@@ -1,0 +1,193 @@
+::-webkit-scrollbar {
+    width: 4px;
+    height: 15px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #bdc3c7;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    height: 30px;
+    background-color: #e74c3c;
+}
+
+
+
+
+
+.container-admin {
+    display: flex;
+    width: 100%;
+    background-color: #f1f4f5;
+    height: auto;
+}
+
+
+.left-menu {
+
+    display: block;
+    width: 19%;
+    background: #263238;
+    margin: 0px;
+    padding-top: 20px;
+}
+
+.list {
+    color: #fff;
+    list-style-type: none;
+    padding-top: 15px;
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-bottom: solid 3.5px #2c3e50;
+}
+
+li {
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    padding-left: 30px;
+    cursor: pointer;
+    margin-top: 0px;
+}
+
+li i {
+    margin-left: auto;
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.sub h3 {
+    font-weight: 300;
+    font-size: 15px;
+    margin: 3px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.sub:hover h3 {
+    font-weight: 700;
+
+}
+
+.sub a {
+    color: #FFF;
+
+}
+
+.sub {
+    display: none;
+    background: #2c3e50;
+    transition: background 0.3s ease;
+    padding: 1px 20px;
+}
+
+.sub:hover {
+    background: #e4eaec;
+    border-radius: 4px;
+}
+
+.sub:hover a {
+    color: #000;
+    text-decoration: none;
+}
+
+.main {
+    width: 70%;
+    margin-left: 0px;
+    /* text-align: center; */
+}
+
+.main-header {
+    position: relative;
+    padding: 30px 30px;
+    margin-top: 0;
+    margin-bottom: 0;
+    background: 0 0;
+    border-bottom: 0;
+}
+
+.main-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 26px;
+}
+
+.page-content {
+    padding: 30px 30px;
+}
+
+.top {
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    padding: 5px;
+}
+
+.top h3 {
+    font-weight: 500;
+    font-size: 17px;
+    margin: 3px !important;
+}
+
+.top:hover {
+    background: gray;
+    border-radius: 4px;
+
+
+
+}
+
+.rotatedown {
+
+    margin-top: 0px;
+    margin-right: 50px;
+    transform: rotate(90deg);
+}
+
+.admin-logo {
+    width: 249.08px;
+    background-color: #3e8ef7;
+    padding: 5px;
+    text-align: center;
+}
+
+.nav-admin {
+    display: flex;
+    width: 100%;
+    background-color: #FFFF;
+    height: auto;
+}
+
+.nav-admin img {
+    width: 84px;
+}
+
+.panel {
+    position: relative;
+    margin-bottom: 2.143rem;
+    background-color: #fff;
+    border: 0 solid transparent;
+    border-radius: .286rem;
+    -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+    box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+}
+
+.panel-body {
+    position: relative;
+    padding: 30px 30px;
+}
+
+
+.actions-options {
+    text-align: center;
+    margin: 0 7px;
+}
+
+.actions-options img {
+    width: 23px;
+    margin: 0 3px;
+
+}
+
+

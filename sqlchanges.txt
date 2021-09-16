@@ -1,0 +1,5 @@
+ALTER TABLE `habaybnaDB`.`users`
+CHANGE COLUMN `password` `password` VARCHAR(255) COLLATE 'utf8mb4_unicode_ci' NULL ;
+-------------
+ALTER TABLE `habaybnaDB`.`parent_users`
+CHANGE COLUMN `password` `password` VARCHAR(255) COLLATE 'utf8mb4_unicode_ci' NULL ;
