@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="nav-admin">
         <div class="admin-logo">
-            <img src="{{asset('imgs/logos/logo.png') }}" alt="">
+            <img src="{{asset('/storage/images/courseCoverImg/courseCoverImg-التحديات الذهنيه.jpg') }}" alt="">
         </div>
         {{-- <a class="navbar-brand" href="{{ url('admin/onlineCourse') }}">
             Online Courses
@@ -40,12 +40,12 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            <a class="dropdown-item" href="{{ url('logout') }}" onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ url('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
                         </div>

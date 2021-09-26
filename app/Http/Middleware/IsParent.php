@@ -17,7 +17,9 @@ class IsParent
      */
     public function handle($request, Closure $next)
     {
+
         if (Auth::user() &&  Auth::user()->role == 'parent') {
+
             return $next($request);
        }
 

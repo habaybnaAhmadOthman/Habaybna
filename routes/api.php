@@ -14,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
+// Route::group(['middleware' => 'auth:api'], function () {
+//     Route::post('storeCourseInfo','CourseController@storeCourseInfo')->name('storeCourseInfo');
+
+// });
+// Route::group(['prefix' => 'auth'], function () {
+//     Route::post('user/login', 'AuthController@login');
+//     Route::post('signup', 'AuthController@signup');
+
+//     Route::group(function() {
+//         Route::get('logout', 'AuthController@logout');
+//         Route::get('user', 'AuthController@user');
+//         Route::middleware('auth:api')->get('user','AuthController@user');
+//         Route::post('course/storeCourseInfo','CourseController@storeCourseInfo')->name('course.storeCourseInfo');
+
+//     });
 // });

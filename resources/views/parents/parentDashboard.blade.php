@@ -1,11 +1,12 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h1>Parent Dashboard</h1>
-            </div>
-        </div>
+        @if (Auth::user() && Auth::user()->role == 'parent')
+            <parent-dashboard>
 
-    </div>
-    @endsection
+            </parent-dashboard>
+        @endif
+@endsection
+
+
+
+

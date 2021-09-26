@@ -17,12 +17,14 @@ use App\Http\Middleware\IsParent;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('login', 'AuthController@loginPage')->name('loginPage');
+// Route::post('login', 'AuthController@login')->name('loginn');
+// Route::post('logout', 'AuthController@logout')->name('logoutt');
+// Route::post('signup', 'AuthController@signup');
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/check-otp', 'HomeController@checkOtp')->name('check-otp'); //->withoutMiddleware(IsVerified::class);
 Route::post('/check-otp', 'HomeController@otpValidate')->name('otp-validate');
@@ -31,9 +33,10 @@ Route::post('/check-otp', 'HomeController@otpValidate')->name('otp-validate');
 //patents route
 Route::middleware([IsParent::class])->group(function () {
     Route::post('/complete-register','ParentUsersController@completeRegister')->name('parent.completeRegister')->middleware(IsVerified::class);
-Route::get('/complete-register','ParentUsersController@completeRegister')->name('parent.completeRegister')->middleware(IsVerified::class);
-Route::view('/complete-register', 'parents.completeRegister');
-Route::view('/parent-dashboard','parents.parentDashboard')->middleware(IsVerified::class);
+    Route::get('/complete-register','ParentUsersController@completeRegister')->name('parent.completeRegister')->middleware(IsVerified::class);
+    Route::view('/complete-register', 'parents.completeRegister');
+    Route::view('/parent-dashboard','parents.parentDashboard')->middleware(IsVerified::class);
+    Route::get('/parent/all-courses','CourseController@getAllcourses')->name('getAllcourses');
 
     });
 
@@ -44,7 +47,7 @@ Route::view('/parent-dashboard','parents.parentDashboard')->middleware(IsVerifie
 
 // admin
 
-Route::prefix('admin')->middleware([IsAdmin::class])->group(function () {
+Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () {
 
     // dashboard
     Route::view('/','admin.adminDashboard');
@@ -52,7 +55,14 @@ Route::prefix('admin')->middleware([IsAdmin::class])->group(function () {
     // courses
 
     Route::get('/onlineCourse','CourseController@index')->name('onlineCourse');
-    Route::get('course/create','CourseController@create')->name('course.create');
+    // Route::get('course/create','CourseController@create')->name('course.create');
+    // Route::any('/{any}','CourseController@create')->name('course.any');
+    // Route::get('course/create','CourseController@create')->name('course.create');
+    Route::post('storeCourseInfo','CourseController@storeCourseInfo')->name('storeCourseInfo');
+    Route::post('/course/upload-video','CourseController@UploadCourseVideo')->name('UploadCourseVideo');
+    // Route::get('uploadVideos/{id}','CourseController@uploadVideos')->name('uploadVideos');
+    Route::get('course-category','CourseController@getCoursesCategories')->name('getCoursesCategories');
+
 
     // courses categories
 

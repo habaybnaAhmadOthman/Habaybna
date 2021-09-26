@@ -9,8 +9,25 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import CKEditor from '../../node_modules/@ckeditor/ckeditor5-vue2';
+import VideoInfoComponent from './components/VideoInfoComponent.vue';
+import AdminDashboard from './components/admin/AdminDashboard.vue'
+import ParentDashboard from './components/parents/ParentDashboard.vue'
 
-Vue.use( CKEditor );
+import UploadVideos from './components/UploadVideos.vue'
+import router from './router';
+import ViewUI from 'view-design';
+import 'view-design/dist/styles/iview.css';
+import common from './common';
+import VueCoreVideoPlayer from 'vue-core-video-player'
+import VueCarousel from 'vue-carousel';
+
+Vue.use(VueCarousel);
+Vue.use(ViewUI);
+
+Vue.mixin(common)
+
+Vue.use(CKEditor);
+Vue.use(VueCoreVideoPlayer)
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -23,7 +40,10 @@ Vue.use( CKEditor );
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('upload-video', require('./components/UploadCourse.vue').default);
+Vue.component('video-info-component', VideoInfoComponent);
+Vue.component('upload-video', require('./components/UploadVideos.vue').default);
+Vue.component('admin-dashboard', require('./components/admin/AdminDashboard.vue').default);
+Vue.component('parent-dashboard', require('./components/parents/ParentDashboard.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -33,4 +53,7 @@ Vue.component('upload-video', require('./components/UploadCourse.vue').default);
 
 const app = new Vue({
     el: '#app',
+    router
 });
+
+//

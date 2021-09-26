@@ -5,7 +5,7 @@
         </li>
         <li class="sub">
 
-            <a href="{{route('course.create')}}">
+            <a href="{{route('onlineCourse')}}">
                 <h3>Courses</h3>
             </a>
         </li>
