@@ -121,7 +121,10 @@
                   name="price"
                 />
               </div>
-              <button class="btn btn-outline-dark float-right">Next</button>
+                <Button :style="{float:'right'}" type="info" ghost :loading="loading" @click="formSubmit">
+                    <span v-if="!loading">next</span>
+                    <span v-else>Creating...</span>
+                </Button>
             </form>
           </div>
         </div>
@@ -155,9 +158,10 @@ export default {
         is_publish: false,
         is_free: false,
       },
+      categories:"",
+      loading:false,
     };
   },
-  props: ["categories"],
 
   methods: {
     uploadCoverImage(event) {
@@ -167,6 +171,7 @@ export default {
       this.form.promoVideo = event.target.files[0];
     },
     formSubmit(e) {
+        this.loading = true;
       let self = this.$router;
       e.preventDefault();
       let formData = new FormData();
@@ -189,10 +194,13 @@ export default {
         .post("/admin/storeCourseInfo", formData)
         .then((response) => {
           if (response.status == 200) {
+            this.$Message.success("Course Created success");
+
             self.push({
               name: "UploadVideo",
               params: { data: response.data.course_id },
             });
+            this.loading = false;
           }
         })
         .catch((error) => {

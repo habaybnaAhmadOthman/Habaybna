@@ -24,8 +24,13 @@ use App\Http\Middleware\IsParent;
 // Route::post('login', 'AuthController@login')->name('loginn');
 // Route::post('logout', 'AuthController@logout')->name('logoutt');
 // Route::post('signup', 'AuthController@signup');
+
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+    Route::view('/','welcome');
+
+// Route::view('xxxxx','auth.register');
+
+// Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/check-otp', 'HomeController@checkOtp')->name('check-otp'); //->withoutMiddleware(IsVerified::class);
 Route::post('/check-otp', 'HomeController@otpValidate')->name('otp-validate');
 
@@ -37,6 +42,10 @@ Route::middleware([IsParent::class])->group(function () {
     Route::view('/complete-register', 'parents.completeRegister');
     Route::view('/parent-dashboard','parents.parentDashboard')->middleware(IsVerified::class);
     Route::get('/parent/all-courses','CourseController@getAllcourses')->name('getAllcourses');
+    Route::view('/parent-dashboard/class-room/{id}', 'parents.classRoom');
+    Route::get('/parent/getCourseVideos/{course_id}','CourseController@getCourseAndVideos')->name('parent.getCourseVideos');
+
+
 
     });
 
@@ -61,7 +70,8 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
     Route::post('storeCourseInfo','CourseController@storeCourseInfo')->name('storeCourseInfo');
     Route::post('/course/upload-video','CourseController@UploadCourseVideo')->name('UploadCourseVideo');
     // Route::get('uploadVideos/{id}','CourseController@uploadVideos')->name('uploadVideos');
-    Route::get('course-category','CourseController@getCoursesCategories')->name('getCoursesCategories');
+     Route::get('course-category','CourseController@getCoursesCategories')->name('getCoursesCategories');
+     Route::get('/getCourseVideos/{course_id}','CourseController@getCourseVideos')->name('getCourseVideos');
 
 
     // courses categories
@@ -71,5 +81,5 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
     Route::post('category/store','CoursesCategoriesController@store')->name('category.store');
     Route::get('category/{id}/edit','CoursesCategoriesController@edit')->name('category.edit');
     Route::post('category/update/{id}','CoursesCategoriesController@update')->name('category.update');
-
+    Route::view('{any}','admin.adminDashboard')->where('any','.*');
     });

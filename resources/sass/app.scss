@@ -8,3 +8,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+body
+{
+    background-image: linear-gradient(#9400d3, #ff6347);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

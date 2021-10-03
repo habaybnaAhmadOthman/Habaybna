@@ -3,48 +3,93 @@
     display: none;
 } */
 
-   /* video::-webkit-media-controls-download-button {
+/* video::-webkit-media-controls-download-button {
     display:none;
    } */
-.layout {
-  border: 1px solid #d7dde4;
-  background: #f5f7f9;
-  position: relative;
+/* .ivu-row {
+       margin: 0 !important;
+   } */
+/* .layout {
+  border: 1px solid #d7dde4; */
+/* background: #f5f7f9; */
+/* position: relative;
   border-radius: 4px;
   overflow: hidden;
+  direction: rtl;
+} */
+.card-img-top {
+  max-height: 100px;
 }
-.layout-header-bar {
-  background: #fff;
+.courses {
+  cursor: pointer;
+  margin: 5px 0 !important;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
-.menu-item span {
+.logout {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+}
+.nav-p {
+  height: auto;
+  padding: 10px;
+  transition: all 0.3s ease-in-out;
+  background-color: #2949a2f5;
+
+  opacity: 0.2;
+}
+.nav-p:hover {
+  opacity: 1;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  opacity: 0.8;
+}
+.logout-btn {
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  transition: all 0.3s;
+  background: none;
+  opacity: 1;
+}
+.logout-btn:hover {
+  color: #fff;
+  opacity: 1;
+}
+/* .layout-header-bar { */
+/* background: #fff; */
+/* background-color: rgba(0, 0, 0, 0);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  height: auto !important;
+  padding: 0;
+  line-height: 50px !important;
+} */
+/* .content-course {
+  padding: 10px;
+  margin-bottom: 50px;
+} */
+/* .wrapper-courses {
+  margin: auto 15px;
+  display: flex;
+} */
+/* .layout-course {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0);
   display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  vertical-align: bottom;
-  transition: width 0.2s ease 0.2s;
-}
-.menu-item i {
-  transform: translateX(0px);
-  transition: font-size 0.2s ease, transform 0.2s ease;
-  vertical-align: middle;
-  font-size: 16px;
-}
-.collapsed-menu span {
-  width: 0px;
-  transition: width 0.2s ease;
-}
-.collapsed-menu i {
-  transform: translateX(5px);
-  transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;
-  vertical-align: middle;
-  font-size: 22px;
+  width: 100%;
+} */
+.banner {
+  background-image: url(/images/siteImgs/home-banner.jpg);
+  height: 450px;
+  background-size: cover;
+  background-position: top;
+  margin: 0 0 !important;
+  opacity: 0.8;
+  position: relative;
 }
 </style>
 <template>
-  <div class="layout">
-    <Layout>
+  <!-- <Layout>
       <Sider
         breakpoint="md"
         collapsible
@@ -58,14 +103,17 @@
           :class="menuitemClasses"
           v-if="courses"
         >
-         <h3
-            :style="{color:'#FFFF',
-            padding:'15px',
-            textAlign:'center',
-            backgroundColor:'#181e2aab',
-            borderRadius:'5px',
+          <h3
+            :style="{
+              color: '#FFFF',
+              padding: '15px',
+              textAlign: 'center',
+              backgroundColor: '#181e2aab',
+              borderRadius: '5px',
             }"
-         >All Courses</h3>
+          >
+            All Courses
+          </h3>
           <MenuItem v-for="(course, i) in courses" :key="i" name="1-1">
             <span v-on:click="getCourseVideos(i)">{{
               course.courseTitle
@@ -74,70 +122,74 @@
           </MenuItem>
         </Menu>
         <div slot="trigger"></div>
-      </Sider>
-      <Layout>
-        <Header class="layout-header-bar"> </Header>
-        <Content
-          v-if="videos"
-          :style="{ margin: '20px', background: '#fff', minHeight: '220px' }"
-        >
-          <Row>
-            <Col
-              span="24"
-              style="text-align: center; background-color: #ebebeb"
-            >
-              <!-- <div
-                @click="playVideo(i)"
-                style="background-color: blue; margin-top: 5px; color: #fff"
-              >
-                {{ video.id }}
-              </div> -->
-              <carousel
-                :per-page="1"
-                :loop="true"
-                :autoplay="true"
-                :minSwipeDistance="12"
-                :paginationPadding="5"
-                paginationColor="#0000004a"
-                :perPage="3"
-              >
-                <slide v-for="(video, i) in videos" :key="i">
-                  <img
-                    :src="'storage/images/courseCoverImg/' + video.cover_image"
-                    alt=""
-                    :style="{ width: '150px', height: '150px' }"
-                    @click="playVideo(i)"
-                  />
-                  <p>{{video.title}}</p>
-                </slide>
-              </carousel>
-            </Col>
-          </Row>
-          <Row>
-            <Col span="24" style="text-align: center">
-              <div class="player-container">
-                <!-- <vue-core-video-player :src="currentVideo.url"></vue-core-video-player> -->
-                <video
-                    :poster="currentVideo.coverImage"
-                  id="videoo"
-                  controls
-                  preload="none"
-                  :style="{ maxWidth: '700px', width: '100%', height: 'auto' }"
-                >
-                </video>
-              </div>
-            </Col>
-          </Row>
-        </Content>
-      </Layout>
-    </Layout>
+      </Sider> -->
+  <!-- <Header class="layout-header-bar"> -->
+  <!-- <Button type="warning" :style="{ float: 'right' }" @click="logoutUser()"> -->
+  <div class="container">
+
+    <div class="row banner">
+      <button class="btn btn-primary logout" @click="logoutUser()">
+        Logout
+      </button>
+    </div>
+    <div class="row">
+      <Divider orientation="left"> <h3>Discover our new courses</h3> </Divider>
+    </div>
+    <div class="row">
+      <div
+        class="col courses"
+        v-for="(course, i) in courses"
+        :key="i"
+        @click="getCourseVideos(i)"
+      >
+        <div class="card" style="width: 18rem">
+          <img
+            class="card-img-top"
+            :src="`storage/images/courseCoverImg/${course.cover_photo}`"
+            alt="..."
+          />
+          <div class="card-body">
+            <a :href="`/parent-dashboard/class-room/${course.id}`">
+              <h5 class="card-title">{{ course.courseTitle }}</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- </Header> -->
+
+  <!-- <Content class="content-course">
+        <Col span="6">
+          <div class="wrapper-courses"> -->
+  <!-- <Row :gutter="8">
+      <Col span="4" v-for="(course, i) in courses" :key="i">
+            <div :style="{ textAlign: 'center', padding: '15px', overflow:'hidden' }">
+              <img
+                :style="{ width: '190px', height:'150px' }"
+                :src="`storage/images/courseCoverImg/${course.cover_photo}`"
+              />
+              <h3>{{ course.courseTitle }}</h3>
+            </div>
+      </Col>
+    </Row> -->
+
+  <!-- </div>
+        </Col>
+      </Content> -->
+
+  <!-- </Layout> -->
 </template>
 <script>
 export default {
+    template:`
+
+
+
+    `,
   created() {
     this.getCourses();
-
   },
   data() {
     return {
@@ -169,27 +221,27 @@ export default {
       }
     },
     getCourseVideos(i) {
+      console.log("XXXXXXXXX");
       this.videos = this.courses[i].videos;
       this.currentVideo.url =
         "storage/videos/promoVideo/" + this.courses[i].promo_video; //window.location.host +"/storage/videos/courseVideos/"+this.videos[i].url;
-       this.currentVideo.coverImage =
+      this.currentVideo.coverImage =
         "storage/images/videoCoverImgs/" + this.courses[i].cover_photo;
       if (document.getElementById("videoo")) {
-
         let vid = document.getElementById("videoo");
         // vid.controlBar.progressControl.disable();
-        console.log(vid)
+        console.log(vid);
         vid.src = this.currentVideo.url;
         if (vid) {
-        //   vid
-        //     .play()
-        //     .then(function () {
-        //       console.log("played!");
-        //     })
-        //     .catch(function (error) {
-        //       console.log("did not play.");
-        //       console.log(error);
-        //     });
+          //   vid
+          //     .play()
+          //     .then(function () {
+          //       console.log("played!");
+          //     })
+          //     .catch(function (error) {
+          //       console.log("did not play.");
+          //       console.log(error);
+          //     });
         }
       }
     },
@@ -213,6 +265,16 @@ export default {
             });
         }
       }
+    },
+    logoutUser() {
+      axios({
+        method: "post",
+        url: "logout",
+      }).then((resp) => {
+        if (resp.status == 200) {
+          this.courses = resp.data.courses;
+        }
+      });
     },
   },
   computed: {

@@ -12,6 +12,7 @@ import CKEditor from '../../node_modules/@ckeditor/ckeditor5-vue2';
 import VideoInfoComponent from './components/VideoInfoComponent.vue';
 import AdminDashboard from './components/admin/AdminDashboard.vue'
 import ParentDashboard from './components/parents/ParentDashboard.vue'
+import ClassRoom from './components/parents/ClassRoom.vue'
 
 import UploadVideos from './components/UploadVideos.vue'
 import router from './router';
@@ -44,6 +45,7 @@ Vue.component('video-info-component', VideoInfoComponent);
 Vue.component('upload-video', require('./components/UploadVideos.vue').default);
 Vue.component('admin-dashboard', require('./components/admin/AdminDashboard.vue').default);
 Vue.component('parent-dashboard', require('./components/parents/ParentDashboard.vue').default);
+Vue.component('class-room', require('./components/parents/ClassRoom.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

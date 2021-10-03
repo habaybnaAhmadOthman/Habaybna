@@ -52,7 +52,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'phone' => ['required', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'type' => ['required', 'string'],
+            // 'type' => ['required', 'string'],
         ]);
     }
 
@@ -66,7 +66,7 @@ class RegisterController extends Controller
     {
         return
         $user = User::create([
-            'role' => $data['type'],
+            'role' => 'parent',
             'email' => $data['email'],
             'phone' => $data['phone'],
             'otp'=> random_int(100000, 999999),

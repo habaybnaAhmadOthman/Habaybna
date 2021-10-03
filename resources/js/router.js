@@ -7,6 +7,7 @@ import firstPage from './components/pages/firstPage.vue'
 import UploadVideos from './components/UploadVideos.vue'
 import AdminDashboard from './components/admin/AdminDashboard.vue'
 import Courses from './components/admin/Courses.vue'
+import ClassRoom from './components/parents/ClassRoom.vue'
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 const routes = [
@@ -26,7 +27,7 @@ const routes = [
     },
     {
 
-        path: '/admin/corses',
+        path: '/admin/courses',
         component: Courses,
         name: 'Courses',
     },
@@ -34,6 +35,12 @@ const routes = [
 
         path: '/admin/course-create',
         component: VideoInfoComponent,
+        name: 'VideoInfoComponent',
+    },
+    {
+
+        path: '/parent-dashboard/class-room',
+        component: ClassRoom,
         name: 'VideoInfoComponent',
     },
 

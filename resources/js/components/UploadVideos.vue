@@ -1,89 +1,121 @@
+<style>
+    .ivu-card {
+        background-color: rgb(81 90 110) !important;
+        color: #FFF;
+    }
+    .ivu-card-head p{
+        color: rgb(255 255 255 / 70%) !important;
+        transition: all 0.3s ease-in-out;   
+        cursor: pointer;
+    }
+        .ivu-card-head p:hover {
+        color:#FFF !important;
+    }
+    .ivu-col-span-6 {
+        padding:2px !important;
+    }
+    .ivu-card-body {
+    padding: 0 !important;
+}
+
+</style>
 <template>
   <Collapse v-model="value1">
-    <Panel name="1">
-      Videos List
-      <p slot="content">
-        史蒂夫·乔布斯（Steve
-        Jobs），1955年2月24日生于美国加利福尼亚州旧金山，美国发明家、企业家、美国苹果公司联合创办人。
-      </p>
-    </Panel>
-    <Panel name="2">
-        Add video
-          <div class="card" slot="content">
-            <div class="card-body">
-              <form @submit="formSubmit" enctype="multipart/form-data">
-                <div class="form-group">
-                  <strong>Video Title:</strong>
+    <Panel name="1"   v-if="allVideos.haveVideos">
+        video list ({{allVideos.count}})
+        <strong class="float-right" :style="{paddingRight:'15px'}">{{allVideos.courseTitle}}</strong>
+      <Row  :gutter="16" slot="content">
+          <Col span="6" class="video-list" v-for="(video , index) in allVideos.videos" :key=index>
+            <Card :bordered="false">
+                <p slot="title">{{video.title}}</p>
+            </Card>
+        </Col>
+      </Row>
 
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="form.videoTitle"
-                    name="title"
-                  />
-                </div>
-                <div class="form-group">
-                  <strong>Video Discription:</strong>
-                  <ckeditor
-                    :editor="form.editor"
-                    v-model="form.videoDescription"
-                    :config="form.editorConfig"
-                  ></ckeditor>
-                </div>
-                <div class="form-group">
-                  <strong>Video cover photo:</strong>
-                  <input
-                    name="coverImage"
-                    type="file"
-                    class="form-control"
-                    @change="uploadCoverImage"
-                  />
-                </div>
-                <div class="form-group">
-                  <strong>Video:</strong>
-                  <input
-                    name="video"
-                    type="file"
-                    class="form-control"
-                    @change="uploadvideo"
-                  />
-                </div>
-                <div class="form-group">
-                  <div class="btn-group" data-toggle="buttons" role="group">
-                    <label class="btn btn-outline btn-success">
-                      <input
-                        type="radio"
-                        id="is_publish_1"
-                        value="1"
-                        v-model="form.is_publish"
-                      />
-                      <i
-                        class="icon wb-check text-active"
-                        aria-hidden="true"
-                      ></i>
-                      Published
-                    </label>
-                    <label class="btn btn-outline btn-danger">
-                      <input
-                        type="radio"
-                        id="is_publish_2"
-                        value="0"
-                        v-model="form.is_publish"
-                      />
-                      <i
-                        class="icon wb-check text-active"
-                        aria-hidden="true"
-                      ></i>
-                      Unpublished
-                    </label>
-                  </div>
-                </div>
-                <button class="btn btn-outline-dark float-right">
-                  Upload Video
-                </button>
-              </form>
+    </Panel>
+        <Panel name="1" v-model="value1"  v-else>
+        video list
+      <h1 slot="content" class="text-center" >Oh no videos for this course   😢</h1>
+
+    </Panel>
+    <Panel name="2" >
+      Add video
+      <div class="card" slot="content">
+        <div class="card-body">
+          <form @submit="formSubmit" enctype="multipart/form-data">
+            <div class="form-group">
+              <strong>Video Title:</strong>
+
+              <input
+                type="text"
+                class="form-control"
+                v-model="form.videoTitle"
+                name="title"
+              />
             </div>
-          </div>
+            <div class="form-group">
+              <strong>Video Discription:</strong>
+              <ckeditor
+                :editor="form.editor"
+                v-model="form.videoDescription"
+                :config="form.editorConfig"
+              ></ckeditor>
+            </div>
+            <div class="form-group">
+              <strong>Video cover photo:</strong>
+              <input
+                name="coverImage"
+                type="file"
+                class="form-control"
+                @change="uploadCoverImage"
+              />
+            </div>
+            <div class="form-group">
+              <strong>Video:</strong>
+              <input
+                name="video"
+                type="file"
+                class="form-control"
+                @change="uploadvideo"
+              />
+            </div>
+            <div class="form-group">
+              <div class="btn-group" data-toggle="buttons" role="group">
+                <label class="btn btn-outline btn-success">
+                  <input
+                    type="radio"
+                    id="is_publish_1"
+                    value="1"
+                    v-model="form.is_publish"
+                  />
+                  <i class="icon wb-check text-active" aria-hidden="true"></i>
+                  Published
+                </label>
+                <label class="btn btn-outline btn-danger">
+                  <input
+                    type="radio"
+                    id="is_publish_2"
+                    value="0"
+                    v-model="form.is_publish"
+                  />
+                  <i class="icon wb-check text-active" aria-hidden="true"></i>
+                  Unpublished
+                </label>
+              </div>
+            </div>
+            <Button
+              :style="{ float: 'right' }"
+              type="info"
+              ghost
+              :loading="loading"
+              @click="formSubmit"
+            >
+              <span v-if="!loading">Upload</span>
+              <span v-else>Uploading...</span>
+            </Button>
+          </form>
+        </div>
+      </div>
     </Panel>
   </Collapse>
 </template>
@@ -105,17 +137,24 @@ export default {
         is_publish: false,
         course_id: "",
       },
-      value1: '1'
+      value1: "1",
+      loading:false,
+      allVideos:{
+         videos:"",
+         count:0,
+         haveVideos:false,
+         courseTitle:"",
+      }
     };
   },
   created() {
     this.getCourseId();
+    this.getCourseVideos()
+    // console.log('zzzzz',this.allVideos);
   },
   methods: {
     getCourseId() {
       this.form.course_id = this.$router.currentRoute.params.data;
-
-      console.log(this.form);
     },
     uploadCoverImage(event) {
       this.form.coverImage = event.target.files[0];
@@ -124,6 +163,7 @@ export default {
       this.form.video = event.target.files[0];
     },
     formSubmit(e) {
+        this.loading = true;
       let self = this.$router;
       e.preventDefault();
       let formData = new FormData();
@@ -143,13 +183,35 @@ export default {
         .post("/admin/course/upload-video", formData)
         .then((response) => {
           if (response.status == 200) {
-            console.log(response);
+            this.$Message.success("Video Uploaded success");
+
+            this.form.videoTitle = "";
+            this.form.videoDescription = "";
+            this.form.video = "";
+            this.form.videoTitle = "";
           }
+            this.loading = false;
+
         })
         .catch((error) => {
           return 404;
         });
     },
+    getCourseVideos(){
+        console.log(this.form.course_id);
+              axios
+        .get("/admin/getCourseVideos/"+ this.form.course_id)
+        .then((response) => {
+            this.allVideos.videos = response.data.videos
+            this.allVideos.count  = response.data.count
+            this.allVideos.haveVideos  = response.data.haveVideos
+            this.allVideos.courseTitle  = response.data.courseInfo['title']
+            console.log(this.allVideos);
+        })
+        .catch((error) => {
+          return '404';
+        });
+    }
   },
 };
 </script>

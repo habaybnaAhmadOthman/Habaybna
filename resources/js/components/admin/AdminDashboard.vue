@@ -59,7 +59,7 @@
                         <Submenu name="1">
                             <template slot="title">
                                 <Icon type="ios-navigate"></Icon>
-                                 <router-link to="/admin/corses">Courses</router-link>
+                                 <router-link to="/admin/courses">Courses</router-link>
                             </template>
                             <MenuItem name="1-1">
                                  <router-link to="/admin/course-create">Create new course</router-link>

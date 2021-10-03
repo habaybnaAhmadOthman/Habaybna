@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Courses;
 use App\CourseCategory;
 use App\CourseVideos;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,6 +91,7 @@ class CourseController extends Controller
         $videoCourse->course_id= $request->course_id;
         $videoCourse->status= $request->is_publish;
         $videoCourse->description= $request->description;
+        $videoCourse->title= $request->title ;
         $videoCourse->save();
         if($videoCourse){
             $courseVideos = CourseVideos::where('course_id',$videoCourse->course_id)->get();
@@ -133,5 +136,56 @@ class CourseController extends Controller
             200
         ]);
        }
+   }
+
+   public function getCourseVideos($id)
+   {
+       try{
+        $course = Courses::findOrFail($id);
+        return response()->json([
+             'msg'=>'success',
+             'courseInfo'=>[
+                 'title'=>$course->courseTitle,
+
+             ],
+             'count'=>$course->videos->count(),
+             'videos'=>$course->videos ? $course->videos : [] ,
+             'haveVideos'=>$course->videos->count() > 0 ? true : false
+        ]);
+    } catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+
+       ]);
+    }
+
+
+
+   }
+
+   public function getCourseAndVideos($id)
+   {
+       try{
+        $course = Courses::findOrFail($id);
+        return response()->json([
+             'msg'=>'success',
+             'course'=>$course,
+             'count'=>$course->videos->count(),
+            //  'videos'=>$course->videos ? $course->videos : [] ,
+             'haveVideos'=>$course->videos->count() > 0 ? true : false
+        ]);
+    } catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+
+       ]);
+    }
+
+
+
    }
 }

@@ -115,7 +115,7 @@ class ParentUsersController extends Controller
         Auth::user()->password = Hash::make($request->password) ;
         Auth::user()->save();
 
-        // return view('parent.');
+        return view('parents.parentDashboard');
     }
 
     public function onlineCourses()
