@@ -198,8 +198,8 @@ class CourseController extends Controller
                 $pathVid = $nVideo->storeAs('public/videos/courseVideos', $videoName);
             }
 
-            $video->url= $request->hasFile('video') ? $videoName : '';
-            $video->cover_image = $request->hasFile('coverImage') ? $imageName: '';
+            $video->url= $request->hasFile('video') ? $videoName :$video->url;
+            $video->cover_image = $request->hasFile('coverImage') ? $imageName:$video->cover_image;
             $video->status= $request->is_publish;
             $video->description= $request->description;
             $video->title= $request->title ;
