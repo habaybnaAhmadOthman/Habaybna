@@ -21,6 +21,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+
     {{-- <link href="{{ asset('css/admin.css') }}" rel="stylesheet"> --}}
 
 
@@ -43,6 +45,8 @@
 
 
     </div>
+    <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+
 </body>
 {{-- <script src="{{ mix('/js/app.js') }}"></script> --}}
 {{-- @yield('js-files')

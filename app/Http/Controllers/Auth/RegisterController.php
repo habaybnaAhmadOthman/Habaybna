@@ -69,7 +69,7 @@ class RegisterController extends Controller
             'role' => 'parent',
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'otp'=> random_int(100000, 999999),
+            'otp'=> 000111//random_int(100000, 999999),
         ]);
         // $accessToken = $user->$user->createToken('authToken')->accessToken ;
     }

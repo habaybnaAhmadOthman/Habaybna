@@ -1,44 +1,58 @@
 <style>
-    .ivu-card {
-        background-color: rgb(81 90 110) !important;
-        color: #FFF;
-    }
-    .ivu-card-head p{
-        color: rgb(255 255 255 / 70%) !important;
-        transition: all 0.3s ease-in-out;   
-        cursor: pointer;
-    }
-        .ivu-card-head p:hover {
-        color:#FFF !important;
-    }
-    .ivu-col-span-6 {
-        padding:2px !important;
-    }
-    .ivu-card-body {
-    padding: 0 !important;
+.ivu-card {
+  background-color: rgb(81 90 110) !important;
+  color: #fff;
 }
-
+.ivu-card-head p {
+  color: rgb(255 255 255 / 70%) !important;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.ivu-card-head p:hover {
+  color: #fff !important;
+}
+.ivu-col-span-6 {
+  padding: 2px !important;
+}
+.ivu-card-body {
+  padding: 0 !important;
+}
 </style>
 <template>
   <Collapse v-model="value1">
-    <Panel name="1"   v-if="allVideos.haveVideos">
-        video list ({{allVideos.count}})
-        <strong class="float-right" :style="{paddingRight:'15px'}">{{allVideos.courseTitle}}</strong>
-      <Row  :gutter="16" slot="content">
-          <Col span="6" class="video-list" v-for="(video , index) in allVideos.videos" :key=index>
-            <Card :bordered="false">
-                <p slot="title">{{video.title}}</p>
-            </Card>
+    <Panel name="1" v-if="allVideos.haveVideos">
+      video list ({{ allVideos.count }})
+      <strong class="float-right" :style="{ paddingRight: '15px' }">{{
+        allVideos.courseTitle
+      }}</strong>
+      <Row :gutter="16" slot="content">
+        <Col
+          span="6"
+          class="video-list"
+          v-for="(video, index) in allVideos.videos"
+          :key="index"
+        >
+          <Card :bordered="false">
+            <p
+              @click="editVideo(index)"
+              slot="title"
+              :style="{ textAlign: 'right' }"
+            >
+              {{ video.title }}
+
+              <Icon type="ios-build-outline" :style="{ float: 'left' }" />
+            </p>
+          </Card>
         </Col>
       </Row>
-
     </Panel>
-        <Panel name="1" v-model="value1"  v-else>
-        video list
-      <h1 slot="content" class="text-center" >Oh no videos for this course   😢</h1>
-
+    <Panel name="1" v-model="value1" v-else>
+      video list
+      <h1 slot="content" class="text-center">
+        Oh no videos for this course 😢
+      </h1>
     </Panel>
-    <Panel name="2" >
+    <Panel name="2">
       Add video
       <div class="card" slot="content">
         <div class="card-body">
@@ -104,6 +118,18 @@
               </div>
             </div>
             <Button
+            v-if="isUpdate"
+              :style="{ float: 'right' }"
+              type="info"
+              ghost
+              :loading="loading"
+              @click="formSubmit"
+            >
+              <span v-if="!loading">Update</span>
+              <span v-else>Updating...</span>
+            </Button>
+                        <Button
+            v-else
               :style="{ float: 'right' }"
               type="info"
               ghost
@@ -126,6 +152,7 @@ export default {
   data() {
     return {
       form: {
+          id:"",
         videoTitle: "",
         videoDescription: "",
         editor: ClassicEditor,
@@ -138,18 +165,19 @@ export default {
         course_id: "",
       },
       value1: "1",
-      loading:false,
-      allVideos:{
-         videos:"",
-         count:0,
-         haveVideos:false,
-         courseTitle:"",
-      }
+      loading: false,
+      allVideos: {
+        videos: "",
+        count: 0,
+        haveVideos: false,
+        courseTitle: "",
+      },
+      isUpdate:false
     };
   },
   created() {
     this.getCourseId();
-    this.getCourseVideos()
+    this.getCourseVideos();
     // console.log('zzzzz',this.allVideos);
   },
   methods: {
@@ -163,7 +191,7 @@ export default {
       this.form.video = event.target.files[0];
     },
     formSubmit(e) {
-        this.loading = true;
+      this.loading = true;
       let self = this.$router;
       e.preventDefault();
       let formData = new FormData();
@@ -173,16 +201,20 @@ export default {
       formData.append("video", this.form.video);
       formData.append("is_publish", this.form.is_publish);
       formData.append("course_id", this.form.course_id);
+      this.isUpdate ? formData.append("video_id", this.form.id) : '' ;
       const config = {
         headers: {
           "content-type": "multipart/form-data",
           Accept: "application/json",
         },
       };
-      axios
+      if(!this.isUpdate){
+          alert('add')
+                  axios
         .post("/admin/course/upload-video", formData)
         .then((response) => {
           if (response.status == 200) {
+            this.allVideos.videos = response.data.videos;
             this.$Message.success("Video Uploaded success");
 
             this.form.videoTitle = "";
@@ -190,28 +222,60 @@ export default {
             this.form.video = "";
             this.form.videoTitle = "";
           }
-            this.loading = false;
-
+          this.loading = false;
         })
         .catch((error) => {
           return 404;
         });
-    },
-    getCourseVideos(){
-        console.log(this.form.course_id);
-              axios
-        .get("/admin/getCourseVideos/"+ this.form.course_id)
+      }else{
+          alert('update')
+                axios
+        .post("/admin/course/update-video/" + this.form.id, formData)
         .then((response) => {
-            this.allVideos.videos = response.data.videos
-            this.allVideos.count  = response.data.count
-            this.allVideos.haveVideos  = response.data.haveVideos
-            this.allVideos.courseTitle  = response.data.courseInfo['title']
-            console.log(this.allVideos);
+          if (response.status == 200) {
+            this.allVideos.videos = response.data.videos;
+            this.$Message.success("Video Uploaded success");
+
+            this.form.videoTitle = "";
+            this.form.videoDescription = "";
+            this.form.video = "";
+            this.form.videoTitle = "";
+            this.getCourseVideos()
+            this.isUpdate = false
+          }
+          this.loading = false;
         })
         .catch((error) => {
-          return '404';
+          return 404;
         });
-    }
+      }
+
+    },
+    getCourseVideos() {
+      console.log(this.form.course_id);
+      axios
+        .get("/admin/getCourseVideos/" + this.form.course_id)
+        .then((response) => {
+          this.allVideos.videos = response.data.videos;
+          this.allVideos.count = response.data.count;
+          this.allVideos.haveVideos = response.data.haveVideos;
+          this.allVideos.courseTitle = response.data.courseInfo["title"];
+          console.log(this.allVideos);
+        })
+        .catch((error) => {
+          return "404";
+        });
+    },
+    editVideo(i) {
+      let video = this.allVideos.videos[i];
+      console.log(video);
+      this.form.id = video.id
+      this.form.videoTitle = video.title;
+      this.form.videoDescription= video.description;
+      this.form.is_publish= video.status;
+      this.value1 = "2"
+      this.isUpdate = true
+    },
   },
 };
 </script>

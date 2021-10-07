@@ -22,7 +22,7 @@ use App\Http\Middleware\IsParent;
 // });
 // Route::get('login', 'AuthController@loginPage')->name('loginPage');
 // Route::post('login', 'AuthController@login')->name('loginn');
-// Route::post('logout', 'AuthController@logout')->name('logoutt');
+Route::post('logoutt', 'AuthController@logout')->name('logoutt');
 // Route::post('signup', 'AuthController@signup');
 
 Auth::routes();
@@ -69,6 +69,7 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
     // Route::get('course/create','CourseController@create')->name('course.create');
     Route::post('storeCourseInfo','CourseController@storeCourseInfo')->name('storeCourseInfo');
     Route::post('/course/upload-video','CourseController@UploadCourseVideo')->name('UploadCourseVideo');
+    Route::post('/course/update-video/{id}','CourseController@updateVideo')->name('updateVideo');
     // Route::get('uploadVideos/{id}','CourseController@uploadVideos')->name('uploadVideos');
      Route::get('course-category','CourseController@getCoursesCategories')->name('getCoursesCategories');
      Route::get('/getCourseVideos/{course_id}','CourseController@getCourseVideos')->name('getCourseVideos');

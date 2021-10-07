@@ -21,7 +21,7 @@ class AuthController extends Controller
             'role' => $request->type,
             'email' => $request->email,
             'phone' => $request->phone,
-            'otp'=> random_int(100000, 999999),
+            'otp'=> 000111 //random_int(100000, 999999),
         ]);
         $user->save();
         // $accessToken = $user->createToken('authToken')->access_token ;
@@ -85,6 +85,8 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        Auth::logout();
+
         return response()->json([
             'message' => 'Successfully logged out'
         ]);

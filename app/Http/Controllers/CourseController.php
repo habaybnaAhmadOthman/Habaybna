@@ -5,8 +5,7 @@ use App\Courses;
 use App\CourseCategory;
 use App\CourseVideos;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -103,17 +102,11 @@ class CourseController extends Controller
                 200
             ]);
         }
-
-
         return response([
          'msg'=>'fail',
          'status'=>false,
          201
      ]);
-
-
-
-
     }
 
    public function getCoursesCategories()
@@ -184,8 +177,45 @@ class CourseController extends Controller
 
        ]);
     }
+   }
 
+   public function updateVideo(Request $request, $id)
+   {
+       try{
+        $video = CourseVideos::findOrFail($id);
 
+        if ($request->hasFile('coverImage')) {
+            Storage::delete('public/images/videoCoverImgs/'.$video->cover_image);
+            $coverImage = $request->file('coverImage');
+            $imageName = 'courseCoverImg' . '-' . $coverImage->getClientOriginalName();
+            $pathImg = $coverImage->storeAs('public/images/videoCoverImgs', $imageName);
 
+            }
+            if ($request->hasFile('video')) {
+                Storage::delete('public/videos/courseVideos/'.$video->url);
+                $nVideo = $request->file('video');
+                $videoName = 'courseVideo' . '-' . $nVideo->getClientOriginalName();
+                $pathVid = $nVideo->storeAs('public/videos/courseVideos', $videoName);
+            }
+
+            $video->url= $request->hasFile('video') ? $videoName : '';
+            $video->cover_image = $request->hasFile('coverImage') ? $imageName: '';
+            $video->status= $request->is_publish;
+            $video->description= $request->description;
+            $video->title= $request->title ;
+            $video->save();
+        return response()->json([
+             'msg'=>'success',
+                200,
+                'status'=>true
+        ]);
+    } catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+
+       ]);
+    }
    }
 }

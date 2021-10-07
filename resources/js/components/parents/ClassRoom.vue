@@ -1,9 +1,21 @@
 <style scoped>
-
 .logout {
   position: absolute;
   top: 20px;
   right: 22px;
+}
+ol {
+    width: 100% !important;
+}
+#videoo {
+  max-height: 100%;
+  max-width: 100%;
+}
+.hideVideo {
+  display: block;
+  z-index: 999;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 .banner {
@@ -12,37 +24,47 @@
   background-position: top;
   margin: 0 0 !important;
   opacity: 0.8;
-  position: relative;
+  padding: 7%;
+  /*position: relative; */
 }
-.video-wrapper {
-  margin: auto 25px;
+#learn-wrapper p {
+    width: 100% !important;
+}
+.wrapper {
+  max-width: 52.2%;
+  max-height: 95.3%;
 }
 .title-wrapper {
-  min-width: 30%;
-}
-.title-wrapper p {
-  padding: 16px;
+  width: 100%;
   direction: rtl;
-  padding: 16px;
-  font-size: 21px;
-  font-weight: bold;
+  background-color: #80808080;
   color: #fff;
-  background-color: #f85c4f33;
-  border-radius: 15px;
+  font-size: 33px;
+  font-weight: bold;
+  margin: 1.5% 0;
 }
-p {
-  text-align: center !important;
-}
-.lessons {
+
+li {
   cursor: pointer;
-  padding: 7px 7px 7px 7px;
-  text-align: right;
+  padding: 4px 0 !important;
   transition: all 0.1s ease-in-out;
+}
+ul {
+  text-align: right;
+  list-style-type: arabic-indic;
+  width: 50%;
+  color: rgb(255, 255, 255);
+  font-size: 17px;
+  font-weight: 700;
+  padding: 10px;
 }
 .lessons:hover {
   color: #fff;
   background-color: #0000005c;
   border-radius: 5px;
+}
+.disc-wrapper p {
+  width: 100% !important;
 }
 .disc-wrapper {
   font-size: 18px;
@@ -63,19 +85,36 @@ p {
 </style>
 <template>
   <div class="container">
-    <div class="row banner" id="banner" :style="{ backgroundImage: img }">
+    <div
+      class="row banner d-flex justify-content-center"
+      id="banner"
+      :style="{ backgroundImage: img }"
+    >
       <button class="btn btn-primary logout" @click="logoutUser()">
         Logout
       </button>
-      <div class="video-wrapper">
-        <video id="videoo" width="320" height="240" controls controlsList="nodownload">
+      <div class="wrapper d-flex justify-content-center">
+        <video hidden id="hiddenVideo">
+          <source src="" type="video/mp4" />
+          <source src="" type="video/ogg" />
+        </video>
+        <video
+          class="video-js"
+          data-setup="{}"
+          id="videoo"
+          controls
+          @play="play"
+          @ended="onEnd()"
+          :src="currentVideo.url"
+        >
           <source src="" type="video/mp4" />
           <source src="" type="video/ogg" />
           Your browser does not support the video tag.
+          <source type="video/mp4" :src="currentVideo.url" />
         </video>
       </div>
       <div
-        class="align-self-center title-wrapper"
+        class="row d-flex justify-content-center title-wrapper"
         :style="{ direction: 'rtl' }"
       >
         <p>{{ title }}</p>
@@ -100,9 +139,9 @@ p {
     </div>
 
     <div class="row" :style="{ direction: 'rtl', padding: '10px' }">
-      <ul :style="{ listStyleType: 'none', width: '60%', color: '#fff' }">
+      <ul>
         <li
-          @click="playVideo(index)"
+          @click="loadCurrentVideo(index)"
           class="lessons"
           v-for="(lesson, index) in course.videos"
           :key="index"
@@ -124,18 +163,11 @@ export default {
     this.getCourseVideos(course_id);
   },
   updated() {
-    var learnWraper = document.getElementById("learn-wrapper");
-    learnWraper.firstChild.style.width = "100%";
-    learnWraper.getElementsByTagName("ol")[0].style.margin = "10px 20px";
-    let video = document.getElementsByTagName("video")[0];
-    this.getLessonDouration(this.course.videos);
-    if (document.getElementById("videoo")) {
-        console.log('xxxxxxxxxxxxxxx');
-      let vid = document.getElementById("videoo");
-      console.log('promo',this.promoVideo);
-      vid.src = this.promoVideo;
-        console.log('src', vid.scr);
-    }
+      console.log('xxxxxxzzzzz');
+    // this.getLessonDouration();
+  },
+  mounted(){
+      console.log('xxxxxxx');
   },
   data() {
     return {
@@ -152,6 +184,7 @@ export default {
         title: "",
         description: "",
       },
+      courseId: null,
     };
   },
   methods: {
@@ -169,9 +202,13 @@ export default {
             "/storage/videos/promoVideo/" + response.data.course.promo_video;
           var bgimg =
             "/storage/images/courseCoverImg/" + this.course.cover_photo;
-
           this.img = "url('" + bgimg + "')";
 
+          this.currentVideo.url = this.promoVideo;
+          this.currentVideo.title = this.title;
+          this.currentVideo.description = this.courseDescription;
+
+          //   console.log('current=>',this.currentVideo);
           //   if (document.getElementById("videoo")) {
           //     let vid = document.getElementById("videoo");
           //     vid.src = this.promoVideo;
@@ -193,28 +230,85 @@ export default {
           return "404";
         });
     },
-    getLessonDouration(videos = []) {
-      let d = document.getElementsByClassName("lessons");
+    loadCurrentVideo(i) {
+      let video = this.course.videos[i];
 
-      videos.forEach((element, index) => {
-        let v = "/storage/videos/courseVideos/" + element.url;
-        if (document.getElementById("videoo")) {
-          let vid = document.getElementById("videoo");
-          vid.src = v;
-          vid.addEventListener("loadedmetadata", function () {
-            for (var i = 0; i < d.length; i++) {
-              // var elem = subDiv[i];
-              // if(elem.id.indexOf(elementsId) === 0) {
-              //     myArray.push(elem.id);
-              if (index == i)
-                d[i].getElementsByTagName("p")[0].innerHTML = (
-                  vid.duration / 60
-                ).toFixed(2);
-            }
-            //    }
-          });
-        }
-      });
+      if (typeof video !== "undefined") {
+        this.currentVideo.url = "/storage/videos/courseVideos/" + video.url;
+        this.currentVideo.title = video.title;
+        this.currentVideo.description = video.description;
+        window.scroll({top: 0, behavior: "smooth"})
+        console.log("xxxxxx");
+      }
+    },
+    getLessonDouration() {
+    //   var trackDuration = new Array();
+
+    //   var audioPlaylist = document.getElementById("hiddenVideo");
+    //   // audioPlaylist.preload = "metadata";
+    //   var arraySize = this.course.videos.length;
+
+    //   for (let i = 0; i < arraySize; i++) {
+    //     audioPlaylist.src = "/storage/videos/courseVideos/" + this.course.videos[i].url;
+    //     console.log(audioPlaylist.src);
+    //     audioPlaylist.addEventListener("loadedmetadata", function (e) {
+    //         console.log(e.target.src);
+    //         trackDuration.push(audioPlaylist.duration)
+    //     });
+
+    //     // trackDuration.push(duration)
+    //   }
+
+    //   console.log("xxx", trackDuration);
+
+      //   let videos = this.course.videos;
+      //   let player = document.getElementById("hiddenVideo");
+      //   if (player) {
+      //     let videoDurations = [];
+      //     videos.forEach((v, index) => {
+      //       console.log(index,v.url);
+      //       player.src = "/storage/videos/courseVideos/" + v.url;
+      //       player.addEventListener("loadedmetadata", function (e) {
+      //           console.log('xxxxxx');
+      //           console.log(e.target.src);
+
+      //             // console.log(player.duration);
+      //           var duration = new Date(player.duration * 1000).toISOString().substr(14, 5)
+      //         //   console.log(duration);
+      //       });
+      //             // videoDurations.push(duration)
+
+      //     });
+      //     // console.log(videoDurations);
+      //   }
+
+      //   let d = document.getElementsByClassName("lessons");
+
+      //   videos.forEach((element, index) => {
+      //     let v = "/storage/videos/courseVideos/" + element.url;
+      //     if (document.getElementById("videoo")) {
+      //       let vid = document.getElementById("videoo");
+      //       vid.src = v;
+      //       vid.addEventListener("loadedmetadata", function () {
+      //         for (var i = 0; i < d.length; i++) {
+      //           // var elem = subDiv[i];
+      //           // if(elem.id.indexOf(elementsId) === 0) {
+      //           //     myArray.push(elem.id);
+      //           if (index == i)
+      //             d[i].getElementsByTagName("p")[0].innerHTML = (
+      //               vid.duration / 60
+      //             ).toFixed(2);
+      //         }
+      //         //    }
+      //       });
+      //     }
+      //   });
+    },
+    play(){
+        console.log('play');
+    },
+    onEnd(){
+        console.log('ended Api');
     },
     playVideo(i) {
       this.currentVideo.url =
@@ -223,6 +317,7 @@ export default {
       if (document.getElementById("videoo")) {
         let vid = document.getElementById("videoo");
         vid.src = this.currentVideo.url;
+        document.documentElement.scrollTop = 0
         if (vid) {
           vid
             .play()
@@ -234,6 +329,7 @@ export default {
               console.log(error);
             });
         }
+
       }
     },
   },

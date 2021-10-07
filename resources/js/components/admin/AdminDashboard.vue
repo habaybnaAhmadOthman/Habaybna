@@ -40,11 +40,11 @@
                         </MenuItem>
                         <MenuItem name="3">
                             <Icon type="ios-analytics"></Icon>
-                            Item 3
+                    <Button @click="logoutUser()">Logout</Button >
+
                         </MenuItem>
                         <MenuItem name="4">
-                            <Icon type="ios-paper"></Icon>
-                            Item 4
+
                         </MenuItem>
                     </div>
                 </Menu>
@@ -102,6 +102,22 @@
 </template>
 <script>
     export default {
+        data() {
+            return {
 
+            }
+        },
+        methods:{
+                logoutUser() {
+      axios({
+        method: "post",
+        url: "logoutt",
+      }).then((resp) => {
+        if (resp.status == 200) {
+            location.href='/'
+}
+      });
+    },
+        }
     }
 </script>

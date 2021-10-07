@@ -269,11 +269,11 @@ export default {
     logoutUser() {
       axios({
         method: "post",
-        url: "logout",
+        url: "logoutt",
       }).then((resp) => {
         if (resp.status == 200) {
-          this.courses = resp.data.courses;
-        }
+            location.href='/'
+}
       });
     },
   },
