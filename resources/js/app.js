@@ -22,9 +22,12 @@ import 'view-design/dist/styles/iview.css';
 import common from './common';
 import VueCoreVideoPlayer from 'vue-core-video-player'
 import VueCarousel from 'vue-carousel';
+import locale from 'view-design/dist/locale/en-US';
+
+
 
 Vue.use(VueCarousel);
-Vue.use(ViewUI);
+Vue.use(ViewUI,{ locale });
 
 Vue.mixin(common)
 

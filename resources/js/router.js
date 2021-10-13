@@ -1,8 +1,10 @@
 import Vue from 'vue'
-import  Router  from 'vue-router'
+import Router from 'vue-router'
 
 Vue.use(Router)
 import VideoInfoComponent from './components/VideoInfoComponent.vue';
+import EditCourseInfo from './components/EditCourseInfo.vue';
+import Quiz from './components/Quiz.vue';
 import firstPage from './components/pages/firstPage.vue'
 import UploadVideos from './components/UploadVideos.vue'
 import AdminDashboard from './components/admin/AdminDashboard.vue'
@@ -11,42 +13,40 @@ import ClassRoom from './components/parents/ClassRoom.vue'
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 const routes = [
-    // {
-
-    //     path: '/admin',
-    //     component: AdminDashboard,
-    //     name: 'AdminDashboard',
-    // },
     {
-
         path: '/admin/uploadVideos/:data',
         component: UploadVideos,
         name: 'UploadVideo',
         default: true,
-
     },
     {
-
         path: '/admin/courses',
         component: Courses,
         name: 'Courses',
     },
     {
-
         path: '/admin/course-create',
         component: VideoInfoComponent,
         name: 'VideoInfoComponent',
     },
     {
-
+        path: '/admin/course-edit/:data',
+        component: EditCourseInfo,
+        name: 'EditCourseInfo',
+    },
+    {
         path: '/parent-dashboard/class-room',
         component: ClassRoom,
         name: 'VideoInfoComponent',
     },
-
+    {
+        path: '/admin/course-quiz/:data',
+        component: Quiz,
+        name: 'Quiz',
+    },
 ]
 
-export default new Router ({
-    mode:'history',
+export default new Router({
+    mode: 'history',
     routes
 })

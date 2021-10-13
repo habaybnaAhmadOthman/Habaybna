@@ -10,4 +10,9 @@ class Courses extends Model
     {
         return $this->hasMany(CourseVideos::class,'course_id');
     }
+
+    public function quiz()
+    {
+        return $this->hasOne(Quize::class,'course_id');
+    }
 }

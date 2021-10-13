@@ -228,7 +228,6 @@ export default {
           return 404;
         });
       }else{
-          alert('update')
                 axios
         .post("/admin/course/update-video/" + this.form.id, formData)
         .then((response) => {

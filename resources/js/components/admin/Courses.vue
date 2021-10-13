@@ -35,13 +35,12 @@ export default {
         {
           title: "Publish",
           key: "is_publish",
-          width:100
-
+          width: 100,
         },
         {
           title: "Free",
           key: "is_free",
-          width:100
+          width: 100,
         },
         {
           title: "Action",
@@ -49,35 +48,33 @@ export default {
           width: 300,
           render: (h, params) => {
             return h("div", [
+              //   h(
+              //     "Button",
+              //     {
+              //       props: {
+              //         type: "primary",
+              //         size: "small",
+              //       },
+              //       style: {
+              //         marginRight: "5px",
+              //       },
+              //       on: {
+              //         click: () => {
+              //           this.show(params.index);
+              //         },
+              //       },
+              //     },
+              //     "View"
+              //   ),
               h(
                 "Button",
                 {
                   props: {
                     type: "primary",
                     size: "small",
-                  },
-                  style: {
-                    marginRight: "5px",
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.index);
+                    to: {
+                      path: "/admin/uploadVideos/" + params.row.id,
                     },
-                  },
-                },
-                "View"
-              ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "primary",
-                    size: "small",
-                 to:{
-                     path:"/admin/uploadVideos/"+params.row.id,
-
-                 }
-
                   },
                   style: {
                     marginRight: "5px",
@@ -91,17 +88,15 @@ export default {
                   props: {
                     type: "primary",
                     size: "small",
+                    to: {
+                      path: "/admin/course-quiz/" + params.row.id,
+                    },
                   },
                   style: {
                     marginRight: "5px",
                   },
-                  on: {
-                    click: () => {
-                      this.show(params.index);
-                    },
-                  },
                 },
-                "View"
+                "Quiz"
               ),
               h(
                 "Button",
@@ -109,33 +104,36 @@ export default {
                   props: {
                     type: "primary",
                     size: "small",
+                    to: {
+                      path: "/admin/course-edit/" + params.row.id,
+                    },
                   },
                   style: {
                     marginRight: "5px",
                   },
-                  on: {
-                    click: () => {
-                      this.show(params.index);
-                    },
-                  },
+                  //   on: {
+                  //     click: () => {
+                  //       this.show(params.index);
+                  //     },
+                  //   },
                 },
-                "View"
+                "Edit"
               ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "error",
-                    size: "small",
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index);
-                    },
-                  },
-                },
-                "Delete"
-              ),
+              //   h(
+              //     "Button",
+              //     {
+              //       props: {
+              //         type: "error",
+              //         size: "small",
+              //       },
+              //       on: {
+              //         click: () => {
+              //           this.remove(params.index);
+              //         },
+              //       },
+              //     },
+              //     "Delete"
+              //   ),
             ]);
           },
         },
@@ -146,7 +144,7 @@ export default {
   async created() {
     const resp = await this.callApi("get", "/admin/onlineCourse");
     if (resp.status == 200) {
-        console.log(resp.data);
+      console.log(resp.data);
       this.data6 = resp.data.courses;
     }
   },

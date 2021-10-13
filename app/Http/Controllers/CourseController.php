@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Answer;
 use App\Courses;
+use App\Quize;
 use App\CourseCategory;
 use App\CourseVideos;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -208,6 +211,149 @@ class CourseController extends Controller
              'msg'=>'success',
                 200,
                 'status'=>true
+        ]);
+    } catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+
+       ]);
+    }
+   }
+
+   public function getCoruseInfo($id)
+   {
+    try{
+        $course = Courses::findOrFail($id);
+        return response()->json([
+             'msg'=>'success',
+             'course'=>$course,
+             'status'=>true,
+             200
+        ]);
+    } catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+
+       ]);
+    }
+
+   }
+
+   public function updateCoruseInfo(Request $request, $id)
+   {
+    try{
+        $course = Courses::findOrFail($id);
+
+        if ($request->hasFile('coverImage')) {
+            Storage::delete('public/images/courseCoverImg/'.$course->cover_image);
+
+            $coverImage = $request->file('coverImage');
+            $imageName = 'courseCoverImg' . '-' . $coverImage->getClientOriginalName();
+            $pathImg = $coverImage->storeAs('public/images/courseCoverImg', $imageName);
+
+            }
+            if ($request->hasFile('promoVideo')) {
+                Storage::delete('public/videos/promoVideo/'.$course->cover_image);
+                $promoVideo = $request->file('promoVideo');
+                $videoName = 'coursePromoVideo' . '-' . $promoVideo->getClientOriginalName();
+                $pathVid = $promoVideo->storeAs('public/videos/promoVideo', $videoName);
+            }
+
+           $course->courseTitle = $request->title;
+           $course->courseDescription= $request->description;
+           $course->category_id= $request->category;
+           $course->whatWeLearn= $request->watWeLearn;
+           $course->is_publish= $request->is_publish;
+           $course->is_free= $request->is_free;
+           $course->price= $request->price;
+           $course->promo_video= $request->hasFile('promoVideo') ? $videoName :$course->promo_video  ;
+           $course->cover_photo = $request->hasFile('coverImage') ? $imageName :$course->cover_photo;
+
+           $course->save();
+
+        return response()->json([
+             'msg'=>'success',
+             'course'=>$course,
+             'status'=>true,
+             200
+        ]);
+    } catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+
+       ]);
+    }
+
+   }
+
+   public function storeQuestion(Request $request)
+   {
+    try{
+        $course = Courses::findOrFail($request->course_id);
+        $quiz = Quize::updateOrCreate([
+            'course_id'=>$request->course_id
+        ],
+        [
+              'title'=>$request->title,
+              'status'=>1
+        ]);
+
+        if($quiz){
+            $question = $quiz->questions()->create([
+                'quiz_id'=>$quiz->id,
+                'title'=>$request->question,
+                // 'point'=>5,
+                'status'=>$request->status
+            ]);
+        }
+
+        if($question){
+
+            foreach ($request->answers as $answer) {
+                $question->answers()->create([
+                    'question_id'=>$question->id,
+                    'title'=>$answer,
+                    'is_correct'=>false,
+                ]);
+            }
+        }
+        // dd($question);
+        return response()->json([
+             'msg'=>'success',
+             'question'=>$question->where('id',$question->id)->with('answers')->get(),
+             'status'=>true,
+             200
+        ]);
+    } catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+
+       ]);
+    }
+   }
+
+   public function setCorrectAnswer($id)
+   {
+
+
+       try{
+             $answer = Answer::findorfail($id);
+             if($answer) {
+                $answer->is_correct = true;
+                $answer->save();
+             }
+        return response()->json([
+             'msg'=>'success',
+             'status'=>true,
+             200
         ]);
     } catch (ModelNotFoundException $e){
         return response()->json([

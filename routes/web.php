@@ -73,7 +73,11 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
     // Route::get('uploadVideos/{id}','CourseController@uploadVideos')->name('uploadVideos');
      Route::get('course-category','CourseController@getCoursesCategories')->name('getCoursesCategories');
      Route::get('/getCourseVideos/{course_id}','CourseController@getCourseVideos')->name('getCourseVideos');
+     Route::get('/edit-course/{course_id}','CourseController@getCoruseInfo')->name('getCoruseInfo');
+     Route::post('/edit-course/{course_id}','CourseController@updateCoruseInfo')->name('updateCoruseInfo');
 
+    Route::post('/question-store','CourseController@storeQuestion')->name('question.store');
+    Route::post('/set-correct-answer/{id}','CourseController@setCorrectAnswer')->name('setCorrectAnswer');
 
     // courses categories
 
