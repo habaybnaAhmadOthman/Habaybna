@@ -1,185 +1,123 @@
-<template>
-  <Form
-    ref="formValidate"
-    :model="formValidate"
-    :rules="ruleValidate"
-    :label-width="80"
-  >
-    <FormItem label="Title" prop="title">
-      <Input
-        v-model="formValidate.title"
-        placeholder="Enter Quiz title"
-      ></Input>
-    </FormItem>
-    <FormItem label="Question" prop="question">
-      <Input
-        v-model="formValidate.question"
-        placeholder="Enter your Question"
-      ></Input>
-    </FormItem>
-    <FormItem label="Answer 1" prop="answers.answer1">
-      <Input
-        v-model="formValidate.answers.answer1"
-        placeholder="Enter first answer"
-      ></Input>
-    </FormItem>
-    <FormItem label="Answer 2" prop="answers.answer2">
-      <Input
-        v-model="formValidate.answers.answer2"
-        placeholder="Enter second answer"
-      ></Input>
-    </FormItem>
-    <FormItem label="Answer 3" prop="answers.answer3">
-      <Input
-        v-model="formValidate.answers.answer3"
-        placeholder="Enter third answer"
-      ></Input>
-    </FormItem>
-    <FormItem label="Status" prop="status">
-      <RadioGroup v-model="formValidate.status">
-        <Radio label="1">Active</Radio>
-        <Radio label="0">Inactive</Radio>
-      </RadioGroup>
-    </FormItem>
+<style>
+.title {
+  text-align: left;
+  margin: 15px 0;
+}
+.correct-answer {
+  text-align: center;
+  background: lightgreen;
+  padding: 7px;
+  border-radius: 5px;
+  margin: 20px 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+select {
+  width: 40%;
+  border-radius: 4px;
+  padding: 3px 7px;
 
-    <FormItem>
-      <Button type="primary" @click="handleSubmit('formValidate')"
-        >Submit</Button
-      >
-      <Button @click="handleReset('formValidate')" style="margin-left: 8px"
-        >Reset</Button
-      >
-    </FormItem>
-    <Modal
-      v-model="correctAnswerModal"
-      title="Select the correct answer"
-      @on-ok="ok(correctAnswer)"
-    >
-      <Form
-        ref="formValidate"
-        :model="formValidate"
-        :rules="ruleValidate"
-        :label-width="80"
-      >
-        <h2 :style="{ textAlign: 'right', margin: '25px' }">
-          {{ question.title }}
-        </h2>
-        <FormItem>
-          <Select v-model="correctAnswer">
-            <Option
-              :style="{ textAlign: 'right' }"
-              v-for="(one, index) in question.answers"
-              :key="index"
-              :value="one.id"
-              >{{ one.title }}</Option
+  margin-bottom: 20px;
+}
+</style>
+<template>
+  <div>
+    <div class="title">
+      <h1>Course Quiz</h1>
+    </div>
+    <Collapse v-model="value1">
+      <Panel v-if="hasQuiz" v-for="(question, index) in questions" :key="index">
+        {{ question.title }}
+        <div slot="content">
+          <div v-for="(answer, i) in question.answers" :key="i">
+            <strong v-if="answer.is_correct">Correct Answer: </strong>
+            <p class="correct-answer" v-if="answer.is_correct">
+              {{ correct_answer ? correct_answer : answer.title }}
+            </p>
+          </div>
+          <div v-if="edit_answer.index === index && edit_answer.inEditMood">
+            <select @change="changeAnswer($event,index)" id="ansers">
+              <option value="" selected>Select correct answer</option>
+              <option
+                v-for="(answer, index) in question.answers"
+                :key="index"
+                :value="answer.id"
+              >
+                {{ answer.title }}
+              </option>
+            </select>
+          </div>
+          <div v-if="edit_answer.inEditMood === false">
+            <Button type="info" @click="editAnswerForm(index, question.id)"
+              >edit</Button
             >
-          </Select>
-        </FormItem>
-      </Form>
-    </Modal>
-  </Form>
+          </div>
+        </div>
+      </Panel>
+    </Collapse>
+  </div>
 </template>
 <script>
 export default {
+  created() {
+    let course_id = this.$router.currentRoute.params.data;
+    if (course_id) {
+      this.getQuiz(course_id);
+    }
+  },
+  updated() {
+    console.log("update");
+  },
   data() {
     return {
-      formValidate: {
-        title: "",
-        question: "",
-        answers: {
-          answer1: "",
-          answer2: "",
-          answer3: "",
-        },
-        course_id: "",
-        status: "",
+      value1: "",
+      correct_answer: "",
+      quizTitle: "",
+      courseTitle: "",
+      questions: [],
+      hasQuiz: false,
+      edit_answer: {
+        questionId: "",
+        index: "",
+        newAnswer: "",
+        inEditMood: false,
       },
-      ruleValidate: {
-        question: [
-          {
-            required: true,
-            message: "The question cannot be empty",
-            trigger: "blur",
-          },
-        ],
-        answer1: [
-          {
-            required: true,
-            message: "The first answer cannot be empty",
-            trigger: "blur",
-          },
-        ],
-        answer2: [
-          {
-            required: true,
-            message: "The second answer cannot be empty",
-            trigger: "blur",
-          },
-        ],
-        answer3: [
-          {
-            required: true,
-            message: "The third answer cannot be empty",
-            trigger: "blur",
-          },
-        ],
-        // answer3: [
-        //   {
-        //     required: true,
-        //     message: "The third answer cannot be empty",
-        //     trigger: "blur",
-        //   },
-        // ],
-        status: [
-          {
-            required: true,
-            message: "The status cannot be empty",
-            trigger: "blur",
-          },
-        ],
-      },
-      correctAnswerModal: false,
-      question: "",
-      correctAnswer: "",
     };
   },
   methods: {
-    handleSubmit(name) {
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.formValidate.course_id = this.$router.currentRoute.params.data;
-          axios
-            .post("/admin/question-store", this.formValidate)
-            .then((resp) => {
-              this.correctAnswerModal = true;
-              if (resp.status == 200) {
-                this.question = resp.data.question[0];
-                console.log(this.question);
-              }
-            });
-        } else {
-          this.$Message.error("Fail!");
+    getQuiz(course_id) {
+      axios.get("/admin/get-quiz/" + course_id).then((resp) => {
+        if (resp.status == 200) {
+          this.quizTitle = resp.data[0].quiz_title;
+          this.courseTitle = resp.data[0].course_title;
+          this.questions = resp.data[0].quesiotns;
+          console.log(this.questions[0].answers);
+          this.hasQuiz = true;
         }
       });
     },
-    handleReset(name) {
-      this.$refs[name].resetFields();
+    editAnswerForm(index, questionId) {
+      this.edit_answer.inEditMood = true;
+      this.edit_answer.questionId = questionId;
+      this.edit_answer.index = index;
+      console.log(this.edit_answer);
     },
-    ok(id) {
-      axios.post("/admin/set-correct-answer/" + id).then((resp) => {
+    changeAnswer(e,index) {
+      let data = { answerId: e.target.value };
+      let questionId = this.edit_answer.questionId;
+      axios.post("/admin/edit-answer/" + questionId, data).then((resp) => {
         if (resp.status == 200) {
-          this.formValidate = {
-            title: "",
-            question: "",
-            answers: {
-              answer1: "",
-              answer2: "",
-              answer3: "",
-            },
-            course_id: "",
-            status: "",
-          };
-          this.$Message.success("question added successfully");
+          this.edit_answer.inEditMood = false;
+          this.edit_answer.questionId = "";
+        //   this.edit_answer.index = "";
+        //   this.correct_answer = resp.data[0].title;
+            console.log(this.questions[index].answers[this.edit_answer.index],index);
+                let answers = this.questions[index].answers
+                for (let i = 0; i < answers.length; i++) {
+                    answers[i].is_correct = 0
+                }
+
+            this.questions[index].answers[this.edit_answer.index].is_correct = 1
         }
       });
     },

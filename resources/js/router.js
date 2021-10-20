@@ -4,6 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 import VideoInfoComponent from './components/VideoInfoComponent.vue';
 import EditCourseInfo from './components/EditCourseInfo.vue';
+import AddQuestion from './components/AddQuestion.vue';
 import Quiz from './components/Quiz.vue';
 import firstPage from './components/pages/firstPage.vue'
 import UploadVideos from './components/UploadVideos.vue'

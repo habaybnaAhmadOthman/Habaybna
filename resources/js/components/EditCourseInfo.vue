@@ -1,9 +1,12 @@
+
 <template>
-  <div class="container" >
+  <div class="container">
     <div class="row justify-content-center">
+
       <div class="col-md-8">
+
         <div class="card">
-          <div class="card-header">About the course</div>
+          <div class="card-header" > <strong>Edit the course info</strong> </div>
           <div class="card-body">
             <form @submit="formSubmit" enctype="multipart/form-data">
               <div class="form-group">
@@ -150,7 +153,7 @@ export default {
 
       axios.get("/admin/edit-course/" + course_id).then((resp) => {
         if (resp.status == 200) {
-            this.courseId = course_id
+          this.courseId = course_id;
           console.log(resp.data.course.courseTitle);
           this.form.courseTitle = resp.data.course.courseTitle;
           this.form.courseCategory = resp.data.course.category_id;
@@ -165,7 +168,7 @@ export default {
   },
   data() {
     return {
-        courseId:null,
+      courseId: null,
       form: {
         courseTitle: "",
         courseCategory: "",
@@ -213,11 +216,10 @@ export default {
         },
       };
       axios
-        .post("/admin/edit-course/"+this.courseId, formData)
+        .post("/admin/edit-course/" + this.courseId, formData)
         .then((response) => {
           if (response.status == 200) {
             this.$Message.success("Course Updated success");
-
 
             this.loading = false;
           }

@@ -15,4 +15,14 @@ class Courses extends Model
     {
         return $this->hasOne(Quize::class,'course_id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(CourseCategory::class,'category_id');
+    }
+
+    public function getCategoryNameAttribute()
+    {
+        return $this->category->title ;
+    }
 }

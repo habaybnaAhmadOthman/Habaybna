@@ -7,6 +7,7 @@ use App\Courses;
 use App\Quize;
 use App\CourseCategory;
 use App\CourseVideos;
+use App\Question;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -17,9 +18,20 @@ class CourseController extends Controller
    public function index(Request $request)
    {
             $courses = Courses::select('id','courseTitle', 'category_id', 'price', 'is_publish', 'is_free')->get();
+            $data=[];
 
+            foreach ($courses as $one) {
+                $data[] =[
+                    'course_id' => $one->id,
+                    'courseTitle' => $one->courseTitle,
+                    'courseCategory' => $one->category_name,
+                    'coursePrice' => $one->price,
+                    'publish' => $one->is_publish ? 'Published' : 'Unpublished',
+                    'free' => $one->is_free ? 'Free' : 'Paid',
+                ];
+            }
             return response()->json([
-                'courses' => $courses,
+                'courses' => $data,
                 'status'=>true,
                 200
             ]);
@@ -224,6 +236,7 @@ class CourseController extends Controller
 
    public function getCoruseInfo($id)
    {
+
     try{
         $course = Courses::findOrFail($id);
         return response()->json([
@@ -364,4 +377,67 @@ class CourseController extends Controller
        ]);
     }
    }
+
+
+   public function getQuiz($id)
+   {
+
+
+       try{
+            $course = Courses::findorfail($id);
+
+            $data = [];
+            $data['course_title'] = $course->courseTitle;
+            $data['quiz_title'] = $course->quiz->title;
+            $question = $course->quiz->questions()->with('answers')->get();
+            $data['quesiotns']=$question;
+
+        return response()->json([
+             'msg'=>'success',
+             'status'=>true,
+             $data,
+             200
+        ]);
+    } catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+
+       ]);
+    }
+   }
+   public function editAnswer(Request $request ,$id)
+   {
+       try {
+        $q = Question::findorfail($id) ;
+        foreach ($q->answers as $key) {
+            if($key->id == $request->answerId)
+              {
+                  $answer = $key ;
+                  $key->is_correct = true;
+                  $key->save();
+              }
+              else{
+                  $key->is_correct = false;
+                  $key->save();
+
+              }
+        }
+        return response()->json([
+            'msg'=>'success',
+            'status'=>true,
+            $answer,
+            200
+       ]);
+       } catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+
+       ]);
+
+   }
+}
 }

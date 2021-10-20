@@ -22,4 +22,9 @@ class Question extends Model
             return false;
         }
     }
+
+    public function correctAnswer()
+    {
+        return $this->hasOne(Answer::class)->where('is_correct',1);
+    }
 }

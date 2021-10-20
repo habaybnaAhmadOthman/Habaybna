@@ -118,7 +118,7 @@
               </div>
             </div>
             <Button
-            v-if="isUpdate"
+              v-if="isUpdate"
               :style="{ float: 'right' }"
               type="info"
               ghost
@@ -128,8 +128,8 @@
               <span v-if="!loading">Update</span>
               <span v-else>Updating...</span>
             </Button>
-                        <Button
-            v-else
+            <Button
+              v-else
               :style="{ float: 'right' }"
               type="info"
               ghost
@@ -152,7 +152,7 @@ export default {
   data() {
     return {
       form: {
-          id:"",
+        id: "",
         videoTitle: "",
         videoDescription: "",
         editor: ClassicEditor,
@@ -172,7 +172,7 @@ export default {
         haveVideos: false,
         courseTitle: "",
       },
-      isUpdate:false
+      isUpdate: false,
     };
   },
   created() {
@@ -201,54 +201,53 @@ export default {
       formData.append("video", this.form.video);
       formData.append("is_publish", this.form.is_publish);
       formData.append("course_id", this.form.course_id);
-      this.isUpdate ? formData.append("video_id", this.form.id) : '' ;
+      this.isUpdate ? formData.append("video_id", this.form.id) : "";
       const config = {
         headers: {
           "content-type": "multipart/form-data",
           Accept: "application/json",
         },
       };
-      if(!this.isUpdate){
-          alert('add')
-                  axios
-        .post("/admin/course/upload-video", formData)
-        .then((response) => {
-          if (response.status == 200) {
-            this.allVideos.videos = response.data.videos;
-            this.$Message.success("Video Uploaded success");
+      if (!this.isUpdate) {
+        alert("add");
+        axios
+          .post("/admin/course/upload-video", formData)
+          .then((response) => {
+            if (response.status == 200) {
+              this.allVideos.videos = response.data.videos;
+              this.$Message.success("Video Uploaded success");
 
-            this.form.videoTitle = "";
-            this.form.videoDescription = "";
-            this.form.video = "";
-            this.form.videoTitle = "";
-          }
-          this.loading = false;
-        })
-        .catch((error) => {
-          return 404;
-        });
-      }else{
-                axios
-        .post("/admin/course/update-video/" + this.form.id, formData)
-        .then((response) => {
-          if (response.status == 200) {
-            this.allVideos.videos = response.data.videos;
-            this.$Message.success("Video Uploaded success");
+              this.form.videoTitle = "";
+              this.form.videoDescription = "";
+              this.form.video = "";
+              this.form.videoTitle = "";
+            }
+            this.loading = false;
+          })
+          .catch((error) => {
+            return 404;
+          });
+      } else {
+        axios
+          .post("/admin/course/update-video/" + this.form.id, formData)
+          .then((response) => {
+            if (response.status == 200) {
+              this.allVideos.videos = response.data.videos;
+              this.$Message.success("Video Uploaded success");
 
-            this.form.videoTitle = "";
-            this.form.videoDescription = "";
-            this.form.video = "";
-            this.form.videoTitle = "";
-            this.getCourseVideos()
-            this.isUpdate = false
-          }
-          this.loading = false;
-        })
-        .catch((error) => {
-          return 404;
-        });
+              this.form.videoTitle = "";
+              this.form.videoDescription = "";
+              this.form.video = "";
+              this.form.videoTitle = "";
+              this.getCourseVideos();
+              this.isUpdate = false;
+            }
+            this.loading = false;
+          })
+          .catch((error) => {
+            return 404;
+          });
       }
-
     },
     getCourseVideos() {
       console.log(this.form.course_id);
@@ -268,12 +267,12 @@ export default {
     editVideo(i) {
       let video = this.allVideos.videos[i];
       console.log(video);
-      this.form.id = video.id
+      this.form.id = video.id;
       this.form.videoTitle = video.title;
-      this.form.videoDescription= video.description;
-      this.form.is_publish= video.status;
-      this.value1 = "2"
-      this.isUpdate = true
+      this.form.videoDescription = video.description;
+      this.form.is_publish = video.status;
+      this.value1 = "2";
+      this.isUpdate = true;
     },
   },
 };

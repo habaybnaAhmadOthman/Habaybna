@@ -78,6 +78,9 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
 
     Route::post('/question-store','CourseController@storeQuestion')->name('question.store');
     Route::post('/set-correct-answer/{id}','CourseController@setCorrectAnswer')->name('setCorrectAnswer');
+    Route::get('/get-quiz/{id}','CourseController@getQuiz')->name('getQuiz');
+    Route::post('/edit-answer/{id}','CourseController@editAnswer')->name('editAnswer');
+
 
     // courses categories
 
