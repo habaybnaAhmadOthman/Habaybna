@@ -45,6 +45,11 @@ const routes = [
         component: Quiz,
         name: 'Quiz',
     },
+    {
+        path: '/admin/add-question/:data',
+        component: AddQuestion,
+        name: 'AddQuestion',
+    },
 ]
 
 export default new Router({

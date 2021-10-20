@@ -3,6 +3,14 @@
   text-align: left;
   margin: 15px 0;
 }
+.sub-title {
+  padding: 5px 15px;
+  margin-top: 10px;
+  background: #d6d6d6;
+  border-radius: 5px;
+  color: black;
+  font-weight: 500;
+}
 .correct-answer {
   text-align: center;
   background: lightgreen;
@@ -11,6 +19,14 @@
   margin: 20px 0;
   font-size: 17px;
   font-weight: 600;
+}
+h1 {
+  background: #515a6e;
+  color: #fff;
+  border-radius: 4px;
+  padding: 2px 16px;
+  text-align: center;
+  margin: 20px 0;
 }
 select {
   width: 40%;
@@ -24,6 +40,18 @@ select {
   <div>
     <div class="title">
       <h1>Course Quiz</h1>
+      <div class="sub-title">
+        <Button
+          :to="'/admin/add-question/' + course_id"
+          size="small"
+          type="primary"
+          :style="{ float: 'right' }"
+          >Add Qutestion</Button
+        >
+
+        <p>Course Title : {{ courseTitle }}</p>
+        <p>Quiz Title : {{ quizTitle }}</p>
+      </div>
     </div>
     <Collapse v-model="value1">
       <Panel v-if="hasQuiz" v-for="(question, index) in questions" :key="index">
@@ -36,7 +64,7 @@ select {
             </p>
           </div>
           <div v-if="edit_answer.index === index && edit_answer.inEditMood">
-            <select @change="changeAnswer($event,index)" id="ansers">
+            <select @change="changeAnswer($event, index)" id="ansers">
               <option value="" selected>Select correct answer</option>
               <option
                 v-for="(answer, index) in question.answers"
@@ -62,6 +90,7 @@ export default {
   created() {
     let course_id = this.$router.currentRoute.params.data;
     if (course_id) {
+      this.course_id = course_id;
       this.getQuiz(course_id);
     }
   },
@@ -72,6 +101,7 @@ export default {
     return {
       value1: "",
       correct_answer: "",
+      course_id: "",
       quizTitle: "",
       courseTitle: "",
       questions: [],
@@ -102,23 +132,25 @@ export default {
       this.edit_answer.index = index;
       console.log(this.edit_answer);
     },
-    changeAnswer(e,index) {
+    changeAnswer(e, index) {
       let data = { answerId: e.target.value };
       let questionId = this.edit_answer.questionId;
       axios.post("/admin/edit-answer/" + questionId, data).then((resp) => {
         if (resp.status == 200) {
           this.edit_answer.inEditMood = false;
           this.edit_answer.questionId = "";
-        //   this.edit_answer.index = "";
-        //   this.correct_answer = resp.data[0].title;
-            console.log(this.questions[index].answers[this.edit_answer.index],index);
-                let answers = this.questions[index].answers
-                for (let i = 0; i < answers.length; i++) {
-                    answers[i].is_correct = 0
-                }
+          //   this.edit_answer.index = "";
+          //   this.correct_answer = resp.data[0].title;
 
-            this.questions[index].answers[this.edit_answer.index].is_correct = 1
-        }
+          let answers = this.questions[index].answers;
+          for (let i = 0; i < answers.length; i++) {
+            answers[i].is_correct = 0;
+          }
+
+          this.questions[index].answers[this.edit_answer.index].is_correct = 1;
+            this.edit_answer.index = "";
+
+       }
       });
     },
   },
