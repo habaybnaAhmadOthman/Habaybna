@@ -1,13 +1,13 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Exception;
+use Twilio\Rest\Client;
 
 class RegisterController extends Controller
 {
@@ -49,6 +49,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
             'phone' => ['required', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -64,13 +65,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return
+
         $user = User::create([
             'role' => 'parent',
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'otp'=> 000111//random_int(100000, 999999),
+            'otp'=> random_int(100000, 999999),
         ]);
+        if($user){
+            $receiverNumber = "+962".$user->phone;
+            //open connection
+        }
+            return$user;
+        }
+
         // $accessToken = $user->$user->createToken('authToken')->accessToken ;
-    }
 }
