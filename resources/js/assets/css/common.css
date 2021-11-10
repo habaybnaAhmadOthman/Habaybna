@@ -139,6 +139,13 @@ body {
 .pr-30 {
     padding-right: 30px;
 }
+.ml-10 {
+    margin-left: 10px;
+}
+.lang-en .ml-10 {
+    margin-right: 10px;
+    margin-left: 0;
+}
 .ml-20 {
     margin-left: 20px;
 }
@@ -163,6 +170,9 @@ body {
 .pt-15 {
     padding-top: 15px;
 }
+.pt-35 {
+    padding-top: 35px;
+}
 .pt-100 {
     padding-top: 100px;
 }
@@ -174,6 +184,9 @@ body {
 }
 .pb-15 {
     padding-bottom: 15px;
+}
+.pb-35 {
+    padding-bottom: 35px;
 }
 .mb-15 {
     margin-bottom: 15px;
