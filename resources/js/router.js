@@ -6,12 +6,14 @@ import VideoInfoComponent from './components/VideoInfoComponent.vue';
 import EditCourseInfo from './components/EditCourseInfo.vue';
 import AddQuestion from './components/AddQuestion.vue';
 import Quiz from './components/Quiz.vue';
-import firstPage from './components/pages/firstPage.vue'
+// import firstPage from './components/pages/firstPage.vue'
 import UploadVideos from './components/UploadVideos.vue'
 import AdminDashboard from './components/admin/AdminDashboard.vue'
 import Courses from './components/admin/Courses.vue'
 import ClassRoom from './components/parents/ClassRoom.vue'
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
+
+import HomePage from './components/front/pages/HomePage.vue'
 
 const routes = [
     {
@@ -50,6 +52,13 @@ const routes = [
         component: AddQuestion,
         name: 'AddQuestion',
     },
+    // ************
+    // front
+    // ************
+    {
+        path:'/',
+        component: HomePage
+    }
 ]
 
 export default new Router({
