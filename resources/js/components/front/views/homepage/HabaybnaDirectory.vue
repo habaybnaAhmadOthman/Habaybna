@@ -1,5 +1,5 @@
 <template>
-    <section class="directory-section pt-35 pb-35">
+    <section class="directory-section pt-30 pb-30">
         <div class="container">
             <h2 class="white bold font-26 mb-15">دليل حبايبنا</h2>
 
