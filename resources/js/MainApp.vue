@@ -12,6 +12,5 @@ export default {
 }
 </script>
 <style>
-
 @import url('./../../public/css/common.css');
 </style>
