@@ -1,12 +1,16 @@
 <template>
     <form @submit.prevent="register" class="pt-100 p-side-30 mt-30">
-        <div :class="{'invalid': !email.isValid}" class="form-group">
+        <!-- <div :class="{'invalid': !email.isValid}" class="form-group">
             <input placeholder="email" id="email" @blur="checkValidity" v-model.trim="email.val" />
             <p>please enter a correct email</p>
         </div>
         <div class="form-group" :class="{invalid: !password.isValid}">
             <input type="password" id="password" @blur="checkValidity" v-model.trim="password.val" />
             <p>this field is required</p>
+        </div> -->
+        <div :class="{'invalid': !phoneNumber.isValid}" class="form-group">
+            <input placeholder="phoneNumber" id="phoneNumber" @blur="checkValidity" v-model.trim="phoneNumber.val" />
+            <p>please enter a correct phoneNumber</p>
         </div>
         <button>Register</button>
         <router-link to="/login">Login instead</router-link>
@@ -17,6 +21,10 @@
 export default {
     data() {
         return {
+            phoneNumber: {
+                val: '',
+                isValid: true
+            },
             email: {
                 val: '',
                 isValid: true

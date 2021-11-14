@@ -26,10 +26,8 @@ import locale from 'view-design/dist/locale/en-US';
 
 // portal
 import MainApp from './MainApp.vue'
-import store from './store/index.js'
 import Vue from 'vue';
 
-Vue.use(store);
 Vue.use(VueCarousel);
 Vue.use(ViewUI,{ locale });
 
