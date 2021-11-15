@@ -23,11 +23,10 @@ import common from './common';
 import VueCoreVideoPlayer from 'vue-core-video-player'
 import VueCarousel from 'vue-carousel';
 import locale from 'view-design/dist/locale/en-US';
-
+// import firebase from 'firebase'
 // portal
 import MainApp from './MainApp.vue'
 import Vue from 'vue';
-
 Vue.use(VueCarousel);
 Vue.use(ViewUI,{ locale });
 
