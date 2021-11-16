@@ -1,37 +1,61 @@
 <template>
-    <form @submit.prevent="register" class="pt-100 p-side-30 mt-30">
-        <!-- <div :class="{'invalid': !email.isValid}" class="form-group">
-            <input placeholder="email" id="email" @blur="checkValidity" v-model.trim="email.val" />
-            <p>please enter a correct email</p>
-        </div>
-        <div class="form-group" :class="{invalid: !password.isValid}">
-            <input type="password" id="password" @blur="checkValidity" v-model.trim="password.val" />
-            <p>this field is required</p>
-        </div> -->
-        <div :class="{ invalid: !phoneNumber.isValid }" class="form-group">
-            <input
-                placeholder="phoneNumber"
-                id="phoneNumber"
-                @blur="checkValidity"
-                v-model.trim="phoneNumber.val"
-            />
-            <p>please enter a correct phoneNumber</p>
-        </div>
-        <div id="recaptcha-container" class="recaptcha-container"></div>
-        <button id="sign-in-button">Register</button>
-        <router-link to="/login">Login instead</router-link>
-    </form>
+    <div>
+        <form @submit.prevent="sendOtp" v-if="!code.showForm" class="pt-100 p-side-30 mt-30">
+            <div class="form-group" :class="{ invalid: !phoneNumber.val }">
+                <vue-tel-input
+                    @open="getStyleDirection"
+                    v-model="phoneNumber.val"
+                    @input="getPhoneVal"
+                    :inputOptions="{
+                        placeholder: 'xxxxx',
+                        required: true,
+                        invalidMsg: 'please enter a valid number',
+                        id: 'phoneNumberInput'
+                    }"
+                    :dropdownOptions="{
+                        showDialCodeInSelection: true,
+                        showFlags: true
+                    }"
+                ></vue-tel-input>
+            </div>
+            <div id="recaptcha-container" class="recaptcha-container"></div>
+            <button id="sign-in-button">Register</button>
+            <router-link to="/login">Login instead</router-link>
+        </form>
+
+        <form @submit.prevent="submitCode" v-else>
+            <div class="form-group" :class="{ invalid: !code.isValid }">
+                <input
+                    id="code"
+                    @blur="checkValidity"
+                    v-model.trim="code.val"
+                />
+                <p>this field is required</p>
+            </div>
+            <button >Code</button>
+        </form>
+        <alert-dialog :show="!!error" title="An error occurred" @close="closeModal"></alert-dialog>
+    </div>
 </template>
 
 <script>
 import auth from "./../../../../modules/firebase.js";
 import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
+
+import { VueTelInput } from "vue-tel-input";
+import "vue-tel-input/dist/vue-tel-input.css";
+
 export default {
+    components: {
+        VueTelInput
+    },
     data() {
         return {
             phoneNumber: {
                 val: "",
-                isValid: true
+                isValid: true,
+                countryCode: "",
+                styles: false
             },
             email: {
                 val: "",
@@ -41,8 +65,13 @@ export default {
                 val: "",
                 isValid: true
             },
-            appVerifier: "",
-            formIsValid: true
+            code: {
+                val: "",
+                isValid: true,
+                showForm:false
+            },
+            formIsValid: true,
+            error: null
         };
     },
     mounted() {
@@ -57,6 +86,28 @@ export default {
     },
 
     methods: {
+        closeModal(){
+            this.error = null
+        },
+        getPhoneVal(number, phoneObject) {
+            this.phoneNumber.countryCode = phoneObject.country.dialCode;
+        },
+        // add phone number styling
+        getStyleDirection() {
+            if (!this.phoneNumber.style) {
+                var css =
+                        ".vti__dropdown-list { right: 0; }.vti__dropdown-item {display:flex;align-items:center;}",
+                    head =
+                        document.head ||
+                        document.getElementsByTagName("head")[0],
+                    style = document.createElement("style");
+
+                head.appendChild(style);
+
+                style.type = "text/css";
+                style.appendChild(document.createTextNode(css));
+            }
+        },
         checkValidity(e) {
             if (e.target.value != "") {
                 this[e.target.id].isValid = true;
@@ -78,49 +129,44 @@ export default {
                 this.formIsValid = false;
             }
         },
-        register() {
+        sendOtp() {
             // this.validateForm()
             // if (!this.formIsValid) {
             //     return;
             // }
 
-            let countryCode = "+962"; //india
-            let phoneNumber = countryCode + "786753791";
+            let countryCode = "+" + this.phoneNumber.countryCode;
+            let phoneNumber = countryCode + this.phoneNumber.val.slice(1);
             // //
-
-            // const appVerifier = window.recaptchaVerifier;
             signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
                 .then(confirmationResult => {
                     // SMS sent.
-                    // window.confirmationResult = confirmationResult;
-                    // ...
+                    window.confirmationResult = confirmationResult;
+                    this.code.showForm = true;
                 })
                 .catch(error => {
                     // Error; SMS not sent
-                    console.log(error);
+                    this.error = error.message || 'Some thing went wrong'
                 });
-            // auth.sendOtp(window.recaptchaVerifier);
-            // let countryCode = "+962"; //india
-            // let phoneNumber = countryCode + "786753791";
-            // //
-
-            // //
-            // firebase
-            //     .auth()
-            //     .signInWithPhoneNumber(phoneNumber, appVerifier)
-            //     .then(function(confirmationResult) {
-            //         // SMS sent. Prompt user to type the code from the message, then sign the
-            //         // user in with confirmationResult.confirm(code).
-            //         window.confirmationResult = confirmationResult;
-            //         //
-            //         alert("SMS sent");
-            //     })
-            //     .catch(function(error) {
-            //         // Error; SMS not sent
-            //         // ...
-            //         alert("Error ! SMS not sent");
-            //     });
-            // // }
+        },
+        submitCode() {
+            if (this.code.val == "") {
+                this.code.isValid = false;
+                return;
+            }
+            // ...
+            window.confirmationResult
+                .confirm(this.code.val)
+                .then(result => {
+                    // User signed in successfully.
+                    const user = result.user;
+                    // ...
+                })
+                .catch(error => {
+                    this.error = error.message || 'Some thing went wrong'
+                    // User couldn't sign in (bad verification code?)
+                    // ...
+                });
         }
     }
 };
@@ -132,5 +178,9 @@ export default {
 }
 .form-group.invalid p {
     display: block;
+}
+.vti__input {
+    text-align: right;
+    unicode-bidi: plaintext;
 }
 </style>

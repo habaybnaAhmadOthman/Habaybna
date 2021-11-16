@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBtT7zNSwVmFAexZjNi7WuHAyXGADSoMwc",
   authDomain: "habaybna-21237.firebaseapp.com",
@@ -8,9 +9,8 @@ const firebaseConfig = {
   messagingSenderId: "759094603217",
   appId: "1:759094603217:web:ba601f8d8d7f7cd51e44f0"
 };
-// let appVerifier = this.appVerifier;
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
 
   
 export default auth

@@ -28,6 +28,9 @@ body {
     font-size: 16px;
     direction: rtl;
 }
+.p-0 {
+    padding: 0;
+}
 .p-5 {
     padding: 5px;
 }
@@ -67,6 +70,10 @@ body {
 .h-50 {
     height: 50%;
 }
+.z-1 {
+    position: relative;
+    z-index: 1;
+}
 .container {
     width: 1062px;
     margin: auto;
@@ -91,6 +98,9 @@ body {
 }
 .flex-column {
     flex-direction: column;
+}
+.flex-end {
+    justify-content: flex-end;
 }
 .flex-all {
     display: flex;
@@ -192,6 +202,9 @@ body {
 }
 .mb-30 {
     margin-bottom: 30px;
+}
+.m-0 {
+    margin: 0;
 }
 .mr-5 {
     margin-right: 5px;
@@ -430,6 +443,9 @@ input {
 .radius-5 {
     border-radius: 5px;
 }
+.radius-12 {
+    border-radius: 12px;
+}
 .radius-60 {
     border-radius: 60px;
 }
@@ -450,6 +466,10 @@ a:hover {
 .p-side-30 {
     padding-left: 30px;
     padding-right: 30px;
+}
+.p-side-15 {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .p-side-10 {
     padding-left: 10px;
