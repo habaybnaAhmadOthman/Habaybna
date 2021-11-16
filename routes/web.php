@@ -91,3 +91,5 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
     Route::post('category/update/{id}','CoursesCategoriesController@update')->name('category.update');
     Route::view('{any}','admin.adminDashboard')->where('any','.*');
     });
+
+    Route::view('{any}','welcome')->where('any','.*');

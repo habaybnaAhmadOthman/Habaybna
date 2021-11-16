@@ -4,11 +4,30 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Home | habaybna</title>
+      <style>
+         @font-face {
+            font-family: "Almarai Bold";
+            src: url("/../../../public/fonts/Almarai-Bold.woff2") format("woff2"),
+               url("./../../public/fonts/Almarai-Bold.woff") format("woff");
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+         }
+
+         @font-face {
+            font-family: "Almarai Regular";
+            src: url("/../../public/fonts/Almarai-Regular.woff2") format("woff2"),
+            url("./../../public/fonts/Almarai-Regular.woff") format("woff");
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+         }
+      </style>
+
    </head>
    <body>
    <div id="app">
-      <the-header></the-header>
-      <router-view></router-view>
+      <main-app></main-app>
     </div>
    </body>
    <script src="{{mix('/js/app.js')}}"></script>

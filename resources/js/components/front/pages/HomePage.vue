@@ -1,6 +1,8 @@
 <template>
     <div>
+        
         <LandingSection></LandingSection>
+        <router-link to='/signup'>register</router-link>
         <HabaybnaLibrary></HabaybnaLibrary>
         <HabaybnaDirectory></HabaybnaDirectory>
     </div>

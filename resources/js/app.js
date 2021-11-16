@@ -23,10 +23,10 @@ import common from './common';
 import VueCoreVideoPlayer from 'vue-core-video-player'
 import VueCarousel from 'vue-carousel';
 import locale from 'view-design/dist/locale/en-US';
-import './assets/css/common.css';
-import TheHeader from './components/front/layouts/header/TheHeader.vue'
+// import firebase from 'firebase'
+// portal
+import MainApp from './MainApp.vue'
 import Vue from 'vue';
-
 Vue.use(VueCarousel);
 Vue.use(ViewUI,{ locale });
 
@@ -52,7 +52,7 @@ Vue.component('admin-dashboard', require('./components/admin/AdminDashboard.vue'
 Vue.component('parent-dashboard', require('./components/parents/ParentDashboard.vue').default);
 Vue.component('class-room', require('./components/parents/ClassRoom.vue').default);
 Vue.component('player',Player);
-Vue.component('the-header',TheHeader)
+Vue.component('main-app',MainApp)
 
 
 /**

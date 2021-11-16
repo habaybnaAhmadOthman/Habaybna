@@ -14,6 +14,7 @@ import ClassRoom from './components/parents/ClassRoom.vue'
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 import HomePage from './components/front/pages/HomePage.vue'
+import RegisterPage from './components/front/pages/auth/RegisterPage.vue'
 
 const routes = [
     {
@@ -58,6 +59,10 @@ const routes = [
     {
         path:'/',
         component: HomePage
+    },
+    {
+        path: '/signup',
+        component: RegisterPage
     }
 ]
 

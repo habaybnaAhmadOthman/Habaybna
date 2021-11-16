@@ -3,7 +3,7 @@
         <div class="d-flex align-center space-between">
             <div class="d-flex align-center">
                 <div class="logo">
-                    <img src="./../../../../assets/images/header/logo.png" />
+                    <img src="/images/siteImgs/header/logo.png" />
                 </div>
                 <menu class="d-flex align-center main-menu">
                     <router-link
