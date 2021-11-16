@@ -1,40 +1,65 @@
 <template>
-    <div>
-        <form @submit.prevent="sendOtp" v-if="!code.showForm" class="pt-100 p-side-30 mt-30">
-            <div class="form-group" :class="{ invalid: !phoneNumber.val }">
-                <vue-tel-input
-                    @open="getStyleDirection"
-                    v-model="phoneNumber.val"
-                    @input="getPhoneVal"
-                    :inputOptions="{
-                        placeholder: 'xxxxx',
-                        required: true,
-                        invalidMsg: 'please enter a valid number',
-                        id: 'phoneNumberInput'
-                    }"
-                    :dropdownOptions="{
-                        showDialCodeInSelection: true,
-                        showFlags: true
-                    }"
-                ></vue-tel-input>
-            </div>
-            <div id="recaptcha-container" class="recaptcha-container"></div>
-            <button id="sign-in-button">Register</button>
-            <router-link to="/login">Login instead</router-link>
-        </form>
+    <div class="header-margin">
+        <div class="container soft-bg radius-12 pt-30 pb-30">
+            <AuthHeader></AuthHeader>
+            <div class="p-side-30 mt-50">
+                <form
+                    @submit.prevent="sendOtp"
+                    v-if="!code.showForm"
+                    class=""
+                >
+                    <div class="form-group">
+                        <select v-model="type.val">
+                            <option value="no" disabled hidden>هل أنت</option>
+                            <option value="parnet"
+                                >أحد الوالدين أو أفراد العائلة</option
+                            >
+                            <option value="parnet"
+                                >أخصائي تربية حاصة أو تأهيل</option
+                            >
+                            <option value="parnet">آخر</option>
+                        </select>
+                    </div>
+                    <div class="form-group" :class="{ invalid: !phoneNumber.val }">
+                        <vue-tel-input
+                            @open="getStyleDirection"
+                            v-model="phoneNumber.val"
+                            @input="getPhoneVal"
+                            :inputOptions="{
+                                placeholder: 'xxxxx',
+                                required: true,
+                                invalidMsg: 'please enter a valid number',
+                                id: 'phoneNumberInput'
+                            }"
+                            :dropdownOptions="{
+                                showDialCodeInSelection: true,
+                                showFlags: true
+                            }"
+                        ></vue-tel-input>
+                    </div>
+                    <div id="recaptcha-container" class="recaptcha-container"></div>
+                    <button id="sign-in-button">Register</button>
+                    <router-link to="/login">Login instead</router-link>
+                </form>
 
-        <form @submit.prevent="submitCode" v-else>
-            <div class="form-group" :class="{ invalid: !code.isValid }">
-                <input
-                    id="code"
-                    @blur="checkValidity"
-                    v-model.trim="code.val"
-                />
-                <p>this field is required</p>
+                <form @submit.prevent="submitCode" v-else>
+                    <div class="form-group" :class="{ invalid: !code.isValid }">
+                        <input
+                            id="code"
+                            @blur="checkValidity"
+                            v-model.trim="code.val"
+                        />
+                        <p>this field is required</p>
+                    </div>
+                    <button>Code</button>
+                </form>
             </div>
-            <button >Code</button>
-        </form>
-        <alert-dialog :show="!!error" title="An error occurred" @close="closeModal"></alert-dialog>
+        </div>
+        <alert-dialog
+            :show="!!error"
+            title="An error occurred"
+            @close="closeModal"
+        ></alert-dialog>
     </div>
 </template>
 
@@ -45,12 +70,20 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import { VueTelInput } from "vue-tel-input";
 import "vue-tel-input/dist/vue-tel-input.css";
 
+// page header
+import AuthHeader from "./../../layouts/header/AuthHeader.vue";
+
 export default {
     components: {
-        VueTelInput
+        VueTelInput,
+        AuthHeader
     },
     data() {
         return {
+            type: {
+                val: "no",
+                isValid: true
+            },
             phoneNumber: {
                 val: "",
                 isValid: true,
@@ -68,7 +101,7 @@ export default {
             code: {
                 val: "",
                 isValid: true,
-                showForm:false
+                showForm: false
             },
             formIsValid: true,
             error: null
@@ -86,8 +119,8 @@ export default {
     },
 
     methods: {
-        closeModal(){
-            this.error = null
+        closeModal() {
+            this.error = null;
         },
         getPhoneVal(number, phoneObject) {
             this.phoneNumber.countryCode = phoneObject.country.dialCode;
@@ -146,7 +179,7 @@ export default {
                 })
                 .catch(error => {
                     // Error; SMS not sent
-                    this.error = error.message || 'Some thing went wrong'
+                    this.error = error.message || "Some thing went wrong";
                 });
         },
         submitCode() {
@@ -163,9 +196,8 @@ export default {
                     // ...
                 })
                 .catch(error => {
-                    this.error = error.message || 'Some thing went wrong'
+                    this.error = error.message || "Some thing went wrong";
                     // User couldn't sign in (bad verification code?)
-                    // ...
                 });
         }
     }
@@ -182,5 +214,8 @@ export default {
 .vti__input {
     text-align: right;
     unicode-bidi: plaintext;
+}
+.soft-bg {
+    background: #d0ebf1;
 }
 </style>
