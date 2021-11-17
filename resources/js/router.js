@@ -63,7 +63,11 @@ const routes = [
     {
         path: '/signup',
         component: RegisterPage
-    }
+    },
+    // {
+    //     path: '/user-profile',
+    //     component: UserProfile
+    // }
 ]
 
 export default new Router({

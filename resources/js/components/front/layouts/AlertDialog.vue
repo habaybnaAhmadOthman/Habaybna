@@ -16,7 +16,7 @@
                 </section>
                 <menu  class="d-flex flex-end m-0">
                     <slot name="actions">
-                        <button @click="tryClose">Close</button>
+                        <button class="btn mb-10 ml-10" @click="tryClose">حسنا</button>
                     </slot>
                 </menu>
             </dialog>

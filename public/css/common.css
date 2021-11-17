@@ -7,26 +7,29 @@
 @font-face {
     font-family: "Almarai Bold";
     src: url("/fonts/Almarai-Bold.woff2") format("woff2"),
-       url("/public/fonts/Almarai-Bold.woff") format("woff");
+        url("/public/fonts/Almarai-Bold.woff") format("woff");
     font-weight: bold;
     font-style: normal;
     font-display: swap;
- }
+}
 
- @font-face {
+@font-face {
     font-family: "Almarai Regular";
     src: url("/fonts/Almarai-Regular.woff2") format("woff2"),
-    url("/public/fonts/Almarai-Regular.woff") format("woff");
+        url("/public/fonts/Almarai-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
- }
+}
 body {
     font-family: "Almarai Regular";
     margin: 0;
     padding: 0;
     font-size: 16px;
     direction: rtl;
+}
+.header-margin {
+    margin-top: 150px;
 }
 .p-0 {
     padding: 0;
@@ -185,6 +188,9 @@ body {
 .mt-30 {
     margin-top: 30px;
 }
+.mt-50 {
+    margin-top: 50px;
+}
 .mb-5 {
     margin-bottom: 5px;
 }
@@ -202,6 +208,13 @@ body {
 }
 .mb-30 {
     margin-bottom: 30px;
+}
+.mb-50 {
+    margin-bottom: 50px;
+}
+.m-side-auto {
+    margin-left: auto;
+    margin-right: auto;
 }
 .m-0 {
     margin: 0;
@@ -494,7 +507,7 @@ a:hover {
 .btn {
     background: #606;
     padding: 13px 35px;
-    border-radius: 6px;
+    border-radius: 5px;
     color: #fff;
     transition: 0.3s;
     border: 1px solid #606;
@@ -509,4 +522,28 @@ a:hover {
 }
 .main-color {
     color: #606;
+}
+:focus-visible {
+    outline: -webkit-focus-ring-color auto 0;
+}
+.ltr {
+    direction: ltr;
+}
+.rtl {
+    direction: rtl;
+}
+.row-half {
+    width: 49%;
+    margin-bottom: 15px;
+}
+@media (max-width: 767px) {
+    .w-100-p {
+        width: 100% !important;
+    }
+    .w-50-p {
+        width: 50%;
+    }
+    .container {
+        max-width:100%;
+    }
 }
