@@ -48,7 +48,7 @@ export default {
             this.showCodeForm = true
         },
         gotCode(){
-            this.showCodeForm = true
+            this.showCompleteForm = true
         },
         showErrorMessage(msg){
             this.error = msg;
