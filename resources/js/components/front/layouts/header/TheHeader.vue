@@ -1,5 +1,5 @@
 <template>
-    <header id="header">
+    <header id="header" class="bg-white">
         <div class="d-flex align-center space-between">
             <div class="d-flex align-center">
                 <div class="logo">
