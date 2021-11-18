@@ -14,14 +14,20 @@
                 v-else-if="!showCompleteForm"
             ></CodeForm>
             <CompleteRegistration v-else></CompleteRegistration>
-            <button :class="{'asb-btn': phoneNumber != ''}"
+            <button
+                :class="{ 'asb-btn': phoneNumber != '' }"
                 @click="submitPhone"
                 class="btn w-100 mt-30 bold font-20"
                 id="sign-in-button"
             >
                 التالي
             </button>
-            <h2 v-if="!showCodeForm" class="main-color mt-50 light font-17">هل أنت عضو في حبايبنا؟ <router-link class="pr-5" to="/signin">تسجيل الدخول</router-link></h2>
+            <h2 v-if="!showCodeForm" class="main-color mt-50 light font-17">
+                هل أنت عضو في حبايبنا؟
+                <router-link class="pr-5" to="/signin"
+                    >تسجيل الدخول</router-link
+                >
+            </h2>
         </FormTemplate>
         <div id="recaptcha-container" class="recaptcha-container"></div>
         <alert-dialog
@@ -57,6 +63,7 @@ export default {
             showCodeForm: false,
             showCompleteForm: false,
             phoneNumber: "",
+            type: "",
             error: null
         };
     },
@@ -79,6 +86,7 @@ export default {
                     });
             } else {
                 this.phoneNumber = obj.phoneNumber;
+                this.type = obj.type;
             }
             await signInWithPhoneNumber(
                 auth,
@@ -98,8 +106,28 @@ export default {
 
             this.isLoading = false;
         },
-        gotCode() {
-            this.showCompleteForm = true;
+        async gotCode() {
+            await fetch(
+                "https://habaybna-21237-default-rtdb.firebaseio.com/users.json",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        type: this.type.val,
+                        phone: this.phoneNumber
+                    })
+                }
+            ).then((response)=>{
+                return response.json();
+            }).then((data)=>{
+                console.log(data);
+                this.showCompleteForm = true;
+            }).catch(error => {
+                showErrorMessage('حدث خطأ ما')
+            });
+            
         },
         showErrorMessage(msg) {
             this.error = msg;
