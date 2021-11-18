@@ -1,58 +1,110 @@
 <template>
-    <div class="header-margin">
-        <div class="container soft-bg radius-12 pt-30 pb-30 mb-30">
-            <AuthHeader></AuthHeader>
-            <div class="p-side-30 mt-50 w-50 m-side-auto">
-                <OtpForm @phone-registered="gotPhone" v-if="!showCodeForm" @error-happen="showErrorMessage" ></OtpForm>
-                <CodeForm @complete-registration-form="gotCode" v-else-if="!showCompleteForm"></CodeForm>
-                <CompleteRegistration v-else></CompleteRegistration>
-            </div>
-        </div>
+    <div>
+        <FormTemplate>
+            <OtpForm
+                @send-otp="gotPhone"
+                @error-happen="showErrorMessage"
+                v-if="!showCodeForm"
+                ref="phoneForm"
+            >
+            </OtpForm>
+            <CodeForm
+                @complete-registration-form="gotCode"
+                @send-otp="gotPhone"
+                v-else-if="!showCompleteForm"
+            ></CodeForm>
+            <CompleteRegistration v-else></CompleteRegistration>
+            <button :class="{'asb-btn': phoneNumber != ''}"
+                @click="submitPhone"
+                class="btn w-100 mt-30 bold font-20"
+                id="sign-in-button"
+            >
+                التالي
+            </button>
+            <h2 v-if="!showCodeForm" class="main-color mt-50 light font-17">هل أنت عضو في حبايبنا؟ <router-link class="pr-5" to="/signin">تسجيل الدخول</router-link></h2>
+        </FormTemplate>
+        <div id="recaptcha-container" class="recaptcha-container"></div>
         <alert-dialog
             :show="!!error"
             :title="error"
             @close="closeModal"
         ></alert-dialog>
+        <div v-if="isLoading">
+            <loading-spinner></loading-spinner>
+        </div>
     </div>
 </template>
 
 <script>
-// page header
-import AuthHeader from "./../../layouts/header/AuthHeader.vue";
+import auth from "./../../../../modules/firebase";
+import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 // forms
+import FormTemplate from "./../../layouts/FormTemplate.vue";
 import OtpForm from "./../../views/auth/OtpForm.vue";
 import CodeForm from "./../../views/auth/CodeForm.vue";
 import CompleteRegistration from "./../../views/auth/CompleteRegistration.vue";
 
 export default {
     components: {
-        AuthHeader,
+        FormTemplate,
         OtpForm,
         CodeForm,
         CompleteRegistration
     },
     data() {
         return {
+            isLoading: false,
             showCodeForm: false,
             showCompleteForm: false,
+            phoneNumber: "",
             error: null
         };
     },
-    
 
     methods: {
+        submitPhone() {
+            this.$refs.phoneForm.submitForm();
+        },
         closeModal() {
             this.error = null;
         },
-        gotPhone(){
-            this.showCodeForm = true
+        async gotPhone(obj) {
+            this.isLoading = true;
+            if (!obj.phoneNumber) {
+                obj.phoneNumber = this.phoneNumber;
+                await window.recaptchaVerifier
+                    .render()
+                    .then(function(widgetId) {
+                        grecaptcha.reset(widgetId);
+                    });
+            } else {
+                this.phoneNumber = obj.phoneNumber;
+            }
+            await signInWithPhoneNumber(
+                auth,
+                obj.phoneNumber,
+                window.recaptchaVerifier
+            )
+                .then(confirmationResult => {
+                    // SMS sent.
+                    window.confirmationResult = confirmationResult;
+                    this.showCodeForm = true;
+                })
+                .catch(error => {
+                    console.log(error);
+                    // Error; SMS not sent
+                    this.showErrorMessage("حدث خطأ ما");
+                });
+
+            this.isLoading = false;
         },
-        gotCode(){
-            this.showCompleteForm = true
+        gotCode() {
+            this.showCompleteForm = true;
         },
-        showErrorMessage(msg){
+        showErrorMessage(msg) {
             this.error = msg;
         }
+
         // // add phone number styling
         // getStyleDirection() {
         //     if (!this.phoneNumber.style) {
@@ -69,13 +121,28 @@ export default {
         //         style.appendChild(document.createTextNode(css));
         //     }
         // },
-        
+    },
+    mounted() {
+        window.recaptchaVerifier = new RecaptchaVerifier(
+            "sign-in-button",
+            {
+                size: "invisible",
+                callback: response => {}
+            },
+            auth
+        );
     }
 };
 </script>
-
 <style scoped>
-.soft-bg {
-    background: #eff5ff;
+.asb-btn {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    visibility: hidden;
+    opacity: 0;
+}
+.spinner {
+    z-index: 10;
 }
 </style>

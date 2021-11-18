@@ -189,32 +189,10 @@
 import LoadingSpinner from "../../layouts/LoadingSpinner.vue";
 // page header
 import AuthHeader from "./../../layouts/header/AuthHeader.vue";
+import passwordMixin from './../../mixins/password.js'
 export default {
+    mixins: [passwordMixin],
     methods: {
-        passwordCheck() {
-            this.password.has_minimum_lenth = this.password.val.length > 7;
-            this.password.has_number = /\d/.test(this.password.val);
-            this.password.has_lowercase = /[a-z]/.test(this.password.val);
-            this.password.has_uppercase = /[A-Z]/.test(this.password.val);
-            this.password.has_special = /[!@#\$%\^\&*\)\(+=._-]/.test(
-                this.password.val
-            );
-
-            if (
-                !this.password.has_minimum_lenth ||
-                !this.password.has_number ||
-                !this.password.has_lowercase ||
-                !this.password.has_uppercase ||
-                !this.password.has_special
-            ) {
-                this.password.isValid = false;
-            } else {
-                this.password.isValid = true;
-            }
-        },
-        passwordVisibility() {
-            this.password.show = !this.password.show;
-        },
         validateForm() {
             this.formIsValid = true;
             if (this.firstName.val == "") {
@@ -276,6 +254,7 @@ export default {
                 return;
             }
             this.isLoading = true;
+            // should navigate to /user-profile
             this.isLoading = false;
         }
     },
@@ -288,16 +267,6 @@ export default {
             lastName: {
                 val: "",
                 isValid: true
-            },
-            password: {
-                val: "",
-                isValid: true,
-                show: false,
-                has_minimum_lenth: false,
-                has_number: false,
-                has_lowercase: false,
-                has_uppercase: false,
-                has_special: false
             },
             rePassword: {
                 val: "",

@@ -87,6 +87,9 @@ body {
 .d-block {
     display: block;
 }
+.none {
+    display: none;
+}
 .align-center {
     align-items: center;
 }
