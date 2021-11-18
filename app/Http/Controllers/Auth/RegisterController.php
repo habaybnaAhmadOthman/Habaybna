@@ -52,8 +52,8 @@ class RegisterController extends Controller
 
         return Validator::make($data, [
             'phone' => ['required', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            // 'type' => ['required', 'string'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'type' => ['required', 'string'],
         ]);
     }
 
@@ -67,17 +67,13 @@ class RegisterController extends Controller
     {
 
         $user = User::create([
-            'role' => 'parent',
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'otp'=> random_int(100000, 999999),
+            'role' => $data['type'], // parent, specialist, other
+            // 'email' => $data['email'],
+            'phone' => $data['phone'], // ex: +962792819107
+            'is_verify'=> 1,
         ]);
-        if($user){
-            $receiverNumber = "+962".$user->phone;
-            //open connection
-        }
-            return$user;
+
+            return $user;
         }
 
-        // $accessToken = $user->$user->createToken('authToken')->accessToken ;
 }
