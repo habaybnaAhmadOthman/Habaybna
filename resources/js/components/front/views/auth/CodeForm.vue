@@ -1,24 +1,53 @@
 <template>
-    <form @submit.prevent="submitCode">
-        
-        <div class="form-group" :class="{ invalid: !code.isValid }">
-            <input class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans" placeholder="أدخل رمز التحقق" id="code" @blur="checkValidity" v-model.trim="code.val" />
-            <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
-        </div>
-        <div class="">
-            <p class="main-color mt-5 font-20" v-if="!canResend && this.otp.availableTry > 0">يمكنك إعادة إرسال رمز التحقق بعد <span class="bold">{{otp.secondsLeft}}</span></p>
-            <p @click="resendOtp" class="pointer underline main-color mt-10" v-else-if="canResend">إعادة إرسال الرمز</p>
-        </div>
-        <button class="btn w-100 mt-30 bold font-20" id="sign-in-button">التالي</button>
-        <div v-if="isLoading">
-            <loading-spinner></loading-spinner>
-        </div>
-    </form>
+    <div class="mobile-form pt-50 p-side-50">
+        <h2 class="white font-22 bold d-flex align-center">
+            رمز التحقق
+            <img src="/images/siteImgs/header/logo.png" class="mr-10" />
+        </h2>
+        <form @submit.prevent="submitCode" class="mt-30">
+            <p class="white font-14 center mb-15">تم ارسال رمز التحقق برسالة نصية</p>
+            <div class="form-group" :class="{ invalid: !code.isValid }">
+                <input
+                    class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
+                    placeholder="أدخل رمز التحقق"
+                    id="code"
+                    @blur="checkValidity"
+                    v-model.trim="code.val"
+                />
+                <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
+            </div>
+            <div class="">
+                <p
+                    class="white mt-5 font-12"
+                    v-if="!canResend && this.otp.availableTry > 0"
+                >
+                    يمكنك إعادة إرسال رمز التحقق بعد
+                    <span class="bold">{{ otp.secondsLeft }}</span>
+                </p>
+                <p
+                    @click="resendOtp"
+                    class="pointer underline white mt-10 font-12"
+                    v-else-if="canResend"
+                >
+                    إعادة إرسال الرمز
+                </p>
+            </div>
+            <button
+                class="btn-img bg-none mt-30 border-0 pointer flex-all white m-side-auto font-20"
+                id="sign-in-button"
+            >
+                التالي <img src="/images/siteImgs/header/logo.png" class="mr-10">
+            </button>
+            <div v-if="isLoading">
+                <loading-spinner></loading-spinner>
+            </div>
+        </form>
+    </div>
 </template>
 
 <script>
 export default {
-    emits: ['error-happen','complete-registration-form','send-otp'],
+    emits: ["error-happen", "complete-registration-form", "send-otp"],
     data() {
         return {
             isLoading: false,
@@ -35,27 +64,27 @@ export default {
             error: null
         };
     },
-    mounted(){
+    mounted() {
         this.countDown();
     },
     computed: {
-        canResend(){
-            return this.otp.canResend && this.otp.availableTry > 0
+        canResend() {
+            return this.otp.canResend && this.otp.availableTry > 0;
         }
     },
     methods: {
-        countDown(){
+        countDown() {
             if (this.otp.availableTry > 0) {
-                const resendInterval = setInterval (()=>{
+                const resendInterval = setInterval(() => {
                     this.otp.secondsLeft -= 1;
                     if (this.otp.secondsLeft == 0) {
                         this.otp.canResend = true;
                         this.otp.secondsLeft = 10;
-                        clearInterval (resendInterval)
+                        clearInterval(resendInterval);
                     } else {
                         this.otp.canResend = false;
                     }
-                },1000)
+                }, 1000);
             } else {
                 this.otp.canResend = false;
             }
@@ -63,8 +92,8 @@ export default {
         resendOtp() {
             this.otp.canResend = true;
             this.otp.availableTry -= 1;
-            this.countDown()
-            this.$emit('send-otp',{})
+            this.countDown();
+            this.$emit("send-otp", {});
         },
         checkValidity(e) {
             if (e.target.value != "") {
@@ -84,15 +113,15 @@ export default {
                 .then(result => {
                     // User signed in successfully.
                     const user = result.user;
-                    this.$emit('complete-registration-form')
+                    this.$emit("complete-registration-form");
                     // ...
                 })
                 .catch(error => {
-                    this.$emit('error-happen',"حدث خطأ ما")
+                    this.$emit("error-happen", "حدث خطأ ما");
                 });
             this.isLoading = false;
         }
-    },
+    }
 };
 </script>
 

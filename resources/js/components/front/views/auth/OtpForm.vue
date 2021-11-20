@@ -1,9 +1,14 @@
 <template>
-  <form @submit.prevent="submitForm" class="">
-    <div class="form-group mb-30" :class="{ invalid: !type.isValid }">
-      <div class="select-wrapper relative">
-        <select
-          class="
+    <div class="mobile-form pt-50 p-side-50">
+        <h2 class="white font-22 bold d-flex align-center">
+            مستخدم جديد
+            <img src="/images/siteImgs/header/logo.png" class="mr-10" />
+        </h2>
+        <form @submit.prevent="submitForm" class="mt-30">
+            <div class="form-group mb-30" :class="{ invalid: !type.isValid }">
+                <div class="select-wrapper relative">
+                    <select
+                        class="
             bg-white
             border-0
             radius-5
@@ -13,30 +18,36 @@
             form-control
             trans
           "
-          v-model="type.val"
-          id="type"
-          @blur="checkValidity"
-        >
-          <option value="no" disabled hidden>هل أنت</option>
-          <option value="parent">أحد الوالدين أو أفراد العائلة</option>
-          <!-- <option value="parnet">أخصائي تربية حاصة أو تأهيل</option>
-          <option value="parnet">آخر</option> -->
-        </select>
-      </div>
-      <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+                        v-model="type.val"
+                        id="type"
+                        @blur="checkValidity"
+                    >
+                        <option value="no" disabled hidden>هل أنت</option>
+                        <option value="parent"
+                            >أحد الوالدين أو أفراد العائلة</option
+                        >
+                        <option value="specialist">أخصائي تربية حاصة أو تأهيل</option>
+                        <option value="other">آخر</option>
+                    </select>
+                </div>
+                <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
+            </div>
+            <div
+                class="form-group ltr"
+                :class="{ invalid: !phoneNumber.isValid }"
+            >
+                <VuePhoneNumberInput
+                    v-model="phoneNumber.input"
+                    @update="getPhoneVal"
+                    @blur="checkValidity"
+                    @input="checkPhoneNumber"
+                    id="phoneNumber"
+                    :default-country-code="'JO'"
+                />
+                <p class="white mt-5 font-12">رقم الهاتف غير صحيح</p>
+            </div>
+        </form>
     </div>
-    <div class="form-group ltr" :class="{ invalid: !phoneNumber.isValid }">
-      <VuePhoneNumberInput
-        v-model="phoneNumber.input"
-        @update="getPhoneVal"
-        @blur="checkValidity"
-        @input="checkPhoneNumber"
-        id="phoneNumber"
-        :default-country-code="'JO'"
-      />
-      <p class="main-color mt-5 font-12">رقم الهاتف غير صحيح</p>
-    </div>
-  </form>
 </template>
 
 <script>
@@ -46,106 +57,106 @@ import "vue-phone-number-input/dist/vue-phone-number-input.css";
 import phoneNumberMixin from "./../../mixins/phoneNumber.js";
 
 export default {
-  emits: ["send-otp"],
-  mixins: [phoneNumberMixin],
-  data() {
-    return {
-      type: {
-        val: "no",
-        isValid: true,
-      },
-      formIsValid: true,
-    };
-  },
-  methods: {
-    validateForm() {
-      this.formIsValid = true;
-      this.checkPhoneNumber();
-      if (this.phoneNumber.val == "") {
-        this.phoneNumber.isValid = false;
-        this.formIsValid = false;
-      }
-      if (this.type.val == "no") {
-        this.type.isValid = false;
-        this.formIsValid = false;
-      }
+    emits: ["send-otp"],
+    mixins: [phoneNumberMixin],
+    data() {
+        return {
+            type: {
+                val: "no",
+                isValid: true
+            },
+            formIsValid: true
+        };
     },
-    checkValidity(e) {
-      if (e.target.value != "") {
-        this[e.target.id].isValid = true;
-      } else {
-        this[e.target.id].isValid = false;
-      }
-      if (e.target.id == "type") {
-        if (e.target.value == "no") {
-          this[e.target.id].isValid = false;
-        } else {
-          this[e.target.id].isValid = true;
-        }
-      }
-    },
-    submitForm() {
-      this.validateForm();
-      if (!this.formIsValid) {
-        return;
-      }
+    methods: {
+        validateForm() {
+            this.formIsValid = true;
+            this.checkPhoneNumber();
+            if (this.phoneNumber.val == "") {
+                this.phoneNumber.isValid = false;
+                this.formIsValid = false;
+            }
+            if (this.type.val == "no") {
+                this.type.isValid = false;
+                this.formIsValid = false;
+            }
+        },
+        checkValidity(e) {
+            if (e.target.value != "") {
+                this[e.target.id].isValid = true;
+            } else {
+                this[e.target.id].isValid = false;
+            }
+            if (e.target.id == "type") {
+                if (e.target.value == "no") {
+                    this[e.target.id].isValid = false;
+                } else {
+                    this[e.target.id].isValid = true;
+                }
+            }
+        },
+        submitForm() {
+            this.validateForm();
+            if (!this.formIsValid) {
+                return;
+            }
 
-      let phoneNumber = this.phoneNumber.val;
-      this.$emit("send-otp", { phoneNumber, type: this.type });
+            let phoneNumber = this.phoneNumber.val;
+            this.$emit("send-otp", { phoneNumber, type: this.type });
+        }
     },
-  },
-  components: { VuePhoneNumberInput },
+    components: { VuePhoneNumberInput }
 };
 </script>
 
 <style scoped>
 .form-group p {
-  display: none;
+    display: none;
 }
 .form-group.invalid p {
-  display: block;
+    display: block;
 }
 .vti__input {
-  text-align: right;
-  unicode-bidi: plaintext;
+    text-align: right;
+    unicode-bidi: plaintext;
 }
 .select-wrapper::after {
-  color: #606;
-  content: "▾";
-  margin-right: 10px;
-  pointer-events: none;
-  position: absolute;
-  left: 10px;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  font-size: 20px;
-  width: 10px;
-  height: 10px;
-  line-height: 10px;
+    color: #606;
+    content: "▾";
+    margin-right: 10px;
+    pointer-events: none;
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 20px;
+    width: 10px;
+    height: 10px;
+    line-height: 10px;
 }
 
 select {
-  -moz-appearance: none;
-  -webkit-appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
 }
 select:focus {
-  color: black;
+    color: black;
 }
 select::-ms-expand {
-  display: none;
+    display: none;
 }
 select::-ms-expand {
-  display: none;
+    display: none;
 }
 .form-control {
-  border: 1px solid #606;
-  height: 52px;
+    border: 1px solid #606;
+    height: 52px;
 }
 .form-control:focus {
-  box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%);
+    box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%);
 }
 .spinner {
-  z-index: 11;
+    z-index: 11;
 }
 </style>

@@ -33,6 +33,7 @@
         "vue-core-video-player": "^0.2.0",
         "vue-phone-number-input": "^1.1.12",
         "vue-router": "^3.5.2",
+        "vuex": "^2.5.0",
         "webpack": "^4.43.0"
     }
 }

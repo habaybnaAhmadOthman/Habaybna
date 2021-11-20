@@ -1,6 +1,6 @@
 <template>
     <div>
-        <FormTemplate>
+        <RegisterTemplate>
             <OtpForm
                 @send-otp="gotPhone"
                 @error-happen="showErrorMessage"
@@ -13,22 +13,24 @@
                 @send-otp="gotPhone"
                 v-else-if="!showCompleteForm"
             ></CodeForm>
-            <CompleteRegistration v-else></CompleteRegistration>
+            <CompleteParent @complete-registration="registrationDone" v-else-if="type == 'parent'"></CompleteParent>
+            <CompleteOthers @complete-registration="registrationDone" v-else-if="type== 'x'"></CompleteOthers>
+            <WelcomeScreen></WelcomeScreen>
             <button
                 :class="{ 'asb-btn': phoneNumber != '' }"
                 @click="submitPhone"
-                class="btn w-100 mt-30 bold font-20"
+                class="btn-img bg-none mt-30 border-0 pointer flex-all white m-side-auto font-20"
                 id="sign-in-button"
             >
-                التالي
+                أرسل رمز التحقّق <img src="/images/siteImgs/header/logo.png" class="mr-10">
             </button>
-            <h2 v-if="!showCodeForm" class="main-color mt-50 light font-17">
-                هل أنت عضو في حبايبنا؟
-                <router-link class="pr-5" to="/signin"
-                    >تسجيل الدخول</router-link
+            <h2 v-if="!showCompleteForm " class="white mt-30 light font-17 d-flex space-between align-center p-side-50">
+                <span class="">هل أنت عضو في حبايبنا؟</span>
+                <router-link class="white d-flex align-center" to="/signin"
+                    >تسجيل الدخول <img src="/images/siteImgs/header/logo.png" class="mr-10"></router-link
                 >
             </h2>
-        </FormTemplate>
+        </RegisterTemplate>
         <div id="recaptcha-container" class="recaptcha-container"></div>
         <alert-dialog
             :show="!!error"
@@ -44,24 +46,28 @@
 <script>
 import auth from "./../../../../modules/firebase";
 import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
-// forms
-import FormTemplate from "./../../layouts/FormTemplate.vue";
+// // forms
+import RegisterTemplate from "./../../views/auth/RegisterTemplate.vue";
 import OtpForm from "./../../views/auth/OtpForm.vue";
 import CodeForm from "./../../views/auth/CodeForm.vue";
-import CompleteRegistration from "./../../views/auth/CompleteRegistration.vue";
+import CompleteParent from "./../../views/auth/CompleteParent.vue";
+import CompleteOthers from "./../../views/auth/CompleteOthers.vue";
+import WelcomeScreen from "./../../views/auth/WelcomeScreen.vue";
 
 export default {
     components: {
-        FormTemplate,
+        RegisterTemplate,
         OtpForm,
         CodeForm,
-        CompleteRegistration
+        CompleteParent,
+        CompleteOthers,
+        WelcomeScreen,
     },
     data() {
         return {
             isLoading: false,
-            showCodeForm: false,
-            showCompleteForm: false,
+            showCodeForm: true,
+            showCompleteForm: true,
             phoneNumber: "",
             type: "",
             error: null
@@ -106,28 +112,32 @@ export default {
 
             this.isLoading = false;
         },
+        async registrationDone(userData){
+            this.isLoading = true;
+            try {
+                await this.$store.dispatch("user/register",{
+                    ...userData,
+                    type:this.type,
+                    phone: this.phoneNumber
+                })
+            } catch (e) {
+                this.showErrorMessage("حدث خطأ ما")
+            }
+            this.isLoading = false;
+        },
         async gotCode() {
-            await fetch(
-                "https://habaybna-21237-default-rtdb.firebaseio.com/users.json",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        type: this.type.val,
-                        phone: this.phoneNumber
-                    })
-                }
-            ).then((response)=>{
-                return response.json();
-            }).then((data)=>{
-                console.log(data);
-                this.showCompleteForm = true;
-            }).catch(error => {
-                showErrorMessage('حدث خطأ ما')
-            });
-            
+            this.isLoading = true;
+            try {
+                await this.$store.dispatch("user/register", {
+                    type: this.type.val,
+                    phone: this.phoneNumber
+                });
+                console.log("done");
+            } catch (e) {
+                this.showErrorMessage("حدث خطأ ما");
+            }
+            this.isLoading = false;
+            this.showCompleteForm = true;
         },
         showErrorMessage(msg) {
             this.error = msg;
@@ -173,4 +183,5 @@ export default {
 .spinner {
     z-index: 10;
 }
+
 </style>

@@ -64,7 +64,10 @@ const routes = [
     },
     {
         path: '/signup',
-        component: RegisterPage
+        component: RegisterPage,
+        meta: {
+            header: false
+        }
     },
     {
         path: '/signin',

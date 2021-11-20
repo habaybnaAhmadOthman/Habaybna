@@ -9,7 +9,7 @@
 <script>
 
 // forms
-import FormTemplate from "./../../layouts/FormTemplate.vue";
+import FormTemplate from "../../views/auth/RegisterTemplate.vue";
 import MobileLogin from "./../../views/auth/MobileLogin.vue";
 export default {
     components:{
