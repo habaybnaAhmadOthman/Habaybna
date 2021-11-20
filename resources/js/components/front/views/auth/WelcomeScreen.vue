@@ -3,107 +3,73 @@
         <p class="white font-40 bold center">
             أهلا و سهلاً بك  <br> في عائلة حبايبنا
         </p>
-        <form @submit.prevent="">
-            
+        
+        <form @submit.prevent="submitForm">
+            <div class="form-group mt-50" :class="{ invalid: !tagsValid }">
+                <vue-tags-input
+                v-model="tag"
+                :tags="tags"
+                @tags-changed="newTags => tags = newTags"
+                placeholder="الاهتمامات"
+                class="tags-input"
+                >
+                </vue-tags-input>
+                <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
+            </div>
+            <div class="center">
+                <button class="btn font-15 mt-15 w-30">حفظ</button>
+            </div>
         </form>
+        <p class="font-18 mt-50 bold white">يمكنك أيضاً:</p>
+        <div class="d-flex">
+            <router-link to="/" class="white underline font-16">عودة الى الرئيسية</router-link>
+            <router-link to="/" class="white underline mr-20 font-16">ملفي الشخصي</router-link>
+        </div>
     </div>
 </template>
 
 <script>
+import VueTagsInput from '@johmun/vue-tags-input';
 export default {
-    emits: ["error-happen", "complete-registration-form", "send-otp"],
+    emits: ['submit-interests'],
+    components: {
+        VueTagsInput
+    },
     data() {
         return {
             isLoading: false,
-            code: {
-                val: "",
-                isValid: true,
-                showForm: false
-            },
-            otp: {
-                canResend: false,
-                availableTry: 5,
-                secondsLeft: 10
-            },
+            tag: '',
+            tags: [],
+            tagsValid: true,
             error: null
         };
     },
-    mounted() {
-        this.countDown();
-    },
-    computed: {
-        canResend() {
-            return this.otp.canResend && this.otp.availableTry > 0;
-        }
-    },
     methods: {
-        countDown() {
-            if (this.otp.availableTry > 0) {
-                const resendInterval = setInterval(() => {
-                    this.otp.secondsLeft -= 1;
-                    if (this.otp.secondsLeft == 0) {
-                        this.otp.canResend = true;
-                        this.otp.secondsLeft = 10;
-                        clearInterval(resendInterval);
-                    } else {
-                        this.otp.canResend = false;
-                    }
-                }, 1000);
-            } else {
-                this.otp.canResend = false;
+        submitForm(){
+            this.tagsValid = true;
+            if (this.tags.length < 1) {
+                this.tagsValid = false;
+                return ;
             }
-        },
-        resendOtp() {
-            this.otp.canResend = true;
-            this.otp.availableTry -= 1;
-            this.countDown();
-            this.$emit("send-otp", {});
-        },
-        checkValidity(e) {
-            if (e.target.value != "") {
-                this[e.target.id].isValid = true;
-            } else {
-                this[e.target.id].isValid = false;
-            }
-        },
-        async submitCode() {
-            if (this.code.val == "") {
-                this.code.isValid = false;
-                return;
-            }
-            this.isLoading = true;
-            await window.confirmationResult
-                .confirm(this.code.val)
-                .then(result => {
-                    // User signed in successfully.
-                    const user = result.user;
-                    this.$emit("complete-registration-form");
-                    // ...
-                })
-                .catch(error => {
-                    this.$emit("error-happen", "حدث خطأ ما");
-                });
-            this.isLoading = false;
+            this.$emit('submit-interests',this.tags)
         }
     }
 };
 </script>
 
-<style scoped>
-.form-group p {
+<style>
+  .tags-input,.ti-input {
+    min-height:52px;
+    border: 1px solid #606;
+    border-radius: 5px;
+    }
+    .vue-tags-input {
+        max-width: 100%!important;
+    }
+    .form-group p {
     display: none;
 }
 .form-group.invalid p {
     display: block;
-}
-.form-control {
-    border: 1px solid #606;
-    height: 52px;
-}
-.form-control:focus {
-    box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%);
-}
-.spinner {
-    z-index: 10;
 }
 </style>

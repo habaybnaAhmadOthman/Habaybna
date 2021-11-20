@@ -21,6 +21,7 @@ export default {
 .right-side {
     background:#b57abd;
     border-radius: 24px 0 0 24px;
+    overflow-y: auto;
 }
 .registration-template .right-side, .registration-template .left-side{
     padding-top: 98px;

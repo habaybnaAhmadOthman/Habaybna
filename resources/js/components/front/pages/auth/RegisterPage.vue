@@ -13,9 +13,9 @@
                 @send-otp="gotPhone"
                 v-else-if="!showCompleteForm"
             ></CodeForm>
-            <CompleteParent @complete-registration="registrationDone" v-else-if="type == 'parent'"></CompleteParent>
-            <CompleteOthers @complete-registration="registrationDone" v-else-if="type== 'x'"></CompleteOthers>
-            <WelcomeScreen></WelcomeScreen>
+            <CompleteParent @complete-registration="registrationDone" v-else-if="showCompleteForm && type == 'parent'"></CompleteParent>
+            <CompleteOthers @complete-registration="registrationDone" v-else-if="showCompleteForm && !showInterestScreen"></CompleteOthers>
+            <WelcomeScreen v-else-if="showInterestScreen" @submit-interests="addInterests"></WelcomeScreen>
             <button
                 :class="{ 'asb-btn': phoneNumber != '' }"
                 @click="submitPhone"
@@ -24,7 +24,7 @@
             >
                 أرسل رمز التحقّق <img src="/images/siteImgs/header/logo.png" class="mr-10">
             </button>
-            <h2 v-if="!showCompleteForm " class="white mt-30 light font-17 d-flex space-between align-center p-side-50">
+            <h2 v-if="!showCompleteForm || !showInterestScreen" class="white mt-30 light font-17 d-flex space-between align-center p-side-50">
                 <span class="">هل أنت عضو في حبايبنا؟</span>
                 <router-link class="white d-flex align-center" to="/signin"
                     >تسجيل الدخول <img src="/images/siteImgs/header/logo.png" class="mr-10"></router-link
@@ -66,8 +66,9 @@ export default {
     data() {
         return {
             isLoading: false,
-            showCodeForm: true,
-            showCompleteForm: true,
+            showCodeForm: false,
+            showCompleteForm: false,
+            showInterestScreen:false,
             phoneNumber: "",
             type: "",
             error: null
@@ -119,11 +120,22 @@ export default {
                     ...userData,
                     type:this.type,
                     phone: this.phoneNumber
-                })
+                });
+                this.showInterestScreen = true
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما")
             }
             this.isLoading = false;
+        },
+        addInterests(interests){
+            try {
+                this.$store.dispatch("user/register",{
+                    interests
+                });
+                this.$router.replace('/')
+            } catch (e) {
+                this.showErrorMessage("حدث خطأ ما")
+            }
         },
         async gotCode() {
             this.isLoading = true;
