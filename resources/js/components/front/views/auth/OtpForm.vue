@@ -1,36 +1,53 @@
 <template>
-    <form @submit.prevent="submitForm" class="">
-        <div class="form-group mb-30" :class="{ invalid: !type.isValid }">
-            <div class="select-wrapper relative">
-                <select
-                    class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                    v-model="type.val"
-                    id="type"
-                    @blur="checkValidity"
-                >
-                    <option value="no" disabled hidden>هل أنت</option>
-                    <option value="parnet"
-                        >أحد الوالدين أو أفراد العائلة</option
+    <div class="mobile-form pt-50 p-side-50">
+        <h2 class="white font-22 bold d-flex align-center">
+            مستخدم جديد
+            <img src="/images/siteImgs/header/logo.png" class="mr-10" />
+        </h2>
+        <form @submit.prevent="submitForm" class="mt-30">
+            <div class="form-group mb-30" :class="{ invalid: !type.isValid }">
+                <div class="select-wrapper relative">
+                    <select
+                        class="
+            bg-white
+            border-0
+            radius-5
+            w-100
+            p-10
+            pointer
+            form-control
+            trans
+          "
+                        v-model="type.val"
+                        id="type"
+                        @blur="checkValidity"
                     >
-                    <!-- <option value="parnet">أخصائي تربية حاصة أو تأهيل</option>
-                    <option value="parnet">آخر</option> -->
-                </select>
+                        <option value="no" disabled hidden>هل أنت</option>
+                        <option value="parent"
+                            >أحد الوالدين أو أفراد العائلة</option
+                        >
+                        <option value="specialist">أخصائي تربية حاصة أو تأهيل</option>
+                        <option value="other">آخر</option>
+                    </select>
+                </div>
+                <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
-            <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
-        </div>
-        <div class="form-group ltr" :class="{ invalid: !phoneNumber.isValid }">
-            <VuePhoneNumberInput
-                v-model="phoneNumber.input"
-                @update="getPhoneVal"
-                @blur="checkValidity"
-                @input="checkPhoneNumber"
-                id="phoneNumber"
-                :default-country-code="'JO'"
-            />
-            <p class="main-color mt-5 font-12">رقم الهاتف غير صحيح</p>
-        </div>
-
-    </form>
+            <div
+                class="form-group ltr"
+                :class="{ invalid: !phoneNumber.isValid }"
+            >
+                <VuePhoneNumberInput
+                    v-model="phoneNumber.input"
+                    @update="getPhoneVal"
+                    @blur="checkValidity"
+                    @input="checkPhoneNumber"
+                    id="phoneNumber"
+                    :default-country-code="'JO'"
+                />
+                <p class="white mt-5 font-12">رقم الهاتف غير صحيح</p>
+            </div>
+        </form>
+    </div>
 </template>
 
 <script>
@@ -46,7 +63,6 @@ export default {
     mixins: [phoneNumberMixin],
     data() {
         return {
-
             type: {
                 val: "no",
                 isValid: true
@@ -88,7 +104,7 @@ export default {
             }
 
             let phoneNumber = this.phoneNumber.val;
-            this.$emit("send-otp", {phoneNumber,type: this.type});
+            this.$emit("send-otp", { phoneNumber, type: this.type });
         }
     },
     components: { VuePhoneNumberInput }

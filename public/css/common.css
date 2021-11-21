@@ -67,6 +67,9 @@ body {
 .w-25 {
     width: 25%;
 }
+.h-full {
+    height: 100vh;
+}
 .h-100 {
     height: 100%;
 }
@@ -89,6 +92,9 @@ body {
 }
 .none {
     display: none;
+}
+.center {
+    text-align: center;
 }
 .align-center {
     align-items: center;
@@ -118,6 +124,9 @@ body {
 }
 .main-color {
     color: #752775;
+}
+.font-40 {
+    font-size: 40px;
 }
 .font-26 {
     font-size: 26px;
@@ -324,6 +333,9 @@ body {
 .pt-30 {
     padding-top: 30px;
 }
+.pt-50 {
+    padding-top: 50px;
+}
 .pt-100 {
     padding-top: 100px;
 }
@@ -456,6 +468,9 @@ input {
 .bg-white {
     background: #fff;
 }
+.bg-none {
+    background: none;
+}
 .radius-5 {
     border-radius: 5px;
 }
@@ -482,6 +497,10 @@ a:hover {
 .p-side-30 {
     padding-left: 30px;
     padding-right: 30px;
+}
+.p-side-50 {
+    padding-left: 50px;
+    padding-right: 50px;
 }
 .p-side-15 {
     padding-left: 15px;
