@@ -116,7 +116,7 @@ export default {
                     phone: this.phoneNumber,
                     token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 });
-                this.$router.replace(`/${this.type}-complete-registration`)
+                this.$router.replace(`/${this.type}-complete-registration`);
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما");
             }

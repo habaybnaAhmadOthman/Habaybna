@@ -35,7 +35,7 @@ export default {
             payload
         );
         if (resp.status != 200) {
-            const error = new Error("fail to register");
+            const error = new Error("fail to complete registration as parent");
             throw error;
         }
         // context.commit('parentCompleteRegistration',payload);
