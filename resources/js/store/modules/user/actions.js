@@ -25,6 +25,7 @@ export default {
             const error = new Error('fail to register');
             throw error;
         }
+        console.log('resp',resp);
         context.commit('register',payload);
     }
 }

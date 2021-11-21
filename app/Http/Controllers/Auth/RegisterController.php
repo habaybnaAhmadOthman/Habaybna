@@ -49,7 +49,6 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        dd($data);
         return Validator::make($data, [
             'phone' => ['required', 'unique:users'],
             // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -65,15 +64,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
+        // dd($data);
         $user = User::create([
             'role' => $data['type'], // parent, specialist, other
             // 'email' => $data['email'],
             'phone' => $data['phone'], // ex: +962792819107
             'is_verify'=> 1,
+            'otp'=>'123432'
         ]);
 
-            return $user;
+        return $user;
         }
 
 }

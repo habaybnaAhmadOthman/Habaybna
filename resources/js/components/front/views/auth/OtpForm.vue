@@ -51,10 +51,12 @@
 </template>
 
 <script>
+
+
 import VuePhoneNumberInput from "vue-phone-number-input";
 import "vue-phone-number-input/dist/vue-phone-number-input.css";
 
-import phoneNumberMixin from "./../../mixins/phoneNumber.js";
+import phoneNumberMixin from './../../mixins/phoneNumber.js';
 
 export default {
     emits: ["send-otp"],
