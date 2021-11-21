@@ -113,7 +113,7 @@ export default {
                 .then(result => {
                     // User signed in successfully.
                     const user = result.user;
-                    this.$emit("complete-registration-form");
+                    this.$emit("complete-registration-form",{code: this.code.val});
                     // ...
                 })
                 .catch(error => {

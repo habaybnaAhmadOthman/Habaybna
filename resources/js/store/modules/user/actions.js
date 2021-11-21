@@ -12,7 +12,15 @@ async function callApi(method, url, dataObj) {
 
 export default {
     async register(context,payload){
-        const resp = await callApi("POST", "https://habaybna-21237-default-rtdb.firebaseio.com/users.json",payload);
+        const resp = await callApi("POST", "/register",payload);
+        if (resp.status != 200) {
+            const error = new Error('fail to register');
+            throw error;
+        }
+        context.commit('register',payload);
+    },
+    async registerFirstStep(context,payload){
+        const resp = await callApi("POST", "/register",payload);
         if (resp.status != 200) {
             const error = new Error('fail to register');
             throw error;

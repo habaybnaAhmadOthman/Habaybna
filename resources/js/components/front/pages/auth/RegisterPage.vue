@@ -71,6 +71,7 @@ export default {
             showInterestScreen:false,
             phoneNumber: "",
             type: "",
+            code: "",
             error: null
         };
     },
@@ -83,6 +84,7 @@ export default {
             this.error = null;
         },
         async gotPhone(obj) {
+            
             this.isLoading = true;
             if (!obj.phoneNumber) {
                 obj.phoneNumber = this.phoneNumber;
@@ -104,6 +106,7 @@ export default {
                     // SMS sent.
                     window.confirmationResult = confirmationResult;
                     this.showCodeForm = true;
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -113,6 +116,7 @@ export default {
 
             this.isLoading = false;
         },
+        
         async registrationDone(userData){
             this.isLoading = true;
             try {
@@ -137,11 +141,13 @@ export default {
                 this.showErrorMessage("حدث خطأ ما")
             }
         },
-        async gotCode() {
+        // store phone number and type and otp(optional)
+        async gotCode(code) {
             this.isLoading = true;
             try {
-                await this.$store.dispatch("user/register", {
-                    type: this.type.val,
+                await this.$store.dispatch("user/registerFirstStep", {
+                    type: this.type,
+                    code: code,
                     phone: this.phoneNumber
                 });
                 console.log("done");

@@ -102,7 +102,7 @@ export default {
             }
 
             let phoneNumber = this.phoneNumber.val;
-            this.$emit("send-otp", { phoneNumber, type: this.type });
+            this.$emit("send-otp", { phoneNumber, type: this.type.val });
         }
     },
     components: { VuePhoneNumberInput }
