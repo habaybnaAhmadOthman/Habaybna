@@ -108,15 +108,18 @@ export default {
                 return;
             }
             this.isLoading = true;
+            debugger;
             await window.confirmationResult
                 .confirm(this.code.val)
                 .then(result => {
                     // User signed in successfully.
+                    debugger;
                     const user = result.user;
                     this.$emit("complete-registration-form",{code: this.code.val});
                     // ...
                 })
                 .catch(error => {
+                    debugger;
                     this.$emit("error-happen", "حدث خطأ ما");
                 });
             this.isLoading = false;

@@ -71,7 +71,10 @@ const routes = [
     },
     {
         path: '/signin',
-        component: LoginPage
+        component: LoginPage,
+        meta: {
+            header: false
+        }
     },
     {
         path: '/user-profile',

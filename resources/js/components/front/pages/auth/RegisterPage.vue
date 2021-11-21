@@ -11,11 +11,8 @@
             <CodeForm
                 @complete-registration-form="gotCode"
                 @send-otp="gotPhone"
-                v-else-if="!showCompleteForm"
+                v-else
             ></CodeForm>
-            <CompleteParent @complete-registration="registrationDone" v-else-if="showCompleteForm && type == 'parent'"></CompleteParent>
-            <CompleteOthers @complete-registration="registrationDone" v-else-if="showCompleteForm && !showInterestScreen"></CompleteOthers>
-            <WelcomeScreen v-else-if="showInterestScreen" @submit-interests="addInterests"></WelcomeScreen>
             <button
                 :class="{ 'asb-btn': phoneNumber != '' }"
                 @click="submitPhone"
@@ -24,7 +21,7 @@
             >
                 أرسل رمز التحقّق <img src="/images/siteImgs/header/logo.png" class="mr-10">
             </button>
-            <h2 v-if="!showCompleteForm || !showInterestScreen" class="white mt-30 light font-17 d-flex space-between align-center p-side-50">
+            <h2 class="white mt-30 light font-17 d-flex space-between align-center p-side-50">
                 <span class="">هل أنت عضو في حبايبنا؟</span>
                 <router-link class="white d-flex align-center" to="/signin"
                     >تسجيل الدخول <img src="/images/siteImgs/header/logo.png" class="mr-10"></router-link
@@ -50,25 +47,17 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import RegisterTemplate from "./../../views/auth/RegisterTemplate.vue";
 import OtpForm from "./../../views/auth/OtpForm.vue";
 import CodeForm from "./../../views/auth/CodeForm.vue";
-import CompleteParent from "./../../views/auth/CompleteParent.vue";
-import CompleteOthers from "./../../views/auth/CompleteOthers.vue";
-import WelcomeScreen from "./../../views/auth/WelcomeScreen.vue";
 
 export default {
     components: {
         RegisterTemplate,
         OtpForm,
-        CodeForm,
-        CompleteParent,
-        CompleteOthers,
-        WelcomeScreen,
+        CodeForm
     },
     data() {
         return {
             isLoading: false,
             showCodeForm: false,
-            showCompleteForm: false,
-            showInterestScreen:false,
             phoneNumber: "",
             type: "",
             code: "",
@@ -116,41 +105,15 @@ export default {
 
             this.isLoading = false;
         },
-        
-        async registrationDone(userData){
-            this.isLoading = true;
-            try {
-                await this.$store.dispatch("user/register",{
-                    ...userData,
-                    type:this.type,
-                    phone: this.phoneNumber
-                });
-                this.showInterestScreen = true
-            } catch (e) {
-                this.showErrorMessage("حدث خطأ ما")
-            }
-            this.isLoading = false;
-        },
-        addInterests(interests){
-            try {
-                this.$store.dispatch("user/register",{
-                    interests
-                });
-                this.$router.replace('/')
-            } catch (e) {
-                this.showErrorMessage("حدث خطأ ما")
-            }
-        },
         // store phone number and type and otp(optional)
-        async gotCode(code) {
+        async gotCode(otpCode) {
             this.isLoading = true;
             try {
                 await this.$store.dispatch("user/registerFirstStep", {
                     type: this.type,
-                    code: code,
+                    code: otpCode,
                     phone: this.phoneNumber
                 });
-                console.log("done");
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما");
             }
@@ -160,23 +123,6 @@ export default {
         showErrorMessage(msg) {
             this.error = msg;
         }
-
-        // // add phone number styling
-        // getStyleDirection() {
-        //     if (!this.phoneNumber.style) {
-        //         var css =
-        //                 ".vti__dropdown-list { right: 0; }.vti__dropdown-item {display:flex;align-items:center;}",
-        //             head =
-        //                 document.head ||
-        //                 document.getElementsByTagName("head")[0],
-        //             style = document.createElement("style");
-
-        //         head.appendChild(style);
-
-        //         style.type = "text/css";
-        //         style.appendChild(document.createTextNode(css));
-        //     }
-        // },
     },
     mounted() {
         window.recaptchaVerifier = new RecaptchaVerifier(
