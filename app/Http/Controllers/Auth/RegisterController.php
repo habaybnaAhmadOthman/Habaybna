@@ -49,7 +49,6 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
         return Validator::make($data, [
             'phone' => ['required', 'unique:users'],
             // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -71,6 +70,7 @@ class RegisterController extends Controller
             // 'email' => $data['email'],
             'phone' => $data['phone'], // ex: +962792819107
             'is_verify'=> 1,
+            'otp'=>'123432'
         ]);
 
             return $user;
