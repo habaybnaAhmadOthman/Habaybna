@@ -64,7 +64,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
+        // dd($data);
         $user = User::create([
             'role' => $data['type'], // parent, specialist, other
             // 'email' => $data['email'],
@@ -73,7 +73,7 @@ class RegisterController extends Controller
             'otp'=>'123432'
         ]);
 
-            return $user;
+        return $user;
         }
 
 }

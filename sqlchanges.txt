@@ -7,3 +7,6 @@ CHANGE COLUMN `password` `password` VARCHAR(255) COLLATE 'utf8mb4_unicode_ci' NU
 ALTER TABLE `habaybnaDB`.`users`
 CHANGE COLUMN `otp` `otp` VARCHAR(255) COLLATE 'utf8mb4_unicode_ci' NULL ,
 CHANGE COLUMN `email` `email` VARCHAR(255) COLLATE 'utf8mb4_unicode_ci' NULL ;
+----------------------
+parent_users table some nn
+---------------------

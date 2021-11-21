@@ -104,13 +104,23 @@ export default {
             }
 
             let phoneNumber = this.phoneNumber.val;
-            this.$emit("send-otp", { phoneNumber, type: this.type });
+            this.$emit("send-otp", { phoneNumber, type: this.type.val });
         }
     },
     components: { VuePhoneNumberInput }
 };
 </script>
-
+<style>
+    .country-selector,.country-selector__input ,.input-tel__input{
+        height: 52px !important;;
+    }
+    .country-selector__country-flag {
+        top :29px!important;
+    }
+    #phoneNumber-8_country_selector,.input-tel__input {
+        border-color: #606!important;
+    }
+</style>
 <style scoped>
 .form-group p {
     display: none;

@@ -108,8 +108,8 @@ class ParentUsersController extends Controller
         $parent->firstName = $request->firstName ;
         $parent->lastName = $request->lastName ;
         $parent->gender = $request->gender ;
-        $parent->dob = $request->dob ;
-        $parent->avatar = $path ? $path  : '';
+        // $parent->dob = $request->dob ;
+        // $parent->avatar = $path ? $path  : '';
 
         $parent->save();
         Auth::user()->password = Hash::make($request->password) ;
