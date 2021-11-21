@@ -2,22 +2,15 @@
     <div>
         <RegisterTemplate>
             <LoginForm
-                @send-otp="login"
-                @error-happen="showErrorMessage"
+                @save-form="login"
             >
             </LoginForm>
-            <h2 class="white mt-30 light font-17 d-flex space-between align-center p-side-50">
-                <span class="">هل أنت عضو في حبايبنا؟</span>
-                <router-link class="white d-flex align-center" to="/signin"
-                    >تسجيل الدخول <img src="/images/siteImgs/header/logo.png" class="mr-10"></router-link
-                >
+            <h2 class="mt-30 center light font-15 flex-all p-side-50">
+                <span class="main-color">لست من عائلة حبايبنا؟</span>
+                <router-link class="blue d-flex align-center" to="/signin"
+                    >إنضم الآن</router-link>
             </h2>
         </RegisterTemplate>
-        <alert-dialog
-            :show="!!error"
-            :title="error"
-            @close="closeModal"
-        ></alert-dialog>
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
         </div>
@@ -37,38 +30,23 @@ export default {
     data() {
         return {
             isLoading: false,
-            showCodeForm: false,
-            phoneNumber: "",
             type: "",
-            code: "",
-            error: null
+            code: ""
         };
     },
 
     methods: {
-        submitPhone() {
-            this.$refs.phoneForm.submitForm();
-        },
-        closeModal() {
-            this.error = null;
-        },
-        // store phone number and type and otp(optional)
-        async login(otpCode) {
+        async login(data) {
             this.isLoading = true;
             try {
-                await this.$store.dispatch("user/registerFirstStep", {
-                    type: this.type,
-                    code: otpCode,
-                    phone: this.phoneNumber
+                await this.$store.dispatch("user/login", {
+                    password: data.password,
+                    user: data.user,
                 });
             } catch (e) {
-                this.showErrorMessage("حدث خطأ ما");
+                
             }
             this.isLoading = false;
-            this.showCompleteForm = true;
-        },
-        showErrorMessage(msg) {
-            this.error = msg;
         }
     }
 };

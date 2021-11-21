@@ -1,9 +1,14 @@
 <template>
     <div>
         <RegisterTemplate>
-            <CompleteParent @complete-registration="registrationDone" v-if="!showInterestScreen && type == 'parent'"></CompleteParent>
-            <CompleteOthers @complete-registration="registrationDone" v-else-if="!showInterestScreen"></CompleteOthers>
-            <WelcomeScreen v-else @submit-interests="addInterests"></WelcomeScreen>
+            <CompleteParent
+                @complete-registration="submitForm"
+                v-if="!showInterestScreen"
+            ></CompleteParent>
+            <WelcomeScreen
+                v-else
+                @submit-interests="addInterests"
+            ></WelcomeScreen>
         </RegisterTemplate>
         <alert-dialog
             :show="!!error"
@@ -17,24 +22,21 @@
 </template>
 
 <script>
+import RegisterTemplate from "./../../views/auth/RegisterTemplate.vue";
 // // forms
 import CompleteParent from "./../../views/auth/CompleteParent.vue";
-import CompleteOthers from "./../../views/auth/CompleteOthers.vue";
 import WelcomeScreen from "./../../views/auth/WelcomeScreen.vue";
 
 export default {
     components: {
         RegisterTemplate,
-        OtpForm,
-        CodeForm,
         CompleteParent,
-        CompleteOthers,
-        WelcomeScreen,
+        WelcomeScreen
     },
     data() {
         return {
             isLoading: false,
-            showInterestScreen:false,
+            showInterestScreen: false,
             phoneNumber: "",
             type: "",
             code: "",
@@ -46,28 +48,32 @@ export default {
         closeModal() {
             this.error = null;
         },
-        async registrationDone(userData){
+        async submitForm(userData) {
             this.isLoading = true;
             try {
-                await this.$store.dispatch("user/register",{
-                    ...userData,
-                    type:this.type,
-                    phone: this.phoneNumber
-                });
-                this.showInterestScreen = true
+                let obj = {
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    password: userData.password,
+                    email: userData.email,
+                    gender: userData.gender,
+                    relative: userData.relative
+                }
+                await this.$store.dispatch("user/parentCompleteRegistration",obj);
+                this.showInterestScreen = true;
             } catch (e) {
-                this.showErrorMessage("حدث خطأ ما")
+                this.showErrorMessage("حدث خطأ ما");
             }
             this.isLoading = false;
         },
-        addInterests(interests){
+        addInterests(interests) {
             try {
-                this.$store.dispatch("user/register",{
+                this.$store.dispatch("user/register", {
                     interests
                 });
-                this.$router.replace('/')
+                this.$router.replace("/");
             } catch (e) {
-                this.showErrorMessage("حدث خطأ ما")
+                this.showErrorMessage("حدث خطأ ما");
             }
         },
         showErrorMessage(msg) {

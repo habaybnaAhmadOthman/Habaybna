@@ -569,6 +569,9 @@ a:hover {
 .main-color {
     color: #660066;
 }
+.blue {
+    color: #0043FF;
+}
 :focus-visible {
     outline: -webkit-focus-ring-color auto 0;
 }

@@ -58,7 +58,7 @@ export default {
             },
             otp: {
                 canResend: false,
-                availableTry: 5,
+                availableTry: 3,
                 secondsLeft: 10
             },
             error: null
@@ -108,18 +108,15 @@ export default {
                 return;
             }
             this.isLoading = true;
-            debugger;
             await window.confirmationResult
                 .confirm(this.code.val)
                 .then(result => {
                     // User signed in successfully.
-                    debugger;
                     const user = result.user;
                     this.$emit("complete-registration-form",{code: this.code.val});
                     // ...
                 })
                 .catch(error => {
-                    debugger;
                     this.$emit("error-happen", "حدث خطأ ما");
                 });
             this.isLoading = false;
@@ -143,6 +140,6 @@ export default {
     box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%);
 }
 .spinner {
-    z-index: 10;
+    z-index: 10!important;
 }
 </style>

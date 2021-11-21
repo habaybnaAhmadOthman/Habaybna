@@ -9,7 +9,7 @@
             >
             </OtpForm>
             <CodeForm
-                @complete-registration-form="gotCode"
+                @complete-registration-form="submitForm"
                 @send-otp="gotPhone"
                 v-else
             ></CodeForm>
@@ -106,14 +106,17 @@ export default {
             this.isLoading = false;
         },
         // store phone number and type and otp(optional)
-        async gotCode(otpCode) {
+        async submitForm(otpCode) {
             this.isLoading = true;
             try {
+                // call api
                 await this.$store.dispatch("user/registerFirstStep", {
                     type: this.type,
                     code: otpCode,
-                    phone: this.phoneNumber
+                    phone: this.phoneNumber,
+                    token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 });
+                this.$router.replace(`/${this.type}-complete-registration`)
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما");
             }
@@ -145,7 +148,7 @@ export default {
     opacity: 0;
 }
 .spinner {
-    z-index: 10;
+    z-index: 10!important;
 }
 
 </style>
