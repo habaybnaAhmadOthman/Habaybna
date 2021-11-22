@@ -7,15 +7,16 @@
 
         <form @submit.prevent="submitForm">
             <div class="form-group mt-50" :class="{ invalid: !tagsValid }">
-                <vue-tags-input
-                    v-model="tag"
-                    :tags="tags"
-                    :autocomplete-items="filteredItems"
-                    @tags-changed="newTags => (tags = newTags)"
-                    placeholder="الاهتمامات"
-                    class="tags-input"
-                >
-                </vue-tags-input>
+                <multiselect
+                    v-model="tags"
+                    :options="interestsList"
+                    :searchable="true"
+                    :close-on-select="false"
+                    :multiple="true" 
+                    :taggable="true" 
+                    label="title" track-by="title"
+                    placeholder="يرجى إختيار الإهتمامات"
+                ></multiselect>
                 <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
             <div class="center">
@@ -35,68 +36,43 @@
 </template>
 
 <script>
-import VueTagsInput from "@johmun/vue-tags-input";
+import Multiselect from "vue-multiselect";
+import "vue-multiselect/dist/vue-multiselect.min.css";
 export default {
     emits: ["submit-interests"],
     props: ["interestsList"],
     components: {
-        VueTagsInput
+        Multiselect
     },
-    created(){
-        this.initAutoComplete()
+    created() {
+        // this.initAutoComplete();
     },
     data() {
         return {
             isLoading: false,
-            tag: "",
-            tags: [],
+            tags: "",
             tagsValid: true,
-            autoCompleteItems: [],
-            error: null
+            error: null,
         };
     },
     methods: {
-        initAutoComplete() {
-            let temp = []
-            this.interestsList.forEach((interest) =>{
-                temp.push({
-                    id: interest.id,
-                    text: interest.title,
-                })
-            });
-            this.autoCompleteItems = temp;
-        },
         submitForm() {
             this.tagsValid = true;
             if (this.tags.length < 1) {
                 this.tagsValid = false;
                 return;
             }
-            this.$emit("submit-interests", this.tags);
+            let tagIDs = []
+            this.tags.forEach((item)=>tagIDs.push(item.id))
+            
+            this.$emit("submit-interests", tagIDs);
         }
     },
-    computed: {
-        filteredItems() {
-            return this.autoCompleteItems.filter(i => {
-                return (
-                    i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1
-                );
-            });
-        }
-    }
+    computed: {}
 };
 </script>
 
 <style>
-.tags-input,
-.ti-input {
-    min-height: 52px;
-    border: 1px solid #606;
-    border-radius: 5px;
-}
-.vue-tags-input {
-    max-width: 100% !important;
-}
 .form-group p {
     display: none;
 }

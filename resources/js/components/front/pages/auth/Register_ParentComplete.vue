@@ -27,6 +27,7 @@ import RegisterTemplate from "./../../views/auth/RegisterTemplate.vue";
 // // forms
 import CompleteParent from "./../../views/auth/CompleteParent.vue";
 import WelcomeScreen from "./../../views/auth/WelcomeScreen.vue";
+// import WelcomeScreen from "./../../../";
 
 export default {
     components: {
@@ -70,10 +71,8 @@ export default {
         },
         addInterests(interests) {
             try {
-                this.$store.dispatch("user/register", {
-                    interests
-                });
-                this.$router.replace("/");
+                this.$store.dispatch("user/addInterests",interests);
+                // this.$router.replace("/parent");
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما");
             }

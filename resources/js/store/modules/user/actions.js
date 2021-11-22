@@ -46,12 +46,19 @@ export default {
     },
     async login(context, payload){
         const resp = await callApi("POST", "/login", payload);
-        if (resp.status != 200 || resp.status != 201) {
+        if (resp.status != 200) {
             const error = new Error("fail to login");
             throw error;
         }
         context.commit("setUser", payload);
     },
-    
+    // ******** interests
+    async addInterests(_, interests){
+        const resp = await callApi("POST", "/store-user-interests", interests);
+        if (resp.status != 200) {
+            const error = new Error("fail to add interests");
+            throw error;
+        }
+    }
     
 };
