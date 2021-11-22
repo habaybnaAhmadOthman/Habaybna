@@ -112,6 +112,7 @@ class ParentUsersController extends Controller
         // $parent->avatar = $path ? $path  : '';
 
         $parent->save();
+        Auth::user()->email = $request->email;
         Auth::user()->password = Hash::make($request->password) ;
         Auth::user()->save();
 
