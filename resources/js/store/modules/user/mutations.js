@@ -6,10 +6,8 @@ export default {
     },
     setCountryCode(state,countryCode) {
         state.countryCode = countryCode
-    }
-    // parentCompleteRegistration(state,payload){
-    //     state.phone = payload.phone
-    //     state.type = payload.type
-    //     console.log(state);
+    },
+    // login(state,payload){
+    //     state.is_verify = payload.is_verify;
     // },
 }

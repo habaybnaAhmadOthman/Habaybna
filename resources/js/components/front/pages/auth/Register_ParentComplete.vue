@@ -8,6 +8,7 @@
             <WelcomeScreen
                 v-else
                 @submit-interests="addInterests"
+                :interestsList="interests"
             ></WelcomeScreen>
         </RegisterTemplate>
         <alert-dialog
@@ -37,6 +38,7 @@ export default {
         return {
             isLoading: false,
             showInterestScreen: false,
+            interests: [],
             phoneNumber: "",
             type: "",
             code: "",
@@ -59,8 +61,7 @@ export default {
                     gender: userData.gender,
                     relative: userData.relative
                 }
-                const resp = await this.$store.dispatch("user/parentCompleteRegistration",obj);
-                
+                this.interests = await this.$store.dispatch("user/completeRegistration",obj);
                 this.showInterestScreen = true;
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما");

@@ -7,8 +7,9 @@ export default {
         return {
             phone: null,
             type: null,
-            countryCode: 'JO'
-            // token: null,
+            countryCode: 'JO',
+            is_verify: false,
+            token: null,
         }
     },
     mutations,
