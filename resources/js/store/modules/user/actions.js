@@ -31,7 +31,7 @@ export default {
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
-        type = 'parent'
+        type = 'specialist'
         const resp = await callApi(
             "POST",
             `/${type}-complete-register`,
