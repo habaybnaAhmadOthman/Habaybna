@@ -104,7 +104,7 @@ const routes = [
         }
     },
     {
-        path: '/user-profile',
+        path: '/profile',
         component: UserProfile
     }
 ]

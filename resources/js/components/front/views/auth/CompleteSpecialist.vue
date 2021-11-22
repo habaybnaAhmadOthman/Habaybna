@@ -1,17 +1,17 @@
 <template>
     <form @submit.prevent="submitForm" class="p-side-50">
         <div class="row d-flex space-between">
-            <!-- firstName -->
+            <!-- fristName -->
             <div
                 class="form-group row-half"
-                :class="{ invalid: !firstName.isValid }"
+                :class="{ invalid: !fristName.isValid }"
             >
                 <input
                     class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
                     placeholder="الإسم الأول"
-                    id="firstName"
+                    id="fristName"
                     @blur="checkValidity"
-                    v-model.trim="firstName.val"
+                    v-model.trim="fristName.val"
                 />
                 <p class="main-color mt-5 font-12">
                     هذا الحقل مطلوب
@@ -113,7 +113,44 @@
                     هذا الحقل مطلوب
                 </p>
             </div>
+            <!-- speciality -->
+            <div
+                class="form-group row-half"
+                :class="{ invalid: !specialization.isValid }"
+            >
+                <div class="select-wrapper relative">
+                    <select
+                        class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
+                        v-model="specialization.val"
+                        id="specialization"
+                        @blur="checkValidity"
+                    >
+                        <option value="no" disabled hidden>التخصص</option>
+                        <option value="التربية الخاصة">التربية الخاصة</option>
+                        <option value="النطق واللغة">النطق واللغة</option>
+                        <option value="العلاج الوظيفي">العلاج الوظيفي</option>
+                        <option value="العلاج الطبيعي">العلاج الطبيعي</option>
+                        <option value="تحليل السلوك">تحليل السلوك</option>
+                    </select>
+                </div>
+                <p class="main-color mt-5 font-12">
+                    هذا الحقل مطلوب
+                </p>
+            </div>
             
+        </div>
+
+        <!-- workPlace -->
+        <div class="form-group mb-15" :class="{ invalid: !workPlace.isValid }">
+            <input
+                type="text"
+                class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
+                placeholder="مكان العمل"
+                id="workPlace"
+                @blur="checkValidity"
+                v-model.trim="workPlace.val"
+            />
+            <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
         </div>
 
         <button
@@ -137,8 +174,8 @@ export default {
     methods: {
         validateForm() {
             this.formIsValid = true;
-            if (this.firstName.val == "") {
-                this.firstName.isValid = false;
+            if (this.fristName.val == "") {
+                this.fristName.isValid = false;
                 this.formIsValid = false;
             }
             if (this.lastName.val == "") {
@@ -157,6 +194,14 @@ export default {
                 this.gender.isValid = false;
                 this.formIsValid = false;
             }
+            if (this.specialization.val == "no") {
+                this.specialization.isValid = false;
+                this.formIsValid = false;
+            }
+            if (this.workPlace.val == "") {
+                this.workPlace.isValid = false;
+                this.formIsValid = false;
+            }
         },
         checkValidity(e) {
             if (e.target.value != "") {
@@ -164,7 +209,7 @@ export default {
             } else {
                 this[e.target.id].isValid = false;
             }
-            if (e.target.id == "gender") {
+            if (e.target.id == "gender" || e.target.id == "specialization") {
                 if (e.target.value == "no") {
                     this[e.target.id].isValid = false;
                 } else {
@@ -181,18 +226,19 @@ export default {
                 return;
             }
             this.$emit('complete-registration',{
-                firstName: this.firstName.val,
+                fristName: this.fristName.val,
                 lastName: this.lastName.val,
                 password: this.password.val,
                 email: this.email.val,
                 gender: this.gender.val,
-                relative: this.relative.val
+                specialization: this.specialization.val,
+                workPlace: this.workPlace.val
             })
         }
     },
     data() {
         return {
-            firstName: {
+            fristName: {
                 val: "",
                 isValid: true
             },
@@ -208,8 +254,12 @@ export default {
                 val: "no",
                 isValid: true
             },
-            relative: {
+            specialization: {
                 val: "no",
+                isValid: true
+            },
+            workPlace: {
+                val: "",
                 isValid: true
             },
             formIsValid: true,

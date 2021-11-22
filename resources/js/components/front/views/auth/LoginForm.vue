@@ -6,13 +6,13 @@
         <form @submit.prevent="submitForm">
             <div
                 class="form-group mb-30 relative"
-                :class="{ invalid: !user.isValid }"
+                :class="{ invalid: !phone.isValid }"
             >
                 <label class="font-20 main-color mb-10">اسم المستخدم</label>
                 <input
                     @blur="checkValidity"
-                    v-model.trim="user.val"
-                    id="user"
+                    v-model.trim="phone.val"
+                    id="phone"
                     class="form-control font-18 holder-center w-100 user-input"
                     placeholder="رقم الخلوي او البريد الالكتروني"
                 />
@@ -26,17 +26,18 @@
                 <input
                     class="form-control font-18 holder-center w-100 password-input"
                     @blur="checkValidity"
+                    v-model.trim="password.val"
                     id="password"
                     placeholder="xxxxxx"
                 />
                 <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="checkbox main-color font-16">
                     <input type="checkbox" name="checkbox-checked" checked />
                     تذكرني
                 </label>
-            </div>
+            </div> -->
             <button
                 class="btn mt-20 border-0 pointer flex-all white m-side-auto font-17"
             >
@@ -51,7 +52,7 @@ export default {
     emits: ["save-form"],
     data() {
         return {
-            user: {
+            phone: {
                 val: "",
                 isValid: true
             },
@@ -65,8 +66,8 @@ export default {
     methods: {
         validateForm() {
             this.formIsValid = true;
-            if (this.user.val == "") {
-                this.user.isValid = false;
+            if (this.phone.val == "") {
+                this.phone.isValid = false;
                 this.formIsValid = false;
             }
         },
@@ -78,12 +79,13 @@ export default {
             }
         },
         submitForm() {
-            // this.validateForm();
-            // if (!this.formIsValid) {
-            //     return;
-            // }
+            this.validateForm();
+            if (!this.formIsValid) {
+                return;
+            }
+            
             this.$emit("save-form", {
-                user: this.user.val,
+                phone: this.phone.val,
                 password: this.password.val
             });
         }

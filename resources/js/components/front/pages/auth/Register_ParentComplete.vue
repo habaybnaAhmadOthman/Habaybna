@@ -72,7 +72,7 @@ export default {
         addInterests(interests) {
             try {
                 this.$store.dispatch("user/addInterests",interests);
-                this.$router.replace("/user-profile");
+                this.$router.replace("/profile");
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما");
             }
