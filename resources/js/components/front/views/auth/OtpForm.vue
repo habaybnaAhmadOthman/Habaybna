@@ -1,88 +1,86 @@
 <template>
-    <form @submit.prevent="sendOtp" class="">
-        <div class="form-group mb-30" :class="{ invalid: !type.isValid }">
-            <div class="select-wrapper relative">
-                <select
-                    class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                    v-model="type.val"
-                    id="type"
-                    @blur="checkValidity"
-                >
-                    <option value="no" disabled hidden>هل أنت</option>
-                    <option value="parnet"
-                        >أحد الوالدين أو أفراد العائلة</option
+    <div class="mobile-form pt-50 p-side-50">
+        <h2 class="white font-22 bold d-flex align-center">
+            مستخدم جديد
+            <img src="/images/siteImgs/header/logo.png" class="mr-10" />
+        </h2>
+        <form @submit.prevent="submitForm" class="mt-30">
+            <div class="form-group mb-30" :class="{ invalid: !type.isValid }">
+                <div class="select-wrapper relative">
+                    <select
+                        class="
+            bg-white
+            border-0
+            radius-5
+            w-100
+            p-10
+            pointer
+            form-control
+            trans
+          "
+                        v-model="type.val"
+                        id="type"
+                        @blur="checkValidity"
                     >
-                    <option value="parnet">أخصائي تربية حاصة أو تأهيل</option>
-                    <option value="parnet">آخر</option>
-                </select>
+                        <option value="no" disabled hidden>هل أنت</option>
+                        <option value="parent"
+                            >أحد الوالدين أو أفراد العائلة</option
+                        >
+                        <option value="specialist">أخصائي تربية حاصة أو تأهيل</option>
+                        <option value="other">آخر</option>
+                    </select>
+                </div>
+                <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
-            <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
-        </div>
-        <div class="form-group ltr" :class="{ invalid: !phoneNumber.isValid }">
-            <VuePhoneNumberInput
-                v-model="phoneNumber.input"
-                @update="getPhoneVal"
-                @blur="checkValidity"
-                @input="checkPhoneNumber"
-                id="phoneNumber"
-            />
-            <p class="main-color mt-5 font-12">رقم الهاتف غير صحيح</p>
-        </div>
-        <div id="recaptcha-container" class="recaptcha-container"></div>
-        <button class="btn w-100 mt-30 bold font-20" id="sign-in-button">التالي</button>
-        <div v-if="isLoading">
-            <loading-spinner></loading-spinner>
-        </div>
-    </form>
+            <div
+                class="form-group ltr"
+                :class="{ invalid: !phoneNumber.isValid }"
+            >
+                <VuePhoneNumberInput
+                    v-model="phoneNumber.input"
+                    @update="getPhoneVal"
+                    @blur="checkValidity"
+                    @input="checkPhoneNumber"
+                    id="phoneNumber"
+                    :default-country-code="'JO'"
+                />
+                <p class="white mt-5 font-12">رقم الهاتف غير صحيح</p>
+            </div>
+        </form>
+    </div>
 </template>
 
 <script>
-import auth from "./../../../../modules/firebase";
-import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
+
 
 import VuePhoneNumberInput from "vue-phone-number-input";
 import "vue-phone-number-input/dist/vue-phone-number-input.css";
+
+import phoneNumberMixin from './../../mixins/phoneNumber.js';
+
 export default {
-    emits: ["phone-registered"],
+    emits: ["send-otp"],
+    mixins: [phoneNumberMixin],
     data() {
         return {
-            isLoading: false,
             type: {
                 val: "no",
                 isValid: true
             },
-            phoneNumber: {
-                input: '',
-                val: "",
-                isValid: true,
-                countryCode: "",
-                style: false,
-                created:false
-            },
-            otpFormIsValid: true
+            formIsValid: true
         };
     },
     methods: {
-        getPhoneVal(phoneNumberInput) {
-            if (phoneNumberInput.isValid) {
-                this.phoneNumber.val = phoneNumberInput.formattedNumber;
-                this.phoneNumber.isValid = true;
-            }
-        },
-        checkPhoneNumber(e){
-            if(!this.phoneNumber.created) {
-                this.phoneNumber.isValid = true;
-            }
-        },
-        otpValidateForm() {
-            this.otpFormIsValid = true;
+        validateForm() {
+            this.formIsValid = true;
+            this.checkPhoneNumber();
             if (this.phoneNumber.val == "") {
                 this.phoneNumber.isValid = false;
-                this.otpFormIsValid = false;
+                this.formIsValid = false;
             }
             if (this.type.val == "no") {
                 this.type.isValid = false;
-                this.otpFormIsValid = false;
+                this.formIsValid = false;
             }
         },
         checkValidity(e) {
@@ -98,44 +96,31 @@ export default {
                     this[e.target.id].isValid = true;
                 }
             }
-            
         },
-        async sendOtp() {
-            this.otpValidateForm();
-            if (!this.otpFormIsValid) {
+        submitForm() {
+            this.validateForm();
+            if (!this.formIsValid) {
                 return;
             }
-            this.isLoading = true
 
             let phoneNumber = this.phoneNumber.val;
-            // //
-            await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
-                .then(confirmationResult => {
-                    // SMS sent.
-                    window.confirmationResult = confirmationResult;
-                    this.$emit("phone-registered");
-                })
-                .catch(error => {
-                    // Error; SMS not sent
-                    this.$emit("error-happen", "حدث خطأ ما");
-                });
-            this.isLoading = false
+            this.$emit("send-otp", { phoneNumber, type: this.type.val });
         }
-    },
-    mounted() {
-        window.recaptchaVerifier = new RecaptchaVerifier(
-            "sign-in-button",
-            {
-                size: "invisible",
-                callback: response => {}
-            },
-            auth
-        );
     },
     components: { VuePhoneNumberInput }
 };
 </script>
-
+<style>
+    .country-selector,.country-selector__input ,.input-tel__input{
+        height: 52px !important;;
+    }
+    .country-selector__country-flag {
+        top :29px!important;
+    }
+    #phoneNumber-8_country_selector,.input-tel__input {
+        border-color: #606!important;
+    }
+</style>
 <style scoped>
 .form-group p {
     display: none;
@@ -182,5 +167,8 @@ select::-ms-expand {
 }
 .form-control:focus {
     box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%);
+}
+.spinner {
+    z-index: 11;
 }
 </style>

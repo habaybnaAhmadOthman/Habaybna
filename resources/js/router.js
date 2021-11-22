@@ -15,6 +15,9 @@ import ClassRoom from './components/parents/ClassRoom.vue'
 
 import HomePage from './components/front/pages/HomePage.vue'
 import RegisterPage from './components/front/pages/auth/RegisterPage.vue'
+import RegisterParentComplete from './components/front/pages/auth/Register_ParentComplete.vue'
+import UserProfile from './components/front/pages/auth/UserProfile.vue'
+import LoginPage from './components/front/pages/auth/LoginPage.vue'
 
 const routes = [
     {
@@ -62,12 +65,29 @@ const routes = [
     },
     {
         path: '/signup',
-        component: RegisterPage
+        component: RegisterPage,
+        meta: {
+            header: false
+        }
     },
-    // {
-    //     path: '/user-profile',
-    //     component: UserProfile
-    // }
+    {
+        path: '/parent-complete-registration',
+        component: RegisterParentComplete,
+        meta: {
+            header: false
+        }
+    },
+    {
+        path: '/signin',
+        component: LoginPage,
+        meta: {
+            header: false
+        }
+    },
+    {
+        path: '/user-profile',
+        component: UserProfile
+    }
 ]
 
 export default new Router({
