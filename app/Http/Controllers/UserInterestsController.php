@@ -15,6 +15,11 @@ class UserInterestsController extends Controller
     public function store(Request $request)
     {
 
-        dd($request);
+        foreach ($request as $one) {
+            $userInterest = new UserInterest();
+            $userInterest->user_id = Auth::user()->id;
+            $userInterest->interest_id = $one;
+            $userInterest->save();
+        }
     }
 }

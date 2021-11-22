@@ -44,7 +44,7 @@ Route::get('/get-user-country','HomeController@getUserCountry');
     Route::get('/parent/all-courses','CourseController@getAllcourses')->name('getAllcourses');
     Route::view('/parent-dashboard/class-room/{id}', 'parents.classRoom');
     Route::get('/parent/getCourseVideos/{course_id}','CourseController@getCourseAndVideos')->name('parent.getCourseVideos');
-
+    Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
 
 
     // });
@@ -53,7 +53,7 @@ Route::get('/get-user-country','HomeController@getUserCountry');
     Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
 
     //others
-    
+
 
 
 
