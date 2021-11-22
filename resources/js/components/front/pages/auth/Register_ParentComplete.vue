@@ -8,6 +8,7 @@
             <WelcomeScreen
                 v-else
                 @submit-interests="addInterests"
+                :interestsList="interests"
             ></WelcomeScreen>
         </RegisterTemplate>
         <alert-dialog
@@ -26,6 +27,7 @@ import RegisterTemplate from "./../../views/auth/RegisterTemplate.vue";
 // // forms
 import CompleteParent from "./../../views/auth/CompleteParent.vue";
 import WelcomeScreen from "./../../views/auth/WelcomeScreen.vue";
+// import WelcomeScreen from "./../../../";
 
 export default {
     components: {
@@ -37,6 +39,7 @@ export default {
         return {
             isLoading: false,
             showInterestScreen: false,
+            interests: [],
             phoneNumber: "",
             type: "",
             code: "",
@@ -59,8 +62,7 @@ export default {
                     gender: userData.gender,
                     relative: userData.relative
                 }
-                const resp = await this.$store.dispatch("user/parentCompleteRegistration",obj);
-                
+                this.interests = await this.$store.dispatch("user/completeRegistration",obj);
                 this.showInterestScreen = true;
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما");
@@ -69,10 +71,8 @@ export default {
         },
         addInterests(interests) {
             try {
-                this.$store.dispatch("user/register", {
-                    interests
-                });
-                this.$router.replace("/");
+                this.$store.dispatch("user/addInterests",interests);
+                // this.$router.replace("/parent");
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما");
             }
