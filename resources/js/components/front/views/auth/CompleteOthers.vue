@@ -105,8 +105,8 @@
                         @blur="checkValidity"
                     >
                         <option value="no" disabled hidden>الجنس</option>
-                        <option value="male">ذكر</option>
-                        <option value="female">أنثى</option>
+                        <option value="m">ذكر</option>
+                        <option value="f">أنثى</option>
                     </select>
                 </div>
                 <p class="main-color mt-5 font-12">
@@ -129,8 +129,8 @@
                 <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
         </div>
-        
-        
+
+
         <div class="row d-flex space-between">
             <!-- Speciality -->
             <div
@@ -225,7 +225,7 @@ export default {
                 this.speciality.isValid = false;
                 this.formIsValid = false;
             }
-           
+
         },
         checkValidity(e) {
             if (e.target.value != "") {
@@ -290,7 +290,7 @@ export default {
                 val: "no",
                 isValid: true
             },
-            
+
             formIsValid: true,
             isLoading: false
         };

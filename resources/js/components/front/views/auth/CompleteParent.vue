@@ -105,8 +105,8 @@
                         @blur="checkValidity"
                     >
                         <option value="no" disabled hidden>الجنس</option>
-                        <option value="male">ذكر</option>
-                        <option value="female">أنثى</option>
+                        <option value="m">ذكر</option>
+                        <option value="f">أنثى</option>
                     </select>
                 </div>
                 <p class="main-color mt-5 font-12">

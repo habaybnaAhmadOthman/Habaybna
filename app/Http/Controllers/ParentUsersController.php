@@ -96,7 +96,7 @@ class ParentUsersController extends Controller
     public function completeRegister(Request $request)
     {
 
-        dd(Auth::user());
+        // dd(Auth::user());
         $parent = new ParentUsers() ;
         if ($request->hasFile('image')) {
             $img = $request->file('image');
@@ -108,14 +108,19 @@ class ParentUsersController extends Controller
         $parent->firstName = $request->firstName ;
         $parent->lastName = $request->lastName ;
         $parent->gender = $request->gender ;
-        // $parent->dob = $request->dob ;
+        $parent->relative = $request->relative ;
         // $parent->avatar = $path ? $path  : '';
 
         $parent->save();
         Auth::user()->password = Hash::make($request->password) ;
         Auth::user()->save();
 
-        return view('parents.parentDashboard');
+        return response()->json([
+            'msg'=>'success',
+            'status'=>true,
+            Auth::user(),
+            200
+        ]);
     }
 
     public function onlineCourses()

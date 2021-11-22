@@ -10,3 +10,6 @@ CHANGE COLUMN `email` `email` VARCHAR(255) COLLATE 'utf8mb4_unicode_ci' NULL ;
 ----------------------
 parent_users table some nn
 ---------------------
+ALTER TABLE `habaybnaDB`.`parent_users`
+ADD COLUMN `relative` VARCHAR(45) NULL AFTER `password`;
+
