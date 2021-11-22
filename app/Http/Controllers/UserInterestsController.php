@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\UserInterest;
+use Auth;
 
 class UserInterestsController extends Controller
 {
@@ -14,12 +15,21 @@ class UserInterestsController extends Controller
 
     public function store(Request $request)
     {
+        $interests = $request->all();
 
-        foreach ($request as $one) {
-            $userInterest = new UserInterest();
-            $userInterest->user_id = Auth::user()->id;
-            $userInterest->interest_id = $one;
-            $userInterest->save();
+        foreach ($interests as $interest) {
+           $userInterest = new UserInterest();
+
+           $userInterest->user_id = Auth::user()->id;
+           $userInterest->interest_id = $interest;
+
+           $userInterest->save();
         }
+        return response()->json([
+            'msg'=>'success',
+            'status'=>true,
+            'userData'=>Auth::user(),
+             200
+        ]);
     }
 }
