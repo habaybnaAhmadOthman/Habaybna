@@ -59,7 +59,8 @@ export default {
                     gender: userData.gender,
                     relative: userData.relative
                 }
-                await this.$store.dispatch("user/parentCompleteRegistration",obj);
+                const resp = await this.$store.dispatch("user/parentCompleteRegistration",obj);
+                
                 this.showInterestScreen = true;
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما");

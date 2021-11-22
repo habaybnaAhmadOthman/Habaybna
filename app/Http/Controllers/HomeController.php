@@ -34,11 +34,9 @@ class HomeController extends Controller
 
     public function getUserCountry(Request $request)
     {
-
-
+        // request()->ip() ::: 37.220.117.144
         try {
-            $position = Location::get(request()->ip());
-
+            $position = Location::get('37.220.117.144');
             return response()->json([
                 'msg'=>'success',
                 'status'=>true,

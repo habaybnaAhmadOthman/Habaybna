@@ -39,5 +39,14 @@ export default {
             throw error;
         }
         // context.commit('parentCompleteRegistration',payload);
+    },
+    async getCountryCode(context) {
+        const resp = await callApi("GET", "/get-user-country");
+        if (resp.status != 200) {
+            const error = new Error("fail to get country code");
+            throw error;
+        }
+        const countryCode = resp.data.data.countryCode
+        context.commit('setCountryCode',countryCode)
     }
 };

@@ -7,6 +7,7 @@ export default {
         return {
             phone: null,
             type: null,
+            countryCode: 'JO'
             // token: null,
         }
     },

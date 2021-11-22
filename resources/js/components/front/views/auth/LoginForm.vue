@@ -92,11 +92,14 @@ export default {
 </script>
 
 <style scoped>
-.user-input {
+.user-input ,.password-input{
     background-image: url(/images/logo.png);
     background-repeat: no-repeat;
     background-size: 40px 40px;
     background-position: 20px center;
+}
+.password-input {
+    background-image: url(/images/logo.png);
 }
 .form-control {
     padding-right: 20px;

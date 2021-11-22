@@ -6,7 +6,7 @@ export default {
                 val: "",
                 isValid: true,
                 countryCode: "",
-                style: false,
+                obj:null,
                 created: false
             }
         };
@@ -15,13 +15,14 @@ export default {
         getPhoneVal(phoneNumberInput) {
             if (phoneNumberInput.isValid) {
                 this.phoneNumber.val = phoneNumberInput.formattedNumber;
-                this.phoneNumber.isValid = true;
-            }
+            } 
+            this.phoneNumber.isValid = phoneNumberInput.isValid;
         },
         checkPhoneNumber(e) {
             if (!this.phoneNumber.created) {
                 this.phoneNumber.isValid = true;
             }
+            
         },
     }
 }
