@@ -23,14 +23,14 @@ import common from './common';
 import VueCoreVideoPlayer from 'vue-core-video-player'
 import VueCarousel from 'vue-carousel';
 import locale from 'view-design/dist/locale/en-US';
-// import firebase from 'firebase'
+import Vue from 'vue';
 // portal
 import MainApp from './MainApp.vue'
-import Vue from 'vue';
+
 Vue.use(VueCarousel);
 Vue.use(ViewUI,{ locale });
-
 Vue.mixin(common)
+
 
 Vue.use(CKEditor);
 Vue.use(VueCoreVideoPlayer)
@@ -60,9 +60,10 @@ Vue.component('main-app',MainApp)
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
+import store from './store/index.js';
 const app = new Vue({
     el: '#app',
+    store,
     router
 });
 

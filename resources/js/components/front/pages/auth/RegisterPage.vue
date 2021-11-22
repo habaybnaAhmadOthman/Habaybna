@@ -1,81 +1,154 @@
 <template>
-    <div class="header-margin">
-        <div class="container soft-bg radius-12 pt-30 pb-30 mb-30">
-            <AuthHeader></AuthHeader>
-            <div class="p-side-30 mt-50 w-50 m-side-auto">
-                <OtpForm @phone-registered="gotPhone" v-if="!showCodeForm" @error-happen="showErrorMessage" ></OtpForm>
-                <CodeForm @complete-registration-form="gotCode" v-else-if="!showCompleteForm"></CodeForm>
-                <CompleteRegistration v-else></CompleteRegistration>
-            </div>
-        </div>
+    <div>
+        <RegisterTemplate>
+            <OtpForm
+                @send-otp="gotPhone"
+                @error-happen="showErrorMessage"
+                v-if="!showCodeForm"
+                ref="phoneForm"
+            >
+            </OtpForm>
+            <CodeForm
+                @complete-registration-form="submitForm"
+                @send-otp="gotPhone"
+                v-else
+            ></CodeForm>
+            <button
+                :class="{ 'asb-btn': phoneNumber != '' }"
+                @click="submitPhone"
+                class="btn-img bg-none mt-30 border-0 pointer flex-all white m-side-auto font-20"
+                id="sign-in-button"
+            >
+                أرسل رمز التحقّق <img src="/images/siteImgs/header/logo.png" class="mr-10">
+            </button>
+            <h2 class="white mt-30 light font-17 d-flex space-between align-center p-side-50">
+                <span class="">هل أنت عضو في حبايبنا؟</span>
+                <router-link class="white d-flex align-center" to="/signin"
+                    >تسجيل الدخول <img src="/images/siteImgs/header/logo.png" class="mr-10"></router-link
+                >
+            </h2>
+        </RegisterTemplate>
+        <div id="recaptcha-container" class="recaptcha-container"></div>
         <alert-dialog
             :show="!!error"
             :title="error"
             @close="closeModal"
         ></alert-dialog>
+        <div v-if="isLoading">
+            <loading-spinner></loading-spinner>
+        </div>
     </div>
 </template>
 
 <script>
-// page header
-import AuthHeader from "./../../layouts/header/AuthHeader.vue";
-// forms
+import auth from "./../../../../modules/firebase";
+import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
+// // forms
+import RegisterTemplate from "./../../views/auth/RegisterTemplate.vue";
 import OtpForm from "./../../views/auth/OtpForm.vue";
 import CodeForm from "./../../views/auth/CodeForm.vue";
-import CompleteRegistration from "./../../views/auth/CompleteRegistration.vue";
 
 export default {
     components: {
-        AuthHeader,
+        RegisterTemplate,
         OtpForm,
-        CodeForm,
-        CompleteRegistration
+        CodeForm
     },
     data() {
         return {
+            isLoading: false,
             showCodeForm: false,
-            showCompleteForm: false,
+            phoneNumber: "",
+            type: "",
+            code: "",
             error: null
         };
     },
-    
 
     methods: {
+        submitPhone() {
+            this.$refs.phoneForm.submitForm();
+        },
         closeModal() {
             this.error = null;
         },
-        gotPhone(){
-            this.showCodeForm = true
+        async gotPhone(obj) {
+            
+            this.isLoading = true;
+            if (!obj.phoneNumber) {
+                obj.phoneNumber = this.phoneNumber;
+                await window.recaptchaVerifier
+                    .render()
+                    .then(function(widgetId) {
+                        grecaptcha.reset(widgetId);
+                    });
+            } else {
+                this.phoneNumber = obj.phoneNumber;
+                this.type = obj.type;
+            }
+            await signInWithPhoneNumber(
+                auth,
+                obj.phoneNumber,
+                window.recaptchaVerifier
+            )
+                .then(confirmationResult => {
+                    // SMS sent.
+                    window.confirmationResult = confirmationResult;
+                    this.showCodeForm = true;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                    // Error; SMS not sent
+                    this.showErrorMessage("حدث خطأ ما");
+                });
+
+            this.isLoading = false;
         },
-        gotCode(){
-            this.showCompleteForm = true
+        // store phone number and type and otp(optional)
+        async submitForm(otpCode) {
+            this.isLoading = true;
+            try {
+                // call api
+                await this.$store.dispatch("user/registerFirstStep", {
+                    type: this.type,
+                    code: otpCode,
+                    phone: this.phoneNumber,
+                    token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                });
+                this.$router.replace(`/${this.type}-complete-registration`);
+            } catch (e) {
+                this.showErrorMessage("حدث خطأ ما");
+            }
+            this.isLoading = false;
+            this.showCompleteForm = true;
         },
-        showErrorMessage(msg){
+        showErrorMessage(msg) {
             this.error = msg;
         }
-        // // add phone number styling
-        // getStyleDirection() {
-        //     if (!this.phoneNumber.style) {
-        //         var css =
-        //                 ".vti__dropdown-list { right: 0; }.vti__dropdown-item {display:flex;align-items:center;}",
-        //             head =
-        //                 document.head ||
-        //                 document.getElementsByTagName("head")[0],
-        //             style = document.createElement("style");
-
-        //         head.appendChild(style);
-
-        //         style.type = "text/css";
-        //         style.appendChild(document.createTextNode(css));
-        //     }
-        // },
-        
+    },
+    mounted() {
+        window.recaptchaVerifier = new RecaptchaVerifier(
+            "sign-in-button",
+            {
+                size: "invisible",
+                callback: response => {}
+            },
+            auth
+        );
     }
 };
 </script>
-
 <style scoped>
-.soft-bg {
-    background: #eff5ff;
+.asb-btn {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    visibility: hidden;
+    opacity: 0;
 }
+.spinner {
+    z-index: 10!important;
+}
+
 </style>

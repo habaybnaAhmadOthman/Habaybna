@@ -36,8 +36,8 @@ Route::post('/check-otp', 'HomeController@otpValidate')->name('otp-validate');
 
 
 //patents route
-Route::middleware([IsParent::class])->group(function () {
-    Route::post('/complete-register','ParentUsersController@completeRegister')->name('parent.completeRegister')->middleware(IsVerified::class);
+// Route::middleware([IsParent::class])->group(function () {
+    Route::post('/parent-complete-register','ParentUsersController@completeRegister')->name('parent.completeRegister')->middleware(IsVerified::class);
     Route::get('/complete-register','ParentUsersController@completeRegister')->name('parent.completeRegister')->middleware(IsVerified::class);
     Route::view('/complete-register', 'parents.completeRegister');
     Route::view('/parent-dashboard','parents.parentDashboard')->middleware(IsVerified::class);
@@ -47,7 +47,7 @@ Route::middleware([IsParent::class])->group(function () {
 
 
 
-    });
+    // });
 
 
 

@@ -14,7 +14,8 @@ Vue.component('loading-spinner',LoadingSpinner)
 Vue.component('alert-dialog',AlertDialog)
 export default {
     components: {
-        TheHeader}
+        TheHeader
+    }
 }
 </script>
 <style>
