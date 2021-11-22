@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ParentUsers;
+use App\Interest;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Hash;
@@ -114,11 +115,12 @@ class ParentUsersController extends Controller
         Auth::user()->email = $request->email;
         Auth::user()->password = Hash::make($request->password) ;
         Auth::user()->save();
-
+        $interest = Interest::all();
         return response()->json([
             'msg'=>'success',
             'status'=>true,
-            Auth::user(),
+            'userData'=>Auth::user(),
+            'intrest'=>$interest,
             200
         ]);
     }
