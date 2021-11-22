@@ -58,7 +58,7 @@ export default {
             },
             otp: {
                 canResend: false,
-                availableTry: 5,
+                availableTry: 3,
                 secondsLeft: 10
             },
             error: null
@@ -140,6 +140,6 @@ export default {
     box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%);
 }
 .spinner {
-    z-index: 10;
+    z-index: 10!important;
 }
 </style>

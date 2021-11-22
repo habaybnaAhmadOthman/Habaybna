@@ -15,6 +15,7 @@ import ClassRoom from './components/parents/ClassRoom.vue'
 
 import HomePage from './components/front/pages/HomePage.vue'
 import RegisterPage from './components/front/pages/auth/RegisterPage.vue'
+import RegisterParentComplete from './components/front/pages/auth/Register_ParentComplete.vue'
 import UserProfile from './components/front/pages/auth/UserProfile.vue'
 import LoginPage from './components/front/pages/auth/LoginPage.vue'
 
@@ -70,8 +71,18 @@ const routes = [
         }
     },
     {
+        path: '/parent-complete-registration',
+        component: RegisterParentComplete,
+        meta: {
+            header: false
+        }
+    },
+    {
         path: '/signin',
-        component: LoginPage
+        component: LoginPage,
+        meta: {
+            header: false
+        }
     },
     {
         path: '/user-profile',

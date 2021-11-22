@@ -176,10 +176,6 @@ export default {
                 this.gender.isValid = false;
                 this.formIsValid = false;
             }
-            if (this.birthDate.val == "") {
-                this.birthDate.isValid = false;
-                this.formIsValid = false;
-            }
             if (this.relative.val == "no") {
                 this.relative.isValid = false;
                 this.formIsValid = false;
@@ -210,6 +206,7 @@ export default {
             this.$emit('complete-registration',{
                 firstName: this.firstName.val,
                 lastName: this.lastName.val,
+                password: this.password.val,
                 email: this.email.val,
                 gender: this.gender.val,
                 relative: this.relative.val

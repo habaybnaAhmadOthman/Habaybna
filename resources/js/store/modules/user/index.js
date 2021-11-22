@@ -5,7 +5,9 @@ export default {
     namespaced: true,
     state(){
         return {
-            user: 'moon'
+            phone: null,
+            type: null,
+            // token: null,
         }
     },
     mutations,

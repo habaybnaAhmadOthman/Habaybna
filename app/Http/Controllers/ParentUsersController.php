@@ -96,8 +96,8 @@ class ParentUsersController extends Controller
     public function completeRegister(Request $request)
     {
 
+        dd(Auth::user());
         $parent = new ParentUsers() ;
-
         if ($request->hasFile('image')) {
             $img = $request->file('image');
             $filename = 'profile-photo-' . time() . '.' . $img->getClientOriginalExtension();

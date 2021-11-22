@@ -1,5 +1,12 @@
 export default {
-    register(state,payload){
-        state.user = payload
-    }
+    setUser(state,payload){
+        state.phone = payload.phone
+        state.type = payload.type
+        state.token = payload.token
+    },
+    // parentCompleteRegistration(state,payload){
+    //     state.phone = payload.phone
+    //     state.type = payload.type
+    //     console.log(state);
+    // },
 }

@@ -1,0 +1,84 @@
+<template>
+    <div>
+        <RegisterTemplate>
+            <CompleteParent
+                @complete-registration="submitForm"
+                v-if="!showInterestScreen"
+            ></CompleteParent>
+            <WelcomeScreen
+                v-else
+                @submit-interests="addInterests"
+            ></WelcomeScreen>
+        </RegisterTemplate>
+        <alert-dialog
+            :show="!!error"
+            :title="error"
+            @close="closeModal"
+        ></alert-dialog>
+        <div v-if="isLoading">
+            <loading-spinner></loading-spinner>
+        </div>
+    </div>
+</template>
+
+<script>
+import RegisterTemplate from "./../../views/auth/RegisterTemplate.vue";
+// // forms
+import CompleteParent from "./../../views/auth/CompleteParent.vue";
+import WelcomeScreen from "./../../views/auth/WelcomeScreen.vue";
+
+export default {
+    components: {
+        RegisterTemplate,
+        CompleteParent,
+        WelcomeScreen
+    },
+    data() {
+        return {
+            isLoading: false,
+            showInterestScreen: false,
+            phoneNumber: "",
+            type: "",
+            code: "",
+            error: null
+        };
+    },
+
+    methods: {
+        closeModal() {
+            this.error = null;
+        },
+        async submitForm(userData) {
+            this.isLoading = true;
+            try {
+                let obj = {
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    password: userData.password,
+                    email: userData.email,
+                    gender: userData.gender,
+                    relative: userData.relative
+                }
+                await this.$store.dispatch("user/parentCompleteRegistration",obj);
+                this.showInterestScreen = true;
+            } catch (e) {
+                this.showErrorMessage("حدث خطأ ما");
+            }
+            this.isLoading = false;
+        },
+        addInterests(interests) {
+            try {
+                this.$store.dispatch("user/register", {
+                    interests
+                });
+                this.$router.replace("/");
+            } catch (e) {
+                this.showErrorMessage("حدث خطأ ما");
+            }
+        },
+        showErrorMessage(msg) {
+            this.error = msg;
+        }
+    }
+};
+</script>
