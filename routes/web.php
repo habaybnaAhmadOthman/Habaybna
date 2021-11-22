@@ -49,12 +49,15 @@ Route::get('/get-user-country','HomeController@getUserCountry');
 
     // });
 
+    // specialist
+    Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
+
+    //others
+    
 
 
 
-
-
-// admin
+    // admin
 
 Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () {
 
