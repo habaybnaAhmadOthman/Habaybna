@@ -6,7 +6,6 @@ use App\ParentUsers;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Hash;
-use Stevebauman\Location\Facades\Location;
 
 
 
@@ -97,8 +96,6 @@ class ParentUsersController extends Controller
 
     public function completeRegister(Request $request)
     {
-        $position = Location::get();
-         dd( $position );
         $parent = new ParentUsers() ;
         if ($request->hasFile('image')) {
             $img = $request->file('image');
