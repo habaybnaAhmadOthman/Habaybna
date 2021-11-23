@@ -41,8 +41,9 @@ export default {
             try {
                 await this.$store.dispatch("user/login", {
                     password: data.password,
-                    user: data.user,
+                    phone: data.phone,
                 });
+                this.$router.replace("/");
             } catch (e) {
                 
             }

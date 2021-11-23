@@ -55,12 +55,13 @@ export default {
             this.isLoading = true;
             try {
                 let obj = {
-                    firstName: userData.firstName,
+                    fristName: userData.fristName,
                     lastName: userData.lastName,
                     password: userData.password,
                     email: userData.email,
                     gender: userData.gender,
-                    relative: userData.relative
+                    specialization: userData.specialization,
+                    workPlace: userData.workPlace
                 }
                 this.interests = await this.$store.dispatch("user/completeRegistration",obj);
                 this.showInterestScreen = true;
@@ -72,7 +73,7 @@ export default {
         addInterests(interests) {
             try {
                 this.$store.dispatch("user/addInterests",interests);
-                this.$router.replace("/user-profile");
+                this.$router.replace("/profile");
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما");
             }

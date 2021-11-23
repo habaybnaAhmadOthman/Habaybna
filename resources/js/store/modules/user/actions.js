@@ -31,7 +31,6 @@ export default {
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
-        type = 'specialist'
         const resp = await callApi(
             "POST",
             `/${type}-complete-register`,
@@ -52,6 +51,14 @@ export default {
         }
         context.commit("setUser", payload);
     },
+    async logout(context){
+        const resp = await callApi("POST", "/logoutt");
+        if (resp.status != 200) {
+            const error = new Error("fail to logout");
+            throw error;
+        }
+        context.commit("logout");
+    },
     // ******** interests
     async addInterests(_, interests){
         const resp = await callApi("POST", "/store-user-interests", interests);
@@ -60,5 +67,5 @@ export default {
             throw error;
         }
     }
-    
+
 };
