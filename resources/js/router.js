@@ -14,9 +14,14 @@ import ClassRoom from './components/parents/ClassRoom.vue'
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 import HomePage from './components/front/pages/HomePage.vue'
+
+// register pages
 import RegisterPage from './components/front/pages/auth/RegisterPage.vue'
 import RegisterParentComplete from './components/front/pages/auth/Register_ParentComplete.vue'
-import UserProfile from './components/front/pages/auth/UserProfile.vue'
+import RegisterSpecialistComplete from './components/front/pages/auth/Register_SpecialistComplete.vue'
+import RegisterOtherComplete from './components/front/pages/auth/Register_OtherComplete.vue'
+
+import UserProfile from './components/front/pages/dashboard/UserProfile.vue'
 import LoginPage from './components/front/pages/auth/LoginPage.vue'
 
 const routes = [
@@ -78,6 +83,20 @@ const routes = [
         }
     },
     {
+        path: '/specialist-complete-registration',
+        component: RegisterSpecialistComplete,
+        meta: {
+            header: false
+        }
+    },
+    {
+        path: '/other-complete-registration',
+        component: RegisterOtherComplete,
+        meta: {
+            header: false
+        }
+    },
+    {
         path: '/signin',
         component: LoginPage,
         meta: {
@@ -85,7 +104,7 @@ const routes = [
         }
     },
     {
-        path: '/user-profile',
+        path: '/profile',
         component: UserProfile
     }
 ]

@@ -42,7 +42,7 @@
                     @blur="checkValidity"
                     @input="checkPhoneNumber"
                     id="phoneNumber"
-                    :default-country-code="'JO'"
+                    :default-country-code="countryCode"
                 />
                 <p class="white mt-5 font-12">رقم الهاتف غير صحيح</p>
             </div>
@@ -67,10 +67,18 @@ export default {
                 val: "no",
                 isValid: true
             },
+            countryCode:'',
             formIsValid: true
         };
     },
+    created() {
+        this.getUserCountry()
+    },
     methods: {
+        async getUserCountry() {
+            await this.$store.dispatch('user/getCountryCode');
+            this.countryCode = this.$store.getters['user/countryCode']
+        },
         validateForm() {
             this.formIsValid = true;
             this.checkPhoneNumber();

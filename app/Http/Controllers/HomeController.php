@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 // use App\Http\Controllers\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Stevebauman\Location\Facades\Location;
+
+
 use Auth;
 
 class HomeController extends Controller
@@ -15,7 +19,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -27,46 +31,30 @@ class HomeController extends Controller
     {
         return view('home');
     }
-    public function checkOtp()
+
+    public function getUserCountry(Request $request)
     {
+        // request()->ip() ::: 37.220.117.144
+        try {
+            $position = Location::get('37.220.117.144');
+            return response()->json([
+                'msg'=>'success',
+                'status'=>true,
+                'data'=>$position,
+            ]);
 
-        return view('checkOtp');
-    }
+           } catch (ModelNotFoundException $e){
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
 
-    public function otpValidate(Request $request)
-    {
-        $otp = $request->otp;
+           ]);
 
-        $user = Auth::user();
-
-        if($user->otp === $otp) {
-            $user->is_verify = true ;
-            $user->save();
-        }else {
-            return redirect()->back()->with('msg', 'OTP virefication faild ');
-
-        }
-
-        switch ($user->role) {
-            case 'parent':
-                return redirect('/complete-register');
-                break;
-
-            case 'directory':
-                dd('directory');
-
-                break;
-
-            case 'specialist':
-                dd('specialist');
-
-                break;
-
-            default:
-
-                break;
-        }
+       }
 
 
     }
+
+
 }

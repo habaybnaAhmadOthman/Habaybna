@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\ParentUsers;
+use App\Interest;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Hash;
-use Stevebauman\Location\Facades\Location;
 
 
 
@@ -97,8 +97,6 @@ class ParentUsersController extends Controller
 
     public function completeRegister(Request $request)
     {
-        $position = Location::get();
-         dd( $position );
         $parent = new ParentUsers() ;
         if ($request->hasFile('image')) {
             $img = $request->file('image');
@@ -117,11 +115,12 @@ class ParentUsersController extends Controller
         Auth::user()->email = $request->email;
         Auth::user()->password = Hash::make($request->password) ;
         Auth::user()->save();
-
+        $interest = Interest::all();
         return response()->json([
             'msg'=>'success',
             'status'=>true,
-            Auth::user(),
+            'userData'=>Auth::user(),
+            'intrest'=>$interest,
             200
         ]);
     }

@@ -31,9 +31,9 @@ Auth::routes();
 // Route::view('xxxxx','auth.register');
 
 // Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/check-otp', 'HomeController@checkOtp')->name('check-otp'); //->withoutMiddleware(IsVerified::class);
-Route::post('/check-otp', 'HomeController@otpValidate')->name('otp-validate');
-
+// Route::get('/check-otp', 'HomeController@checkOtp')->name('check-otp'); //->withoutMiddleware(IsVerified::class);
+// Route::post('/check-otp', 'HomeController@otpValidate')->name('otp-validate');
+Route::get('/get-user-country','HomeController@getUserCountry');
 
 //patents route
 // Route::middleware([IsParent::class])->group(function () {
@@ -44,17 +44,20 @@ Route::post('/check-otp', 'HomeController@otpValidate')->name('otp-validate');
     Route::get('/parent/all-courses','CourseController@getAllcourses')->name('getAllcourses');
     Route::view('/parent-dashboard/class-room/{id}', 'parents.classRoom');
     Route::get('/parent/getCourseVideos/{course_id}','CourseController@getCourseAndVideos')->name('parent.getCourseVideos');
-
+    Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
 
 
     // });
 
+    // specialist
+    Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
+
+    //others
 
 
 
 
-
-// admin
+    // admin
 
 Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () {
 
