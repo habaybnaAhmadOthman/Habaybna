@@ -12,9 +12,10 @@
                     :options="interestsList"
                     :searchable="true"
                     :close-on-select="false"
-                    :multiple="true" 
-                    :taggable="true" 
-                    label="title" track-by="title"
+                    :multiple="true"
+                    :taggable="true"
+                    label="title"
+                    track-by="title"
                     placeholder="يرجى إختيار الإهتمامات"
                 ></multiselect>
                 <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
@@ -52,7 +53,7 @@ export default {
             isLoading: false,
             tags: "",
             tagsValid: true,
-            error: null,
+            error: null
         };
     },
     methods: {
@@ -62,9 +63,8 @@ export default {
                 this.tagsValid = false;
                 return;
             }
-            let tagIDs = []
-            this.tags.forEach((item)=>tagIDs.push(item.id))
-            
+            let tagIDs = [];
+            this.tags.forEach(item => tagIDs.push(item.id));
             this.$emit("submit-interests", tagIDs);
         }
     },
@@ -72,11 +72,44 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .form-group p {
     display: none;
 }
 .form-group.invalid p {
     display: block;
+}
+</style>
+<style>
+.multiselect__tags {
+    border: 1px solid #606;
+    min-height: 52px;
+    border-radius: 4px;
+    padding: 8px 8px 0 40px;
+    text-align: right;
+}
+.multiselect__option--selected,.multiselect__option {
+    text-align: right;
+}
+.multiselect__option--highlight:after,.multiselect__option--selected:after {
+    content: none !important;
+}
+.multiselect__option--highlight {
+    background: #606!important;
+    text-align: right;
+}
+.multiselect__select {
+    left: 1px;
+    right: auto;
+    height: 52px;
+}
+.multiselect__select:before {
+    border-color: #606 transparent transparent;
+}
+.multiselect__tag {
+    background:#606;
+}
+.multiselect__tag-icon:after {
+    color:#fff;
 }
 </style>

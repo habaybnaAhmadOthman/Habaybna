@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Specialist;
 use App\Interest;
 use Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 
 class SpecialistController extends Controller
