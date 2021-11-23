@@ -36,7 +36,7 @@ class HomeController extends Controller
     {
         // request()->ip() ::: 37.220.117.144
         try {
-            $position = Location::get('37.220.117.144');
+            $position = Location::get(request()->ip());
             return response()->json([
                 'msg'=>'success',
                 'status'=>true,
