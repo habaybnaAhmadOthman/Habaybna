@@ -1,9 +1,9 @@
 <template>
-    <div class="d-flex registration-template main-bg h-full">
-        <div class="right-side w-50">
+    <div class="d-flex registration-template main-bg h-full overflow-hidden">
+        <div class="right-side bg-white w-40" :class="padding">
             <slot></slot>
         </div>
-        <LeftSide class="w-50"></LeftSide>
+        <LeftSide class="w-60"></LeftSide>
     </div>
 </template>
 
@@ -11,6 +11,7 @@
 // page header
 import LeftSide from "./LeftSide.vue";
 export default {
+    props: { padding: { default: "pt-100" } },
     components: {
         LeftSide
     }
@@ -19,11 +20,6 @@ export default {
 
 <style scoped>
 .right-side {
-    background:#b57abd;
-    border-radius: 24px 0 0 24px;
     overflow-y: auto;
-}
-.registration-template .right-side, .registration-template .left-side{
-    padding-top: 98px;
 }
 </style>

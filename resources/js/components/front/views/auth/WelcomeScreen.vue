@@ -1,6 +1,6 @@
 <template>
     <div class="mobile-form pt-50 p-side-50">
-        <p class="white font-40 bold center">
+        <p class="main-color font-40 bold center">
             أهلا و سهلاً بك <br />
             في عائلة حبايبنا
         </p>
@@ -21,15 +21,15 @@
                 <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
             <div class="center">
-                <button class="btn font-15 mt-15 w-30">حفظ</button>
+                <button class="btn-2 font-17 mt-30 w-40">حفظ</button>
             </div>
         </form>
-        <p class="font-18 mt-50 bold white">يمكنك أيضاً:</p>
+        <p class="font-18 mt-50 bold">يمكنك أيضاً:</p>
         <div class="d-flex">
-            <router-link to="/" class="white underline font-16"
+            <router-link to="/" class="main-color underline font-16"
                 >عودة الى الرئيسية</router-link
             >
-            <router-link to="/" class="white underline mr-20 font-16"
+            <router-link to="/" class="main-color underline mr-20 font-16"
                 >ملفي الشخصي</router-link
             >
         </div>
@@ -84,7 +84,7 @@ export default {
 .multiselect__tags {
     border: 1px solid #606;
     min-height: 52px;
-    border-radius: 4px;
+    border-radius: 21px;
     padding: 8px 8px 0 40px;
     text-align: right;
 }

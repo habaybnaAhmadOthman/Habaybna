@@ -14,19 +14,18 @@
                 v-else
             ></CodeForm>
             <button
-                :class="{ 'asb-btn': phoneNumber != '' }"
+                :class="{ 'asb-btn': showCodeForm }"
                 @click="submitPhone"
-                class="btn-img bg-none mt-30 border-0 pointer flex-all white m-side-auto font-20"
+                class="btn-2 mt-30 flex-all m-side-auto font-20"
                 id="sign-in-button"
             >
                 أرسل رمز التحقّق <img src="/images/siteImgs/header/logo.png" class="mr-10">
             </button>
-            <h2 class="white mt-30 light font-17 d-flex space-between align-center p-side-50">
-                <span class="">هل أنت عضو في حبايبنا؟</span>
-                <router-link class="white d-flex align-center" to="/signin"
-                    >تسجيل الدخول <img src="/images/siteImgs/header/logo.png" class="mr-10"></router-link
-                >
-            </h2>
+            <h3 class="mt-50 center light font-15 flex-all p-side-50">
+                <span class="main-color">هل أنت عضو في عائلة حبايبنا؟</span>
+                <router-link class="blue d-flex align-center" to="/signin"
+                    >تسجيل دخول</router-link>
+            </h3>
         </RegisterTemplate>
         <div id="recaptcha-container" class="recaptcha-container"></div>
         <alert-dialog
@@ -121,7 +120,6 @@ export default {
                 this.showErrorMessage("حدث خطأ ما");
             }
             this.isLoading = false;
-            this.showCompleteForm = true;
         },
         showErrorMessage(msg) {
             this.error = msg;

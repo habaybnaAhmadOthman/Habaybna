@@ -1,18 +1,21 @@
 export default {
-    setUser(state,payload){
-        state.phone = payload.phone
-        state.type = payload.type
-        state.token = payload.token
+    setUser(state, payload) {
+        state.phone = payload.phone;
+        state.type = payload.type;
+        state.token = payload.token;
     },
-    logout(state){
-        state.phone = null
-        state.type = null
-        state.token = null
+    login(state) {
+        state.loggedIn = true;
+        localStorage.setItem('login',true)
     },
-    setCountryCode(state,countryCode) {
-        state.countryCode = countryCode
+    logout(state) {
+        state.loggedIn = true;
+        localStorage.removeItem('login')
     },
+    setCountryCode(state, countryCode) {
+        state.countryCode = countryCode;
+    }
     // login(state,payload){
     //     state.is_verify = payload.is_verify;
     // },
-}
+};

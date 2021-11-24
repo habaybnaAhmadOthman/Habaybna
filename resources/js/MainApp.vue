@@ -15,6 +15,16 @@ Vue.component('alert-dialog',AlertDialog)
 export default {
     components: {
         TheHeader
+    },
+    created(){
+        this.isLoggedIn()
+    },
+    methods: {
+        isLoggedIn() {
+            if (Boolean(localStorage.getItem('login'))) {
+                this.$store.commit('user/login');
+            }
+        }
     }
 }
 </script>
