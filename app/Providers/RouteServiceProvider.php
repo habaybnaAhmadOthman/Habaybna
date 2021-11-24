@@ -21,7 +21,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/parent-dashboard';
+    public const HOME = '/';
     // public const OTPVERIFY = '/check-otp';
 
 
