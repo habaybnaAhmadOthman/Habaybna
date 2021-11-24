@@ -8,8 +8,8 @@ export default {
     type(state) {
         return state.type;
     },
-    loggedIn(state) {
-        return state.is_verify;
+    isLoggedIn(state) {
+        return Boolean(state.loggedIn);
     }
     // user(state,getters,rootState,rootGetters)
 };

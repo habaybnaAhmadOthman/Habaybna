@@ -49,8 +49,7 @@ export default {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
-        
-        // context.commit("setUser", payload);
+        context.commit("login");
     },
     async logout(context){
         const resp = await callApi("POST", "/logout");

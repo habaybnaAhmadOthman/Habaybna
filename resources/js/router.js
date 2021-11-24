@@ -121,19 +121,19 @@ const router =  new Router({
     mode: 'history',
     routes
 })
-router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (!store.user) {
-            next({
-                name: 'login'
-            });
-        } else {
-            next()
-        }
-    } else {
-        next()
-    }
-})
+// router.beforeEach((to, from, next) => {
+//     if (to.matched.some(record => record.meta.requiresAuth)) {
+//         if (!store.getters['user/isLoggedIn']) {
+//             next({
+//                 name: 'login'
+//             });
+//         } else {
+//             next()
+//         }
+//     } else {
+//         next()
+//     }
+// })
 
 
 export default router
