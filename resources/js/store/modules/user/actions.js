@@ -45,15 +45,16 @@ export default {
     },
     async login(context, payload){
         const resp = await callApi("POST", "/login", payload);
-        if (resp.status != 200) {
-            const error = new Error("fail to login");
+        if (resp.status != 204) {
+            const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
-        context.commit("setUser", payload);
+        
+        // context.commit("setUser", payload);
     },
     async logout(context){
         const resp = await callApi("POST", "/logout");
-        if (resp.status != 200) {
+        if (resp.status != 204) {
             const error = new Error("fail to logout");
             throw error;
         }

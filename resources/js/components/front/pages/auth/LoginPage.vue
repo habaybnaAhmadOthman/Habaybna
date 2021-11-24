@@ -5,12 +5,17 @@
                 @save-form="login"
             >
             </LoginForm>
-            <h2 class="mt-30 center light font-15 flex-all p-side-50">
+            <h3 class="mt-50 center light font-15 flex-all p-side-50">
                 <span class="main-color">لست من عائلة حبايبنا؟</span>
-                <router-link class="blue d-flex align-center" to="/signin"
+                <router-link class="blue d-flex align-center" to="/signup"
                     >إنضم الآن</router-link>
-            </h2>
+            </h3>
         </RegisterTemplate>
+        <alert-dialog
+            :show="!!error"
+            :title="error"
+            @close="closeModal"
+        ></alert-dialog>
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
         </div>
@@ -31,11 +36,18 @@ export default {
         return {
             isLoading: false,
             type: "",
-            code: ""
+            code: "",
+            error: null
         };
     },
 
     methods: {
+        closeModal() {
+            this.error = null;
+        },
+        showErrorMessage(msg) {
+            this.error = msg;
+        },
         async login(data) {
             this.isLoading = true;
             try {
@@ -43,9 +55,10 @@ export default {
                     password: data.password,
                     phone: data.phone,
                 });
+                
                 this.$router.replace("/");
             } catch (e) {
-                
+                this.showErrorMessage(e);
             }
             this.isLoading = false;
         }

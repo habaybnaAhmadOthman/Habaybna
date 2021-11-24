@@ -1,24 +1,23 @@
 <template>
-    <div class="mobile-form pt-50 p-side-50">
-        <h2 class="white font-22 bold d-flex align-center">
+    <div class="mobile-form p-side-50">
+        <h2 class="main-color text-shadow font-40 bold center">
             رمز التحقق
-            <img src="/images/siteImgs/header/logo.png" class="mr-10" />
         </h2>
         <form @submit.prevent="submitCode" class="mt-30">
-            <p class="white font-14 center mb-15">تم ارسال رمز التحقق برسالة نصية</p>
+            <p class="main-color font-14 center mb-15">تم ارسال رمز التحقق برسالة نصية</p>
             <div class="form-group" :class="{ invalid: !code.isValid }">
                 <input
-                    class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
+                    class="bg-main-color border-0 radius-5 w-100 p-10 pointer form-control trans"
                     placeholder="أدخل رمز التحقق"
                     id="code"
                     @blur="checkValidity"
                     v-model.trim="code.val"
                 />
-                <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
+                <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
             <div class="">
                 <p
-                    class="white mt-5 font-12"
+                    class="main-color mt-5 font-12"
                     v-if="!canResend && this.otp.availableTry > 0"
                 >
                     يمكنك إعادة إرسال رمز التحقق بعد
@@ -26,14 +25,14 @@
                 </p>
                 <p
                     @click="resendOtp"
-                    class="pointer underline white mt-10 font-12"
+                    class="pointer underline main-color mt-10 font-12"
                     v-else-if="canResend"
                 >
                     إعادة إرسال الرمز
                 </p>
             </div>
             <button
-                class="btn-img bg-none mt-30 border-0 pointer flex-all white m-side-auto font-20"
+                class="btn-2 mt-30 flex-all m-side-auto font-20"
                 id="sign-in-button"
             >
                 التالي <img src="/images/siteImgs/header/logo.png" class="mr-10">
@@ -112,8 +111,7 @@ export default {
                 .confirm(this.code.val)
                 .then(result => {
                     // User signed in successfully.
-                    const user = result.user;
-                    this.$emit("complete-registration-form",{code: this.code.val});
+                    this.$emit("complete-registration-form", this.code.val);
                     // ...
                 })
                 .catch(error => {
@@ -126,19 +124,6 @@ export default {
 </script>
 
 <style scoped>
-.form-group p {
-    display: none;
-}
-.form-group.invalid p {
-    display: block;
-}
-.form-control {
-    border: 1px solid #606;
-    height: 52px;
-}
-.form-control:focus {
-    box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%);
-}
 .spinner {
     z-index: 10!important;
 }

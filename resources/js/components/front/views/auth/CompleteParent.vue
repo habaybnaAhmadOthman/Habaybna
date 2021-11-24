@@ -1,5 +1,8 @@
 <template>
     <form @submit.prevent="submitForm" class="p-side-50">
+        <h2 class="main-color text-shadow font-40 bold center mb-30">
+            أكمل معلوماتك
+        </h2>
         <div class="row d-flex space-between">
             <!-- firstName -->
             <div
@@ -135,11 +138,9 @@
             </div>
         </div>
 
-        <button
-            class="btn-img bg-none mt-30 border-0 pointer flex-all white m-side-auto font-20"
-            id="sign-in-button"
-        >
-            إتمام التسجيل <img src="/images/siteImgs/header/logo.png" class="mr-10" />
+        <button class="btn-2 mt-30 flex-all m-side-auto font-20">
+            إتمام التسجيل
+            <img src="/images/siteImgs/header/logo.png" class="mr-10" />
         </button>
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
@@ -203,14 +204,14 @@ export default {
             if (!this.formIsValid) {
                 return;
             }
-            this.$emit('complete-registration',{
+            this.$emit("complete-registration", {
                 firstName: this.firstName.val,
                 lastName: this.lastName.val,
                 password: this.password.val,
                 email: this.email.val,
                 gender: this.gender.val,
                 relative: this.relative.val
-            })
+            });
         }
     },
     data() {
@@ -244,15 +245,6 @@ export default {
 </script>
 
 <style scoped>
-.soft-bg {
-    background: #eff5ff;
-}
-.form-group p {
-    display: none;
-}
-.form-group.invalid p {
-    display: block;
-}
 .vti__input {
     text-align: right;
     unicode-bidi: plaintext;
@@ -286,13 +278,6 @@ select::-ms-expand {
 }
 select::-ms-expand {
     display: none;
-}
-.form-control {
-    border: 1px solid #606;
-    height: 52px;
-}
-.form-control:focus {
-    box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%);
 }
 .pass-visible {
     background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIuMDE1IDdjNC43NTEgMCA4LjA2MyAzLjAxMiA5LjUwNCA0LjYzNi0xLjQwMSAxLjgzNy00LjcxMyA1LjM2NC05LjUwNCA1LjM2NC00LjQyIDAtNy45My0zLjUzNi05LjQ3OC01LjQwNyAxLjQ5My0xLjY0NyA0LjgxNy00LjU5MyA5LjQ3OC00LjU5M3ptMC0yYy03LjU2OSAwLTEyLjAxNSA2LjU1MS0xMi4wMTUgNi41NTFzNC44MzUgNy40NDkgMTIuMDE1IDcuNDQ5YzcuNzMzIDAgMTEuOTg1LTcuNDQ5IDExLjk4NS03LjQ0OXMtNC4yOTEtNi41NTEtMTEuOTg1LTYuNTUxem0tLjAxNSAzYy0yLjIwOSAwLTQgMS43OTItNCA0IDAgMi4yMDkgMS43OTEgNCA0IDRzNC0xLjc5MSA0LTRjMC0yLjIwOC0xLjc5MS00LTQtNHoiLz48L3N2Zz4=)

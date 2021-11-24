@@ -1,6 +1,6 @@
 <template>
     <div>
-        <RegisterTemplate>
+        <RegisterTemplate :padding="'pt-30'">
             <CompleteSpecialist
                 @complete-registration="submitForm"
                 v-if="!showInterestScreen"
