@@ -4,20 +4,43 @@
             تسجيل دخول
         </h2>
         <form @submit.prevent="submitForm">
-            <div
-                class="form-group mb-30 relative"
-                :class="{ invalid: !phone.isValid }"
-            >
-                <label class="font-20 main-color mb-10">اسم المستخدم</label>
-                <input
-                    @blur="checkValidity"
-                    v-model.trim="phone.val"
-                    id="phone"
-                    class="form-control font-18 holder-center w-100 user-input"
-                    placeholder="رقم الخلوي او البريد الالكتروني"
-                />
-                <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
-            </div>
+            <template>
+                <div
+                    v-if="viaPhone"
+                    class="form-group ltr mb-30"
+                    :class="{ invalid: !phoneNumber.isValid }"
+                >
+                    <VuePhoneNumberInput
+                        v-model="phoneNumber.input"
+                        @update="getPhoneVal"
+                        @input="checkPhoneNumber"
+                        :show-code-on-list="true"
+                        :translations="{
+                            countrySelectorLabel: 'رمز الدولة',
+                            phoneNumberLabel: 'رقم الهاتف'
+                        }"
+                        id="phoneNumber"
+                        :default-country-code="countryCode"
+                    />
+                    <p class="main-color mt-5 font-12">رقم الهاتف غير صحيح</p>
+                </div>
+                <div v-else>
+                    <div
+                        class="form-group mb-30 relative"
+                        :class="{ invalid: !email.isValid }"
+                    >
+                        <input
+                            @blur="checkValidity"
+                            v-model.trim="email.val"
+                            id="email"
+                            type="email"
+                            class="form-control font-18 holder-center w-100 user-input"
+                            placeholder=" البريد الالكتروني"
+                        />
+                        <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+                    </div>
+                </div>
+            </template>
             <div
                 class="form-group mb-15 relative"
                 :class="{ invalid: !password.isValid }"
@@ -30,7 +53,7 @@
                     id="password"
                     placeholder="xxxxxx"
                 />
-                <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
+                <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
             <!-- <div class="form-group">
                 <label class="checkbox main-color font-16">
@@ -39,20 +62,42 @@
                 </label>
             </div> -->
             <button
-                class="btn mt-20 border-0 pointer flex-all white m-side-auto font-17"
+                class="btn mt-30 border-0 pointer flex-all white m-side-auto font-17"
             >
                 تسجيل الدخول
             </button>
+            <div
+                class="main-color mt-15 pointer"
+                v-if="viaPhone"
+                @click="changeLoginMethod"
+            >
+                تسجيل الدخول عبر البريد الإلكتروني
+            </div>
+            <div
+                class="main-color mt-15 pointer"
+                @click="changeLoginMethod"
+                v-else
+            >
+                تسجيل الدخول عن طريق رقم الهاتف
+            </div>
         </form>
     </div>
 </template>
 
 <script>
+import VuePhoneNumberInput from "vue-phone-number-input";
+import "vue-phone-number-input/dist/vue-phone-number-input.css";
+
+import phoneNumberMixin from "./../../mixins/phoneNumber.js";
 export default {
     emits: ["save-form"],
+    mixins: [phoneNumberMixin],
+    created() {
+        this.getUserCountry()
+    },
     data() {
         return {
-            phone: {
+            email: {
                 val: "",
                 isValid: true
             },
@@ -60,14 +105,37 @@ export default {
                 val: "",
                 isValid: true
             },
+            viaPhone: true,
+            countryCode: "",
             formIsValid: true
         };
     },
     methods: {
+        async getUserCountry() {
+            await this.$store.dispatch('user/getCountryCode');
+            this.countryCode = this.$store.getters['user/countryCode']
+        },
+        changeLoginMethod() {
+            this.viaPhone = !this.viaPhone;
+            this.phoneNumber.val = ""
+            this.phoneNumber.input = ""
+            this.email.val = ""
+        },
         validateForm() {
             this.formIsValid = true;
-            if (this.phone.val == "") {
-                this.phone.isValid = false;
+            if (this.viaPhone) {
+                if (this.phoneNumber.val == "") {
+                    this.phoneNumber.isValid = false;
+                    this.formIsValid = false;
+                }
+            } else {
+                if (this.email.val == "") {
+                    this.email.isValid = false;
+                    this.formIsValid = false;
+                }
+            }
+            if (this.password.val == "") {
+                this.password.isValid = false;
                 this.formIsValid = false;
             }
         },
@@ -83,18 +151,23 @@ export default {
             if (!this.formIsValid) {
                 return;
             }
-            
+            let phone = this.phoneNumber.val;
+            if (!this.viaPhone) {
+                phone = this.email.val;
+            }
             this.$emit("save-form", {
-                phone: this.phone.val,
+                phone: phone,
                 password: this.password.val
             });
         }
-    }
+    },
+    components: { VuePhoneNumberInput }
 };
 </script>
 
 <style scoped>
-.user-input ,.password-input{
+.user-input,
+.password-input {
     background-image: url(/images/logo.png);
     background-repeat: no-repeat;
     background-size: 40px 40px;
@@ -106,7 +179,6 @@ export default {
 .form-control {
     padding-right: 20px;
     padding-left: 70px;
-    height: 60px;
 }
 .checkbox {
     font-family: system-ui, sans-serif;

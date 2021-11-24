@@ -16,11 +16,13 @@ export default {
             if (phoneNumberInput.isValid) {
                 this.phoneNumber.val = phoneNumberInput.formattedNumber;
             } 
+            
             this.phoneNumber.isValid = phoneNumberInput.isValid;
         },
-        checkPhoneNumber(e) {
+        checkPhoneNumber() {
             if (!this.phoneNumber.created) {
                 this.phoneNumber.isValid = true;
+                
             }
             
         },

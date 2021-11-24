@@ -21,8 +21,12 @@ import RegisterParentComplete from './components/front/pages/auth/Register_Paren
 import RegisterSpecialistComplete from './components/front/pages/auth/Register_SpecialistComplete.vue'
 import RegisterOtherComplete from './components/front/pages/auth/Register_OtherComplete.vue'
 
-import UserProfile from './components/front/pages/dashboard/UserProfile.vue'
+// login
 import LoginPage from './components/front/pages/auth/LoginPage.vue'
+
+import UserProfile from './components/front/pages/dashboard/UserProfile.vue'
+
+import store from './store/index'
 
 const routes = [
     {
@@ -101,15 +105,35 @@ const routes = [
         component: LoginPage,
         meta: {
             header: false
-        }
+        },
+        name: 'login'
     },
     {
         path: '/profile',
-        component: UserProfile
+        component: UserProfile,
+        meta: {
+            requiresAuth:true
+        }
     }
 ]
 
-export default new Router({
+const router =  new Router({
     mode: 'history',
     routes
 })
+// router.beforeEach((to, from, next) => {
+//     if (to.matched.some(record => record.meta.requiresAuth)) {
+//         if (!store.getters['user/isLoggedIn']) {
+//             next({
+//                 name: 'login'
+//             });
+//         } else {
+//             next()
+//         }
+//     } else {
+//         next()
+//     }
+// })
+
+
+export default router

@@ -1,22 +1,19 @@
 <template>
-    <div class="mobile-form pt-50 p-side-50">
-        <h2 class="white font-22 bold d-flex align-center">
+    <div class="mobile-form p-side-50">
+        <h2 class="main-color text-shadow font-40 bold center">
             مستخدم جديد
-            <img src="/images/siteImgs/header/logo.png" class="mr-10" />
         </h2>
         <form @submit.prevent="submitForm" class="mt-30">
             <div class="form-group mb-30" :class="{ invalid: !type.isValid }">
                 <div class="select-wrapper relative">
                     <select
                         class="
-            bg-white
-            border-0
-            radius-5
             w-100
             p-10
             pointer
             form-control
             trans
+            center
           "
                         v-model="type.val"
                         id="type"
@@ -30,7 +27,7 @@
                         <option value="other">آخر</option>
                     </select>
                 </div>
-                <p class="white mt-5 font-12">هذا الحقل مطلوب</p>
+                <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
             <div
                 class="form-group ltr"
@@ -39,12 +36,16 @@
                 <VuePhoneNumberInput
                     v-model="phoneNumber.input"
                     @update="getPhoneVal"
-                    @blur="checkValidity"
                     @input="checkPhoneNumber"
+                    :show-code-on-list="true"
+                    :translations="{
+                        countrySelectorLabel: 'رمز الدولة',
+                        phoneNumberLabel: 'رقم الهاتف',
+                    }"
                     id="phoneNumber"
                     :default-country-code="countryCode"
                 />
-                <p class="white mt-5 font-12">رقم الهاتف غير صحيح</p>
+                <p class="main-color mt-5 font-12">رقم الهاتف غير صحيح</p>
             </div>
         </form>
     </div>
@@ -81,7 +82,7 @@ export default {
         },
         validateForm() {
             this.formIsValid = true;
-            this.checkPhoneNumber();
+            
             if (this.phoneNumber.val == "") {
                 this.phoneNumber.isValid = false;
                 this.formIsValid = false;
@@ -130,16 +131,6 @@ export default {
     }
 </style>
 <style scoped>
-.form-group p {
-    display: none;
-}
-.form-group.invalid p {
-    display: block;
-}
-.vti__input {
-    text-align: right;
-    unicode-bidi: plaintext;
-}
 .select-wrapper::after {
     color: #606;
     content: "▾";
@@ -169,14 +160,19 @@ select::-ms-expand {
 select::-ms-expand {
     display: none;
 }
-.form-control {
-    border: 1px solid #606;
-    height: 52px;
-}
-.form-control:focus {
-    box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%);
-}
 .spinner {
     z-index: 11;
+}
+</style>
+<style>
+.country-selector__input {
+    border-radius:21px 0 0 21px!important;
+    border-color:#606!important;
+}
+.input-tel__input:not(.no-country-selector) {
+    border-radius: 0 21px 21px 0!important;
+}
+.input-tel.is-focused .input-tel__input {
+    box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%)!important;
 }
 </style>

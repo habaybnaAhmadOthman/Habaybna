@@ -9,7 +9,7 @@
             إهداء مكالمة مجانیة</router-link
         >
         <div class="bar"></div>
-        <div class="sign-out-box pr-30 relative bold white">تسجيل الدخول</div>
+        <router-link to="/signin" class="sign-out-box pr-30 relative bold white">تسجيل الدخول</router-link>
     </div>
 </template>
 

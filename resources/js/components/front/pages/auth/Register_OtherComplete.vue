@@ -1,6 +1,6 @@
 <template>
     <div>
-        <RegisterTemplate>
+        <RegisterTemplate :padding="'pt-30'">
             <CompleteOther
                 @complete-registration="submitForm"
                 v-if="!showInterestScreen"
@@ -60,8 +60,8 @@ export default {
                     password: userData.password,
                     email: userData.email,
                     gender: userData.gender,
-                    specialization: userData.specialization,
-                    workPlace: userData.workPlace
+                    empolyment: userData.empolyment,
+                    whyToJoin: userData.whyToJoin
                 }
                 this.interests = await this.$store.dispatch("user/completeRegistration",obj);
                 this.showInterestScreen = true;

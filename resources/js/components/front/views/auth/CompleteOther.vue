@@ -1,5 +1,8 @@
 <template>
     <form @submit.prevent="submitForm" class="p-side-50">
+        <h2 class="main-color text-shadow font-40 bold center mb-30">
+            أكمل معلوماتك
+        </h2>
         <div class="row d-flex space-between">
             <!-- fristName -->
             <div
@@ -116,21 +119,28 @@
             <!-- speciality -->
             <div
                 class="form-group row-half"
-                :class="{ invalid: !specialization.isValid }"
+                :class="{ invalid: !empolyment.isValid }"
             >
                 <div class="select-wrapper relative">
                     <select
                         class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                        v-model="specialization.val"
-                        id="specialization"
+                        v-model="empolyment.val"
+                        id="empolyment"
                         @blur="checkValidity"
                     >
-                        <option value="no" disabled hidden>التخصص</option>
-                        <option value="التربية الخاصة">التربية الخاصة</option>
-                        <option value="النطق واللغة">النطق واللغة</option>
-                        <option value="العلاج الوظيفي">العلاج الوظيفي</option>
-                        <option value="العلاج الطبيعي">العلاج الطبيعي</option>
-                        <option value="تحليل السلوك">تحليل السلوك</option>
+                        <option value="no" disabled hidden>مجال العمل</option>
+                        <option value="قطاع التعليم">قطاع التعليم</option>
+                        <option value="قطاع الصحة">قطاع الصحة</option>
+                        <option value="منظمات المجتمع المدني">منظمات المجتمع المدني</option>
+                        <option value="القطاع الحكومي">القطاع الحكومي</option>
+                        <option value="القطاع الخاص">القطاع الخاص</option>
+                        <option value="مجال الإعلام">مجال الإعلام</option>
+                        <option value="عمل حر">عمل حر</option>
+                        <option value="التدريب والإستشارات">التدريب والإستشارات</option>
+                        <option value="طلاب جامعية">طلاب جامعية</option>
+                        <option value="طالب مدرسة">طالب مدرسة</option>
+                        <option value="ربة منزل">ربة منزل</option>
+                        <option value="لا أعمل">لا أعمل</option>
                     </select>
                 </div>
                 <p class="main-color mt-5 font-12">
@@ -140,24 +150,22 @@
             
         </div>
 
-        <!-- workPlace -->
-        <div class="form-group mb-15" :class="{ invalid: !workPlace.isValid }">
+        <!-- whyToJoin -->
+        <div class="form-group mb-15" :class="{ invalid: !whyToJoin.isValid }">
             <input
                 type="text"
                 class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                placeholder="مكان العمل"
-                id="workPlace"
+                placeholder="لماذا ترغب بالإنضمام لعائلة حبايبنا"
+                id="whyToJoin"
                 @blur="checkValidity"
-                v-model.trim="workPlace.val"
+                v-model.trim="whyToJoin.val"
             />
             <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
         </div>
 
-        <button
-            class="btn-img bg-none mt-30 border-0 pointer flex-all white m-side-auto font-20"
-            id="sign-in-button"
-        >
-            إتمام التسجيل <img src="/images/siteImgs/header/logo.png" class="mr-10" />
+        <button class="btn-2 mt-30 flex-all m-side-auto font-20">
+            إتمام التسجيل
+            <img src="/images/siteImgs/header/logo.png" class="mr-10" />
         </button>
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
@@ -194,12 +202,12 @@ export default {
                 this.gender.isValid = false;
                 this.formIsValid = false;
             }
-            if (this.specialization.val == "no") {
-                this.specialization.isValid = false;
+            if (this.empolyment.val == "no") {
+                this.empolyment.isValid = false;
                 this.formIsValid = false;
             }
-            if (this.workPlace.val == "") {
-                this.workPlace.isValid = false;
+            if (this.whyToJoin.val == "") {
+                this.whyToJoin.isValid = false;
                 this.formIsValid = false;
             }
         },
@@ -209,7 +217,7 @@ export default {
             } else {
                 this[e.target.id].isValid = false;
             }
-            if (e.target.id == "gender" || e.target.id == "specialization") {
+            if (e.target.id == "gender" || e.target.id == "empolyment") {
                 if (e.target.value == "no") {
                     this[e.target.id].isValid = false;
                 } else {
@@ -231,8 +239,8 @@ export default {
                 password: this.password.val,
                 email: this.email.val,
                 gender: this.gender.val,
-                specialization: this.specialization.val,
-                workPlace: this.workPlace.val
+                empolyment: this.empolyment.val,
+                whyToJoin: this.whyToJoin.val
             })
         }
     },
@@ -254,11 +262,11 @@ export default {
                 val: "no",
                 isValid: true
             },
-            specialization: {
+            empolyment: {
                 val: "no",
                 isValid: true
             },
-            workPlace: {
+            whyToJoin: {
                 val: "",
                 isValid: true
             },
@@ -271,15 +279,6 @@ export default {
 </script>
 
 <style scoped>
-.soft-bg {
-    background: #eff5ff;
-}
-.form-group p {
-    display: none;
-}
-.form-group.invalid p {
-    display: block;
-}
 .vti__input {
     text-align: right;
     unicode-bidi: plaintext;
@@ -313,13 +312,6 @@ select::-ms-expand {
 }
 select::-ms-expand {
     display: none;
-}
-.form-control {
-    border: 1px solid #606;
-    height: 52px;
-}
-.form-control:focus {
-    box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%);
 }
 .pass-visible {
     background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIuMDE1IDdjNC43NTEgMCA4LjA2MyAzLjAxMiA5LjUwNCA0LjYzNi0xLjQwMSAxLjgzNy00LjcxMyA1LjM2NC05LjUwNCA1LjM2NC00LjQyIDAtNy45My0zLjUzNi05LjQ3OC01LjQwNyAxLjQ5My0xLjY0NyA0LjgxNy00LjU5MyA5LjQ3OC00LjU5M3ptMC0yYy03LjU2OSAwLTEyLjAxNSA2LjU1MS0xMi4wMTUgNi41NTFzNC44MzUgNy40NDkgMTIuMDE1IDcuNDQ5YzcuNzMzIDAgMTEuOTg1LTcuNDQ5IDExLjk4NS03LjQ0OXMtNC4yOTEtNi41NTEtMTEuOTg1LTYuNTUxem0tLjAxNSAzYy0yLjIwOSAwLTQgMS43OTItNCA0IDAgMi4yMDkgMS43OTEgNCA0IDRzNC0xLjc5MSA0LTRjMC0yLjIwOC0xLjc5MS00LTQtNHoiLz48L3N2Zz4=)
