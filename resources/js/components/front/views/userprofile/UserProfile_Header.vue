@@ -18,7 +18,7 @@
 <style scoped>
 /* header */
 .user-header {
-    background: #2f333e;
+    background: #660066;
 }
 .user-nav {
     box-shadow: 2px 2px 2px rgb(0 0 0 / 20%);
