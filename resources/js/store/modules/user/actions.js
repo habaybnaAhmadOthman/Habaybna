@@ -48,7 +48,7 @@ export default {
         return resp.data.intrest
     },
      async login(context, payload){
-        const resp = await callApi("POST", "/login", payload);
+        const resp = await callApi("POST", "/api/login", payload);
         if (resp.status != 200) {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
