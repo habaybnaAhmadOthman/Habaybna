@@ -28,8 +28,9 @@ import RegisterTemplate from "./../../views/auth/RegisterTemplate.vue";
 import CompleteSpecialist from "./../../views/auth/CompleteSpecialist.vue";
 import WelcomeScreen from "./../../views/auth/WelcomeScreen.vue";
 
-
+import loading from "./../../mixins/loading.js";
 export default {
+    mixins: [loading],
     components: {
         RegisterTemplate,
         CompleteSpecialist,
@@ -37,20 +38,15 @@ export default {
     },
     data() {
         return {
-            isLoading: false,
             showInterestScreen: false,
             interests: [],
             phoneNumber: "",
             type: "",
             code: "",
-            error: null
         };
     },
 
     methods: {
-        closeModal() {
-            this.error = null;
-        },
         async submitForm(userData) {
             this.isLoading = true;
             try {
@@ -77,9 +73,6 @@ export default {
             } catch (e) {
                 this.showErrorMessage("حدث خطأ ما");
             }
-        },
-        showErrorMessage(msg) {
-            this.error = msg;
         }
     }
 };

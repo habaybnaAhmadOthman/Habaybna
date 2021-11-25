@@ -27,10 +27,14 @@ export default {
             throw error;
         }
 
-        context.commit("setUser", payload);
+        context.commit("login");
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
+
+        if (!type) {
+            type = window.location.pathname.slice(1).split('-')[0]
+        }
         const resp = await callApi(
             "POST",
             `/${type}-complete-register`,
@@ -43,9 +47,9 @@ export default {
         // return interests
         return resp.data.intrest
     },
-    async login(context, payload){
+     async login(context, payload){
         const resp = await callApi("POST", "/login", payload);
-        if (resp.status != 204) {
+        if (resp.status != 200) {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }

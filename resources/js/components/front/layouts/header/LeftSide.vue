@@ -9,9 +9,41 @@
             إهداء مكالمة مجانیة</router-link
         >
         <div class="bar"></div>
-        <router-link to="/signin" class="sign-out-box pr-30 relative bold white">تسجيل الدخول</router-link>
+        <template v-if="!isLoggedIn">
+            <router-link
+                to="/signup"
+                class="signin-box-btn pr-30 relative bold white"
+                >تسجيل</router-link
+            >
+            <router-link
+                to="/signin"
+                class="signin-box-btn pr-30 relative bold white"
+                >تسجيل الدخول</router-link
+            >
+        </template>
+        <button
+            @click="logout"
+            v-else
+            class="sign-out-box bg-none border-0 pointer pr-30 relative bold white"
+        >
+            تسجيل الخروج
+        </button>
     </div>
 </template>
+
+<script>
+export default {
+    props: ["isLoggedIn"],
+    methods: {
+        async logout() {
+            await this.$store.dispatch("user/logout");
+            if (this.$router.currentRoute.name != "home") {
+                this.$router.push("/");
+            }
+        }
+    }
+};
+</script>
 
 <style scoped>
 .bar {
