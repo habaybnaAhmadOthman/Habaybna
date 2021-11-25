@@ -9,7 +9,7 @@ export default {
         return state.type;
     },
     isLoggedIn(state) {
-        return Boolean(state.loggedIn);
+        return !!state.loggedIn;
     }
     // user(state,getters,rootState,rootGetters)
 };

@@ -27,10 +27,14 @@ export default {
             throw error;
         }
 
-        context.commit("setUser", payload);
+        context.commit("login");
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
+        
+        if (!type) {
+            type = window.location.pathname.slice(1).split('-')[0]
+        }
         const resp = await callApi(
             "POST",
             `/${type}-complete-register`,

@@ -62,7 +62,7 @@
                     >
                 </menu>
             </div>
-            <LeftSide></LeftSide>
+            <LeftSide :isLoggedIn="isLoggedIn"></LeftSide>
         </div>
     </header>
 </template>
@@ -72,6 +72,23 @@ import LeftSide from "./LeftSide.vue";
 export default {
     components: {
         LeftSide
+    },
+    computed: {
+        isLoggedIn() {
+            return this.$store.getters["user/isLoggedIn"];
+        }
+    },
+    created() {
+        window.addEventListener("scroll", this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener("scroll", this.handleScroll);
+    },
+    methods: {
+        handleScroll(event) {
+            // Any code to be executed when the window is scrolled
+            // console.log(event);
+        }
     }
 };
 </script>

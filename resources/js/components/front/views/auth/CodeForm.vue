@@ -45,11 +45,12 @@
 </template>
 
 <script>
+import loading from "./../../mixins/loading.js";
 export default {
+    mixins: [loading],
     emits: ["error-happen", "complete-registration-form", "send-otp"],
     data() {
         return {
-            isLoading: false,
             code: {
                 val: "",
                 isValid: true,
@@ -60,7 +61,6 @@ export default {
                 availableTry: 3,
                 secondsLeft: 10
             },
-            error: null
         };
     },
     mounted() {
