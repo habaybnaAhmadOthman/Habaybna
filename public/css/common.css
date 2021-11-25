@@ -85,6 +85,11 @@ body {
     width: 1062px;
     margin: auto;
 }
+.container-fluid {
+    min-width: 1062px;
+    margin: auto;
+    padding: 0 30px;
+}
 .d-flex {
     display: flex;
 }
@@ -462,6 +467,10 @@ h6,
 p {
     margin: 0;
 }
+li {
+    list-style: none;
+}
+
 .regular,
 input {
     font-family: "Hacen"!important;
@@ -580,6 +589,9 @@ a:hover {
 }
 :focus-visible {
     outline: -webkit-focus-ring-color auto 0;
+}
+.visible-0 {
+    visibility: hidden;
 }
 .ltr {
     direction: ltr;

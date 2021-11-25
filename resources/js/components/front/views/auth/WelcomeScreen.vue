@@ -50,10 +50,8 @@ export default {
     },
     data() {
         return {
-            isLoading: false,
             tags: "",
-            tagsValid: true,
-            error: null
+            tagsValid: true
         };
     },
     methods: {
@@ -88,14 +86,16 @@ export default {
     padding: 8px 8px 0 40px;
     text-align: right;
 }
-.multiselect__option--selected,.multiselect__option {
+.multiselect__option--selected,
+.multiselect__option {
     text-align: right;
 }
-.multiselect__option--highlight:after,.multiselect__option--selected:after {
+.multiselect__option--highlight:after,
+.multiselect__option--selected:after {
     content: none !important;
 }
 .multiselect__option--highlight {
-    background: #606!important;
+    background: #606 !important;
     text-align: right;
 }
 .multiselect__select {
@@ -107,9 +107,9 @@ export default {
     border-color: #606 transparent transparent;
 }
 .multiselect__tag {
-    background:#606;
+    background: #606;
 }
 .multiselect__tag-icon:after {
-    color:#fff;
+    color: #fff;
 }
 </style>

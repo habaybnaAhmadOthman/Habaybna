@@ -9,7 +9,7 @@ export default {
         localStorage.setItem('login',true)
     },
     logout(state) {
-        state.loggedIn = true;
+        state.loggedIn = false;
         localStorage.removeItem('login')
     },
     setCountryCode(state, countryCode) {

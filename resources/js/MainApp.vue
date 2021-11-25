@@ -20,9 +20,12 @@ export default {
         this.isLoggedIn()
     },
     methods: {
-        isLoggedIn() {
-            if (Boolean(localStorage.getItem('login'))) {
+        async isLoggedIn() {
+            const userStatus = await localStorage.getItem('login')
+            if (Boolean(userStatus)) {
                 this.$store.commit('user/login');
+            } else {
+                this.$store.commit('user/logout');
             }
         }
     }

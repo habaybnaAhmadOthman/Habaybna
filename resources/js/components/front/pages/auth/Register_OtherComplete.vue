@@ -28,8 +28,9 @@ import RegisterTemplate from "./../../views/auth/RegisterTemplate.vue";
 import CompleteOther from "./../../views/auth/CompleteOther.vue";
 import WelcomeScreen from "./../../views/auth/WelcomeScreen.vue";
 
-
+import loading from "./../../mixins/loading.js";
 export default {
+    mixins: [loading],
     components: {
         RegisterTemplate,
         CompleteOther,
@@ -37,13 +38,11 @@ export default {
     },
     data() {
         return {
-            isLoading: false,
             showInterestScreen: false,
             interests: [],
             phoneNumber: "",
             type: "",
-            code: "",
-            error: null
+            code: ""
         };
     },
 
