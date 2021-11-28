@@ -1,6 +1,6 @@
 <template>
     <div class="mobile-form pt-50 p-side-50">
-        <p class="main-color font-40 bold center">
+        <p class="main-color font-40 bold center font-28-p">
             أهلا و سهلاً بك <br />
             في عائلة حبايبنا
         </p>

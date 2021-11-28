@@ -1,9 +1,9 @@
 <template>
-    <div class="d-flex registration-template main-bg h-full overflow-hidden">
-        <div class="right-side bg-white w-40" :class="padding">
+    <div class="d-flex registration-template main-bg h-full h-auto-p overflow-hidden">
+        <div class="right-side bg-white w-40 w-100-p pt-0-p pt-20-p" :class="padding">
             <slot></slot>
         </div>
-        <LeftSide class="w-60"></LeftSide>
+        <LeftSide class="w-60 w-100-p pt-0-p"></LeftSide>
     </div>
 </template>
 
@@ -21,5 +21,10 @@ export default {
 <style scoped>
 .right-side {
     overflow-y: auto;
+}
+@media (max-width: 667px) {
+    .registration-template {
+            flex-direction: column-reverse;
+    }
 }
 </style>

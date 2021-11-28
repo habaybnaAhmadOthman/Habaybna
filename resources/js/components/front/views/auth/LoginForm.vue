@@ -1,6 +1,6 @@
 <template>
-    <div class="mobile-form p-side-50">
-        <h2 class="main-color font-40 bold center mb-10">
+    <div class="mobile-form p-side-50 p-side-12-p">
+        <h2 class="main-color font-40 bold center mb-10 font-28-p">
             تسجيل دخول
         </h2>
         <form @submit.prevent="submitForm">
@@ -51,8 +51,6 @@
                     class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
                     placeholder="كلمة السر"
                     id="password"
-                    @input="passwordCheck"
-                    @focus="password.isValid = false"
                     @blur="checkValidity"
                     v-model.trim="password.val"
                 />
@@ -61,30 +59,6 @@
                     :class="{ active: !password.show }"
                     @click="passwordVisibility"
                 ></div>
-                <!-- <small>يجب أن تحتوي كلمة السر على أرقام و رموز خاصة و ان لا تقل عن ٨ خانات و احرف كبيرة وصغيرة</small> -->
-                <div class="check-pass" v-if="!password.isValid">
-                    <small
-                        class="d-block relative"
-                        v-if="!password.has_minimum_lenth"
-                        >يجب أن لا تقل كلمة السر عن ٨ خانات</small
-                    >
-                    <small class="d-block relative" v-if="!password.has_number"
-                        >يجب أن تحتوي على أرقام</small
-                    >
-                    <small
-                        class="d-block relative"
-                        v-if="!password.has_lowercase"
-                        >يجب أن تحتوي على حروف صغيرة</small
-                    >
-                    <small
-                        class="d-block relative"
-                        v-if="!password.has_uppercase"
-                        >يجب أن تحتوي على حروف كبيرة</small
-                    >
-                    <small class="d-block relative" v-if="!password.has_special"
-                        >يجب أن تحتوي على رموز خاصة</small
-                    >
-                </div>
                 <p class="main-color mt-5 font-12">
                     هذا الحقل مطلوب
                 </p>
@@ -101,14 +75,14 @@
                 تسجيل الدخول
             </button>
             <div
-                class="main-color mt-15 pointer"
+                class="main-color mt-15 pointer center-p"
                 v-if="viaPhone"
                 @click="changeLoginMethod"
             >
                 تسجيل الدخول عبر البريد الإلكتروني
             </div>
             <div
-                class="main-color mt-15 pointer"
+                class="main-color mt-15 pointer center-p"
                 @click="changeLoginMethod"
                 v-else
             >
@@ -127,9 +101,6 @@ import passwordMixin from "./../../mixins/password.js";
 export default {
     emits: ["save-form"],
     mixins: [phoneNumberMixin, passwordMixin],
-    created() {
-        this.getUserCountry();
-    },
     data() {
         return {
             email: {
@@ -137,15 +108,10 @@ export default {
                 isValid: true
             },
             viaPhone: true,
-            countryCode: "",
             formIsValid: true
         };
     },
     methods: {
-        async getUserCountry() {
-            await this.$store.dispatch("user/getCountryCode");
-            this.countryCode = this.$store.getters["user/countryCode"];
-        },
         changeLoginMethod() {
             this.viaPhone = !this.viaPhone;
             this.phoneNumber.val = "";
@@ -175,9 +141,6 @@ export default {
                 this[e.target.id].isValid = true;
             } else {
                 this[e.target.id].isValid = false;
-            }
-            if (e.target.id == "password") {
-                this.passwordCheck();
             }
         },
         submitForm() {
@@ -274,11 +237,5 @@ input[type="checkbox"]:checked::before {
 .pass-visible.active {
     background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTkuNjA0IDIuNTYybC0zLjM0NiAzLjEzN2MtMS4yNy0uNDI4LTIuNjg2LS42OTktNC4yNDMtLjY5OS03LjU2OSAwLTEyLjAxNSA2LjU1MS0xMi4wMTUgNi41NTFzMS45MjggMi45NTEgNS4xNDYgNS4xMzhsLTIuOTExIDIuOTA5IDEuNDE0IDEuNDE0IDE3LjM3LTE3LjAzNS0xLjQxNS0xLjQxNXptLTYuMDE2IDUuNzc5Yy0zLjI4OC0xLjQ1My02LjY4MSAxLjkwOC01LjI2NSA1LjIwNmwtMS43MjYgMS43MDdjLTEuODE0LTEuMTYtMy4yMjUtMi42NS00LjA2LTMuNjYgMS40OTMtMS42NDggNC44MTctNC41OTQgOS40NzgtNC41OTQuOTI3IDAgMS43OTYuMTE5IDIuNjEuMzE1bC0xLjAzNyAxLjAyNnptLTIuODgzIDcuNDMxbDUuMDktNC45OTNjMS4wMTcgMy4xMTEtMi4wMDMgNi4wNjctNS4wOSA0Ljk5M3ptMTMuMjk1LTQuMjIxcy00LjI1MiA3LjQ0OS0xMS45ODUgNy40NDljLTEuMzc5IDAtMi42NjItLjI5MS0zLjg1MS0uNzM3bDEuNjE0LTEuNTgzYy43MTUuMTkzIDEuNDU4LjMyIDIuMjM3LjMyIDQuNzkxIDAgOC4xMDQtMy41MjcgOS41MDQtNS4zNjQtLjcyOS0uODIyLTEuOTU2LTEuOTktMy41ODctMi45NTJsMS40ODktMS40NmMyLjk4MiAxLjkgNC41NzkgNC4zMjcgNC41NzkgNC4zMjd6Ii8+PC9zdmc+)
         no-repeat center;
-}
-.pass-group .check-pass small:before {
-    content: "x";
-    color: #f44336;
-    font-weight: bold;
-    margin-left: 5px;
 }
 </style>
