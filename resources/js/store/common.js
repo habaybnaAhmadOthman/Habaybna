@@ -13,10 +13,6 @@ export async function callApi(method, url, dataObj) {
 export function isLoggedIn() {
     return localStorage.getItem("login") == "true";
 }
-
-export function logIn() {
-    localStorage.setItem("login", true);
-}
 export function logInWithToken(token) {
     localStorage.setItem("login", true);
     localStorage.setItem("token", token);
@@ -25,4 +21,7 @@ export function logInWithToken(token) {
 export function logOut() {
     localStorage.removeItem("login");
     localStorage.removeItem('token')
+}
+export function sanctum() {
+    window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 }

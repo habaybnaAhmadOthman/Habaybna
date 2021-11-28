@@ -1,4 +1,4 @@
-import { isLoggedIn, callApi,logIn,logOut ,logInWithToken} from "../../common";
+import { isLoggedIn, callApi,logIn,logOut ,logInWithToken,sanctum} from "../../common";
 export default {
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
@@ -10,12 +10,14 @@ export default {
         context.commit('setCountryCode',countryCode)
     },
     async registerFirstStep(context, payload) {
+        await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "/register", payload);
         if (resp.status != 201) {
             const error = new Error("fail to register");
             throw error;
         }
-        logIn();
+        const token = resp.data.userData.token
+        logInWithToken(token);
         context.commit("login");
     },
     async completeRegistration({context,getters}, payload) {
@@ -49,9 +51,11 @@ export default {
         context.commit("login",token);
     },
     test(){
-        window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
+        sanctum();
         axios.get('/api/profile').then((res)=>{
             console.log(res);
+        }).catch((err)=>{
+            console.log(err);
         })
     },
     async logout(context){
