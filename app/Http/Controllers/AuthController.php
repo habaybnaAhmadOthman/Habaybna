@@ -55,7 +55,19 @@ class AuthController extends Controller
             ]);
         }
 
-        return $user->createToken($request->device_name)->plainTextToken;
+        $userType = $user->user_data;
+
+
+        $token = $user->createToken('vue web')->accessToken;
+        $userData['user'] =  $user;
+        $userData['token'] =  $token;
+
+        if($userType){
+            $userData['user']['firstName'] = $userType['firstName'];
+            $userData['user']['lastName'] = $userType['lastName'];
+        }
+
+        return response()->json(['userData' => $userData], 200);
     }
 
     public function logout(Request $request)
