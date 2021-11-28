@@ -6,14 +6,12 @@ export default {
     },
     login(state) {
         state.loggedIn = true;
-        localStorage.setItem('login',true)
     },
     logout(state) {
         state.loggedIn = false;
-        localStorage.removeItem('login')
     },
     setCountryCode(state, countryCode) {
-        state.countryCode = countryCode;
+        state.countryCode = countryCode || state.countryCode;
     }
     // login(state,payload){
     //     state.is_verify = payload.is_verify;

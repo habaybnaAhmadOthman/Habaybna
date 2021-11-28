@@ -32,6 +32,33 @@ body {
 .header-margin {
     margin-top: 150px;
 }
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.col-md-4 {
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+}
+.col-md-4,
+.col-md-3 {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.col-md-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+
 .p-0 {
     padding: 0;
 }
@@ -242,6 +269,9 @@ body {
 }
 .m-0 {
     margin: 0;
+}
+.m-0-i {
+    margin: 0!important;
 }
 .mr-5 {
     margin-right: 5px;
@@ -610,7 +640,38 @@ a:hover {
     .w-50-p {
         width: 50%;
     }
+    .h-auto-p {
+        height: auto;
+    }
     .container {
         max-width:100%;
+    }
+    .flex-wrap-p {
+        flex-wrap:wrap
+    }
+    .center-p {
+        text-align: center
+    }
+    .mt-0-p {
+        margin-top: 0;
+    }
+    .mt-10-p {
+        margin-top: 10px;
+    }
+    .mb-10-p {
+        margin-bottom: 10px;
+    }
+    .pt-0-p {
+        padding-top: 0;
+    }
+    .pt-20-p {
+        padding-top: 20px;
+    }
+    .p-side-12-p {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    .font-28-p {
+        font-size: 28px;
     }
 }

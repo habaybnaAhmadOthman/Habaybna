@@ -15,22 +15,10 @@ Vue.component('alert-dialog',AlertDialog)
 export default {
     components: {
         TheHeader
-    },
-    created(){
-        this.isLoggedIn()
-    },
-    methods: {
-        async isLoggedIn() {
-            const userStatus = await localStorage.getItem('login')
-            if (Boolean(userStatus)) {
-                this.$store.commit('user/login');
-            } else {
-                this.$store.commit('user/logout');
-            }
-        }
     }
 }
 </script>
 <style>
 @import url('./../../public/css/common.css');
+@import url('./../../public/css/userprofile.css');
 </style>

@@ -1,15 +1,4 @@
-async function callApi(method, url, dataObj) {
-    try {
-        return await axios({
-            method: method,
-            url: url,
-            data: dataObj
-        });
-    } catch (e) {
-        return e.response;
-    }
-}
-
+import { isLoggedIn, callApi,logIn,logOut } from "../../common";
 export default {
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
@@ -26,7 +15,7 @@ export default {
             const error = new Error("fail to register");
             throw error;
         }
-
+        logIn();
         context.commit("login");
     },
     async completeRegistration({context,getters}, payload) {
@@ -53,6 +42,7 @@ export default {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
+        logIn();
         context.commit("login");
     },
     async logout(context){
@@ -61,6 +51,7 @@ export default {
             const error = new Error("fail to logout");
             throw error;
         }
+        logOut();
         context.commit("logout");
     },
     // ******** interests

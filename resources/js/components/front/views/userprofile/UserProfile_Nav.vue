@@ -16,8 +16,8 @@
 
 <style scoped>
 .user-side-nav {
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 230px;
+    max-width: 230px;
     color: #686a76;
     box-shadow: -1px 1px 1px rgb(0 0 0 / 10%);
     min-height: calc(100vh - 65px);
