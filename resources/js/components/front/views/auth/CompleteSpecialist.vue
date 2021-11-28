@@ -3,7 +3,7 @@
         <h2 class="main-color text-shadow font-40 bold center mb-30 font-28-p">
             أكمل معلوماتك
         </h2>
-        <div class="row d-flex space-between">
+        <div class="d-flex space-between">
             <!-- fristName -->
             <div
                 class="form-group row-half"

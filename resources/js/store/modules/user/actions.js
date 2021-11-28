@@ -1,4 +1,4 @@
-import { isLoggedIn, callApi,logIn,logOut } from "../../common";
+import { isLoggedIn, callApi,logIn,logOut ,logInWithToken,sanctum} from "../../common";
 export default {
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
@@ -10,12 +10,14 @@ export default {
         context.commit('setCountryCode',countryCode)
     },
     async registerFirstStep(context, payload) {
+        await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "/register", payload);
         if (resp.status != 201) {
             const error = new Error("fail to register");
             throw error;
         }
-        logIn();
+        const token = resp.data.userData.token
+        logInWithToken(token);
         context.commit("login");
     },
     async completeRegistration({context,getters}, payload) {
@@ -37,13 +39,24 @@ export default {
         return resp.data.intrest
     },
      async login(context, payload){
-        const resp = await callApi("POST", "/login", payload);
+        await axios.get("/sanctum/csrf-cookie");
+        const resp = await callApi("POST", "/api/login", payload);
+        
         if (resp.status != 200) {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
-        logIn();
-        context.commit("login");
+        const token = resp.data.userData.token
+        logInWithToken(token);
+        context.commit("login",token);
+    },
+    test(){
+        sanctum();
+        axios.get('/api/profile').then((res)=>{
+            console.log(res);
+        }).catch((err)=>{
+            console.log(err);
+        })
     },
     async logout(context){
         const resp = await callApi("POST", "/logoutt");
@@ -61,6 +74,15 @@ export default {
             const error = new Error("fail to add interests");
             throw error;
         }
-    }
+    },
+    // ******** userProfile
+    async getProfileData(){
+        const resp = await callApi("GET", "/api/get-profile-data");
+        if (resp.status != 200) {
+            const error = new Error("fail to get profile data");
+            throw error;
+        }
+        return resp.data
+    },
 
 };
