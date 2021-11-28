@@ -1,4 +1,4 @@
-import { isLoggedIn, callApi,logIn,logOut } from "../../common";
+import { isLoggedIn, callApi,logIn,logOut ,logInWithToken} from "../../common";
 export default {
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
@@ -20,7 +20,7 @@ export default {
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
-        
+
         if (!type) {
             type = window.location.pathname.slice(1).split('-')[0]
         }
@@ -36,14 +36,23 @@ export default {
         // return interests
         return resp.data.intrest
     },
-    async login(context, payload){
-        const resp = await callApi("POST", "/login", payload);
-        if (resp.status != 204) {
+     async login(context, payload){
+        await axios.get("/sanctum/csrf-cookie");
+        const resp = await callApi("POST", "/api/login", payload);
+        
+        if (resp.status != 200) {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
-        logIn();
-        context.commit("login");
+        const token = resp.data.userData.token
+        logInWithToken(token);
+        context.commit("login",token);
+    },
+    test(){
+        window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
+        axios.get('/api/profile').then((res)=>{
+            console.log(res);
+        })
     },
     async logout(context){
         const resp = await callApi("POST", "/logoutt");

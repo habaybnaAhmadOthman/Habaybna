@@ -30,3 +30,20 @@ use Illuminate\Support\Facades\Route;
 
 //     });
 // });
+// Route::middleware('auth:sanctum')->group(function () {
+
+// });
+
+// route::middleware('auth:sanctum')->get('/user',function(Request $request){
+//     dd($request->user());
+//     return $request->user();
+// });
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    route::get('profile',function(){
+        dd('xxxx');
+    });
+});
+
+Route::post('register','AuthController@signup')->name('user.register');
+Route::post('login','AuthController@login')->name('user.login');

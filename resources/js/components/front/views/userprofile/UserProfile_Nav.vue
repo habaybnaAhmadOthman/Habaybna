@@ -1,6 +1,6 @@
 <template>
     <aside class="user-side-nav bg-white z-1">
-        <ul class="pt-30">
+        <ul class="user-side-nav-list">
             <li class="active">
                 <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/">حسابي</router-link>
             </li>
@@ -21,6 +21,9 @@
     color: #686a76;
     box-shadow: -1px 1px 1px rgb(0 0 0 / 10%);
     min-height: calc(100vh - 65px);
+}
+.user-side-nav-list {
+    padding-top: 57px;
 }
 .user-side-nav li > a {
     border-right: 4px solid transparent;

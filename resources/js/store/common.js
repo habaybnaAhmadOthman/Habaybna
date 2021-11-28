@@ -17,6 +17,12 @@ export function isLoggedIn() {
 export function logIn() {
     localStorage.setItem("login", true);
 }
+export function logInWithToken(token) {
+    localStorage.setItem("login", true);
+    localStorage.setItem("token", token);
+    window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+}
 export function logOut() {
-    localStorage.removeItem('login')
+    localStorage.removeItem("login");
+    localStorage.removeItem('token')
 }
