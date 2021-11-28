@@ -83,4 +83,9 @@ class AuthController extends Controller
     {
         return response()->json($request->user());
     }
+
+    public function getProfileData(Request $request)
+    {
+        dd(Auth::user());
+    }
 }

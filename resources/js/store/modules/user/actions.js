@@ -74,6 +74,15 @@ export default {
             const error = new Error("fail to add interests");
             throw error;
         }
-    }
+    },
+    // ******** userProfile
+    async getProfileData(){
+        const resp = await callApi("GET", "/api/get-profile-data");
+        if (resp.status != 200) {
+            const error = new Error("fail to get profile data");
+            throw error;
+        }
+        return resp.data
+    },
 
 };

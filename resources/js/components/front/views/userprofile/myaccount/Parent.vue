@@ -158,6 +158,9 @@ export default {
     mixins: [phoneNumberMixin, passwordMixin],
     components: { Multiselect, VuePhoneNumberInput },
     props: ["interestsList"],
+    mounted(){
+        this.getProfileData();
+    },
     data() {
         return {
             tags: "",
@@ -202,6 +205,9 @@ export default {
         };
     },
     methods: {
+        async getProfileData(){
+            const obj = await this.$store.dispatch("user/getProfileData");
+        },
         validateForm() {
             this.formIsValid = true;
             this.tagsValid = true;

@@ -40,9 +40,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    route::get('profile',function(){
-        dd('xxxx');
-    });
+    route::get('get-profile-data','AuthController@getProfileData');
 });
 
 Route::post('register','AuthController@signup')->name('user.register');
