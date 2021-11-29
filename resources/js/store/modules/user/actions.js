@@ -1,4 +1,4 @@
-import { isLoggedIn, callApi,logIn,logOut ,logInWithToken,sanctum} from "../../common";
+import { isLoggedIn, callApi,logIn,logOut ,logInWithToken,sanctum,local_userID} from "../../common";
 export default {
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
@@ -16,9 +16,11 @@ export default {
             const error = new Error("fail to register");
             throw error;
         }
-        const token = resp.data.userData.token
-        logInWithToken(token);
-        context.commit("login");
+        const token = resp.data.userData.token;
+        const userId = resp.data.userData.user.id;
+
+        logInWithToken(token,userId);
+        context.commit("login",token,userId);
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
@@ -46,9 +48,11 @@ export default {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
-        const token = resp.data.userData.token
-        logInWithToken(token);
-        context.commit("login",token);
+        const token = resp.data.userData.token;
+        const userId = resp.data.userData.user.id;
+
+        logInWithToken(token,userId);
+        context.commit("login",token,userId);
     },
     test(){
         sanctum();
@@ -59,7 +63,8 @@ export default {
         })
     },
     async logout(context){
-        const resp = await callApi("POST", "/logoutt");
+        sanctum();
+        const resp = await callApi("POST", "/api/logoutt",{id:local_userID()});
         if (resp.status != 200) {
             const error = new Error("fail to logout");
             throw error;
