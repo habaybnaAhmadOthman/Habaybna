@@ -41,7 +41,7 @@ export default {
      async login(context, payload){
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "/api/login", payload);
-        
+
         if (resp.status != 200) {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
@@ -77,6 +77,7 @@ export default {
     },
     // ******** userProfile
     async getProfileData(){
+        sanctum();
         const resp = await callApi("GET", "/api/get-profile-data");
         if (resp.status != 200) {
             const error = new Error("fail to get profile data");

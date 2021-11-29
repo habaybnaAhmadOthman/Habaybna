@@ -54,11 +54,12 @@ class AuthController extends Controller
                 'phone' => ['The provided credentials are incorrect.'],
             ]);
         }
-
         $userType = $user->user_data;
 
+        $user->tokens()->delete();
 
         $token = $user->createToken('vue web')->accessToken;
+
         $userData['user'] =  $user;
         $userData['token'] =  $token;
 
@@ -72,6 +73,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        // dd(Auth::user());
         Auth::user()->tokens()->delete();
         // Auth::logout();
         return response()->json([
