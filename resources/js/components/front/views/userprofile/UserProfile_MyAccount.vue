@@ -46,8 +46,7 @@ export default {
     },
     async created() {
         const userType = await this.$store.getters["user/type"];
-        // this.activeComponent = `${userType}Account`;
-        this.activeComponent = `specialistAccount`;
+        this.activeComponent = `${userType}Account`;
     },
     data() {
         return {
