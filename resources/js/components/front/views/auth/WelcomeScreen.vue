@@ -29,7 +29,7 @@
             <router-link to="/" class="main-color underline font-16"
                 >عودة الى الرئيسية</router-link
             >
-            <router-link to="/" class="main-color underline mr-20 font-16"
+            <router-link to="/profile" class="main-color underline mr-20 font-16"
                 >ملفي الشخصي</router-link
             >
         </div>

@@ -69,17 +69,14 @@ export default {
         },
         async submitForm(data) {
             this.isLoading = true;
-            // try {
-            //     await this.$store.dispatch('updateProfileData',data)
-            // } catch (e) {
-            //     // this.showErrorMessage("حدث خطأ ما")
-            //     console.log(e)
-            // }
-            console.log(data);
-            setTimeout(() => {
-                this.isLoading = false;
-                this.error = true;
-            }, 1000);
+            try {
+                await this.$store.dispatch('user/updateProfileData',data)
+            } catch (e) {
+                // this.showErrorMessage("حدث خطأ ما")
+                console.log(e)
+            }
+            this.isLoading = false;
+            this.error = true;
         },
         showPasswordDialog() {
             this.showPasswordModal = !this.showPasswordModal;
