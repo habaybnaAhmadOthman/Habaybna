@@ -69,6 +69,7 @@ dialog {
     right: 0;
     left: 0;
     margin: auto;
+    width:500px;
 }
 .header {
     background-color: #660066;
