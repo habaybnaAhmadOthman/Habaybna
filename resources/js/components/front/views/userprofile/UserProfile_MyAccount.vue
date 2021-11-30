@@ -7,7 +7,7 @@
         ></component>
         <ChangePassword
             v-if="showPasswordModal"
-            @close-password-modal="showPasswordDialog"
+            @close-password-modal="successPasswordDialog"
         ></ChangePassword>
         <UserImage
             v-if="showUserImageModal"
@@ -19,7 +19,7 @@
         </div>
         <alert-dialog
             :show="!!error"
-            :title="'تم الحفظ بنجاح'"
+            :title="error"
             @close="closeModal"
         ></alert-dialog>
     </div>
@@ -72,15 +72,19 @@ export default {
             try {
                 await this.$store.dispatch('user/updateProfileData',data)
             } catch (e) {
-                // this.showErrorMessage("حدث خطأ ما")
+                // this.showPopupMessage("حدث خطأ ما")
                 console.log(e)
             }
             this.isLoading = false;
-            this.error = true;
+            this.showPopupMessage("تم الحفظ بنجاح")
         },
         showPasswordDialog() {
             this.showPasswordModal = !this.showPasswordModal;
-        }
+        },
+        successPasswordDialog() {
+            this.showPasswordModal = !this.showPasswordModal;
+            this.showPopupMessage("تم تغيير كلمة المرور بنجاح");
+        },
     }
 };
 </script>

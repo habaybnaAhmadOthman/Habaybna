@@ -3,7 +3,7 @@
         <RegisterTemplate>
             <OtpForm
                 @send-otp="gotPhone"
-                @error-happen="showErrorMessage"
+                @error-happen="showPopupMessage"
                 v-if="!showCodeForm"
                 ref="phoneForm"
             >
@@ -97,7 +97,7 @@ export default {
                 .catch(error => {
                     console.log(error);
                     // Error; SMS not sent
-                    this.showErrorMessage("حدث خطأ ما");
+                    this.showPopupMessage("حدث خطأ ما");
                 });
 
             this.isLoading = false;
@@ -117,7 +117,7 @@ export default {
                 });
                 this.$router.replace(`/${this.type}-complete-registration`);
             } catch (e) {
-                this.showErrorMessage("حدث خطأ ما");
+                this.showPopupMessage("حدث خطأ ما");
             }
             this.isLoading = false;
         }

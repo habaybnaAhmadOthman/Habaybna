@@ -113,7 +113,6 @@ body {
     margin: auto;
 }
 .container-fluid {
-    min-width: 1062px;
     margin: auto;
     padding: 0 30px;
 }

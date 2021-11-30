@@ -45,6 +45,22 @@
                         </div>
                     </div>
                     <div class="col-md-4">
+                        <label class="form-control-label">رقم الهاتف</label>
+                        <div class="">
+                            <input
+                                class="form-control plaintext"
+                                placeholder="رقم الهاتف"
+                                id="phoneNumber"
+                                v-model="phoneNumber"
+                                disabled
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-0-p">
+                <div class="row">
+                    <div class="col-md-4">
                         <label class="form-control-label">مجال العمل</label>
                         <select
                             class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
@@ -203,7 +219,6 @@ import "vue-multiselect/dist/vue-multiselect.min.css";
 export default {
     emits: ["submit-form", "open-password-dialog"],
     components: { Multiselect },
-    props: ["interestsList"],
     mounted() {
         this.getProfileData();
     },
@@ -211,7 +226,7 @@ export default {
         return {
             tags: "",
             tagsValid: true,
-
+            interestsList: [],
             firstName: "",
             lastName: "",
             email: "",
@@ -250,6 +265,18 @@ export default {
     methods: {
         async getProfileData() {
             const obj = await this.$store.dispatch("user/getProfileData");
+            const data = obj.userData;
+            this.firstName = data.firstName;
+            this.lastName = data.lastName;
+            this.phoneNumber = data.phone;
+            this.email = data.email;
+            this.birthdate.val = new Date(data.dob).getFullYear();
+            this.workPlace.val = data.work_place ;
+            this.gender.val = data.gender;
+            this.education.val = data.edu_level || 'no';
+            this.jobTitle.val = data.job_title;
+            this.whyToJoin.val = data.why_to_join;
+            this.employment.val = data.employment || 'no';
         },
         showPasswordDialog() {
             this.$emit("open-password-dialog");
@@ -284,13 +311,17 @@ export default {
             // this.tags.forEach(item => tagIDs.push(item.id));
 
             this.$emit("submitForm", {
-                birthdate: this.birthdate.val,
+                firstName: this.firstName,
+                lastName: this.lastName,
+                phone: this.phoneNumber,
+                email: this.email,
+                dob: this.birthdate.val,
+                gender: this.gender.val,
                 education: this.education.val,
                 employment: this.employment.val,
                 jobTitle: this.jobTitle.val,
                 workPlace: this.workPlace.val,
                 whyToJoin: this.whyToJoin.val,
-                jobTitle: this.jobTitle.val,
                 interests: []
             });
         }

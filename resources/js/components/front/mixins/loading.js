@@ -9,7 +9,7 @@ export default {
         closeModal() {
             this.error = null;
         },
-        showErrorMessage(msg) {
+        showPopupMessage(msg) {
             this.error = msg;
         }
     }

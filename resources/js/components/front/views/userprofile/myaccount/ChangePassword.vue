@@ -97,9 +97,9 @@ export default {
                     oldPassword: this.oldPassword.val,
                     newPassword: this.password.val
                 })
-                this.closeModal()
+                this.successModal()
             } catch (e) {
-                this.showErrorMessage("حدث خطأ ما");
+                this.showPopupMessage("حدث خطأ ما");
             }
             this.isLoading = false;
             // submit then
@@ -113,6 +113,9 @@ export default {
             if (e.target.id == "password") {
                 this.passwordCheck();
             }
+        },
+        successModal(){
+            this.$emit('close-password-modal')
         },
         closeModal(){
             this.$emit('close-password-modal')
