@@ -102,7 +102,10 @@ export default {
     // ******** userProfile ::: password
     async changePassword(_,payload) {
         const resp = await callApi("POST", "/api/set-new-password",payload);
-        if (resp.status != 200) {
+        if (!resp.status) {
+            const error = new Error("كلمة المرور القديمة غير صحيحة");
+            throw error;
+        } else if (resp.status != 200) {
             const error = new Error("fail to change password");
             throw error;
         }
