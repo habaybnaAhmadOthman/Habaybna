@@ -71,7 +71,7 @@
 import passwordMixin from "../../../mixins/password.js";
 import loadingMixin from "../../../mixins/loading.js";
 export default {
-    emits: ["close-password-modal","success-password-modal"],
+    emits: ["close-password-modal","alert-password-modal"],
     mixins: [passwordMixin,loadingMixin],
     data(){
         return {
@@ -97,9 +97,9 @@ export default {
                     oldPassword: this.oldPassword.val,
                     newPassword: this.password.val
                 })
-                this.successModal()
+                this.alertModal(true)
             } catch (e) {
-                this.showPopupMessage(e);
+                this.alertModal(false)
             }
             this.isLoading = false;
             // submit then
@@ -114,8 +114,8 @@ export default {
                 this.passwordCheck();
             }
         },
-        successModal(){
-            this.$emit('success-password-modal')
+        alertModal(isShow){
+            this.$emit('alert-password-modal',isShow)
         },
         closeModal(){
             this.$emit('close-password-modal')

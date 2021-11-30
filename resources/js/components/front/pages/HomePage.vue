@@ -2,7 +2,6 @@
     <div>
         
         <LandingSection></LandingSection>
-        <button @click="test">tedt</button>
         <HabaybnaLibrary></HabaybnaLibrary>
         <HabaybnaDirectory></HabaybnaDirectory>
     </div>
@@ -13,11 +12,6 @@ import LandingSection from "./../views/homepage/LandingSection.vue";
 import HabaybnaLibrary from "./../views/homepage/HabaybnaLibrary.vue";
 import HabaybnaDirectory from "./../views/homepage/HabaybnaDirectory.vue";
 export default {
-    components: { LandingSection, HabaybnaLibrary,HabaybnaDirectory },
-    methods: {
-        test(){
-             this.$store.dispatch("user/test");
-        }
-    }
+    components: { LandingSection, HabaybnaLibrary,HabaybnaDirectory }
 };
 </script>

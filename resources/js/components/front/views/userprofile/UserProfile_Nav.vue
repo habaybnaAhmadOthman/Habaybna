@@ -23,6 +23,11 @@
                     >الإستشارات</router-link
                 >
             </li>
+            <li class="mo">
+                <button @click="logout" class="d-block p-side-15 pt-10 pb-10 trans bg-none w-100 border-0"
+                    >تسجيل خروج</button
+                >
+            </li>
         </ul>
     </aside>
 </template>
@@ -38,6 +43,10 @@ export default {
         closeNavMenu() {
             document.querySelector(".user-side-nav").classList.remove("active");
             document.querySelector("body").classList.remove("overflow-hidden");
+        },
+        logout(){
+            this.$store.dispatch('user/logout');
+            this.$router.replace('/')
         }
     }
 };
@@ -54,12 +63,12 @@ export default {
 .user-side-nav-list {
     padding-top: 57px;
 }
-.user-side-nav li > a {
+.user-side-nav li > * {
     border-right: 4px solid transparent;
     color: #212529;
 }
-.user-side-nav li.active > a,
-.user-side-nav li:hover > a {
+.user-side-nav li.active > *,
+.user-side-nav li:hover > * {
     background: #660066;
     color: #fff;
     border-color: #b915b9;

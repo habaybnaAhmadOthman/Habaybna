@@ -7,7 +7,7 @@
         ></component>
         <ChangePassword
             v-if="showPasswordModal"
-            @success-password-modal="successPasswordDialog"
+            @alert-password-modal="alertPasswordDialog"
             @close-password-modal="showPasswordDialog"
         ></ChangePassword>
         <UserImage
@@ -59,7 +59,7 @@ export default {
         };
     },
     mounted() {
-        userImageModalBus.$on("openImageModal", (avatarSrc) => {
+        userImageModalBus.$on("openImageModal", avatarSrc => {
             this.showUserImageModal = true;
             this.userAvatar = avatarSrc;
         });
@@ -71,21 +71,25 @@ export default {
         async submitForm(data) {
             this.isLoading = true;
             try {
-                await this.$store.dispatch('user/updateProfileData',data)
+                await this.$store.dispatch("user/updateProfileData", data);
             } catch (e) {
                 // this.showPopupMessage("حدث خطأ ما")
-                console.log(e)
+                console.log(e);
             }
             this.isLoading = false;
-            this.showPopupMessage("تم الحفظ بنجاح")
+            this.showPopupMessage("تم الحفظ بنجاح");
         },
         showPasswordDialog() {
             this.showPasswordModal = !this.showPasswordModal;
         },
-        successPasswordDialog() {
-            this.showPasswordModal = !this.showPasswordModal;
-            this.showPopupMessage("تم تغيير كلمة المرور بنجاح");
-        },
+        alertPasswordDialog(isShow) {
+            this.showPasswordModal = false;
+            if (isShow) {
+                this.showPopupMessage("تم تغيير كلمة المرور بنجاح");
+            } else {
+                this.showPopupMessage("كلمة المرور القديمة غير صحيحة");
+            }
+        }
     }
 };
 </script>

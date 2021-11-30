@@ -22,7 +22,7 @@ export default {
 .right-side {
     overflow-y: auto;
 }
-@media (max-width: 667px) {
+@media (max-width: 767px) {
     .registration-template {
             flex-direction: column-reverse;
     }
