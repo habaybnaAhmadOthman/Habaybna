@@ -89,5 +89,11 @@ export default {
         }
         return resp.data
     },
-
+    async updateProfileData() {
+        const resp = await callApi("PUT", "/api/update-profile-data");
+        if (resp.status != 200) {
+            const error = new Error("fail to update profile data");
+            throw error;
+        }
+    }
 };

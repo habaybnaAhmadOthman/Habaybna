@@ -1,227 +1,325 @@
 <template>
-    <form class="card-body">
-        <div class="form-group">
-            <label class="form-control-label">الاسم كامل</label>
-            <div class="row">
-                <div class="col-md-4">
-                    <input class="form-control" placeholder="الإسم الأول" />
-                </div>
-                <div class="col-md-4">
-                    <input class="form-control" placeholder="العائلة" />
+    <div class="">
+        <form @submit.prevent="submitForm" class="card-body">
+            <div class="form-group mb-0-p">
+                <label class="form-control-label">الاسم كامل</label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group m-0-i">
+                            <input
+                                class="form-control"
+                                placeholder="الإسم الأول"
+                                id="firstName"
+                                v-model="firstName"
+                                disabled
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group m-0-i">
+                            <input
+                                class="form-control"
+                                placeholder="العائلة"
+                                id="lastName"
+                                v-model="lastName"
+                                disabled
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-4">
-                    <label class="form-control-label">البريد الإلكتروني</label>
-                    <input class="form-control" placeholder="البريد الإلكتروني" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-control-label">كلمة المرور</label>
-                    <div
-                        class="relative pass-group"
-                        :class="{ invalid: !password.isValid }"
-                    >
-                        <input
-                            :type="!password.show ? 'password' : ''"
-                            class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                            placeholder="كلمة السر"
-                            id="password"
-                            @input="passwordCheck"
-                            @focus="password.isValid = false"
-                            @blur="checkValidity"
-                            v-model.trim="password.val"
-                        />
-                        <div
-                            class="pass-visible pointer"
-                            :class="{ active: !password.show }"
-                            @click="passwordVisibility"
-                        ></div>
-                        <!-- <small>يجب أن تحتوي كلمة السر على أرقام و رموز خاصة و ان لا تقل عن ٨ خانات و احرف كبيرة وصغيرة</small> -->
-                        <div class="check-pass" v-if="!password.isValid">
-                            <small
-                                class="d-block relative"
-                                v-if="!password.has_minimum_lenth"
-                                >يجب أن لا تقل كلمة السر عن ٨ خانات</small
+            <div class="form-group mb-0-p">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group m-0-i">
+                            <label class="form-control-label"
+                                >البريد الإلكتروني</label
                             >
-                            <small
-                                class="d-block relative"
-                                v-if="!password.has_number"
-                                >يجب أن تحتوي على أرقام</small
-                            >
-                            <small
-                                class="d-block relative"
-                                v-if="!password.has_lowercase"
-                                >يجب أن تحتوي على حروف صغيرة</small
-                            >
-                            <small
-                                class="d-block relative"
-                                v-if="!password.has_uppercase"
-                                >يجب أن تحتوي على حروف كبيرة</small
-                            >
-                            <small
-                                class="d-block relative"
-                                v-if="!password.has_special"
-                                >يجب أن تحتوي على رموز خاصة</small
-                            >
+                            <input
+                                class="form-control"
+                                placeholder="البريد الإلكتروني"
+                                id="email"
+                                v-model="email"
+                                disabled
+                            />
                         </div>
-                        <p class="main-color mt-5 font-12">
-                            هذا الحقل مطلوب
+                    </div>
+                    <div class="col-md-4">
+                        <!-- speciality -->
+                        <div
+                            class="form-group m-0-i"
+                            :class="{ invalid: !specialization.isValid }"
+                        >
+                        <label class="form-control-label">التخصص</label>
+                            <select
+                                class="form-control w-100"
+                                v-model="specialization.val"
+                                id="specialization"
+                                @blur="checkValidity"
+                            >
+                                <option value="no" disabled hidden
+                                    >التخصص</option
+                                >
+                                <option value="التربية الخاصة"
+                                    >التربية الخاصة</option
+                                >
+                                <option value="النطق واللغة"
+                                    >النطق واللغة</option
+                                >
+                                <option value="العلاج الوظيفي"
+                                    >العلاج الوظيفي</option
+                                >
+                                <option value="العلاج الطبيعي"
+                                    >العلاج الطبيعي</option
+                                >
+                                <option value="تحليل السلوك"
+                                    >تحليل السلوك</option
+                                >
+                            </select>
+                            <p class="main-color mt-5 font-12">
+                                هذا الحقل مطلوب
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- work place -->
+                        
+                        <label class="form-control-label">مكان العمل</label>
+                        <input
+                            class="form-control"
+                            placeholder="مكان العمل"
+                            id="workPlace"
+                            v-model="workPlace.val"
+                        />
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-0-p">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="form-control-label">سنة الميلاد</label>
+                        <input
+                            class="form-control"
+                            placeholder="1999"
+                            v-model="birthdate.val"
+                        />
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group m-0-i">
+                            <label class="form-control-label">الجنس</label>
+                            <select
+                                class="form-control"
+                                id="gender"
+                                v-model="gender.val"
+                            >
+                                <option value="no" disabled hidden
+                                    >الجنس</option
+                                >
+                                <option value="m">ذكر</option>
+                                <option value="f">أنثى</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-0-p">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="form-control-label">التحصيل العلمي</label>
+                        <select
+                            class="form-control"
+                            id="education"
+                            v-model="education.val"
+                        >
+                            <option value="no" disabled hidden
+                                >التحصيل العلمي</option
+                            >
+                            <option value="school">ثانوية عامة</option>
+                            <option value="diploma">دبلوم</option>
+                            <option value="Bachelor">بكالوريوس</option>
+                            <option value="master">ماجستير</option>
+                            <option value="doctorate">دكتوراه</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-control-label">المسمى الوظيفي</label>
+                        <input
+                            class="form-control"
+                            placeholder="المسمى الوظيفي"
+                            v-model.trim="jobTitle.val"
+                        />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-control-label">سنوات الخبرة</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            placeholder="سنوات الخبرة"
+                            v-model.trim="experience.val"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group admin-control">
+                <div class="">
+                    <div class="w-100">
+                        <label class="form-control-label">الإهتمامات</label>
+                        <multiselect
+                            v-model="tags"
+                            :options="interestsList"
+                            :searchable="true"
+                            :close-on-select="false"
+                            :multiple="true"
+                            :taggable="true"
+                            label="title"
+                            track-by="title"
+                            placeholder="يرجى إختيار الإهتمامات"
+                        ></multiselect>
+                        <p class="main-color mt-5 font-12" v-if="!tagsValid">
+                            لا يمكنك ترك هذا الحقل فارغ
                         </p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-control-label">رقم الهاتف</label>
-                    <div
-                        class=" ltr"
-                        :class="{ invalid: !phoneNumber.isValid }"
+            </div>
+
+            <div class="w-100 form-group">
+                <label class="form-control-label">ما هي الاضطرابات التي تعمل معها ؟ ( 150 كلمة )</label>
+                <textarea
+                    rows="5"
+                    type="text"
+                    class="form-control trans"
+                    placeholder="ما هي الاضطرابات التي تعمل معها ؟ "
+                    id="whyToJoin"
+                    @blur="checkValidity"
+                    v-model.trim="whyToJoin.val"
+                ></textarea>
+            </div>
+
+            <div class="">
+                <div class="d-flex">
+                    <button class="btn-2 flex-all font-20 ml-20">
+                        حفظ
+                    </button>
+                    <button
+                        class="bg-none border-0 main-color font-20 pointer font-16-p"
+                        @click.prevent="showPasswordDialog"
                     >
-                        <VuePhoneNumberInput
-                            v-model="phoneNumber.input"
-                            @update="getPhoneVal"
-                            @input="checkPhoneNumber"
-                            :show-code-on-list="true"
-                            :translations="{
-                                countrySelectorLabel: 'رمز الدولة',
-                                phoneNumberLabel: 'رقم الهاتف',
-                            }"
-                            id="phoneNumber"
-                            :default-country-code="countryCode"
-                        />
-                        <p class="main-color mt-5 font-12">رقم الهاتف غير صحيح</p>
-                    </div>
+                        تغيير كلمة المرور
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-4">
-                    <label class="form-control-label">سنة الميلاد</label>
-                    <input class="form-control" placeholder="1999" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-control-label">الجنس</label>
-                    <select class="form-control" id="gender">
-                        <option value="no" disabled hidden>الجنس</option>
-                        <option value="m">ذكر</option>
-                        <option value="f">أنثى</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-control-label">صلة القرابة</label>
-                    <select class="form-control" id="relative">
-                        <option value="no" disabled hidden>صلة القرابة</option>
-                        <option value="parent">أب / أم</option>
-                        <option value="brother">أخ / آخت</option>
-                        <option value="relative">أقرباء</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-4">
-                    <label class="form-control-label">البلد</label>
-                    <input class="form-control" placeholder="البلد" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-control-label">المدينة</label>
-                    <input class="form-control" placeholder="المدينة" />
-                </div>
-                <div class="col-md-4">
-                    <label class="form-control-label">عدد الأبناء</label>
-                    <input
-                        type="number"
-                        class="form-control"
-                        placeholder="عدد الأبناء"
-                    />
-                </div>
-            </div>
-        </div>
-        <div class="form-group admin-control">
-            <div class="row">
-                <div class="col-md-4">
-                    <label class="form-control-label">الإهتمامات</label>
-                    <multiselect
-                        v-model="tags"
-                        :options="interestsList"
-                        :searchable="true"
-                        :close-on-select="false"
-                        :multiple="true"
-                        :taggable="true"
-                        label="title"
-                        track-by="title"
-                        placeholder="يرجى إختيار الإهتمامات"
-                    ></multiselect>
-                </div>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </template>
 <script>
-import VuePhoneNumberInput from "vue-phone-number-input";
-import "vue-phone-number-input/dist/vue-phone-number-input.css";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
-// mixins
-import phoneNumberMixin from "../../../mixins/phoneNumber.js";
-import passwordMixin from "../../../mixins/password.js";
+
 export default {
-    emits: ["submit-form"],
-    mixins: [phoneNumberMixin, passwordMixin],
-    components: { Multiselect, VuePhoneNumberInput },
+    emits: ["submit-form", "open-password-dialog"],
+    components: { Multiselect },
     props: ["interestsList"],
+    mounted() {
+        // this.getProfileData();
+    },
     data() {
         return {
             tags: "",
             tagsValid: true,
+
+            firstName: "",
+            lastName: "",
+            email: "",
+            phoneNumber: "",
+            gender: {
+                val: "no",
+                isValid: true
+            },
+            specialization: {
+                val: "no",
+                isValid: true
+            },
+            education: {
+                val: "no",
+                isValid: true
+            },
+            whyToJoin: {
+                val: "",
+                isValid: true
+            },
+            jobTitle: {
+                val: "",
+                isValid: true
+            },
+            workPlace: {
+                val: "",
+                isValid: true
+            },
+            experience: {
+                val: "",
+                isValid: true
+            },
+            birthdate: {
+                val: "",
+                isValid: true
+            },
             formIsValid: true
         };
     },
     methods: {
+        async getProfileData() {
+            const obj = await this.$store.dispatch("user/getProfileData");
+        },
+        showPasswordDialog() {
+            this.$emit("open-password-dialog");
+        },
+        validateForm() {
+            this.formIsValid = true;
+            this.tagsValid = true;
+            // if (this.tags.length < 1) {
+            //     this.tagsValid = false;
+            // }
+        },
         checkValidity(e) {
             if (e.target.value != "") {
                 this[e.target.id].isValid = true;
             } else {
                 this[e.target.id].isValid = false;
             }
-            if (e.target.id == "password") {
-                this.passwordCheck();
-            }
         },
         submitForm() {
-            this.tagsValid = true;
-            if (this.tags.length < 1) {
-                this.tagsValid = false;
+            this.validateForm();
+            if (!this.formIsValid) {
                 return;
             }
-            let tagIDs = [];
-            this.tags.forEach(item => tagIDs.push(item.id));
-            this.$emit("submitForm", tagIDs);
+            if (this.education.val == "no") {
+                this.education.val = "";
+            }
+            if (this.specialization.val == "no") {
+                this.specialization.val = "";
+            }
+
+            // let tagIDs = [];
+            // this.tags.forEach(item => tagIDs.push(item.id));
+
+            this.$emit("submitForm", {
+                birthdate: this.birthdate.val,
+                education: this.education.val,
+                specialization: this.specialization.val,
+                jobTitle: this.jobTitle.val,
+                workPlace: this.workPlace.val,
+                experience: this.experience.val,
+                whyToJoin: this.whyToJoin.val,
+                jobTitle: this.jobTitle.val,
+                interests: []
+            });
         }
     }
 };
 </script>
 <style scoped>
-.profile .pass-visible {
-    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIuMDE1IDdjNC43NTEgMCA4LjA2MyAzLjAxMiA5LjUwNCA0LjYzNi0xLjQwMSAxLjgzNy00LjcxMyA1LjM2NC05LjUwNCA1LjM2NC00LjQyIDAtNy45My0zLjUzNi05LjQ3OC01LjQwNyAxLjQ5My0xLjY0NyA0LjgxNy00LjU5MyA5LjQ3OC00LjU5M3ptMC0yYy03LjU2OSAwLTEyLjAxNSA2LjU1MS0xMi4wMTUgNi41NTFzNC44MzUgNy40NDkgMTIuMDE1IDcuNDQ5YzcuNzMzIDAgMTEuOTg1LTcuNDQ5IDExLjk4NS03LjQ0OXMtNC4yOTEtNi41NTEtMTEuOTg1LTYuNTUxem0tLjAxNSAzYy0yLjIwOSAwLTQgMS43OTItNCA0IDAgMi4yMDkgMS43OTEgNCA0IDRzNC0xLjc5MSA0LTRjMC0yLjIwOC0xLjc5MS00LTQtNHoiLz48L3N2Zz4=)
-        no-repeat center;
-    position: absolute;
-    left: 5px;
-    width: 30px;
-    height: 30px;
-    top: 5px;
-    margin: auto;
-}
-.profile .pass-visible.active {
-    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTkuNjA0IDIuNTYybC0zLjM0NiAzLjEzN2MtMS4yNy0uNDI4LTIuNjg2LS42OTktNC4yNDMtLjY5OS03LjU2OSAwLTEyLjAxNSA2LjU1MS0xMi4wMTUgNi41NTFzMS45MjggMi45NTEgNS4xNDYgNS4xMzhsLTIuOTExIDIuOTA5IDEuNDE0IDEuNDE0IDE3LjM3LTE3LjAzNS0xLjQxNS0xLjQxNXptLTYuMDE2IDUuNzc5Yy0zLjI4OC0xLjQ1My02LjY4MSAxLjkwOC01LjI2NSA1LjIwNmwtMS43MjYgMS43MDdjLTEuODE0LTEuMTYtMy4yMjUtMi42NS00LjA2LTMuNjYgMS40OTMtMS42NDggNC44MTctNC41OTQgOS40NzgtNC41OTQuOTI3IDAgMS43OTYuMTE5IDIuNjEuMzE1bC0xLjAzNyAxLjAyNnptLTIuODgzIDcuNDMxbDUuMDktNC45OTNjMS4wMTcgMy4xMTEtMi4wMDMgNi4wNjctNS4wOSA0Ljk5M3ptMTMuMjk1LTQuMjIxcy00LjI1MiA3LjQ0OS0xMS45ODUgNy40NDljLTEuMzc5IDAtMi42NjItLjI5MS0zLjg1MS0uNzM3bDEuNjE0LTEuNTgzYy43MTUuMTkzIDEuNDU4LjMyIDIuMjM3LjMyIDQuNzkxIDAgOC4xMDQtMy41MjcgOS41MDQtNS4zNjQtLjcyOS0uODIyLTEuOTU2LTEuOTktMy41ODctMi45NTJsMS40ODktMS40NmMyLjk4MiAxLjkgNC41NzkgNC4zMjcgNC41NzkgNC4zMjd6Ii8+PC9zdmc+)
-        no-repeat center;
-}
-.profile .pass-group .check-pass small:before {
-    content: "x";
-    color: #f44336;
-    font-weight: bold;
-    margin-left: 5px;
+.profile textarea {
+    height: auto !important;
 }
 </style>

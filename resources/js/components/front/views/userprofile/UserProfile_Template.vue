@@ -3,8 +3,8 @@
         <UserProfileHeader></UserProfileHeader>
         <div class="d-flex page-content">
             <UserProfileNav></UserProfileNav>
-            <div class="content-inner">
-                <div class="page-header bg-white relative">
+            <div class="content-inner w-100-p">
+                <div class="page-header bg-white relative pt-10-p pb-10-p">
                     <div class="container-fluid pt-15 pb-15">
                         <slot name="page-header">
                             <h1>الحساب الشخصي</h1>
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+export const userImageModalBus = new Vue();
 import UserProfileHeader from "./UserProfile_Header.vue";
 import UserProfileNav from "./UserProfile_Nav.vue";
 export default {

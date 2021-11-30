@@ -178,7 +178,6 @@ export default {
     padding-left: 70px;
 }
 .checkbox {
-    font-family: system-ui, sans-serif;
     font-weight: bold;
     line-height: 1.1;
     display: flex;
