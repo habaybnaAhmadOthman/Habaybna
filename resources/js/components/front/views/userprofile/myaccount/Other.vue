@@ -76,7 +76,7 @@
                     </div>
                     <div class="col-md-4">
                         <!-- work place -->
-                        
+
                         <label class="form-control-label">مكان العمل</label>
                         <input
                             class="form-control"
@@ -84,7 +84,7 @@
                             id="workPlace"
                             v-model="workPlace.val"
                         />
-                        
+
                     </div>
                 </div>
             </div>
@@ -205,7 +205,7 @@ export default {
     components: { Multiselect },
     props: ["interestsList"],
     mounted() {
-        // this.getProfileData();
+        this.getProfileData();
     },
     data() {
         return {

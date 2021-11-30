@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\PersonalAccessTokenResult;
 use App\ParentUsers;
-// use App\Other;
+use App\Other;
 use App\Specialist;
 
 
@@ -55,9 +55,9 @@ class User extends Authenticatable
             case 'specialist':
                 return Specialist::where('user_id',$this->id)->first();
                 break;
-            // case 'parent':
-            //     return Other::where('user_id',$this->id)->first();
-            //     break;
+            case 'other':
+                return Other::where('user_id',$this->id)->first();
+                break;
 
             default:
                 # code...
