@@ -28,7 +28,7 @@ export default {
         }
         const resp = await callApi(
             "POST",
-            `/${type}-complete-register`,
+            `api/${type}-complete-register`,
             payload
         );
         if (resp.status != 200) {
@@ -41,7 +41,7 @@ export default {
      async login(context, payload){
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "login", payload);
-        
+
         if (resp.status != 200) {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
@@ -62,7 +62,7 @@ export default {
     },
     async logout(context){
         sanctum();
-        const resp = await callApi("POST", "/api/logoutt",{id:local_userID()});
+        const resp = await callApi("POST", "logoutt",{id:local_userID()});
         if (resp.status != 200) {
             const error = new Error("fail to logout");
             throw error;
@@ -80,6 +80,7 @@ export default {
     },
     // ******** userProfile
     async getProfileData(){
+        sanctum();
         const resp = await callApi("GET", "/api/get-profile-data");
         if (resp.status != 200) {
             const error = new Error("fail to get profile data");

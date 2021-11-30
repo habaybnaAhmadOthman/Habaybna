@@ -20,7 +20,8 @@ class ParentUsersController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // dd('xxxxxxxx');
+        // $this->middleware('auth:sanctum');
     }
 
 
@@ -97,7 +98,6 @@ class ParentUsersController extends Controller
 
     public function completeRegister(Request $request)
     {
-        dd($request);
         $parent = new ParentUsers() ;
         if ($request->hasFile('image')) {
             $img = $request->file('image');
