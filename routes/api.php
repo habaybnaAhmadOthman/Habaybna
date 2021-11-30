@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::middleware('auth:sanctum')->group(function () {
-    route::get('get-profile-data','AuthController@getProfileData');
+    route::get('get-profile-data','UserController@getUserData');
     Route::post('/parent-complete-register','ParentUsersController@completeRegister');
     Route::post('logoutt','AuthController@logout')->name('user.logoutt');
 });
