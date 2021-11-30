@@ -40,9 +40,19 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::middleware('auth:sanctum')->group(function () {
+
+    // general routes
     route::get('get-profile-data','UserController@getUserData');
-    Route::post('/parent-complete-register','ParentUsersController@completeRegister');
     Route::post('logoutt','AuthController@logout')->name('user.logoutt');
+    Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
+
+
+    // parent routes
+    Route::post('/parent-complete-register','ParentUsersController@completeRegister');
+
+    // speciaist route
+    Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
+
 });
 
 Route::post('register','AuthController@signup')->name('user.register');

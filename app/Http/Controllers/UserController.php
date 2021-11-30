@@ -18,7 +18,6 @@ class UserController extends Controller
     {
         try{
             $user = Auth::user();
-            // dd($user->user_data);
             switch ($user->role) {
                 case 'parent':
                     $userData = [] ;
@@ -37,13 +36,33 @@ class UserController extends Controller
                     $userData['job_title'] = $user->user_data->job_title ;
                     $userData['why_to_join'] = $user->user_data->why_to_join ;
                     $userData['private_mode'] = $user->user_data->private_mode ;
+                    $userData['phone'] = $user->phone ;
+                    $userData['email'] = $user->email ;
+
+                    break;
+
+
+
+                case 'specialist':
+                    $userData = [] ;
+                    $userData['firstName'] = $user->user_data->firstName ;
+                    $userData['lastName'] = $user->user_data->lastName ;
+                    $userData['gender'] = $user->user_data->gender ;
+                    $userData['specialization'] = $user->user_data->specialization ;
+                    $userData['work_place'] = $user->user_data->work_place ;
+                    $userData['status'] = $user->user_data->status ;
+                    $userData['avatar'] = $user->user_data->avatar ;
+                    $userData['edu_level'] = $user->user_data->edu_level ;
+                    $userData['job_title'] = $user->user_data->job_title ;
+                    $userData['dob'] = $user->user_data->dob ;
+                    $userData['experience'] = $user->user_data->experience ;
+                    $userData['disorders_work_with'] = $user->user_data->disorders_work_with ;
 
 
 
                     $userData['phone'] = $user->phone ;
                     $userData['email'] = $user->email ;
 
-                    break;
 
                 default:
                     # code...

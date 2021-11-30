@@ -73,6 +73,7 @@ export default {
             //     // this.showErrorMessage("حدث خطأ ما")
             //     console.log(e)
             // }
+            console.log(data);
             setTimeout(() => {
                 this.isLoading = false;
                 this.error = true;

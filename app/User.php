@@ -52,7 +52,7 @@ class User extends Authenticatable
             case 'parent':
                 return ParentUsers::where('user_id',$this->id)->first();
                 break;
-            case 'spesialist':
+            case 'specialist':
                 return Specialist::where('user_id',$this->id)->first();
                 break;
             // case 'parent':

@@ -59,7 +59,7 @@ export default {
                     password: userData.password,
                     email: userData.email,
                     gender: userData.gender,
-                    empolyment: userData.empolyment,
+                    employment: userData.employment,
                     whyToJoin: userData.whyToJoin
                 }
                 this.interests = await this.$store.dispatch("user/completeRegistration",obj);

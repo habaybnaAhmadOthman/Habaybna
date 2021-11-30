@@ -19,9 +19,8 @@ export default {
 
         logIn();
         context.commit("login");
-
-        context.commit("type",resp.data.userData.role);
-        userType(resp.data.userData.role)
+        context.commit("type",payload.type);
+        userType(payload.type)
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
@@ -84,7 +83,7 @@ export default {
         }
     },
     // ******** userProfile
-    async getProfileData(){
+    async getProfileData() {
         const resp = await callApi("GET", "/api/get-profile-data");
         if (resp.status != 200) {
             const error = new Error("fail to get profile data");
@@ -96,6 +95,14 @@ export default {
         const resp = await callApi("PUT", "/api/update-profile-data");
         if (resp.status != 200) {
             const error = new Error("fail to update profile data");
+            throw error;
+        }
+    },
+    // ******** userProfile ::: password
+    async changePassword() {
+        const resp = await callApi("PUT", "/api/set-new-password");
+        if (resp.status != 200) {
+            const error = new Error("fail to change password");
             throw error;
         }
     }

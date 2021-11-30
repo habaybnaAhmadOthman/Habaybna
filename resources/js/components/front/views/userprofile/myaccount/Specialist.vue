@@ -45,6 +45,22 @@
                         </div>
                     </div>
                     <div class="col-md-4">
+                        <label class="form-control-label">رقم الهاتف</label>
+                        <div class="">
+                            <input
+                                class="form-control plaintext"
+                                placeholder="رقم الهاتف"
+                                id="phoneNumber"
+                                v-model="phoneNumber"
+                                disabled
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-0-p">
+                <div class="row">
+                    <div class="col-md-4">
                         <!-- speciality -->
                         <div
                             class="form-group m-0-i"
@@ -83,7 +99,7 @@
                     </div>
                     <div class="col-md-4">
                         <!-- work place -->
-                        
+
                         <label class="form-control-label">مكان العمل</label>
                         <input
                             class="form-control"
@@ -91,7 +107,7 @@
                             id="workPlace"
                             v-model="workPlace.val"
                         />
-                        
+
                     </div>
                 </div>
             </div>
@@ -270,6 +286,19 @@ export default {
     methods: {
         async getProfileData() {
             const obj = await this.$store.dispatch("user/getProfileData");
+            const data = obj.userData;
+            this.firstName = data.firstName;
+            this.lastName = data.lastName;
+            this.phoneNumber = data.phone;
+            this.email = data.email;
+            this.birthdate.val = new Date(data.dob).getFullYear();
+            this.specialization.val = data.specialization || 'no';
+            this.workPlace.val = data.work_place ;
+            this.jobTitle.val = data.job_title;
+            this.experience.val = data.experience;
+            this.gender.val = data.gender;
+            this.whyToJoin.val = data.disorders_work_with;
+            this.education.val = data.edu_level || 'no';
         },
         showPasswordDialog() {
             this.$emit("open-password-dialog");
@@ -296,22 +325,22 @@ export default {
             if (this.education.val == "no") {
                 this.education.val = "";
             }
-            if (this.specialization.val == "no") {
-                this.specialization.val = "";
-            }
 
             // let tagIDs = [];
             // this.tags.forEach(item => tagIDs.push(item.id));
-
             this.$emit("submitForm", {
-                birthdate: this.birthdate.val,
-                education: this.education.val,
+                firstName: this.firstName,
+                lastName: this.lastName,
+                phone: this.phoneNumber,
+                email: this.email,
+                dob: this.birthdate.val,
                 specialization: this.specialization.val,
-                jobTitle: this.jobTitle.val,
                 workPlace: this.workPlace.val,
-                experience: this.experience.val,
-                whyToJoin: this.whyToJoin.val,
                 jobTitle: this.jobTitle.val,
+                experience: this.experience.val,
+                gender: this.gender.val,
+                whyToJoin: this.whyToJoin.val,
+                education: this.education.val,
                 interests: []
             });
         }

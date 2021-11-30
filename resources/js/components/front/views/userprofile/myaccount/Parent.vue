@@ -156,8 +156,8 @@
                         <label class="form-control-label">مجال العمل</label>
                         <select
                             class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                            v-model="empolyment.val"
-                            id="empolyment"
+                            v-model="employment.val"
+                            id="employment"
                         >
                             <option value="no" disabled hidden
                                 >مجال العمل</option
@@ -282,7 +282,7 @@ export default {
                 val: "no",
                 isValid: true
             },
-            empolyment: {
+            employment: {
                 val: "no",
                 isValid: true
             },
@@ -333,7 +333,7 @@ export default {
             this.city.val = data.city;
             this.noChilds.val = data.childs_count;
             this.education.val = data.edu_level || 'no';
-            this.empolyment.val = data.employment || 'no';
+            this.employment.val = data.employment || 'no';
             this.jobTitle.val = data.job_title;
         },
         showPasswordDialog() {
@@ -358,9 +358,9 @@ export default {
             if (!this.formIsValid) {
                 return;
             }
-            if (this.empolyment.val == "no") {
-                this.empolyment.isValid = false;
-                this.empolyment.val = "";
+            if (this.employment.val == "no") {
+                this.employment.isValid = false;
+                this.employment.val = "";
             }
             if (this.education.val == "no") {
                 this.education.isValid = false;
@@ -374,7 +374,7 @@ export default {
                 lastName: this.lastName,
                 phone: this.phoneNumber,
                 email: this.email,
-                birthdate: this.birthdate.val,
+                dob: this.birthdate.val,
                 gender: this.gender.val,
                 relative: this.relative.val,
                 noChildsSpecialNeeds: this.noChildsSpecialNeeds.val,
@@ -382,7 +382,7 @@ export default {
                 city: this.city.val,
                 noChilds: this.noChilds.val,
                 education: this.education.val,
-                empolyment: this.empolyment.val,
+                employment: this.employment.val,
                 jobTitle: this.jobTitle.val,
                 interests: []
             });

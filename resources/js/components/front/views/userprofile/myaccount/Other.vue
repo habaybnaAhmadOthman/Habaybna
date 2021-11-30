@@ -48,8 +48,8 @@
                         <label class="form-control-label">مجال العمل</label>
                         <select
                             class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                            v-model="empolyment.val"
-                            id="empolyment"
+                            v-model="employment.val"
+                            id="employment"
                         >
                             <option value="no" disabled hidden
                                 >مجال العمل</option
@@ -220,7 +220,7 @@ export default {
                 val: "no",
                 isValid: true
             },
-            empolyment: {
+            employment: {
                 val: "no",
                 isValid: true
             },
@@ -276,8 +276,8 @@ export default {
             if (this.education.val == "no") {
                 this.education.val = "";
             }
-            if (this.empolyment.val == "no") {
-                this.empolyment.val = "";
+            if (this.employment.val == "no") {
+                this.employment.val = "";
             }
 
             // let tagIDs = [];
@@ -286,7 +286,7 @@ export default {
             this.$emit("submitForm", {
                 birthdate: this.birthdate.val,
                 education: this.education.val,
-                empolyment: this.empolyment.val,
+                employment: this.employment.val,
                 jobTitle: this.jobTitle.val,
                 workPlace: this.workPlace.val,
                 whyToJoin: this.whyToJoin.val,
