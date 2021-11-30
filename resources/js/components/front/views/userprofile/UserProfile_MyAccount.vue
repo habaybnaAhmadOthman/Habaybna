@@ -12,6 +12,7 @@
         <UserImage
             v-if="showUserImageModal"
             @close-image-modal="closeImageModal"
+            :user-avatar="userAvatar"
         ></UserImage>
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
@@ -52,12 +53,14 @@ export default {
         return {
             activeComponent: null,
             showPasswordModal: false,
-            showUserImageModal: false
+            showUserImageModal: false,
+            userAvatar: null
         };
     },
     mounted() {
-        userImageModalBus.$on("openImageModal", () => {
+        userImageModalBus.$on("openImageModal", (avatarSrc) => {
             this.showUserImageModal = true;
+            this.userAvatar = avatarSrc;
         });
     },
     methods: {

@@ -9,7 +9,7 @@
                                 src="/images/siteImgs/header/logo.png"
                                 width="45"
                                 height="45"
-                                class="pointer user-avatar radius-60 object-fit"
+                                class="pointer user-avatar user-avatar-get radius-60 object-fit"
                             />
                         </div>
                         <div class="white font-10 mr-15">
@@ -49,7 +49,7 @@ export default {
             document.querySelector("body").classList.add("overflow-hidden");
         },
         openUserImageModal(){
-            userImageModalBus.$emit('openImageModal')
+            userImageModalBus.$emit('openImageModal',document.querySelector('.user-avatar-get').getAttribute('src'));
         },
         logout(){
             this.$store.dispatch('user/logout');

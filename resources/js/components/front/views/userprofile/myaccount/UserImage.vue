@@ -3,7 +3,7 @@
         <template>
             <div class="modal-body m-side-auto">
                 <img
-                    src="/images/siteImgs/header/logo.png"
+                    :src="userAvatar"
                     width="100"
                     height="100"
                     class="m-side-auto d-block radius-60 user-img object-fit"
@@ -11,42 +11,42 @@
                 <p class="main-color font-22">اختر شخصية</p>
                 <div class="d-flex flex-wrap space-between images-box radius-12 p-10">
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15" >
-                        <input type="radio" value="L" v-model="selectedImage" />
+                        <input type="radio" value="A1" v-model="selectedImage" />
                         <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15">
-                        <input type="radio" value="Le" v-model="selectedImage" />
+                        <input type="radio" value="A2" v-model="selectedImage" />
                         <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
                         <span></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15">
-                        <input type="radio" value="Lem" v-model="selectedImage" />
+                        <input type="radio" value="A3" v-model="selectedImage" />
                         <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15">
-                        <input type="radio" value="Lemo" v-model="selectedImage" />
+                        <input type="radio" value="A4" v-model="selectedImage" />
                         <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="Lemon" v-model="selectedImage" />
+                        <input type="radio" value="A5" v-model="selectedImage" />
                         <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="L1" v-model="selectedImage" />
+                        <input type="radio" value="A6" v-model="selectedImage" />
                         <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="L2" v-model="selectedImage" />
+                        <input type="radio" value="A7" v-model="selectedImage" />
                         <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="L3" v-model="selectedImage" />
+                        <input type="radio" value="A8" v-model="selectedImage" />
                         <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
                         <span class="trans"></span>
                     </label>
@@ -74,6 +74,12 @@ import loadingMixin from './../../../mixins/loading.js'
 export default {
     emits: ["close-image-modal"],
     mixins: [loadingMixin],
+    props: {
+        userAvatar: {
+            type: String,
+            default: '/images/siteImgs/header/logo.png'
+        }
+    },
     data() {
         return {
             uploadedImage: null ,
@@ -94,7 +100,27 @@ export default {
             if (this.uploadedImage) {
                 var formData = new FormData();
                 formData.append("file", this.uploadedImage, this.uploadedImage.name);
-
+                $.ajax({
+                    "url": baseUrl+"/my-profile-image",
+                    "method": "PUT",
+                    "timeout": 0,
+                    "headers": {
+                        "enctype": "multipart/form-data",
+                        "Authorization": "Bearer "+getCookie('go_access_token')
+                    },
+                    "processData": false,
+                    "mimeType": "multipart/form-data",
+                    "contentType": false,
+                    "data": formData
+                }).done(function (response) {
+                    // alert(true,'تم تغيير الصورة بنجاح ')
+                    $('.user-prof-img').attr('src',blob);
+                    loading(false)
+                }).fail(function(err){
+                    console.log('uploadAvatart ajax error::',err);
+                    // alert(false,'يرجى المحاولة مرة أخرى')
+                    // loading(false)
+                });
             }
             this.isLoading = false;
             
