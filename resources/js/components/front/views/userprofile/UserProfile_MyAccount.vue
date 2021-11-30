@@ -33,7 +33,7 @@ export default {
     components: { parentAccount,ChangePassword,specialistAccount,otherAccount,UserImage },
     data() {
         return {
-            activeComponent: 'parentAccount',
+            activeComponent: 'specialistAccount',
             showPasswordModal: false,
             showUserImageModal:false
         };
@@ -65,7 +65,7 @@ export default {
         showPasswordDialog() {
             this.showPasswordModal = !this.showPasswordModal;
         },
-        
+
     }
 };
 </script>
