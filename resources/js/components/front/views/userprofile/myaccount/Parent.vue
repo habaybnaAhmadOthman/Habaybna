@@ -48,7 +48,7 @@
                         <label class="form-control-label">رقم الهاتف</label>
                         <div class="">
                             <input
-                                class="form-control"
+                                class="form-control plaintext"
                                 placeholder="رقم الهاتف"
                                 id="phoneNumber"
                                 v-model="phoneNumber"
@@ -261,7 +261,6 @@ import "vue-multiselect/dist/vue-multiselect.min.css";
 export default {
     emits: ["submit-form", "open-password-dialog"],
     components: { Multiselect },
-    props: ["interestsList"],
     mounted() {
         this.getProfileData();
     },
@@ -269,11 +268,11 @@ export default {
         return {
             tags: "",
             tagsValid: true,
-
             firstName: "",
             lastName: "",
             email: "",
             phoneNumber: "",
+            interestsList: [],
             privateMode: false,
             gender: {
                 val: "no",
@@ -321,7 +320,21 @@ export default {
     methods: {
         async getProfileData() {
             const obj = await this.$store.dispatch("user/getProfileData");
-            // console.log(obj);
+            const data = obj.userData;
+            this.firstName = data.firstName;
+            this.lastName = data.lastName;
+            this.phoneNumber = data.phone;
+            this.email = data.email;
+            this.birthdate.val = new Date(data.dob).getFullYear();
+            this.gender.val = data.gender;
+            this.relative.val = data.relative;
+            this.noChildsSpecialNeeds.val = data.speci_childs_count;
+            this.whyToJoin.val = data.why_to_join;
+            this.city.val = data.city;
+            this.noChilds.val = data.childs_count;
+            this.education.val = data.edu_level || 'no';
+            this.empolyment.val = data.employment || 'no';
+            this.jobTitle.val = data.job_title;
         },
         showPasswordDialog() {
             this.$emit("open-password-dialog");
@@ -356,17 +369,20 @@ export default {
 
             // let tagIDs = [];
             // this.tags.forEach(item => tagIDs.push(item.id));
-
             this.$emit("submitForm", {
-                relative: this.relative.val,
-                city: this.city.val,
+                firstName: this.firstName,
+                lastName: this.lastName,
+                phone: this.phoneNumber,
+                email: this.email,
                 birthdate: this.birthdate.val,
-                noChilds: this.noChilds.val,
+                gender: this.gender.val,
+                relative: this.relative.val,
                 noChildsSpecialNeeds: this.noChildsSpecialNeeds.val,
-                empolyment: this.empolyment.val,
-                education: this.education.val,
-                jobTitle: this.jobTitle.val,
                 whyToJoin: this.whyToJoin.val,
+                city: this.city.val,
+                noChilds: this.noChilds.val,
+                education: this.education.val,
+                empolyment: this.empolyment.val,
                 jobTitle: this.jobTitle.val,
                 interests: []
             });

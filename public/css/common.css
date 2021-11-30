@@ -506,7 +506,10 @@ p {
 li {
     list-style: none;
 }
-
+.plaintext {
+    text-align: right;
+    direction: ltr;
+}
 .regular,
 input {
     font-family: "Hacen"!important;

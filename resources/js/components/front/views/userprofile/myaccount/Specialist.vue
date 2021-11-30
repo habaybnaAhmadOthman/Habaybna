@@ -219,9 +219,8 @@ import "vue-multiselect/dist/vue-multiselect.min.css";
 export default {
     emits: ["submit-form", "open-password-dialog"],
     components: { Multiselect },
-    props: ["interestsList"],
     mounted() {
-        // this.getProfileData();
+        this.getProfileData();
     },
     data() {
         return {
@@ -231,6 +230,7 @@ export default {
             firstName: "",
             lastName: "",
             email: "",
+            interestsList: [],
             phoneNumber: "",
             gender: {
                 val: "no",
