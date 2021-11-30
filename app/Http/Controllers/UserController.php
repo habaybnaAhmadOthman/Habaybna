@@ -141,9 +141,9 @@ class UserController extends Controller
                 'msg'=>'old password not correct',
                 'status'=>false,
 
-                404
 
-           ]);
+
+           ],404);
         }
     }
 }
