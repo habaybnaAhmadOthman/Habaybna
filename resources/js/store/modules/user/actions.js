@@ -16,11 +16,9 @@ export default {
             const error = new Error("fail to register");
             throw error;
         }
-        const token = resp.data.userData.token;
-        const userId = resp.data.userData.user.id;
 
-        logInWithToken(token,userId);
-        context.commit("login",token,userId);
+        logInWithToken('token','userId');
+        context.commit("login",'token','userId');
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
@@ -48,7 +46,7 @@ export default {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
-        const token = resp.data.userData.token;
+        const token = 'resp.data.userData.token';
         const userId = resp.data.userData.id;
 
         logInWithToken(token,userId);
@@ -90,5 +88,11 @@ export default {
         }
         return resp.data
     },
-
+    async updateProfileData() {
+        const resp = await callApi("PUT", "/api/update-profile-data");
+        if (resp.status != 200) {
+            const error = new Error("fail to update profile data");
+            throw error;
+        }
+    }
 };

@@ -1,7 +1,7 @@
 <template>
     <PageTemplate>
         <template #page-header>
-            <h1>الحساب الشخصي</h1>
+            <h1>البيانات الشخصية</h1>
         </template>
         <template>
             <section class="profile-section pt-50 pb-50">

@@ -1,18 +1,47 @@
 <template>
     <aside class="user-side-nav bg-white z-1">
+        <img
+            src="/images/siteImgs/header/logo.png"
+            width="20"
+            height="20"
+            @click="closeNavMenu"
+            class="close-nav-menu mo"
+        />
         <ul class="user-side-nav-list">
             <li class="active">
-                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/">حسابي</router-link>
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/"
+                    >حسابي</router-link
+                >
             </li>
             <li>
-                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/">حساب الطفل</router-link>
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/"
+                    >حساب الطفل</router-link
+                >
             </li>
             <li>
-                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/">الإستشارات</router-link>
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/"
+                    >الإستشارات</router-link
+                >
             </li>
         </ul>
     </aside>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            isMenuOpened: false
+        };
+    },
+    methods: {
+        closeNavMenu() {
+            document.querySelector(".user-side-nav").classList.remove("active");
+            document.querySelector("body").classList.remove("overflow-hidden");
+        }
+    }
+};
+</script>
 
 <style scoped>
 .user-side-nav {
@@ -27,11 +56,38 @@
 }
 .user-side-nav li > a {
     border-right: 4px solid transparent;
-    color:#212529;
+    color: #212529;
 }
-.user-side-nav li.active > a, .user-side-nav li:hover > a {
+.user-side-nav li.active > a,
+.user-side-nav li:hover > a {
     background: #660066;
     color: #fff;
     border-color: #b915b9;
+}
+@media (max-width: 767px) {
+    .user-side-nav {
+        position: fixed;
+        min-width: 100%;
+        max-width: none;
+        top: 0;
+        right: 0;
+        transition: 0.3s;
+        opacity: 0;
+        right: -90%;
+        visibility: hidden;
+        min-height: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+    }
+    .user-side-nav.active {
+        opacity: 1;
+        right: 0%;
+        visibility: visible;
+    }
+    .close-nav-menu {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
 }
 </style>
