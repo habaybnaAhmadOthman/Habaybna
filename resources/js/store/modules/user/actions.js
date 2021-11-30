@@ -1,4 +1,4 @@
-import { isLoggedIn, callApi,logIn,logOut ,logInWithToken,sanctum,local_userID} from "../../common";
+import { userType, callApi,logIn,logOut ,sanctum} from "../../common";
 export default {
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
@@ -17,8 +17,10 @@ export default {
             throw error;
         }
 
-        logInWithToken('token','userId');
-        context.commit("login",'token','userId');
+        logIn();
+        context.commit("login");
+        context.commit("type",payload.type);
+        userType(payload.type)
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
@@ -46,11 +48,14 @@ export default {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
-        const token = 'resp.data.userData.token';
-        const userId = resp.data.userData.id;
+        // const token = 'resp.data.userData.token';
+        // const userId = resp.data.userData.id;
 
-        logInWithToken(token,userId);
-        context.commit("login",token,userId);
+        // logInWithToken(token,userId);
+        logIn();
+        context.commit("login");
+        context.commit("type",resp.data.userData.role);
+        userType(resp.data.userData.role)
     },
     test(){
         sanctum();
@@ -61,8 +66,7 @@ export default {
         })
     },
     async logout(context){
-        sanctum();
-        const resp = await callApi("POST", "logoutt",{id:local_userID()});
+        const resp = await callApi("POST", "logoutt");
         if (resp.status != 200) {
             const error = new Error("fail to logout");
             throw error;
@@ -79,8 +83,7 @@ export default {
         }
     },
     // ******** userProfile
-    async getProfileData(){
-        sanctum();
+    async getProfileData() {
         const resp = await callApi("GET", "/api/get-profile-data");
         if (resp.status != 200) {
             const error = new Error("fail to get profile data");
@@ -92,6 +95,14 @@ export default {
         const resp = await callApi("PUT", "/api/update-profile-data");
         if (resp.status != 200) {
             const error = new Error("fail to update profile data");
+            throw error;
+        }
+    },
+    // ******** userProfile ::: password
+    async changePassword() {
+        const resp = await callApi("PUT", "/api/set-new-password");
+        if (resp.status != 200) {
+            const error = new Error("fail to change password");
             throw error;
         }
     }

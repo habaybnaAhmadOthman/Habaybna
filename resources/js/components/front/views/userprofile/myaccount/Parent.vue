@@ -48,7 +48,7 @@
                         <label class="form-control-label">رقم الهاتف</label>
                         <div class="">
                             <input
-                                class="form-control"
+                                class="form-control plaintext"
                                 placeholder="رقم الهاتف"
                                 id="phoneNumber"
                                 v-model="phoneNumber"
@@ -156,8 +156,8 @@
                         <label class="form-control-label">مجال العمل</label>
                         <select
                             class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                            v-model="empolyment.val"
-                            id="empolyment"
+                            v-model="employment.val"
+                            id="employment"
                         >
                             <option value="no" disabled hidden
                                 >مجال العمل</option
@@ -261,7 +261,6 @@ import "vue-multiselect/dist/vue-multiselect.min.css";
 export default {
     emits: ["submit-form", "open-password-dialog"],
     components: { Multiselect },
-    props: ["interestsList"],
     mounted() {
         this.getProfileData();
     },
@@ -269,11 +268,11 @@ export default {
         return {
             tags: "",
             tagsValid: true,
-
             firstName: "",
             lastName: "",
             email: "",
             phoneNumber: "",
+            interestsList: [],
             privateMode: false,
             gender: {
                 val: "no",
@@ -283,7 +282,7 @@ export default {
                 val: "no",
                 isValid: true
             },
-            empolyment: {
+            employment: {
                 val: "no",
                 isValid: true
             },
@@ -321,7 +320,21 @@ export default {
     methods: {
         async getProfileData() {
             const obj = await this.$store.dispatch("user/getProfileData");
-            // console.log(obj);
+            const data = obj.userData;
+            this.firstName = data.firstName;
+            this.lastName = data.lastName;
+            this.phoneNumber = data.phone;
+            this.email = data.email;
+            this.birthdate.val = new Date(data.dob).getFullYear();
+            this.gender.val = data.gender;
+            this.relative.val = data.relative;
+            this.noChildsSpecialNeeds.val = data.speci_childs_count;
+            this.whyToJoin.val = data.why_to_join;
+            this.city.val = data.city;
+            this.noChilds.val = data.childs_count;
+            this.education.val = data.edu_level || 'no';
+            this.employment.val = data.employment || 'no';
+            this.jobTitle.val = data.job_title;
         },
         showPasswordDialog() {
             this.$emit("open-password-dialog");
@@ -345,9 +358,9 @@ export default {
             if (!this.formIsValid) {
                 return;
             }
-            if (this.empolyment.val == "no") {
-                this.empolyment.isValid = false;
-                this.empolyment.val = "";
+            if (this.employment.val == "no") {
+                this.employment.isValid = false;
+                this.employment.val = "";
             }
             if (this.education.val == "no") {
                 this.education.isValid = false;
@@ -356,17 +369,20 @@ export default {
 
             // let tagIDs = [];
             // this.tags.forEach(item => tagIDs.push(item.id));
-
             this.$emit("submitForm", {
+                firstName: this.firstName,
+                lastName: this.lastName,
+                phone: this.phoneNumber,
+                email: this.email,
+                dob: this.birthdate.val,
+                gender: this.gender.val,
                 relative: this.relative.val,
-                city: this.city.val,
-                birthdate: this.birthdate.val,
-                noChilds: this.noChilds.val,
                 noChildsSpecialNeeds: this.noChildsSpecialNeeds.val,
-                empolyment: this.empolyment.val,
-                education: this.education.val,
-                jobTitle: this.jobTitle.val,
                 whyToJoin: this.whyToJoin.val,
+                city: this.city.val,
+                noChilds: this.noChilds.val,
+                education: this.education.val,
+                employment: this.employment.val,
                 jobTitle: this.jobTitle.val,
                 interests: []
             });

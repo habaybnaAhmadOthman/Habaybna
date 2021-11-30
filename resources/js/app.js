@@ -65,12 +65,15 @@ const app = new Vue({
     el: '#app',
     // check if user logged in
     async beforeCreate() {
-        const userStatus = await localStorage.getItem('token');
+        const userStatus = await localStorage.getItem('login');
         if (Boolean(userStatus)) {
-            this.$store.commit('user/login',userStatus);
+            this.$store.commit('user/login');
         } else {
             this.$store.commit('user/logout');
         }
+    },
+    created(){
+        this.$store.commit('user/type',localStorage.getItem('type'));
     },
     store,
     router

@@ -16,6 +16,12 @@
                             Notifications Here
                         </div>
                     </div>
+                    <div class="do">
+                        <div class="d-flex align-center">
+                            <router-link class="white-i ml-20" to="/">عودة الى الرئيسية</router-link>
+                            <button class="p-10 radius-5 bg-none white pointer btn-logout" @click="logout">تسجيل خروج</button>
+                        </div>
+                    </div>
                     <img
                         src="/images/siteImgs/header/logo.png"
                         width="20"
@@ -44,6 +50,10 @@ export default {
         },
         openUserImageModal(){
             userImageModalBus.$emit('openImageModal')
+        },
+        logout(){
+            this.$store.dispatch('user/logout');
+            this.$router.push("/");
         }
     }
 }
@@ -74,6 +84,9 @@ export default {
 }
 .user-avatar-box:hover:after {
     opacity:0.5;
+}
+.btn-logout {
+    border: 1px solid #fff;
 }
 /* end header */
 </style>

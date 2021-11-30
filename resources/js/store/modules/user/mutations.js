@@ -4,15 +4,14 @@ export default {
         state.type = payload.type;
         state.token = payload.token;
     },
-    login(state,token,id) {
+    login(state) {
         state.loggedIn = true;
-        state.token = token;
-        state.userID = id;
+    },
+    type(state,userType) {
+        state.type = userType;
     },
     logout(state) {
         state.loggedIn = false;
-        state.token = null;
-        state.userID = null;
     },
     setCountryCode(state, countryCode) {
         state.countryCode = countryCode || state.countryCode;
