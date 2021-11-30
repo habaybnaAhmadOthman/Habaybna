@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddApiTokenToUsersTablt extends Migration
+class AlterPasswordUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddApiTokenToUsersTablt extends Migration
      */
     public function up()
     {
-        Schema::table('users_tablt', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('password')->nullable()->change();
+
         });
     }
 
@@ -25,7 +26,7 @@ class AddApiTokenToUsersTablt extends Migration
      */
     public function down()
     {
-        Schema::table('users_tablt', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

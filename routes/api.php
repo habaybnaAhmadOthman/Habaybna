@@ -39,9 +39,11 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     route::get('get-profile-data','AuthController@getProfileData');
+    Route::post('/parent-complete-register','ParentUsersController@completeRegister');
 });
 
+Route::post('logoutt','AuthController@logout')->name('user.logoutt');
 Route::post('register','AuthController@signup')->name('user.register');
 Route::post('login','AuthController@login')->name('user.login');
