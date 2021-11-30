@@ -77,6 +77,9 @@ class UserController extends Controller
                     $userData['job_title'] = $user->user_data->job_title ;
                     $userData['dob'] = $user->user_data->dob ;
                     $userData['why_to_join'] = $user->user_data->why_to_join ;
+                    $userData['intrest'] = [
+                        '4'=>'sdfas'
+                    ];
 
 
 
@@ -85,7 +88,12 @@ class UserController extends Controller
 
 
                 default:
-                    # code...
+                return response()->json([
+                    'msg'=>'faild',
+                    'status'=>false,
+                    404
+
+               ]);
                     break;
             }
 
@@ -106,5 +114,10 @@ class UserController extends Controller
 
            ]);
         }
+    }
+
+    public function setNewPassword(Request $request)
+    {
+        dd($request);
     }
 }
