@@ -22,7 +22,6 @@ class UserController extends Controller
             switch ($user->role) {
                 case 'parent':
                     $userData = [] ;
-                    dd($user->user_data);
                     $userData['firstName'] = $user->user_data->firstName ;
                     $userData['lastName'] = $user->user_data->lastName ;
                     $userData['gender'] = $user->user_data->gender ;
