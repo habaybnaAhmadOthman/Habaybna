@@ -71,7 +71,7 @@
 import passwordMixin from "../../../mixins/password.js";
 import loadingMixin from "../../../mixins/loading.js";
 export default {
-    emits: ["close-password-modal"],
+    emits: ["close-password-modal","succes-password-modal"],
     mixins: [passwordMixin,loadingMixin],
     data(){
         return {
@@ -115,7 +115,7 @@ export default {
             }
         },
         successModal(){
-            this.$emit('close-password-modal')
+            this.$emit('succes-password-modal')
         },
         closeModal(){
             this.$emit('close-password-modal')

@@ -7,7 +7,8 @@
         ></component>
         <ChangePassword
             v-if="showPasswordModal"
-            @close-password-modal="successPasswordDialog"
+            @success-password-modal="successPasswordDialog"
+            @close-password-modal="showPasswordDialog"
         ></ChangePassword>
         <UserImage
             v-if="showUserImageModal"
