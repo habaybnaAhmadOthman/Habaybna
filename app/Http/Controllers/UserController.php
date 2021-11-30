@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Hash;
+
 
 use App\User;
 use App\Specialist;
@@ -77,6 +79,10 @@ class UserController extends Controller
                     $userData['job_title'] = $user->user_data->job_title ;
                     $userData['dob'] = $user->user_data->dob ;
                     $userData['why_to_join'] = $user->user_data->why_to_join ;
+                    $userData['employment'] = $user->user_data->employment ;
+                    $userData['intrest'] = [
+                        '4'=>'sdfas'
+                    ];
 
 
 
@@ -85,7 +91,12 @@ class UserController extends Controller
 
 
                 default:
-                    # code...
+                return response()->json([
+                    'msg'=>'faild',
+                    'status'=>false,
+                    404
+
+               ]);
                     break;
             }
 
@@ -102,6 +113,34 @@ class UserController extends Controller
             return response()->json([
                 'msg'=>'faild',
                 'status'=>false,
+                404
+
+           ]);
+        }
+    }
+
+    public function setNewPassword(Request $request)
+    {
+        $oldPassword = $request->oldPassword;
+        $hashedPassword = Auth::user()->password;  // Taking the value from database
+
+        if(Hash::check($oldPassword, $hashedPassword))
+        {
+             Auth::user()->password = Hash::make($request->newPassword) ;
+             Auth::user()->save();
+
+            return response()->json([
+                'msg'=>'success',
+                'status'=>true,
+                200
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'msg'=>'old password not correct',
+                'status'=>false,
+
                 404
 
            ]);
