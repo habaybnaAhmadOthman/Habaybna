@@ -9,7 +9,7 @@
         />
         <ul class="user-side-nav-list">
             <li class="active">
-                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/"
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile"
                     >حسابي</router-link
                 >
             </li>

@@ -91,16 +91,17 @@ export default {
         }
         return resp.data
     },
-    async updateProfileData() {
-        const resp = await callApi("POST", "/api/update-profile-data");
+    // ******** edit user profile ::: password
+    async updateProfileData({context,getters}) {
+        const resp = await callApi("POST", `/api/edit-${getters.type}-profile-data`);
         if (resp.status != 200) {
             const error = new Error("fail to update profile data");
             throw error;
         }
     },
     // ******** userProfile ::: password
-    async changePassword() {
-        const resp = await callApi("POST", "/api/set-new-password");
+    async changePassword(_,payload) {
+        const resp = await callApi("POST", "/api/set-new-password",payload);
         if (resp.status != 200) {
             const error = new Error("fail to change password");
             throw error;
