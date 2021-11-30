@@ -97,6 +97,7 @@ class ParentUsersController extends Controller
 
     public function completeRegister(Request $request)
     {
+        dd($request);
         $parent = new ParentUsers() ;
         if ($request->hasFile('image')) {
             $img = $request->file('image');

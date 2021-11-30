@@ -11,16 +11,14 @@ export default {
     },
     async registerFirstStep(context, payload) {
         await axios.get("/sanctum/csrf-cookie");
-        const resp = await callApi("POST", "/register", payload);
+        const resp = await callApi("POST", "register", payload);
         if (resp.status != 201) {
             const error = new Error("fail to register");
             throw error;
         }
-        const token = resp.data.userData.token;
-        const userId = resp.data.userData.user.id;
 
-        logInWithToken(token,userId);
-        context.commit("login",token,userId);
+        logInWithToken('token','userId');
+        context.commit("login",'token','userId');
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
@@ -42,14 +40,14 @@ export default {
     },
      async login(context, payload){
         await axios.get("/sanctum/csrf-cookie");
-        const resp = await callApi("POST", "/api/login", payload);
+        const resp = await callApi("POST", "login", payload);
         
         if (resp.status != 200) {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
-        const token = resp.data.userData.token;
-        const userId = resp.data.userData.user.id;
+        const token = 'resp.data.userData.token';
+        const userId = resp.data.userData.id;
 
         logInWithToken(token,userId);
         context.commit("login",token,userId);

@@ -263,7 +263,7 @@ export default {
     components: { Multiselect },
     props: ["interestsList"],
     mounted() {
-        // this.getProfileData();
+        this.getProfileData();
     },
     data() {
         return {
@@ -321,6 +321,7 @@ export default {
     methods: {
         async getProfileData() {
             const obj = await this.$store.dispatch("user/getProfileData");
+            // console.log(obj);
         },
         showPasswordDialog() {
             this.$emit("open-password-dialog");
