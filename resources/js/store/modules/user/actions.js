@@ -92,7 +92,7 @@ export default {
         return resp.data
     },
     async updateProfileData() {
-        const resp = await callApi("PUT", "/api/update-profile-data");
+        const resp = await callApi("POST", "/api/update-profile-data");
         if (resp.status != 200) {
             const error = new Error("fail to update profile data");
             throw error;
@@ -100,7 +100,7 @@ export default {
     },
     // ******** userProfile ::: password
     async changePassword() {
-        const resp = await callApi("PUT", "/api/set-new-password");
+        const resp = await callApi("POST", "/api/set-new-password");
         if (resp.status != 200) {
             const error = new Error("fail to change password");
             throw error;

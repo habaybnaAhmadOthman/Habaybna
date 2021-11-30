@@ -107,6 +107,7 @@ header {
     top: 0;
     width: 100%;
     z-index: 10;
+    background:#000;
 }
 .main-menu {
     align-self: stretch;

@@ -69,9 +69,10 @@
 
 <script>
 import passwordMixin from "../../../mixins/password.js";
+import loadingMixin from "../../../mixins/loading.js";
 export default {
     emits: ["close-password-modal"],
-    mixins: [passwordMixin],
+    mixins: [passwordMixin,loadingMixin],
     data(){
         return {
             isOpened: true,
@@ -82,7 +83,7 @@ export default {
         }
     },
     methods: {
-        submitForm: function() {
+        async submitForm() {
             this.passwordCheck();
             if (this.oldPassword.val == '') {
                 this.oldPassword.isValid = false;
@@ -90,8 +91,18 @@ export default {
             if (!this.oldPassword.isValid || !this.password.isValid) {
                 return ;
             }
+            this.isLoading = true;
+            try {
+                await this.$store.dispatch('user/changePassword',{
+                    oldPassword: this.oldPassword.val,
+                    newPassword: this.password.val
+                })
+                this.closeModal()
+            } catch (e) {
+                this.showErrorMessage("حدث خطأ ما");
+            }
+            this.isLoading = false;
             // submit then
-            this.closeModal()
         },
         checkValidity(e) {
             if (e.target.value != "") {
