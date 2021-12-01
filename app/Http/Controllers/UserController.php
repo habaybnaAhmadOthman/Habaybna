@@ -91,12 +91,12 @@ class UserController extends Controller
 
 
                 default:
-                return response()->json([
-                    'msg'=>'faild',
-                    'status'=>false,
-                    404
+            //     return response()->json([
+            //         'msg'=>'faild',
+            //         'status'=>false,
+            //         404
 
-               ]);
+            //    ]);
                     break;
             }
 
