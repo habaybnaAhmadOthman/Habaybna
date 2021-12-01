@@ -11,6 +11,11 @@
                         to="/"
                         >الرئيسية</router-link
                     >
+                    <router-link
+                            class="white-i nowrap p-side-10 h-100 flex-all bold"
+                            to="/profile"
+                            >حسابي</router-link
+                        >
                     <div class="dropdown relative h-100 flex-all">
                         <router-link
                             class="white-i nowrap p-side-10 h-100 flex-all bold"
@@ -102,6 +107,7 @@ header {
     top: 0;
     width: 100%;
     z-index: 10;
+    background:#000;
 }
 .main-menu {
     align-self: stretch;

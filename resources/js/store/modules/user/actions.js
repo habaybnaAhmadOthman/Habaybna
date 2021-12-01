@@ -1,15 +1,4 @@
-async function callApi(method, url, dataObj) {
-    try {
-        return await axios({
-            method: method,
-            url: url,
-            data: dataObj
-        });
-    } catch (e) {
-        return e.response;
-    }
-}
-
+import { userType, callApi,logIn,logOut ,sanctum} from "../../common";
 export default {
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
@@ -21,13 +10,17 @@ export default {
         context.commit('setCountryCode',countryCode)
     },
     async registerFirstStep(context, payload) {
-        const resp = await callApi("POST", "/register", payload);
+        await axios.get("/sanctum/csrf-cookie");
+        const resp = await callApi("POST", "register", payload);
         if (resp.status != 201) {
             const error = new Error("fail to register");
             throw error;
         }
 
+        logIn();
         context.commit("login");
+        context.commit("type",payload.type);
+        userType(payload.type)
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
@@ -37,7 +30,7 @@ export default {
         }
         const resp = await callApi(
             "POST",
-            `/${type}-complete-register`,
+            `api/${type}-complete-register`,
             payload
         );
         if (resp.status != 200) {
@@ -48,19 +41,37 @@ export default {
         return resp.data.intrest
     },
      async login(context, payload){
-        const resp = await callApi("POST", "/login", payload);
+        await axios.get("/sanctum/csrf-cookie");
+        const resp = await callApi("POST", "login", payload);
+
         if (resp.status != 200) {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
+        // const token = 'resp.data.userData.token';
+        // const userId = resp.data.userData.id;
+
+        // logInWithToken(token,userId);
+        logIn();
         context.commit("login");
+        context.commit("type",resp.data.userData.role);
+        userType(resp.data.userData.role)
+    },
+    test(){
+        sanctum();
+        axios.get('/api/profile').then((res)=>{
+            console.log(res);
+        }).catch((err)=>{
+            console.log(err);
+        })
     },
     async logout(context){
-        const resp = await callApi("POST", "/logoutt");
+        const resp = await callApi("POST", "logoutt");
         if (resp.status != 200) {
             const error = new Error("fail to logout");
             throw error;
         }
+        logOut();
         context.commit("logout");
     },
     // ******** interests
@@ -70,6 +81,30 @@ export default {
             const error = new Error("fail to add interests");
             throw error;
         }
+    },
+    // ******** userProfile
+    async getProfileData() {
+        const resp = await callApi("GET", "/api/get-profile-data");
+        if (resp.status != 200) {
+            const error = new Error("fail to get profile data");
+            throw error;
+        }
+        return resp.data
+    },
+    // ******** edit user profile ::: password
+    async updateProfileData({context,getters}) {
+        const resp = await callApi("POST", `/api/edit-${getters.type}-profile-data`);
+        if (resp.status != 200) {
+            const error = new Error("fail to update profile data");
+            throw error;
+        }
+    },
+    // ******** userProfile ::: password
+    async changePassword(_,payload) {
+        const resp = await callApi("POST", "/api/set-new-password",payload);
+        if (!resp.data.status) {
+            const error = new Error("كلمة المرور القديمة غير صحيحة");
+            throw error;
+        }
     }
-
 };

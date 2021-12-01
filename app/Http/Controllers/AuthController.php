@@ -6,29 +6,46 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+
+
 
 
 class AuthController extends Controller
 {
     public function signup(Request $request)
     {
+        // dd($request);
         $request->validate([
             'phone' => ['required', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'type' => ['required', 'string'],
         ]);
         $user = User::create([
             'role' => $request->type,
-            'email' => $request->email,
+            // 'email' => $request->email,
             'phone' => $request->phone,
             'otp'=> 000111 //random_int(100000, 999999),
         ]);
-        $user->save();
+        // $user->save();
+        //  $user->createToken(random_int(100000, 999999))->planeTextTokens;
+        //  return  $user->createToken($request->phone)->token->id;
+
+        // $token =  $user->createToken($request->phone);
+        // dd(Auth::user());
+        // $token = $user->createToken($request->phone);
+
+        $userData['user'] =  $user;
+        $userData['token'] =  $user->createToken('LaravelSanctumAuth')->accessToken;
+
         // $accessToken = $user->createToken('authToken')->access_token ;
 
-        return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
+        // return response()->json([
+        //     'message' => 'Successfully created user!'
+        // ], 201);
+        return response()->json(['userData' => $userData], 201);
+
     }
 
     public function loginPage()
@@ -38,56 +55,39 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        dd('xxxxx');
         $request->validate([
             'phone' => 'required|string',
             'password' => 'required|string',
         ]);
-        $credentials = request(['phone', 'password']);
+        $user = User::where('phone', $request->phone)->first();
 
-            if(!Auth::attempt($credentials))
-            {
-                if ($request->is('api/*')) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'phone' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+        $userType = $user->user_data;
 
-                    return response()->json([
-                        'message' => 'Unauthorized'
-                    ], 401);
-                }
-                return view('auth.login');
-            }
-            // $user = $request->user();
-            // $access_token = $user->createToken('Personal Access Token')->accessToken;
+        $user->tokens()->delete();
 
+        $token = $user->createToken('vue web')->accessToken;
 
+        $userData['user'] =  $user;
+        $userData['token'] =  $token;
 
-
-            if ($request->is('api/*')) {
-                return response([
-                    // 'access_token' => $access_token,
-                    // 'token_type' => 'Bearer',
-                    // 'expires_at' => Carbon::parse(
-                    //     $tokenResult->token->expires_at
-                    // )->toDateTimeString()
-                ]);
-            }
-        if (! auth()->check() ) {
-            return redirect()->to( '/auth/login' );
+        if($userType){
+            $userData['user']['firstName'] = $userType['firstName'];
+            $userData['user']['lastName'] = $userType['lastName'];
         }
 
-        if (auth()->user()->role === "parent") {
-            return redirect()->to( '/parent-dashboard' );
-        }
-        if (auth()->user()->role === "admin") {
-            return redirect()->to( '/admin' );
-        }
-
-
+        return response()->json(['userData' => $userData], 200);
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
 
+        Auth::user()->tokens()->delete();
+        Auth::logout();
         return response()->json([
             'message' => 'Successfully logged out'
         ]);
@@ -96,5 +96,10 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+
+    public function getProfileData(Request $request)
+    {
+        dd(Auth::user());
     }
 }

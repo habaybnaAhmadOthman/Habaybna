@@ -1,6 +1,6 @@
 export default {
-    user(state) {
-        return state.user;
+    userID(state) {
+        return state.userID;
     },
     countryCode(state) {
         return state.countryCode;

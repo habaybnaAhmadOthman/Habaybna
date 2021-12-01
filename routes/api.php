@@ -30,3 +30,35 @@ use Illuminate\Support\Facades\Route;
 
 //     });
 // });
+// Route::middleware('auth:sanctum')->group(function () {
+
+// });
+
+// route::middleware('auth:sanctum')->get('/user',function(Request $request){
+//     dd($request->user());
+//     return $request->user();
+// });
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    // general routes
+    route::get('get-profile-data','UserController@getUserData');
+    Route::post('logoutt','AuthController@logout')->name('user.logoutt');
+    Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
+    route::post('set-new-password','UserController@setNewPassword');
+
+
+
+    // parent routes
+    Route::post('/parent-complete-register','ParentUsersController@completeRegister');
+
+    // speciaist route
+    Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
+
+    // others route
+    Route::post('/other-complete-register','OthersController@create')->name('create.others');
+
+});
+
+Route::post('register','AuthController@signup')->name('user.register');
+Route::post('login','AuthController@login')->name('user.login');

@@ -1,9 +1,9 @@
 <template>
     <form @submit.prevent="submitForm" class="p-side-50">
-        <h2 class="main-color text-shadow font-40 bold center mb-30">
+        <h2 class="main-color text-shadow font-40 bold center mb-30 font-28-p">
             أكمل معلوماتك
         </h2>
-        <div class="row d-flex space-between">
+        <div class="d-flex space-between">
             <!-- fristName -->
             <div
                 class="form-group row-half"
@@ -94,7 +94,7 @@
             <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
         </div>
 
-        <div class="row d-flex space-between">
+        <div class=" d-flex space-between">
             <!-- gender -->
             <div
                 class="form-group row-half"
@@ -119,13 +119,13 @@
             <!-- speciality -->
             <div
                 class="form-group row-half"
-                :class="{ invalid: !empolyment.isValid }"
+                :class="{ invalid: !employment.isValid }"
             >
                 <div class="select-wrapper relative">
                     <select
                         class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                        v-model="empolyment.val"
-                        id="empolyment"
+                        v-model="employment.val"
+                        id="employment"
                         @blur="checkValidity"
                     >
                         <option value="no" disabled hidden>مجال العمل</option>
@@ -202,8 +202,8 @@ export default {
                 this.gender.isValid = false;
                 this.formIsValid = false;
             }
-            if (this.empolyment.val == "no") {
-                this.empolyment.isValid = false;
+            if (this.employment.val == "no") {
+                this.employment.isValid = false;
                 this.formIsValid = false;
             }
             if (this.whyToJoin.val == "") {
@@ -217,7 +217,7 @@ export default {
             } else {
                 this[e.target.id].isValid = false;
             }
-            if (e.target.id == "gender" || e.target.id == "empolyment") {
+            if (e.target.id == "gender" || e.target.id == "employment") {
                 if (e.target.value == "no") {
                     this[e.target.id].isValid = false;
                 } else {
@@ -239,7 +239,7 @@ export default {
                 password: this.password.val,
                 email: this.email.val,
                 gender: this.gender.val,
-                empolyment: this.empolyment.val,
+                employment: this.employment.val,
                 whyToJoin: this.whyToJoin.val
             })
         }
@@ -262,7 +262,7 @@ export default {
                 val: "no",
                 isValid: true
             },
-            empolyment: {
+            employment: {
                 val: "no",
                 isValid: true
             },

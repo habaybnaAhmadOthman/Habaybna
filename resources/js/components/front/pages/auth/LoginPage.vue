@@ -49,7 +49,7 @@ export default {
 
                 this.$router.replace("/");
             } catch (e) {
-                this.showErrorMessage(e);
+                this.showPopupMessage(e);
             }
             this.isLoading = false;
         }

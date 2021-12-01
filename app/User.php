@@ -7,11 +7,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // use Spatie\Permission\Traits\HasRoles;
 use Laravel\Passport\HasApiTokens;
+use Laravel\Passport\PersonalAccessTokenResult;
+use App\ParentUsers;
+use App\Other;
+use App\Specialist;
+
 
 
 class User extends Authenticatable
 {
-    use Notifiable , HasApiTokens;
+    use HasApiTokens, Notifiable  ;
 
     /**
      * The attributes that are mass assignable.
@@ -39,6 +44,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getUserDataAttribute()
+    {
+        // dd($this->role);
+        switch ($this->role) {
+            case 'parent':
+                return ParentUsers::where('user_id',$this->id)->first();
+                break;
+            case 'specialist':
+                return Specialist::where('user_id',$this->id)->first();
+                break;
+            case 'other':
+                return Other::where('user_id',$this->id)->first();
+                break;
+
+            default:
+                # code...
+                break;
+        }
+    }
 
     public function getIsVerfiedAttribute()
     {

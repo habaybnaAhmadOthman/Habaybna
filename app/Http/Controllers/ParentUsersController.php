@@ -20,7 +20,8 @@ class ParentUsersController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // dd('xxxxxxxx');
+        // $this->middleware('auth:sanctum');
     }
 
 

@@ -10,7 +10,8 @@ export default {
             countryCode: 'JO',
             is_verify: false,
             token: null,
-            loggedIn: false
+            loggedIn: false,
+            userID: null
         }
     },
     mutations,

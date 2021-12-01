@@ -1,9 +1,9 @@
 <template>
     <form @submit.prevent="submitForm" class="p-side-50">
-        <h2 class="main-color text-shadow font-40 bold center mb-30">
+        <h2 class="main-color text-shadow font-40 bold center mb-30 font-28-p">
             أكمل معلوماتك
         </h2>
-        <div class="row d-flex space-between">
+        <div class="d-flex space-between">
             <!-- firstName -->
             <div
                 class="form-group row-half"
@@ -94,7 +94,7 @@
             <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
         </div>
 
-        <div class="row d-flex space-between">
+        <div class="d-flex space-between">
             <!-- gender -->
             <div
                 class="form-group row-half"

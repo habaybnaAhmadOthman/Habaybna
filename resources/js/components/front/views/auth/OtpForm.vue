@@ -1,6 +1,6 @@
 <template>
-    <div class="mobile-form p-side-50">
-        <h2 class="main-color text-shadow font-40 bold center">
+    <div class="mobile-form p-side-50 p-side-12-p">
+        <h2 class="main-color text-shadow font-40 bold center font-28-p">
             مستخدم جديد
         </h2>
         <form @submit.prevent="submitForm" class="mt-30">
@@ -68,18 +68,10 @@ export default {
                 val: "no",
                 isValid: true
             },
-            countryCode:'',
             formIsValid: true
         };
     },
-    created() {
-        this.getUserCountry()
-    },
     methods: {
-        async getUserCountry() {
-            await this.$store.dispatch('user/getCountryCode');
-            this.countryCode = this.$store.getters['user/countryCode']
-        },
         validateForm() {
             this.formIsValid = true;
             

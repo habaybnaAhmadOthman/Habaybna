@@ -1,6 +1,6 @@
 <template>
     <div class="mobile-form pt-50 p-side-50">
-        <p class="main-color font-40 bold center">
+        <p class="main-color font-40 bold center font-28-p">
             أهلا و سهلاً بك <br />
             في عائلة حبايبنا
         </p>
@@ -29,7 +29,7 @@
             <router-link to="/" class="main-color underline font-16"
                 >عودة الى الرئيسية</router-link
             >
-            <router-link to="/" class="main-color underline mr-20 font-16"
+            <router-link to="/profile" class="main-color underline mr-20 font-16"
                 >ملفي الشخصي</router-link
             >
         </div>

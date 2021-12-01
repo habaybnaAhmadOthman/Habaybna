@@ -59,13 +59,13 @@ export default {
                     password: userData.password,
                     email: userData.email,
                     gender: userData.gender,
-                    empolyment: userData.empolyment,
+                    employment: userData.employment,
                     whyToJoin: userData.whyToJoin
                 }
                 this.interests = await this.$store.dispatch("user/completeRegistration",obj);
                 this.showInterestScreen = true;
             } catch (e) {
-                this.showErrorMessage("حدث خطأ ما");
+                this.showPopupMessage("حدث خطأ ما");
             }
             this.isLoading = false;
         },
@@ -74,10 +74,10 @@ export default {
                 this.$store.dispatch("user/addInterests",interests);
                 this.$router.replace("/profile");
             } catch (e) {
-                this.showErrorMessage("حدث خطأ ما");
+                this.showPopupMessage("حدث خطأ ما");
             }
         },
-        showErrorMessage(msg) {
+        showPopupMessage(msg) {
             this.error = msg;
         }
     }
