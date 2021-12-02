@@ -44,7 +44,7 @@ export default {
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "login", payload);
 
-        if (resp.status != 204) {
+        if (resp.status != 200) {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
