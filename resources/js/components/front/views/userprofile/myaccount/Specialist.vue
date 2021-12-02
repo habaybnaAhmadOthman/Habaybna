@@ -218,7 +218,7 @@
                         حفظ
                     </button>
                     <button
-                        class="bg-none border-0 main-color font-20 pointer font-16-p"
+                        class="btn-3 radius-12"
                         @click.prevent="showPasswordDialog"
                     >
                         تغيير كلمة المرور
@@ -322,8 +322,9 @@ export default {
             if (!this.formIsValid) {
                 return;
             }
-            if (this.education.val == "no") {
-                this.education.val = "";
+            let educationValue = this.education.val;
+            if (educationValue == "no") {
+                educationValue = "";
             }
 
             // let tagIDs = [];
@@ -340,7 +341,7 @@ export default {
                 experience: this.experience.val,
                 gender: this.gender.val,
                 whyToJoin: this.whyToJoin.val,
-                education: this.education.val,
+                education: educationValue,
                 interests: []
             });
         }

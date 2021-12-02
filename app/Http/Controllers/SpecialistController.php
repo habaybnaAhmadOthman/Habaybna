@@ -43,9 +43,40 @@ class SpecialistController extends Controller
             'intrest'=>$interest,
             200
         ]);
+    }
 
+    public function editProfileData(Request $request)
+    {
+        try{
 
+            $specialist = Auth::user()->user_data ;
 
+            $specialist->dob = $request->dob ;
+            $specialist->specialization = $request->specialization ;
+            $specialist->work_place = $request->workPlace ;
+            $specialist->job_title = $request->jobTitle ;
+            $specialist->experience = $request->experience ;
+            $specialist->gender = $request->gender ;
+            $specialist->disorders_work_with = $request->whyToJoin ;
+            $specialist->edu_level = $request->education ;
 
+            // interest
+
+            $specialist->save();
+
+            return response()->json([
+                'msg'=>'success',
+                'status'=>true,
+                200
+           ]);
+         } catch (ModelNotFoundException $e){
+
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
+
+           ]);
+           }
     }
 }

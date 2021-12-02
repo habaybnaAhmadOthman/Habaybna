@@ -227,16 +227,7 @@
                 ></textarea>
             </div>
 
-            <div class="form-group d-flex">
-                <label class="checkbox main-color font-16">
-                    <input
-                        type="checkbox"
-                        name="checkbox-checked"
-                        v-model="privateMode"
-                    />
-                    تفعيل نظام الخصوصية
-                </label>
-            </div>
+            
 
             <div class="">
                 <div class="d-flex">
@@ -244,7 +235,13 @@
                         حفظ
                     </button>
                     <button
-                        class="bg-none border-0 main-color font-20 pointer font-16-p"
+                        class="btn-3 radius-12 ml-20"
+                        @click.prevent="toggleSpecialModeDialog"
+                    >
+                        نظام الخصوصية
+                    </button>
+                    <button
+                        class="btn-3 radius-12"
                         @click.prevent="showPasswordDialog"
                     >
                         تغيير كلمة المرور
@@ -252,15 +249,24 @@
                 </div>
             </div>
         </form>
+
+        
+        <SpecialModeDialog :show="specialModeDialog" @popup-alert="openAlertDialog" :private-mode="privateMode" @close-special-dialog="toggleSpecialModeDialog"></SpecialModeDialog>
+        <alert-dialog
+            :show="!!alertDialog"
+            :title="alertDialog"
+            @close="closeAlertDialog">
+        </alert-dialog>
+
     </div>
 </template>
 <script>
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
-
+import SpecialModeDialog from './SpecialModeDialog.vue';
 export default {
     emits: ["submit-form", "open-password-dialog"],
-    components: { Multiselect },
+    components: { Multiselect,SpecialModeDialog },
     mounted() {
         this.getProfileData();
     },
@@ -314,10 +320,16 @@ export default {
                 val: "",
                 isValid: true
             },
+            alertDialog: null,
+            privateMode: false,
+            specialModeDialog: false,
             formIsValid: true
         };
     },
     methods: {
+        toggleSpecialModeDialog(){
+            this.specialModeDialog = !this.specialModeDialog;
+        },
         async getProfileData() {
             const obj = await this.$store.dispatch("user/getProfileData");
             const data = obj.userData;
@@ -335,6 +347,7 @@ export default {
             this.education.val = data.edu_level || 'no';
             this.employment.val = data.employment || 'no';
             this.jobTitle.val = data.job_title;
+            this.privateMode = data.private_mode;
         },
         showPasswordDialog() {
             this.$emit("open-password-dialog");
@@ -358,13 +371,13 @@ export default {
             if (!this.formIsValid) {
                 return;
             }
-            if (this.employment.val == "no") {
-                this.employment.isValid = false;
-                this.employment.val = "";
+            let employmentValue = this.employment.val;
+            if (employmentValue == "no") {
+                employmentValue = "";
             }
-            if (this.education.val == "no") {
-                this.education.isValid = false;
-                this.education.val = "";
+            let educationValue = this.education.val;
+            if (educationValue == "no") {
+                educationValue = "";
             }
 
             // let tagIDs = [];
@@ -381,11 +394,18 @@ export default {
                 whyToJoin: this.whyToJoin.val,
                 city: this.city.val,
                 noChilds: this.noChilds.val,
-                education: this.education.val,
-                employment: this.employment.val,
+                education: educationValue,
+                employment: employmentValue,
                 jobTitle: this.jobTitle.val,
                 interests: []
             });
+        },
+        openAlertDialog(paramName,message){
+            this[paramName] = false;
+            this.alertDialog = message;
+        },
+        closeAlertDialog(){
+            this.alertDialog = null
         }
     }
 };
@@ -393,51 +413,5 @@ export default {
 <style scoped>
 .profile textarea {
     height: auto !important;
-}
-.checkbox {
-    font-weight: bold;
-    line-height: 1.1;
-    display: flex;
-    cursor: pointer;
-    align-items: center;
-}
-input[type="checkbox"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    margin: 0;
-    width: 25px;
-    height: 25px;
-    border: 1px solid #660066;
-    border-radius: 3px;
-    transform: translateY(-0.075em);
-    display: grid;
-    place-content: center;
-    margin-left: 12px;
-}
-
-input[type="checkbox"]::before {
-    content: "";
-    width: 15px;
-    height: 15px;
-    -webkit-clip-path: polygon(
-        14% 44%,
-        0 65%,
-        50% 100%,
-        100% 16%,
-        80% 0%,
-        43% 62%
-    );
-    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-    transform: scale(0);
-    transform-origin: bottom left;
-    transition: 120ms transform ease-in-out;
-    /* Windows High Contrast Mode */
-    background-color: CanvasText;
-}
-
-input[type="checkbox"]:checked::before {
-    transform: scale(1);
 }
 </style>

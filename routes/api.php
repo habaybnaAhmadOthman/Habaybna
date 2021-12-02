@@ -51,12 +51,18 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // parent routes
     Route::post('/parent-complete-register','ParentUsersController@completeRegister');
+    Route::post('/edit-parent-profile-data','ParentUsersController@editProfileData');
+    Route::post('/set-private-mode','ParentUsersController@setPrivateMode');
 
     // speciaist route
     Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
+    Route::post('/edit-specialist-profile-data','SpecialistController@editProfileData');
+
 
     // others route
     Route::post('/other-complete-register','OthersController@create')->name('create.others');
+    Route::post('/edit-other-profile-data','OthersController@editProfileData');
+
 
 });
 

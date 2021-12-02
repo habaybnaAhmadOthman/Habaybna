@@ -300,11 +300,13 @@ export default {
             if (!this.formIsValid) {
                 return;
             }
-            if (this.education.val == "no") {
-                this.education.val = "";
+            let employmentValue = this.employment.val;
+            if (employmentValue == "no") {
+                employmentValue = "";
             }
-            if (this.employment.val == "no") {
-                this.employment.val = "";
+            let educationValue = this.education.val;
+            if (educationValue == "no") {
+                educationValue = "";
             }
 
             // let tagIDs = [];
@@ -317,8 +319,8 @@ export default {
                 email: this.email,
                 dob: this.birthdate.val,
                 gender: this.gender.val,
-                education: this.education.val,
-                employment: this.employment.val,
+                education: educationValue,
+                employment: employmentValue,
                 jobTitle: this.jobTitle.val,
                 workPlace: this.workPlace.val,
                 whyToJoin: this.whyToJoin.val,
