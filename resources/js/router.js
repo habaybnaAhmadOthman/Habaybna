@@ -24,7 +24,8 @@ import RegisterOtherComplete from "./components/front/pages/auth/Register_OtherC
 // login
 import LoginPage from "./components/front/pages/auth/LoginPage.vue";
 
-import UserProfile from "./components/front/pages/dashboard/UserProfile.vue";
+import UserProfile_Template from "./components/front/views/userprofile/UserProfile_Template";
+import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfile.vue";
 
 import store from "./store/index";
 
@@ -118,11 +119,21 @@ const routes = [
     // user profile #dashboard
     {
         path: "/profile",
-        component: UserProfile,
+        component: UserProfile_Template,
         meta: {
             requiresAuth: true,
             header: false
-        }
+        },
+        children: [
+            {
+                path: "my-account",
+                component: UserProfile_MyAccount,
+                meta: {
+                    header: false
+                },
+                name: 'myAccount'
+            }
+        ]
     }
 ];
 

@@ -53,7 +53,7 @@ export default {
             this.isLoading = false;
         },
         closeModal(){
-            this.$emit('close-special-dialog')
+            this.$emit('close-private-dialog')
         }
     }
 };

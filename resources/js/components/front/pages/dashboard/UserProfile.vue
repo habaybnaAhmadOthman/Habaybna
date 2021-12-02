@@ -1,5 +1,5 @@
 <template>
-    <PageTemplate>
+    <UserProfileContent>
         <template #page-header>
             <h1>البيانات الشخصية</h1>
         </template>
@@ -12,14 +12,14 @@
                 </div>
             </section>
         </template>
-    </PageTemplate>
+    </UserProfileContent>
 </template>
 
 <script>
-import PageTemplate from "../../views/userprofile/UserProfile_Template.vue";
+import UserProfileContent from "../../views/userprofile/UserProfile_Content.vue";
 import MyAccount from "../../views/userprofile/UserProfile_MyAccount.vue";
 export default {
-    components: { PageTemplate, MyAccount },
+    components: { UserProfileContent,MyAccount },
     methods: {
         submitForm() {
 

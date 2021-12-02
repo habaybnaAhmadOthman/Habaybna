@@ -341,7 +341,7 @@ export default {
             this.email = data.email;
             this.birthdate.val = new Date(data.dob).getFullYear() || 'no';
             this.gender.val = data.gender;
-            this.gender.parsed = data.gender == 'f' ? this.gender.parsed == 'أنثى' : ('ذكر') ;
+            this.gender.parsed = data.gender == 'f' ? 'أنثى' : ('ذكر') ;
             this.relative.val = data.relative;
             this.noChildsSpecialNeeds.val = data.speci_childs_count;
             this.whyToJoin.val = data.why_to_join;

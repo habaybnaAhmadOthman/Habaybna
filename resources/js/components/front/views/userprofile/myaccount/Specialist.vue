@@ -236,6 +236,7 @@ import "vue-multiselect/dist/vue-multiselect.min.css";
 export default {
     emits: ["submit-form", "open-password-dialog"],
     components: { Multiselect },
+    props: ['years'],
     mounted() {
         this.getProfileData();
     },
@@ -298,7 +299,7 @@ export default {
             this.jobTitle.val = data.job_title;
             this.experience.val = data.experience;
             this.gender.val = data.gender;
-            this.gender.parsed = data.gender == 'f' ? this.gender.parsed == 'أنثى' : ('ذكر') ;
+            this.gender.parsed = data.gender == 'f' ? 'أنثى' : ('ذكر') ;
             this.whyToJoin.val = data.disorders_work_with;
             this.education.val = data.edu_level || 'no';
         },

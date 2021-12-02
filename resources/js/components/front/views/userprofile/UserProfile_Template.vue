@@ -3,16 +3,9 @@
         <UserProfileHeader></UserProfileHeader>
         <div class="d-flex page-content">
             <UserProfileNav></UserProfileNav>
-            <div class="content-inner w-100-p">
-                <div class="page-header bg-white relative pt-10-p pb-10-p">
-                    <div class="container-fluid pt-15 pb-15">
-                        <slot name="page-header"></slot>
-                    </div>
-                </div>
-                <div class="content-container">
-                    <slot></slot>
-                </div>
-            </div>
+            <transition name="modal">
+                <router-view></router-view>
+            </transition>
         </div>
     </main>
 </template>
@@ -23,30 +16,30 @@ export const userImageModalBus = new Vue();
 import UserProfileHeader from "./UserProfile_Header.vue";
 import UserProfileNav from "./UserProfile_Nav.vue";
 export default {
-    components: { UserProfileHeader, UserProfileNav }
+    components: { UserProfileHeader, UserProfileNav },
+    
 };
 </script>
 <style scoped>
-.container-fluid {
-    min-width: auto!important;
-}
-.content-inner {
-    position: relative;
-    width: calc(100% - 230px);
-    min-height: calc(100vh - 65px);
-    padding-bottom: 60px;
+.page-content {
     background: #eef5f9;
 }
-.page-header {
-    box-shadow: 2px 2px 2px rgb(0 0 0 / 10%);
+.modal-enter-active {
+    animation: modal 0.3s ease-out;
 }
-.card {
-    box-shadow: 2px 2px 2px rgb(0 0 0 / 10%), -1px 0 2px rgb(0 0 0 / 5%);
-    background: #fff;
+
+.modal-leave-active {
+    animation: modal 0.3s ease-in reverse;
 }
-h1 {
-    color: #2f333e;
-    font-size: 18px;
-    font-weight: bold;
+@keyframes modal {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 </style>
