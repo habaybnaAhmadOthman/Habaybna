@@ -1,5 +1,5 @@
 <template>
-    <alert-dialog :show="true" title="تغيير كلمة المرور" @close="closeModal">
+    <alert-dialog :show="show" title="تغيير كلمة المرور" @close="closeModal">
         <template>
             <div class="form-group mb-15" :class="{ invalid: !oldPassword.isValid }">
                 <input class="form-control" 
@@ -73,6 +73,7 @@ import loadingMixin from "../../../mixins/loading.js";
 export default {
     emits: ["close-password-modal","alert-password-modal"],
     mixins: [passwordMixin,loadingMixin],
+    props: ['show'],
     data(){
         return {
             isOpened: true,

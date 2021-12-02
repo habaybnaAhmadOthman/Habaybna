@@ -12,4 +12,7 @@ parent_users table some nn
 ---------------------
 ALTER TABLE `habaybnaDB`.`parent_users`
 ADD COLUMN `relative` VARCHAR(45) NULL AFTER `password`;
+-------------------
+ALTER TABLE `habaybnaDB`.`parent_users`
+CHANGE COLUMN `dob` `dob` VARCHAR(255) NULL ;
 

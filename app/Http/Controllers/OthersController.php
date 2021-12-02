@@ -34,8 +34,8 @@ class OthersController extends Controller
         $otherUser->firstName = $request->fristName;
         $otherUser->lastName = $request->lastName;
         $otherUser->gender = $request->gender ;
-        $otherUser->specialization = 'others' ;
-        $otherUser->work_place = 'others' ;
+        $otherUser->specialization = '' ;
+        $otherUser->work_place = '' ;
         $otherUser->employment = $request->employment ;
         $otherUser->why_to_join = $request->whyToJoin ;
 
@@ -111,5 +111,39 @@ class OthersController extends Controller
     public function destroy(Other $other)
     {
         //
+    }
+
+    public function editProfileData(Request $request)
+    {
+        try{
+
+            $other = Auth::user()->user_data ;
+
+            $other->dob = $request->dob ;
+            $other->gender = $request->gender ;
+            $other->edu_level = $request->education ;
+            $other->employment = $request->employment ;
+            $other->job_title = $request->jobTitle ;
+            $other->work_place = $request->workPlace ;
+            $other->why_to_join = $request->whyToJoin ;
+
+            // interest
+
+            $other->save();
+
+            return response()->json([
+                'msg'=>'success',
+                'status'=>true,
+                200
+           ]);
+         } catch (ModelNotFoundException $e){
+
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
+
+           ]);
+           }
     }
 }

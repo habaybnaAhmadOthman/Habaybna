@@ -6,12 +6,12 @@
             @open-password-dialog="showPasswordDialog"
         ></component>
         <ChangePassword
-            v-if="showPasswordModal"
+            :show="showPasswordModal"
             @alert-password-modal="alertPasswordDialog"
             @close-password-modal="showPasswordDialog"
         ></ChangePassword>
         <UserImage
-            v-if="showUserImageModal"
+            :show="showUserImageModal"
             @close-image-modal="closeImageModal"
             :user-avatar="userAvatar"
         ></UserImage>
@@ -72,12 +72,11 @@ export default {
             this.isLoading = true;
             try {
                 await this.$store.dispatch("user/updateProfileData", data);
+                this.showPopupMessage("تم الحفظ بنجاح");
             } catch (e) {
-                // this.showPopupMessage("حدث خطأ ما")
-                console.log(e);
+                this.showPopupMessage("حدث خطأ ما")
             }
             this.isLoading = false;
-            this.showPopupMessage("تم الحفظ بنجاح");
         },
         showPasswordDialog() {
             this.showPasswordModal = !this.showPasswordModal;
