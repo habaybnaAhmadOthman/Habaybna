@@ -56,33 +56,34 @@
                             />
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group m-0-i">
+                            <label class="form-control-label">الجنس</label>
+                           <input
+                                class="form-control plaintext"
+                                placeholder="الجنس"
+                                id="gender"
+                                :value="gender.parsed"
+                                disabled
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group mb-0-p">
                 <div class="row">
                     <div class="col-md-4">
                         <label class="form-control-label">سنة الميلاد</label>
-                        <input
-                            class="form-control"
-                            placeholder="1999"
+                        <select
+                            class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
                             v-model="birthdate.val"
-                        />
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group m-0-i">
-                            <label class="form-control-label">الجنس</label>
-                            <select
-                                class="form-control"
-                                id="gender"
-                                v-model="gender.val"
+                            id="birthdate"
+                        >
+                            <option value="no" disabled hidden
+                                >سنة الميلاد</option
                             >
-                                <option value="no" disabled hidden
-                                    >الجنس</option
-                                >
-                                <option value="m">ذكر</option>
-                                <option value="f">أنثى</option>
-                            </select>
-                        </div>
+                            <option v-for="year in years" :value="year" :key="year">{{year}}</option>
+                        </select>
                     </div>
                     <div class="col-md-4">
                         <label class="form-control-label">صلة القرابة</label>
@@ -236,7 +237,7 @@
                     </button>
                     <button
                         class="btn-3 radius-12 ml-20"
-                        @click.prevent="toggleSpecialModeDialog"
+                        @click.prevent="togglePrivateModeDialog"
                     >
                         نظام الخصوصية
                     </button>
@@ -251,7 +252,7 @@
         </form>
 
         
-        <SpecialModeDialog :show="specialModeDialog" @popup-alert="openAlertDialog" :private-mode="privateMode" @close-special-dialog="toggleSpecialModeDialog"></SpecialModeDialog>
+        <PrivateModeDialog :show="PrivateModeDialog" @popup-alert="openAlertDialog" :private-mode="privateMode" @close-private-dialog="togglePrivateModeDialog"></PrivateModeDialog>
         <alert-dialog
             :show="!!alertDialog"
             :title="alertDialog"
@@ -263,10 +264,12 @@
 <script>
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
-import SpecialModeDialog from './SpecialModeDialog.vue';
+import PrivateModeDialog from './PrivateModeDialog.vue';
+
 export default {
     emits: ["submit-form", "open-password-dialog"],
-    components: { Multiselect,SpecialModeDialog },
+    components: { Multiselect,PrivateModeDialog },
+    props: ['years'],
     mounted() {
         this.getProfileData();
     },
@@ -282,7 +285,7 @@ export default {
             privateMode: false,
             gender: {
                 val: "no",
-                isValid: true
+                parsed: null
             },
             relative: {
                 val: "no",
@@ -309,7 +312,7 @@ export default {
                 isValid: true
             },
             birthdate: {
-                val: "",
+                val: "no",
                 isValid: true
             },
             noChilds: {
@@ -321,14 +324,13 @@ export default {
                 isValid: true
             },
             alertDialog: null,
-            privateMode: false,
-            specialModeDialog: false,
+            PrivateModeDialog: false,
             formIsValid: true
         };
     },
     methods: {
-        toggleSpecialModeDialog(){
-            this.specialModeDialog = !this.specialModeDialog;
+        togglePrivateModeDialog(){
+            this.PrivateModeDialog = !this.PrivateModeDialog;
         },
         async getProfileData() {
             const obj = await this.$store.dispatch("user/getProfileData");
@@ -337,8 +339,9 @@ export default {
             this.lastName = data.lastName;
             this.phoneNumber = data.phone;
             this.email = data.email;
-            this.birthdate.val = new Date(data.dob).getFullYear();
+            this.birthdate.val = new Date(data.dob).getFullYear() || 'no';
             this.gender.val = data.gender;
+            this.gender.parsed = data.gender == 'f' ? this.gender.parsed == 'أنثى' : ('ذكر') ;
             this.relative.val = data.relative;
             this.noChildsSpecialNeeds.val = data.speci_childs_count;
             this.whyToJoin.val = data.why_to_join;

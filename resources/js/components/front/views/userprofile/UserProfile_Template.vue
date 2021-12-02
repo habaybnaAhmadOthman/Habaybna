@@ -6,9 +6,7 @@
             <div class="content-inner w-100-p">
                 <div class="page-header bg-white relative pt-10-p pb-10-p">
                     <div class="container-fluid pt-15 pb-15">
-                        <slot name="page-header">
-                            <h1>الحساب الشخصي</h1>
-                        </slot>
+                        <slot name="page-header"></slot>
                     </div>
                 </div>
                 <div class="content-container">

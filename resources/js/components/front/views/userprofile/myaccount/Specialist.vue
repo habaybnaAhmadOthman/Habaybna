@@ -56,6 +56,18 @@
                             />
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group m-0-i">
+                            <label class="form-control-label">الجنس</label>
+                           <input
+                                class="form-control plaintext"
+                                placeholder="الجنس"
+                                id="gender"
+                                :value="gender.parsed"
+                                disabled
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group mb-0-p">
@@ -115,27 +127,16 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label class="form-control-label">سنة الميلاد</label>
-                        <input
-                            class="form-control"
-                            placeholder="1999"
+                        <select
+                            class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
                             v-model="birthdate.val"
-                        />
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group m-0-i">
-                            <label class="form-control-label">الجنس</label>
-                            <select
-                                class="form-control"
-                                id="gender"
-                                v-model="gender.val"
+                            id="birthdate"
+                        >
+                            <option value="no" disabled hidden
+                                >سنة الميلاد</option
                             >
-                                <option value="no" disabled hidden
-                                    >الجنس</option
-                                >
-                                <option value="m">ذكر</option>
-                                <option value="f">أنثى</option>
-                            </select>
-                        </div>
+                            <option v-for="year in years" :value="year" :key="year">{{year}}</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -250,7 +251,7 @@ export default {
             phoneNumber: "",
             gender: {
                 val: "no",
-                isValid: true
+                parsed: null
             },
             specialization: {
                 val: "no",
@@ -297,6 +298,7 @@ export default {
             this.jobTitle.val = data.job_title;
             this.experience.val = data.experience;
             this.gender.val = data.gender;
+            this.gender.parsed = data.gender == 'f' ? this.gender.parsed == 'أنثى' : ('ذكر') ;
             this.whyToJoin.val = data.disorders_work_with;
             this.education.val = data.edu_level || 'no';
         },

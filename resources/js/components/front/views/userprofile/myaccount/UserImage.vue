@@ -3,7 +3,7 @@
         <template>
             <div class="modal-body m-side-auto">
                 <img
-                    :src="userAvatar"
+                    :src="userAvatarTemp"
                     width="100"
                     height="100"
                     class="m-side-auto d-block radius-60 user-img object-fit"
@@ -85,7 +85,13 @@ export default {
         return {
             uploadedImage: null ,
             selectedImage: null,
+            userAvatarTemp: null,
             formIsValid: true
+        }
+    },
+    watch: {
+        userAvatar(newV) {
+            this.userAvatarTemp = newV;
         }
     },
     methods: {
@@ -130,16 +136,20 @@ export default {
             this.$emit("close-image-modal");
         },
         processFile(event){
-            this.uploadedImage = event.target.files[0]
+            self = this
+            if (event.target.files[0]) {
+                this.uploadedImage = event.target.files[0];
+                var reader = new FileReader();
+                
+                reader.onload = function (e) {
+                    self.userAvatarTemp = e.target.result
+                }
+                reader.readAsDataURL(event.target.files[0]);
+            }
         }
     }
 };
-// var blob = '';
-//           var reader = new FileReader();
-//           reader.onload = function (e) {
-//             blob = e.target.result
-//           }
-//           reader.readAsDataURL(document.getElementById('avatar-input').files[0]);
+
 </script>
 <style scoped>
 .images-box {

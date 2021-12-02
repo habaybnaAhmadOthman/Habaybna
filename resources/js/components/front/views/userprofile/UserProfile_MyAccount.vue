@@ -4,6 +4,7 @@
             :is="activeComponent"
             @submitForm="submitForm"
             @open-password-dialog="showPasswordDialog"
+            :years="birthDateYears"
         ></component>
         <ChangePassword
             :show="showPasswordModal"
@@ -34,6 +35,7 @@ import ChangePassword from "../../views/userprofile/myaccount/ChangePassword.vue
 import UserImage from "../../views/userprofile/myaccount/UserImage.vue";
 
 import loadingMixin from "./../../mixins/loading.js";
+import years from '../../../../modules/years';
 
 import { userImageModalBus } from "./UserProfile_Template.vue";
 export default {
@@ -55,7 +57,8 @@ export default {
             activeComponent: null,
             showPasswordModal: false,
             showUserImageModal: false,
-            userAvatar: null
+            userAvatar: null,
+            birthDateYears: null
         };
     },
     mounted() {
@@ -63,6 +66,7 @@ export default {
             this.showUserImageModal = true;
             this.userAvatar = avatarSrc;
         });
+        this.birthDateYears = years
     },
     methods: {
         closeImageModal() {

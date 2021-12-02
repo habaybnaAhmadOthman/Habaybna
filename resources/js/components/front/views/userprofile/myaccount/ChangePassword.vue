@@ -116,10 +116,21 @@ export default {
             }
         },
         alertModal(isShow){
+            this.clearFields();
             this.$emit('alert-password-modal',isShow)
         },
         closeModal(){
+            this.clearFields();
             this.$emit('close-password-modal')
+        },
+        clearFields(){
+            this.password.val = '';
+            this.oldPassword.val = '';
+            this.password.has_minimum_lenth = false;
+            this.password.has_number = false;
+            this.password.has_lowercase = false;
+            this.password.has_uppercase = false;
+            this.password.has_special = false
         }
     }
 };
