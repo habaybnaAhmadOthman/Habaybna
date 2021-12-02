@@ -276,7 +276,7 @@ body {
     margin: 0;
 }
 .m-0-i {
-    margin: 0!important;
+    margin: 0 !important;
 }
 .mr-5 {
     margin-right: 5px;
@@ -511,11 +511,11 @@ li {
 }
 .regular,
 input {
-    font-family: "Hacen"!important;
+    font-family: "Hacen" !important;
 }
 input[disabled] {
-    background: rgb(222 226 230 / 40%)!important;
-    cursor: not-allowed;;
+    background: rgb(222 226 230 / 40%) !important;
+    cursor: not-allowed;
 }
 .light {
     font-weight: 100;
@@ -584,10 +584,11 @@ h1 {
 a:hover {
     color: #660066;
 }
-.btn,.btn-2  {
+.btn,
+.btn-2 {
     background: #660066;
     padding: 13px 35px;
-    border-radius: 11px;
+    border-radius: 12px;
     color: #fff;
     transition: 0.3s;
     border: 1px solid #660066;
@@ -596,7 +597,14 @@ a:hover {
 .btn-2 {
     padding: 9px 35px;
 }
-.btn:hover {
+.btn-3 {
+    border: 1px solid #660066;
+    padding: 9px 35px;
+    color: #660066;
+    cursor: pointer;
+    background: transparent;
+}
+.btn:hover{
     color: #660066;
     background: #fff;
 }
@@ -604,7 +612,7 @@ a:hover {
     display: none;
 }
 .form-group > label {
-    display:block;
+    display: block;
 }
 .form-group.invalid p {
     display: block;
@@ -618,7 +626,7 @@ a:hover {
     box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%);
 }
 .holder-center::placeholder {
-    color: #7B797BA6;
+    color: #7b797ba6;
 }
 .main-bg {
     background: #660066;
@@ -627,7 +635,7 @@ a:hover {
     color: #660066;
 }
 .blue {
-    color: #0043FF;
+    color: #0043ff;
 }
 :focus-visible {
     outline: -webkit-focus-ring-color auto 0;
@@ -646,17 +654,17 @@ a:hover {
     margin-bottom: 15px;
 }
 .do {
-    display: block!important;
+    display: block !important;
 }
 .mo {
-    display: none!important;
+    display: none !important;
 }
 @media (max-width: 767px) {
     .mo {
-        display: block!important;
+        display: block !important;
     }
     .do {
-        display: none!important;
+        display: none !important;
     }
     .w-100-p {
         width: 100% !important;
@@ -679,17 +687,18 @@ a:hover {
     .h-auto-p {
         height: auto;
     }
-    .container,.container-fluid {
-        max-width:100%;
+    .container,
+    .container-fluid {
+        max-width: 100%;
     }
     .container-fluid {
         min-width: auto;
     }
     .flex-wrap-p {
-        flex-wrap:wrap
+        flex-wrap: wrap;
     }
     .center-p {
-        text-align: center
+        text-align: center;
     }
     .m-0-p {
         margin: 0;
@@ -701,7 +710,7 @@ a:hover {
         margin-top: 10px;
     }
     .mb-0-p {
-        margin-bottom: 0!important;
+        margin-bottom: 0 !important;
     }
     .mb-10-p {
         margin-bottom: 10px;

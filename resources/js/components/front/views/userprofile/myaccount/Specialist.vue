@@ -218,7 +218,7 @@
                         حفظ
                     </button>
                     <button
-                        class="bg-none border-0 main-color font-20 pointer font-16-p"
+                        class="btn-3 radius-12"
                         @click.prevent="showPasswordDialog"
                     >
                         تغيير كلمة المرور
