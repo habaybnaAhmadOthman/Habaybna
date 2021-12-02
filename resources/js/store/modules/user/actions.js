@@ -92,8 +92,8 @@ export default {
         return resp.data
     },
     // ******** edit user profile ::: edit
-    async updateProfileData({context,getters}) {
-        const resp = await callApi("POST", `/api/edit-${getters.type}-profile-data`);
+    async updateProfileData({_,getters},payload) {
+        const resp = await callApi("POST", `/api/edit-${getters.type}-profile-data`,payload);
         if (resp.status != 200) {
             const error = new Error("fail to update profile data");
             throw error;

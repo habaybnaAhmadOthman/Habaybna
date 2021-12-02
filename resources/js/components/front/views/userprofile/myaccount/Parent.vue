@@ -371,13 +371,13 @@ export default {
             if (!this.formIsValid) {
                 return;
             }
-            if (this.employment.val == "no") {
-                this.employment.isValid = false;
-                this.employment.val = "";
+            let employmentValue = this.employment.val;
+            if (employmentValue == "no") {
+                employmentValue = "";
             }
-            if (this.education.val == "no") {
-                this.education.isValid = false;
-                this.education.val = "";
+            let educationValue = this.education.val;
+            if (educationValue == "no") {
+                educationValue = "";
             }
 
             // let tagIDs = [];
@@ -394,8 +394,8 @@ export default {
                 whyToJoin: this.whyToJoin.val,
                 city: this.city.val,
                 noChilds: this.noChilds.val,
-                education: this.education.val,
-                employment: this.employment.val,
+                education: educationValue,
+                employment: employmentValue,
                 jobTitle: this.jobTitle.val,
                 interests: []
             });
