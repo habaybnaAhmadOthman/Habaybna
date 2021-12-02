@@ -23,7 +23,7 @@ class UserController extends Controller
             // dd($user->user_data);
             switch ($user->role) {
                 case 'parent':
-                    $userData = [] ;
+
                     $userData['firstName'] = $user->user_data->firstName ;
                     $userData['lastName'] = $user->user_data->lastName ;
                     $userData['gender'] = $user->user_data->gender ;
@@ -39,15 +39,14 @@ class UserController extends Controller
                     $userData['job_title'] = $user->user_data->job_title ;
                     $userData['why_to_join'] = $user->user_data->why_to_join ;
                     $userData['private_mode'] = $user->user_data->private_mode ;
+
                     $userData['phone'] = $user->phone ;
                     $userData['email'] = $user->email ;
 
                     break;
 
-
-
                 case 'specialist':
-                    $userData = [] ;
+
                     $userData['firstName'] = $user->user_data->firstName ;
                     $userData['lastName'] = $user->user_data->lastName ;
                     $userData['gender'] = $user->user_data->gender ;
@@ -61,13 +60,10 @@ class UserController extends Controller
                     $userData['experience'] = $user->user_data->experience ;
                     $userData['disorders_work_with'] = $user->user_data->disorders_work_with ;
 
-
-
                     $userData['phone'] = $user->phone ;
                     $userData['email'] = $user->email ;
 
                 case 'other':
-                    $userData = [] ;
                     $userData['firstName'] = $user->user_data->firstName ;
                     $userData['lastName'] = $user->user_data->lastName ;
                     $userData['gender'] = $user->user_data->gender ;
@@ -84,37 +80,20 @@ class UserController extends Controller
                         '4'=>'sdfas'
                     ];
 
-
-
                     $userData['phone'] = $user->phone ;
                     $userData['email'] = $user->email ;
-
-
-                default:
-            //     return response()->json([
-            //         'msg'=>'faild',
-            //         'status'=>false,
-            //         404
-
-            //    ]);
-                    break;
             }
-
-
-
-
-            return response()->json([
-                 'msg'=>'success',
-                 'userData'=>$userData,
-                 'status'=>true,
-                 200
-            ]);
+                return response()->json([
+                    'msg'=>'success',
+                    'userData'=>$userData,
+                    'status'=>true,
+                    200
+                ]);
         } catch (ModelNotFoundException $e){
             return response()->json([
                 'msg'=>'faild',
                 'status'=>false,
                 404
-
            ]);
         }
     }

@@ -56,9 +56,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // speciaist route
     Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
+    Route::post('/edit-specialist-profile-data','SpecialistController@editProfileData');
+
 
     // others route
     Route::post('/other-complete-register','OthersController@create')->name('create.others');
+    Route::post('/edit-other-profile-data','OthersController@editProfileData');
+
 
 });
 

@@ -109,8 +109,8 @@ export default {
     },
     // ******** userProfile ::: private mode
     async privateMode(_,payload) {
-        const resp = await callApi("POST", "/api/set-private-mode",payload);
-        if (resp.status !== 200) {
+        const resp = await callApi("POST", "/api/set-private-mode",{isPrivateMode: payload});
+        if (!resp.data.status) {
             const error = new Error("هناك خطأ ما");
             throw error;
         }

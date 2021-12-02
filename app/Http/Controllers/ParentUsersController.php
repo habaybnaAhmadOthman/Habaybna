@@ -7,6 +7,8 @@ use App\Interest;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 
 
@@ -128,12 +130,67 @@ class ParentUsersController extends Controller
 
     public function editProfileData(Request $request)
     {
-        dd($request);
+        try{
+            $parent = Auth::user()->user_data ;
+
+            $parent->dob = $request->dob ;
+            $parent->lastName = $request->gender ;
+            $parent->relative = $request->relative ;
+            $parent->speci_childs_count = $request->noChildsSpecialNeeds ;
+            $parent->why_to_join = $request->whyToJoin ;
+            $parent->city = $request->city ;
+            $parent->childs_count = $request->noChilds ;
+            $parent->edu_level = $request->education ;
+            $parent->employment = $request->employment ;
+            $parent->job_title = $request->jobTitle ;
+
+            $parent->save();
+
+            return response()->json([
+                'msg'=>'success',
+                'status'=>true,
+                200
+           ]);
+         } catch (ModelNotFoundException $e){
+
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
+
+           ]);
+           }
     }
+
 
     public function setPrivateMode(Request $request)
     {
-        dd($request);
+        try{
+            $parent = Auth::user()->user_data ;
+
+            $parent->private_mode = $request->isPrivateMode ;
+            if($request->isPrivateMode){
+
+                $nickName = 'habaybnaUser_'.random_int(100000, 999999);
+                $parent->nick_name = $nickName;
+            }
+
+            $parent->save();
+
+            return response()->json([
+                'msg'=>'success',
+                'status'=>true,
+                'nickName'=>$nickName,
+                200
+           ]);
+        } catch (ModelNotFoundException $e){
+
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
+            ]);
+        }
     }
 
 
