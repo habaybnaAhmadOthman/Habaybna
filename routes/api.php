@@ -51,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // parent routes
     Route::post('/parent-complete-register','ParentUsersController@completeRegister');
+    Route::post('/edit-parent-profile-data','ParentUsersController@editProfileData');
 
     // speciaist route
     Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');

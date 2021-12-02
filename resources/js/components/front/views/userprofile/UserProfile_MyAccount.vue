@@ -71,7 +71,8 @@ export default {
         async submitForm(data) {
             this.isLoading = true;
             try {
-                await this.$store.dispatch("user/updateProfileData", data);
+                console.log('profile',data);
+                await this.$store.dispatch("user/updateProfileData", {data});
             } catch (e) {
                 // this.showPopupMessage("حدث خطأ ما")
                 console.log(e);

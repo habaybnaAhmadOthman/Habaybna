@@ -126,8 +126,10 @@ class ParentUsersController extends Controller
         ]);
     }
 
-    public function onlineCourses()
+    public function editProfileData(Request $request)
     {
-        return view('parents.onlineCourses');
+        dd($request);
     }
+
+
 }
