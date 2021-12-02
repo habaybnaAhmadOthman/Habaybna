@@ -131,5 +131,10 @@ class ParentUsersController extends Controller
         dd($request);
     }
 
+    public function setPrivateMode(Request $request)
+    {
+        dd($request);
+    }
+
 
 }

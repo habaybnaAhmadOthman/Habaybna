@@ -82,7 +82,7 @@ export default {
             throw error;
         }
     },
-    // ******** userProfile
+    // ******** userProfile ::: get
     async getProfileData() {
         const resp = await callApi("GET", "/api/get-profile-data");
         if (resp.status != 200) {
@@ -91,9 +91,9 @@ export default {
         }
         return resp.data
     },
-    // ******** edit user profile ::: password
-    async updateProfileData({context,getters}) {
-        const resp = await callApi("POST", `/api/edit-${getters.type}-profile-data`);
+    // ******** edit user profile ::: edit
+    async updateProfileData({_,getters},payload) {
+        const resp = await callApi("POST", `/api/edit-${getters.type}-profile-data`,payload);
         if (resp.status != 200) {
             const error = new Error("fail to update profile data");
             throw error;
@@ -104,6 +104,14 @@ export default {
         const resp = await callApi("POST", "/api/set-new-password",payload);
         if (!resp.data.status) {
             const error = new Error("كلمة المرور القديمة غير صحيحة");
+            throw error;
+        }
+    },
+    // ******** userProfile ::: private mode
+    async privateMode(_,payload) {
+        const resp = await callApi("POST", "/api/set-private-mode",payload);
+        if (resp.status !== 200) {
+            const error = new Error("هناك خطأ ما");
             throw error;
         }
     }

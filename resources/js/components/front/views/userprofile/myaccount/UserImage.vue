@@ -1,5 +1,5 @@
 <template>
-    <alert-dialog :show="true" title="تغيير الصورة الشخصية" @close="closeModal" :modal-class="'user-image-modal'">
+    <alert-dialog :show="show" title="تغيير الصورة الشخصية" @close="closeModal" :modal-class="'user-image-modal'">
         <template>
             <div class="modal-body m-side-auto">
                 <img
@@ -78,7 +78,8 @@ export default {
         userAvatar: {
             type: String,
             default: '/images/siteImgs/header/logo.png'
-        }
+        },
+        show: Boolean
     },
     data() {
         return {
