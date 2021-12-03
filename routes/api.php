@@ -53,6 +53,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/parent-complete-register','ParentUsersController@completeRegister');
     Route::post('/edit-parent-profile-data','ParentUsersController@editProfileData');
     Route::post('/set-private-mode','ParentUsersController@setPrivateMode');
+    Route::post('/edit-profile-image','ParentUsersController@editProfileImage');
 
     // speciaist route
     Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
