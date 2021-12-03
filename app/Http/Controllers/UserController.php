@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 
 use App\User;
 use App\Specialist;
+use App\UserInterest;
+
 // use App\Specialist;
 
 
@@ -21,6 +24,20 @@ class UserController extends Controller
         try{
             $user = Auth::user();
             // dd($user->user_data);
+            $userIntrest = UserInterest::where('user_id',$user->id )->get() ;
+            $interestsList = Interest::all();
+            if($userIntrest){
+                $userIntrests = [];
+                foreach ($userIntrest as $intrest) {
+                    $userIntrests[] =
+                    [
+                       'id'=> $intrest->intrest_data->id,
+                       'title'=>$intrest->intrest_data->title,
+                    ];
+                }
+
+            }
+
             switch ($user->role) {
                 case 'parent':
 
@@ -39,6 +56,10 @@ class UserController extends Controller
                     $userData['job_title'] = $user->user_data->job_title ;
                     $userData['why_to_join'] = $user->user_data->why_to_join ;
                     $userData['private_mode'] = $user->user_data->private_mode ;
+                    $userData['interests'] = $userIntrests ? $userIntrests : '';
+                    $userData['interestsList'] = $interestsList ? $interestsList : [];
+
+
 
                     $userData['phone'] = $user->phone ;
                     $userData['email'] = $user->email ;
@@ -59,6 +80,10 @@ class UserController extends Controller
                     $userData['dob'] = $user->user_data->dob ;
                     $userData['experience'] = $user->user_data->experience ;
                     $userData['disorders_work_with'] = $user->user_data->disorders_work_with ;
+                    $userData['interests'] = $userIntrests ? $userIntrests : '';
+                    $userData['interestsList'] = $interestsList ? $interestsList : [];
+
+
 
                     $userData['phone'] = $user->phone ;
                     $userData['email'] = $user->email ;
@@ -76,9 +101,9 @@ class UserController extends Controller
                     $userData['dob'] = $user->user_data->dob ;
                     $userData['why_to_join'] = $user->user_data->why_to_join ;
                     $userData['employment'] = $user->user_data->employment ;
-                    $userData['intrest'] = [
-                        '4'=>'sdfas'
-                    ];
+                    $userData['interests'] = $userIntrests ? $userIntrests : '';
+                    $userData['interestsList'] = $interestsList ? $interestsList : [];
+
 
                     $userData['phone'] = $user->phone ;
                     $userData['email'] = $user->email ;
