@@ -11,7 +11,10 @@ export default {
             is_verify: false,
             token: null,
             loggedIn: false,
-            userID: null
+            userID: null,
+            avatar: '/images/siteImgs/header/logo.png',
+            firstName: null,
+            lastName: null
         }
     },
     mutations,

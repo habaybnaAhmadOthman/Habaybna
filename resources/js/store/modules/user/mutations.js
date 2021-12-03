@@ -1,8 +1,10 @@
 export default {
     setUser(state, payload) {
-        state.phone = payload.phone;
+        state.firstName = payload.firstName;
+        state.lastName = payload.lastName;
         state.type = payload.type;
-        state.token = payload.token;
+        state.avatar = payload.avatar;
+        state.loggedIn = payload.loggedIn;
     },
     login(state) {
         state.loggedIn = true;

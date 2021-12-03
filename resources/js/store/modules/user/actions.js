@@ -82,6 +82,30 @@ export default {
             throw error;
         }
     },
+    // ******** retreive user data ::: get      
+    async checkUserAuth(context) {
+        const resp = await callApi("GET", "/api/check-user-authentication");
+        if (resp.status == 404) {
+            context.commit('setUser',{
+                firstName: null,
+                lastName: null,
+                type: null,
+                avatar: '/images/siteImgs/header/logo.png',
+                loggedIn: false
+            });
+            return false;
+        } 
+        
+        context.commit('setUser',{
+            firstName: 'firstName',
+            lastName: 'firstName',
+            type: 'firstName',
+            avatar: 'firstName',
+            loggedIn: true
+        })
+        return true;
+        
+    },
     // ******** userProfile ::: get
     async getProfileData() {
         const resp = await callApi("GET", "/api/get-profile-data");
