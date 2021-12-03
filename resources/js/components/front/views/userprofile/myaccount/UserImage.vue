@@ -57,7 +57,7 @@
                         <img src="/images/siteImgs/header/logo.png" width="20" height="20" class="" />
                         <span>او قم بتحميل صورة</span>
                     </label>
-                </div>                
+                </div>
                 <p v-if="!formIsValid" class="main-color font-12">يرجى إختيار أحد الشخصيات أو تحميل صورة</p>
 
             </div>
@@ -108,7 +108,7 @@ export default {
                 var formData = new FormData();
                 formData.append("file", this.uploadedImage, this.uploadedImage.name);
                 $.ajax({
-                    "url": "/edit-profile-image",
+                    "url": "/api/edit-profile-image",
                     "method": "POST",
                     "timeout": 0,
                     "headers": {
@@ -131,7 +131,7 @@ export default {
                 });
             }
             this.isLoading = false;
-            
+
         },
         closeModal() {
             this.$emit("close-image-modal");
@@ -141,7 +141,7 @@ export default {
             if (event.target.files[0]) {
                 this.uploadedImage = event.target.files[0];
                 var reader = new FileReader();
-                
+
                 reader.onload = function (e) {
                     self.userAvatarTemp = e.target.result
                 }

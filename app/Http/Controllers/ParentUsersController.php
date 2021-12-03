@@ -193,5 +193,10 @@ class ParentUsersController extends Controller
         }
     }
 
+    public function editProfileImage(Request $request)
+    {
+        dd($request);
+    }
+
 
 }
