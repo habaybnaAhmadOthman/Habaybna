@@ -76,7 +76,7 @@ export default {
     },
     // ******** interests
     async addInterests(_, interests){
-        const resp = await callApi("POST", "/store-user-interests", interests);
+        const resp = await callApi("POST", "/api/store-user-interests", interests);
         if (resp.status != 200) {
             const error = new Error("fail to add interests");
             throw error;
