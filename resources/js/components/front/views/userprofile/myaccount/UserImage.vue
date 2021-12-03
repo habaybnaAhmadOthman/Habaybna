@@ -141,8 +141,8 @@ export default {
         },
         processFile(event){
             self = this
-            self.$emit('loading',true);
             if (event.target.files[0]) {
+                self.$emit('loading',true);
                 this.uploadedImage = event.target.files[0];
                 var reader = new FileReader();
 
