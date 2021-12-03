@@ -244,11 +244,10 @@ export default {
         return {
             tags: "",
             tagsValid: true,
-
+            interestsList: [],
             firstName: "",
             lastName: "",
             email: "",
-            interestsList: [],
             phoneNumber: "",
             gender: {
                 val: "no",
@@ -301,6 +300,8 @@ export default {
             this.gender.val = data.gender;
             this.gender.parsed = data.gender == 'f' ? 'أنثى' : ('ذكر') ;
             this.whyToJoin.val = data.disorders_work_with;
+            this.interestsList = data.interestsList;
+            this.tags = data.interests;
             this.education.val = data.edu_level || 'no';
         },
         showPasswordDialog() {
@@ -309,9 +310,10 @@ export default {
         validateForm() {
             this.formIsValid = true;
             this.tagsValid = true;
-            // if (this.tags.length < 1) {
-            //     this.tagsValid = false;
-            // }
+            if (this.tags.length < 1) {
+                this.tagsValid = false;
+                this.formIsValid = false;
+            }
         },
         checkValidity(e) {
             if (e.target.value != "") {
@@ -330,8 +332,8 @@ export default {
                 educationValue = "";
             }
 
-            // let tagIDs = [];
-            // this.tags.forEach(item => tagIDs.push(item.id));
+            let tagIDs = [];
+            this.tags.forEach(item => tagIDs.push(item.id));
             this.$emit("submitForm", {
                 firstName: this.firstName,
                 lastName: this.lastName,
@@ -345,7 +347,7 @@ export default {
                 gender: this.gender.val,
                 whyToJoin: this.whyToJoin.val,
                 education: educationValue,
-                interests: []
+                interests: tagIDs
             });
         }
     }

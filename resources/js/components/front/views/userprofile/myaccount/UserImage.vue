@@ -108,7 +108,7 @@ export default {
                 var formData = new FormData();
                 formData.append("file", this.uploadedImage, this.uploadedImage.name);
                 $.ajax({
-                    "url": "/edit-profile-image",
+                    "url": "/api/edit-profile-image",
                     "method": "POST",
                     "timeout": 0,
                     "headers": {

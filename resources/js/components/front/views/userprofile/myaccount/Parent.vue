@@ -193,7 +193,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group admin-control">
+            <div class="form-group admin-control" :class="{ invalid: !tagsValid }">
                 <div class="">
                     <div class="w-100">
                         <label class="form-control-label">الإهتمامات</label>
@@ -346,7 +346,8 @@ export default {
             this.relative.val = data.relative;
             this.noChildsSpecialNeeds.val = data.speci_childs_count;
             this.whyToJoin.val = data.why_to_join;
-            this.interestsList = data.interests;
+            this.interestsList = data.interestsList;
+            this.tags = data.interests;
             this.city.val = data.city;
             this.noChilds.val = data.childs_count;
             this.education.val = data.edu_level || 'no';
@@ -386,8 +387,8 @@ export default {
                 educationValue = "";
             }
 
-            // let tagIDs = [];
-            // this.tags.forEach(item => tagIDs.push(item.id));
+            let tagIDs = [];
+            this.tags.forEach(item => tagIDs.push(item.id));
             this.$emit("submitForm", {
                 firstName: this.firstName,
                 lastName: this.lastName,
@@ -403,7 +404,7 @@ export default {
                 education: educationValue,
                 employment: employmentValue,
                 jobTitle: this.jobTitle.val,
-                interests: this.interestsList
+                interests: tagIDs
             });
         },
         openAlertDialog(paramName,message){
