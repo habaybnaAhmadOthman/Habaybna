@@ -74,7 +74,7 @@ export default {
         logOut();
         context.commit("logout");
     },
-    // ******** interests
+    // ******** interests ::: post
     async addInterests(_, interests){
         const resp = await callApi("POST", "/api/store-user-interests", interests);
         if (resp.status != 200) {
