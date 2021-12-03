@@ -1,6 +1,8 @@
 import Vue from "vue";
 import vuex from "vuex";
 import UserModule from "./modules/user/index.js";
+import getters from "./getters";
+import mutations from "./mutations";
 Vue.use(vuex);
 
 const store = new vuex.Store({
@@ -8,10 +10,11 @@ const store = new vuex.Store({
         user: UserModule
     },
     state() {
-        return {};
+        return {
+            
+        };
     },
-    getters: {
-        getTest() {}
-    }
+    getters,
+    mutations
 });
 export default store;

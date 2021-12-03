@@ -39,7 +39,6 @@ import years from '../../../../modules/years';
 
 import { userImageModalBus } from "./UserProfile_Template.vue";
 export default {
-    emits: ["submit-form"],
     mixins: [loadingMixin],
     components: {
         parentAccount,

@@ -16,8 +16,7 @@ export const userImageModalBus = new Vue();
 import UserProfileHeader from "./UserProfile_Header.vue";
 import UserProfileNav from "./UserProfile_Nav.vue";
 export default {
-    components: { UserProfileHeader, UserProfileNav },
-    
+    components: { UserProfileHeader, UserProfileNav }
 };
 </script>
 <style scoped>
