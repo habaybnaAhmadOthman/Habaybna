@@ -98,18 +98,18 @@ export default {
         async submitForm() {
             this.formIsValid = true;
             self = this
-            self.$emit('loading',true);
             // submit then
             // this.closeModal();
             if (!this.uploadedImage && !this.selectedImage) {
                 this.formIsValid = false;
                 return false;
             }
+            self.$emit('loading',true);
             var formData = new FormData();
             if (this.uploadedImage) {
                 formData.append("url", this.uploadedImage, this.uploadedImage.name);
             } else {
-                formData.append("url", this.selectedImage);
+                formData.append("avatar", this.selectedImage);
             }
 
             await $.ajax({
@@ -126,7 +126,8 @@ export default {
                 "data": formData
             }).done(function (response) {
                 self.$emit('popup-alert','showUserImageModal','تم حفظ التغييرات')
-                self.userAvatarTemp = response;
+                response = JSON.parse(response)
+                self.userAvatarTemp = response.url;
                 document.querySelector('.user-avatar-get').setAttribute('src',response.url)
             }).fail(function(err){
                 self.$emit('popup-alert','showUserImageModal','حصل خطأ ما')
@@ -140,8 +141,8 @@ export default {
         },
         processFile(event){
             self = this
-            self.$emit('loading',true);
             if (event.target.files[0]) {
+                self.$emit('loading',true);
                 this.uploadedImage = event.target.files[0];
                 var reader = new FileReader();
 

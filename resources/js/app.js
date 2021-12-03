@@ -65,13 +65,22 @@ const app = new Vue({
     el: '#app',
     // check if user logged in
     async beforeCreate() {
-        const userStatus = await localStorage.getItem('login');
+        const userStatus = await this.$store.dispatch('user/checkUserAuth');
+        console.log(userStatus);
         if (Boolean(userStatus)) {
             this.$store.commit('user/login');
         } else {
             this.$store.commit('user/logout');
         }
     },
+    // async beforeCreate() {
+    //     const userStatus = await localStorage.getItem('login');
+    //     if (Boolean(userStatus)) {
+    //         this.$store.commit('user/login');
+    //     } else {
+    //         this.$store.commit('user/logout');
+    //     }
+    // },
     created(){
         this.$store.commit('user/type',localStorage.getItem('type'));
     },
