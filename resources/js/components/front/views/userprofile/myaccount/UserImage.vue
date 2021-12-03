@@ -11,43 +11,43 @@
                 <p class="main-color font-22">اختر شخصية</p>
                 <div class="d-flex flex-wrap space-between images-box radius-12 p-10">
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15" >
-                        <input type="radio" value="A1" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
+                        <input type="radio" value="/images/siteImgs/header/logo.png" v-model="selectedImage" />
+                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15">
-                        <input type="radio" value="A2" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
+                        <input type="radio" value="/images/siteImgs/home-banner.jpg" v-model="selectedImage" />
+                        <img src="/images/siteImgs/home-banner.jpg" width="88" height="83" class="z-1 radius-12" />
                         <span></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15">
                         <input type="radio" value="A3" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
+                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15">
                         <input type="radio" value="A4" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
+                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">
                         <input type="radio" value="A5" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
+                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">
                         <input type="radio" value="A6" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
+                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">
                         <input type="radio" value="A7" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
+                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">
                         <input type="radio" value="A8" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1" />
+                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                 </div>
@@ -72,7 +72,7 @@
 <script>
 import loadingMixin from './../../../mixins/loading.js'
 export default {
-    emits: ["close-image-modal"],
+    emits: ["close-image-modal","popup-alert"],
     mixins: [loadingMixin],
     props: {
         userAvatar: {
@@ -95,42 +95,44 @@ export default {
         }
     },
     methods: {
-        submitForm: function() {
+        async submitForm() {
             this.formIsValid = true;
-            this.isLoading = true;
+            self = this
+            self.$emit('loading',true);
             // submit then
             // this.closeModal();
             if (!this.uploadedImage && !this.selectedImage) {
                 this.formIsValid = false;
                 return false;
             }
+            var formData = new FormData();
             if (this.uploadedImage) {
-                var formData = new FormData();
-                formData.append("file", this.uploadedImage, this.uploadedImage.name);
-                $.ajax({
-                    "url": "/api/edit-profile-image",
-                    "method": "POST",
-                    "timeout": 0,
-                    "headers": {
-                        "enctype": "multipart/form-data",
-                        "X-CSRF-TOKEN": document.querySelector('[name="csrf-token"]').getAttribute('content')
-                    },
-                    "processData": false,
-                    "mimeType": "multipart/form-data",
-                    "contentType": false,
-                    "data": formData
-                }).done(function (response) {
-                    console.log(response);
-                    // alert(true,'تم تغيير الصورة بنجاح ')
-                    // $('.user-prof-img').attr('src',blob);
-                    // loading(false)
-                }).fail(function(err){
-                    console.log('uploadAvatart ajax error::',err);
-                    // alert(false,'يرجى المحاولة مرة أخرى')
-                    // loading(false)
-                });
+                formData.append("url", this.uploadedImage, this.uploadedImage.name);
+            } else {
+                formData.append("url", this.selectedImage);
             }
-            this.isLoading = false;
+
+            await $.ajax({
+                "url": "/api/edit-profile-image",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "enctype": "multipart/form-data",
+                    "X-CSRF-TOKEN": document.querySelector('[name="csrf-token"]').getAttribute('content')
+                },
+                "processData": false,
+                "mimeType": "multipart/form-data",
+                "contentType": false,
+                "data": formData
+            }).done(function (response) {
+                self.$emit('popup-alert','showUserImageModal','تم حفظ التغييرات')
+                self.userAvatarTemp = response;
+                document.querySelector('.user-avatar-get').setAttribute('src',response.url)
+            }).fail(function(err){
+                self.$emit('popup-alert','showUserImageModal','حصل خطأ ما')
+            });
+            
+            self.$emit('loading',false);
 
         },
         closeModal() {
@@ -138,11 +140,13 @@ export default {
         },
         processFile(event){
             self = this
+            self.$emit('loading',true);
             if (event.target.files[0]) {
                 this.uploadedImage = event.target.files[0];
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
+                    self.$emit('loading',false);
                     self.userAvatarTemp = e.target.result
                 }
                 reader.readAsDataURL(event.target.files[0]);

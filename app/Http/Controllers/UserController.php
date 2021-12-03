@@ -153,9 +153,8 @@ class UserController extends Controller
 
     public function editProfileImage(Request $request)
     {
-
-        if ($request->hasFile('file')) {
-            $profileImage = $request->file('file');
+        if ($request->hasFile('url')) {
+            $profileImage = $request->file('url');
             $imageName = 'user-'. Auth::user()->id . '-' . $profileImage->getClientOriginalName();
             $pathImg = $profileImage->storeAs('public/images/profileImages', $imageName);
             Auth::user()->user_data->avatar ;
