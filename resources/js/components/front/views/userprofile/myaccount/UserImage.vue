@@ -127,7 +127,7 @@ export default {
             }).done(function (response) {
                 self.$emit('popup-alert','showUserImageModal','تم حفظ التغييرات')
                 self.userAvatarTemp = response;
-                document.querySelector('.user-avatar-get').setAttribute('src',response)
+                document.querySelector('.user-avatar-get').setAttribute('src',response.url)
             }).fail(function(err){
                 self.$emit('popup-alert','showUserImageModal','حصل خطأ ما')
             });
