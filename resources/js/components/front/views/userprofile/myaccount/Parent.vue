@@ -200,6 +200,7 @@
                         <multiselect
                             v-model="tags"
                             :options="interestsList"
+                            :preselect-first="true"
                             :searchable="true"
                             :close-on-select="false"
                             :multiple="true"
@@ -209,7 +210,7 @@
                             placeholder="يرجى إختيار الإهتمامات"
                         ></multiselect>
                         <p class="main-color mt-5 font-12" v-if="!tagsValid">
-                            لا يمكنك ترك هذا الحقل فارغ
+                            يجب إختيار واحدة على الأقل
                         </p>
                     </div>
                 </div>
@@ -277,11 +278,11 @@ export default {
         return {
             tags: "",
             tagsValid: true,
+            interestsList: [],
             firstName: "",
             lastName: "",
             email: "",
             phoneNumber: "",
-            interestsList: [],
             privateMode: false,
             gender: {
                 val: "no",
@@ -345,6 +346,7 @@ export default {
             this.relative.val = data.relative;
             this.noChildsSpecialNeeds.val = data.speci_childs_count;
             this.whyToJoin.val = data.why_to_join;
+            this.interestsList = data.interests;
             this.city.val = data.city;
             this.noChilds.val = data.childs_count;
             this.education.val = data.edu_level || 'no';
@@ -358,9 +360,10 @@ export default {
         validateForm() {
             this.formIsValid = true;
             this.tagsValid = true;
-            // if (this.tags.length < 1) {
-            //     this.tagsValid = false;
-            // }
+            if (this.tags.length < 1) {
+                this.tagsValid = false;
+                this.formIsValid = false;
+            }
         },
         checkValidity(e) {
             if (e.target.value != "") {
@@ -400,7 +403,7 @@ export default {
                 education: educationValue,
                 employment: employmentValue,
                 jobTitle: this.jobTitle.val,
-                interests: []
+                interests: this.interestsList
             });
         },
         openAlertDialog(paramName,message){
