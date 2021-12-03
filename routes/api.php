@@ -46,6 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logoutt','AuthController@logout')->name('user.logoutt');
     Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
     route::post('set-new-password','UserController@setNewPassword');
+    Route::post('/edit-profile-image','UserController@editProfileImage');
 
 
 
@@ -53,7 +54,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/parent-complete-register','ParentUsersController@completeRegister');
     Route::post('/edit-parent-profile-data','ParentUsersController@editProfileData');
     Route::post('/set-private-mode','ParentUsersController@setPrivateMode');
-    Route::post('/edit-profile-image','ParentUsersController@editProfileImage');
 
     // speciaist route
     Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');

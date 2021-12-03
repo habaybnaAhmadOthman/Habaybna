@@ -150,4 +150,23 @@ class UserController extends Controller
            ],404);
         }
     }
+
+    public function editProfileImage(Request $request)
+    {
+
+        if ($request->hasFile('file')) {
+            $profileImage = $request->file('file');
+            $imageName = 'user-'. Auth::user()->id . '-' . $profileImage->getClientOriginalName();
+            $pathImg = $profileImage->storeAs('public/images/profileImages', $imageName);
+            Auth::user()->user_data->avatar ;
+            Auth::user()->user_data->save();
+            $url = url('/images/profileImages/'.$imageName);
+            return response()->json([
+                'status'=>true,
+                'msg'=>'success',
+                'url'=>$url
+            ]);
+
+            }
+    }
 }
