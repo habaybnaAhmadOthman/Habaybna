@@ -109,7 +109,7 @@ export default {
             if (this.uploadedImage) {
                 formData.append("url", this.uploadedImage, this.uploadedImage.name);
             } else {
-                formData.append("url", this.selectedImage);
+                formData.append("avatar", this.selectedImage);
             }
 
             await $.ajax({
