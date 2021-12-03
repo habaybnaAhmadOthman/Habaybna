@@ -108,21 +108,22 @@ export default {
                 var formData = new FormData();
                 formData.append("file", this.uploadedImage, this.uploadedImage.name);
                 $.ajax({
-                    "url": baseUrl+"/my-profile-image",
-                    "method": "PUT",
+                    "url": "/edit-profile-image",
+                    "method": "POST",
                     "timeout": 0,
                     "headers": {
                         "enctype": "multipart/form-data",
-                        "Authorization": "Bearer "+getCookie('go_access_token')
+                        // "Authorization": "Bearer "+getCookie('go_access_token')
                     },
                     "processData": false,
                     "mimeType": "multipart/form-data",
                     "contentType": false,
                     "data": formData
                 }).done(function (response) {
+                    console.log(response);
                     // alert(true,'تم تغيير الصورة بنجاح ')
-                    $('.user-prof-img').attr('src',blob);
-                    loading(false)
+                    // $('.user-prof-img').attr('src',blob);
+                    // loading(false)
                 }).fail(function(err){
                     console.log('uploadAvatart ajax error::',err);
                     // alert(false,'يرجى المحاولة مرة أخرى')
