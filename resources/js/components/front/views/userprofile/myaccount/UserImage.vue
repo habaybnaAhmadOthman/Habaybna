@@ -113,7 +113,7 @@ export default {
                     "timeout": 0,
                     "headers": {
                         "enctype": "multipart/form-data",
-                        // "Authorization": "Bearer "+getCookie('go_access_token')
+                        "X-CSRF-TOKEN": document.querySelector('[name="csrf-token"]').getAttribute('content')
                     },
                     "processData": false,
                     "mimeType": "multipart/form-data",
