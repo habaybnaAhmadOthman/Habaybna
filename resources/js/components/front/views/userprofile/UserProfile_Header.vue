@@ -4,7 +4,8 @@
             <div class="container-fluid">
                 <div class="d-flex space-between align-center">
                     <div class="d-flex align-center">
-                        <div class="user-avatar-box overflow-hidden radius-60 relative d-flex" @click="openUserImageModal">
+                        <!-- <div class="user-avatar-box overflow-hidden radius-60 relative d-flex" @click="openUserImageModal"> -->
+                        <div class="user-avatar-box overflow-hidden radius-60 relative d-flex" :class="{'cant-edit-img': !canEditImage}" @[mayclick]="openUserImageModal">
                             <img
                                 src="/images/siteImgs/header/logo.png"
                                 width="45"
@@ -12,9 +13,13 @@
                                 class="pointer user-avatar user-avatar-get radius-60 object-fit"
                             />
                         </div>
-                        <div class="white font-10 mr-15">
-                            Notifications Here
+                        <div class="user-info-card mr-10 white">
+                            <p class="font-13">moon zalloum</p>
+                            <p class="font-12">عامل</p>
                         </div>
+                        <!-- <div class="white font-10 mr-15">
+                            Notifications Here
+                        </div> -->
                     </div>
                     <div class="do">
                         <div class="d-flex align-center">
@@ -40,7 +45,18 @@ import {userImageModalBus} from './../../views/userprofile/UserProfile_Template.
 export default {
     data() {
         return {
-            isMenuOpened: false
+            isMenuOpened: false,
+            canEditImage: false
+        }
+    },
+    created() {
+        if (this.$route.name == 'myAccount') {
+            this.canEditImage = true
+        }
+    },
+    computed: {
+        mayclick: function() {
+            return this.canEditImage ? "click" : null;
         }
     },
     methods: { 
@@ -55,7 +71,16 @@ export default {
             this.$store.dispatch('user/logout');
             this.$router.push("/");
         }
-    }
+    },
+    watch:{
+        $route (to, from){
+            if (to.name == 'myAccount') {
+                this.canEditImage = true
+            } else {
+                this.canEditImage = false
+            }
+        }
+    } 
 }
 </script>
 
@@ -70,7 +95,7 @@ export default {
 .user-avatar {
     border: 1px solid #fff;
 }
-.user-avatar-box:after {
+.user-avatar-box:not(.cant-edit-img):after {
     content: '';
     background: #000;
     position: absolute;

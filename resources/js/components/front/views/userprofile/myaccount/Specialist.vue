@@ -56,6 +56,18 @@
                             />
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group m-0-i">
+                            <label class="form-control-label">الجنس</label>
+                           <input
+                                class="form-control plaintext"
+                                placeholder="الجنس"
+                                id="gender"
+                                :value="gender.parsed"
+                                disabled
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group mb-0-p">
@@ -115,27 +127,16 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label class="form-control-label">سنة الميلاد</label>
-                        <input
-                            class="form-control"
-                            placeholder="1999"
+                        <select
+                            class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
                             v-model="birthdate.val"
-                        />
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group m-0-i">
-                            <label class="form-control-label">الجنس</label>
-                            <select
-                                class="form-control"
-                                id="gender"
-                                v-model="gender.val"
+                            id="birthdate"
+                        >
+                            <option value="no" disabled hidden
+                                >سنة الميلاد</option
                             >
-                                <option value="no" disabled hidden
-                                    >الجنس</option
-                                >
-                                <option value="m">ذكر</option>
-                                <option value="f">أنثى</option>
-                            </select>
-                        </div>
+                            <option v-for="year in years" :value="year" :key="year">{{year}}</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -235,6 +236,7 @@ import "vue-multiselect/dist/vue-multiselect.min.css";
 export default {
     emits: ["submit-form", "open-password-dialog"],
     components: { Multiselect },
+    props: ['years'],
     mounted() {
         this.getProfileData();
     },
@@ -242,15 +244,14 @@ export default {
         return {
             tags: "",
             tagsValid: true,
-
+            interestsList: [],
             firstName: "",
             lastName: "",
             email: "",
-            interestsList: [],
             phoneNumber: "",
             gender: {
                 val: "no",
-                isValid: true
+                parsed: null
             },
             specialization: {
                 val: "no",
@@ -297,7 +298,10 @@ export default {
             this.jobTitle.val = data.job_title;
             this.experience.val = data.experience;
             this.gender.val = data.gender;
+            this.gender.parsed = data.gender == 'f' ? 'أنثى' : ('ذكر') ;
             this.whyToJoin.val = data.disorders_work_with;
+            this.interestsList = data.interestsList;
+            this.tags = data.interests;
             this.education.val = data.edu_level || 'no';
         },
         showPasswordDialog() {
@@ -306,9 +310,10 @@ export default {
         validateForm() {
             this.formIsValid = true;
             this.tagsValid = true;
-            // if (this.tags.length < 1) {
-            //     this.tagsValid = false;
-            // }
+            if (this.tags.length < 1) {
+                this.tagsValid = false;
+                this.formIsValid = false;
+            }
         },
         checkValidity(e) {
             if (e.target.value != "") {
@@ -327,8 +332,8 @@ export default {
                 educationValue = "";
             }
 
-            // let tagIDs = [];
-            // this.tags.forEach(item => tagIDs.push(item.id));
+            let tagIDs = [];
+            this.tags.forEach(item => tagIDs.push(item.id));
             this.$emit("submitForm", {
                 firstName: this.firstName,
                 lastName: this.lastName,
@@ -342,7 +347,7 @@ export default {
                 gender: this.gender.val,
                 whyToJoin: this.whyToJoin.val,
                 education: educationValue,
-                interests: []
+                interests: tagIDs
             });
         }
     }
