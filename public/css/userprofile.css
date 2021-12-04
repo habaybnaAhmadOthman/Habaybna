@@ -34,7 +34,6 @@ input {
 }
 .profile .multiselect__tags {
     border: 1px solid #dee2e6 !important;
-    height: 38px !important;
     min-height: 38px !important;
     border-radius: 0px;
 }

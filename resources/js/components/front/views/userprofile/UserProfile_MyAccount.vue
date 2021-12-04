@@ -4,6 +4,7 @@
             :is="activeComponent"
             @submitForm="submitForm"
             @open-password-dialog="showPasswordDialog"
+            :years="birthDateYears"
         ></component>
         <ChangePassword
             :show="showPasswordModal"
@@ -14,6 +15,8 @@
             :show="showUserImageModal"
             @close-image-modal="closeImageModal"
             :user-avatar="userAvatar"
+            @loading=triggerLoading
+            @popup-alert="openAlertDialog"
         ></UserImage>
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
@@ -23,6 +26,11 @@
             :title="error"
             @close="closeModal"
         ></alert-dialog>
+        <alert-dialog
+            :show="!!alertDialog"
+            :title="alertDialog"
+            @close="closeAlertDialog">
+        </alert-dialog>
     </div>
 </template>
 <script>
@@ -34,10 +42,10 @@ import ChangePassword from "../../views/userprofile/myaccount/ChangePassword.vue
 import UserImage from "../../views/userprofile/myaccount/UserImage.vue";
 
 import loadingMixin from "./../../mixins/loading.js";
+import years from '../../../../modules/years';
 
 import { userImageModalBus } from "./UserProfile_Template.vue";
 export default {
-    emits: ["submit-form"],
     mixins: [loadingMixin],
     components: {
         parentAccount,
@@ -55,7 +63,9 @@ export default {
             activeComponent: null,
             showPasswordModal: false,
             showUserImageModal: false,
-            userAvatar: null
+            userAvatar: null,
+            birthDateYears: null,
+            alertDialog: null,
         };
     },
     mounted() {
@@ -63,8 +73,12 @@ export default {
             this.showUserImageModal = true;
             this.userAvatar = avatarSrc;
         });
+        this.birthDateYears = years
     },
     methods: {
+        triggerLoading(show){
+            this.isLoading = show;
+        },
         closeImageModal() {
             this.showUserImageModal = false;
         },
@@ -88,6 +102,13 @@ export default {
             } else {
                 this.showPopupMessage("كلمة المرور القديمة غير صحيحة");
             }
+        },
+        openAlertDialog(paramName,message){
+            this[paramName] = false;
+            this.alertDialog = message;
+        },
+        closeAlertDialog(){
+            this.alertDialog = null
         }
     }
 };

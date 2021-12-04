@@ -8,8 +8,8 @@
             class="close-nav-menu mo"
         />
         <ul class="user-side-nav-list">
-            <li class="active">
-                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile"
+            <li>
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-account"
                     >حسابي</router-link
                 >
             </li>
@@ -67,7 +67,7 @@ export default {
     border-right: 4px solid transparent;
     color: #212529;
 }
-.user-side-nav li.active > *,
+.user-side-nav li a.router-link-exact-active,
 .user-side-nav li:hover > * {
     background: #660066;
     color: #fff;

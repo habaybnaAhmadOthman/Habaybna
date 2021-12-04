@@ -39,6 +39,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::middleware('auth:sanctum')->group(function () {
 
     // general routes
@@ -46,6 +47,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logoutt','AuthController@logout')->name('user.logoutt');
     Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
     route::post('set-new-password','UserController@setNewPassword');
+    Route::post('/edit-profile-image','UserController@editProfileImage');
+
 
 
 
