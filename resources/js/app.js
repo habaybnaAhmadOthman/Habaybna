@@ -24,6 +24,7 @@ import VueCoreVideoPlayer from 'vue-core-video-player'
 import VueCarousel from 'vue-carousel';
 import locale from 'view-design/dist/locale/en-US';
 import Vue from 'vue';
+import store from './store/index.js';
 // portal
 import MainApp from './MainApp.vue'
 
@@ -60,18 +61,23 @@ Vue.component('main-app',MainApp)
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import store from './store/index.js';
+// check if the session is 
+axios.interceptors.response.use(undefined, function (error) {
+    if (error) {
+      const originalRequest = error.config;
+      if (error.response.status === 401 && !originalRequest._retry) {
+    
+          originalRequest._retry = true;
+          store.dispatch('user/logout')
+          return router.push('/login')
+      }
+    }
+})
 const app = new Vue({
     el: '#app',
     // check if user logged in
     async beforeCreate() {
-        const userStatus = await this.$store.dispatch('user/checkUserAuth');
-        console.log(userStatus);
-        if (Boolean(userStatus)) {
-            this.$store.commit('user/login');
-        } else {
-            this.$store.commit('user/logout');
-        }
+        await this.$store.dispatch('user/checkUserAuth');
     },
     // async beforeCreate() {
     //     const userStatus = await localStorage.getItem('login');

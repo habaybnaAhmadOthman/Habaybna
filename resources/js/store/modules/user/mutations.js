@@ -1,19 +1,20 @@
 export default {
     setUser(state, payload) {
-        state.firstName = payload.firstName;
-        state.lastName = payload.lastName;
-        state.type = payload.type;
-        state.avatar = payload.avatar;
-        state.loggedIn = payload.loggedIn;
-    },
-    login(state) {
+        state.firstName = payload.firstName || null;
+        state.lastName = payload.lastName || null;
+        state.type = payload.type || null;
+        state.avatar = payload.avatar || null;
         state.loggedIn = true;
+    },
+    clearUser(state) {
+        state.firstName = null;
+        state.lastName = null;
+        state.type = null;
+        state.avatar = null;
+        state.loggedIn = false;
     },
     type(state,userType) {
         state.type = userType;
-    },
-    logout(state) {
-        state.loggedIn = false;
     },
     setCountryCode(state, countryCode) {
         state.countryCode = countryCode || state.countryCode;

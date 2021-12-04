@@ -49,10 +49,12 @@ export default {
             canEditImage: false
         }
     },
-    created() {
+    async created() {
         if (this.$route.name == 'myAccount') {
             this.canEditImage = true
         }
+        const x = await this.$store.getters['user/userData'];
+        // console.log(x);
     },
     computed: {
         mayclick: function() {

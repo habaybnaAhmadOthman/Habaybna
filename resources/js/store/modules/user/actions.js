@@ -1,4 +1,4 @@
-import { userType, callApi,logIn,logOut ,sanctum} from "../../common";
+import { logIn, logOut,callApi} from "../../common";
 export default {
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
@@ -16,11 +16,10 @@ export default {
             const error = new Error("fail to register");
             throw error;
         }
-
-        logIn();
-        context.commit("login");
-        context.commit("type",payload.type);
-        userType(payload.type)
+        logIn()
+        context.commit("setUser",{
+            type: payload.type
+        });
     },
     async completeRegistration({context,getters}, payload) {
         let type = getters.type
@@ -52,17 +51,13 @@ export default {
         // const userId = resp.data.userData.id;
 
         // logInWithToken(token,userId);
-        logIn();
-        context.commit("login");
-        context.commit("type",resp.data.userData.role);
-        userType(resp.data.userData.role)
-    },
-    test(){
-        sanctum();
-        axios.get('/api/profile').then((res)=>{
-            console.log(res);
-        }).catch((err)=>{
-            console.log(err);
+        const obj = resp.data.userData;
+        logIn()
+        context.commit('setUser',{
+            firstName: obj.firstName,
+            lastName: obj.lastName,
+            type: obj.role,
+            avatar: obj.avatar
         })
     },
     async logout(context){
@@ -71,8 +66,8 @@ export default {
             const error = new Error("fail to logout");
             throw error;
         }
-        logOut();
-        context.commit("logout");
+        logOut()
+        context.commit('clearUser');
     },
     // ******** interests ::: post
     async addInterests(_, interests){
@@ -86,23 +81,18 @@ export default {
     async checkUserAuth(context) {
         const resp = await callApi("GET", "/api/check-user-authentication");
         if (resp.status == 404) {
-            context.commit('setUser',{
-                firstName: null,
-                lastName: null,
-                type: null,
-                avatar: '/images/siteImgs/header/logo.png',
-                loggedIn: false
-            });
+            context.commit('clearUser');
+            logOut()
             return false;
         } 
-        
+        const obj = resp.data.userData;
         context.commit('setUser',{
-            firstName: 'firstName',
-            lastName: 'firstName',
-            type: 'firstName',
-            avatar: 'firstName',
-            loggedIn: true
+            firstName: obj.firstName,
+            lastName: obj.lastName,
+            type: obj.type,
+            avatar: obj.avatar
         })
+        logIn()
         return true;
         
     },
