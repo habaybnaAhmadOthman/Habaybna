@@ -1,5 +1,5 @@
 export async function callApi(method, url, dataObj) {
-    try {
+    try { 
         return await axios({
             method: method,
             url: url,
