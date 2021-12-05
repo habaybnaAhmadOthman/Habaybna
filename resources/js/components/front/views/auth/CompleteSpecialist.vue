@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submitForm" class="p-side-50">
+    <form @submit.prevent="submitForm" class="p-side-50"> 
         <h2 class="main-color text-shadow font-40 bold center mb-30 font-28-p">
             أكمل معلوماتك
         </h2>
