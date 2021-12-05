@@ -1,4 +1,4 @@
-import { logIn, logOut,callApi} from "../../common";
+import {callApi} from "../../common";
 export default {
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
@@ -16,12 +16,11 @@ export default {
             const error = new Error("fail to register");
             throw error;
         }
-        logIn()
         context.commit("setUser",{
             type: payload.type
         });
     },
-    async completeRegistration({context,getters}, payload) {
+    async completeRegistration({_,getters,dispatch}, payload) {
         let type = getters.type
 
         if (!type) {
@@ -36,10 +35,12 @@ export default {
             const error = new Error(`fail to complete registration as ${type}`);
             throw error;
         }
+        dispatch('checkUserAuth')
         // return interests
         return resp.data.intrest
     },
-     async login(context, payload){
+    // ******** login ::: 
+     async login({context,dispatch}, payload){
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "login", payload);
 
@@ -47,26 +48,17 @@ export default {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
-        // const token = 'resp.data.userData.token';
-        // const userId = resp.data.userData.id;
 
-        // logInWithToken(token,userId);
-        const obj = resp.data.userData;
-        logIn()
-        context.commit('setUser',{
-            firstName: obj.firstName,
-            lastName: obj.lastName,
-            type: obj.role,
-            avatar: obj.avatar
-        })
+        dispatch('checkUserAuth')
     },
+    // ******** logout ::: 
     async logout(context){
         const resp = await callApi("POST", "logoutt");
         if (resp.status != 200) {
             const error = new Error("fail to logout");
             throw error;
         }
-        logOut()
+
         context.commit('clearUser');
     },
     // ******** interests ::: post
@@ -82,7 +74,6 @@ export default {
         const resp = await callApi("GET", "/api/check-user-authentication");
         if (resp.status == 404) {
             context.commit('clearUser');
-            logOut()
             return false;
         } 
         const obj = resp.data.userData;
@@ -92,8 +83,7 @@ export default {
             type: obj.type,
             avatar: obj.avatar
         })
-        logIn()
-        return true;
+        return false;
         
     },
     // ******** userProfile ::: get

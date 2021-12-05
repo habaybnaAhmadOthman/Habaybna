@@ -127,6 +127,7 @@ export default {
             }).done(function (response) {
                 self.$emit('popup-alert','showUserImageModal','تم حفظ التغييرات')
                 response = JSON.parse(response)
+                self.$store.commit('user/userAvatar',response.url);
                 self.userAvatarTemp = response.url;
                 document.querySelector('.user-avatar-get').setAttribute('src',response.url)
             }).fail(function(err){

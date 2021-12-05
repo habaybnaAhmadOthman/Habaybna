@@ -94,7 +94,7 @@
             <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
         </div>
 
-        <div class="row d-flex space-between">
+        <div class="d-flex space-between">
             <!-- gender -->
             <div
                 class="form-group row-half"

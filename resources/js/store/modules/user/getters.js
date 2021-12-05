@@ -10,10 +10,13 @@ export default {
             firstName: state.firstName,
             lastName: state.lastName,
             type: state.type,
+            token: state.token,
             avatar: state.avatar
         }
-        console.log(state);
-        return state.firstName
+        return obj
+    },
+    checkToken(state) {
+        return state.token;
     },
     isLoggedIn(state) {
         return !!state.loggedIn;
