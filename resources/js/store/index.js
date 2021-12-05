@@ -1,5 +1,5 @@
 import Vue from "vue";
-import vuex from "vuex";
+import vuex from "vuex"; 
 import UserModule from "./modules/user/index.js";
 import getters from "./getters";
 import mutations from "./mutations";
