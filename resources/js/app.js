@@ -6,7 +6,7 @@
 
 require('./bootstrap');
 
-
+ 
 window.Vue = require('vue');
 import CKEditor from '../../node_modules/@ckeditor/ckeditor5-vue2';
 import VideoInfoComponent from './components/VideoInfoComponent.vue';

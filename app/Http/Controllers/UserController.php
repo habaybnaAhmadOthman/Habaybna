@@ -65,7 +65,7 @@ class UserController extends Controller
                     $userData['email'] = $user->email ;
 
                     break;
-
+ 
                 case 'specialist':
 
                     $userData['firstName'] = $user->user_data->firstName ;
@@ -154,17 +154,35 @@ class UserController extends Controller
     public function editProfileImage(Request $request)
     {
         if ($request->hasFile('url')) {
-            $profileImage = $request->file('url');
-            $imageName = 'user-'. Auth::user()->id . '-' . $profileImage->getClientOriginalName();
-            $pathImg = $profileImage->storeAs('public/images/profileImages', $imageName);
-            Auth::user()->user_data->avatar ;
-            Auth::user()->user_data->save();
-            $url = url('/storage/images/profileImages/'.$imageName);
-            return response()->json([
-                'status'=>true,
-                'msg'=>'success',
-                'url'=>$url
-            ]);
+            try{
+
+                $user = Auth::user()->user_data;
+
+                if($user){
+                    $profileImage = $request->file('url');
+                    $imageName = 'user-'. $user->id . '-' . $profileImage->getClientOriginalName();
+                    $pathImg = $profileImage->storeAs('public/images/profileImages', $imageName);
+                    $url = url('/storage/images/profileImages/'.$imageName);
+                    $user->avatar =  $url;
+                    $user->save();
+                    return response()->json([
+                        'status'=>true,
+                        'msg'=>'success',
+                        'url'=>$url
+                    ]);
+                }
+
+
+             } catch (ModelNotFoundException $e){
+                return response()->json([
+                    'msg'=>'faild',
+                    'status'=>false,
+                    404
+               ]);
+
+        }
+
+
 
             }
     }

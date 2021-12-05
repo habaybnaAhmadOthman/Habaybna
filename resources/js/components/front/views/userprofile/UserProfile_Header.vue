@@ -18,7 +18,7 @@
                         </div>
                         <!-- <div class="white font-10 mr-15">
                             Notifications Here
-                        </div> -->
+                        </div> --> 
                     </div>
                     <div class="do">
                         <div class="d-flex align-center">

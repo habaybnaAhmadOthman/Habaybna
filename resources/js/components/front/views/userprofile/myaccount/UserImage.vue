@@ -32,7 +32,7 @@
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">
                         <input type="radio" value="A5" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
+                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" /> 
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">

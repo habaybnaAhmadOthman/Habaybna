@@ -14,7 +14,7 @@ import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 import HomePage from "./components/front/pages/HomePage.vue";
-
+ 
 // register pages
 import RegisterPage from "./components/front/pages/auth/RegisterPage.vue";
 import RegisterParentComplete from "./components/front/pages/auth/Register_ParentComplete.vue";

@@ -1,5 +1,5 @@
 import {callApi} from "../../common";
-export default {
+export default { 
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
         if (resp.status != 200) {
@@ -39,7 +39,7 @@ export default {
         // return interests
         return resp.data.intrest
     },
-    // ******** login ::: 
+    // ******** login :::
      async login({context,dispatch}, payload){
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "login", payload);
@@ -51,7 +51,7 @@ export default {
 
         dispatch('checkUserAuth')
     },
-    // ******** logout ::: 
+    // ******** logout :::
     async logout(context){
         const resp = await callApi("POST", "logoutt");
         if (resp.status != 200) {
@@ -69,13 +69,13 @@ export default {
             throw error;
         }
     },
-    // ******** retreive user data ::: get      
+    // ******** retreive user data ::: get
     async checkUserAuth(context) {
         const resp = await callApi("GET", "/api/check-user-authentication");
         if (resp.status == 404) {
             context.commit('clearUser');
             return false;
-        } 
+        }
         const obj = resp.data.userData;
         context.commit('setUser',{
             firstName: obj.firstName,
@@ -84,7 +84,7 @@ export default {
             avatar: obj.avatar
         })
         return false;
-        
+
     },
     // ******** userProfile ::: get
     async getProfileData() {
