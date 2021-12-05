@@ -51,3 +51,4 @@ class CheckUserAuth extends Controller
 
     }
 }
+ 
