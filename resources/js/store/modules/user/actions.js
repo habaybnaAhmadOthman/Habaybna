@@ -1,5 +1,5 @@
 import {callApi} from "../../common";
-export default {
+export default { 
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
         if (resp.status != 200) {
