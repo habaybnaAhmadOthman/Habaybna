@@ -27,6 +27,7 @@
         "@ckeditor/ckeditor5-build-classic": "^29.2.0",
         "@ckeditor/ckeditor5-vue2": "^1.0.5",
         "firebase": "^9.4.1",
+        "secure-ls": "^1.2.6",
         "view-design": "^4.7.0-beta.9",
         "vue-awesome-swiper": "^3.1.3",
         "vue-carousel": "^0.18.0",
@@ -35,6 +36,7 @@
         "vue-phone-number-input": "^1.1.12",
         "vue-router": "^3.5.2",
         "vuex": "^2.5.0",
+        "vuex-persistedstate": "^4.1.0",
         "webpack": "^4.43.0"
     }
 }

@@ -1,4 +1,4 @@
-import { userType, callApi,logIn,logOut ,sanctum} from "../../common";
+import {callApi} from "../../common";
 export default {
     async getCountryCode(context) {
         const resp = await callApi("GET", "/get-user-country");
@@ -16,13 +16,11 @@ export default {
             const error = new Error("fail to register");
             throw error;
         }
-
-        logIn();
-        context.commit("login");
-        context.commit("type",payload.type);
-        userType(payload.type)
+        context.commit("setUser",{
+            type: payload.type
+        });
     },
-    async completeRegistration({context,getters}, payload) {
+    async completeRegistration({_,getters,dispatch}, payload) {
         let type = getters.type
 
         if (!type) {
@@ -37,10 +35,12 @@ export default {
             const error = new Error(`fail to complete registration as ${type}`);
             throw error;
         }
+        dispatch('checkUserAuth')
         // return interests
         return resp.data.intrest
     },
-     async login(context, payload){
+    // ******** login ::: 
+     async login({context,dispatch}, payload){
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "login", payload);
 
@@ -48,33 +48,20 @@ export default {
             const error = new Error("يرجى التحقق من الحقول المدخلة");
             throw error;
         }
-        // const token = 'resp.data.userData.token';
-        // const userId = resp.data.userData.id;
 
-        // logInWithToken(token,userId);
-        logIn();
-        context.commit("login");
-        context.commit("type",resp.data.userData.role);
-        userType(resp.data.userData.role)
+        dispatch('checkUserAuth')
     },
-    test(){
-        sanctum();
-        axios.get('/api/profile').then((res)=>{
-            console.log(res);
-        }).catch((err)=>{
-            console.log(err);
-        })
-    },
+    // ******** logout ::: 
     async logout(context){
         const resp = await callApi("POST", "logoutt");
         if (resp.status != 200) {
             const error = new Error("fail to logout");
             throw error;
         }
-        logOut();
-        context.commit("logout");
+
+        context.commit('clearUser');
     },
-    // ******** interests
+    // ******** interests ::: post
     async addInterests(_, interests){
         const resp = await callApi("POST", "/api/store-user-interests", interests);
         if (resp.status != 200) {
@@ -86,24 +73,17 @@ export default {
     async checkUserAuth(context) {
         const resp = await callApi("GET", "/api/check-user-authentication");
         if (resp.status == 404) {
-            context.commit('setUser',{
-                firstName: null,
-                lastName: null,
-                type: null,
-                avatar: '/images/siteImgs/header/logo.png',
-                loggedIn: false
-            });
+            context.commit('clearUser');
             return false;
         } 
-        
+        const obj = resp.data.userData;
         context.commit('setUser',{
-            firstName: 'firstName',
-            lastName: 'firstName',
-            type: 'firstName',
-            avatar: 'firstName',
-            loggedIn: true
+            firstName: obj.firstName,
+            lastName: obj.lastName,
+            type: obj.type,
+            avatar: obj.avatar
         })
-        return true;
+        return false;
         
     },
     // ******** userProfile ::: get
