@@ -65,7 +65,7 @@ class UserController extends Controller
                     $userData['email'] = $user->email ;
 
                     break;
-
+ 
                 case 'specialist':
 
                     $userData['firstName'] = $user->user_data->firstName ;
