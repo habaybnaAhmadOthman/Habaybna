@@ -7,15 +7,14 @@
                         <!-- <div class="user-avatar-box overflow-hidden radius-60 relative d-flex" @click="openUserImageModal"> -->
                         <div class="user-avatar-box overflow-hidden radius-60 relative d-flex" :class="{'cant-edit-img': !canEditImage}" @[mayclick]="openUserImageModal">
                             <img
-                                src="/images/siteImgs/header/logo.png"
+                                :src="avatar"
                                 width="45"
                                 height="45"
                                 class="pointer user-avatar user-avatar-get radius-60 object-fit"
                             />
                         </div>
                         <div class="user-info-card mr-10 white">
-                            <p class="font-13">moon zalloum</p>
-                            <p class="font-12">عامل</p>
+                            <p class="font-14">{{firstName + ' ' + lastName}}</p>
                         </div>
                         <!-- <div class="white font-10 mr-15">
                             Notifications Here
@@ -46,13 +45,20 @@ export default {
     data() {
         return {
             isMenuOpened: false,
-            canEditImage: false
+            canEditImage: false,
+            firstName: '',
+            lastName: '',
+            avatar: ''
         }
     },
-    created() {
+    async created() {
         if (this.$route.name == 'myAccount') {
             this.canEditImage = true
         }
+        const obj = await this.$store.getters['user/userData'];
+        this.firstName = obj.firstName
+        this.lastName = obj.lastName
+        this.avatar = obj.avatar  
     },
     computed: {
         mayclick: function() {

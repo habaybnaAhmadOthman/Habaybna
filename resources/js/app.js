@@ -24,6 +24,8 @@ import VueCoreVideoPlayer from 'vue-core-video-player'
 import VueCarousel from 'vue-carousel';
 import locale from 'view-design/dist/locale/en-US';
 import Vue from 'vue';
+import store from './store/index.js';
+import './modules/auth.js';
 // portal
 import MainApp from './MainApp.vue'
 
@@ -60,29 +62,12 @@ Vue.component('main-app',MainApp)
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import store from './store/index.js';
+
 const app = new Vue({
     el: '#app',
     // check if user logged in
     async beforeCreate() {
-        const userStatus = await this.$store.dispatch('user/checkUserAuth');
-        console.log(userStatus);
-        if (Boolean(userStatus)) {
-            this.$store.commit('user/login');
-        } else {
-            this.$store.commit('user/logout');
-        }
-    },
-    // async beforeCreate() {
-    //     const userStatus = await localStorage.getItem('login');
-    //     if (Boolean(userStatus)) {
-    //         this.$store.commit('user/login');
-    //     } else {
-    //         this.$store.commit('user/logout');
-    //     }
-    // },
-    created(){
-        this.$store.commit('user/type',localStorage.getItem('type'));
+        await this.$store.getters['user/isLoggedin'];
     },
     store,
     router

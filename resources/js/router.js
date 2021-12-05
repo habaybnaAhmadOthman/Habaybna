@@ -145,7 +145,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     // if page require auth
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (!!localStorage.getItem("login")) {
+        if (store.getters['user/isLoggedIn']) {
             next();
         } else {
             next({
@@ -154,7 +154,7 @@ router.beforeEach((to, from, next) => {
         }
     } else {
         // if the user already logged in and try to register or login again
-        if (to.meta.anonymous && !!localStorage.getItem("login")) {
+        if (to.meta.anonymous && store.getters['user/isLoggedIn']) {
             next({
                 name: "home"
             });
