@@ -637,6 +637,9 @@ a:hover {
 .blue {
     color: #0043ff;
 }
+.. {
+    color:#7B7A7B;
+}
 :focus-visible {
     outline: -webkit-focus-ring-color auto 0;
 }
@@ -652,6 +655,21 @@ a:hover {
 .row-half {
     width: 49%;
     margin-bottom: 15px;
+}
+.one-line, .three-line, .two-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+.one-line {
+    -webkit-line-clamp: 1;
+}
+.two-line {
+    -webkit-line-clamp: 2;
+}
+.three-line {
+    -webkit-line-clamp: 3;
 }
 .do {
     display: block !important;
