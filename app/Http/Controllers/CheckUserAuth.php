@@ -23,12 +23,19 @@ class CheckUserAuth extends Controller
 
         try{
             if (Auth::check()) {
-
+                if(Auth::user()->role == 'admin'){
+                    return response()->json([
+                        'status'=>true,
+                        'msg'=>'success',
+                        'userData'=>Auth::user(),
+                        'type'=>'admin'
+                    ]);
+                }
                 $user = Auth::user();
                 $userData['avatar']= $user->user_data->avatar;
                 $userData['firstName']= $user->user_data->firstName;
                 $userData['lastName']= $user->user_data->lastName;
-                $userData['type']= $user->role;
+                $userData['type']= Auth::user()->role;
                 return response()->json([
                     'status'=>true,
                     'msg'=>'success',
