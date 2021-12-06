@@ -25,7 +25,7 @@ class CheckUserAuth extends Controller
             if (Auth::check()) {
 
                 $user = Auth::user();
-                $userData['avatar']= 'avatar';
+                $userData['avatar']= $user->user_data->avatar;
                 $userData['firstName']= $user->user_data->firstName;
                 $userData['lastName']= $user->user_data->lastName;
                 $userData['type']= $user->role;
