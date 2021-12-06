@@ -47,7 +47,6 @@ class User extends Authenticatable
 
     public function getUserDataAttribute()
     {
-        // dd($this->role);
         switch ($this->role) {
             case 'parent':
                 return ParentUsers::where('user_id',$this->id)->first();
@@ -57,6 +56,9 @@ class User extends Authenticatable
                 break;
             case 'other':
                 return Other::where('user_id',$this->id)->first();
+                break;
+            case 'admin':
+                return $this;
                 break;
 
             default:
