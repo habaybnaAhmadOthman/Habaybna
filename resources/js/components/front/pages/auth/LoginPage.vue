@@ -47,7 +47,13 @@ export default {
                     phone: data.phone
                 });
 
-                this.$router.replace("/");
+                const userType = this.$store.getters["user/type"]
+
+                if (userType == 'admin') {
+                    window.location.href = '/admin'
+                } else {
+                    this.$router.replace("/");
+                }
             } catch (e) {
                 this.showPopupMessage(e);
             }

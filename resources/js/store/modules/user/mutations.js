@@ -6,6 +6,7 @@ export default {
         state.avatar = payload.avatar || null;
         state.token = payload.token || null;
         state.loggedIn = true;
+        state.is_verify = true;
     },
     clearUser(state) {
         state.firstName = null;
@@ -14,9 +15,14 @@ export default {
         state.avatar = null;
         state.token = null;
         state.loggedIn = false;
+        state.is_verify = false;
     },
     type(state,userType) {
         state.type = userType;
+    },
+    login(state) {
+        state.loggedIn = true;
+        state.is_verify = true;
     },
     userAvatar(state,src){
         state.avatar = src
