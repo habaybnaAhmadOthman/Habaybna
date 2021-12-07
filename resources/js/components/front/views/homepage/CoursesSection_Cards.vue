@@ -2,92 +2,98 @@
     <div class="d-flex videos-list flex-wrap">
         <template v-if="filteredCourses.length">
             <div
-                class="card-video ml-25 mb-25 overflow-hidden relative"
+                class="card-video overflow-hidden relative"
                 v-for="(course, index) in filteredCourses"
                 :key="index"
             >
-                <img
-                    :src="course.coverImage"
-                    class="object-fit"
-                    alt=""
-                    width="100%"
-                    height="235"
-                />
-                <svg class="corner" xmlns="http://www.w3.org/2000/svg">
-                    <path></path>
-                </svg>
+                <router-link to="">
+                    <img
+                        :src="course.coverImage"
+                        class="object-fit"
+                        alt=""
+                        width="100%"
+                        height="235"
+                    />
+                    <svg class="corner" xmlns="http://www.w3.org/2000/svg">
+                        <path></path>
+                    </svg>
 
-                <!-- tools -->
-                <div
-                    class="card-tools p-side-15 d-flex space-between align-center w-100"
-                >
-                    <div class="fav-box relative">
-                        <img
-                            width="36"
-                            height="36"
-                            src="https://www.arabiaweather.com/farms/assets/images/favourite-add.svg"
-                            class="add pointer"
-                        />
-                        <img
-                            width="36"
-                            height="36"
-                            src="https://www.arabiaweather.com/farms/assets/images/favourite-added-offer.svg"
-                            class="remove pointer"
-                        />
-                    </div>
-                    <!-- <p class="tag radius-60 p-side-10 white">
+                    <!-- tools -->
+                    <div
+                        class="card-tools p-side-15 d-flex space-between align-center w-100"
+                    >
+                        <div class="fav-box relative">
+                            <img
+                                width="36"
+                                height="36"
+                                src="https://www.arabiaweather.com/farms/assets/images/favourite-add.svg"
+                                class="add pointer"
+                            />
+                            <img
+                                width="36"
+                                height="36"
+                                src="https://www.arabiaweather.com/farms/assets/images/favourite-added-offer.svg"
+                                class="remove pointer"
+                            />
+                        </div>
+                        <!-- <p class="tag radius-60 p-side-10 white">
                         {{ course.category }}
                     </p> -->
-                </div>
-                <!-- info -->
-                <div class="info pt-30 p-side-15">
-                    <span class="discount" v-if="course.discount">خصم ٥٠٪</span>
-                    <p class="main-color font-16 bold two-line">
-                        {{ course.title }}
-                    </p>
-                    <p
-                        class="font-14 main-color source relative d-flex align-center mb-10"
-                    >
-                        {{ course.provider }}
-                    </p>
-                    <p class="three-line gray mb-25 desc">
-                        {{ course.description }}
-                    </p>
-                    <div class="about d-flex align-center">
-                        <p class="d-flex align-center main-color font-13">
-                            <img
-                                src="/images/siteImgs/header/logo.png"
-                                class="ml-5"
-                                alt=""
-                                width="24"
-                                height="18"
-                            />
-                            {{ course.video }} فيديو
-                        </p>
-                        <p class="d-flex align-center main-color font-13 mr-20">
-                            <img
-                                src="/images/siteImgs/header/logo.png"
-                                class="ml-5"
-                                alt=""
-                                width="24"
-                                height="18"
-                            />
-                            {{ course.hours }} ساعات
-                        </p>
                     </div>
-                </div>
-                <div
-                    class="card-footer flex-all white pt-15 pb-15 z-1"
-                    :class="{ premium: course.price }"
-                >
-                    <label class="" v-if="course.price"
-                        ><p>50 USD</p>
-                        <p class="font-13 before-discount relative">
-                            USD 100
-                        </p></label
+                    <!-- info -->
+                    <div class="info pt-30 p-side-15">
+                        <span class="discount" v-if="course.discount"
+                            >خصم ٥٠٪</span
+                        >
+                        <p class="main-color font-16 bold two-line">
+                            {{ course.title }}
+                        </p>
+                        <p
+                            class="font-14 main-color source relative d-flex align-center mb-10"
+                        >
+                            {{ course.provider }}
+                        </p>
+                        <p class="three-line gray mb-25 desc">
+                            {{ course.description }}
+                        </p>
+                        <div class="about d-flex align-center">
+                            <p class="d-flex align-center main-color font-13">
+                                <img
+                                    src="/images/siteImgs/header/logo.png"
+                                    class="ml-5"
+                                    alt=""
+                                    width="24"
+                                    height="18"
+                                />
+                                {{ course.videos }} فيديو
+                            </p>
+                            <p
+                                class="d-flex align-center main-color font-13 mr-20"
+                            >
+                                <img
+                                    src="/images/siteImgs/header/logo.png"
+                                    class="ml-5"
+                                    alt=""
+                                    width="24"
+                                    height="18"
+                                />
+                                {{ course.hours }} ساعات
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        class="card-footer flex-all white pt-15 pb-15 z-1"
+                        :class="{ premium: course.price }"
                     >
-                    <label v-else>مجاني</label>
-                </div>
+                        <label class="" v-if="course.price"
+                            ><p>50 USD</p>
+                            <p class="font-13 before-discount relative">
+                                USD 100
+                            </p></label
+                        >
+                        <label v-else>مجاني</label>
+                    </div>
+                </router-link>
             </div>
         </template>
         <div v-else class="w-100 center">
@@ -103,6 +109,10 @@ export default {
 </script>
 
 <style scoped>
+.videos-list {
+    column-gap: 2%;
+    row-gap: 20px;
+}
 .card-video {
     width: 23%;
 }
@@ -198,5 +208,10 @@ export default {
     margin: auto;
     display: flex;
     max-width: fit-content;
+}
+@media (max-width: 1100px) {
+    .card-video {
+        width: 32%;
+    }
 }
 </style>
