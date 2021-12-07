@@ -1,5 +1,6 @@
 <template>
   <section class="learn-section pt-50 pb-50">
+    <Banner></Banner>
     <div class="container-fluid h-100">
       <Categories @change-filter="setFilters"></Categories>
       <template v-if="filteredCourses.length">
@@ -11,8 +12,9 @@
 <script>
 import Categories from './CoursesSection_Categories.vue'
 import Courses from './CoursesSection_Cards.vue'
+import Banner from './CoursesSection_Banner.vue'
 export default {
-  components: {Categories,Courses},
+  components: {Categories,Courses,Banner},
   data(){
     return {
       activeFilters: [],

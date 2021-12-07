@@ -146,6 +146,9 @@ body {
 .nowrap {
     white-space: nowrap;
 }
+.pre-line {
+    white-space: pre-line;
+}
 .flex-column {
     flex-direction: column;
 }
@@ -160,11 +163,11 @@ body {
 .relative {
     position: relative;
 }
-.main-color {
-    color: #752775;
-}
 .object-fit {
     object-fit: cover;
+}
+.font-50 {
+    font-size: 50px;
 }
 .font-40 {
     font-size: 40px;
@@ -537,6 +540,9 @@ input[disabled] {
 }
 .radius-60 {
     border-radius: 60px;
+}
+.rounded {
+    border-radius: 50%;
 }
 
 .border-0 {
