@@ -39,7 +39,7 @@ export default {
         // return interests
         return resp.data.intrest
     },
-    // ******** login ::: 
+    // ******** login :::
     async login(context, payload) {
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "login", payload);
@@ -51,7 +51,7 @@ export default {
 
         await context.dispatch('checkUserAuth')
     },
-    // ******** logout ::: 
+    // ******** logout :::
     async logout(context){
         const resp = await callApi("POST", "logoutt");
         if (resp.status != 200) {
@@ -69,14 +69,14 @@ export default {
             throw error;
         }
     },
-    // ******** retreive user data ::: get      
+    // ******** retreive user data ::: get
     async checkUserAuth(context) {
         const resp = await callApi("GET", "/api/check-user-authentication");
         if (resp.status == 404) {
             context.commit('clearUser');
             return false;
-        } 
-        
+        }
+
         const obj = resp.data.userData;
         if (obj.role != 'admin') {
             context.commit('setUser',{
@@ -86,12 +86,12 @@ export default {
                 avatar: obj.avatar
             })
         } else { // is admin
-            
+
             context.commit('type',obj.role)
             context.commit('login')
         }
         return true
-        
+
     },
     // ******** userProfile ::: get
     async getProfileData() {
