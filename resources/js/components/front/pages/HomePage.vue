@@ -1,6 +1,5 @@
 <template>
     <div>
-        
         <LandingSection></LandingSection>
         <CoursesSection></CoursesSection>
         <HabaybnaLibrary></HabaybnaLibrary>

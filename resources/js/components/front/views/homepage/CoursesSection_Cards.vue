@@ -7,7 +7,7 @@
                 :key="index"
             >
                 <img
-                    src="/images/siteImgs/1.jpg"
+                    :src="course.coverImage"
                     class="object-fit"
                     alt=""
                     width="100%"
@@ -35,12 +35,13 @@
                             class="remove pointer"
                         />
                     </div>
-                    <p class="tag radius-60 p-side-10 white">
+                    <!-- <p class="tag radius-60 p-side-10 white">
                         {{ course.category }}
-                    </p>
+                    </p> -->
                 </div>
                 <!-- info -->
                 <div class="info pt-30 p-side-15">
+                    <span class="discount" v-if="course.discount">خصم ٥٠٪</span>
                     <p class="main-color font-16 bold two-line">
                         {{ course.title }}
                     </p>
