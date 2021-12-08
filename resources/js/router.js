@@ -160,7 +160,8 @@ const routes = [
         meta: {
             header: false,
             requiresAuth: false
-        }
+        },
+        props: true
     },
 ];
 

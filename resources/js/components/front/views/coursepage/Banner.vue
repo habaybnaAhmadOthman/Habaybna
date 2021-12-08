@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="banner relative overflow-hidden radius-12">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVGa04OI-Nz_WVhfGsDZy-lXU9Z2LwpWnvtQ&usqp=CAU" alt="" class="main-img h-100 w-100 z-1">
+            <video :src="videoSrc" controls class="main-img h-100 w-100 z-1"></video>
             <div class="fav-box relative">
                 <img width="36" height="36" src="https://www.arabiaweather.com/farms/assets/images/favourite-add.svg" class="add pointer"> 
                 <img width="36" height="36" src="https://www.arabiaweather.com/farms/assets/images/favourite-added-offer.svg" class="remove pointer">
@@ -9,6 +9,11 @@
         </div>
     </div>
 </template>
+<script>
+export default {
+    props: ['videoSrc']
+}
+</script>
 
 <style scoped>
 .banner {
