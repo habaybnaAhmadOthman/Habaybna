@@ -102,6 +102,8 @@ export default {
         }
         return resp.data
     },
+
+
     // ******** edit user profile ::: edit
     async updateProfileData({_,getters},payload) {
         const resp = await callApi("POST", `/api/edit-${getters.type}-profile-data`,payload);

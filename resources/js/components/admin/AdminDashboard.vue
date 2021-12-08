@@ -59,10 +59,10 @@
                         <Submenu name="1">
                             <template slot="title">
                                 <Icon type="ios-navigate"></Icon>
-                                 <router-link to="/admin/courses">Courses</router-link>
+                                 <router-link to="/admin/courses">الدورات التدريبية</router-link>
                             </template>
                             <MenuItem name="1-1">
-                                 <router-link to="/admin/course-create">Create new course</router-link>
+                                 <router-link to="/admin/course-create">انشاء دورة تدريبية</router-link>
 
                             </MenuItem>
                             <MenuItem name="1-2">Option 2</MenuItem>
@@ -71,10 +71,15 @@
                         <Submenu name="2">
                             <template slot="title">
                                 <Icon type="ios-keypad"></Icon>
-                                Item 2
+                                ادارة المستخدمين
                             </template>
-                            <MenuItem name="2-1">Option 1</MenuItem>
-                            <MenuItem name="2-2">Option 2</MenuItem>
+                            <MenuItem name="2-1">
+                             <router-link to="/admin/parents">
+                                 الأهالي
+                                 </router-link>
+                            </MenuItem>
+                            <MenuItem name="2-2">الأخصائيين</MenuItem>
+                            <MenuItem name="2-3">الاخرون</MenuItem>
                         </Submenu>
                         <Submenu name="3">
                             <template slot="title">

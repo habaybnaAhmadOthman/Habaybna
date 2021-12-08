@@ -229,7 +229,7 @@
                 ></textarea>
             </div>
 
-            
+
 
             <div class="">
                 <div class="d-flex">
@@ -252,7 +252,7 @@
             </div>
         </form>
 
-        
+
         <PrivateModeDialog :show="PrivateModeDialog" @popup-alert="openAlertDialog" :private-mode="privateMode" @close-private-dialog="togglePrivateModeDialog"></PrivateModeDialog>
         <alert-dialog
             :show="!!alertDialog"

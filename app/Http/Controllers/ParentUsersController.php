@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\ParentUsers;
+use App\User;
 use App\Interest;
+use App\UserInterest;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Hash;
@@ -59,11 +61,62 @@ class ParentUsersController extends Controller
      * @param  \App\ParentUsers  $parentUsers
      * @return \Illuminate\Http\Response
      */
-    public function show(ParentUsers $parentUsers)
+    public function show($id)
     {
-        //
-    }
+        try{
+        $user = User::findorfail($id);
+        $userIntrest = UserInterest::where('user_id',$user->id )->get() ;
+        $interestsList = Interest::all();
 
+        if($userIntrest){
+            $userIntrests = [];
+            foreach ($userIntrest as $one) {
+                $userIntrests[] =
+                [
+                   'id'=> $one->intrest_data->id,
+                   'title'=>$one->intrest_data->title,
+                ];
+            }
+
+        }
+        // dd($user->user_data);
+        $userData['firstName'] = $user->user_data->firstName ;
+        $userData['lastName'] = $user->user_data->lastName ;
+        $userData['gender'] = $user->user_data->gender ;
+        $userData['dob'] = $user->user_data->dob ;
+        $userData['avatar'] = $user->user_data->avatar ;
+        $userData['status'] = $user->user_data->status ;
+        $userData['relative'] = $user->user_data->relative ;
+        $userData['childs_count'] = $user->user_data->childs_count ;
+        $userData['speci_childs_count'] = $user->user_data->speci_childs_count ;
+        $userData['edu_level'] = $user->user_data->edu_level ;
+        $userData['city'] = $user->user_data->city ;
+        $userData['employment'] = $user->user_data->employment ;
+        $userData['job_title'] = $user->user_data->job_title ;
+        $userData['why_to_join'] = $user->user_data->why_to_join ;
+        $userData['private_mode'] = $user->user_data->private_mode ;
+        $userData['interests'] = $userIntrests ? $userIntrests : '';
+        $userData['interestsList'] = $interestsList ? $interestsList : [];
+
+
+
+        $userData['phone'] = $user->phone ;
+        $userData['email'] = $user->email ;
+
+        return response()->json([
+            'msg'=>'success',
+            'userData'=>$userData,
+            'status'=>true,
+            200
+        ]);
+    }catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+       ]);
+    }
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -82,9 +135,66 @@ class ParentUsersController extends Controller
      * @param  \App\ParentUsers  $parentUsers
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ParentUsers $parentUsers)
+    public function update(Request $request, $id)
     {
-        //
+
+        try{
+            $parent = ParentUsers::where('user_id',$id)->first();
+
+            if(count($request->interests) > 0 ){
+            $oldInterest = UserInterest::where('user_id',$id )->get() ;
+
+                if(count($oldInterest) > 0 ){
+                    foreach ($oldInterest as $old) {
+                    $old->delete();
+                    }
+                }
+
+                foreach ($request->interests as $interest) {
+                    $userInterest = new UserInterest();
+                    $userInterest->user_id = $id;
+                    $userInterest->interest_id = $interest;
+
+                    $userInterest->save();
+                 }
+
+                 return response()->json([
+                     'msg'=>'success',
+                     'status'=>true,
+                     'userData'=>Auth::user(),
+                      200
+                 ]);
+            }
+
+
+
+            $parent->dob = $request->dob ;
+            $parent->lastName = $request->gender ;
+            $parent->relative = $request->relative ;
+            $parent->speci_childs_count = $request->noChildsSpecialNeeds ;
+            $parent->why_to_join = $request->whyToJoin ;
+            $parent->city = $request->city ;
+            $parent->childs_count = $request->noChilds ;
+            $parent->edu_level = $request->education ;
+            $parent->employment = $request->employment ;
+            $parent->job_title = $request->jobTitle ;
+
+            $parent->save();
+
+            return response()->json([
+                'msg'=>'success',
+                'status'=>true,
+                200
+           ]);
+         } catch (ModelNotFoundException $e){
+
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
+
+           ]);
+           }
     }
 
     /**
@@ -193,7 +303,29 @@ class ParentUsersController extends Controller
         }
     }
 
+    public function getParentsData()
+    {
+        try{
+            $parents = ParentUsers::all();
+            $data = [];
+            foreach ($parents as  $parent) {
+                $parent->user->toArray();
+                $parent->toArray();
+                array_push($data,$parent);
+            }
 
+            return response()->json([
+                'parnets'=>$data
+            ],200);
+    } catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+       ]);
+    }
+
+    }
 
 
 }
