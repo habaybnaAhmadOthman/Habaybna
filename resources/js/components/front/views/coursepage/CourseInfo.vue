@@ -1,50 +1,21 @@
 <template>
     <div class="about-course pt-20 w-50">
-        <h1 class="title- font-30 main-color">الخطة التربوية الفردية (الجزء الثاني)</h1>
-        <h2 class="by main-color font-18 mb-10"><span> بواسطة الاخصائي :</span> <span class="bold">أحمد حمدان</span></h2>
-        <p class="desc">في هذا الجزء من المساق سيتم استعراض أهم الأسس في مجال اختبارات الذكاء عند تصميم الخطة التربوية الفردية للأطفال ذوي الاضطرابات النمائية</p>
+        <h1 class="title- font-30 main-color">{{courseName}}</h1>
+        <h2 class="by main-color font-18 mb-10"><span> بواسطة الاخصائي :</span> <span class="bold">{{specialistName}}</span></h2>
+        <p class="desc">{{courseDescription}}</p>
         <div class="course-lectures mt-20">
             <p class="main-color font-26 mb-10">محتوى الدورة التدريبية</p>
             <div class="box" show-more-less :class="{'active': showMore}">
-                <div class="to-show">
+                <div class="to-show" v-for="(lecture,index) in lectures" :key="index">
                     <div class="lecture d-flex space-between gray font-14">
-                        <p>الخطة التربوية</p>
-                        <p>10 دقيقة</p>
+                        <p>{{lecture.title}}</p>
+                        <p>{{lecture.time}} دقيقة</p>
                     </div>
                 </div>
-                <div class="to-show">
-                    <div class="lecture d-flex space-between gray font-14">
-                        <p>الخطة التربوية</p>
-                        <p>10 دقيقة</p>
-                    </div>
-                </div>
-                <div class="to-show">
-                    <div class="lecture d-flex space-between gray font-14">
-                        <p>الخطة التربوية</p>
-                        <p>10 دقيقة</p>
-                    </div>
-                </div>
-                <div class="to-show">
-                    <div class="lecture d-flex space-between gray font-14">
-                        <p>الخطة التربوية</p>
-                        <p>10 دقيقة</p>
-                    </div>
-                </div>
-                <div class="to-show">
-                    <div class="lecture d-flex space-between gray font-14">
-                        <p>الخطة التربوية</p>
-                        <p>10 دقيقة</p>
-                    </div>
-                </div>
-                <div class="to-show">
-                    <div class="lecture d-flex space-between gray font-14">
-                        <p>الخطة التربوية</p>
-                        <p>10 دقيقة</p>
-                    </div>
-                </div>
-                
-                <div more @click="showMoreLess" class="btn mt-15" ><span class="d-flex align-center justify-center">أظهر المزيد <img class="mr-10" src="/images/siteImgs/header/logo.png" alt="" width="16" height="24"></span></div>
-                <div less @click="showMoreLess" class="btn mt-15" ><span class="d-flex align-center justify-center">عرض أقل <img class="mr-10" src="/images/siteImgs/header/logo.png" alt="" width="16" height="24"></span></div>
+                <template v-if="lectures.length > 4">
+                    <div more @click="showMoreLess" class="btn mt-15" ><span class="d-flex align-center justify-center">أظهر المزيد <img class="mr-10" src="/images/siteImgs/header/logo.png" alt="" width="16" height="24"></span></div>
+                    <div less @click="showMoreLess" class="btn mt-15" ><span class="d-flex align-center justify-center">عرض أقل <img class="mr-10" src="/images/siteImgs/header/logo.png" alt="" width="16" height="24"></span></div>
+                </template>
             </div>
         </div>
     </div>
@@ -52,6 +23,7 @@
 
 <script>
 export default {
+    props: ['courseName','specialistName','courseDescription','lectures'],
     data(){
         return {
             showMore: false,
