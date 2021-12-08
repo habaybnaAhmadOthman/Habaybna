@@ -142,7 +142,7 @@ class ParentUsersController extends Controller
             $parent = ParentUsers::where('user_id',$id)->first();
 
             if(count($request->interests) > 0 ){
-            $oldInterest = UserInterest::where('user_id',$id )->get() ;
+                $oldInterest = UserInterest::where('user_id',$id )->get() ;
 
                 if(count($oldInterest) > 0 ){
                     foreach ($oldInterest as $old) {
@@ -158,18 +158,12 @@ class ParentUsersController extends Controller
                     $userInterest->save();
                  }
 
-                 return response()->json([
-                     'msg'=>'success',
-                     'status'=>true,
-                     'userData'=>Auth::user(),
-                      200
-                 ]);
+
             }
 
 
-
             $parent->dob = $request->dob ;
-            $parent->lastName = $request->gender ;
+            $parent->lastName = $request->lastName ;
             $parent->relative = $request->relative ;
             $parent->speci_childs_count = $request->noChildsSpecialNeeds ;
             $parent->why_to_join = $request->whyToJoin ;
