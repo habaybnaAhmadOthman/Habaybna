@@ -52,6 +52,11 @@ class LoginController extends Controller
 
         return $field;
     }
+    public function showLoginForm()
+    {
+        return redirect('signin');
+
+    }
 
 
 }

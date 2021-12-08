@@ -71,4 +71,6 @@ class User extends Authenticatable
     {
         return $this->is_verify ? true : false ;
     }
+
+
 }

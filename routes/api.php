@@ -41,6 +41,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::middleware('auth:sanctum')->group(function () {
+    //admin routes
+    Route::get('/admin/get-parents-data','ParentUsersController@getParentsData')->middleware('isAdmin');
+    Route::get('/admin/parent/{id}','ParentUsersController@show')->middleware('isAdmin');
+
+    Route::post('admin/parent/update/{id}','ParentUsersController@update')->middleware('isAdmin');
 
     // general routes
     route::get('get-profile-data','UserController@getUserData');

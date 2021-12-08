@@ -9,7 +9,7 @@ class UserInterest extends Model
 {
     public function intrest()
     {
-        return $this->belongsTo(Interest::class,'id');
+        return $this->belongsTo(Interest::class,'interest_id');
     }
 
     public function getIntrestDataAttribute()

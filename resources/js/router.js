@@ -10,6 +10,8 @@ import Quiz from "./components/Quiz.vue";
 import UploadVideos from "./components/UploadVideos.vue";
 import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
+import Parents from "./components/admin/parent/Parents.vue";
+import Show from "./components/admin/parent/Show.vue";
 import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
@@ -40,6 +42,16 @@ const routes = [
         path: "/admin/courses",
         component: Courses,
         name: "Courses"
+    },
+    {
+        path: "/admin/parents",
+        component: Parents,
+        name: "Parents"
+    },
+    {
+        path: "/admin/parent/:data",
+        component: Show,
+        name: "Show"
     },
     {
         path: "/admin/course-create",
