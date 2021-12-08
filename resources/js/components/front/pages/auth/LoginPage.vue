@@ -55,7 +55,7 @@ export default {
                     this.$router.replace("/");
                 }
             } catch (e) {
-                this.showPopupMessage(e);
+                this.showPopupMessage(e.message);
             }
             this.isLoading = false;
         }

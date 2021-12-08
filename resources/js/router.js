@@ -16,6 +16,8 @@ import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 import HomePage from "./components/front/pages/HomePage.vue";
+import CoursePage from "./components/front/pages/CoursePage.vue";
+
 
 // register pages
 import RegisterPage from "./components/front/pages/auth/RegisterPage.vue";
@@ -25,6 +27,7 @@ import RegisterOtherComplete from "./components/front/pages/auth/Register_OtherC
 
 // login
 import LoginPage from "./components/front/pages/auth/LoginPage.vue";
+
 
 import UserProfile_Template from "./components/front/views/userprofile/UserProfile_Template";
 import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfile.vue";
@@ -86,6 +89,8 @@ const routes = [
         component: HomePage,
         name: "home"
     },
+    // *****************
+    // auth pages
     {
         path: "/signup",
         component: RegisterPage,
@@ -146,7 +151,18 @@ const routes = [
                 name: 'myAccount'
             }
         ]
-    }
+    },
+    // *****************
+    // courses 
+    {
+        path: "/courses/:course",
+        component: CoursePage,
+        meta: {
+            header: false,
+            requiresAuth: false
+        },
+        props: true
+    },
 ];
 
 const router = new Router({
