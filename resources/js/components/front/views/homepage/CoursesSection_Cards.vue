@@ -6,7 +6,7 @@
                 v-for="(course, index) in filteredCourses"
                 :key="index"
             >
-                <router-link to="">
+                <router-link :to="`/courses/${course.id}`">
                     <img
                         :src="course.coverImage"
                         class="object-fit"
@@ -209,6 +209,7 @@ export default {
     display: flex;
     max-width: fit-content;
 }
+
 @media (max-width: 1100px) {
     .card-video {
         width: 32%;
