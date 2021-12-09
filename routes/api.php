@@ -48,7 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('admin/parent/update/{id}','ParentUsersController@update')->middleware('isAdmin');
 
     // general routes
-    route::get('get-profile-data','UserController@getUserData');
+    Route::get('get-profile-data','UserController@getUserData');
     Route::post('logoutt','AuthController@logout')->name('user.logoutt');
     Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
     route::post('set-new-password','UserController@setNewPassword');
