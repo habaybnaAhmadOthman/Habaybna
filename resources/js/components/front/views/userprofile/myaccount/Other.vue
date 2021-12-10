@@ -219,7 +219,7 @@ import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
 
 export default {
-    emits: ["submit-form", "open-password-dialog"],
+    emits: ["submit-form", "open-password-dialog","loading"],
     components: { Multiselect },
     props: ['years'],
     mounted() {
@@ -267,6 +267,7 @@ export default {
     },
     methods: {
         async getProfileData() {
+            this.$emit('loading',true)
             const obj = await this.$store.dispatch("user/getProfileData");
             const data = obj.userData;
             this.firstName = data.firstName;
@@ -283,6 +284,7 @@ export default {
             this.interestsList = data.interestsList;
             this.tags = data.interests;
             this.employment.val = data.employment || 'no';
+            this.$emit('loading',false)
         },
         showPasswordDialog() {
             this.$emit("open-password-dialog");

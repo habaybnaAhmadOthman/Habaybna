@@ -5,6 +5,7 @@
             @submitForm="submitForm"
             @open-password-dialog="showPasswordDialog"
             :years="birthDateYears"
+            @loading="triggerLoading"
         ></component>
         <ChangePassword
             :show="showPasswordModal"
