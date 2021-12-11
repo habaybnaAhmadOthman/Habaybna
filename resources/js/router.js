@@ -14,7 +14,9 @@ import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 import HomePage from "./components/front/pages/HomePage.vue";
-import CoursePage from "./components/front/pages/CoursePage.vue";
+// courses
+import CoursePage from "./components/front/pages/courses/CoursePage.vue";
+import CourseVideoPage from "./components/front/pages/courses/CourseVideo.vue";
 
 
 // register pages
@@ -148,6 +150,15 @@ const routes = [
         meta: {
             header: false,
             requiresAuth: false
+        },
+        props: true
+    },
+    {
+        path: "/courses/:course/:lesson",
+        component: CourseVideoPage,
+        meta: {
+            header: false,
+            requiresAuth: true
         },
         props: true
     },

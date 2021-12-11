@@ -2,11 +2,15 @@
     <div class="d-flex videos-list flex-wrap">
         <template v-if="filteredCourses.length">
             <div
-                class="card-video overflow-hidden relative"
+                class="card-video relative"
                 v-for="(course, index) in filteredCourses"
                 :key="index"
             >
-                <router-link :to="`/courses/${course.id}`">
+                <span class="course-discount white" v-if="course.discount">خصم {{course.discount}}٪</span>
+                <router-link
+                    class="d-block overflow-hidden"
+                    :to="`/courses/${course.id}`"
+                >
                     <img
                         :src="course.coverImage"
                         class="object-fit"
@@ -42,9 +46,6 @@
                     </div>
                     <!-- info -->
                     <div class="info pt-30 p-side-15">
-                        <span class="discount" v-if="course.discount"
-                            >خصم ٥٠٪</span
-                        >
                         <p class="main-color font-16 bold two-line">
                             {{ course.title }}
                         </p>
@@ -116,7 +117,30 @@ export default {
 .card-video {
     width: 23%;
 }
-.card-video {
+.course-discount {
+    background: #9c27b0;
+    border-radius: 0px 4px 4px 0;
+    height: 23px;
+    line-height: 22px;
+    padding-right: 15px;
+    padding-left: 19px;
+    left: -10px;
+    position: absolute;
+    top: 32px;
+    text-align: center;
+    min-width: 95px;
+}
+.course-discount:before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 6px solid #742083;
+    border-left: 10px solid transparent;
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+}
+.card-video a {
     border-radius: 40px;
     box-shadow: 0px 3px 6px #00000029;
 }
@@ -155,6 +179,7 @@ export default {
     width: 100%;
     background: #009688;
     height: 58px;
+    border-radius: 0 0 40px 40px;
 }
 .desc {
     height: 72px;
@@ -182,11 +207,6 @@ export default {
 }
 .premium {
     background: #660066;
-}
-.discount {
-    position: absolute;
-    top: 7px;
-    color: #eb7676;
 }
 .before-discount:before {
     content: "";
