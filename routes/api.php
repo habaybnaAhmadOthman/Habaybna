@@ -42,8 +42,39 @@ use Illuminate\Support\Facades\Route;
 Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::middleware('auth:sanctum')->group(function () {
 
+    //admin routes
+    Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function(){
+
+       // parent route
+        Route::get('get-parents-data','ParentUsersController@getParentsData');
+        Route::get('parent/{id}','ParentUsersController@show');
+        Route::post('admin/parent/update/{id}','ParentUsersController@update');
+
+        //specialist route
+        Route::get('get-specialists-data','SpecialistController@getSpecialistsData');
+        Route::get('specialist/{id}','SpecialistController@show');
+        Route::post('admin/specialist/update/{id}','SpecialistController@update');
+
+        //other route
+        Route::get('get-others-data','OthersController@getOthersData');
+        Route::get('other/{id}','OthersController@show');
+        Route::post('other/update/{id}','OthersController@update');
+
+        // course route
+        Route::get('course-init-data','CourseController@getCoursesInitData');
+        Route::post('storeCourseInfo','CourseController@storeCourseInfo');
+        Route::get('/getCourseVideos/{course_id}','CourseController@getCourseVideos');
+        Route::get('uploadVideos/{id}','CourseController@uploadVideos');
+        Route::post('/course/upload-video','CourseController@UploadCourseVideo');
+
+
+
+
+
+    });
+
     // general routes
-    route::get('get-profile-data','UserController@getUserData');
+    Route::get('get-profile-data','UserController@getUserData');
     Route::post('logoutt','AuthController@logout')->name('user.logoutt');
     Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
     route::post('set-new-password','UserController@setNewPassword');

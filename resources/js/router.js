@@ -10,6 +10,12 @@ import Quiz from "./components/Quiz.vue";
 import UploadVideos from "./components/UploadVideos.vue";
 import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
+import Parents from "./components/admin/parent/Parents.vue";
+import ShowSpecialist from "./components/admin/specialist/Show.vue";
+import ShowOther from "./components/admin/other/Show.vue";
+import Specialists from "./components/admin/specialist/Specialists.vue";
+import Others from "./components/admin/other/Others.vue";
+import Show from "./components/admin/parent/Show.vue";
 import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
@@ -45,6 +51,36 @@ const routes = [
         path: "/admin/courses",
         component: Courses,
         name: "Courses"
+    },
+    {
+        path: "/admin/parents",
+        component: Parents,
+        name: "Parents"
+    },
+    {
+        path: "/admin/specialist",
+        component: Specialists,
+        name: "Specialists"
+    },
+     {
+        path: "/admin/others",
+        component: Others,
+        name: "Others"
+    },
+    {
+        path: "/admin/parent/:data",
+        component: Show,
+        name: "Show"
+    },
+    {
+        path: "/admin/specialist/:data",
+        component: ShowSpecialist,
+        name: "ShowSpecialist"
+    },
+    {
+        path: "/admin/other/:data",
+        component: ShowOther,
+        name: "ShowOther"
     },
     {
         path: "/admin/course-create",
@@ -143,7 +179,7 @@ const routes = [
         ]
     },
     // *****************
-    // courses 
+    // courses
     {
         path: "/courses/:course",
         component: CoursePage,

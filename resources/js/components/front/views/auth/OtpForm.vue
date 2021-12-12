@@ -74,7 +74,7 @@ export default {
     methods: {
         validateForm() {
             this.formIsValid = true;
-            
+
             if (this.phoneNumber.val == "") {
                 this.phoneNumber.isValid = false;
                 this.formIsValid = false;
