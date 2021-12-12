@@ -1,5 +1,5 @@
 <style >
-    *{
+    td{
         direction: rtl;
         text-align: right;
     }
@@ -30,7 +30,8 @@
         <td>{{ parent.private_mode ?'نشط':'غير نشط' }}</td>
         <td>
           <Button :to="'/admin/parent/' + parent.user_id"  type="dashed" size="small">show</Button>
-          <Button :to="'/admin/edit/' + parent.user_id"  type="dashed" size="small">edit</Button>
+          <Button  type="dashed" size="small">courses</Button>
+          <Button  type="dashed" size="small">calls</Button>
           <Button :to="'/admin/delete/' + parent.user_id"  type="dashed" size="small">delete</Button>
         </td>
       </tr>
