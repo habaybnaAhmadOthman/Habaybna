@@ -71,6 +71,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
+
     });
 
     // general routes
@@ -79,6 +80,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
     route::post('set-new-password','UserController@setNewPassword');
     Route::post('/edit-profile-image','UserController@editProfileImage');
+    Route::get('all-courses','CourseController@getAllcourses')->name('getAllcourses');
+
 
 
 
