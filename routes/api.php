@@ -41,19 +41,37 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::middleware('auth:sanctum')->group(function () {
+
     //admin routes
+    Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function(){
 
-    Route::get('/admin/get-parents-data','ParentUsersController@getParentsData')->middleware('isAdmin');
-    Route::get('/admin/parent/{id}','ParentUsersController@show')->middleware('isAdmin');
-    Route::post('admin/parent/update/{id}','ParentUsersController@update')->middleware('isAdmin');
+       // parent route
+        Route::get('get-parents-data','ParentUsersController@getParentsData');
+        Route::get('parent/{id}','ParentUsersController@show');
+        Route::post('admin/parent/update/{id}','ParentUsersController@update');
 
-    Route::get('/admin/get-specialists-data','SpecialistController@getSpecialistsData')->middleware('isAdmin');
-    Route::get('/admin/specialist/{id}','SpecialistController@show')->middleware('isAdmin');
-    Route::post('admin/specialist/update/{id}','SpecialistController@update')->middleware('isAdmin');
+        //specialist route
+        Route::get('get-specialists-data','SpecialistController@getSpecialistsData');
+        Route::get('specialist/{id}','SpecialistController@show');
+        Route::post('admin/specialist/update/{id}','SpecialistController@update');
 
-    Route::get('/admin/get-others-data','OthersController@getOthersData')->middleware('isAdmin');
-    Route::get('/admin/other/{id}','OthersController@show')->middleware('isAdmin');
-    Route::post('admin/other/update/{id}','OthersController@update')->middleware('isAdmin');
+        //other route
+        Route::get('get-others-data','OthersController@getOthersData');
+        Route::get('other/{id}','OthersController@show');
+        Route::post('other/update/{id}','OthersController@update');
+
+        // course route
+        Route::get('course-init-data','CourseController@getCoursesInitData');
+        Route::post('storeCourseInfo','CourseController@storeCourseInfo');
+        Route::get('/getCourseVideos/{course_id}','CourseController@getCourseVideos');
+        Route::get('uploadVideos/{id}','CourseController@uploadVideos');
+        Route::post('/course/upload-video','CourseController@UploadCourseVideo');
+
+
+
+
+
+    });
 
     // general routes
     Route::get('get-profile-data','UserController@getUserData');

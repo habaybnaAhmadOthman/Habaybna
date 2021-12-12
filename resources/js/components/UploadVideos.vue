@@ -18,8 +18,8 @@
   padding: 0 !important;
 }
 </style>
-<template>
-  <Collapse v-model="value1">
+<template class="">
+  <Collapse v-model="value1" class="profile">
     <Panel name="1" v-if="allVideos.haveVideos">
       video list ({{ allVideos.count }})
       <strong class="float-right" :style="{ paddingRight: '15px' }">{{
@@ -202,31 +202,42 @@ export default {
       formData.append("is_publish", this.form.is_publish);
       formData.append("course_id", this.form.course_id);
       this.isUpdate ? formData.append("video_id", this.form.id) : "";
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data",
-          Accept: "application/json",
-        },
-      };
+    //   const config = {
+    //     headers: {
+    //       "content-type": "multipart/form-data",
+    //       Accept: "application/json",
+    //     },
+    //   };
       if (!this.isUpdate) {
         alert("add");
-        axios
-          .post("/admin/course/upload-video", formData)
-          .then((response) => {
-            if (response.status == 200) {
-              this.allVideos.videos = response.data.videos;
+        debugger
+        let resp = this.$store.dispatch('admin/uploadVideo',formData);
+              this.allVideos.videos = resp.data.videos;
               this.$Message.success("Video Uploaded success");
 
               this.form.videoTitle = "";
               this.form.videoDescription = "";
               this.form.video = "";
               this.form.videoTitle = "";
-            }
             this.loading = false;
-          })
-          .catch((error) => {
-            return 404;
-          });
+
+        // axios
+        //   .post("/admin/course/upload-video", formData)
+        //   .then((response) => {
+        //     if (response.status == 200) {
+        //       this.allVideos.videos = response.data.videos;
+        //       this.$Message.success("Video Uploaded success");
+
+        //       this.form.videoTitle = "";
+        //       this.form.videoDescription = "";
+        //       this.form.video = "";
+        //       this.form.videoTitle = "";
+        //     }
+        //     this.loading = false;
+        //   })
+        //   .catch((error) => {
+        //     return 404;
+        //   });
       } else {
         axios
           .post("/admin/course/update-video/" + this.form.id, formData)

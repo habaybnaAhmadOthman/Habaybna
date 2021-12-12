@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Answer;
 use App\Courses;
+use App\Specialist;
 use App\Quize;
 use App\CourseCategory;
 use App\CourseVideos;
+use App\CourseSpecialist;
+use App\CategoryCourse;
 use App\Question;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
@@ -44,6 +47,7 @@ class CourseController extends Controller
 
    public function storeCourseInfo(Request $request)
    {
+    //    dd($request->category);
        $course = new Courses();
 
        if ($request->hasFile('coverImage')) {
@@ -60,7 +64,7 @@ class CourseController extends Controller
 
        $course->courseTitle = $request->title;
        $course->courseDescription= $request->description;
-       $course->category_id= $request->category;
+    //    $course->category_id= $request->category;
        $course->whatWeLearn= $request->watWeLearn;
        $course->is_publish= $request->is_publish;
        $course->is_free= $request->is_free;
@@ -68,7 +72,26 @@ class CourseController extends Controller
        $course->promo_video= $request->hasFile('promoVideo') ? $videoName : '';
        $course->cover_photo = $request->hasFile('coverImage') ? $imageName: '';
 
-       if($course->save())
+       $course->save();
+       if($request->has('category')){
+        $categories = explode( ',', $request->category );
+
+        foreach ($categories as $one) {
+            $categoryCourse = new CategoryCourse();
+            $categoryCourse->course_id = $course->id;
+            $categoryCourse->cat_id = $one;
+            $categoryCourse->save();
+        }
+    }
+    if($request->has('specialists')){
+        $specialists = explode( ',', $request->specialists );
+        foreach ($categories as $one) {
+            $courseSpecialist = new CourseSpecialist();
+            $courseSpecialist->course_id = $course->id;
+            $courseSpecialist->specialist_id = $one;
+            $courseSpecialist->save();
+        }
+    }
        return response([
            'msg'=>'success',
            'status'=>true,
@@ -100,6 +123,8 @@ class CourseController extends Controller
             $pathVid = $video->storeAs('public/videos/courseVideos', $videoName);
         }
 
+
+
         $videoCourse->url= $request->hasFile('video') ? $videoName : '';
         $videoCourse->cover_image = $request->hasFile('coverImage') ? $imageName: '';
         $videoCourse->course_id= $request->course_id;
@@ -124,14 +149,27 @@ class CourseController extends Controller
      ]);
     }
 
-   public function getCoursesCategories()
+   public function getCoursesInitData()
    {
         $categories = CourseCategory::all()->where('status',1);
+        $specialists = Specialist::all();
+        $data = [];
+        foreach ($specialists as  $specialist) {
+            $specialist->user->toArray();
+            $specialist->toArray();
+            array_push($data,$specialist);
+        }
+               if(count($categories) > 0)
         return response()->json([
-            'categories' => $categories,
+                'specialists'=>$specialists,
+                'categories'=>$categories,
             'status'=>true,
             200
         ]);
+        return response([
+            'msg'=>'fail',
+            'status'=>false,
+        ],204);
    }
 
    public function getAllcourses()
