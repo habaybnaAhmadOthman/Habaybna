@@ -3,7 +3,7 @@
         <Banner :videoSrc="trailerSrc"></Banner>
         <div class="container">
             <div class="d-flex structure flex-wrap space-between">
-                <CourseInfo :course-name="courseName" :specialist-name="specialistName" course-description="courseDescription" :lectures="lectures"></CourseInfo>
+                <CourseInfo :course-name="courseName" :specialist-name="specialistName" description="courseDescription" :lectures="lectures"></CourseInfo>
                 <CourseDetails></CourseDetails>
                 <AboutSpecialist :specialistID="1"></AboutSpecialist>
             </div>

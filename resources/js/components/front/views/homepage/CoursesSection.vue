@@ -18,8 +18,7 @@ export default {
   data(){
     return {
       activeFilters: [],
-      atLeastOneSelected: false,
-      cc: []
+      atLeastOneSelected: false
     }
   },
   computed: {
@@ -43,10 +42,8 @@ export default {
       });
       if (updatedList.length < 1) {
         if (!self.atLeastOneSelected) {
-          self.cc = courses;
           return courses
         } else {
-          self.cc = []
           return [];
         }
       } else {

@@ -28,6 +28,7 @@
         "@ckeditor/ckeditor5-vue2": "^1.0.5",
         "firebase": "^9.4.1",
         "secure-ls": "^1.2.6",
+        "video.js": "^7.17.0",
         "view-design": "^4.7.0-beta.9",
         "vue-awesome-swiper": "^3.1.3",
         "vue-carousel": "^0.18.0",

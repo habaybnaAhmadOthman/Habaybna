@@ -2,7 +2,16 @@
     <div class="about-course pt-20 w-50">
         <h1 class="title- font-30 main-color">{{courseName}}</h1>
         <h2 class="by main-color font-18 mb-10"><span> بواسطة الاخصائي :</span> <span class="bold">{{specialistName}}</span></h2>
-        <p class="desc">{{courseDescription}}</p>
+        <p class="desc">{{description}}</p>
+
+        <div class="attached-box mt-15" v-if="documents">
+            <p class="font-18 main-color">المرفقات</p>
+            <a v-for="(attach,index) in documents" :key="index" class="d-flex align-center gray" download :href="attach.link">
+                <img class="ml-10" src="/images/siteImgs/header/logo.png" :alt="attach.title" width="20" height="27">
+                {{attach.title}}
+            </a>
+        </div>
+
         <div class="course-lectures mt-20">
             <p class="main-color font-26 mb-10">محتوى الدورة التدريبية</p>
             <div class="box" show-more-less :class="{'active': showMore}">
@@ -23,7 +32,7 @@
 
 <script>
 export default {
-    props: ['courseName','specialistName','courseDescription','lectures'],
+    props: ['courseName','specialistName','description','lectures','documents'],
     data(){
         return {
             showMore: false,
