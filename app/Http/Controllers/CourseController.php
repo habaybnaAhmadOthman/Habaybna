@@ -191,6 +191,7 @@ class CourseController extends Controller
       $data = [];
       foreach ($courses as $course) {
         $data [] =[
+            'id'=>$course->id,
             'title'=>$course->courseTitle,
             'providers'=>$course->course_providers,
             'videos_count'=>count($course->videos),
@@ -203,6 +204,7 @@ class CourseController extends Controller
                 'discount_value'=>"50%",
                 'discount_price'=>$course->price - $course->price * (50/100),
             ],
+            'categories'=>$course->category_name
 
         ];
       }
@@ -375,7 +377,7 @@ class CourseController extends Controller
     }
 
    }
-
+   
    public function storeQuestion(Request $request)
    {
     try{
