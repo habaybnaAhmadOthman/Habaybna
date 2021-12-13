@@ -60,5 +60,25 @@ class Courses extends Model
         }
     }
 
+    public function getCourseLengthAttribute()
+    {
+       if(count($this->videos) > 0){
+        $time = [];
+        foreach ($this->videos as $video) {
+
+            array_push($time,$video->length);
+        }
+        $sum = 0 ;
+        foreach ($time as $key) {
+            $parts = explode(':', $key);
+            $sum += (0 * 60 * 60) + ($parts[0] * 60) + $parts[1];
+        }
+
+        return gmdate("H:i:s", $sum );
+       }
+       return gmdate("H:i:s", 0 );
+
+    }
+
 
 }

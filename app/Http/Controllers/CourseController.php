@@ -190,11 +190,19 @@ class CourseController extends Controller
       $courses = Courses::all();
       $data = [];
       foreach ($courses as $course) {
-            
         $data [] =[
             'title'=>$course->courseTitle,
             'providers'=>$course->course_providers,
             'videos_count'=>count($course->videos),
+            'course_length'=>$course->course_length,
+            'cover_photo'=>$course->cover_photo,
+            'is_free'=>$course->is_free,
+            'price'=>$course->price,
+            'discount'=>[
+                'has_discount'=>true,
+                'discount_value'=>"50%",
+                'discount_price'=>$course->price - $course->price * (50/100),
+            ],
 
         ];
       }
@@ -503,4 +511,5 @@ class CourseController extends Controller
 
    }
 }
+
 }
