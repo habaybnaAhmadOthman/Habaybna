@@ -43,14 +43,16 @@
                     </div>
                     <!-- card body -->
                     <div class="body d-flex flex-column h-100 space-between">
-                        <div class="info pt-15 p-side-10 pb-25">
+                        <div class="info pt-15 p-side-10 pb-15">
                             <p class="main-color font-20 bold two-line -title mb-5">
-                                {{ course.courseTitle }}
+                                {{ course.title }}
                             </p>
                             <p
-                                class="font-14 main-color source relative d-flex align-center mb-10 gray"
+                                class="font-14 main-color source relative d-flex align-center mb-15 gray flex-wrap"
                             >
-                                {{ course.provider }}
+                            <span v-for="(provider,idx) in course.providers" :key="idx" class="main-bg radius-5 white source-name">
+                                {{provider.name}}
+                            </span>
                             </p>
                             <div class="about d-flex align-center">
                                 <p class="d-flex align-center main-color font-13">
@@ -61,7 +63,7 @@
                                         width="24"
                                         height="18"
                                     />
-                                    {{ course.videos }} فيديو
+                                    {{ course.videos_count }} فيديو
                                 </p>
                                 <p
                                     class="d-flex align-center main-color font-13 mr-20"
@@ -110,7 +112,8 @@ export default {
     row-gap: 20px;
 }
 .-title {
-    height: 60px;
+    height: 40px;
+    line-height: 20px;
 }
 .videos-list .main-img {
     height: 200px;
@@ -145,6 +148,10 @@ export default {
 .card-video a {
     border-radius: 40px;
     box-shadow: 0px 3px 6px #00000029;
+}
+.source {
+    max-height: 20px;
+    overflow: hidden;
 }
 .source:before {
     content: "";
@@ -204,7 +211,11 @@ export default {
     display: flex;
     max-width: fit-content;
 }
-
+.source-name {
+    padding: 0 4px;
+    line-height: 20px;
+    margin-left: 5px;
+}
 @media (max-width: 1100px) {
     .card-video {
         width: 32%;

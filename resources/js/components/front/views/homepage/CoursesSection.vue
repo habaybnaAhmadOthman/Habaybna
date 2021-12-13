@@ -29,7 +29,7 @@ export default {
     filteredCourses() {
       self = this;
       self.atLeastOneSelected = false;
-      const courses = this.$store.getters['courses/courses'];
+      const courses = this.appendedCourses;
 
       const updatedList =  courses.filter(course=>{
         for (let index = 0; index < this.activeFilters.length; index++) {
@@ -59,7 +59,7 @@ export default {
       this.filteredCourses();
     },
     async getCourses(){
-      await this.$store.dispatch('courses/getAllCourses');
+      this.appendedCourses = await this.$store.dispatch('courses/getAllCourses');
       this.filteredCourses()
     }
   }

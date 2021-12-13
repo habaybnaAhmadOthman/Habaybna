@@ -1,15 +1,23 @@
 <template>
     <div class="course-page mt-50 pb-100">
-        <Banner :videoSrc="trailerSrc"></Banner>
+        <div class="container">
+            <Banner :videoSrc="trailerSrc"></Banner>
+        </div>
+        <div class="container">
+            <CourseProgress></CourseProgress>
+        </div>
         <div class="container">
             <div class="d-flex structure flex-wrap space-between">
-                <CourseProgress></CourseProgress>
-                <CourseInfo :course-name="courseName" :specialist-name="specialistName" :documents="documents" description="description" :lectures="lectures"></CourseInfo>
+                <div class="w-50">
+                    <CourseInfo :course-name="courseName" :specialist-name="specialistName" :documents="documents" description="description" :lectures="lectures"></CourseInfo>
+                </div>
                 <VideoDescription :lectureInfo="lectureInfo"></VideoDescription>
                 <AboutSpecialist :specialistID="1"></AboutSpecialist>
+                <div class="w-100">
+                    <ContactUs></ContactUs>
+                </div>
             </div>
         </div>
-        <ContactUs></ContactUs>
     </div>
 </template>
 

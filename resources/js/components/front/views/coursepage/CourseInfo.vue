@@ -1,5 +1,5 @@
 <template>
-    <div class="about-course pt-20 w-50">
+    <div class="about-course pt-20">
         <h1 class="title- font-30 main-color">{{courseName}}</h1>
         <h2 class="by main-color font-18 mb-10"><span> بواسطة الاخصائي :</span> <span class="bold">{{specialistName}}</span></h2>
         <p class="desc">{{description}}</p>

@@ -1,13 +1,9 @@
 <template>
-    <div class="container">
-        <div class="banner relative overflow-hidden radius-12">
-            <!-- <video :src="videoSrc" controls class="main-img h-100 w-100 z-1"></video> -->
-            <video ref="videoPlayer" @seeking="seeking($event)"
-              @seeked="seeked($event)" :events="['seeking', 'seeked']" class="video-js main-img w-100"></video>
-            <div class="fav-box relative">
-                <img width="36" height="36" src="https://www.arabiaweather.com/farms/assets/images/favourite-add.svg" class="add pointer"> 
-                <img width="36" height="36" src="https://www.arabiaweather.com/farms/assets/images/favourite-added-offer.svg" class="remove pointer">
-            </div>
+    <div class="banner relative overflow-hidden radius-12">
+        <video ref="videoPlayer" class="video-js main-img w-100"></video>
+        <div class="fav-box relative">
+            <img width="36" height="36" src="https://www.arabiaweather.com/farms/assets/images/favourite-add.svg" class="add pointer"> 
+            <img width="36" height="36" src="https://www.arabiaweather.com/farms/assets/images/favourite-added-offer.svg" class="remove pointer">
         </div>
     </div>
 </template>
@@ -15,7 +11,7 @@
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css'
 export default {
-    props: ['videoSrc'],
+    props: ['videoSrc','isFull'],
     data() {
         return {
             player: null,
@@ -34,21 +30,14 @@ export default {
 			}
         }
     },
+    computed: {
+        fullContainer(){
+            return !!!this.isFull 
+        }
+    },
     methods : {
-        seeking(e){
-            console.log('seeeeeking',e)
-            e.preventDefault();
-            e.stopPropagation();
-            
-            return false;
-        },
-        seeked(e){
-            console.log('seeeked',e)
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-            }
-        },
+
+    },
     mounted() {
         this.player = videojs(this.$refs.videoPlayer, this.videoOptions, function onPlayerReady() {
             console.log('onPlayerReady', this);
@@ -71,7 +60,7 @@ export default {
 
 <style scoped>
 .banner {
-    height:400px;
+    height:415px;
 }
 .banner:after  {
     content: '';
