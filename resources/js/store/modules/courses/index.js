@@ -5,36 +5,7 @@ export default {
     namespaced: true,
     state() {
         return {
-            categories: [
-                {
-                    id: "v1",
-                    title: "المساق الرقمي"
-                },
-                {
-                    id: "v2",
-                    title: "مشاريع"
-                },
-                {
-                    id: "v3",
-                    title: "محاسبة"
-                },
-                {
-                    id: "v4",
-                    title: "أرقام"
-                },
-                {
-                    id: "v5",
-                    title: "كمبيوتر"
-                },
-                {
-                    id: "v6",
-                    title: "معلومات"
-                },
-                {
-                    id: "v7",
-                    title: "فراسة"
-                }
-            ],
+            categories: [],
             courses: []
         };
     },

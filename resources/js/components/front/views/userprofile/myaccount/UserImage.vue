@@ -132,6 +132,7 @@ export default {
                 document.querySelector('.user-avatar-get').setAttribute('src',response.url)
             }).fail(function(err){
                 self.$emit('popup-alert','showUserImageModal','حصل خطأ ما')
+                self.$emit('loading',false);
             });
             
             self.$emit('loading',false);

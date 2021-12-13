@@ -19,7 +19,8 @@ export default {
     return {
       activeFilters: [],
       atLeastOneSelected: false,
-      appendedCourses: []
+      appendedCourses: [],
+      courseTemp: []
     }
   },
   created(){
@@ -29,8 +30,8 @@ export default {
     filteredCourses() {
       self = this;
       self.atLeastOneSelected = false;
-      const courses = this.appendedCourses;
-
+      const courses = this.courseTemp;
+      console.log('asdsaa');
       const updatedList =  courses.filter(course=>{
         for (let index = 0; index < this.activeFilters.length; index++) {
           let isChecked =  this.activeFilters[index].isChecked;
@@ -39,8 +40,14 @@ export default {
           if (isChecked) {
             self.atLeastOneSelected = true;
           }
-          if ( isChecked && course.category.includes(this.activeFilters[index].id)) {
-            return true;
+          if ( isChecked ) {
+            // .id.includes(this.activeFilters[index].id)
+            let selected = course.categories.filter(cat=>{
+              return cat.id == this.activeFilters[index].id
+            })
+            if (selected.length > 0) {
+              return true;
+            }
           }
         }
       });
@@ -59,7 +66,7 @@ export default {
       this.filteredCourses();
     },
     async getCourses(){
-      this.appendedCourses = await this.$store.dispatch('courses/getAllCourses');
+      this.courseTemp = await this.$store.dispatch('courses/getAllCourses');
       this.filteredCourses()
     }
   }
