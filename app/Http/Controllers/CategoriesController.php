@@ -9,7 +9,7 @@ class CategoriesController extends Controller
 {
     public function index()
     {
-        $categories = CourseCategory::select('id','title')->get();
+        $categories = CourseCategory::select('id','title')->get()->toArray();
         if($categories){
             return response()->json(
                 $categories
