@@ -126,5 +126,14 @@ export default {
             const error = new Error("هناك خطأ ما");
             throw error;
         }
+    },
+    // ******** userProfile ::: upload profile avatar
+    async profileAvatar(_,payload) {
+        const resp = await callApi("POST", "/api/edit-profile-image", payload);
+        if (resp.status != 200) {
+            const error = new Error("هناك خطأ ما");
+            throw error;
+        }
+        return resp.data.url
     }
 };

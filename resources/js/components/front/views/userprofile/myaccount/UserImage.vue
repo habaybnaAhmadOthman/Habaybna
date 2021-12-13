@@ -111,29 +111,38 @@ export default {
             } else {
                 formData.append("avatar", this.selectedImage);
             }
-
-            await $.ajax({
-                "url": "/api/edit-profile-image",
-                "method": "POST",
-                "timeout": 0,
-                "headers": {
-                    "enctype": "multipart/form-data",
-                    "X-CSRF-TOKEN": document.querySelector('[name="csrf-token"]').getAttribute('content')
-                },
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": formData
-            }).done(function (response) {
+            try {
+                let resultURL  = await this.$store.dispatch("user/profileAvatar", formData);
                 self.$emit('popup-alert','showUserImageModal','تم حفظ التغييرات')
-                response = JSON.parse(response)
-                self.$store.commit('user/userAvatar',response.url);
-                self.userAvatarTemp = response.url;
-                document.querySelector('.user-avatar-get').setAttribute('src',response.url)
-            }).fail(function(err){
+                self.$store.commit('user/userAvatar',resultURL);
+                self.userAvatarTemp = resultURL;
+                document.querySelector('.user-avatar-get').setAttribute('src',resultURL)
+            } catch (e) {
                 self.$emit('popup-alert','showUserImageModal','حصل خطأ ما')
                 self.$emit('loading',false);
-            });
+            }
+            // await $.ajax({
+            //     "url": "/api/edit-profile-image",
+            //     "method": "POST",
+            //     "timeout": 0,
+            //     "headers": {
+            //         "enctype": "multipart/form-data",
+            //         "X-CSRF-TOKEN": window.axios.defaults.headers.common['X-CSRF-TOKEN']
+            //     },
+            //     "processData": false,
+            //     "mimeType": "multipart/form-data",
+            //     "contentType": false,
+            //     "data": formData
+            // }).done(function (response) {
+            //     self.$emit('popup-alert','showUserImageModal','تم حفظ التغييرات')
+            //     response = JSON.parse(response)
+            //     self.$store.commit('user/userAvatar',response.url);
+            //     self.userAvatarTemp = response.url;
+            //     document.querySelector('.user-avatar-get').setAttribute('src',response.url)
+            // }).fail(function(err){
+            //     self.$emit('popup-alert','showUserImageModal','حصل خطأ ما')
+            //     self.$emit('loading',false);
+            // });
             
             self.$emit('loading',false);
 
