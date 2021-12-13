@@ -173,7 +173,7 @@
                       :multiple="true"
                       :taggable="true"
                       label="firstName"
-                      track-by="firstName"
+                      track-by="user_id"
                       placeholder="يرجى إختيار مقدمي الدورة"
                     ></multiselect>
                     <p class="main-color mt-5 font-12" v-if="!form.tagsValid">
@@ -251,7 +251,7 @@ export default {
       let self = this.$router;
 
       let tagIDs = [];
-      this.form.tags.forEach((item) => tagIDs.push(item.id));
+      this.form.tags.forEach((item) => tagIDs.push(item.user_id));
 
       let CategorytagIDs = [];
       this.form.courseCategory.forEach((item) => CategorytagIDs.push(item.id));
