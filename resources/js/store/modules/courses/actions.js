@@ -1,24 +1,13 @@
 import {callApi} from "../../common";
 export default {
     // ******** get all courses ::: get
-    async getCourses(context) {
+    async getAllCourses(context) {
         const resp = await callApi("GET", "/api/all-courses");
         if (resp.status != 200) {
             const error = new Error("fail to get courses");
             throw error;
         }
-        return resp.courses
-
-    },
-    // ******** get all categories ::: get
-    async getCategories(context) {
-        const resp = await callApi("GET", "/get-categories");
-        if (resp.status != 200) {
-            const error = new Error("fail to get categories");
-            throw error;
-        }
-        const countryCode = resp.data.data.countryCode
-        context.commit('setCountryCode',countryCode)
+        context.commit('setCourses',resp.data.courses);
     },
     async getCourseDetails(context,courseID) {
         // const resp = await callApi("GET", "/api/get-course-details",courseID);

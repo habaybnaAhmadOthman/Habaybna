@@ -12,13 +12,13 @@
                     :to="`/courses/${course.id}`"
                 >
                     <img
-                        :src="course.coverImage"
+                        :src="course.cover_photo"
                         class="object-fit main-img"
                         alt=""
                         width="100%"
                         height="235"
                     />
-                    
+
                     <!-- tools -->
                     <div
                         class="card-tools p-side-15 d-flex space-between align-center w-100"
@@ -45,7 +45,7 @@
                     <div class="body d-flex flex-column h-100 space-between">
                         <div class="info pt-15 p-side-10 pb-25">
                             <p class="main-color font-20 bold two-line -title mb-5">
-                                {{ course.title }}
+                                {{ course.courseTitle }}
                             </p>
                             <p
                                 class="font-14 main-color source relative d-flex align-center mb-10 gray"
@@ -100,8 +100,7 @@
 </template>
 <script>
 export default {
-    props: ["filteredCourses"],
-    methods: {}
+    props: ["filteredCourses"]
 };
 </script>
 

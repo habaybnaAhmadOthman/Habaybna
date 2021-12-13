@@ -3,8 +3,8 @@
     <Banner></Banner>
     <div class="container-fluid h-100">
       <Categories @change-filter="setFilters"></Categories>
-      <template v-if="filteredCourses.length">
-        <Courses :filtered-courses="filteredCourses"></Courses>
+      <template v-if="appendedCourses.length">
+        <Courses :filtered-courses="appendedCourses"></Courses>
       </template>
     </div>
   </section>
@@ -18,14 +18,19 @@ export default {
   data(){
     return {
       activeFilters: [],
-      atLeastOneSelected: false
+      atLeastOneSelected: false,
+      appendedCourses: []
     }
   },
-  computed: {
-    async filteredCourses() {
+  created(){
+    this.getCourses();
+  },
+  methods:{
+    filteredCourses() {
       self = this;
       self.atLeastOneSelected = false;
-      const courses =await this.$store.dispatch('courses/getCourses');
+      const courses = this.$store.getters['courses/courses'];
+
       const updatedList =  courses.filter(course=>{
         for (let index = 0; index < this.activeFilters.length; index++) {
           let isChecked =  this.activeFilters[index].isChecked;
@@ -41,18 +46,21 @@ export default {
       });
       if (updatedList.length < 1) {
         if (!self.atLeastOneSelected) {
-          return courses
+          this.appendedCourses = courses;
         } else {
-          return [];
+          this.appendedCourses = [];
         }
       } else {
-        return updatedList
+        this.appendedCourses = updatedList;
       }
-    }
-  },
-  methods:{
+    },
     setFilters(updatedFilters){
       this.activeFilters = updatedFilters;
+      this.filteredCourses();
+    },
+    async getCourses(){
+      await this.$store.dispatch('courses/getAllCourses');
+      this.filteredCourses()
     }
   }
 }

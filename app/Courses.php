@@ -36,4 +36,29 @@ class Courses extends Model
             return $courseCategories;
         }
     }
+
+    public function courseProvider()
+    {
+        return $this->hasMany(CourseSpecialist::class,'course_id','id');
+    }
+
+    public function getCourseProvidersAttribute()
+    {
+        if(count($this->courseProvider) > 0){
+
+            $courseProviders = [] ;
+            // dd('providers',$this->courseProvider);
+            foreach ($this->courseProvider as $one) {
+                $courseProviders[] = [
+                    'id'=>$one->specialist->user_id,
+                    'name'=>$one->specialist->firstName,
+                    'avatar'=>$one->specialist->avatar,
+                    'specialization'=>$one->specialist->specialization,
+                ];
+            }
+            return $courseProviders;
+        }
+    }
+
+
 }

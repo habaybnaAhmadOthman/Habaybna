@@ -56,11 +56,15 @@ class CourseController extends Controller
         $imageName = 'courseCoverImg' . '-' . $coverImage->getClientOriginalName();
         $pathImg = $coverImage->storeAs('public/images/courseCoverImg', $imageName);
 
+        $coverUrl = url('/storage/images/courseCoverImg/'.$imageName);
+
         }
         if ($request->hasFile('promoVideo')) {
             $promoVideo = $request->file('promoVideo');
             $videoName = 'coursePromoVideo' . '-' . $promoVideo->getClientOriginalName();
             $pathVid = $promoVideo->storeAs('public/videos/promoVideo', $videoName);
+            $promoUrl = url('/storage/videos/promoVideo/'.$videoName);
+
         }
 
        $course->courseTitle = $request->title;
@@ -70,8 +74,8 @@ class CourseController extends Controller
        $course->is_publish= $request->is_publish;
        $course->is_free= $request->is_free;
        $course->price= $request->price;
-       $course->promo_video= $request->hasFile('promoVideo') ? $videoName : '';
-       $course->cover_photo = $request->hasFile('coverImage') ? $imageName: '';
+       $course->promo_video= $promoUrl ? $promoUrl : '';
+       $course->cover_photo = $coverUrl ? $coverUrl: '';
 
        $course->save();
        if($request->has('category')){
@@ -86,7 +90,7 @@ class CourseController extends Controller
     }
     if($request->has('specialists')){
         $specialists = explode( ',', $request->specialists );
-        foreach ($categories as $one) {
+        foreach ($specialists as $one) {
             $courseSpecialist = new CourseSpecialist();
             $courseSpecialist->course_id = $course->id;
             $courseSpecialist->specialist_id = $one;
@@ -119,6 +123,7 @@ class CourseController extends Controller
         $imageName = 'courseCoverImg' . '-' . $coverImage->getClientOriginalName();
         $pathImg = $coverImage->storeAs('public/images/videoCoverImgs', $imageName);
 
+
         }
         if ($request->hasFile('video')) {
             $track = GetId3::fromUploadedFile($request->file('video'));
@@ -126,11 +131,13 @@ class CourseController extends Controller
             $video = $request->file('video');
             $videoName = 'courseVideo' . '-' . $video->getClientOriginalName();
             $pathVid = $video->storeAs('public/videos/courseVideos', $videoName);
+            $url = url('/storage/videos/courseVideos/'.$videoName);
+
         }
 
 
 
-        $videoCourse->url= $request->hasFile('video') ? $videoName : '';
+        $videoCourse->url= $url !== "" ? $url : '';
         $videoCourse->cover_image = $request->hasFile('coverImage') ? $imageName: '';
         $videoCourse->course_id= $request->course_id;
         $videoCourse->status= $request->is_publish;
@@ -180,10 +187,22 @@ class CourseController extends Controller
 
    public function getAllcourses()
    {
-      $courses = Courses::with('videos')->get();
+      $courses = Courses::all();
+      $data = [];
+      foreach ($courses as $course) {
+            
+        $data [] =[
+            'title'=>$course->courseTitle,
+            'providers'=>$course->course_providers,
+            'videos_count'=>count($course->videos),
+
+        ];
+      }
+    //   dd($data);
+
        if($courses){
         return response()->json([
-            'courses' => $courses,
+            'courses' => $data,
             'status'=>true,
             200
         ]);
