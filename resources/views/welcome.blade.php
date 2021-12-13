@@ -24,7 +24,6 @@
             font-display: swap;
          }
       </style>
-      <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
    </head>
    <body>
       
