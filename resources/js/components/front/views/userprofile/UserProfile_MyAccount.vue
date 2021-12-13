@@ -14,7 +14,7 @@
         ></ChangePassword>
         <UserImage
             :show="showUserImageModalGlobal"
-            @loading=triggerLoading
+            @loading="triggerLoading"
             @popup-alert="openAlertDialog"
         ></UserImage>
         <div v-if="isLoading">
