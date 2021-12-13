@@ -3,8 +3,8 @@
     <Banner></Banner>
     <div class="container-fluid h-100">
       <Categories @change-filter="setFilters"></Categories>
-      <template v-if="filteredCourses.length">
-        <Courses :filtered-courses="filteredCourses"></Courses>
+      <template v-if="appendedCourses.length">
+        <Courses :filtered-courses="appendedCourses"></Courses>
       </template>
     </div>
   </section>
@@ -19,44 +19,55 @@ export default {
     return {
       activeFilters: [],
       atLeastOneSelected: false,
-      cc: []
+      appendedCourses: [],
+      courseTemp: []
     }
   },
-  computed: {
+  created(){
+    this.getCourses();
+  },
+  methods:{
     filteredCourses() {
       self = this;
       self.atLeastOneSelected = false;
-      const courses = this.$store.getters['courses/courses'];
-
+      const courses = this.courseTemp;
+      console.log('asdsaa');
       const updatedList =  courses.filter(course=>{
         for (let index = 0; index < this.activeFilters.length; index++) {
           let isChecked =  this.activeFilters[index].isChecked;
-          
+
           // check if user select one category at least
           if (isChecked) {
             self.atLeastOneSelected = true;
           }
-          if ( isChecked && course.category.includes(this.activeFilters[index].id)) {
-            return true;
+          if ( isChecked ) {
+            // .id.includes(this.activeFilters[index].id)
+            let selected = course.categories.filter(cat=>{
+              return cat.id == this.activeFilters[index].id
+            })
+            if (selected.length > 0) {
+              return true;
+            }
           }
         }
       });
       if (updatedList.length < 1) {
         if (!self.atLeastOneSelected) {
-          self.cc = courses;
-          return courses
+          this.appendedCourses = courses;
         } else {
-          self.cc = []
-          return [];
+          this.appendedCourses = [];
         }
       } else {
-        return updatedList
+        this.appendedCourses = updatedList;
       }
-    }
-  },
-  methods:{
+    },
     setFilters(updatedFilters){
       this.activeFilters = updatedFilters;
+      this.filteredCourses();
+    },
+    async getCourses(){
+      this.courseTemp = await this.$store.dispatch('courses/getAllCourses');
+      this.filteredCourses()
     }
   }
 }

@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Answer;
 use App\Courses;
+use App\Specialist;
 use App\Quize;
 use App\CourseCategory;
 use App\CourseVideos;
+use App\CourseSpecialist;
+use App\CategoryCourse;
 use App\Question;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Owenoj\LaravelGetId3\GetId3;
+
 
 class CourseController extends Controller
 {
@@ -33,8 +38,7 @@ class CourseController extends Controller
             return response()->json([
                 'courses' => $data,
                 'status'=>true,
-                200
-            ]);
+            ],200);
    }
 
    public function create()
@@ -44,6 +48,7 @@ class CourseController extends Controller
 
    public function storeCourseInfo(Request $request)
    {
+    //    dd($request->category);
        $course = new Courses();
 
        if ($request->hasFile('coverImage')) {
@@ -51,24 +56,47 @@ class CourseController extends Controller
         $imageName = 'courseCoverImg' . '-' . $coverImage->getClientOriginalName();
         $pathImg = $coverImage->storeAs('public/images/courseCoverImg', $imageName);
 
+        $coverUrl = url('/storage/images/courseCoverImg/'.$imageName);
+
         }
         if ($request->hasFile('promoVideo')) {
             $promoVideo = $request->file('promoVideo');
             $videoName = 'coursePromoVideo' . '-' . $promoVideo->getClientOriginalName();
             $pathVid = $promoVideo->storeAs('public/videos/promoVideo', $videoName);
+            $promoUrl = url('/storage/videos/promoVideo/'.$videoName);
+
         }
 
        $course->courseTitle = $request->title;
        $course->courseDescription= $request->description;
-       $course->category_id= $request->category;
+    //    $course->category_id= $request->category;
        $course->whatWeLearn= $request->watWeLearn;
        $course->is_publish= $request->is_publish;
        $course->is_free= $request->is_free;
        $course->price= $request->price;
-       $course->promo_video= $request->hasFile('promoVideo') ? $videoName : '';
-       $course->cover_photo = $request->hasFile('coverImage') ? $imageName: '';
+       $course->promo_video= $promoUrl ? $promoUrl : '';
+       $course->cover_photo = $coverUrl ? $coverUrl: '';
 
-       if($course->save())
+       $course->save();
+       if($request->has('category')){
+        $categories = explode( ',', $request->category );
+
+        foreach ($categories as $one) {
+            $categoryCourse = new CategoryCourse();
+            $categoryCourse->course_id = $course->id;
+            $categoryCourse->cat_id = $one;
+            $categoryCourse->save();
+        }
+    }
+    if($request->has('specialists')){
+        $specialists = explode( ',', $request->specialists );
+        foreach ($specialists as $one) {
+            $courseSpecialist = new CourseSpecialist();
+            $courseSpecialist->course_id = $course->id;
+            $courseSpecialist->specialist_id = $one;
+            $courseSpecialist->save();
+        }
+    }
        return response([
            'msg'=>'success',
            'status'=>true,
@@ -86,6 +114,8 @@ class CourseController extends Controller
 
    public function UploadCourseVideo(Request $request)
    {
+
+
        $videoCourse = new CourseVideos();
 
        if ($request->hasFile('coverImage')) {
@@ -93,19 +123,27 @@ class CourseController extends Controller
         $imageName = 'courseCoverImg' . '-' . $coverImage->getClientOriginalName();
         $pathImg = $coverImage->storeAs('public/images/videoCoverImgs', $imageName);
 
+
         }
         if ($request->hasFile('video')) {
+            $track = GetId3::fromUploadedFile($request->file('video'));
+            $length = $track->getPlaytime();
             $video = $request->file('video');
             $videoName = 'courseVideo' . '-' . $video->getClientOriginalName();
             $pathVid = $video->storeAs('public/videos/courseVideos', $videoName);
+            $url = url('/storage/videos/courseVideos/'.$videoName);
+
         }
 
-        $videoCourse->url= $request->hasFile('video') ? $videoName : '';
+
+
+        $videoCourse->url= $url !== "" ? $url : '';
         $videoCourse->cover_image = $request->hasFile('coverImage') ? $imageName: '';
         $videoCourse->course_id= $request->course_id;
         $videoCourse->status= $request->is_publish;
         $videoCourse->description= $request->description;
         $videoCourse->title= $request->title ;
+        $videoCourse->length= $length ;
         $videoCourse->save();
         if($videoCourse){
             $courseVideos = CourseVideos::where('course_id',$videoCourse->course_id)->get();
@@ -124,22 +162,57 @@ class CourseController extends Controller
      ]);
     }
 
-   public function getCoursesCategories()
+   public function getCoursesInitData()
    {
         $categories = CourseCategory::all()->where('status',1);
+        $specialists = Specialist::all();
+        $data = [];
+        foreach ($specialists as  $specialist) {
+            $specialist->user->toArray();
+            $specialist->toArray();
+            array_push($data,$specialist);
+        }
+               if(count($categories) > 0)
         return response()->json([
-            'categories' => $categories,
+                'specialists'=>$specialists,
+                'categories'=>$categories,
             'status'=>true,
             200
         ]);
+        return response([
+            'msg'=>'fail',
+            'status'=>false,
+        ],204);
    }
 
    public function getAllcourses()
    {
-      $courses = Courses::with('videos')->get();
+      $courses = Courses::all();
+      $data = [];
+      foreach ($courses as $course) {
+        $data [] =[
+            'id'=>$course->id,
+            'title'=>$course->courseTitle,
+            'providers'=>$course->course_providers,
+            'videos_count'=>count($course->videos),
+            'course_length'=>$course->course_length,
+            'cover_photo'=>$course->cover_photo,
+            'is_free'=>$course->is_free,
+            'price'=>$course->price,
+            'discount'=>[
+                'has_discount'=>true,
+                'discount_value'=>"50%",
+                'discount_price'=>$course->price - $course->price * (50/100),
+            ],
+            'categories'=>$course->category_name
+
+        ];
+      }
+    //   dd($data);
+
        if($courses){
         return response()->json([
-            'courses' => $courses,
+            'courses' => $data,
             'status'=>true,
             200
         ]);
@@ -304,7 +377,7 @@ class CourseController extends Controller
     }
 
    }
-
+   
    public function storeQuestion(Request $request)
    {
     try{
@@ -440,4 +513,5 @@ class CourseController extends Controller
 
    }
 }
+
 }

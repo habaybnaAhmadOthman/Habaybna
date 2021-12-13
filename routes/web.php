@@ -41,7 +41,7 @@ Route::get('/get-user-country','HomeController@getUserCountry');
     Route::get('/complete-register','ParentUsersController@completeRegister')->name('parent.completeRegister')->middleware(IsVerified::class);
     Route::view('/complete-register', 'parents.completeRegister');
     Route::view('/parent-dashboard','parents.parentDashboard')->middleware(IsVerified::class);
-    Route::get('/parent/all-courses','CourseController@getAllcourses')->name('getAllcourses');
+    // Route::get('/parent/all-courses','CourseController@getAllcourses')->name('getAllcourses');
     Route::view('/parent-dashboard/class-room/{id}', 'parents.classRoom');
     Route::get('/parent/getCourseVideos/{course_id}','CourseController@getCourseAndVideos')->name('parent.getCourseVideos');
     // Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
@@ -66,15 +66,15 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
 
     // courses
 
-    Route::get('/onlineCourse','CourseController@index')->name('onlineCourse');
+    // Route::get('/onlineCourse','CourseController@index')->name('onlineCourse');
     // Route::get('course/create','CourseController@create')->name('course.create');
     // Route::any('/{any}','CourseController@create')->name('course.any');
     // Route::get('course/create','CourseController@create')->name('course.create');
-    Route::post('storeCourseInfo','CourseController@storeCourseInfo')->name('storeCourseInfo');
+    // Route::post('storeCourseInfo','CourseController@storeCourseInfo')->name('storeCourseInfo');
     Route::post('/course/upload-video','CourseController@UploadCourseVideo')->name('UploadCourseVideo');
     Route::post('/course/update-video/{id}','CourseController@updateVideo')->name('updateVideo');
     // Route::get('uploadVideos/{id}','CourseController@uploadVideos')->name('uploadVideos');
-     Route::get('course-category','CourseController@getCoursesCategories')->name('getCoursesCategories');
+    //  Route::get('course-category','CourseController@getCoursesCategories')->name('getCoursesCategories');
      Route::get('/getCourseVideos/{course_id}','CourseController@getCourseVideos')->name('getCourseVideos');
      Route::get('/edit-course/{course_id}','CourseController@getCoruseInfo')->name('getCoruseInfo');
      Route::post('/edit-course/{course_id}','CourseController@updateCoruseInfo')->name('updateCoruseInfo');

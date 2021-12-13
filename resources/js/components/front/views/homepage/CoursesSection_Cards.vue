@@ -2,21 +2,22 @@
     <div class="d-flex videos-list flex-wrap">
         <template v-if="filteredCourses.length">
             <div
-                class="card-video overflow-hidden relative"
+                class="card-video relative"
                 v-for="(course, index) in filteredCourses"
                 :key="index"
             >
-                <router-link :to="`/courses/${course.id}`">
+                <span class="course-discount white" v-if="!course.is_free && course.discount.has_discount">خصم {{course.discount.discount_value}}</span>
+                <router-link
+                    class="d-flex flex-column overflow-hidden h-100"
+                    :to="`/courses/${course.id}`"
+                >
                     <img
-                        :src="course.coverImage"
-                        class="object-fit"
+                        :src="course.cover_photo"
+                        class="object-fit main-img"
                         alt=""
                         width="100%"
                         height="235"
                     />
-                    <svg class="corner" xmlns="http://www.w3.org/2000/svg">
-                        <path></path>
-                    </svg>
 
                     <!-- tools -->
                     <div
@@ -36,62 +37,57 @@
                                 class="remove pointer"
                             />
                         </div>
-                        <!-- <p class="tag radius-60 p-side-10 white">
-                        {{ course.category }}
-                    </p> -->
                     </div>
-                    <!-- info -->
-                    <div class="info pt-30 p-side-15">
-                        <span class="discount" v-if="course.discount"
-                            >خصم ٥٠٪</span
-                        >
-                        <p class="main-color font-16 bold two-line">
-                            {{ course.title }}
-                        </p>
-                        <p
-                            class="font-14 main-color source relative d-flex align-center mb-10"
-                        >
-                            {{ course.provider }}
-                        </p>
-                        <p class="three-line gray mb-25 desc">
-                            {{ course.description }}
-                        </p>
-                        <div class="about d-flex align-center">
-                            <p class="d-flex align-center main-color font-13">
-                                <img
-                                    src="/images/siteImgs/header/logo.png"
-                                    class="ml-5"
-                                    alt=""
-                                    width="24"
-                                    height="18"
-                                />
-                                {{ course.videos }} فيديو
+                    <!-- card body -->
+                    <div class="body d-flex flex-column h-100 space-between">
+                        <div class="info pt-15 p-side-10 pb-15">
+                            <p class="main-color font-20 bold two-line -title mb-5">
+                                {{ course.title }}
                             </p>
                             <p
-                                class="d-flex align-center main-color font-13 mr-20"
+                                class="font-14 main-color source relative d-flex align-center mb-15 gray flex-wrap"
                             >
-                                <img
-                                    src="/images/siteImgs/header/logo.png"
-                                    class="ml-5"
-                                    alt=""
-                                    width="24"
-                                    height="18"
-                                />
-                                {{ course.hours }} ساعات
+                            <span v-for="(provider,idx) in course.providers" :key="idx" class="main-bg radius-5 white source-name">
+                                {{provider.name}}
+                            </span>
                             </p>
+                            <div class="about d-flex align-center">
+                                <p class="d-flex align-center main-color font-13">
+                                    <img
+                                        src="/images/siteImgs/header/logo.png"
+                                        class="ml-5"
+                                        alt=""
+                                        width="24"
+                                        height="18"
+                                    />
+                                    {{ course.videos_count }} فيديو
+                                </p>
+                                <p
+                                    class="d-flex align-center main-color font-13 mr-20"
+                                >
+                                    <img
+                                        src="/images/siteImgs/header/logo.png"
+                                        class="ml-5"
+                                        alt=""
+                                        width="24"
+                                        height="18"
+                                    />
+                                    {{ course.course_length }} ساعات
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        class="card-footer flex-all white pt-15 pb-15 z-1"
-                        :class="{ premium: course.price }"
-                    >
-                        <label class="" v-if="course.price"
-                            ><p>50 USD</p>
-                            <p class="font-13 before-discount relative">
-                                USD 100
-                            </p></label
+                        <div
+                            class="card-footer flex-all white pt-15 pb-15 z-1"
+                            :class="{ premium: !course.is_free }"
                         >
-                        <label v-else>مجاني</label>
+                            <label class="" v-if="!course.is_free && course.price"
+                                ><p class="font-22">{{course.price}} USD</p>
+                                <p v-if="course.discount.discount_price" class="font-15 before-discount relative">
+                                    USD {{course.discount.discount_price}}
+                                </p></label
+                            >
+                            <label v-else>مجاني</label>
+                        </div>
                     </div>
                 </router-link>
             </div>
@@ -103,8 +99,7 @@
 </template>
 <script>
 export default {
-    props: ["filteredCourses"],
-    methods: {}
+    props: ["filteredCourses"]
 };
 </script>
 
@@ -113,51 +108,60 @@ export default {
     column-gap: 2%;
     row-gap: 20px;
 }
+.-title {
+    height: 40px;
+    line-height: 20px;
+}
+.videos-list .main-img {
+    height: 200px;
+    min-height: 200px;
+}
 .card-video {
     width: 23%;
 }
-.card-video {
+.course-discount {
+    background: #9c27b0;
+    border-radius: 0px 4px 4px 0;
+    height: 23px;
+    line-height: 22px;
+    padding-right: 15px;
+    padding-left: 19px;
+    left: -10px;
+    position: absolute;
+    top: 32px;
+    text-align: center;
+    min-width: 95px;
+}
+.course-discount:before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 6px solid #742083;
+    border-left: 10px solid transparent;
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+}
+.card-video a {
     border-radius: 40px;
     box-shadow: 0px 3px 6px #00000029;
 }
-.corner {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 80px;
-    height: 80px;
-    top: 123px;
-}
-.corner path {
-    fill: #fff;
-    d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
-}
-.info {
-    background: #fff;
-    z-index: 1;
-    position: relative;
-    border-radius: 40px 0 0 0;
-    padding-bottom: 40px;
-    transform: translateY(-40px);
+.source {
+    max-height: 20px;
+    overflow: hidden;
 }
 .source:before {
     content: "";
     border-radius: 50%;
-    background: #660066;
+    background: #7B7A7B;
     width: 7px;
     height: 7px;
     display: block;
     margin-left: 7px;
 }
 .card-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
     background: #009688;
-    height: 58px;
-}
-.desc {
-    height: 72px;
+    min-height: 63px;
 }
 .card-tools {
     position: absolute;
@@ -183,11 +187,6 @@ export default {
 .premium {
     background: #660066;
 }
-.discount {
-    position: absolute;
-    top: 7px;
-    color: #eb7676;
-}
 .before-discount:before {
     content: "";
     width: 100%;
@@ -209,7 +208,11 @@ export default {
     display: flex;
     max-width: fit-content;
 }
-
+.source-name {
+    padding: 0 4px;
+    line-height: 20px;
+    margin-left: 5px;
+}
 @media (max-width: 1100px) {
     .card-video {
         width: 32%;

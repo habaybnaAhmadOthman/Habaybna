@@ -20,7 +20,9 @@ import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 import HomePage from "./components/front/pages/HomePage.vue";
-import CoursePage from "./components/front/pages/CoursePage.vue";
+// courses
+import CoursePage from "./components/front/pages/courses/CoursePage.vue";
+import CourseVideoPage from "./components/front/pages/courses/CourseVideo.vue";
 
 
 // register pages
@@ -187,11 +189,27 @@ const routes = [
         },
         props: true
     },
+    {
+        path: "/courses/:course/:lesson",
+        component: CourseVideoPage,
+        meta: {
+            header: false,
+            requiresAuth: true
+        },
+        props: true
+    },
 ];
 
 const router = new Router({
     mode: "history",
-    routes
+    routes,
+    scrollBehavior (to, from, savedPosition) {
+        if (savedPosition) {
+          return savedPosition
+        } else {
+          return { x: 0, y: 0 }
+        }
+    }
 });
 
 router.beforeEach((to, from, next) => {

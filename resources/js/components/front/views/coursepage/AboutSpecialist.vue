@@ -1,14 +1,12 @@
 <template>
     <div class="about-coach mt-50 pt-10">
-        <div class="container">
-            <p class="main-color font-30 mb-15">عن المدرب</p>
-            <div class="d-flex">
-                <img class="rounded object-fit" :src="avatar" :alt="name" width="200" height="200">
-                <div class="mr-30">
-                    <p class="main-color font-40">{{name}}</p>
-                    <p class="font-30 mb-10">{{speciality}}</p>
-                    <p>{{description}}</p>
-                </div>
+        <p class="main-color font-30 mb-15">عن المدرب</p>
+        <div class="d-flex">
+            <img class="rounded object-fit" :src="avatar" :alt="name" width="200" height="200">
+            <div class="mr-30">
+                <p class="main-color font-40">{{name}}</p>
+                <p class="font-30 mb-10">{{speciality}}</p>
+                <p>{{description}}</p>
             </div>
         </div>
     </div>

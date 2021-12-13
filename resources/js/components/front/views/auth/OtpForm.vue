@@ -23,7 +23,7 @@
                         <option value="parent"
                             >أحد الوالدين أو أفراد العائلة</option
                         >
-                        <option value="specialist">أخصائي تربية حاصة أو تأهيل</option>
+                        <option value="specialist">أخصائي تربية خاصة أو تأهيل</option>
                         <option value="other">آخر</option>
                     </select>
                 </div>
@@ -74,7 +74,7 @@ export default {
     methods: {
         validateForm() {
             this.formIsValid = true;
-            
+
             if (this.phoneNumber.val == "") {
                 this.phoneNumber.isValid = false;
                 this.formIsValid = false;

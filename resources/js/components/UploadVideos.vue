@@ -18,13 +18,11 @@
   padding: 0 !important;
 }
 </style>
-<template>
-  <Collapse v-model="value1">
+<template class="">
+  <Collapse v-model="value1" class="profile">
     <Panel name="1" v-if="allVideos.haveVideos">
-      video list ({{ allVideos.count }})
-      <strong class="float-right" :style="{ paddingRight: '15px' }">{{
-        allVideos.courseTitle
-      }}</strong>
+      قائمة الحلقات ({{ allVideos.count }})
+
       <Row :gutter="16" slot="content">
         <Col
           span="6"
@@ -47,13 +45,13 @@
       </Row>
     </Panel>
     <Panel name="1" v-model="value1" v-else>
-      video list
+      قائمة الحلقات
       <h1 slot="content" class="text-center">
-        Oh no videos for this course 😢
+         لا يوجد حلقات 😢
       </h1>
     </Panel>
     <Panel name="2">
-      Add video
+      أضف حلقة
       <div class="card" slot="content">
         <div class="card-body">
           <form @submit="formSubmit" enctype="multipart/form-data">
@@ -189,8 +187,9 @@ export default {
     },
     uploadvideo(event) {
       this.form.video = event.target.files[0];
+
     },
-    formSubmit(e) {
+    async formSubmit(e) {
       this.loading = true;
       let self = this.$router;
       e.preventDefault();
@@ -202,31 +201,42 @@ export default {
       formData.append("is_publish", this.form.is_publish);
       formData.append("course_id", this.form.course_id);
       this.isUpdate ? formData.append("video_id", this.form.id) : "";
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data",
-          Accept: "application/json",
-        },
-      };
+    //   const config = {
+    //     headers: {
+    //       "content-type": "multipart/form-data",
+    //       Accept: "application/json",
+    //     },
+    //   };
       if (!this.isUpdate) {
-        alert("add");
-        axios
-          .post("/admin/course/upload-video", formData)
-          .then((response) => {
-            if (response.status == 200) {
-              this.allVideos.videos = response.data.videos;
+        // alert("add");
+        const resp = await this.$store.dispatch('admin/uploadVideo',formData);
+        console.log(resp);
+              this.allVideos.videos = resp.videos;
               this.$Message.success("Video Uploaded success");
 
               this.form.videoTitle = "";
               this.form.videoDescription = "";
               this.form.video = "";
               this.form.videoTitle = "";
-            }
             this.loading = false;
-          })
-          .catch((error) => {
-            return 404;
-          });
+
+        // axios
+        //   .post("/admin/course/upload-video", formData)
+        //   .then((response) => {
+        //     if (response.status == 200) {
+        //       this.allVideos.videos = response.data.videos;
+        //       this.$Message.success("Video Uploaded success");
+
+        //       this.form.videoTitle = "";
+        //       this.form.videoDescription = "";
+        //       this.form.video = "";
+        //       this.form.videoTitle = "";
+        //     }
+        //     this.loading = false;
+        //   })
+        //   .catch((error) => {
+        //     return 404;
+        //   });
       } else {
         axios
           .post("/admin/course/update-video/" + this.form.id, formData)

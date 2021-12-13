@@ -66,5 +66,25 @@ export default {
             return resp.data
 
         },
+        async storeCourseInfo(context,payload){
+            console.log('context',context);
+            const resp = await callApi('POST','/api/admin/storeCourseInfo',payload)
+            if(resp.status != 200){
+                const error = new Error("fail to update profile data");
+                throw error;
+            }
+            return resp.data
+
+        },
+        async uploadVideo(context,payload){
+            console.log('context',context);
+            const resp = await callApi('POST','/api/admin/course/upload-video',payload)
+            if(resp.status != 200){
+                const error = new Error("fail to update profile data");
+                throw error;
+            }
+            return resp.data
+
+        },
         //
 };

@@ -16,13 +16,69 @@ class Courses extends Model
         return $this->hasOne(Quize::class,'course_id');
     }
 
-    public function category()
+    public function courseCategories()
     {
-        return $this->belongsTo(CourseCategory::class,'category_id');
+        return $this->hasMany(CategoryCourse::class,'course_id','id');
     }
 
     public function getCategoryNameAttribute()
     {
-        return $this->category->title ;
+        if(count($this->courseCategories) > 0){
+
+            $courseCategories = [] ;
+
+            foreach ($this->courseCategories as $one) {
+                $courseCategories[] = [
+                    'id'=>$one->category->id,
+                    'title'=>$one->category->title,
+                ];
+            }
+            return $courseCategories;
+        }
     }
+
+    public function courseProvider()
+    {
+        return $this->hasMany(CourseSpecialist::class,'course_id','id');
+    }
+
+    public function getCourseProvidersAttribute()
+    {
+        if(count($this->courseProvider) > 0){
+
+            $courseProviders = [] ;
+            // dd('providers',$this->courseProvider);
+            foreach ($this->courseProvider as $one) {
+                $courseProviders[] = [
+                    'id'=>$one->specialist->user_id,
+                    'name'=>$one->specialist->firstName,
+                    'avatar'=>$one->specialist->avatar,
+                    'specialization'=>$one->specialist->specialization,
+                ];
+            }
+            return $courseProviders;
+        }
+    }
+
+    public function getCourseLengthAttribute()
+    {
+       if(count($this->videos) > 0){
+        $time = [];
+        foreach ($this->videos as $video) {
+
+            array_push($time,$video->length);
+        }
+        $sum = 0 ;
+        foreach ($time as $key) {
+            $parts = explode(':', $key);
+            $sum += (0 * 60 * 60) + ($parts[0] * 60) + $parts[1];
+        }
+
+        return gmdate("H:i:s", $sum );
+       }
+       return gmdate("H:i:s", 0 );
+
+    }
+
+
 }
