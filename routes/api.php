@@ -83,7 +83,7 @@ Route::middleware('auth:sanctum')->group(function () {
     route::post('set-new-password','UserController@setNewPassword');
     Route::post('/edit-profile-image','UserController@editProfileImage');
     Route::get('all-courses','CourseController@getAllcourses')->name('getAllcourses');
-
+    Route::get('get-categories','CategoriesController@index');
 
 
 
