@@ -41,7 +41,7 @@ Route::get('/get-user-country','HomeController@getUserCountry');
     Route::get('/complete-register','ParentUsersController@completeRegister')->name('parent.completeRegister')->middleware(IsVerified::class);
     Route::view('/complete-register', 'parents.completeRegister');
     Route::view('/parent-dashboard','parents.parentDashboard')->middleware(IsVerified::class);
-    Route::get('/parent/all-courses','CourseController@getAllcourses')->name('getAllcourses');
+    // Route::get('/parent/all-courses','CourseController@getAllcourses')->name('getAllcourses');
     Route::view('/parent-dashboard/class-room/{id}', 'parents.classRoom');
     Route::get('/parent/getCourseVideos/{course_id}','CourseController@getCourseAndVideos')->name('parent.getCourseVideos');
     // Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');

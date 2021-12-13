@@ -160,7 +160,10 @@ export default {
           // The configuration of the editor.
         },
         coverImage: "",
-        video: "",
+        video: {
+          url: "",
+          duration: 0,
+        },
         is_publish: false,
         course_id: "",
       },
@@ -188,7 +191,22 @@ export default {
       this.form.coverImage = event.target.files[0];
     },
     uploadvideo(event) {
-      this.form.video = event.target.files[0];
+        let self = this;
+      this.form.video.url = event.target.files[0];
+      this.form.video.duration = event.target.files[0].duration;
+
+        var files = event.target.files[0];
+        var video = document.createElement("video");
+        video.preload = "metadata";
+
+        video.onloadedmetadata = function () {
+          window.URL.revokeObjectURL(video.src);
+           self.form.video.duration = video.duration;
+    debugger
+        };
+
+        video.src = URL.createObjectURL(files);
+      debugger;
     },
     formSubmit(e) {
       this.loading = true;
@@ -202,24 +220,24 @@ export default {
       formData.append("is_publish", this.form.is_publish);
       formData.append("course_id", this.form.course_id);
       this.isUpdate ? formData.append("video_id", this.form.id) : "";
-    //   const config = {
-    //     headers: {
-    //       "content-type": "multipart/form-data",
-    //       Accept: "application/json",
-    //     },
-    //   };
+      //   const config = {
+      //     headers: {
+      //       "content-type": "multipart/form-data",
+      //       Accept: "application/json",
+      //     },
+      //   };
       if (!this.isUpdate) {
         alert("add");
-        debugger
-        let resp = this.$store.dispatch('admin/uploadVideo',formData);
-              this.allVideos.videos = resp.data.videos;
-              this.$Message.success("Video Uploaded success");
+        debugger;
+        let resp = this.$store.dispatch("admin/uploadVideo", formData);
+        this.allVideos.videos = resp.data.videos;
+        this.$Message.success("Video Uploaded success");
 
-              this.form.videoTitle = "";
-              this.form.videoDescription = "";
-              this.form.video = "";
-              this.form.videoTitle = "";
-            this.loading = false;
+        this.form.videoTitle = "";
+        this.form.videoDescription = "";
+        this.form.video = "";
+        this.form.videoTitle = "";
+        this.loading = false;
 
         // axios
         //   .post("/admin/course/upload-video", formData)

@@ -100,8 +100,7 @@
 </template>
 <script>
 export default {
-    props: ["filteredCourses"],
-    methods: {}
+    props: ["filteredCourses"]
 };
 </script>
 
