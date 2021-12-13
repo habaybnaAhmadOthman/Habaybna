@@ -5,6 +5,9 @@ export default {
     type(state) {
         return state.type;
     },
+    openAvatarModal(state) {
+        return state.openAvatarModal;
+    },
     userData(state) {
         const obj = {
             firstName: state.firstName,

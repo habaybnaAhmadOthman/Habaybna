@@ -13,9 +13,7 @@
             @close-password-modal="showPasswordDialog"
         ></ChangePassword>
         <UserImage
-            :show="showUserImageModal"
-            @close-image-modal="closeImageModal"
-            :user-avatar="userAvatar"
+            :show="showUserImageModalGlobal"
             @loading=triggerLoading
             @popup-alert="openAlertDialog"
         ></UserImage>
@@ -45,7 +43,7 @@ import UserImage from "../../views/userprofile/myaccount/UserImage.vue";
 import loadingMixin from "./../../mixins/loading.js";
 import years from '../../../../modules/years';
 
-import { userImageModalBus } from "./UserProfile_Template.vue";
+
 export default {
     mixins: [loadingMixin],
     components: {
@@ -70,18 +68,16 @@ export default {
         };
     },
     mounted() {
-        userImageModalBus.$on("openImageModal", avatarSrc => {
-            this.showUserImageModal = true;
-            this.userAvatar = avatarSrc;
-        });
         this.birthDateYears = years
+    },
+    computed: {
+        showUserImageModalGlobal(){
+            return this.$store.getters['user/openAvatarModal']
+        }
     },
     methods: {
         triggerLoading(show){
             this.isLoading = show;
-        },
-        closeImageModal() {
-            this.showUserImageModal = false;
         },
         async submitForm(data) {
             this.isLoading = true;
@@ -105,7 +101,11 @@ export default {
             }
         },
         openAlertDialog(paramName,message){
-            this[paramName] = false;
+            if (paramName == "showUserImageModal") {
+                this.$store.commit('user/openAvatarModal',false);
+            } else {
+                this[paramName] = false;
+            }
             this.alertDialog = message;
         },
         closeAlertDialog(){

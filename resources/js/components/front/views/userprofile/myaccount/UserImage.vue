@@ -75,10 +75,6 @@ export default {
     emits: ["close-image-modal","popup-alert"],
     mixins: [loadingMixin],
     props: {
-        userAvatar: {
-            type: String,
-            default: '/images/siteImgs/header/logo.png'
-        },
         show: Boolean
     },
     data() {
@@ -94,12 +90,14 @@ export default {
             this.userAvatarTemp = newV;
         }
     },
+    mounted(){
+        this.userAvatarTemp = this.$store.getters['user/userData'].avatar
+    },
     methods: {
         async submitForm() {
             this.formIsValid = true;
             self = this
             // submit then
-            // this.closeModal();
             if (!this.uploadedImage && !this.selectedImage) {
                 this.formIsValid = false;
                 return false;
@@ -121,34 +119,12 @@ export default {
                 self.$emit('popup-alert','showUserImageModal','حصل خطأ ما')
                 self.$emit('loading',false);
             }
-            // await $.ajax({
-            //     "url": "/api/edit-profile-image",
-            //     "method": "POST",
-            //     "timeout": 0,
-            //     "headers": {
-            //         "enctype": "multipart/form-data",
-            //         "X-CSRF-TOKEN": window.axios.defaults.headers.common['X-CSRF-TOKEN']
-            //     },
-            //     "processData": false,
-            //     "mimeType": "multipart/form-data",
-            //     "contentType": false,
-            //     "data": formData
-            // }).done(function (response) {
-            //     self.$emit('popup-alert','showUserImageModal','تم حفظ التغييرات')
-            //     response = JSON.parse(response)
-            //     self.$store.commit('user/userAvatar',response.url);
-            //     self.userAvatarTemp = response.url;
-            //     document.querySelector('.user-avatar-get').setAttribute('src',response.url)
-            // }).fail(function(err){
-            //     self.$emit('popup-alert','showUserImageModal','حصل خطأ ما')
-            //     self.$emit('loading',false);
-            // });
             
             self.$emit('loading',false);
 
         },
         closeModal() {
-            this.$emit("close-image-modal");
+            this.$store.commit('user/openAvatarModal',false);
         },
         processFile(event){
             self = this
