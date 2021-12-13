@@ -16,7 +16,7 @@ export default {
             const error = new Error("fail to get courses");
             throw error;
         }
-        return resp;
+        return resp.data;
     },
     async getCourseDetails(context,payload) {
         // const resp = await callApi("GET", "/api/get-course-details",courseID);

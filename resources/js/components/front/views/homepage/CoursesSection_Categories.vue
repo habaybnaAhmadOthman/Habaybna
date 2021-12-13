@@ -27,7 +27,7 @@ export default {
   },
   methods:{
     async getCategories(){
-        const categories = await  this.$store.dispatch('courses/getCategories');
+        const categories = await this.$store.dispatch('courses/getCategories');
         categories.forEach((category)=>{
             // this.filters[category.id] = {id:category.id,val: category.title}
             this.filters.push({id:category.id,val: category.title,isChecked: false})
