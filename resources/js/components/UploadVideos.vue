@@ -193,7 +193,7 @@ export default {
     uploadvideo(event) {
         let self = this;
       this.form.video.url = event.target.files[0];
-      this.form.video.duration = event.target.files[0].duration;
+    //   this.form.video.duration = event.target.files[0].duration;
 
         var files = event.target.files[0];
         var video = document.createElement("video");
@@ -202,11 +202,10 @@ export default {
         video.onloadedmetadata = function () {
           window.URL.revokeObjectURL(video.src);
            self.form.video.duration = video.duration;
-    debugger
         };
 
         video.src = URL.createObjectURL(files);
-      debugger;
+        console.log(self.form.video);
     },
     formSubmit(e) {
       this.loading = true;
@@ -228,7 +227,6 @@ export default {
       //   };
       if (!this.isUpdate) {
         alert("add");
-        debugger;
         let resp = this.$store.dispatch("admin/uploadVideo", formData);
         this.allVideos.videos = resp.data.videos;
         this.$Message.success("Video Uploaded success");
