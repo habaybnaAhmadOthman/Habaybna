@@ -39,7 +39,7 @@ export default {
           if (isChecked) {
             self.atLeastOneSelected = true;
           }
-          if ( isChecked && course.category.includes(this.activeFilters[index].id)) {
+          if ( isChecked && course.categories.includes(this.activeFilters[index].id)) {
             return true;
           }
         }

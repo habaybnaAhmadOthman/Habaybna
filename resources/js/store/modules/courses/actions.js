@@ -9,7 +9,16 @@ export default {
         }
         return resp.data.courses;
     },
-    async getCourseDetails(context,courseID) {
+    // ******** get all categories ::: get
+    async getCategories() {
+        const resp = await callApi("GET", "/api/get-categories");
+        if (resp.status != 200) {
+            const error = new Error("fail to get courses");
+            throw error;
+        }
+        return resp;
+    },
+    async getCourseDetails(context,payload) {
         // const resp = await callApi("GET", "/api/get-course-details",courseID);
         const resp = await {
             "courseName": "Bessie Hamill",

@@ -6,7 +6,7 @@
                 v-for="(course, index) in filteredCourses"
                 :key="index"
             >
-                <span class="course-discount white" v-if="course.discount">خصم {{course.discount}}٪</span>
+                <span class="course-discount white" v-if="!course.is_free && course.discount.has_discount">خصم {{course.discount.discount_value}}</span>
                 <router-link
                     class="d-flex flex-column overflow-hidden h-100"
                     :to="`/courses/${course.id}`"
@@ -37,9 +37,6 @@
                                 class="remove pointer"
                             />
                         </div>
-                        <!-- <p class="tag radius-60 p-side-10 white">
-                        {{ course.category }}
-                    </p> -->
                     </div>
                     <!-- card body -->
                     <div class="body d-flex flex-column h-100 space-between">
@@ -75,18 +72,18 @@
                                         width="24"
                                         height="18"
                                     />
-                                    {{ course.hours }} ساعات
+                                    {{ course.course_length }} ساعات
                                 </p>
                             </div>
                         </div>
                         <div
                             class="card-footer flex-all white pt-15 pb-15 z-1"
-                            :class="{ premium: course.price }"
+                            :class="{ premium: !course.is_free }"
                         >
-                            <label class="" v-if="course.price"
+                            <label class="" v-if="!course.is_free && course.price"
                                 ><p class="font-22">{{course.price}} USD</p>
-                                <p v-if="course.beforeDiscount" class="font-15 before-discount relative">
-                                    USD {{course.beforeDiscount}}
+                                <p v-if="course.discount.discount_price" class="font-15 before-discount relative">
+                                    USD {{course.discount.discount_price}}
                                 </p></label
                             >
                             <label v-else>مجاني</label>
