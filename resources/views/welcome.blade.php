@@ -24,7 +24,6 @@
             font-display: swap;
          }
       </style>
-
    </head>
    <body>
       

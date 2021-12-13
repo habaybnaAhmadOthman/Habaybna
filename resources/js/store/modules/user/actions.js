@@ -40,15 +40,23 @@ export default {
         return resp.data.intrest
     },
     // ******** login :::
-    async login(context, payload) {
-        await axios.get("/sanctum/csrf-cookie");
-        const resp = await callApi("POST", "login", payload);
-        if (!resp || resp.status != 200) {
-            const error = new Error("يرجى التأكد من الحقول المدخلة");
-            throw error;
-        }
+     login(context, payload) {
+        // await axios.get("/sanctum/csrf-cookie");
+        // const resp = await callApi("POST", "login", payload);
+        // if (!resp || resp.status != 200) {
+        //     const error = new Error("يرجى التأكد من الحقول المدخلة");
+        //     throw error;
+        // }
 
-        await context.dispatch('checkUserAuth')
+        // await context.dispatch('checkUserAuth')
+        axios.get('/sanctum/csrf-cookie').then(response => {
+            axios.post('/login', payload).then(response => {
+                  context.dispatch('checkUserAuth')
+            }).catch(error => {
+                const err = new Error("يرجى التأكد من الحقول المدخلة");
+                throw err;
+            }); // credentials didn't match
+        });
     },
     // ******** logout :::
     async logout(context){
@@ -126,5 +134,14 @@ export default {
             const error = new Error("هناك خطأ ما");
             throw error;
         }
+    },
+    // ******** userProfile ::: upload profile avatar
+    async profileAvatar(_,payload) {
+        const resp = await callApi("POST", "/api/edit-profile-image", payload);
+        if (resp.status != 200) {
+            const error = new Error("هناك خطأ ما");
+            throw error;
+        }
+        return resp.data.url
     }
 };
