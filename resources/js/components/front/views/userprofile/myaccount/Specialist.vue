@@ -126,6 +126,14 @@
             <div class="form-group mb-0-p">
                 <div class="row">
                     <div class="col-md-4">
+                        <label class="form-control-label">المدينة</label>
+                        <input
+                            class="form-control"
+                            placeholder="المدينة"
+                            v-model="city.val"
+                        />
+                    </div>
+                    <div class="col-md-4">
                         <label class="form-control-label">سنة الميلاد</label>
                         <select
                             class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
@@ -261,6 +269,10 @@ export default {
                 val: "no",
                 isValid: true
             },
+            city: {
+                val: "",
+                isValid: true
+            },
             whyToJoin: {
                 val: "",
                 isValid: true
@@ -302,6 +314,7 @@ export default {
             this.gender.parsed = data.gender == 'f' ? 'أنثى' : ('ذكر') ;
             this.whyToJoin.val = data.disorders_work_with;
             this.interestsList = data.interestsList;
+            this.city.val = data.city;
             this.tags = data.interests;
             this.education.val = data.edu_level || 'no';
             this.$emit('loading',false)
@@ -348,6 +361,7 @@ export default {
                 experience: this.experience.val,
                 gender: this.gender.val,
                 whyToJoin: this.whyToJoin.val,
+                city: this.city.val,
                 education: educationValue,
                 interests: tagIDs
             });
