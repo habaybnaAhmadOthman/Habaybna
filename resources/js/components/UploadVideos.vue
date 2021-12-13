@@ -21,10 +21,8 @@
 <template class="">
   <Collapse v-model="value1" class="profile">
     <Panel name="1" v-if="allVideos.haveVideos">
-      video list ({{ allVideos.count }})
-      <strong class="float-right" :style="{ paddingRight: '15px' }">{{
-        allVideos.courseTitle
-      }}</strong>
+      قائمة الحلقات ({{ allVideos.count }})
+
       <Row :gutter="16" slot="content">
         <Col
           span="6"
@@ -47,13 +45,13 @@
       </Row>
     </Panel>
     <Panel name="1" v-model="value1" v-else>
-      video list
+      قائمة الحلقات
       <h1 slot="content" class="text-center">
-        Oh no videos for this course 😢
+         لا يوجد حلقات 😢
       </h1>
     </Panel>
     <Panel name="2">
-      Add video
+      أضف حلقة
       <div class="card" slot="content">
         <div class="card-body">
           <form @submit="formSubmit" enctype="multipart/form-data">
@@ -160,10 +158,7 @@ export default {
           // The configuration of the editor.
         },
         coverImage: "",
-        video: {
-          url: "",
-          duration: 0,
-        },
+        video: "",
         is_publish: false,
         course_id: "",
       },
@@ -191,23 +186,10 @@ export default {
       this.form.coverImage = event.target.files[0];
     },
     uploadvideo(event) {
-        let self = this;
-      this.form.video.url = event.target.files[0];
-    //   this.form.video.duration = event.target.files[0].duration;
+      this.form.video = event.target.files[0];
 
-        var files = event.target.files[0];
-        var video = document.createElement("video");
-        video.preload = "metadata";
-
-        video.onloadedmetadata = function () {
-          window.URL.revokeObjectURL(video.src);
-           self.form.video.duration = video.duration;
-        };
-
-        video.src = URL.createObjectURL(files);
-        console.log(self.form.video);
     },
-    formSubmit(e) {
+    async formSubmit(e) {
       this.loading = true;
       let self = this.$router;
       e.preventDefault();
@@ -219,23 +201,24 @@ export default {
       formData.append("is_publish", this.form.is_publish);
       formData.append("course_id", this.form.course_id);
       this.isUpdate ? formData.append("video_id", this.form.id) : "";
-      //   const config = {
-      //     headers: {
-      //       "content-type": "multipart/form-data",
-      //       Accept: "application/json",
-      //     },
-      //   };
+    //   const config = {
+    //     headers: {
+    //       "content-type": "multipart/form-data",
+    //       Accept: "application/json",
+    //     },
+    //   };
       if (!this.isUpdate) {
-        alert("add");
-        let resp = this.$store.dispatch("admin/uploadVideo", formData);
-        this.allVideos.videos = resp.data.videos;
-        this.$Message.success("Video Uploaded success");
+        // alert("add");
+        const resp = await this.$store.dispatch('admin/uploadVideo',formData);
+        console.log(resp);
+              this.allVideos.videos = resp.videos;
+              this.$Message.success("Video Uploaded success");
 
-        this.form.videoTitle = "";
-        this.form.videoDescription = "";
-        this.form.video = "";
-        this.form.videoTitle = "";
-        this.loading = false;
+              this.form.videoTitle = "";
+              this.form.videoDescription = "";
+              this.form.video = "";
+              this.form.videoTitle = "";
+            this.loading = false;
 
         // axios
         //   .post("/admin/course/upload-video", formData)

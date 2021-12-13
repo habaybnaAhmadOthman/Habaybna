@@ -66,7 +66,7 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
 
     // courses
 
-    Route::get('/onlineCourse','CourseController@index')->name('onlineCourse');
+    // Route::get('/onlineCourse','CourseController@index')->name('onlineCourse');
     // Route::get('course/create','CourseController@create')->name('course.create');
     // Route::any('/{any}','CourseController@create')->name('course.any');
     // Route::get('course/create','CourseController@create')->name('course.create');

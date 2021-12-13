@@ -18,20 +18,18 @@ export default {
   data(){
     return {
       activeFilters: [],
-      atLeastOneSelected: false,
-      cc: []
+      atLeastOneSelected: false
     }
   },
   computed: {
-    filteredCourses() {
+    async filteredCourses() {
       self = this;
       self.atLeastOneSelected = false;
-      const courses = this.$store.getters['courses/courses'];
-
+      const courses =await this.$store.dispatch('courses/getCourses');
       const updatedList =  courses.filter(course=>{
         for (let index = 0; index < this.activeFilters.length; index++) {
           let isChecked =  this.activeFilters[index].isChecked;
-          
+
           // check if user select one category at least
           if (isChecked) {
             self.atLeastOneSelected = true;
@@ -43,10 +41,8 @@ export default {
       });
       if (updatedList.length < 1) {
         if (!self.atLeastOneSelected) {
-          self.cc = courses;
           return courses
         } else {
-          self.cc = []
           return [];
         }
       } else {

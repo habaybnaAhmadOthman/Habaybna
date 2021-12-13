@@ -90,6 +90,8 @@
                 id="email"
                 @blur="checkValidity"
                 v-model.trim="email.val"
+                oninvalid="this.setCustomValidity('يرجى إدخال بريد إلكتروني صحيح')"
+                oninput="setCustomValidity('')"
             />
             <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
         </div>

@@ -255,7 +255,6 @@ export default {
 
       let CategorytagIDs = [];
       this.form.courseCategory.forEach((item) => CategorytagIDs.push(item.id));
-        debugger
       console.log(this.form.tags, "tags");
 
       e.preventDefault();

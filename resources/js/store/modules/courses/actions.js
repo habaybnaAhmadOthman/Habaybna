@@ -2,13 +2,13 @@ import {callApi} from "../../common";
 export default {
     // ******** get all courses ::: get
     async getCourses(context) {
-        const resp = await callApi("GET", "/get-user-country");
+        const resp = await callApi("GET", "/api/all-courses");
         if (resp.status != 200) {
             const error = new Error("fail to get courses");
             throw error;
         }
-        const countryCode = resp.data.data.countryCode
-        context.commit('setCountryCode',countryCode)
+        return resp.courses
+
     },
     // ******** get all categories ::: get
     async getCategories(context) {
@@ -27,6 +27,17 @@ export default {
             "trailerSrc": "trailerSrc 1",
             "specialistName": "coachName 1",
             "courseDescription": "courseDescription 1",
+            "lectureInfo": "أولاً : التعرف على السلوك المدخلي : يعتمد بناء مناهج الأطفال ذوي الاحتياجات الخاصة على معرفتنا بخصائص هؤلاء الأطفال فالأطفال ذوي الإعاقة الذهنية الشديدة يختلفون في احتياجاتهم عن الأطفال ذوي الإعاقة الذهنية المتوسطة أو البسيطة ، وكذلك الأطفال ذوي بطء التعلم يختلفون في احتياجاتهم عن الأطفال ذوي صعوبات التعلم وهكذا ، وبالتالي فنحن بحاجة منذ البداية إلى معلومات أولية سريعة عن الفئة التي نتعامل معها بشكل عام ، حتى نتمكن من السير قدما في بناء المنهاج . ثانياً : قياس مستوى الأداء الحالي : أن منهاج الطالب ذوي الاحتياجات التربوية الخاصة يوضع بعد مرحلة التعرف على الأداء الحالي للطالب .",
+            "documents": [
+                {
+                    "title": "الملف الاول",
+                    "link": "http://localhost:8000/courses/1/1"
+                },
+                {
+                    "title": "الملف الثاني",
+                    "link": "http://localhost:8000/courses/1/1"
+                }
+            ],
             "lectures": [
              {
               "title": "الخطة التربوية",

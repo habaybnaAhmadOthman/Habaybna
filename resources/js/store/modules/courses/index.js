@@ -51,7 +51,7 @@ export default {
                     coverImage: 'https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg'
                 },
                 {
-                    id: 1,
+                    id: 12,
                     title: "المساق العلمي | مشاريع  الحياة",
                     category: ["v2", "v3"],
                     description:
@@ -65,7 +65,7 @@ export default {
                     coverImage: 'https://media.istockphoto.com/photos/blue-abstract-background-or-texture-picture-id1138395421?k=20&m=1138395421&s=612x612&w=0&h=FPYxPgxJBNucc79Z3fxAehsW6gvjw5jP17CJMsBRjGM='
                 },
                 {
-                    id: 1,
+                    id: 2,
                     title: "المساق الرياضي |  الحياة",
                     category: ["v3", "v7"],
                     description: "نموذج لوريم ايبسوم عربي -  فرانكوا اراب",
@@ -78,7 +78,7 @@ export default {
                     coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfayPfmYCpC5nkY0XFGOvSNz42SA3nA-5L1A&usqp=CAU'
                 },
                 {
-                    id: 1,
+                    id: 3,
                     title: "المساق الرياضي |  الحياة",
                     category: ["v4"],
                     description: "نموذج لوريم ايبسوم عربي -  فرانكوا اراب",
@@ -91,7 +91,7 @@ export default {
                     coverImage: 'https://m.media-amazon.com/images/I/61vkHB+nskL._AC_SX679_.jpg'
                 },
                 {
-                    id: 1,
+                    id: 4,
                     title: "المساق الرياضي |  الحياة",
                     category: "v3",
                     description: "نموذج لوريم ايبسوم عربي -  فرانكوا اراب",
@@ -104,7 +104,7 @@ export default {
                     coverImage: 'https://m.media-amazon.com/images/I/61vkHB+nskL._AC_SX679_.jpg'
                 },
                 {
-                    id: 1,
+                    id: 5,
                     title: "المساق الرياضي |  الحياة",
                     category: "v3",
                     description: "نموذج لوريم ايبسوم عربي -  فرانكوا اراب",

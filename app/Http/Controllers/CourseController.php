@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Owenoj\LaravelGetId3\GetId3;
+
 
 class CourseController extends Controller
 {
@@ -36,8 +38,7 @@ class CourseController extends Controller
             return response()->json([
                 'courses' => $data,
                 'status'=>true,
-                200
-            ]);
+            ],200);
    }
 
    public function create()
@@ -109,6 +110,8 @@ class CourseController extends Controller
 
    public function UploadCourseVideo(Request $request)
    {
+
+
        $videoCourse = new CourseVideos();
 
        if ($request->hasFile('coverImage')) {
@@ -118,6 +121,8 @@ class CourseController extends Controller
 
         }
         if ($request->hasFile('video')) {
+            $track = GetId3::fromUploadedFile($request->file('video'));
+            $length = $track->getPlaytime();
             $video = $request->file('video');
             $videoName = 'courseVideo' . '-' . $video->getClientOriginalName();
             $pathVid = $video->storeAs('public/videos/courseVideos', $videoName);
@@ -131,6 +136,7 @@ class CourseController extends Controller
         $videoCourse->status= $request->is_publish;
         $videoCourse->description= $request->description;
         $videoCourse->title= $request->title ;
+        $videoCourse->length= $length ;
         $videoCourse->save();
         if($videoCourse){
             $courseVideos = CourseVideos::where('course_id',$videoCourse->course_id)->get();

@@ -16,13 +16,24 @@ class Courses extends Model
         return $this->hasOne(Quize::class,'course_id');
     }
 
-    public function category()
+    public function courseCategories()
     {
-        return $this->belongsTo(CourseCategory::class,'category_id');
+        return $this->hasMany(CategoryCourse::class,'course_id','id');
     }
 
     public function getCategoryNameAttribute()
     {
-        return $this->category->title ;
+        if(count($this->courseCategories) > 0){
+
+            $courseCategories = [] ;
+
+            foreach ($this->courseCategories as $one) {
+                $courseCategories[] = [
+                    'id'=>$one->category->id,
+                    'title'=>$one->category->title,
+                ];
+            }
+            return $courseCategories;
+        }
     }
 }

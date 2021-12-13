@@ -1,3 +1,13 @@
+<style>
+.cat {
+  border: 0.5px solid #9e9696b5;
+  padding: 0px 3px;
+  margin: 0 1.5px;
+  color: blueviolet;
+  font-size: 13px;
+  border-radius: 4px;
+}
+</style>
 <template>
   <!-- <Table border :columns="columns7" :data="data6"></Table> -->
   <table class="table">
@@ -16,15 +26,33 @@
       <tr v-for="(course, index) in data6" :key="course.id">
         <th scope="row">1</th>
         <td>{{ course.courseTitle }}</td>
-        <td>{{ course.courseCategory }}</td>
+        <td>
+          <span class="cat" v-for="cat in course.courseCategory" :key="cat.id">
+            {{ cat.title }}
+          </span>
+        </td>
         <td>{{ course.coursePrice }}</td>
         <td>{{ course.publish }}</td>
         <td>{{ course.free }}</td>
         <td>
-          <Button :to="'/admin/course-edit/' + course.course_id"  type="dashed" size="small">Edit</Button>
-          <Button :to="'/admin/uploadVideos/' + course.course_id"  type="dashed" size="small">Videos</Button>
-          <Button :to="'/admin/course-quiz/' + course.course_id"  type="dashed" size="small">Quiz</Button>
-
+          <Button
+            :to="'/admin/course-edit/' + course.course_id"
+            type="dashed"
+            size="small"
+            >Edit</Button
+          >
+          <Button
+            :to="'/admin/uploadVideos/' + course.course_id"
+            type="dashed"
+            size="small"
+            >Videos</Button
+          >
+          <Button
+            :to="'/admin/course-quiz/' + course.course_id"
+            type="dashed"
+            size="small"
+            >Quiz</Button
+          >
         </td>
       </tr>
     </tbody>
@@ -34,12 +62,11 @@
 export default {
   data() {
     return {
-
       data6: "",
     };
   },
   async created() {
-    const resp = await this.callApi("get", "/admin/onlineCourse");
+    const resp = await this.callApi("get", "/api/admin/onlineCourse");
     if (resp.status == 200) {
       console.log(resp.data);
       this.data6 = resp.data.courses;
