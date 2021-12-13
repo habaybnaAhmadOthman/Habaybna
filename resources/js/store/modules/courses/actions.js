@@ -1,13 +1,13 @@
 import {callApi} from "../../common";
 export default {
     // ******** get all courses ::: get
-    async getAllCourses(context) {
+    async getAllCourses() {
         const resp = await callApi("GET", "/api/all-courses");
         if (resp.status != 200) {
             const error = new Error("fail to get courses");
             throw error;
         }
-        context.commit('setCourses',resp.data.courses);
+        return resp.data.courses;
     },
     async getCourseDetails(context,courseID) {
         // const resp = await callApi("GET", "/api/get-course-details",courseID);

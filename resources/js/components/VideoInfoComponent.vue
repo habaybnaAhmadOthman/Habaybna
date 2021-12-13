@@ -305,3 +305,8 @@ export default {
   },
 };
 </script>
+<style>
+.ck-editor__editable {
+  min-height:300px;
+}
+</style>
