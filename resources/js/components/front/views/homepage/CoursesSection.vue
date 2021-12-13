@@ -31,7 +31,6 @@ export default {
       self = this;
       self.atLeastOneSelected = false;
       const courses = this.courseTemp;
-      console.log('asdsaa');
       const updatedList =  courses.filter(course=>{
         for (let index = 0; index < this.activeFilters.length; index++) {
           let isChecked =  this.activeFilters[index].isChecked;
