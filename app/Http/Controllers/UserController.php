@@ -78,6 +78,7 @@ class UserController extends Controller
                     $userData['edu_level'] = $user->user_data->edu_level ;
                     $userData['job_title'] = $user->user_data->job_title ;
                     $userData['dob'] = $user->user_data->dob ;
+                    $userData['city'] = $user->user_data->city ;
                     $userData['experience'] = $user->user_data->experience ;
                     $userData['disorders_work_with'] = $user->user_data->disorders_work_with ;
                     $userData['interests'] = $userIntrests ? $userIntrests : '';

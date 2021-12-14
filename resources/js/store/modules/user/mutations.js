@@ -20,6 +20,9 @@ export default {
     type(state,userType) {
         state.type = userType;
     },
+    openAvatarModal(state,isOpen) {
+        state.openAvatarModal = isOpen;
+    },
     login(state) {
         state.loggedIn = true;
         state.is_verify = true;

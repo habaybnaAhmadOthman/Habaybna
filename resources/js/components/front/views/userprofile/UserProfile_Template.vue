@@ -1,5 +1,5 @@
 <template>
-    <main class="profile">
+    <div class="profile">
         <UserProfileHeader></UserProfileHeader>
         <div class="d-flex page-content">
             <UserProfileNav></UserProfileNav>
@@ -7,12 +7,10 @@
                 <router-view></router-view>
             </transition>
         </div>
-    </main>
+    </div>
 </template>
 
 <script>
-import Vue from 'vue'
-export const userImageModalBus = new Vue();
 import UserProfileHeader from "./UserProfile_Header.vue";
 import UserProfileNav from "./UserProfile_Nav.vue";
 export default {

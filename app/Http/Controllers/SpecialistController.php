@@ -55,7 +55,28 @@ class SpecialistController extends Controller
 
             $specialist = Auth::user()->user_data ;
 
+            if(count($request->interests) > 0 ){
+                $oldInterest = UserInterest::where('user_id',Auth::id() )->get() ;
+
+                if(count($oldInterest) > 0 ){
+                    foreach ($oldInterest as $old) {
+                    $old->delete();
+                    }
+                }
+
+                foreach ($request->interests as $interest) {
+                    $userInterest = new UserInterest();
+                    $userInterest->user_id = Auth::id();
+                    $userInterest->interest_id = $interest;
+
+                    $userInterest->save();
+                 }
+
+
+            }
+
             $specialist->dob = $request->dob ;
+            $specialist->city = $request->city ;
             $specialist->specialization = $request->specialization ;
             $specialist->work_place = $request->workPlace ;
             $specialist->job_title = $request->jobTitle ;
