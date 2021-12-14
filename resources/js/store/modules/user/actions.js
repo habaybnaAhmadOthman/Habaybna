@@ -40,23 +40,15 @@ export default {
         return resp.data.intrest
     },
     // ******** login :::
-     login(context, payload) {
-        // await axios.get("/sanctum/csrf-cookie");
-        // const resp = await callApi("POST", "login", payload);
-        // if (!resp || resp.status != 200) {
-        //     const error = new Error("يرجى التأكد من الحقول المدخلة");
-        //     throw error;
-        // }
+    async login(context, payload) {
+        await axios.get("/sanctum/csrf-cookie");
+        const resp = await callApi("POST", "login", payload);
+        if (!resp || resp.status != 200) {
+            const error = new Error("يرجى التأكد من الحقول المدخلة");
+            throw error;
+        }
 
-        // await context.dispatch('checkUserAuth')
-        axios.get('/sanctum/csrf-cookie').then(response => {
-            axios.post('/login', payload).then(response => {
-                  context.dispatch('checkUserAuth')
-            }).catch(error => {
-                const err = new Error("يرجى التأكد من الحقول المدخلة");
-                throw err;
-            }); // credentials didn't match
-        });
+        await context.dispatch('checkUserAuth')
     },
     // ******** logout :::
     async logout(context){
