@@ -199,12 +199,12 @@
             </div>
 
             <div class="">
-                <div class="d-flex">
-                    <button class="btn-2 flex-all font-20 ml-20">
+                <div class="d-flex flex-wrap justify-center-p column-reverse">
+                    <button class="btn-2 flex-all font-20 ml-20 m-0-p w-100-p">
                         حفظ
                     </button>
                     <button
-                        class="bg-none border-0 main-color font-20 pointer font-16-p"
+                        class="bg-none border-0 main-color font-20 pointer font-16-p mb-15-p m-0-p w-100-p"
                         @click.prevent="showPasswordDialog"
                     >
                         تغيير كلمة المرور

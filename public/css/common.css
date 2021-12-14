@@ -730,6 +730,12 @@ a:hover {
     .flex-wrap-p {
         flex-wrap: wrap;
     }
+    .justify-center-p {
+        justify-content: center;
+    }
+    .column-reverse {
+        flex-direction: column-reverse;
+    }
     .center-p {
         text-align: center;
     }
@@ -745,8 +751,14 @@ a:hover {
     .mb-0-p {
         margin-bottom: 0 !important;
     }
+    .mb-5-p {
+        margin-bottom: 5px;
+    }
     .mb-10-p {
         margin-bottom: 10px;
+    }
+    .mb-15-p {
+        margin-bottom: 15px;
     }
     .pt-0-p {
         padding-top: 0;
@@ -767,10 +779,20 @@ a:hover {
     .font-16-p {
         font-size: 16px;
     }
+    .font-18-p {
+        font-size: 18px;
+    }
     .font-28-p {
         font-size: 28px;
     }
     .container-fluid {
         padding: 0 15px;
+    }
+    .btn, .btn-2 {
+        padding: 6px 25px;
+    }
+    .p-side-15-p {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }

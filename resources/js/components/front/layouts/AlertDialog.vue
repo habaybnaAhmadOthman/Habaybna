@@ -7,9 +7,9 @@
                 v-if="show"
                 open
             >
-                <div class="header white w-100 p-side-15 pt-15 pb-15">
+                <div class="header white w-100 p-side-15 pt-15 pb-15 pt-10-p pb-10-p">
                     <slot name="header">
-                        <p class="bold font-20">{{ title }}</p>
+                        <p class="bold font-20 font-16-p">{{ title }}</p>
                     </slot>
                 </div>
                 <section class="p-side-15 pt-15 pb-15 body">
@@ -105,7 +105,17 @@ dialog {
 }
 @media (max-width: 767px) {
     dialog {
-        top: 10vh;
+        top: 5%;
+    }
+    .body {
+        max-height: 320px;
+    }
+    .modal-body, .user-image-modal .modal-footer,.user-image-modal .modal-footer {
+        width: 100%!important;
+    }
+    .user-image-modal .modal-footer {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }
 </style>
