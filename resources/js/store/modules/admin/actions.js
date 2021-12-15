@@ -14,7 +14,6 @@ export default {
         },
 
         async editParentData(context,payload){
-            console.log('context',context);
             const resp = await callApi('POST','/api/admin/parent/update/'+context.getters.userID,payload)
             if(resp.status != 200){
                 const error = new Error("fail to update profile data");
@@ -23,6 +22,48 @@ export default {
             return resp.data
 
         },
+
+        async createParent(context,payload){
+            console.log('context',context);
+            const resp = await callApi('POST','/api/admin/parent/create',payload)
+            if(resp.status != 200){
+                const error = new Error("fail to create profile data");
+                throw error;
+            }
+            return resp.data
+
+        },
+
+        async createSpecialist(context,payload){
+            const resp = await callApi('POST','/api/admin/specialist/create',payload)
+            if(resp.status != 200){
+                const error = new Error("fail to create profile data");
+                throw error;
+            }
+            return resp.data
+
+        },
+
+        async createOther(context,payload){
+            const resp = await callApi('POST','/api/admin/other/create',payload)
+            if(resp.status != 200){
+                const error = new Error("fail to create profile data");
+                throw error;
+            }
+            return resp.data
+
+        },
+
+        async deleteUser(context,payload){
+            const resp = await callApi('POST','/api/admin/delete-user/'+payload)
+            if(resp.status != 200){
+                const error = new Error("fail to create profile data");
+                throw error;
+            }
+            return resp.data
+
+        },
+
         async getSpecialisDataAdmin(context,id) {
             // console.log(id);
             const resp = await callApi("GET", "/api/admin/specialist/"+id);

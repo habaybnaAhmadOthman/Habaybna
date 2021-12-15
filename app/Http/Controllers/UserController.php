@@ -174,7 +174,7 @@ class UserController extends Controller
                 }
 
 
-             } catch (ModelNotFoundException $e){
+            } catch (ModelNotFoundException $e){
                 return response()->json([
                     'msg'=>'faild',
                     'status'=>false,
@@ -186,5 +186,34 @@ class UserController extends Controller
 
 
             }
+    }
+
+    public function delete($id)
+    {
+        try{
+            $user = User::findorfail($id);
+                if($user->user_data){
+                    $user->user_data->delete();
+                }
+
+            $userIntrests = UserInterest::where('user_id',$id)->get();
+            if(count($userIntrests) > 0){
+                foreach ($userIntrests as $one) {
+                   $one->delete();
+                }
+            }
+
+            $user->delete();
+
+            return response()->json('deleted',200);
+
+        } catch (ModelNotFoundException $e){
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
+           ]);
+
+    }
     }
 }
