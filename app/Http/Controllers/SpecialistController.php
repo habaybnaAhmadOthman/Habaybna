@@ -49,6 +49,50 @@ class SpecialistController extends Controller
         ]);
     }
 
+    public function createSpecAdmin(Request $request)
+    {
+        $request->validate([
+            'phone' => ['required', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'firstName' => ['required', 'string'],
+            'lastName' => ['required', 'string'],
+            'gender' => ['required', 'string'],
+            'specialization' => ['required', 'string'],
+            'password' => ['required', 'string','min:8'],
+           ]);
+
+           $user = new User();
+            $user->phone = '+'.$request->phone ;
+            $user->email = $request->email ;
+            $user->password = Hash::make($request->password);
+            $user->otp = '123432' ;
+            $user->role = 'specialist' ;
+            $user->is_verify = 1 ;
+
+            $user->save();
+
+            if($user){
+                $specialist = new Specialist();
+
+                $specialist->firstName = $request->firstName;
+                $specialist->lastName = $request->lastName;
+                $specialist->gender = $request->gender;
+                $specialist->user_id = $user->id;
+                $specialist->specialization = $request->specialization;
+                $specialist->work_place = " ";
+
+                $specialist->save();
+
+                // send password by email to the parent
+
+                return response()->json(
+                    $user->user_data,
+                    200
+                );
+
+
+            }
+    }
     public function editProfileData(Request $request)
     {
         try{

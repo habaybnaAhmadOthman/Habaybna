@@ -61,6 +61,54 @@ class OthersController extends Controller
 
     }
 
+    public function createOtherAdmin(Request $request)
+    {
+        // dd($request->lastName);
+        $request->validate([
+            'phone' => ['required', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'firstName' => ['required', 'string'],
+            'lastName' => ['required', 'string'],
+            'gender' => ['required', 'string'],
+            'employment' => ['required', 'string'],
+            'password' => ['required', 'string','min:8'],
+           ]);
+
+           $user = new User();
+            $user->phone = '+'.$request->phone ;
+            $user->email = $request->email ;
+            $user->password = Hash::make($request->password);
+            $user->otp = '123432' ;
+            $user->role = 'other' ;
+            $user->is_verify = 1 ;
+
+            $user->save();
+
+            if($user){
+                $other = new Other();
+
+                $other->user_id = $user->id;
+                $other->firstName = $request->firstName;
+                $other->lastName = $request->lastName;
+                $other->gender = $request->gender ;
+                $other->specialization = '' ;
+                $other->work_place = '' ;
+                $other->employment = $request->employment ;
+                $other->why_to_join = '' ;
+
+
+                $other->save();
+
+                // send password by email to the parent
+
+                return response()->json(
+                    200
+                );
+
+
+            }
+    }
+
     /**
      * Store a newly created resource in storage.
      *

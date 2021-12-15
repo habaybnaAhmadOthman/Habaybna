@@ -45,20 +45,29 @@ Route::middleware('auth:sanctum')->group(function () {
     //admin routes
     Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function(){
 
+        //users
+        Route::post('/delete-user/{id}','UserController@delete');
+
+
        // parent route
         Route::get('get-parents-data','ParentUsersController@getParentsData');
         Route::get('parent/{id}','ParentUsersController@show');
-        Route::post('admin/parent/update/{id}','ParentUsersController@update');
+        Route::post('/parent/update/{id}','ParentUsersController@update');
+        Route::post('/parent/create','ParentUsersController@create');
+
 
         //specialist route
         Route::get('get-specialists-data','SpecialistController@getSpecialistsData');
         Route::get('specialist/{id}','SpecialistController@show');
         Route::post('admin/specialist/update/{id}','SpecialistController@update');
+        Route::post('/specialist/create','SpecialistController@createSpecAdmin');
 
         //other route
         Route::get('get-others-data','OthersController@getOthersData');
         Route::get('other/{id}','OthersController@show');
         Route::post('other/update/{id}','OthersController@update');
+        Route::post('/other/create','OthersController@createOtherAdmin');
+
 
         // course route
         Route::get('course-init-data','CourseController@getCoursesInitData');

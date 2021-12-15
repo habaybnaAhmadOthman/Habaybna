@@ -11,6 +11,9 @@ import UploadVideos from "./components/UploadVideos.vue";
 import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
 import Parents from "./components/admin/parent/Parents.vue";
+import CreateParent from "./components/admin/parent/Create.vue";
+import CreateSpecialist from "./components/admin/specialist/Create.vue";
+import CreateOther from "./components/admin/other/Create.vue";
 import ShowSpecialist from "./components/admin/specialist/Show.vue";
 import ShowOther from "./components/admin/other/Show.vue";
 import Specialists from "./components/admin/specialist/Specialists.vue";
@@ -56,6 +59,21 @@ const routes = [
         path: "/admin/parents",
         component: Parents,
         name: "Parents"
+    },
+    {
+        path: "/admin/parent/create",
+        component: CreateParent,
+        name: "CreateParent"
+    },
+    {
+        path: "/admin/specialist/create",
+        component: CreateSpecialist,
+        name: "CreateSpecialist"
+    },
+    {
+        path: "/admin/other/create",
+        component: CreateOther,
+        name: "CreateOther"
     },
     {
         path: "/admin/specialist",
