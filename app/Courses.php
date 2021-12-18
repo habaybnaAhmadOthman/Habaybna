@@ -51,7 +51,7 @@ class Courses extends Model
             foreach ($this->courseProvider as $one) {
                 $courseProviders[] = [
                     'id'=>$one->specialist->user_id,
-                    'name'=>$one->specialist->firstName,
+                    'firstName'=>$one->specialist->firstName,
                     'avatar'=>$one->specialist->avatar,
                     'specialization'=>$one->specialist->specialization,
                 ];

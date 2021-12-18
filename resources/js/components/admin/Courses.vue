@@ -14,12 +14,14 @@
     <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Title</th>
-        <th scope="col">Category</th>
-        <th scope="col">Price</th>
-        <th scope="col">Publish</th>
-        <th scope="col">Free</th>
-        <th scope="col">Action</th>
+        <th scope="col">العنوان</th>
+        <th scope="col">الفئة</th>
+        <th scope="col">السعر</th>
+        <th scope="col">حالة الدورة</th>
+        <th scope="col">نوع الدورة</th>
+        <th scope="col"> عدد الدروس</th>
+        <th scope="col">مدة الدورة</th>
+        <th scope="col">الأجراءات</th>
       </tr>
     </thead>
     <tbody>
@@ -34,24 +36,26 @@
         <td>{{ course.coursePrice }}</td>
         <td>{{ course.publish }}</td>
         <td>{{ course.free }}</td>
+        <td>{{ course.videos_count }}</td>
+        <td>{{ course.course_length }}</td>
         <td>
           <Button
             :to="'/admin/course-edit/' + course.course_id"
             type="dashed"
             size="small"
-            >Edit</Button
+            >تعديل</Button
           >
           <Button
             :to="'/admin/uploadVideos/' + course.course_id"
             type="dashed"
             size="small"
-            >Videos</Button
+            >الدروس</Button
           >
           <Button
             :to="'/admin/course-quiz/' + course.course_id"
             type="dashed"
             size="small"
-            >Quiz</Button
+            >الاختبار</Button
           >
         </td>
       </tr>

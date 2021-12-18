@@ -76,6 +76,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('uploadVideos/{id}','CourseController@uploadVideos');
         Route::post('/course/upload-video','CourseController@UploadCourseVideo');
         Route::get('/onlineCourse','CourseController@index');
+        Route::get('/edit-course/{course_id}','CourseController@getCoruseInfo')->name('getCoruseInfo');
+        Route::post('/edit-course/{course_id}','CourseController@updateCoruseInfo')->name('updateCoruseInfo');
+
 
 
 
