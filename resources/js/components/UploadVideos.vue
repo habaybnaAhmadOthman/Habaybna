@@ -17,6 +17,20 @@
 .ivu-card-body {
   padding: 0 !important;
 }
+.ck p {
+  display: block !important;
+}
+.ck.ck-editor__editable_inline {
+  text-align: right !important;
+  direction: rtl !important;
+
+}
+.ck ol , .ck ul{
+    padding: 20px;
+}
+.ck li {
+    list-style: inherit !important;
+}
 </style>
 <template class="">
   <Collapse v-model="value1" class="profile">
@@ -46,9 +60,7 @@
     </Panel>
     <Panel name="1" v-model="value1" v-else>
       قائمة الحلقات
-      <h1 slot="content" class="text-center">
-         لا يوجد حلقات 😢
-      </h1>
+      <h1 slot="content" class="text-center">لا يوجد حلقات 😢</h1>
     </Panel>
     <Panel name="2">
       أضف حلقة
@@ -56,7 +68,7 @@
         <div class="card-body">
           <form @submit="formSubmit" enctype="multipart/form-data">
             <div class="form-group">
-              <strong>Video Title:</strong>
+              <strong>عنوان الحلقة</strong>
 
               <input
                 type="text"
@@ -66,14 +78,14 @@
               />
             </div>
             <div class="form-group">
-              <strong>Video Discription:</strong>
+              <strong>وصف الحلقة</strong>
               <ckeditor
                 :editor="form.editor"
                 v-model="form.videoDescription"
                 :config="form.editorConfig"
               ></ckeditor>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <strong>Video cover photo:</strong>
               <input
                 name="coverImage"
@@ -81,47 +93,33 @@
                 class="form-control"
                 @change="uploadCoverImage"
               />
-            </div>
+            </div> -->
             <div class="form-group">
-              <strong>Video:</strong>
+              <strong>تحميل فيديو الحلقة</strong>
               <input
                 name="video"
                 type="file"
-                class="form-control"
+                class="cdk-ed form-control"
                 @change="uploadvideo"
               />
             </div>
             <div class="form-group">
-              <div class="btn-group" data-toggle="buttons" role="group">
-                <label class="btn btn-outline btn-success">
-                  <input
-                    type="radio"
-                    id="is_publish_1"
-                    value="1"
-                    v-model="form.is_publish"
-                  />
-                  <i class="icon wb-check text-active" aria-hidden="true"></i>
-                  Published
-                </label>
-                <label class="btn btn-outline btn-danger">
-                  <input
-                    type="radio"
-                    id="is_publish_2"
-                    value="0"
-                    v-model="form.is_publish"
-                  />
-                  <i class="icon wb-check text-active" aria-hidden="true"></i>
-                  Unpublished
-                </label>
-              </div>
+                <RadioGroup v-model="form.is_publish" vertical>
+                  <Radio label="true">
+                    <span>نشر</span>
+                  </Radio >
+                  <Radio label="false">
+                    <span>عدم النشر</span>
+                  </Radio>
+                </RadioGroup>
             </div>
             <Button
               v-if="isUpdate"
               :style="{ float: 'right' }"
               type="info"
-              ghost
               :loading="loading"
               @click="formSubmit"
+              class="publish"
             >
               <span v-if="!loading">Update</span>
               <span v-else>Updating...</span>
@@ -155,11 +153,11 @@ export default {
         videoDescription: "",
         editor: ClassicEditor,
         editorConfig: {
-          // The configuration of the editor.
+          enterMode:"br"
         },
-        coverImage: "",
+        // coverImage: "",
         video: "",
-        is_publish: false,
+        is_publish: "true",
         course_id: "",
       },
       value1: "1",
@@ -182,43 +180,45 @@ export default {
     getCourseId() {
       this.form.course_id = this.$router.currentRoute.params.data;
     },
-    uploadCoverImage(event) {
-      this.form.coverImage = event.target.files[0];
-    },
+    // uploadCoverImage(event) {
+    //   this.form.coverImage = event.target.files[0];
+    // },
     uploadvideo(event) {
       this.form.video = event.target.files[0];
-
     },
     async formSubmit(e) {
       this.loading = true;
       let self = this.$router;
       e.preventDefault();
+      this.form.is_publish = Boolean(this.form.is_publish);
+      console.log('type',typeof this.form.is_publish);
       let formData = new FormData();
       formData.append("title", this.form.videoTitle);
       formData.append("description", this.form.videoDescription);
-      formData.append("coverImage", this.form.coverImage);
+      //   formData.append("coverImage", this.form.coverImage);
       formData.append("video", this.form.video);
       formData.append("is_publish", this.form.is_publish);
       formData.append("course_id", this.form.course_id);
       this.isUpdate ? formData.append("video_id", this.form.id) : "";
-    //   const config = {
-    //     headers: {
-    //       "content-type": "multipart/form-data",
-    //       Accept: "application/json",
-    //     },
-    //   };
+      //   const config = {
+      //     headers: {
+      //       "content-type": "multipart/form-data",
+      //       Accept: "application/json",
+      //     },
+      //   };
+      console.log('form data',this.form.is_publish);
       if (!this.isUpdate) {
         // alert("add");
-        const resp = await this.$store.dispatch('admin/uploadVideo',formData);
+        const resp = await this.$store.dispatch("admin/uploadVideo", formData);
         console.log(resp);
-              this.allVideos.videos = resp.videos;
-              this.$Message.success("Video Uploaded success");
+        this.allVideos.videos = resp.videos;
+        this.$Message.success("Video Uploaded success");
 
-              this.form.videoTitle = "";
-              this.form.videoDescription = "";
-              this.form.video = "";
-              this.form.videoTitle = "";
-            this.loading = false;
+        this.form.videoTitle = "";
+        this.form.videoDescription = "";
+        this.form.video = "";
+        this.form.videoTitle = "";
+        this.loading = false;
 
         // axios
         //   .post("/admin/course/upload-video", formData)

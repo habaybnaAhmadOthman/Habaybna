@@ -227,7 +227,7 @@ export default {
         editor: ClassicEditor,
         watWeLearn: "",
         editorConfig: {
-          // The configuration of the editor.
+          enterMode:"br"
         },
         coverImage: "",
         promoVideo: "",
