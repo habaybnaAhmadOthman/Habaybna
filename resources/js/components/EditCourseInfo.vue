@@ -206,7 +206,7 @@ export default {
       this.specialists = resp.data.specialists;
       var course_id = this.$router.currentRoute.params.data;
 
-      axios.get("/admin/edit-course/" + course_id).then((resp) => {
+      axios.get("/api/admin/edit-course/" + course_id).then((resp) => {
         if (resp.status == 200) {
           this.tags = resp.data.coursecat;
           this.SpecialistTags = resp.data.courseProviders;
@@ -282,7 +282,7 @@ export default {
         },
       };
       axios
-        .post("/admin/edit-course/" + this.courseId, formData)
+        .post("/api/admin/edit-course/" + this.courseId, formData)
         .then((response) => {
           if (response.status == 200) {
             this.$Message.success("Course Updated success");
