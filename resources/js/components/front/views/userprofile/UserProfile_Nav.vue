@@ -47,7 +47,6 @@ export default {
     methods: {
         closeNavMenu() {
             document.querySelector(".user-side-nav").classList.remove("active");
-            document.querySelector("body").classList.remove("overflow-hidden");
         },
         logout(){
             this.$store.dispatch('user/logout');

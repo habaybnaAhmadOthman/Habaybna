@@ -20,6 +20,7 @@ import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 import HomePage from "./components/front/pages/HomePage.vue";
+import trainingCoursesPage from "./components/front/pages/trainingCoursesPage.vue";
 // courses
 import CoursePage from "./components/front/pages/courses/CoursePage.vue";
 import CourseVideoPage from "./components/front/pages/courses/CourseVideo.vue";
@@ -115,13 +116,17 @@ const routes = [
         component: HomePage,
         name: "home"
     },
+    {
+        path: "/training-courses",
+        component: trainingCoursesPage,
+        name: "trainingCourses"
+    },
     // *****************
     // auth pages
     {
         path: "/signup",
         component: RegisterPage,
         meta: {
-            header: false,
             anonymous: true
         }
     },
@@ -129,7 +134,6 @@ const routes = [
         path: "/parent-complete-registration",
         component: RegisterParentComplete,
         meta: {
-            header: false,
             requiresAuth: true
         }
     },
@@ -137,7 +141,6 @@ const routes = [
         path: "/specialist-complete-registration",
         component: RegisterSpecialistComplete,
         meta: {
-            header: false,
             requiresAuth: true
         }
     },
@@ -145,7 +148,6 @@ const routes = [
         path: "/other-complete-registration",
         component: RegisterOtherComplete,
         meta: {
-            header: false,
             requiresAuth: true
         }
     },
@@ -153,7 +155,6 @@ const routes = [
         path: "/signin",
         component: LoginPage,
         meta: {
-            header: false,
             requiresAuth: false,
             anonymous: true
         },
@@ -164,15 +165,14 @@ const routes = [
         path: "/profile",
         component: UserProfile_Template,
         meta: {
-            requiresAuth: true,
-            header: false
+            requiresAuth: true
         },
         children: [
             {
                 path: "my-account",
                 component: UserProfile_MyAccount,
                 meta: {
-                    header: false
+                    
                 },
                 name: 'myAccount'
             }
@@ -184,7 +184,6 @@ const routes = [
         path: "/courses/:course",
         component: CoursePage,
         meta: {
-            header: false,
             requiresAuth: false
         },
         props: true
@@ -193,7 +192,6 @@ const routes = [
         path: "/courses/:course/:lesson",
         component: CourseVideoPage,
         meta: {
-            header: false,
             requiresAuth: true
         },
         props: true

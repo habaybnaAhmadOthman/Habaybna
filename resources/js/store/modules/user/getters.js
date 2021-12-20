@@ -8,6 +8,9 @@ export default {
     openAvatarModal(state) {
         return state.openAvatarModal;
     },
+    avatar(state) {
+        return state.avatar;
+    },
     userData(state) {
         const obj = {
             firstName: state.firstName,

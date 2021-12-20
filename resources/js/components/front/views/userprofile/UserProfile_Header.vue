@@ -67,7 +67,6 @@ export default {
     methods: { 
         openNavMenu(){
             document.querySelector('.user-side-nav').classList.add('active')
-            document.querySelector("body").classList.add("overflow-hidden");
         },
         openUserImageModal(){
             this.$store.commit('user/openAvatarModal',true);

@@ -1,71 +1,73 @@
 <template>
-    <header v-if="$route.meta.header != false" id="header" class="">
+    <header id="header" class="pt-5 pb-5">
         <div class="d-flex align-center space-between">
             <div class="d-flex align-center">
-                <div class="logo">
-                    <img src="/images/siteImgs/header/logo.png" />
+                <div class="logo d-flex">
+                    <img src="/images/siteImgs/header/logo.png" width="120" />
                 </div>
-                <menu class="d-flex align-center main-menu">
-                    <router-link
-                        class="white-i nowrap p-side-10 h-100 flex-all bold"
-                        to="/"
-                        >الرئيسية</router-link
-                    >
-                    <router-link
+                <div class="do">
+                    <menu class="d-flex align-center main-menu">
+                        <router-link
+                            class="white-i nowrap p-side-10 h-100 flex-all bold"
+                            to="/"
+                            >الرئيسية</router-link
+                        >
+                        <router-link
                             class="white-i nowrap p-side-10 h-100 flex-all bold"
                             to="/profile"
                             >حسابي</router-link
                         >
-                    <div class="dropdown relative h-100 flex-all">
+                        <div class="dropdown relative h-100 flex-all">
+                            <router-link
+                                class="white-i nowrap p-side-10 h-100 flex-all bold"
+                                to="/"
+                                >مكتبة حبايبنا</router-link
+                            >
+                            <aside class="radius-5 overflow-hidden trans">
+                                <router-link
+                                    class="white nowrap d-block trans pt-15 pb-15 p-5"
+                                    to="/"
+                                    >الفيديوهات</router-link
+                                >
+                                <router-link
+                                    class="white nowrap d-block trans pt-15 pb-15 p-5"
+                                    to="/"
+                                    >المقالات</router-link
+                                >
+                                <router-link
+                                    class="white nowrap d-block trans pt-15 pb-15 p-5"
+                                    to="/"
+                                    >مقدمي المحتوى</router-link
+                                >
+                                <router-link
+                                    class="white nowrap d-block trans pt-15 pb-15 p-5"
+                                    to="/"
+                                    >شارك معنا</router-link
+                                >
+                            </aside>
+                        </div>
                         <router-link
                             class="white-i nowrap p-side-10 h-100 flex-all bold"
                             to="/"
-                            >مكتبة حبايبنا</router-link
+                            >دليل حبايبنا</router-link
                         >
-                        <aside class="radius-5 overflow-hidden trans">
-                            <router-link
-                                class="white nowrap d-block trans pt-15 pb-15 p-5"
-                                to="/"
-                                >الفيديوهات</router-link
-                            >
-                            <router-link
-                                class="white nowrap d-block trans pt-15 pb-15 p-5"
-                                to="/"
-                                >المقالات</router-link
-                            >
-                            <router-link
-                                class="white nowrap d-block trans pt-15 pb-15 p-5"
-                                to="/"
-                                >مقدمي المحتوى</router-link
-                            >
-                            <router-link
-                                class="white nowrap d-block trans pt-15 pb-15 p-5"
-                                to="/"
-                                >شارك معنا</router-link
-                            >
-                        </aside>
-                    </div>
-                    <router-link
-                        class="white-i nowrap p-side-10 h-100 flex-all bold"
-                        to="/"
-                        >دليل حبايبنا</router-link
-                    >
-                    <router-link
-                        class="white-i nowrap p-side-10 h-100 flex-all bold"
-                        to="/"
-                        >إسأل الأخصائيين</router-link
-                    >
-                    <router-link
-                        class="white-i nowrap p-side-10 h-100 flex-all bold"
-                        to="/"
-                        >من نحن</router-link
-                    >
-                    <router-link
-                        class="white-i nowrap p-side-10 h-100 flex-all bold"
-                        to="/"
-                        >الدورات التدريبية</router-link
-                    >
-                </menu>
+                        <router-link
+                            class="white-i nowrap p-side-10 h-100 flex-all bold"
+                            to="/"
+                            >إسأل الأخصائيين</router-link
+                        >
+                        <router-link
+                            class="white-i nowrap p-side-10 h-100 flex-all bold"
+                            to="/"
+                            >من نحن</router-link
+                        >
+                        <router-link
+                            class="white-i nowrap p-side-10 h-100 flex-all bold"
+                            to="/training-courses"
+                            >الدورات التدريبية</router-link
+                        >
+                    </menu>
+                </div>
             </div>
             <LeftSide :isLoggedIn="isLoggedIn"></LeftSide>
         </div>
@@ -107,14 +109,13 @@ header {
     top: 0;
     width: 100%;
     z-index: 10;
-    background:#000;
+    background: #000;
 }
 .main-menu {
     align-self: stretch;
 }
 .main-menu > a,
 .main-menu .dropdown > a {
-    min-width: 112px;
     padding: 0 10px;
 }
 .dropdown > aside {
@@ -138,5 +139,10 @@ header {
 .dropdown:hover > aside {
     visibility: visible;
     opacity: 1;
+}
+@media (max-width: 767px) {
+    .logo img {
+        width:90px;
+    }
 }
 </style>
