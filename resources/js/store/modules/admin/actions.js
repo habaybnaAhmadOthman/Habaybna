@@ -63,6 +63,15 @@ export default {
             return resp.data
 
         },
+        async changeStatus(context,payload){
+            const resp = await callApi('POST','/api/admin/user-status/'+payload)
+            if(resp.status != 200){
+                const error = new Error("fail to create profile data");
+                throw error;
+            }
+            return resp.data
+
+        },
         async deleteCourse(context,payload){
             const resp = await callApi('POST','/api/admin/delete-course/'+payload)
             if(resp.status != 200){
