@@ -216,4 +216,25 @@ class UserController extends Controller
 
     }
     }
+
+    public function changeStatus($id)
+    {
+        try{
+            $user = User::findorfail($id);
+                if($target = $user->user_data){
+                    $target->status = !$target->status;
+                    $target->save();
+                }
+
+            return response()->json('changged',200);
+
+        } catch (ModelNotFoundException $e){
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
+           ]);
+
+    }
+    }
 }

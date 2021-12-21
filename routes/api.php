@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         //users
         Route::post('/delete-user/{id}','UserController@delete');
+        Route::post('/user-status/{id}','UserController@changeStatus');
 
 
        // parent route

@@ -26,11 +26,17 @@ th {
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
-          <th scope="col">الاسم الاول</th>
+          <th class="sortted" scope="col" v-on:click="sortTable('name')">
+            الاسم الاول
+          </th>
           <th scope="col">الهاتف</th>
           <th scope="col">الايميل</th>
-          <th scope="col">الحالة</th>
-          <th scope="col">الجنس</th>
+          <th scope="col" class="sortted" v-on:click="sortTable('status')">
+            الحالة
+          </th>
+          <th class="sortted" scope="col" v-on:click="sortTable('gender')">
+            الجنس
+          </th>
           <th scope="col">التخصص</th>
           <th scope="col">الاجراءات</th>
         </tr>
@@ -41,7 +47,24 @@ th {
           <td>{{ specialist.firstName }}</td>
           <td>{{ specialist.user.phone }}</td>
           <td>{{ specialist.user.email }}</td>
-          <td>{{ specialist.status ? "فعّال" : "غير فعّال" }}</td>
+          <td class="status">
+            <Button
+              type="success"
+              ghost
+              v-if="specialist.status"
+              v-on:click="changeStatus(index, specialist.user_id)"
+            >
+              <span>نشط</span>
+            </Button>
+            <Button
+              type="error"
+              ghost
+              v-if="!specialist.status"
+              v-on:click="changeStatus(index, specialist.user_id)"
+            >
+              <span>غير نشط</span>
+            </Button>
+          </td>
           <td>{{ specialist.gender == "m" ? "ذكر" : "انثى" }}</td>
           <td>{{ specialist.specialization }}</td>
           <td>
@@ -53,9 +76,9 @@ th {
             >
             <!-- <Button type="dashed" size="small">courses</Button>
             <Button type="dashed" size="small">calls</Button> -->
-            <Button @click="deleteDaialog(specialist.user_id, index)"
-              >حذف</Button
-            >
+            <Button @click="deleteDaialog(specialist.user_id, index)">
+              <Icon size="20" color="red" type="md-trash" />
+            </Button>
           </td>
         </tr>
       </tbody>
@@ -91,6 +114,7 @@ export default {
       idDeleteUser: "",
       indexDeleteUser: "",
       keyword: "",
+      ascending: false,
     };
   },
   async created() {
@@ -116,6 +140,72 @@ export default {
         this.$Message.success("Successfully delete");
       }, 1500);
       this.specialists.splice(index, 1);
+    },
+    changeStatus(i, id) {
+      this.loading = true;
+
+      const resp = this.$store.dispatch("admin/changeStatus", id);
+      setTimeout(() => {
+        this.$Message.success("تم تغيير الحالة");
+        this.specialists[i].status = !this.specialists[i].status;
+        this.loading = false;
+      }, 1000);
+    },
+    sortTable(type) {
+      if (type == "name") {
+        //   console.log(this.ascending);
+        let isAscending = this.ascending;
+        this.ascending = !this.ascending;
+        return this.specialists.sort((a, b) =>
+          isAscending
+            ? a.firstName > b.firstName
+              ? 1
+              : b.firstName > a.firstName
+              ? -1
+              : 0
+            : a.firstName < b.firstName
+            ? 1
+            : b.firstName < a.firstName
+            ? -1
+            : 0
+        );
+      }
+      if (type == "status") {
+        //   console.log(this.ascending);
+        let isAscending = this.ascending;
+        this.ascending = !this.ascending;
+        return this.specialists.sort((a, b) =>
+          isAscending
+            ? a.status > b.status
+              ? 1
+              : b.status > a.status
+              ? -1
+              : 0
+            : a.status < b.status
+            ? 1
+            : b.status < a.status
+            ? -1
+            : 0
+        );
+      }
+      if (type == "gender") {
+        //   console.log(this.ascending);
+        let isAscending = this.ascending;
+        this.ascending = !this.ascending;
+        return this.specialists.sort((a, b) =>
+          isAscending
+            ? a.gender > b.gender
+              ? 1
+              : b.gender > a.gender
+              ? -1
+              : 0
+            : a.gender < b.gender
+            ? 1
+            : b.gender < a.gender
+            ? -1
+            : 0
+        );
+      }
     },
   },
   computed: {
