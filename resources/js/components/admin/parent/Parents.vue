@@ -67,7 +67,13 @@ h3 {
             >
             <!-- <Button type="dashed" size="small">courses</Button>
             <Button type="dashed" size="small">calls</Button> -->
-            <Button @click="deleteDaialog(parent.user_id, index)">حذف</Button>
+            <Button @click="deleteDaialog(parent.user_id, index)">
+              <Icon
+                size="20"
+                color="red"
+                type="md-trash"
+              />
+            </Button>
           </td>
         </tr>
       </tbody>

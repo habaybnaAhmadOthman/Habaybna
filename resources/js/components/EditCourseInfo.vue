@@ -2,6 +2,22 @@
 /* .card {
         text-align: right;
     } */
+.ivu-notice-icon {
+  left: 0 !important;
+  font-size: 30px !important;
+}
+.ivu-notice-title {
+  color: #5cbf6c !important;
+}
+.ivu-notice-custom-content {
+  position: relative;
+  padding: 0 5px;
+}
+.ivu-notice-notice {
+  text-align: right !important;
+  padding: 0;
+  color: lawngreen !important;
+}
 </style>
 <template>
   <div class="profile">
@@ -154,7 +170,7 @@
                   name="price"
                 />
               </div>
-                            <div class="form-group admin-control">
+              <div class="form-group admin-control">
                 <div class="">
                   <div class="w-100">
                     <label class="form-control-label">مقدمي الدورة</label>
@@ -182,8 +198,16 @@
                 :loading="loading"
                 @click="formSubmit"
               >
-                <span v-if="!loading">Update</span>
-                <span v-else>Creating...</span>
+                <span v-if="!loading">تعديل</span>
+                <span v-else>تعديل...</span>
+              </Button>
+              <Button
+                :style="{ float: 'left' }"
+                type="info"
+                to="/admin/courses"
+
+              >
+                رجوع
               </Button>
             </form>
           </div>
@@ -211,7 +235,6 @@ export default {
           this.tags = resp.data.coursecat;
           this.SpecialistTags = resp.data.courseProviders;
           this.courseId = course_id;
-          console.log(resp.data.course.courseTitle);
           this.form.courseTitle = resp.data.course.courseTitle;
           this.form.courseCategory = resp.data.course.category_id;
           this.form.courseDescription = resp.data.course.courseDescription;
@@ -242,7 +265,7 @@ export default {
       },
       tags: "",
       categories: [],
-      SpecialistTags:"",
+      SpecialistTags: "",
       specialists: [],
 
       loading: false,
@@ -262,8 +285,10 @@ export default {
       e.preventDefault();
       let tagIDs = [];
       let specIDs = [];
+      console.log(this.tags);
       this.tags.forEach((item) => tagIDs.push(item.id));
       this.SpecialistTags.forEach((item) => specIDs.push(item.user_id));
+      console.log("xpe", specIDs);
       let formData = new FormData();
       formData.append("title", this.form.courseTitle);
       formData.append("category", tagIDs);
@@ -285,14 +310,19 @@ export default {
         .post("/api/admin/edit-course/" + this.courseId, formData)
         .then((response) => {
           if (response.status == 200) {
-            this.$Message.success("Course Updated success");
-
+            // this.$Message.success("Course Updated success");
+            this.success();
             this.loading = false;
           }
         })
         .catch((error) => {
           return 404;
         });
+    },
+    success(nodesc) {
+      this.$Notice.success({
+        title: "تم حفظ التغييرات بنجاح",
+      });
     },
   },
 };

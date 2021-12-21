@@ -50,7 +50,7 @@ class Courses extends Model
             // dd('providers',$this->courseProvider);
             foreach ($this->courseProvider as $one) {
                 $courseProviders[] = [
-                    'id'=>$one->specialist->user_id,
+                    'user_id'=>$one->specialist->user_id,
                     'firstName'=>$one->specialist->firstName,
                     'avatar'=>$one->specialist->avatar,
                     'specialization'=>$one->specialist->specialization,

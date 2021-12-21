@@ -299,7 +299,7 @@ class CourseController extends Controller
             $video->status= $request->is_publish == 'true' ? true : false;
             $video->description= $request->description;
             $video->title= $request->title ;
-        $video->url= $url !== "" ? $url : '';
+            $video->url= $url ? $url :$video->url;
 
             $video->save();
         return response()->json([
@@ -561,6 +561,58 @@ class CourseController extends Controller
        ]);
 
    }
+}
+
+public function deleteCourse($id)
+{
+    try {
+        $course = Courses::findorfail($id) ;
+
+        // delete course videos
+        if(count($course->videos) > 0)
+        {
+            foreach ($course->videos as $one) {
+
+                $one->delete();
+            }
+        }
+        // delete course providers
+        if(count($course->courseProvider) > 0)
+        {
+            foreach ($course->courseProvider as $one) {
+
+                $one->delete();
+            }
+        }
+        // delete course categories
+        if(count($course->courseCategories) > 0)
+        {
+            foreach ($course->courseCategories as $one) {
+
+                $one->delete();
+            }
+        }
+
+
+
+        // delete course quiz
+            // code ..
+
+        //delete course certifcate
+
+        // delete the course
+        $course->delete();
+
+        return response()->json(200);
+
+    }catch (ModelNotFoundException $e){
+        return response()->json([
+            'msg'=>'faild',
+            'status'=>false,
+            404
+       ]);
+    }
+
 }
 
 }
