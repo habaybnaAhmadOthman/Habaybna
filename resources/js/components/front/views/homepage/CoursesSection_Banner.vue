@@ -1,9 +1,9 @@
 <template>
-    <div class="course-banner mb-50">
+    <div class="course-banner mb-50 relative">
         <div class="container h-100">
-            <div class="flex-all flex-column h-100 white">
-                <h2 class="font-40">أهلا بك في زاوية التعلم المخصصة لك</h2>
-                <p class="w-70 white font-20 center pre-line desc">
+            <div class="flex-all flex-column h-100 white z-1 center-p p-side-12-p">
+                <h2 class="font-40 font-28-p">أهلا بك في زاوية التعلم المخصصة لك</h2>
+                <p class="w-70 white font-20 center pre-line desc w-100-p font-18-p">
                     لأن تمكين طفلك يحتاج إلى وقت، تدريب وتعلم مستمر 
                     أفضل الآخصائيين يقدمون لك التدريب لتعليم طفلك مهارات جديدة
                 </p>
@@ -17,13 +17,31 @@ export default {};
 
 <style scoped>
 .course-banner {
-    height: 270px;
-    background-image: url(https://media.istockphoto.com/photos/blue-abstract-background-or-texture-picture-id1138395421?k=20&m=1138395421&s=612x612&w=0&h=FPYxPgxJBNucc79Z3fxAehsW6gvjw5jP17CJMsBRjGM=);
+    height: 70vh;
+    background-image: url(/images/courses-bg.JPG);
     background-attachment: fixed;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: contain;
+    background-position: 70% -50%;
+}
+.course-banner:before {
+    content: '';
+    background: rgb(102 0 102 / 50%);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
 }
 .desc {
   margin-top: -25px;
+}
+@media (max-width: 767px) {
+    .course-banner {
+        height: 50vh;
+        background-attachment:inherit;
+        background-size: cover;
+        background-position: center;
+    }
 }
 </style>

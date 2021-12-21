@@ -21,12 +21,12 @@
         <template v-if="!isLoggedIn">
             <router-link
                 to="/signup"
-                class="signin-box-btn pr-30 relative bold white"
+                class="signin-box-btn pr-30 relative bold white do"
                 >تسجيل</router-link
             >
             <router-link
                 to="/signin"
-                class="signin-box-btn pr-30 relative bold white"
+                class="signin-box-btn pr-30 relative bold white do"
                 >تسجيل الدخول</router-link
             >
         </template>
@@ -43,7 +43,7 @@
             class="mo"
             @click="toggleMobileMenu">
             <transition name="swing">
-                <MobileMenu :isLoggedIn="isLoggedIn" @closeMobileMenu="toggleMobileMenu" @logout="logout" v-if="isMobileMenuOpened"></MobileMenu>
+                <MobileMenu :isLoggedIn="isLoggedIn" @closeMobileMenu="toggleMobileMenu" @logout="logout" v-if="isMobileMenuOpened" :userAvatar="userAvatar"></MobileMenu>
             </transition>
     </div>
 </template>

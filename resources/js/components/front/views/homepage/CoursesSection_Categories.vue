@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid p-side-0-p">
         <div class="d-flex flex-wrap">
             <ul class="ks-cboxtags d-flex flex-wrap justify-center mb-50 w-100">
                 <li v-for="(category,index) of filters" :key="category.id" :index="index" class="ml-10 mb-10">
@@ -84,5 +84,11 @@ ul.ks-cboxtags li input[type="checkbox"] {
 ul.ks-cboxtags li input[type="checkbox"] {
     position: absolute;
     opacity: 0;
+}
+@media (max-width: 767px) {
+    ul.ks-cboxtags li label[data-v-3023a41f] {
+        padding: 4px 14px;
+        min-width: auto;
+    }
 }
 </style>

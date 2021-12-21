@@ -165,10 +165,10 @@ export default {
 <style scoped>
 .user-input,
 .password-input {
-    background-image: url(/images/logo.png);
+    background-image: url(/images/user-icon-red.svg);
     background-repeat: no-repeat;
-    background-size: 40px 40px;
-    background-position: 20px center;
+    background-size: 25px 25px;
+    background-position: 10px center;
 }
 .password-input {
     background-image: url(/images/logo.png);

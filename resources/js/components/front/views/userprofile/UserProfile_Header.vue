@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <img
-                        src="/images/siteImgs/header/logo.png"
+                        src="/images/bars-icon.svg"
                         width="20"
                         height="20"
                         @click="openNavMenu"

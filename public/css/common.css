@@ -650,6 +650,9 @@ a:hover {
     color: #660066;
 }
 .blue {
+    color: #2BB7C8;
+}
+.blue-2 {
     color: #0043ff;
 }
 .gray {
@@ -745,6 +748,9 @@ a:hover {
     .mt-0-p {
         margin-top: 0;
     }
+    .mt-0-p-i {
+        margin-top: 0!important;
+    }
     .mt-10-p {
         margin-top: 10px;
     }
@@ -759,6 +765,10 @@ a:hover {
     }
     .mb-15-p {
         margin-bottom: 15px;
+    }
+    .p-side-0-p {
+        padding-left: 0!important;
+        padding-right: 0!important;
     }
     .pt-0-p {
         padding-top: 0;

@@ -2,7 +2,7 @@
     <div class="d-flex videos-list flex-wrap">
         <template v-if="filteredCourses.length">
             <div
-                class="card-video relative"
+                class="card-video relative w-100-p"
                 v-for="(course, index) in filteredCourses"
                 :key="index"
             >
@@ -27,7 +27,7 @@
                             <img
                                 width="36"
                                 height="36"
-                                src="https://www.arabiaweather.com/farms/assets/images/favourite-add.svg"
+                                src="/images/heart-icon.svg"
                                 class="add pointer"
                             />
                             <img
@@ -41,7 +41,7 @@
                     <!-- card body -->
                     <div class="body d-flex flex-column h-100 space-between">
                         <div class="info pt-15 p-side-10 pb-15">
-                            <p class="main-color font-20 bold two-line -title mb-5">
+                            <p class="main-color font-20 bold two-line -title mb-5 mb-10-p">
                                 {{ course.title }}
                             </p>
                             <p
@@ -216,6 +216,9 @@ export default {
 @media (max-width: 1100px) {
     .card-video {
         width: 32%;
+    }
+    .-title {
+        height:auto;
     }
 }
 </style>

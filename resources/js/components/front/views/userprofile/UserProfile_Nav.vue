@@ -1,9 +1,9 @@
 <template>
     <aside class="user-side-nav bg-white z-1">
         <img
-            src="/images/siteImgs/header/logo.png"
-            width="20"
-            height="20"
+            src="/images/close-icon.svg"
+            width="30"
+            height="30"
             @click="closeNavMenu"
             class="close-nav-menu mo"
         />

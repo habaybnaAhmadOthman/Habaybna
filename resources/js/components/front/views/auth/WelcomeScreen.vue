@@ -25,7 +25,7 @@
             </div>
         </form>
         <p class="font-18 mt-50 bold">يمكنك أيضاً:</p>
-        <div class="d-flex">
+        <div class="d-flex mb-15-p">
             <router-link to="/" class="main-color underline font-16"
                 >عودة الى الرئيسية</router-link
             >

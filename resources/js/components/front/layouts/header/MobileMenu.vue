@@ -1,14 +1,22 @@
 <template>
     <aside class="user-side-nav bg-white z-1">
         <img
-            src="/images/siteImgs/header/logo.png"
-            width="20"
-            height="20"
+            src="/images/close-icon.svg"
+            width="30"
+            height="30"
             @click="closeNavMenu"
             class="close-nav-menu mo"
         />
+        
         <ul class="user-side-nav-list">
-            <slot></slot>
+            <li v-if="isLoggedIn" class="center">
+                <img
+                    :src="userAvatar"
+                    width="70"
+                    height="70"
+                    class="user-avatar rounded object-fit"
+                />
+            </li>
             <li>
                 <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/" @click.native="closeNavMenu"
                     >الصفحة الرئيسية</router-link
@@ -52,7 +60,7 @@
 <script>
 export default {
     emits: ["closeMobileMenu", "logout"],
-    props: ['isLoggedIn'],
+    props: ['isLoggedIn', 'userAvatar'],
     methods: {
         closeNavMenu() {
             this.$emit("closeMobileMenu");
@@ -77,7 +85,7 @@ export default {
 .user-side-nav-list {
     padding-top: 57px;
 }
-.user-side-nav li > * {
+.user-side-nav li > *:not(img) {
     border-right: 4px solid transparent;
     color: #212529;
 }
@@ -104,6 +112,9 @@ export default {
         position: absolute;
         top: 20px;
         right: 20px;
+    }
+    .user-avatar {
+        border: 2px solid #660066;
     }
 }
 </style>
