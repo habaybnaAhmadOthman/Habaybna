@@ -25,7 +25,7 @@
         <Input
           type="text"
           v-model="keyword"
-          placeholder="ابحث عن العنوان الدورة"
+          placeholder="ابحث عن عنوان الدورة"
         />
       </div>
     </div>

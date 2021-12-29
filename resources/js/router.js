@@ -100,11 +100,11 @@ const routes = [
         component: ShowOther,
         name: "ShowOther"
     },
-    {
-        path: "/admin/course-create",
-        component: VideoInfoComponent,
-        name: "VideoInfoComponent"
-    },
+    // {
+    //     path: "/admin/course-create",
+    //     component: VideoInfoComponent,
+    //     name: "VideoInfoComponent"
+    // },
     {
         path: "/admin/course-edit/:data",
         component: EditCourseInfo,

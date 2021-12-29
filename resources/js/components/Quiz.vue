@@ -125,45 +125,6 @@ select {
       </Button>
       <div v-if="hasQuiz" class="sub-title">
         <div class="all-questions">
-          <!-- <Collapse v-model="value1">
-            <Panel
-              v-if="hasQuiz"
-              v-for="(question, index) in questions"
-              :key="index"
-            >
-              {{ question.title }}
-              <div slot="content">
-                <div v-for="(answer, i) in question.answers" :key="i">
-                  <strong v-if="answer.is_correct">Correct Answer: </strong>
-                  <p class="correct-answer" v-if="answer.is_correct">
-                    {{ correct_answer ? correct_answer : answer.title }}
-                  </p>
-                </div>
-                <div
-                  v-if="edit_answer.index === index && edit_answer.inEditMood"
-                >
-                  <select @change="changeAnswer($event, index)" id="ansers">
-                    <option value="" selected>Select correct answer</option>
-                    <option
-                      v-for="(answer, index) in question.answers"
-                      :key="index"
-                      :value="answer.id"
-                    >
-                      {{ answer.title }}
-                    </option>
-                  </select>
-                </div>
-                <div v-if="edit_answer.inEditMood === false">
-                  <Button
-                    type="info"
-                    @click="editAnswerForm(index, question.id)"
-                    >edit</Button
-                  >
-                </div>
-              </div>
-            </Panel>
-          </Collapse> -->
-
           <div
             class="question"
             v-for="(question, index) in questions"
@@ -225,18 +186,6 @@ select {
               >
                 حفظ
               </Button>
-              <!-- <div v-if="edit_answer.index === index && edit_answer.inEditMood">
-                <select @change="changeAnswer($event, index)" id="ansers">
-                  <option value="" selected>Select correct answer</option>
-                  <option
-                    v-for="(answer, index) in question.answers"
-                    :key="index"
-                    :value="answer.id"
-                  >
-                    {{ answer.title }}
-                  </option>
-                </select>
-              </div> -->
             </div>
             <Divider v-if="index !== questions.length - 1" />
           </div>
@@ -276,9 +225,7 @@ export default {
       this.getQuiz(course_id);
     }
   },
-  updated() {
-    // console.log("update");
-  },
+  updated() {},
   data() {
     return {
       value1: "",
@@ -299,21 +246,17 @@ export default {
   },
   methods: {
     changeStatus(qId, index) {
-      //   console.log(qId,index);
       this.$store.dispatch("admin/changeQuestionStatus", qId);
       this.questions[index].status = !this.questions[index].status;
     },
     deleteQuestionDialog(index, qId) {
-      console.log(index, qId);
       this.dialogDelete = true;
       this.deletedQuestion.question_id = qId;
       this.deletedQuestion.index = index;
       //   this.questions[index].status = !this.questions[index].status;
-      //   console.log(qId,index);
       //   this.$store.dispatch("admin/deleteQuestion", qId);
     },
     deleteQuestion(data) {
-      console.log("data", data.question_id);
       const resp = this.$store.dispatch(
         "admin/deleteQuestion",
         data.question_id
@@ -326,7 +269,6 @@ export default {
       }, 1500);
     },
     setAnswerIndex(qIndex, aIndex) {
-      //   console.log('question:',this.questions[qIndex]);
       let qID = this.questions[qIndex].id;
       let aId = this.questions[qIndex].answers[aIndex].id;
 
@@ -359,41 +301,26 @@ export default {
           var ele = this.questions.map((question, index) => {
             if (question.id == res.question_id) {
               document.getElementsByName(index).forEach((e) => {
-                console.log(e.tagName);
                 e.disabled = true;
                 if (e.tagName !== "INPUT") e.style.display = "none";
               });
             }
           });
         })
-        .catch((e) => {
-          console.log(e);
-        });
+        .catch((e) => {});
     },
     getQuiz(course_id) {
       this.$store.dispatch("admin/getCourseQuiz", course_id).then((res) => {
-        // console.log("quiz", res.quiz);
         if (!res.quiz) {
           this.hasQuiz = false;
         } else {
           this.questions = res.quiz;
           this.courseTitle = res.course_title;
           this.hasQuiz = true;
-          //   console.log(this.questions);
         }
       });
-      //   axios.get("/api/admin/get-quiz/" + course_id).then((resp) => {
-      //     if (resp.status == 200) {
-      //       this.quizTitle = resp.data[0].quiz_title;
-      //       this.courseTitle = resp.data[0].course_title;
-      //       this.questions = resp.data[0].quesiotns;
-      //       console.log(this.questions[0].answers);
-      //       this.hasQuiz = true;
-      //     }
-      //   });
     },
     editAnswerForm(index, questionId) {
-      //   console.log("index:", index, "id:", questionId);
       let enableIds = document.getElementsByName(index);
       enableIds.forEach((e) => {
         e.disabled = false;

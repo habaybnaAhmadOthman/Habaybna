@@ -39,18 +39,6 @@
                   * يجب تعبئة هذا الحقل
                 </span>
               </div>
-              <!-- <div class="form-group">
-                <strong>فئة الدورة</strong>
-                <select class="form-control" v-model="form.courseCategory">
-                  <option
-                    v-for="(category, index) in categories"
-                    :key="index"
-                    :value="category.id"
-                  >
-                    {{ category.title }}
-                  </option>
-                </select>
-              </div> -->
               <div class="form-group admin-control">
                 <div class="">
                   <div class="w-100">
@@ -143,6 +131,9 @@
                     v-model="form.is_publish"
                   />
                   <label for="is_publish_2"> لا تنشر الدورة </label>
+                  <span class="error" v-if="!this.formValidation.is_publish">
+                    * يجب اختيار الحالة
+                  </span>
                 </div>
               </div>
               <div class="form-group" :style="{ margin: '10px' }">
@@ -169,6 +160,9 @@
                     />
                     مدفوعة
                   </label>
+                  <span class="error" v-if="!this.formValidation.is_free">
+                    * يجب اختيار نوع الدورة
+                  </span>
                 </div>
               </div>
               <div class="form-group">
@@ -178,7 +172,9 @@
                   class="form-control"
                   v-model="form.coursePrice"
                   name="price"
+                  :disabled="form.is_free == 1 ? true : false"
                 />
+
                 <span class="error" v-if="!this.formValidation.coursePrice">
                   * يجب تعبئة هذا الحقل
                 </span>
@@ -232,7 +228,6 @@ export default {
   async created() {
     const resp = await this.callApi("get", "/api/admin/course-init-data");
     if (resp.status == 200) {
-      console.log(resp.data.categories);
       this.categories = resp.data.categories;
       this.form.specialistsList = resp.data.specialists;
     }
@@ -253,9 +248,9 @@ export default {
         },
         coverImage: "",
         promoVideo: "",
-        coursePrice: "",
-        is_publish: false,
-        is_free: false,
+        coursePrice: 0,
+        is_publish: "",
+        is_free: "",
       },
       categories: [],
       loading: false,
@@ -268,6 +263,8 @@ export default {
         coverImage: true,
         promoVideo: true,
         coursePrice: true,
+        is_publish: true,
+        is_free: true,
       },
       isValidToSubmit: true,
     };
@@ -282,7 +279,6 @@ export default {
     },
     async formSubmit(e) {
       this.validatForm();
-      console.log("form.tags", this.isValidToSubmit);
       if (this.isValidToSubmit) {
         this.loading = true;
         let self = this.$router;
@@ -294,8 +290,6 @@ export default {
         this.form.courseCategory.forEach((item) =>
           CategorytagIDs.push(item.id)
         );
-        console.log(this.form.tags, "tags");
-
         e.preventDefault();
         let formData = new FormData();
         formData.append("title", this.form.courseTitle);
@@ -313,7 +307,6 @@ export default {
           "admin/storeCourseInfo",
           formData
         );
-        console.log("resp", resp, resp.course_id);
         this.$Message.success("تم انشاء الدورة");
         self.push({
           name: "UploadVideo",
@@ -323,7 +316,6 @@ export default {
       }
     },
     validatForm() {
-      console.log("xxxx");
       if (this.form.courseTitle == "") {
         this.formValidation.courseTitle = false;
       } else {
@@ -349,11 +341,16 @@ export default {
       } else {
         this.formValidation.promoVideo = true;
       }
-      //   if (this.form.promoVideo == "") {
-      //     this.formValidation.promoVideo = false;
-      //   } else {
-      //     this.formValidation.courseTitle = true;
-      //   }
+      if (this.form.is_publish == "") {
+        this.formValidation.is_publish = false;
+      } else {
+        this.formValidation.is_publish = true;
+      }
+      if (this.form.is_free == "") {
+        this.formValidation.is_free = false;
+      } else {
+        this.formValidation.is_free = true;
+      }
       if (this.form.coursePrice == "") {
         this.formValidation.coursePrice = false;
       } else {
