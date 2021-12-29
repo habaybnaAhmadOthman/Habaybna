@@ -81,6 +81,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/edit-course/{course_id}','CourseController@updateCoruseInfo');
         Route::post('/delete-course/{course_id}','CourseController@deleteCourse');
 
+        // quize
+
+        Route::get('/get-quiz/{id}','QuizController@getCourseQuiz');
+        Route::post('/edit-answer/{id}','QuizController@editAnswer')->name('editAnswer');
+        Route::post('/question-status/{id}','QuizController@changeQuestionStatus');
+        Route::post('/question-delete/{id}','QuizController@deleteQuestion');
+
+
+
 
 
 

@@ -12,6 +12,20 @@ h1 {
 .admin-form * {
   width: 80%;
 }
+.ivu-icon-ios-arrow-down {
+  text-align: right !important;
+}
+.password {
+  position: relative;
+}
+.password i {
+  position: absolute;
+  width: auto !important;
+  left: 12px;
+  top: 6px;
+  font-size: 20px;
+  cursor: pointer;
+}
 </style>
 <template>
   <div class="profile">
@@ -37,8 +51,7 @@ h1 {
         </FormItem>
         <FormItem prop="relative">
           صلة القرابة
-          <Select v-model="form.relative">
-            <Option value="no" disabled hidden>صلة القرابة</Option>
+          <Select v-model="form.relative" placeholder="اختر صلة القرابة">
             <Option value="parent">أب / أم</Option>
             <Option value="brother">أخ / آخت</Option>
             <Option value="relative">أقرباء</Option>
@@ -47,7 +60,7 @@ h1 {
 
         <FormItem prop="gender">
           الجنس
-          <Select v-model="form.gender">
+          <Select v-model="form.gender" placeholder="اختر الجنس">
             <Option value="m">ذكر</Option>
             <Option value="f">انثى</Option>
           </Select>
@@ -58,7 +71,20 @@ h1 {
         </FormItem>
         <FormItem prop="password">
           كلمة المرور
-          <Input type="password" v-model="form.password"></Input>
+          <div class="password">
+            <Input :type="toggolePassword.type" v-model="form.password">
+            </Input>
+            <Icon
+              v-if="toggolePassword.type == 'text'"
+              type="md-eye"
+              v-on:click="setToggolePassword('password')"
+            />
+            <Icon
+              v-if="toggolePassword.type == 'password'"
+              type="md-eye-off"
+              v-on:click="setToggolePassword('text')"
+            />
+          </div>
         </FormItem>
         <Button type="primary" @click="submitForm('form')">حفظ</Button>
       </Form>
@@ -173,9 +199,17 @@ export default {
           { type: "email", message: "Incorrect email format", trigger: "blur" },
         ],
       },
+      toggolePassword: {
+        type: "password",
+        btnText: "show",
+      },
     };
   },
   methods: {
+    setToggolePassword(type) {
+        console.log(type);
+      this.toggolePassword.type = type;
+    },
     submitForm(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
@@ -191,9 +225,8 @@ export default {
           const resp = this.$store.dispatch("admin/createParent", Obj);
 
           this.$Message.success("تم انشاء حساب أهل");
-                    this.$router.push("/admin/parents");
-
-       } else {
+          this.$router.push("/admin/parents");
+        } else {
           this.$Message.error("تحقق من الحقول المدخلة");
         }
       });

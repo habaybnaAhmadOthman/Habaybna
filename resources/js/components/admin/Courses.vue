@@ -26,7 +26,6 @@
           type="text"
           v-model="keyword"
           placeholder="ابحث عن العنوان الدورة"
-          v-on:on-change="filteredList"
         />
       </div>
     </div>
@@ -49,7 +48,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(course, index) in courses" :key="index">
+        <tr v-for="(course, index) in filteredList" :key="index">
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ course.courseTitle }}</td>
           <td>
@@ -84,7 +83,12 @@
               type="dashed"
               size="small"
               >الاختبار</Button
-            ><Icon size="20" color="red" type="md-trash" @click="deleteDaialog(course.course_id, index)"/>
+            ><Icon
+              size="20"
+              color="red"
+              type="md-trash"
+              @click="deleteDaialog(course.course_id, index)"
+            />
           </td>
         </tr>
       </tbody>
@@ -137,7 +141,7 @@ export default {
       });
     },
 
-        deleteDaialog(id, index) {
+    deleteDaialog(id, index) {
       this.dialogDelete = true;
       this.idDeleteUser = id;
       this.indexDeleteUser = index;
@@ -145,11 +149,14 @@ export default {
     del(index) {
       console.log(this.idDeleteUser);
       this.modal_loading = true;
-      const resp = this.$store.dispatch("admin/deleteCourse", this.idDeleteUser);
+      const resp = this.$store.dispatch(
+        "admin/deleteCourse",
+        this.idDeleteUser
+      );
       setTimeout(() => {
         this.modal_loading = false;
         this.dialogDelete = false;
-      this.courses.splice(index, 1);
+        this.courses.splice(index, 1);
 
         this.$Message.success("Successfully delete");
       }, 1500);
@@ -192,16 +199,24 @@ export default {
         );
       }
     },
-    filteredList(e) {
-        console.log(e)
-      return this.courses.filter((course) => {
-          console.log('filter',course);
-        return course.courseTitle
+    // filteredList(e) {
+    //   console.log(e);
+    //   return this.courses.filter((course) => {
+    //     console.log("filter", course);
+    //     return course.courseTitle
+    //       .toLowerCase()
+    //       .includes(this.keyword.toLowerCase());
+    //   });
+    // },
+  },
+  computed: {
+    filteredList() {
+      return this.courses.filter((other) => {
+        return other.courseTitle
           .toLowerCase()
           .includes(this.keyword.toLowerCase());
       });
     },
   },
-  computed: {},
 };
 </script>

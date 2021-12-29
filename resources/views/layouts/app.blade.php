@@ -36,6 +36,7 @@
             {{-- @include('admin.layouts.flashMessage') --}}
             <main>
                 @yield('content')
+               
             </main>
             @else
             <main>
