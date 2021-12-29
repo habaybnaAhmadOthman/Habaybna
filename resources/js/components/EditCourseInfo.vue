@@ -18,6 +18,9 @@
   padding: 0;
   color: lawngreen !important;
 }
+ .custom label {
+    display:inline-block !important;
+}
 </style>
 <template>
   <div class="profile">
@@ -92,77 +95,51 @@
                   @change="uploadPromoVideo"
                 />
               </div>
-              <div class="form-group">
-                <div class="btn-group" data-toggle="buttons" role="group">
-                  <strong> حالة الدورة </strong>
+              <div class="form-group custom">
+                <label> حالة الدورة :  </label>
 
-                  <div class="form-group" :style="{ margin: '10px' }">
-                    <label class="btn btn-outline btn-success">
-                      <input
-                        type="radio"
-                        id="is_publish_1"
-                        value="1"
-                        v-model="form.is_publish"
-                      />
-                      <i
-                        class="icon wb-check text-active"
-                        aria-hidden="true"
-                      ></i>
-                      انشر الدورة
-                    </label>
-                    <label class="btn btn-outline btn-danger">
-                      <input
-                        type="radio"
-                        id="is_publish_2"
-                        value="0"
-                        v-model="form.is_publish"
-                      />
-                      <i
-                        class="icon wb-check text-active"
-                        aria-hidden="true"
-                      ></i>
-                      لا تنشر الدورة
-                    </label>
-                  </div>
+                <div class="form-group">
+                  <input
+                    type="radio"
+                    id="is_publish_1"
+                    value="1"
+                    v-model="form.is_publish"
+                  />
+                  <label> انشر الدورة </label>
+
+                  <input
+                    type="radio"
+                    id="is_publish_2"
+                    value="0"
+                    v-model="form.is_publish"
+                  />
+
+                  <label> لا تنشر الدورة </label>
                 </div>
               </div>
-              <div class="form-group" :style="{ margin: '10px' }">
-                <div class="btn-group" data-toggle="buttons" role="group">
-                  <strong>نوع الدورة</strong><br />
-                  <div class="from-group">
-                    <label class="btn btn-outline btn-primary">
-                      <input
-                        type="radio"
-                        id="is_free_1"
-                        autocomplete="off"
-                        value="1"
-                        v-model="form.is_free"
-                      />
-                      <i
-                        class="icon wb-check text-active"
-                        aria-hidden="true"
-                      ></i>
-                      مجانية
-                    </label>
-                    <label class="btn btn-outline btn-secondary">
-                      <input
-                        type="radio"
-                        id="is_free_2"
-                        autocomplete="off"
-                        value="0"
-                        v-model="form.is_free"
-                      />
-                      <i
-                        class="icon wb-check text-active"
-                        aria-hidden="true"
-                      ></i>
-                      مدفوعة
-                    </label>
-                  </div>
+              <div class="form-group custom">
+                <label> نوع الدورة : </label>
+                <div class="from-group">
+                  <input
+                    type="radio"
+                    id="is_free_1"
+                    autocomplete="off"
+                    value="1"
+                    v-model="form.is_free"
+                  />
+                  <label> مجانية </label>
+                  <input
+                    type="radio"
+                    id="is_free_2"
+                    autocomplete="off"
+                    value="0"
+                    v-model="form.is_free"
+                  />
+                  <label> مدفوعة </label>
                 </div>
               </div>
               <div class="form-group">
-                <strong>سعر الدورة</strong>
+                <label>سعر الدورة :</label>
                 <input
                   type="number"
                   class="form-control"
@@ -205,7 +182,6 @@
                 :style="{ float: 'left' }"
                 type="info"
                 to="/admin/courses"
-
               >
                 رجوع
               </Button>
@@ -285,10 +261,8 @@ export default {
       e.preventDefault();
       let tagIDs = [];
       let specIDs = [];
-      console.log(this.tags);
       this.tags.forEach((item) => tagIDs.push(item.id));
       this.SpecialistTags.forEach((item) => specIDs.push(item.user_id));
-      console.log("xpe", specIDs);
       let formData = new FormData();
       formData.append("title", this.form.courseTitle);
       formData.append("category", tagIDs);

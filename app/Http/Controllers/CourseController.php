@@ -427,82 +427,13 @@ class CourseController extends Controller
 
    }
 
-   public function storeQuestion(Request $request)
-   {
-    try{
-        $course = Courses::findOrFail($request->course_id);
-        $quiz = Quize::updateOrCreate([
-            'course_id'=>$request->course_id
-        ],
-        [
-              'title'=>$request->title,
-              'status'=>1
-        ]);
-
-        if($quiz){
-            $question = $quiz->questions()->create([
-                'quiz_id'=>$quiz->id,
-                'title'=>$request->question,
-                // 'point'=>5,
-                'status'=>$request->status
-            ]);
-        }
-
-        if($question){
-
-            foreach ($request->answers as $answer) {
-                $question->answers()->create([
-                    'question_id'=>$question->id,
-                    'title'=>$answer,
-                    'is_correct'=>false,
-                ]);
-            }
-        }
-        // dd($question);
-        return response()->json([
-             'msg'=>'success',
-             'question'=>$question->where('id',$question->id)->with('answers')->get(),
-             'status'=>true,
-             200
-        ]);
-    } catch (ModelNotFoundException $e){
-        return response()->json([
-            'msg'=>'faild',
-            'status'=>false,
-            404
-
-       ]);
-    }
-   }
-
-   public function setCorrectAnswer($id)
-   {
-
-
-       try{
-             $answer = Answer::findorfail($id);
-             if($answer) {
-                $answer->is_correct = true;
-                $answer->save();
-             }
-        return response()->json([
-             'msg'=>'success',
-             'status'=>true,
-             200
-        ]);
-    } catch (ModelNotFoundException $e){
-        return response()->json([
-            'msg'=>'faild',
-            'status'=>false,
-            404
-
-       ]);
-    }
-   }
 
 
 
-   
+
+
+
+
 
 public function deleteCourse($id)
 {

@@ -87,6 +87,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/edit-answer/{id}','QuizController@editAnswer')->name('editAnswer');
         Route::post('/question-status/{id}','QuizController@changeQuestionStatus');
         Route::post('/question-delete/{id}','QuizController@deleteQuestion');
+        Route::post('/question-store','QuizController@storeQuestion')->name('question.store');
+        Route::post('/set-correct-answer/{id}','QuizController@setCorrectAnswer')->name('setCorrectAnswer');
 
 
 
