@@ -1,8 +1,27 @@
+<style>
+.radio label {
+  display: inline-block !important;
+  margin: 2px;
+}
+.error {
+  font-size: 16px !important;
+  color: red;
+}
+</style>
 <template>
   <div class="profile">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
+    <div class="row justify-content-center"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div :style="{ display: 'inline-block', width: '100%' }">
+          <Button
+            type="info"
+            :style="{ float: 'left' }"
+            ghost
+            to="/admin/courses"
+          >
+            رجوع
+          </Button>
           <div class="card-header">معلومات عن الدورة</div>
           <div class="card-body">
             <form @submit="formSubmit" enctype="multipart/form-data">
@@ -14,7 +33,11 @@
                   class="form-control"
                   v-model="form.courseTitle"
                   name="title"
+                  required
                 />
+                <span class="error" v-if="!this.formValidation.courseTitle">
+                  * يجب تعبئة هذا الحقل
+                </span>
               </div>
               <!-- <div class="form-group">
                 <strong>فئة الدورة</strong>
@@ -42,10 +65,14 @@
                       label="title"
                       track-by="title"
                       placeholder="يرجى إختيار فئة الدورة"
+                      required
                     ></multiselect>
-                    <p class="main-color mt-5 font-12" v-if="!form.tagsValid">
-                      لا يمكنك ترك هذا الحقل فارغ
-                    </p>
+                    <span
+                      class="error"
+                      v-if="!this.formValidation.courseCategory"
+                    >
+                      * يجب اختيار واحد على الاقل
+                    </span>
                   </div>
                 </div>
               </div>
@@ -56,6 +83,12 @@
                   v-model="form.courseDescription"
                   :config="form.editorConfig"
                 ></ckeditor>
+                <span
+                  class="error"
+                  v-if="!this.formValidation.courseDescription"
+                >
+                  * يجب تعبئة هذا الحقل
+                </span>
               </div>
               <div class="form-group">
                 <strong>ماذا سوف نتعلم</strong>
@@ -64,6 +97,9 @@
                   v-model="form.watWeLearn"
                   :config="form.editorConfig"
                 ></ckeditor>
+                <span class="error" v-if="!this.formValidation.watWeLearn">
+                  * يجب تعبئة هذا الحقل
+                </span>
               </div>
               <div class="form-group">
                 <strong>صورة غلاف الدورة</strong>
@@ -73,6 +109,9 @@
                   class="form-control"
                   @change="uploadCoverImage"
                 />
+                <span class="error" v-if="!this.formValidation.coverImage">
+                  * يجب تعبئة هذا الحقل
+                </span>
               </div>
               <div class="form-group">
                 <strong>فيديو ترويجي للدورة</strong>
@@ -82,84 +121,67 @@
                   class="form-control"
                   @change="uploadPromoVideo"
                 />
+                <span class="error" v-if="!this.formValidation.promoVideo">
+                  * يجب تعبئة هذا الحقل
+                </span>
               </div>
               <div class="form-group">
-                <div class="btn-group" data-toggle="buttons" role="group">
-                  <strong> حالة الدورة </strong>
+                <div class="form-group radio" :style="{ margin: '10px' }">
+                  <label> حالة الدورة : </label>
+                  <input
+                    type="radio"
+                    id="is_publish_1"
+                    value="1"
+                    v-model="form.is_publish"
+                  />
+                  <label for="is_publish_1"> انشر الدورة </label>
 
-                  <div class="form-group" :style="{ margin: '10px' }">
-                    <label class="btn btn-outline btn-success">
-                      <input
-                        type="radio"
-                        id="is_publish_1"
-                        value="1"
-                        v-model="form.is_publish"
-                      />
-                      <i
-                        class="icon wb-check text-active"
-                        aria-hidden="true"
-                      ></i>
-                      انشر الدورة
-                    </label>
-                    <label class="btn btn-outline btn-danger">
-                      <input
-                        type="radio"
-                        id="is_publish_2"
-                        value="0"
-                        v-model="form.is_publish"
-                      />
-                      <i
-                        class="icon wb-check text-active"
-                        aria-hidden="true"
-                      ></i>
-                      لا تنشر الدورة
-                    </label>
-                  </div>
+                  <input
+                    type="radio"
+                    id="is_publish_2"
+                    value="0"
+                    v-model="form.is_publish"
+                  />
+                  <label for="is_publish_2"> لا تنشر الدورة </label>
                 </div>
               </div>
               <div class="form-group" :style="{ margin: '10px' }">
-                <div class="btn-group" data-toggle="buttons" role="group">
-                  <strong>نوع الدورة</strong><br />
-                  <div class="from-group">
-                    <label class="btn btn-outline btn-primary">
-                      <input
-                        type="radio"
-                        id="is_free_1"
-                        autocomplete="off"
-                        value="1"
-                        v-model="form.is_free"
-                      />
-                      <i
-                        class="icon wb-check text-active"
-                        aria-hidden="true"
-                      ></i>
-                      مجانية
-                    </label>
-                    <label class="btn btn-outline btn-secondary">
-                      <input
-                        type="radio"
-                        id="is_free_2"
-                        autocomplete="off"
-                        value="0"
-                        v-model="form.is_free"
-                      />
-                      <i
-                        class="icon wb-check text-active"
-                        aria-hidden="true"
-                      ></i>
-                      مدفوعة
-                    </label>
-                  </div>
+                <div class="from-group radio">
+                  <label>نوع الدورة : </label>
+                  <label>
+                    <input
+                      type="radio"
+                      id="is_free_1"
+                      autocomplete="off"
+                      value="1"
+                      v-model="form.is_free"
+                    />
+
+                    مجانية
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      id="is_free_2"
+                      autocomplete="off"
+                      value="0"
+                      v-model="form.is_free"
+                    />
+                    مدفوعة
+                  </label>
                 </div>
               </div>
               <div class="form-group">
                 <strong>سعر الدورة</strong>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   v-model="form.coursePrice"
                   name="price"
                 />
+                <span class="error" v-if="!this.formValidation.coursePrice">
+                  * يجب تعبئة هذا الحقل
+                </span>
               </div>
               <div class="form-group admin-control">
                 <div class="">
@@ -176,9 +198,9 @@
                       track-by="user_id"
                       placeholder="يرجى إختيار مقدمي الدورة"
                     ></multiselect>
-                    <p class="main-color mt-5 font-12" v-if="!form.tagsValid">
-                      لا يمكنك ترك هذا الحقل فارغ
-                    </p>
+                    <span class="error" v-if="!this.formValidation.tags">
+                      * يجب اختيار واحد على الاقل
+                    </span>
                   </div>
                 </div>
               </div>
@@ -227,15 +249,27 @@ export default {
         editor: ClassicEditor,
         watWeLearn: "",
         editorConfig: {
-          enterMode:"br"
+          enterMode: "br",
         },
         coverImage: "",
         promoVideo: "",
+        coursePrice: "",
         is_publish: false,
         is_free: false,
       },
       categories: [],
       loading: false,
+      formValidation: {
+        tags: true,
+        courseTitle: true,
+        courseCategory: true,
+        courseDescription: true,
+        watWeLearn: true,
+        coverImage: true,
+        promoVideo: true,
+        coursePrice: true,
+      },
+      isValidToSubmit: true,
     };
   },
 
@@ -247,66 +281,111 @@ export default {
       this.form.promoVideo = event.target.files[0];
     },
     async formSubmit(e) {
-      this.loading = true;
-      let self = this.$router;
+      this.validatForm();
+      console.log("form.tags", this.isValidToSubmit);
+      if (this.isValidToSubmit) {
+        this.loading = true;
+        let self = this.$router;
 
-      let tagIDs = [];
-      this.form.tags.forEach((item) => tagIDs.push(item.user_id));
+        let tagIDs = [];
+        this.form.tags.forEach((item) => tagIDs.push(item.user_id));
 
-      let CategorytagIDs = [];
-      this.form.courseCategory.forEach((item) => CategorytagIDs.push(item.id));
-      console.log(this.form.tags, "tags");
+        let CategorytagIDs = [];
+        this.form.courseCategory.forEach((item) =>
+          CategorytagIDs.push(item.id)
+        );
+        console.log(this.form.tags, "tags");
 
-      e.preventDefault();
-      let formData = new FormData();
-      formData.append("title", this.form.courseTitle);
-      formData.append("category", CategorytagIDs);
-      formData.append("description", this.form.courseDescription);
-      formData.append("watWeLearn", this.form.watWeLearn);
-      formData.append("coverImage", this.form.coverImage);
-      formData.append("promoVideo", this.form.promoVideo);
-      formData.append("is_publish", this.form.is_publish);
-      formData.append("is_free", this.form.is_free);
-      formData.append("price", this.form.coursePrice);
-      formData.append("specialists", tagIDs);
+        e.preventDefault();
+        let formData = new FormData();
+        formData.append("title", this.form.courseTitle);
+        formData.append("category", CategorytagIDs);
+        formData.append("description", this.form.courseDescription);
+        formData.append("watWeLearn", this.form.watWeLearn);
+        formData.append("coverImage", this.form.coverImage);
+        formData.append("promoVideo", this.form.promoVideo);
+        formData.append("is_publish", this.form.is_publish);
+        formData.append("is_free", this.form.is_free);
+        formData.append("price", this.form.coursePrice);
+        formData.append("specialists", tagIDs);
 
-      let resp =await this.$store.dispatch("admin/storeCourseInfo", formData);
-      this.$Message.success("Course Created success");
-      console.log(resp);
-      self.push({
-        name: "UploadVideo",
-        params: { data: resp.course_id },
-      });
-      this.loading = false;
-
-      //   const config = {
-      //     headers: {
-      //       "content-type": "multipart/form-data",
-      //       Accept: "application/json",
-      //     },
-      //   };
-      //   axios
-      // .post("/admin/storeCourseInfo", formData)
-      // .then((response) => {
-      //   if (response.status == 200) {
-      //     this.$Message.success("Course Created success");
-
-      // self.push({
-      //   name: "UploadVideo",
-      //   params: { data: response.data.course_id },
-      // });
-      //     this.loading = false;
+        let resp = await this.$store.dispatch(
+          "admin/storeCourseInfo",
+          formData
+        );
+        console.log("resp", resp, resp.course_id);
+        this.$Message.success("تم انشاء الدورة");
+        self.push({
+          name: "UploadVideo",
+          params: { data: resp.data.course_id },
+        });
+        this.loading = false;
+      }
+    },
+    validatForm() {
+      console.log("xxxx");
+      if (this.form.courseTitle == "") {
+        this.formValidation.courseTitle = false;
+      } else {
+        this.formValidation.courseTitle = true;
+      }
+      if (this.form.courseDescription == "") {
+        this.formValidation.courseDescription = false;
+      } else {
+        this.formValidation.courseDescription = true;
+      }
+      if (this.form.watWeLearn == "") {
+        this.formValidation.watWeLearn = false;
+      } else {
+        this.formValidation.watWeLearn = true;
+      }
+      if (this.form.coverImage == "") {
+        this.formValidation.coverImage = false;
+      } else {
+        this.formValidation.coverImage = true;
+      }
+      if (this.form.promoVideo == "") {
+        this.formValidation.promoVideo = false;
+      } else {
+        this.formValidation.promoVideo = true;
+      }
+      //   if (this.form.promoVideo == "") {
+      //     this.formValidation.promoVideo = false;
+      //   } else {
+      //     this.formValidation.courseTitle = true;
       //   }
-      // })
-      // .catch((error) => {
-      //   return 404;
-      // });
+      if (this.form.coursePrice == "") {
+        this.formValidation.coursePrice = false;
+      } else {
+        this.formValidation.coursePrice = true;
+      }
+      if (this.form.courseCategory.length < 1) {
+        this.formValidation.courseCategory = false;
+      } else {
+        this.formValidation.courseCategory = true;
+      }
+      if (this.form.tags.length < 1) {
+        this.formValidation.tags = false;
+      } else {
+        this.formValidation.tags = true;
+      }
+      for (const prob in this.formValidation) {
+        if (Object.hasOwnProperty.call(this.formValidation, prob)) {
+          const element = this.formValidation[prob];
+          if (!element) {
+            this.isValidToSubmit = false;
+            this.$Message.error("يرجى التحقق من الحقول");
+
+            break;
+          }
+        }
+      }
     },
   },
 };
 </script>
 <style>
 .ck-editor__editable {
-  min-height:300px;
+  min-height: 300px;
 }
 </style>

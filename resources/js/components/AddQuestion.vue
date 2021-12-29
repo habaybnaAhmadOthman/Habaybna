@@ -5,17 +5,20 @@
     :rules="ruleValidate"
     :label-width="80"
   >
-    <FormItem label="Title" prop="title">
+    <!-- <FormItem label="Title" prop="title">
       <Input
         v-model="formValidate.title"
         placeholder="Enter Quiz title"
       ></Input>
-    </FormItem>
-    <FormItem label="Question" prop="question">
-      <Input
-        v-model="formValidate.question"
-        placeholder="Enter your Question"
-      ></Input>
+    </FormItem> -->
+    <FormItem prop="question">
+      <label for="">
+        السؤال
+        <Input
+          v-model="formValidate.question"
+          placeholder="Enter your Question"
+        ></Input>
+      </label>
     </FormItem>
     <FormItem label="Answer 1" prop="answers.answer1">
       <Input

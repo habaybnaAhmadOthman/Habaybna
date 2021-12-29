@@ -501,67 +501,8 @@ class CourseController extends Controller
    }
 
 
-   public function getQuiz($id)
-   {
 
-
-       try{
-            $course = Courses::findorfail($id);
-
-            $data = [];
-            $data['course_title'] = $course->courseTitle;
-            $data['quiz_title'] = $course->quiz->title;
-            $question = $course->quiz->questions()->with('answers')->get();
-            $data['quesiotns']=$question;
-
-        return response()->json([
-             'msg'=>'success',
-             'status'=>true,
-             $data,
-             200
-        ]);
-    } catch (ModelNotFoundException $e){
-        return response()->json([
-            'msg'=>'faild',
-            'status'=>false,
-            404
-
-       ]);
-    }
-   }
-   public function editAnswer(Request $request ,$id)
-   {
-       try {
-        $q = Question::findorfail($id) ;
-        foreach ($q->answers as $key) {
-            if($key->id == $request->answerId)
-              {
-                  $answer = $key ;
-                  $key->is_correct = true;
-                  $key->save();
-              }
-              else{
-                  $key->is_correct = false;
-                  $key->save();
-
-              }
-        }
-        return response()->json([
-            'msg'=>'success',
-            'status'=>true,
-            $answer,
-            200
-       ]);
-       } catch (ModelNotFoundException $e){
-        return response()->json([
-            'msg'=>'faild',
-            'status'=>false,
-            404
-
-       ]);
-
-   }
-}
+   
 
 public function deleteCourse($id)
 {

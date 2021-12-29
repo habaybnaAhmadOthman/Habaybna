@@ -74,9 +74,9 @@ class Courses extends Model
             $sum += (0 * 60 * 60) + ($parts[0] * 60) + $parts[1];
         }
 
-        return gmdate("H:i:s", $sum );
+        return gmdate("H:i", $sum );
        }
-       return gmdate("H:i:s", 0 );
+       return gmdate("H:i", 0 );
 
     }
 

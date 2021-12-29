@@ -23,69 +23,75 @@
 .ck.ck-editor__editable_inline {
   text-align: right !important;
   direction: rtl !important;
-
 }
-.ck ol , .ck ul{
-    padding: 20px;
+.ck ol,
+.ck ul {
+  padding: 20px;
 }
 .ck li {
-    list-style: inherit !important;
+  list-style: inherit !important;
 }
 </style>
 <template class="">
-  <Collapse v-model="value1" class="profile">
-    <Panel name="1" v-if="allVideos.haveVideos">
-      قائمة الحلقات ({{ allVideos.count }})
+  <div class="profile">
+    <div :style="{display:'inline-block', width:'100%'}">
+      <Button  type="info" :style="{float:'left'}" ghost to="/admin/courses">
+        رجوع
+      </Button>
+    </div>
+    <Collapse v-model="value1">
+      <Panel name="1" v-if="allVideos.haveVideos">
+        قائمة الحلقات ({{ allVideos.count }})
 
-      <Row :gutter="16" slot="content">
-        <Col
-          span="6"
-          class="video-list"
-          v-for="(video, index) in allVideos.videos"
-          :key="index"
-        >
-          <Card :bordered="false">
-            <p
-              @click="editVideo(index)"
-              slot="title"
-              :style="{ textAlign: 'right' }"
-            >
-              {{ video.title }}
+        <Row :gutter="16" slot="content">
+          <Col
+            span="6"
+            class="video-list"
+            v-for="(video, index) in allVideos.videos"
+            :key="index"
+          >
+            <Card :bordered="false">
+              <p
+                @click="editVideo(index)"
+                slot="title"
+                :style="{ textAlign: 'right' }"
+              >
+                {{ video.title }}
 
-              <Icon type="ios-build-outline" :style="{ float: 'left' }" />
-            </p>
-          </Card>
-        </Col>
-      </Row>
-    </Panel>
-    <Panel name="1" v-model="value1" v-else>
-      قائمة الحلقات
-      <h1 slot="content" class="text-center">لا يوجد حلقات 😢</h1>
-    </Panel>
-    <Panel name="2">
-      أضف حلقة
-      <div class="card" slot="content">
-        <div class="card-body">
-          <form @submit="formSubmit" enctype="multipart/form-data">
-            <div class="form-group">
-              <strong>عنوان الحلقة</strong>
+                <Icon type="ios-build-outline" :style="{ float: 'left' }" />
+              </p>
+            </Card>
+          </Col>
+        </Row>
+      </Panel>
+      <Panel name="1" v-model="value1" v-else>
+        قائمة الحلقات
+        <h1 slot="content" class="text-center">لا يوجد حلقات 😢</h1>
+      </Panel>
+      <Panel name="2">
+        أضف حلقة
+        <div class="card" slot="content">
+          <div class="card-body">
+            <form @submit="formSubmit" enctype="multipart/form-data">
+              <div class="form-group">
+                <strong>عنوان الحلقة</strong>
 
-              <input
-                type="text"
-                class="form-control"
-                v-model="form.videoTitle"
-                name="title"
-              />
-            </div>
-            <div class="form-group">
-              <strong>وصف الحلقة</strong>
-              <ckeditor
-                :editor="form.editor"
-                v-model="form.videoDescription"
-                :config="form.editorConfig"
-              ></ckeditor>
-            </div>
-            <!-- <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="form.videoTitle"
+                  name="title"
+                />
+              </div>
+              <div class="form-group">
+                <strong>وصف الحلقة</strong>
+                <ckeditor
+                  :editor="form.editor"
+                  v-model="form.videoDescription"
+                  :config="form.editorConfig"
+                ></ckeditor>
+              </div>
+              <!-- <div class="form-group">
               <strong>Video cover photo:</strong>
               <input
                 name="coverImage"
@@ -94,52 +100,53 @@
                 @change="uploadCoverImage"
               />
             </div> -->
-            <div class="form-group">
-              <strong>تحميل فيديو الحلقة</strong>
-              <input
-                name="video"
-                type="file"
-                class="cdk-ed form-control"
-                @change="uploadvideo"
-              />
-            </div>
-            <div class="form-group">
+              <div class="form-group">
+                <strong>تحميل فيديو الحلقة</strong>
+                <input
+                  name="video"
+                  type="file"
+                  class="cdk-ed form-control"
+                  @change="uploadvideo"
+                />
+              </div>
+              <div class="form-group">
                 <RadioGroup v-model="form.is_publish" vertical>
                   <Radio label="true">
                     <span>نشر</span>
-                  </Radio >
+                  </Radio>
                   <Radio label="false">
                     <span>عدم النشر</span>
                   </Radio>
                 </RadioGroup>
-            </div>
-            <Button
-              v-if="isUpdate"
-              :style="{ float: 'right' }"
-              type="info"
-              :loading="loading"
-              @click="formSubmit"
-              class="publish"
-            >
-              <span v-if="!loading">Update</span>
-              <span v-else>Updating...</span>
-            </Button>
-            <Button
-              v-else
-              :style="{ float: 'right' }"
-              type="info"
-              ghost
-              :loading="loading"
-              @click="formSubmit"
-            >
-              <span v-if="!loading">Upload</span>
-              <span v-else>Uploading...</span>
-            </Button>
-          </form>
+              </div>
+              <Button
+                v-if="isUpdate"
+                :style="{ float: 'right' }"
+                type="info"
+                :loading="loading"
+                @click="formSubmit"
+                class="publish"
+              >
+                <span v-if="!loading">تعديل</span>
+                <span v-else>جاري التعديل...</span>
+              </Button>
+              <Button
+                v-else
+                :style="{ float: 'right' }"
+                type="info"
+                ghost
+                :loading="loading"
+                @click="formSubmit"
+              >
+                <span v-if="!loading">حفظ</span>
+                <span v-else>حاري الحفظ...</span>
+              </Button>
+            </form>
+          </div>
         </div>
-      </div>
-    </Panel>
-  </Collapse>
+      </Panel>
+    </Collapse>
+  </div>
 </template>
 
 <script>
@@ -153,7 +160,7 @@ export default {
         videoDescription: "",
         editor: ClassicEditor,
         editorConfig: {
-          enterMode:"br"
+          enterMode: "br",
         },
         // coverImage: "",
         video: "",
@@ -191,7 +198,7 @@ export default {
       let self = this.$router;
       e.preventDefault();
       this.form.is_publish = Boolean(this.form.is_publish);
-      console.log('type',typeof this.form.is_publish);
+      console.log("type", typeof this.form.is_publish);
       let formData = new FormData();
       formData.append("title", this.form.videoTitle);
       formData.append("description", this.form.videoDescription);
@@ -206,7 +213,7 @@ export default {
       //       Accept: "application/json",
       //     },
       //   };
-      console.log('form data',this.form.is_publish);
+      console.log("form data", this.form.is_publish);
       if (!this.isUpdate) {
         // alert("add");
         const resp = await this.$store.dispatch("admin/uploadVideo", formData);
@@ -262,7 +269,7 @@ export default {
     getCourseVideos() {
       console.log(this.form.course_id);
       axios
-        .get("/admin/getCourseVideos/" + this.form.course_id)
+        .get("/api/admin/getCourseVideos/" + this.form.course_id)
         .then((response) => {
           this.allVideos.videos = response.data.videos;
           this.allVideos.count = response.data.count;

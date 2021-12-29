@@ -6,7 +6,9 @@ export default {
     state() {
         return {
             userID:null,
-            
+            courseQuiz:null
+
+
         };
     },
     mutations,
