@@ -100,21 +100,21 @@ const routes = [
         component: ShowOther,
         name: "ShowOther"
     },
-    // {
-    //     path: "/admin/course-create",
-    //     component: VideoInfoComponent,
-    //     name: "VideoInfoComponent"
-    // },
+    {
+        path: "/admin/course-create",
+        component: VideoInfoComponent,
+        name: "VideoInfoComponent"
+    },
     {
         path: "/admin/course-edit/:data",
         component: EditCourseInfo,
         name: "EditCourseInfo"
     },
-    {
-        path: "/parent-dashboard/class-room",
-        component: ClassRoom,
-        name: "VideoInfoComponent"
-    },
+    // {
+    //     path: "/parent-dashboard/class-room",
+    //     component: ClassRoom,
+    //     name: "VideoInfoComponent"
+    // },
     {
         path: "/admin/course-quiz/:data",
         component: Quiz,

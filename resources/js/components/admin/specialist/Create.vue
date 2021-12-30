@@ -14,27 +14,56 @@ h1 {
 }
 </style>
 <template>
-  <div class="profile">
-    <h1>انشاء حساب أخصائي</h1>
-    <div class="admin-form">
-      <Form ref="form" :model="form" :rules="ruleValidate" :label-width="80">
+  <div class="flexxx">
+    <div class="question-form-title">
+      <div class="right-side">
+        <h3>ادارة الاخصائيين - انشاء حساب</h3>
+      </div>
+      <div class="left-side">
+        <Button type="info" to="/admin/specialist">رجوع</Button>
+      </div>
+    </div>
+    <Form
+      class="flexxx"
+      ref="form"
+      :model="form"
+      :rules="ruleValidate"
+      :label-width="80"
+    >
+      <div class="question-form">
         <FormItem prop="firstName"
           >الاسم الاول
           <Input v-model="form.firstName" />
         </FormItem>
+      </div>
+
+      <div class="question-form">
         <FormItem prop="lastName"
           >اسم العائلة
           <Input v-model="form.lastName" />
         </FormItem>
+      </div>
+
+      <div class="question-form">
         <FormItem prop="phone"
           >رقم الهاتف
-          <Input
-            type="text"
-            v-model="form.phone"
-            number
-            placeholder="962xxxxxxxxx"
-          ></Input>
+          <div class="form-group ltr mb-30">
+            <VuePhoneNumberInput
+              :translations="{
+                countrySelectorLabel: 'رمز الدولة',
+                phoneNumberLabel: 'رقم الهاتف',
+              }"
+              id="phoneNumber"
+              :default-country-code="'JO'"
+              v-on:update="countryChanged"
+              bind="bindProps"
+              v-model="phone"
+            />
+          </div>
         </FormItem>
+      </div>
+
+      <div class="question-form">
         <FormItem prop="specialization">
           التخصص
           <Select v-model="form.specialization">
@@ -46,7 +75,9 @@ h1 {
             <Option value="تحليل السلوك">تحليل السلوك</Option>
           </Select>
         </FormItem>
+      </div>
 
+      <div class="question-form">
         <FormItem prop="gender">
           الجنس
           <Select v-model="form.gender">
@@ -54,20 +85,45 @@ h1 {
             <Option value="f">انثى</Option>
           </Select>
         </FormItem>
+      </div>
+
+      <div class="question-form">
         <FormItem prop="mail">
           الايميل
           <Input v-model="form.mail" placeholder="البريد الالكتروني"></Input>
         </FormItem>
-        <FormItem prop="password">
-          كلمة المرور
-          <Input type="password" v-model="form.password"></Input>
-        </FormItem>
+      </div>
+
+      <div class="one-item-in-row">
+        <div class="one-item-right">
+          <FormItem prop="password">
+            كلمة المرور
+            <div class="password">
+              <Input :type="toggolePassword.type" v-model="form.password">
+              </Input>
+              <Icon
+                v-if="toggolePassword.type == 'text'"
+                type="md-eye"
+                v-on:click="setToggolePassword('password')"
+              />
+              <Icon
+                v-if="toggolePassword.type == 'password'"
+                type="md-eye-off"
+                v-on:click="setToggolePassword('text')"
+              />
+            </div>
+          </FormItem>
+        </div>
+      </div>
+      <div class="parent-submit">
         <Button type="primary" @click="submitForm('form')">حفظ</Button>
-      </Form>
-    </div>
+      </div>
+    </Form>
   </div>
 </template>
 <script>
+import VuePhoneNumberInput from "vue-phone-number-input";
+import "vue-phone-number-input/dist/vue-phone-number-input.css";
 export default {
   data() {
     const validatePassword = (role, value, callback) => {
@@ -108,7 +164,9 @@ export default {
       }
     };
     return {
+      country: null,
       countryCode: "JO",
+      phone: "",
       form: {
         firstName: "",
         lastName: "",
@@ -156,7 +214,6 @@ export default {
             required: true,
             message: "يرجى تعبئة الحقل",
             trigger: "blur",
-            type: "integer",
           },
         ],
         gender: [
@@ -175,9 +232,21 @@ export default {
           { type: "email", message: "Incorrect email format", trigger: "blur" },
         ],
       },
+      toggolePassword: {
+        type: "password",
+        btnText: "show",
+      },
     };
   },
   methods: {
+    countryChanged(country) {
+      if (country.isValid) {
+        this.form.phone = country.formattedNumber;
+      }
+    },
+    setToggolePassword(type) {
+      this.toggolePassword.type = type;
+    },
     submitForm(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
@@ -200,5 +269,6 @@ export default {
       });
     },
   },
+  components: { VuePhoneNumberInput },
 };
 </script>
