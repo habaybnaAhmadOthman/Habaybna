@@ -1,6 +1,39 @@
 <style>
+.ivu-layout {
+  background-color: #515a6e !important;
+}
+.ivu-layout-content {
+  width: 87%;
+  padding: 14px;
+  min-height: auto !important;
+  margin: auto;
+  border-radius: 5px;
+}
+#phoneNumber-57_country_selector,
+#phoneNumber-57_phone_number {
+  border-radius: 0 !important;
+}
 h1 {
   color: black;
+}
+.flexxx form {
+  justify-content: center;
+  margin: auto;
+}
+.one-item-in-row {
+  text-align: right;
+  width: 80%;
+  justify-content: start !important;
+  padding: 0 14px;
+}
+.one-item-right {
+  width: 49%;
+}
+.parent-submit {
+  display: flex;
+  width: 80%;
+  padding: 0 14px;
+  padding-top: 3%;
 }
 .admin-form {
   width: 70%;
@@ -28,27 +61,61 @@ h1 {
 }
 </style>
 <template>
-  <div class="profile">
-    <h1>انشاء حساب اهالي</h1>
-    <div class="admin-form">
-      <Form ref="form" :model="form" :rules="ruleValidate" :label-width="80">
+  <div class="flexxx">
+    <div class="question-form-title">
+      <div class="right-side">
+        <h3>ادارة الاهالي - انشاء حساب</h3>
+      </div>
+      <div class="left-side">
+        <Button type="info" to="/admin/parents">رجوع</Button>
+      </div>
+    </div>
+
+    <Form
+      ref="form"
+      :model="form"
+      :rules="ruleValidate"
+      :label-width="80"
+      class="flexxx"
+    >
+      <div class="question-form">
         <FormItem prop="firstName"
           >الاسم الاول
           <Input v-model="form.firstName" />
         </FormItem>
+      </div>
+      <div class="question-form">
         <FormItem prop="lastName"
           >اسم العائلة
           <Input v-model="form.lastName" />
         </FormItem>
+      </div>
+      <div class="question-form">
         <FormItem prop="phone"
           >رقم الهاتف
-          <Input
+          <!-- <Input
             type="text"
             v-model="form.phone"
             number
             placeholder="962xxxxxxxxx"
-          ></Input>
+          ></Input> -->
+          <div class="form-group ltr mb-30">
+            <VuePhoneNumberInput
+              :translations="{
+                countrySelectorLabel: 'رمز الدولة',
+                phoneNumberLabel: 'رقم الهاتف',
+              }"
+              id="phoneNumber"
+              :default-country-code="'JO'"
+              v-on:update="countryChanged"
+              bind="bindProps"
+              v-model="phone"
+            />
+          </div>
+          <!-- :default-country-code="countryCode" -->
         </FormItem>
+      </div>
+      <div class="question-form">
         <FormItem prop="relative">
           صلة القرابة
           <Select v-model="form.relative" placeholder="اختر صلة القرابة">
@@ -57,7 +124,8 @@ h1 {
             <Option value="relative">أقرباء</Option>
           </Select>
         </FormItem>
-
+      </div>
+      <div class="question-form">
         <FormItem prop="gender">
           الجنس
           <Select v-model="form.gender" placeholder="اختر الجنس">
@@ -65,34 +133,47 @@ h1 {
             <Option value="f">انثى</Option>
           </Select>
         </FormItem>
+      </div>
+      <div class="question-form">
         <FormItem prop="mail">
           الايميل
           <Input v-model="form.mail" placeholder="البريد الالكتروني"></Input>
         </FormItem>
-        <FormItem prop="password">
-          كلمة المرور
-          <div class="password">
-            <Input :type="toggolePassword.type" v-model="form.password">
-            </Input>
-            <Icon
-              v-if="toggolePassword.type == 'text'"
-              type="md-eye"
-              v-on:click="setToggolePassword('password')"
-            />
-            <Icon
-              v-if="toggolePassword.type == 'password'"
-              type="md-eye-off"
-              v-on:click="setToggolePassword('text')"
-            />
-          </div>
-        </FormItem>
+      </div>
+      <div class="one-item-in-row">
+        <div class="one-item-right">
+          <FormItem prop="password">
+            كلمة المرور
+            <div class="password">
+              <Input :type="toggolePassword.type" v-model="form.password">
+              </Input>
+              <Icon
+                v-if="toggolePassword.type == 'text'"
+                type="md-eye"
+                v-on:click="setToggolePassword('password')"
+              />
+              <Icon
+                v-if="toggolePassword.type == 'password'"
+                type="md-eye-off"
+                v-on:click="setToggolePassword('text')"
+              />
+            </div>
+          </FormItem>
+        </div>
+      </div>
+      <div class="parent-submit">
         <Button type="primary" @click="submitForm('form')">حفظ</Button>
-      </Form>
-    </div>
+      </div>
+    </Form>
   </div>
 </template>
 <script>
+import VuePhoneNumberInput from "vue-phone-number-input";
+import "vue-phone-number-input/dist/vue-phone-number-input.css";
+
 export default {
+  updated() {
+  },
   data() {
     const validatePassword = (role, value, callback) => {
       this.passwordCheck.has_minimum_lenth = this.form.password.length > 7;
@@ -132,7 +213,21 @@ export default {
       }
     };
     return {
+              bindProps: {
+        mode: "international",
+        required: false,
+        enabledCountryCode: true,
+        enabledFlags: true,
+        autocomplete: "off",
+        name: "telephone",
+        maxLen: 25,
+        inputOptions: {
+          showDialCode: true
+        }
+      },
+        country:null,
       countryCode: "JO",
+      phone:'',
       form: {
         firstName: "",
         lastName: "",
@@ -180,7 +275,6 @@ export default {
             required: true,
             message: "يرجى تعبئة الحقل",
             trigger: "blur",
-            type: "integer",
           },
         ],
         gender: [
@@ -206,8 +300,12 @@ export default {
     };
   },
   methods: {
+      countryChanged(country){
+          if(country.isValid){
+              this.form.phone =country.formattedNumber
+          }
+      },
     setToggolePassword(type) {
-        console.log(type);
       this.toggolePassword.type = type;
     },
     submitForm(name) {
@@ -232,5 +330,6 @@ export default {
       });
     },
   },
+  components: { VuePhoneNumberInput },
 };
 </script>

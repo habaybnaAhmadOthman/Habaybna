@@ -42,8 +42,7 @@ select {
 
   margin-bottom: 20px;
 }
-.question-answers {
-}
+
 .ivu-divider-horizontal {
   height: 2px !important;
   background: #a0939385 !important;
@@ -62,7 +61,7 @@ select {
   opacity: 0.6;
   display: inline-block;
   font-family: Ionicons;
-  speak: none;
+  /* speak: none; */
   font-style: normal;
   font-weight: 400;
   font-variant: normal;

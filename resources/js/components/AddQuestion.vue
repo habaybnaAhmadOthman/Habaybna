@@ -1,13 +1,15 @@
 <style>
-.flex {
+.flexxx {
   display: flex;
-  justify-content: end;
   align-items: center;
   /* flex-direction: ; */
   flex-wrap: wrap;
+  justify-content: center;
 }
+
 .question-form {
-  flex: 40% !important;
+  /* flex: 40% !important; */
+  width: 40%;
   text-align: right;
   padding: 0 14px;
   margin: 14px 0;
@@ -55,13 +57,13 @@
 }
 </style>
 <template>
-  <div class="flex">
+  <div class="flexxx">
     <Form
       ref="formValidate"
       :model="formValidate"
       :rules="ruleValidate"
       :label-width="80"
-      class="flex"
+      class="flexxx"
     >
       <div class="question-form-title">
         <div class="right-side">
@@ -207,7 +209,7 @@ export default {
             this.correctAnswerModal = true;
             if (resp.status == 200) {
               this.question = resp.data.question[0];
-            this.$Message.success(" تم اضافة السؤال");
+              this.$Message.success(" تم اضافة السؤال");
             }
           })
           .catch((e) => {

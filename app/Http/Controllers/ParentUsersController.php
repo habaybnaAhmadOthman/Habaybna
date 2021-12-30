@@ -50,7 +50,7 @@ class ParentUsersController extends Controller
        ]);
 
        $user = new User();
-        $user->phone = '+'.$request->phone ;
+        $user->phone = $request->phone ;
         $user->email = $request->email ;
         $user->password = Hash::make($request->password);
         $user->otp = '123432' ;
