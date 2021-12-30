@@ -9,212 +9,187 @@
 }
 </style>
 <template>
-  <div class="profile">
-    <div class="row justify-content-center"></div>
-    <div class="col-md-8">
-      <div class="card">
-        <div :style="{ display: 'inline-block', width: '100%' }">
-          <Button
-            type="info"
-            :style="{ float: 'left' }"
-            ghost
-            to="/admin/courses"
-          >
-            رجوع
-          </Button>
-          <div class="card-header">معلومات عن الدورة</div>
-          <div class="card-body">
-            <form @submit="formSubmit" enctype="multipart/form-data">
-              <div class="form-group">
-                <strong>عنوان الدورة</strong>
-
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.courseTitle"
-                  name="title"
-                  required
-                />
-                <span class="error" v-if="!this.formValidation.courseTitle">
-                  * يجب تعبئة هذا الحقل
-                </span>
-              </div>
-              <div class="form-group admin-control">
-                <div class="">
-                  <div class="w-100">
-                    <label class="form-control-label">فئة الدورة</label>
-                    <multiselect
-                      v-model="form.courseCategory"
-                      :options="categories"
-                      :searchable="true"
-                      :close-on-select="false"
-                      :multiple="true"
-                      :taggable="true"
-                      label="title"
-                      track-by="title"
-                      placeholder="يرجى إختيار فئة الدورة"
-                      required
-                    ></multiselect>
-                    <span
-                      class="error"
-                      v-if="!this.formValidation.courseCategory"
-                    >
-                      * يجب اختيار واحد على الاقل
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <strong> وصف الدورة</strong>
-                <ckeditor
-                  :editor="form.editor"
-                  v-model="form.courseDescription"
-                  :config="form.editorConfig"
-                ></ckeditor>
-                <span
-                  class="error"
-                  v-if="!this.formValidation.courseDescription"
-                >
-                  * يجب تعبئة هذا الحقل
-                </span>
-              </div>
-              <div class="form-group">
-                <strong>ماذا سوف نتعلم</strong>
-                <ckeditor
-                  :editor="form.editor"
-                  v-model="form.watWeLearn"
-                  :config="form.editorConfig"
-                ></ckeditor>
-                <span class="error" v-if="!this.formValidation.watWeLearn">
-                  * يجب تعبئة هذا الحقل
-                </span>
-              </div>
-              <div class="form-group">
-                <strong>صورة غلاف الدورة</strong>
-                <input
-                  name="coverImage"
-                  type="file"
-                  class="form-control"
-                  @change="uploadCoverImage"
-                />
-                <span class="error" v-if="!this.formValidation.coverImage">
-                  * يجب تعبئة هذا الحقل
-                </span>
-              </div>
-              <div class="form-group">
-                <strong>فيديو ترويجي للدورة</strong>
-                <input
-                  name="promoVideo"
-                  type="file"
-                  class="form-control"
-                  @change="uploadPromoVideo"
-                />
-                <span class="error" v-if="!this.formValidation.promoVideo">
-                  * يجب تعبئة هذا الحقل
-                </span>
-              </div>
-              <div class="form-group">
-                <div class="form-group radio" :style="{ margin: '10px' }">
-                  <label> حالة الدورة : </label>
-                  <input
-                    type="radio"
-                    id="is_publish_1"
-                    value="1"
-                    v-model="form.is_publish"
-                  />
-                  <label for="is_publish_1"> انشر الدورة </label>
-
-                  <input
-                    type="radio"
-                    id="is_publish_2"
-                    value="0"
-                    v-model="form.is_publish"
-                  />
-                  <label for="is_publish_2"> لا تنشر الدورة </label>
-                  <span class="error" v-if="!this.formValidation.is_publish">
-                    * يجب اختيار الحالة
-                  </span>
-                </div>
-              </div>
-              <div class="form-group" :style="{ margin: '10px' }">
-                <div class="from-group radio">
-                  <label>نوع الدورة : </label>
-                  <label>
-                    <input
-                      type="radio"
-                      id="is_free_1"
-                      autocomplete="off"
-                      value="1"
-                      v-model="form.is_free"
-                    />
-
-                    مجانية
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      id="is_free_2"
-                      autocomplete="off"
-                      value="0"
-                      v-model="form.is_free"
-                    />
-                    مدفوعة
-                  </label>
-                  <span class="error" v-if="!this.formValidation.is_free">
-                    * يجب اختيار نوع الدورة
-                  </span>
-                </div>
-              </div>
-              <div class="form-group">
-                <strong>سعر الدورة</strong>
-                <input
-                  type="number"
-                  class="form-control"
-                  v-model="form.coursePrice"
-                  name="price"
-                  :disabled="form.is_free == 1 ? true : false"
-                />
-
-                <span class="error" v-if="!this.formValidation.coursePrice">
-                  * يجب تعبئة هذا الحقل
-                </span>
-              </div>
-              <div class="form-group admin-control">
-                <div class="">
-                  <div class="w-100">
-                    <label class="form-control-label">مقدمي الدورة</label>
-                    <multiselect
-                      v-model="form.tags"
-                      :options="form.specialistsList"
-                      :searchable="true"
-                      :close-on-select="false"
-                      :multiple="true"
-                      :taggable="true"
-                      label="firstName"
-                      track-by="user_id"
-                      placeholder="يرجى إختيار مقدمي الدورة"
-                    ></multiselect>
-                    <span class="error" v-if="!this.formValidation.tags">
-                      * يجب اختيار واحد على الاقل
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <Button
-                :style="{ float: 'left' }"
-                type="info"
-                ghost
-                :loading="loading"
-                @click="formSubmit"
-              >
-                <span v-if="!loading">التالي</span>
-                <span v-else>Creating...</span>
-              </Button>
-            </form>
-          </div>
-        </div>
+  <div class="flexxx profile">
+    <div class="question-form-title">
+      <div class="right-side">
+        <h3>الدورات التدريبة - انشاء دورة</h3>
+      </div>
+      <div class="left-side">
+        <Button type="info" to="/admin/courses">رجوع</Button>
       </div>
     </div>
+    <form @submit="formSubmit" enctype="multipart/form-data" class="flexxx">
+      <div class="question-form">
+        <label for="courseTitle">عنوان الدورة</label>
+        <input
+          type="text"
+          class="form-control"
+          v-model="form.courseTitle"
+          name="title"
+          required
+          id="courseTitle"
+        />
+        <span class="error" v-if="!this.formValidation.courseTitle">
+          * يجب تعبئة هذا الحقل
+        </span>
+      </div>
+
+      <div class="question-form">
+        <label>فئة الدورة</label>
+        <multiselect
+          v-model="form.courseCategory"
+          :options="categories"
+          :searchable="true"
+          :close-on-select="false"
+          :multiple="true"
+          :taggable="true"
+          label="title"
+          track-by="title"
+          placeholder="يرجى إختيار فئة الدورة"
+          required
+        ></multiselect>
+        <span class="error" v-if="!this.formValidation.courseCategory">
+          * يجب اختيار واحد على الاقل
+        </span>
+      </div>
+      <div class="text-area">
+        <label> وصف الدورة</label>
+        <ckeditor
+          :editor="form.editor"
+          v-model="form.courseDescription"
+          :config="form.editorConfig"
+        ></ckeditor>
+        <span class="error" v-if="!this.formValidation.courseDescription">
+          * يجب تعبئة هذا الحقل
+        </span>
+      </div>
+      <div class="text-area">
+        <label>ماذا سوف نتعلم</label>
+        <ckeditor
+          :editor="form.editor"
+          v-model="form.watWeLearn"
+          :config="form.editorConfig"
+        ></ckeditor>
+        <span class="error" v-if="!this.formValidation.watWeLearn">
+          * يجب تعبئة هذا الحقل
+        </span>
+      </div>
+      <div class="question-form">
+        <label>صورة غلاف الدورة</label>
+        <input
+          name="coverImage"
+          type="file"
+          class="form-control"
+          @change="uploadCoverImage"
+        />
+        <span class="error" v-if="!this.formValidation.coverImage">
+          * يجب تعبئة هذا الحقل
+        </span>
+      </div>
+      <div class="question-form">
+        <label>فيديو ترويجي للدورة</label>
+        <input
+          name="promoVideo"
+          type="file"
+          class="form-control"
+          @change="uploadPromoVideo"
+        />
+        <span class="error" v-if="!this.formValidation.promoVideo">
+          * يجب تعبئة هذا الحقل
+        </span>
+      </div>
+      <div class="question-form">
+        <label> حالة الدورة : </label>
+        <input
+          type="radio"
+          id="is_publish_1"
+          value="1"
+          v-model="form.is_publish"
+        />
+        <label for="is_publish_1"> انشر الدورة </label>
+
+        <input
+          type="radio"
+          id="is_publish_2"
+          value="0"
+          v-model="form.is_publish"
+        />
+        <label for="is_publish_2"> لا تنشر الدورة </label>
+        <span class="error" v-if="!this.formValidation.is_publish">
+          * يجب اختيار الحالة
+        </span>
+      </div>
+      <div class="question-form">
+        <label>نوع الدورة : </label>
+        <label>
+          <input
+            type="radio"
+            id="is_free_1"
+            autocomplete="off"
+            value="1"
+            v-model="form.is_free"
+          />
+
+          مجانية
+        </label>
+        <label>
+          <input
+            type="radio"
+            id="is_free_2"
+            autocomplete="off"
+            value="0"
+            v-model="form.is_free"
+          />
+          مدفوعة
+        </label>
+        <span class="error" v-if="!this.formValidation.is_free">
+          * يجب اختيار نوع الدورة
+        </span>
+      </div>
+      <div class="question-form">
+        <label>سعر الدورة</label>
+        <input
+          type="number"
+          v-model="form.coursePrice"
+          name="price"
+          class="form-control"
+          :disabled="form.is_free == 1 ? true : false"
+        />
+
+        <span class="error" v-if="!this.formValidation.coursePrice">
+          * يجب تعبئة هذا الحقل
+        </span>
+      </div>
+      <div class="question-form">
+        <label>مقدمي الدورة</label>
+        <multiselect
+          v-model="form.tags"
+          :options="form.specialistsList"
+          :searchable="true"
+          :close-on-select="false"
+          :multiple="true"
+          :taggable="true"
+          label="firstName"
+          track-by="user_id"
+          placeholder="يرجى إختيار مقدمي الدورة"
+        ></multiselect>
+        <span class="error" v-if="!this.formValidation.tags">
+          * يجب اختيار واحد على الاقل
+        </span>
+      </div>
+      <div class="parent-submit">
+        <Button
+          :style="{ float: 'left' }"
+          type="info"
+          ghost
+          :loading="loading"
+          @click="formSubmit"
+        >
+          <span v-if="!loading">التالي</span>
+          <span v-else>Creating...</span>
+        </Button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -382,7 +357,16 @@ export default {
 };
 </script>
 <style>
-.ck-editor__editable {
-  min-height: 300px;
+.flexxx .text-area {
+  width: 77%;
+  margin: 10px 0;
+}
+.text-area p {
+  min-height: 90px !important;
+}
+.question-form span {
+  display: block !important ;
+}
+.virtical {
 }
 </style>
