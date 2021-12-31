@@ -19,10 +19,9 @@ export default {};
 .course-banner {
     height: 70vh;
     background-image: url(/images/courses-bg.JPG);
-    background-attachment: fixed;
     background-repeat: no-repeat;
-    background-size: contain;
-    background-position: 70% -50%;
+    background-size: cover;
+    background-position: center;
 }
 .course-banner:before {
     content: '';

@@ -10,6 +10,7 @@
             </OtpForm>
             <CodeForm
                 @complete-registration-form="submitForm"
+                @error-happen="showPopupMessage"
                 @send-otp="gotPhone"
                 v-else
             ></CodeForm>
@@ -116,7 +117,7 @@ export default {
                 });
                 this.$router.replace(`/${this.type}-complete-registration`);
             } catch (e) {
-                this.showPopupMessage("حدث خطأ ما");
+                this.showPopupMessage(e.message);
             }
             this.isLoading = false;
         }

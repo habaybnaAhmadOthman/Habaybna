@@ -24,6 +24,7 @@ import trainingCoursesPage from "./components/front/pages/trainingCoursesPage.vu
 // courses
 import CoursePage from "./components/front/pages/courses/CoursePage.vue";
 import CourseVideoPage from "./components/front/pages/courses/CourseVideo.vue";
+import Cirtificate from "./components/front/views/coursepage/Certificate.vue";
 
 
 // register pages
@@ -195,6 +196,13 @@ const routes = [
             requiresAuth: true
         },
         props: true
+    },
+    {
+        path: "/certificate",
+        component: Cirtificate,
+        meta: {
+            requiresAuth: true
+        }
     },
 ];
 

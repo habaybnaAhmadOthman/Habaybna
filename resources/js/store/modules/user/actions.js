@@ -12,8 +12,8 @@ export default {
     async registerFirstStep(context, payload) {
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "register", payload);
-        if (resp.status != 201) {
-            const error = new Error("fail to register");
+        if (!resp || resp.status != 201) {
+            const error = new Error("رقم الهاتف مستخدم، يرجى تجربة رقم آخر");
             throw error;
         }
         context.commit("setUser",{

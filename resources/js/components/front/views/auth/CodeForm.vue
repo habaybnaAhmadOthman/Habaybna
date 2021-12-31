@@ -115,7 +115,7 @@ export default {
                     // ...
                 })
                 .catch(error => {
-                    this.$emit("error-happen", "حدث خطأ ما");
+                    this.$emit("error-happen", "يرجى التأكد من الرمز");
                 });
             this.isLoading = false;
         }
