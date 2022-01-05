@@ -48,6 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
         //users
         Route::post('/delete-user/{id}','UserController@delete');
         Route::post('/user-status/{id}','UserController@changeStatus');
+        Route::get('/get-all-users','UserController@getAllUsers');
 
 
        // parent route
@@ -89,6 +90,18 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/question-delete/{id}','QuizController@deleteQuestion');
         Route::post('/question-store','QuizController@storeQuestion')->name('question.store');
         Route::post('/set-correct-answer/{id}','QuizController@setCorrectAnswer')->name('setCorrectAnswer');
+
+        // coupons
+
+        Route::get('/coupons','PromoCodeController@index');
+        Route::post('/coupon/create','PromoCodeController@create');
+        Route::get('/coupons/{id}','PromoCodeController@show');
+        Route::post('/coupon/assign-to-users','PromoCodeController@assignToUsers');
+        Route::post('/coupon/edit/{id}','PromoCodeController@update');
+        Route::post('/delete-coupon/{id}','PromoCodeController@delete');
+        Route::post('/change-coupon-status/{id}','PromoCodeController@changeStatus');
+
+
 
 
 

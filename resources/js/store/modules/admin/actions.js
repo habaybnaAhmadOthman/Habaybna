@@ -200,5 +200,64 @@ export default {
         return resp.data
 
     },
-    //
+
+    // coupons
+    async createCoupon(context, payload) {
+        const resp = await callApi('POST', '/api/admin/coupon/create', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to create profile data");
+            throw error;
+        }
+        return resp.data
+
+    },
+    async assignCouponToUsers(context, payload) {
+        const resp = await callApi('POST', '/api/admin/coupon/assign-to-users', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to create profile data");
+            throw error;
+        }
+        return resp.data
+
+    },
+    async editCoupon(context, payload) {
+        const resp = await callApi('POST', '/api/admin/coupon/edit/'+payload.coupon_id, payload,)
+        if (resp.status != 200) {
+            const error = new Error("fail to create profile data");
+            throw error;
+        }
+        return resp.data
+
+    },
+
+    async deleteCoupon(context, payload) {
+        const resp = await callApi('POST', '/api/admin/delete-coupon/' + payload)
+
+        if (resp.status != 200) {
+            const error = new Error("fail to create profile data");
+            throw error;
+        }
+        return resp.data
+
+    },
+    async CouponChangeStatus(context, payload) {
+        const resp = await callApi('POST', '/api/admin/change-coupon-status/' + payload)
+
+        if (resp.status != 200) {
+            const error = new Error("fail to create profile data");
+            throw error;
+        }
+        return resp.data
+
+    },
+
+    // get all users
+    async getAllUsers() {
+        const resp = await callApi('GET', '/api/admin/get-all-users');
+        if(resp.status != 200 ) {
+            const error = new Error ('fail to load all users')
+            throw error ;
+        }
+        return resp;
+    }
 };

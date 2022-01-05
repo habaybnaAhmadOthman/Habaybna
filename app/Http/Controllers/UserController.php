@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
-
-
+use App\CustomClass\GetAllUsers;
 use App\User;
 use App\Specialist;
 use App\UserInterest;
@@ -235,6 +234,14 @@ class UserController extends Controller
                 404
            ]);
 
+        }
     }
+
+    public function getAllUsers(GetAllUsers $getAllUsers)
+    {
+        $users = $getAllUsers->execute();
+
+        return response()->json($users, 200);
+
     }
 }

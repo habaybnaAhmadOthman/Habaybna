@@ -12,11 +12,14 @@ import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
 import Parents from "./components/admin/parent/Parents.vue";
 import CreateParent from "./components/admin/parent/Create.vue";
+import CreateCoupon from "./components/admin/coupon/Create.vue";
 import CreateSpecialist from "./components/admin/specialist/Create.vue";
 import CreateOther from "./components/admin/other/Create.vue";
 import ShowSpecialist from "./components/admin/specialist/Show.vue";
 import ShowOther from "./components/admin/other/Show.vue";
 import Specialists from "./components/admin/specialist/Specialists.vue";
+import Coupons from "./components/admin/coupon/Coupons.vue";
+import ShowCoupon from "./components/admin/coupon/Show.vue";
 import Others from "./components/admin/other/Others.vue";
 import Show from "./components/admin/parent/Show.vue";
 import ClassRoom from "./components/parents/ClassRoom.vue";
@@ -80,6 +83,11 @@ const routes = [
         component: Specialists,
         name: "Specialists"
     },
+    {
+        path: "/admin/coupons",
+        component: Coupons,
+        name: "Coupons"
+    },
      {
         path: "/admin/others",
         component: Others,
@@ -96,6 +104,11 @@ const routes = [
         name: "ShowSpecialist"
     },
     {
+        path: "/admin/coupon/:data",
+        component: ShowCoupon,
+        name: "ShowCoupon"
+    },
+    {
         path: "/admin/other/:data",
         component: ShowOther,
         name: "ShowOther"
@@ -110,11 +123,11 @@ const routes = [
         component: EditCourseInfo,
         name: "EditCourseInfo"
     },
-    // {
-    //     path: "/parent-dashboard/class-room",
-    //     component: ClassRoom,
-    //     name: "VideoInfoComponent"
-    // },
+    {
+        path: "/parent-dashboard/class-room",
+        component: ClassRoom,
+        name: "VideoInfoComponent"
+    },
     {
         path: "/admin/course-quiz/:data",
         component: Quiz,
@@ -124,6 +137,11 @@ const routes = [
         path: "/admin/add-question/:data",
         component: AddQuestion,
         name: "AddQuestion"
+    },
+    {
+        path: "/admin/coupons/create",
+        component: CreateCoupon,
+        name: "CreateCoupon"
     },
     // ************
     // front
