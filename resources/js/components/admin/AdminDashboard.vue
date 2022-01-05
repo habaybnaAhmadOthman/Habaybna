@@ -81,13 +81,11 @@
                 <router-link to="/admin/others"> الاخرون </router-link>
               </MenuItem>
             </Submenu>
-            <Submenu name="3">
+            <Submenu name="2">
               <template slot="title">
-                <Icon type="ios-analytics"></Icon>
-                Item 3
+                <Icon type="ios-keypad"></Icon>
+                <router-link to="/admin/coupons"> الكوبونات </router-link>
               </template>
-              <MenuItem name="3-1">Option 1</MenuItem>
-              <MenuItem name="3-2">Option 2</MenuItem>
             </Submenu>
           </Menu>
         </Sider>
@@ -101,7 +99,7 @@
       </Layout>
     </Layout>
   </div>
-  
+
 </template>
 <script>
 export default {
