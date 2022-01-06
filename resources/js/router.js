@@ -19,6 +19,7 @@ import ShowSpecialist from "./components/admin/specialist/Show.vue";
 import ShowOther from "./components/admin/other/Show.vue";
 import Specialists from "./components/admin/specialist/Specialists.vue";
 import Coupons from "./components/admin/coupon/Coupons.vue";
+import PreviewCourse from "./components/admin/courses/Preview.vue";
 import ShowCoupon from "./components/admin/coupon/Show.vue";
 import Others from "./components/admin/other/Others.vue";
 import Show from "./components/admin/parent/Show.vue";
@@ -122,6 +123,11 @@ const routes = [
         path: "/admin/course-edit/:data",
         component: EditCourseInfo,
         name: "EditCourseInfo"
+    },
+    {
+        path: "/admin/course/preview/:data",
+        component: PreviewCourse,
+        name: "PreviewCourse"
     },
     {
         path: "/parent-dashboard/class-room",

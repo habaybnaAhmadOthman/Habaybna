@@ -67,6 +67,12 @@
           <td>{{ course.course_length }}</td>
           <td>
             <Button
+              :to="'/admin/course/preview/' + course.course_id"
+              type="dashed"
+              size="small"
+              ><Icon type="md-eye" /></Button
+            >
+            <Button
               :to="'/admin/course-edit/' + course.course_id"
               type="dashed"
               size="small"
