@@ -117,11 +117,19 @@ select {
     <div class="title">
       <h1>{{ courseTitle }} - الاختبار</h1>
       <Button
-        :to="'/admin/add-question/' + course_id"
-        size="large"
+        :to="'/admin/courses/'"
+        size="small"
         type="primary"
+        :style="{margin:'0 10px'}"
+        > رجوع
+      </Button>
+      <Button
+        :to="'/admin/add-question/' + course_id"
+        size="small"
+        type="success"
         >اضافة سؤال
       </Button>
+
       <div v-if="hasQuiz" class="sub-title">
         <div class="all-questions">
           <div

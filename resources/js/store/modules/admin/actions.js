@@ -75,8 +75,8 @@ export default {
         return resp.data
 
     },
-    async deleteCourse(context, payload) {
-        const resp = await callApi('POST', '/api/admin/delete-course/' + payload)
+    async previewCourse(context, payload) {
+        const resp = await callApi('POST', '/api/admin/course-preview/' + payload)
         if (resp.status != 200) {
             const error = new Error("fail to create profile data");
             throw error;

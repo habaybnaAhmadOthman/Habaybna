@@ -118,7 +118,7 @@
           * يجب تعبئة هذا الحقل
         </span>
       </div>
-      <div class="question-form">
+      <div class="one-item-in-row">
         <label for="">
           الحالة :
 
@@ -136,9 +136,9 @@
 
       <FormItem class="question-submit">
         <Button type="primary" @click="handleSubmit()">حفظ</Button>
-        <Button @click="handleReset('formValidate')" style="margin-left: 8px"
+        <!-- <Button @click="handleReset('formValidate')" style="margin-left: 8px"
           >افرغ الحقول</Button
-        >
+        > -->
       </FormItem>
       <Modal
         v-model="correctAnswerModal"

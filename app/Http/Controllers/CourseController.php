@@ -11,6 +11,7 @@ use App\CourseVideos;
 use App\CourseSpecialist;
 use App\CategoryCourse;
 use App\Question;
+use App\CustomClass\CourseData;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -427,64 +428,63 @@ class CourseController extends Controller
 
    }
 
+   public function preview($id, CourseData $courseData)
+   {
+        $data = $courseData->execute($id);
 
+        return response()->json($data, 200);
+   }
 
+    public function deleteCourse($id)
+    {
+        try {
+            $course = Courses::findorfail($id) ;
 
+            // delete course videos
+            if(count($course->videos) > 0)
+            {
+                foreach ($course->videos as $one) {
 
-
-
-
-
-public function deleteCourse($id)
-{
-    try {
-        $course = Courses::findorfail($id) ;
-
-        // delete course videos
-        if(count($course->videos) > 0)
-        {
-            foreach ($course->videos as $one) {
-
-                $one->delete();
+                    $one->delete();
+                }
             }
-        }
-        // delete course providers
-        if(count($course->courseProvider) > 0)
-        {
-            foreach ($course->courseProvider as $one) {
+            // delete course providers
+            if(count($course->courseProvider) > 0)
+            {
+                foreach ($course->courseProvider as $one) {
 
-                $one->delete();
+                    $one->delete();
+                }
             }
-        }
-        // delete course categories
-        if(count($course->courseCategories) > 0)
-        {
-            foreach ($course->courseCategories as $one) {
+            // delete course categories
+            if(count($course->courseCategories) > 0)
+            {
+                foreach ($course->courseCategories as $one) {
 
-                $one->delete();
+                    $one->delete();
+                }
             }
+
+
+
+            // delete course quiz
+                // code ..
+
+            //delete course certifcate
+
+            // delete the course
+            $course->delete();
+
+            return response()->json(200);
+
+        }catch (ModelNotFoundException $e){
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
+        ]);
         }
 
-
-
-        // delete course quiz
-            // code ..
-
-        //delete course certifcate
-
-        // delete the course
-        $course->delete();
-
-        return response()->json(200);
-
-    }catch (ModelNotFoundException $e){
-        return response()->json([
-            'msg'=>'faild',
-            'status'=>false,
-            404
-       ]);
     }
-
-}
 
 }
