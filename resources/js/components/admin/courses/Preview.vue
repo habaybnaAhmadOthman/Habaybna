@@ -181,7 +181,7 @@
       <div v-else class="course-videos">
         <h4>الدروس :</h4>
         <div :style="{ textAlign: 'center' }">
-          <span :style="{ color: 'red', display: 'block',margin:'10px 0' }">
+          <span :style="{ color: 'red', display: 'block', margin: '10px 0' }">
             لا يوجد دروس في هذه الدورة
           </span>
           <!-- <Button
@@ -192,7 +192,6 @@
             اضف فيديو
           </Button> -->
           <!-- <a :href="'/job/' + r.id"> -->
-
         </div>
       </div>
     </div>
@@ -202,15 +201,13 @@
 export default {
   created() {
     this.course_id = this.$route.params.data;
-    const resp = this.$store
-      .dispatch("admin/previewCourse", this.course_id)
-      .then((res) => {
-        this.courseInfo = res.course.course_info;
-        this.courseProviders = res.course.providers;
-        this.categories = res.course.categories;
-        this.videos = res.course.videos;
-        this.onLoad = this.courseInfo.promo_video;
-      });
+    this.$store.dispatch("admin/previewCourse", this.course_id).then((res) => {
+      this.courseInfo = res.course.course_info;
+      this.courseProviders = res.course.providers;
+      this.categories = res.course.categories;
+      this.videos = res.course.videos;
+      this.onLoad = this.courseInfo.promo_video;
+    });
   },
   data() {
     return {
