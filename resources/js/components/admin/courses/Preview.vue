@@ -184,13 +184,15 @@
           <span :style="{ color: 'red', display: 'block',margin:'10px 0' }">
             لا يوجد دروس في هذه الدورة
           </span>
-          <Button
+          <!-- <Button
             :to="'/admin/uploadVideos/' + coures_id ? course_id : ''"
             type="success"
             size="large"
           >
             اضف فيديو
-          </Button>
+          </Button> -->
+          <!-- <a :href="'/job/' + r.id"> -->
+
         </div>
       </div>
     </div>
@@ -208,7 +210,6 @@ export default {
         this.categories = res.course.categories;
         this.videos = res.course.videos;
         this.onLoad = this.courseInfo.promo_video;
-        console.log(this.videos);
       });
   },
   data() {

@@ -14,7 +14,6 @@ export default {
         context.commit('userId', id)
         return resp.data
     },
-
     async editParentData(context, payload) {
         const resp = await callApi('POST', '/api/admin/parent/update/' + context.getters.userID, payload)
         if (resp.status != 200) {
@@ -24,7 +23,6 @@ export default {
         return resp.data
 
     },
-
     async createParent(context, payload) {
         console.log('context', context);
         const resp = await callApi('POST', '/api/admin/parent/create', payload)
@@ -33,9 +31,7 @@ export default {
             throw error;
         }
         return resp.data
-
     },
-
     async createSpecialist(context, payload) {
         const resp = await callApi('POST', '/api/admin/specialist/create', payload)
         if (resp.status != 200) {
@@ -43,9 +39,7 @@ export default {
             throw error;
         }
         return resp.data
-
     },
-
     async createOther(context, payload) {
         const resp = await callApi('POST', '/api/admin/other/create', payload)
         if (resp.status != 200) {
@@ -55,7 +49,6 @@ export default {
         return resp.data
 
     },
-
     async deleteUser(context, payload) {
         const resp = await callApi('POST', '/api/admin/delete-user/' + payload)
 
@@ -136,7 +129,6 @@ export default {
         }
         return resp.data
     },
-
     async getSpecialisDataAdmin(context, id) {
         // console.log(id);
         const resp = await callApi("GET", "/api/admin/specialist/" + id);
@@ -148,7 +140,6 @@ export default {
         context.commit('userId', id)
         return resp.data
     },
-
     async editSpecialistData(context, payload) {
         console.log('context', context);
         const resp = await callApi('POST', '/api/admin/specialist/update/' + context.getters.userID, payload)
@@ -200,7 +191,6 @@ export default {
         return resp.data
 
     },
-
     // coupons
     async createCoupon(context, payload) {
         const resp = await callApi('POST', '/api/admin/coupon/create', payload)
@@ -229,7 +219,6 @@ export default {
         return resp.data
 
     },
-
     async deleteCoupon(context, payload) {
         const resp = await callApi('POST', '/api/admin/delete-coupon/' + payload)
 
@@ -250,7 +239,6 @@ export default {
         return resp.data
 
     },
-
     // get all users
     async getAllUsers() {
         const resp = await callApi('GET', '/api/admin/get-all-users');
