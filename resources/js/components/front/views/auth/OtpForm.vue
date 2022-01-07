@@ -103,7 +103,6 @@ export default {
             if (!this.formIsValid) {
                 return;
             }
-
             let phoneNumber = this.phoneNumber.val;
             this.$emit("send-otp", { phoneNumber, type: this.type.val });
         }

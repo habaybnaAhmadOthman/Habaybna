@@ -63,7 +63,7 @@
                         >
                         <router-link
                             class="white-i nowrap p-side-10 h-100 flex-all bold"
-                            to="/training-courses"
+                            to="/online-courses"
                             >الدورات التدريبية</router-link
                         >
                     </menu>

@@ -20,7 +20,7 @@ import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 import HomePage from "./components/front/pages/HomePage.vue";
-import trainingCoursesPage from "./components/front/pages/trainingCoursesPage.vue";
+import onlineCoursesPage from "./components/front/pages/onlineCoursesPage.vue";
 // courses
 import CoursePage from "./components/front/pages/courses/CoursePage.vue";
 import CourseVideoPage from "./components/front/pages/courses/CourseVideo.vue";
@@ -118,9 +118,9 @@ const routes = [
         name: "home"
     },
     {
-        path: "/training-courses",
-        component: trainingCoursesPage,
-        name: "trainingCourses"
+        path: "/online-courses",
+        component: onlineCoursesPage,
+        name: "onlineCourses"
     },
     // *****************
     // auth pages

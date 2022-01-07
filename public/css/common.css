@@ -6,9 +6,9 @@
 
 @font-face {
     font-family: "Hacen";
-    src: url("/fonts/HacenLinerXXL.woff2") format("woff2"),
-        url("/public/fonts/HacenLinerXXL.woff") format("woff");
-    font-weight: bold;
+    src: url("/fonts/HacenLinerScreen.woff2") format("woff2"),
+        url("/public/fonts/HacenLinerScreen.woff") format("woff");
+    font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
@@ -95,6 +95,9 @@ body {
 .w-38 {
     width: 38%;
 }
+.w-32 {
+    width: 32%;
+}
 .w-30 {
     width: 30%;
 }
@@ -115,7 +118,7 @@ body {
     z-index: 1;
 }
 .container {
-    width: 1062px;
+    width: 1140px;
     margin: auto;
 }
 .container-fluid {
@@ -175,14 +178,26 @@ body {
 .object-fit {
     object-fit: cover;
 }
+.font-55 {
+    font-size: 55px;
+}
 .font-50 {
     font-size: 50px;
+}
+.font-45 {
+    font-size: 45px;
 }
 .font-40 {
     font-size: 40px;
 }
+.font-32 {
+    font-size: 32px;
+}
 .font-30 {
     font-size: 30px;
+}
+.font-28 {
+    font-size: 28px;
 }
 .font-26 {
     font-size: 26px;
@@ -279,6 +294,9 @@ body {
 }
 .mb-50 {
     margin-bottom: 50px;
+}
+.mb-100 {
+    margin-bottom: 100px;
 }
 .m-side-auto {
     margin-left: auto;
@@ -597,30 +615,30 @@ h1 {
     margin: 0;
 }
 a:hover {
-    color: #660066;
+    color: #780d93;
 }
 .btn,
 .btn-2 {
-    background: #660066;
+    background: #780d93;
     padding: 13px 35px;
     border-radius: 12px;
     color: #fff;
     transition: 0.3s;
-    border: 1px solid #660066;
+    border: 1px solid #780d93;
     cursor: pointer;
 }
 .btn-2 {
     padding: 9px 35px;
 }
 .btn-3 {
-    border: 1px solid #660066;
+    border: 1px solid #780d93;
     padding: 9px 35px;
-    color: #660066;
+    color: #780d93;
     cursor: pointer;
     background: transparent;
 }
 .btn:hover{
-    color: #660066;
+    color: #780d93;
     background: #fff;
 }
 .form-group p {
@@ -633,7 +651,7 @@ a:hover {
     display: block;
 }
 .form-control {
-    border: 1px solid #660066;
+    border: 1px solid #780d93;
     height: 52px;
     border-radius: 21px;
 }
@@ -644,10 +662,13 @@ a:hover {
     color: #7b797ba6;
 }
 .main-bg {
-    background: #660066;
+    background: #780d93;
 }
 .main-color {
-    color: #660066;
+    color: #780d93;
+}
+.black {
+    color: #000;
 }
 .blue {
     color: #2BB7C8;
@@ -694,6 +715,9 @@ a:hover {
 }
 .mo {
     display: none !important;
+}
+.ls-3 {
+    letter-spacing: 3.3px;
 }
 @media (max-width: 767px) {
     .mo {
