@@ -26,7 +26,7 @@ th {
       <Input
         type="text"
         v-model="keyword"
-        placeholder="ابحث عن الاسم او رقم الهاتف"
+        placeholder="ابحث عن رمز الكوبون"
       />
     </div>
     <div class="coupon-table">

@@ -125,7 +125,7 @@ const routes = [
         name: "EditCourseInfo"
     },
     {
-        path: "/admin/preview/:data",
+        path: "/admin/course/preview/:data",
         component: PreviewCourse,
         name: "PreviewCourse"
     },
