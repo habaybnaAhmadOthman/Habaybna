@@ -17,8 +17,8 @@ class CreateCoupon {
             }
             if($data['coupone_duration']){
                 $date = new \stdClass();
-                $date->start = date("Y-m-d", strtotime($data['coupone_duration'][0]));
-                $date->end = date("Y-m-d", strtotime($data['coupone_duration'][1]));
+                $date->start = date("Y-m-d", strtotime($data['coupone_duration']['start_date']));
+                $date->end = date("Y-m-d", strtotime($data['coupone_duration']['end_date']));
                 $date= serialize($date);
             }
             $coupon = new PromoCode();

@@ -17,13 +17,14 @@ class editCoupon {
                 return response()->json(409);
             }
 
-            if($data['coupone_duration']){
+            if($data['coupone_durations']){
                 $date = new \stdClass();
-                $date->start = date("Y-m-d", strtotime($data['coupone_duration'][0]));
-                $date->end = date("Y-m-d", strtotime($data['coupone_duration'][1]));
+                $date->start = date("Y-m-d", strtotime($data['coupone_durations']['start_date']));
+                $date->end = date("Y-m-d", strtotime($data['coupone_durations']['end_date']));
                 $date= serialize($date);
-                $coupon->date = $date ;
+                // $coupon->date = $date ;
             }
+            // dd($date);
 
             $coupon->code = $data['code'];
             $coupon->usage = $data['usage'];
@@ -33,7 +34,7 @@ class editCoupon {
             $coupon->discount_percentage = $data['type'] !== 'free' ? $data['discount_perc'] : 100 ;
             // $coupon->expiry_date = new date();
             // $coupon->expiry_date = $date ? $date : '';
-            // $coupon->date = $date ? $date : '';
+            $coupon->date = $date ? $date : '';
 
 
             $coupon->save();

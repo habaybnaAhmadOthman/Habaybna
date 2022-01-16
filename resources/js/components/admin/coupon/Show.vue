@@ -146,7 +146,52 @@ h1 {
           * يجب تعبئة هذا الحقل
         </span>
       </div>
+      <div class="question-form coupon">
+        <label for=""> حالة الكوبون : </label>
+        <RadioGroup v-model="form.status">
+          <Radio label="1">
+            <span>فعّال</span>
+          </Radio>
+          <Radio label="0">
+            <span>غير فعّال</span>
+          </Radio>
+        </RadioGroup>
+        <span class="error" v-if="!this.formValidation.status">
+          * يجب تعبئة هذا الحقل
+        </span>
+      </div>
       <div class="form-date">
+        <label for=""> تاريخ البدء : </label>
+        <DatePicker
+          v-model="form.coupone_durations.start_date"
+          type="date"
+          placeholder="حدد تاريخ بدء الصلاحية"
+          style="width: 100%"
+        ></DatePicker>
+        <!-- <span
+          class="error"
+          v-if="!this.formValidation.coupone_duration.start_date"
+        >
+          * يجب تعبئة هذا الحقل
+        </span> -->
+      </div>
+      <div class="form-date">
+        <label for=""> تاريخ الانتهاء : </label>
+
+        <DatePicker
+          v-model="form.coupone_durations.end_date"
+          type="date"
+          placeholder="حدد تاريخ انتهاء الصلاحية"
+          style="width: 100%"
+        ></DatePicker>
+        <!-- <span
+          class="error"
+          v-if="!this.formValidation.coupone_duration.end_date"
+        >
+          * يجب تعبئة هذا الحقل
+        </span> -->
+      </div>
+      <!-- <div class="form-date">
         <label for="">
           تاريخ التفعيل: {{ form.coupone_durations.start_date }}
         </label>
@@ -162,22 +207,7 @@ h1 {
         <span class="error" v-if="!this.formValidation.coupone_duration">
           * يجب تعبئة هذا الحقل
         </span>
-      </div>
-      <div class="users-list">
-        <label for=""> حالة الكوبون : </label>
-        <RadioGroup v-model="form.status" vertical>
-          <Radio :label="1">
-            <span>فعّال</span>
-          </Radio>
-          <Radio :label="0">
-            <span>غير فعّال</span>
-          </Radio>
-        </RadioGroup>
-        <span class="error" v-if="!this.formValidation.status">
-          * يجب تعبئة هذا الحقل
-        </span>
-      </div>
-
+      </div> -->
       <div class="parent-submit">
         <Button type="primary" @click="submitForm('form')">حفظ</Button>
       </div>
@@ -222,7 +252,7 @@ export default {
           this.form.coupone_durations.end_date = res.data.end_date;
           this.form.status = res.data.status;
         }
-        console.log(this.form);
+        console.log(this.form.coupone_durations);
       }
     );
   },
@@ -259,7 +289,10 @@ export default {
         type: true,
         max_usage: true,
         discount_perc: true,
-        coupone_duration: true,
+        // coupone_duration:{
+        //     start_date:true,
+        //     end_date:true,
+        // },
         status: true,
       },
       couponIsValid: true,
@@ -276,6 +309,7 @@ export default {
         });
     },
     submitForm(name) {
+        console.log(this.form.coupone_durations);
       this.validateForm();
       if (this.couponIsValid) {
         const Obj = this.form;

@@ -75,6 +75,9 @@ h1 {
 .users-list label {
   height: 12px !important;
 }
+.coupon span {
+  display: inline-block !important;
+}
 </style>
 <template>
   <div class="flexxx">
@@ -147,21 +150,9 @@ h1 {
           * يجب تعبئة هذا الحقل
         </span>
       </div>
-      <div class="form-date">
-        <label for="">صالح لغاية : </label>
-        <DatePicker
-          v-model="form.coupone_duration"
-          type="daterange"
-          placeholder="حدد تاريخ انتهاء الصلاحية"
-          style="width: 100%"
-        ></DatePicker>
-        <span class="error" v-if="!this.formValidation.coupone_duration">
-          * يجب تعبئة هذا الحقل
-        </span>
-      </div>
-      <div class="users-list">
+      <div class="question-form coupon">
         <label for=""> حالة الكوبون : </label>
-        <RadioGroup v-model="form.status" vertical>
+        <RadioGroup v-model="form.status">
           <Radio label="1">
             <span>فعّال</span>
           </Radio>
@@ -170,6 +161,36 @@ h1 {
           </Radio>
         </RadioGroup>
         <span class="error" v-if="!this.formValidation.status">
+          * يجب تعبئة هذا الحقل
+        </span>
+      </div>
+      <div class="form-date">
+        <label for=""> تاريخ البدء : </label>
+        <DatePicker
+          v-model="form.coupone_duration.start_date"
+          type="date"
+          placeholder="حدد تاريخ بدء الصلاحية"
+          style="width: 100%"
+        ></DatePicker>
+        <span
+          class="error"
+          v-if="!this.formValidation.coupone_duration.start_date"
+        >
+          * يجب تعبئة هذا الحقل
+        </span>
+      </div>
+      <div class="form-date">
+        <label for=""> تاريخ الانتهاء : </label>
+        <DatePicker
+          v-model="form.coupone_duration.end_date"
+          type="date"
+          placeholder="حدد تاريخ انتهاء الصلاحية"
+          style="width: 100%"
+        ></DatePicker>
+        <span
+          class="error"
+          v-if="!this.formValidation.coupone_duration.end_date"
+        >
           * يجب تعبئة هذا الحقل
         </span>
       </div>
@@ -225,7 +246,10 @@ export default {
         type: "",
         max_usage: "",
         discount_perc: "",
-        coupone_duration: "",
+        coupone_duration: {
+          start_date: "",
+          end_date: "",
+        },
         status: "",
       },
       formValidation: {
@@ -234,7 +258,10 @@ export default {
         type: true,
         max_usage: true,
         discount_perc: true,
-        coupone_duration: true,
+        coupone_duration: {
+          start_date: true,
+          end_date: true,
+        },
         status: true,
       },
       couponIsValid: true,
@@ -255,6 +282,7 @@ export default {
         });
     },
     submitForm(name) {
+        console.log(this.form.coupone_duration);
       this.validateForm();
       if (this.couponIsValid) {
         const Obj = this.form;
@@ -306,10 +334,15 @@ export default {
       } else {
         this.formValidation.discount_perc = true;
       }
-      if (!this.form.coupone_duration) {
-        this.formValidation.coupone_duration = false;
+      if (!this.form.coupone_duration.start_date) {
+        this.formValidation.coupone_duration.start_date = false;
       } else {
-        this.formValidation.coupone_duration = true;
+        this.formValidation.coupone_duration.start_date = true;
+      }
+      if (!this.form.coupone_duration.end_date) {
+        this.formValidation.coupone_duration.end_date = false;
+      } else {
+        this.formValidation.coupone_duration.end_date = true;
       }
       if (!this.form.status) {
         this.formValidation.status = false;
