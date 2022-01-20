@@ -103,6 +103,19 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/change-coupon-status/{id}','PromoCodeController@changeStatus');
 
 
+        // calls
+
+        Route::get('/calls/packages','CallsController@index');
+        Route::post('/calls/create','CallsController@create');
+        Route::get('/calls/package/{id}','CallsController@show');
+        Route::post('/calls/package/{id}','CallsController@update');
+        Route::post('/change-call-package-status/{id}','CallsController@changeStatus');
+        Route::post('/delete-call-package/{id}','CallsController@delete');
+
+
+
+
+
 
 
 

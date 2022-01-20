@@ -81,10 +81,16 @@
                 <router-link to="/admin/others"> الاخرون </router-link>
               </MenuItem>
             </Submenu>
-            <Submenu name="2">
+            <Submenu name="3">
               <template slot="title">
                 <Icon type="ios-keypad"></Icon>
                 <router-link to="/admin/coupons"> الكوبونات </router-link>
+              </template>
+            </Submenu>
+            <Submenu name="4">
+              <template slot="title">
+                <Icon type="ios-keypad"></Icon>
+                <router-link to="/admin/calls"> المكالمات </router-link>
               </template>
             </Submenu>
           </Menu>
@@ -99,7 +105,6 @@
       </Layout>
     </Layout>
   </div>
-
 </template>
 <script>
 export default {
@@ -108,8 +113,9 @@ export default {
   },
   methods: {
     logoutUser() {
-            this.$store.dispatch('user/logout');
-            this.$router.replace('/')    },
+      this.$store.dispatch("user/logout");
+      this.$router.replace("/");
+    },
   },
 };
 </script>
