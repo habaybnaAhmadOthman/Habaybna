@@ -10,12 +10,15 @@ import Quiz from "./components/Quiz.vue";
 import UploadVideos from "./components/UploadVideos.vue";
 import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
+import Calls from "./components/admin/calls/Calls.vue";
 import Parents from "./components/admin/parent/Parents.vue";
 import CreateParent from "./components/admin/parent/Create.vue";
 import CreateCoupon from "./components/admin/coupon/Create.vue";
+import CreateCall from "./components/admin/calls/Create.vue";
 import CreateSpecialist from "./components/admin/specialist/Create.vue";
 import CreateOther from "./components/admin/other/Create.vue";
 import ShowSpecialist from "./components/admin/specialist/Show.vue";
+import ShowPackage from "./components/admin/calls/Show.vue";
 import ShowOther from "./components/admin/other/Show.vue";
 import Specialists from "./components/admin/specialist/Specialists.vue";
 import Coupons from "./components/admin/coupon/Coupons.vue";
@@ -47,8 +50,7 @@ import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfil
 
 import store from "./store/index";
 
-const routes = [
-    {
+const routes = [{
         path: "/admin/uploadVideos/:data",
         component: UploadVideos,
         name: "UploadVideo",
@@ -89,7 +91,7 @@ const routes = [
         component: Coupons,
         name: "Coupons"
     },
-     {
+    {
         path: "/admin/others",
         component: Others,
         name: "Others"
@@ -98,6 +100,11 @@ const routes = [
         path: "/admin/parent/:data",
         component: Show,
         name: "Show"
+    },
+    {
+        path: "/admin/calls/package/:data",
+        component: ShowPackage,
+        name: "ShowPackage"
     },
     {
         path: "/admin/specialist/:data",
@@ -148,6 +155,16 @@ const routes = [
         path: "/admin/coupons/create",
         component: CreateCoupon,
         name: "CreateCoupon"
+    },
+    {
+        path: "/admin/calls/create",
+        component: CreateCall,
+        name: "CreateCall"
+    },
+    {
+        path: "/admin/calls",
+        component: Calls,
+        name: "Calls"
     },
     // ************
     // front
@@ -209,16 +226,14 @@ const routes = [
             requiresAuth: true,
             header: false
         },
-        children: [
-            {
-                path: "my-account",
-                component: UserProfile_MyAccount,
-                meta: {
-                    header: false
-                },
-                name: 'myAccount'
-            }
-        ]
+        children: [{
+            path: "my-account",
+            component: UserProfile_MyAccount,
+            meta: {
+                header: false
+            },
+            name: 'myAccount'
+        }]
     },
     // *****************
     // courses
@@ -245,11 +260,14 @@ const routes = [
 const router = new Router({
     mode: "history",
     routes,
-    scrollBehavior (to, from, savedPosition) {
+    scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
-          return savedPosition
+            return savedPosition
         } else {
-          return { x: 0, y: 0 }
+            return {
+                x: 0,
+                y: 0
+            }
         }
     }
 });
