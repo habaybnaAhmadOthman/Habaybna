@@ -18,8 +18,9 @@ class updateCallPackage {
             }
 
             if($data['package_durations']){
-                $call_package->start_date = date("Y-m-d", strtotime($data['package_durations']['start_date']));
-                $call_package->end_date = date("Y-m-d", strtotime($data['package_durations']['end_date']));
+                // $call_package->start_date = date("Y-m-d", strtotime('+1 day', $data['package_durations']['start_date']));
+                $call_package->start_date = date("Y-m-d", strtotime('+1 day', strtotime($data['package_durations']['start_date'])));
+                $call_package->end_date = date("Y-m-d", strtotime('+1 day', strtotime($data['package_durations']['end_date'])));
             }
 
             $call_package->title = $data['title'];
