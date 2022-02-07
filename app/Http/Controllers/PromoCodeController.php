@@ -127,4 +127,8 @@ class PromoCodeController extends Controller
 
         }
     }
+    public function getResultData(Request $dangers)
+    {
+        // write here
+    }
 }

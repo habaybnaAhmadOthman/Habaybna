@@ -212,7 +212,7 @@ h1 {
         <Button type="primary" @click="submitForm('form')">حفظ</Button>
       </div>
     </form>
-    <Modal v-model="modal1" title="Common Modal dialog box title" @on-ok="ok">
+    <Modal v-model="modal1"  @on-ok="ok">
       <div class="users-list">
         <label for="">المستخدمين : </label>
         <Select

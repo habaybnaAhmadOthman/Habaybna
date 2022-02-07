@@ -286,21 +286,21 @@ class CourseController extends Controller
         //     }
 
             if ($request->hasFile('video')) {
-            $track = GetId3::fromUploadedFile($request->file('video'));
+             $track = GetId3::fromUploadedFile($request->file('video'));
 
                 Storage::delete('public/videos/courseVideos/'.$video->url);
                 $nVideo = $request->file('video');
                 $videoName = 'courseVideo' . '-' . $nVideo->getClientOriginalName();
                 $pathVid = $nVideo->storeAs('public/videos/courseVideos', $videoName);
                 $url = url('/storage/videos/courseVideos/'.$videoName);
-
+                $video->url= $url ;
             }
 
             // $video->cover_image = $request->hasFile('coverImage') ? $imageName:$video->cover_image;
-            $video->status= $request->is_publish == 'true' ? true : false;
+            $video->status= $request->is_publish == 1 ? true : false;
             $video->description= $request->description;
             $video->title= $request->title ;
-            $video->url= $url ? $url :$video->url;
+            // $video->url= $url ? $url :$video->url;
 
             $video->save();
         return response()->json([
