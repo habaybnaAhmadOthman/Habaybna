@@ -143,7 +143,7 @@ class CourseController extends Controller
 
 
         $videoCourse->url= $url !== "" ? $url : '';
-        $videoCourse->cover_image = $request->hasFile('coverImage') ? $imageName: '';
+        $videoCourse->cover_image = '';
         $videoCourse->course_id= $request->course_id;
         $videoCourse->status= $request->is_publish =='true' ? true : false;
         $videoCourse->description= $request->description;

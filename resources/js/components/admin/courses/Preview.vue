@@ -150,7 +150,7 @@
         </p>
         <p>نوع الدورة : {{ courseInfo.is_free ? "مجانية" : "مدفوعة" }}</p>
         <p>مدة الدورة : {{ courseInfo.duration }} ساعة</p>
-        <p>عدد الدروس : {{ courseInfo.duration }} درس</p>
+        <p>عدد الدروس : {{ courseInfo.videos_count }} درس</p>
       </div>
     </div>
     <div class="course-content">
