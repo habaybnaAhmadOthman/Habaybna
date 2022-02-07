@@ -82,6 +82,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/edit-course/{course_id}','CourseController@updateCoruseInfo');
         Route::post('/delete-course/{course_id}','CourseController@deleteCourse');
         Route::post('/course-preview/{course_id}','CourseController@preview');
+        Route::post('/course/update-video/{id}','CourseController@updateVideo');
 
         // quize
 

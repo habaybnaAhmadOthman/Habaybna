@@ -34,8 +34,8 @@
 </style>
 <template class="">
   <div class="profile">
-    <div :style="{display:'inline-block', width:'100%'}">
-      <Button  type="info" :style="{float:'left'}" ghost to="/admin/courses">
+    <div :style="{ display: 'inline-block', width: '100%' }">
+      <Button type="info" :style="{ float: 'left' }" ghost to="/admin/courses">
         رجوع
       </Button>
     </div>
@@ -82,6 +82,9 @@
                   v-model="form.videoTitle"
                   name="title"
                 />
+                <span class="error" v-if="!this.formValidation.videoTitle">
+                  * يجب تعبئة هذا الحقل
+                </span>
               </div>
               <div class="form-group">
                 <strong>وصف الحلقة</strong>
@@ -90,34 +93,44 @@
                   v-model="form.videoDescription"
                   :config="form.editorConfig"
                 ></ckeditor>
+                <span
+                  class="error"
+                  v-if="!this.formValidation.videoDescription"
+                >
+                  * يجب تعبئة هذا الحقل
+                </span>
               </div>
-              <!-- <div class="form-group">
-              <strong>Video cover photo:</strong>
-              <input
-                name="coverImage"
-                type="file"
-                class="form-control"
-                @change="uploadCoverImage"
-              />
-            </div> -->
+              <div v-if="isUpdate" class="form-group">
+                <video ref="videoPlayer" controls autoplay seeking=true>
+                  <source :src="onLoad ? onLoad : ''" type="video/mp4" />
+                  <source src="movie.ogg" type="video/ogg" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
               <div class="form-group">
-                <strong>تحميل فيديو الحلقة</strong>
+                <strong>تحميل فيديو جديد :</strong>
                 <input
                   name="video"
                   type="file"
                   class="cdk-ed form-control"
                   @change="uploadvideo"
                 />
+                <span class="error" v-if="!this.formValidation.video">
+                  * يجب تعبئة هذا الحقل
+                </span>
               </div>
               <div class="form-group">
                 <RadioGroup v-model="form.is_publish" vertical>
-                  <Radio label="true">
+                  <Radio label="1">
                     <span>نشر</span>
                   </Radio>
-                  <Radio label="false">
+                  <Radio label="0">
                     <span>عدم النشر</span>
                   </Radio>
                 </RadioGroup>
+                <span class="error" v-if="!this.formValidation.is_publish">
+                  * يجب تعبئة هذا الحقل
+                </span>
               </div>
               <Button
                 v-if="isUpdate"
@@ -152,6 +165,9 @@
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default {
+  updated() {},
+  mounted() {
+  },
   data() {
     return {
       form: {
@@ -162,9 +178,8 @@ export default {
         editorConfig: {
           enterMode: "br",
         },
-        // coverImage: "",
         video: "",
-        is_publish: "true",
+        is_publish: "",
         course_id: "",
       },
       value1: "1",
@@ -176,98 +191,79 @@ export default {
         courseTitle: "",
       },
       isUpdate: false,
+      loadingUrl:'',
+      onLoad: "",
+      formValidation: {
+        videoTitle: true,
+        videoDescription: true,
+        video: true,
+        is_publish: true,
+      },
+      isFormValid: true,
     };
   },
   created() {
     this.getCourseId();
     this.getCourseVideos();
-    // console.log('zzzzz',this.allVideos);
   },
   methods: {
     getCourseId() {
       this.form.course_id = this.$router.currentRoute.params.data;
     },
-    // uploadCoverImage(event) {
-    //   this.form.coverImage = event.target.files[0];
-    // },
     uploadvideo(event) {
       this.form.video = event.target.files[0];
     },
     async formSubmit(e) {
-      this.loading = true;
-      let self = this.$router;
-      e.preventDefault();
-      this.form.is_publish = Boolean(this.form.is_publish);
-      console.log("type", typeof this.form.is_publish);
-      let formData = new FormData();
-      formData.append("title", this.form.videoTitle);
-      formData.append("description", this.form.videoDescription);
-      //   formData.append("coverImage", this.form.coverImage);
-      formData.append("video", this.form.video);
-      formData.append("is_publish", this.form.is_publish);
-      formData.append("course_id", this.form.course_id);
-      this.isUpdate ? formData.append("video_id", this.form.id) : "";
-      //   const config = {
-      //     headers: {
-      //       "content-type": "multipart/form-data",
-      //       Accept: "application/json",
-      //     },
-      //   };
-      console.log("form data", this.form.is_publish);
-      if (!this.isUpdate) {
-        // alert("add");
-        const resp = await this.$store.dispatch("admin/uploadVideo", formData);
-        console.log(resp);
-        this.allVideos.videos = resp.videos;
-        this.$Message.success("Video Uploaded success");
+      this.validatForm();
+      if (this.isFormValid) {
+        this.loading = true;
+        let self = this.$router;
+        e.preventDefault();
+        this.form.is_publish = this.form.is_publish;
+        let formData = new FormData();
+        formData.append("title", this.form.videoTitle);
+        formData.append("description", this.form.videoDescription);
+        formData.append("video", this.form.video);
+        formData.append("is_publish", this.form.is_publish);
+        formData.append("course_id", this.form.course_id);
+        this.isUpdate ? formData.append("video_id", this.form.id) : "";
+        if (!this.isUpdate) {
+          const resp = await this.$store.dispatch(
+            "admin/uploadVideo",
+            formData
+          );
+          this.allVideos.videos = resp.videos;
+          this.$Message.success("Video Uploaded success");
 
-        this.form.videoTitle = "";
-        this.form.videoDescription = "";
-        this.form.video = "";
-        this.form.videoTitle = "";
-        this.loading = false;
+          this.form.videoTitle = "";
+          this.form.videoDescription = "";
+          this.form.video = "";
+          this.form.videoTitle = "";
+          this.loading = false;
+        } else {
+          axios
+            .post("/api/admin/course/update-video/" + this.form.id, formData)
+            .then((response) => {
+              if (response.status == 200) {
+                this.allVideos.videos = response.data.videos;
+                this.$Message.success("Video Uploaded success");
 
-        // axios
-        //   .post("/admin/course/upload-video", formData)
-        //   .then((response) => {
-        //     if (response.status == 200) {
-        //       this.allVideos.videos = response.data.videos;
-        //       this.$Message.success("Video Uploaded success");
-
-        //       this.form.videoTitle = "";
-        //       this.form.videoDescription = "";
-        //       this.form.video = "";
-        //       this.form.videoTitle = "";
-        //     }
-        //     this.loading = false;
-        //   })
-        //   .catch((error) => {
-        //     return 404;
-        //   });
-      } else {
-        axios
-          .post("/admin/course/update-video/" + this.form.id, formData)
-          .then((response) => {
-            if (response.status == 200) {
-              this.allVideos.videos = response.data.videos;
-              this.$Message.success("Video Uploaded success");
-
-              this.form.videoTitle = "";
-              this.form.videoDescription = "";
-              this.form.video = "";
-              this.form.videoTitle = "";
-              this.getCourseVideos();
-              this.isUpdate = false;
-            }
-            this.loading = false;
-          })
-          .catch((error) => {
-            return 404;
-          });
+                this.form.videoTitle = "";
+                this.form.videoDescription = "";
+                this.form.video = "";
+                this.form.videoTitle = "";
+                this.getCourseVideos();
+                this.isUpdate = false;
+              }
+              this.loading = false;
+            })
+            .catch((error) => {
+              return 404;
+            });
+        }
       }
     },
     getCourseVideos() {
-      console.log(this.form.course_id);
       axios
         .get("/api/admin/getCourseVideos/" + this.form.course_id)
         .then((response) => {
@@ -275,21 +271,61 @@ export default {
           this.allVideos.count = response.data.count;
           this.allVideos.haveVideos = response.data.haveVideos;
           this.allVideos.courseTitle = response.data.courseInfo["title"];
-          console.log(this.allVideos);
         })
         .catch((error) => {
           return "404";
         });
     },
     editVideo(i) {
+      this.isUpdate = true;
+
       let video = this.allVideos.videos[i];
-      console.log(video);
+
       this.form.id = video.id;
       this.form.videoTitle = video.title;
       this.form.videoDescription = video.description;
-      this.form.is_publish = video.status;
+      this.loadingUrl = video.url;
+      this.form.is_publish = video.status ? "1" : "0";
       this.value1 = "2";
-      this.isUpdate = true;
+      this.loadVideo();
+    },
+    validatForm() {
+      if (this.form.videoTitle !== "") {
+        this.formValidation.videoTitle = true;
+      } else {
+        this.formValidation.videoTitle = false;
+      }
+
+      if (this.form.videoDescription !== "" ) {
+        this.formValidation.videoDescription = true;
+      } else {
+        this.formValidation.videoDescription = false;
+      }
+
+      if (this.form.video !== "" || this.isUpdate) {
+        this.formValidation.video = true;
+      } else {
+        this.formValidation.video = false;
+      }
+      for (const prob in this.formValidation) {
+        if (Object.hasOwnProperty.call(this.formValidation, prob)) {
+          const element = this.formValidation[prob];
+          if (!element) {
+            this.isFormValid = false;
+            break;
+          }
+          this.isFormValid = true;
+        }
+      }
+    },
+    loadVideo() {
+      if (this.isUpdate) {
+        this.onLoad = this.loadingUrl;
+        // if (this.$refs.videoPlayer) {
+        //   this.$refs.videoPlayer.load();
+        //   this.$refs.videoPlayer.play();
+        // }
+      }
     },
   },
 };
