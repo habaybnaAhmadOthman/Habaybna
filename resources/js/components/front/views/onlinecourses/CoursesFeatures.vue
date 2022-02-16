@@ -1,80 +1,52 @@
 <template>
-    <div class="our-features mt-20">
+    <div class="our-features pt-45">
         <div class="container">
-            <h2 class="main-color mb-100 font-45 center">
+            <h2 class="main-color mb-100 font-30 title-line mb-50">
                 ما هي مميزات دورات التدريب من حبايبنا.نت
             </h2>
-            <div class="features mt-25 d-flex space-between flex-wrap">
-                <div class="box center w-32">
-                    <figure class="mb-50">
+            <div class="features pt-15 d-flex space-between flex-wrap">
+                <div class="box relative center w-25 p-side-10">
                       <img
-                          src="/images/video.webp"
-                          width="85"
-                          height="77"
+                          src="/images/video.svg"
+                          width="65"
+                          height="70"
+                          class="mb-30"
                       />
-                    </figure>
-                    <p class="font-28 black">
-                        مسجلة بجودة عالية، متاحة<br> لك بأي وقت ومن أي مكان
+                    <p class="font-19 main-color">
+                        مسجلة بجودة عالية متاحة لك بأي وقت ومن أي مكان
                     </p>
                 </div>
-                <div class="box center w-32">
-                  <figure class="mb-50">
+                <div class="box relative center w-25 p-side-10">
                     <img
-                        src="/images/thumbs-up.png"
-                        width="77"
-                        height="79"
-                    />
-                    </figure>
-                    <p class="font-28 black">
-                        مبسطة تركز على تطبيقات عملية <br>يسهل تطبيقها في الروتين اليومي للطفل
-                    </p>
-                </div>
-                <div class="box center w-32">
-                  <figure class="mb-50">
-                    <img
-                        src="/images/file.png"
-                        width="70"
-                        height="87"
-                    />
-                    </figure>
-                    <p class="font-28 black">
-                        أوراق عمل يمكن استخدامها <br>في التطبيق بعد التدريب
-                    </p>
-                </div>
-                <div class="box center w-32">
-                  <figure class="mb-50">
-                    <img
-                        src="/images/book.png"
-                        width="62"
-                        height="86"
-                    />
-                    </figure>
-                    <p class="font-28 black">
-                        تقدم معلومات موثوقة<br> مثبتة بالدراسات والأبحاث
-                    </p>
-                </div>
-                <div class="box center w-32">
-                  <figure class="mb-50">
-                    <img
-                        src="/images/people.png"
-                        width="90"
+                        src="/images/thumb-up.svg"
+                        width="51"
                         height="70"
+                        class="mb-30"
                     />
-                    </figure>
-                    <p class="font-28 black">
-                        يقدمها أخصائيون ذوي خبرة عملية<br>متميزة في مجالهم وذوي كفاءة علمية
+                    <p class="font-19 main-color">
+                        مبسطة تقدم استراتيجيات عملية من السهل تطبيقها
                     </p>
                 </div>
-                <div class="box center w-32">
-                  <figure class="mb-50">
+                <div class="box relative center w-25 p-side-10">
                     <img
-                        src="/images/computer.png"
-                        width="83"
-                        height="67"
+                        src="/images/file.svg"
+                        width="78"
+                        height="70"
+                        class="mb-30"
                     />
-                    </figure>
-                    <p class="font-28 black">
-                        حضور ورشات نقاش مع الأخصائيين<br>بعد الدورة بشكل حصري للمشاركين
+                    <p class="font-19 main-color">
+                        تقدم معلومات موثوقة مثبتة بالدراسات والأبحاث
+                    </p>
+                </div>
+                <div class="box relative center w-25 p-side-10">
+                    <img
+                        src="/images/specialists-avatar.svg"
+                        width="70"
+                        height="70"
+                        class="mb-30"
+                    />
+                    <p class="font-19 main-color">
+                        يقدمها أخصائيون ذوي خبرة عملية متميزة في مجالهم
                     </p>
                 </div>
             </div>
@@ -83,10 +55,18 @@
 </template>
 
 <style scoped>
-.box {
-  margin-bottom: 152px;
+.box:not(:last-of-type):after {
+  content: "";
+  background: #E58C01;
+  height: 61px;
+  width: 2px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
-.box figure {
-  height:87px;
+.our-features {
+    padding-bottom: 80px;
 }
 </style>

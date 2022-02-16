@@ -1,0 +1,17 @@
+<template>
+    <footer class="main-footer">
+        <div class="container">
+            
+        </div>
+    </footer>
+</template>
+
+<script>
+    export default {
+        
+    }
+</script>
+
+<style scoped>
+
+</style>

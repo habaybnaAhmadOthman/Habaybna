@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex videos-list flex-wrap">
+    <!-- <div class="d-flex videos-list flex-wrap">
         <template v-if="filteredCourses.length">
             <div
                 class="card-video relative w-100-p"
@@ -19,7 +19,6 @@
                         height="235"
                     />
 
-                    <!-- tools -->
                     <div
                         class="card-tools p-side-15 d-flex space-between align-center w-100"
                     >
@@ -38,7 +37,6 @@
                             />
                         </div>
                     </div>
-                    <!-- card body -->
                     <div class="body d-flex flex-column h-100 space-between">
                         <div class="info pt-15 p-side-10 pb-15">
                             <p class="main-color font-20 bold two-line -title mb-5 mb-10-p">
@@ -95,6 +93,55 @@
         <div v-else class="w-100 center">
             <h2>لا يوجد كورسات في هذه الفئة</h2>
         </div>
+    </div> -->
+
+    <div class="training-courses-section pb-30">
+        <div class="container">
+            <div class="courses-container">
+                <template v-if="filteredCourses.length">
+                    <div class="courses-list d-flex flex-wrap">
+                        <div class="course-box shadow w-31 radius-10" v-for="(course, index) in filteredCourses" :key="index">
+
+                            <figure class="d-flex relative radius-10 overflow-hidden figure-box">
+                                <img class="main-img w-100 object-fit" :src="course.cover_photo" height="206" width="auto">
+                                <div class="fav-box relative pointer"></div>
+                                
+                                <router-link :to="`/courses/${course.id}`">
+                                    <img class="play-icon pointer" src="/images/play-icon.svg">
+                                </router-link>
+                                
+                                <!-- discount -->
+                                <div class="discount-label d-flex white pr-30 align-center" v-if="!course.is_free && course.discount.has_discount">
+                                    <span class="font-16">خصم</span>
+                                    <span class="font-17 top-2 discount-val" >{{course.discount.discount_value}}</span>
+                                </div>
+                                <div class="discount-label d-flex white align-center free-course-label" v-if="course.is_free">
+                                    <span class="font-20" >مجاناً</span>
+                                </div>
+
+                            </figure>
+
+                            <div class="p-side-20 pb-20 pt-20">
+                                <p class="font-20 black-2 mb-15 bold two-line">{{ course.title }}</p>
+                                <div class="d-flex space-between">
+                                    <div class="d-flex align-center">
+                                        <span class="bold font-22 main-color ml-15" v-if="!course.is_free && course.price">{{course.price}} JD</span>
+                                        <span class="gray font-19 before-discount bold" v-if="!course.is_free && course.discount.discount_price">{{course.discount.discount_price}} JD</span>
+                                    </div>
+                                    <span class="bold font-22 main-color">{{ course.course_length }} ساعات</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-box shadow w-31 radius-10 more main-bg">
+                            <router-link to="/" class="white-i font-23 h-100 d-block w-100">اكتشف المزيد</router-link>
+                        </div>
+                    </div>
+                </template>
+                <div v-else class="w-100 center">
+                    <h2 class="font-32 main-color bold">لا يوجد كورسات في هذه الفئة</h2>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -104,7 +151,101 @@ export default {
 </script>
 
 <style scoped>
-.videos-list {
+.courses-list {
+    column-gap: 40px;
+    row-gap: 40px;
+}
+.fav-box {
+    position: absolute;
+    background-color: rgb(255 255 255 / 90%);
+    border-radius: 50%;
+    left: 11px;
+    top: 14px;
+    width: 44px;
+    height: 44px;
+    background-image: url(/images/heart-icon.svg);
+    background-repeat: no-repeat;
+    background-size: 22px 21px;
+    background-position: center;
+    transition: .3s;
+}
+.fav-box.active {
+    background-image: url(/images/heart-icon-fill.svg);
+}
+.figure-box .play-icon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 55px;
+    height: 55px;
+    margin: auto;
+}
+.before-discount {
+    position: relative;
+    top: 1px;
+}
+.before-discount:after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: -3px;
+    bottom: 0;
+    margin: auto;
+    width: 120%;
+    height: 1px;
+    background: red;
+}
+.discount-label {
+    background: url(/images/discount-label.svg) no-repeat;
+    background-size: 100% 100%;
+    width: 130px;
+    height: 53px;
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+}
+.discount-val {
+    padding-right:3px;
+}
+.course-box.more {
+    position: relative;
+    min-height: 324px;
+}
+.course-box.more::before {
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(/images/more-courses.png);
+    background-size: 100% 100%;
+    mix-blend-mode: soft-light;
+    position: absolute;
+    pointer-events: none;
+}
+.course-box.more a {
+    display: flex;
+    align-items: end;
+    padding:32px;
+}
+.free-course-label {
+    padding-right: 40px;
+    background: url(/images/free-label.svg) no-repeat;
+}
+.free-course-label span{
+    position: relative;
+    top: 4px;
+}
+
+
+
+
+
+
+
+/* .videos-list {
     column-gap: 2%;
     row-gap: 20px;
 }
@@ -220,5 +361,5 @@ export default {
     .-title {
         height:auto;
     }
-}
+} */
 </style>

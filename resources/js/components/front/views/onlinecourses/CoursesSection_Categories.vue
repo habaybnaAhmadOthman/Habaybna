@@ -1,14 +1,14 @@
 <template>
-    <div class="container-fluid p-side-0-p">
+    <div class="p-side-0-p">
         <div class="d-flex flex-wrap">
-            <ul class="ks-cboxtags d-flex flex-wrap justify-center mb-50 w-100">
-                <li v-for="(category,index) of filters" :key="category.id" :index="index" class="ml-10 mb-10">
+            <ul class="ks-cboxtags d-flex flex-wrap mb-35 w-100">
+                <li v-for="(category,index) of filters" :key="category.id" :index="index" class="ml-10">
                     <input
                         @change="setFilter"
                         type="checkbox"
                         :id="category.id"
                         :value="category.val"
-                    /><label class="center gray radius-12" :for="category.id">{{category.val}}</label>
+                    /><label class="center gray radius-60 font-18" :for="category.id">{{category.val}}</label>
                 </li>
             </ul>
         </div>
@@ -23,15 +23,18 @@ export default {
     }
   },
   created(){
+      
       this.getCategories();
   },
   methods:{
     async getCategories(){
         const categories = await this.$store.dispatch('courses/getCategories');
-        categories.forEach((category)=>{
-            // this.filters[category.id] = {id:category.id,val: category.title}
-            this.filters.push({id:category.id,val: category.title,isChecked: false})
-        });
+        if (categories) {
+            categories.forEach((category)=>{
+                // this.filters[category.id] = {id:category.id,val: category.title}
+                this.filters.push({id:category.id,val: category.title,isChecked: false})
+            });
+        }
     },
     setFilter(e) {
     //   const inputID = e.target.id;
@@ -52,10 +55,8 @@ export default {
 <style scoped>
 ul.ks-cboxtags li label {
     display: inline-block;
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(139, 139, 139, 0.3);
+        padding: 11px 23px;
     white-space: nowrap;
-    margin: 3px 0px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -64,17 +65,13 @@ ul.ks-cboxtags li label {
     -webkit-tap-highlight-color: transparent;
     transition: all 0.3s;
     min-width: 110px;
-}
-
-ul.ks-cboxtags li label {
-    padding: 8px 12px;
     cursor: pointer;
+    border: 1px solid #780d93;
 }
 
 ul.ks-cboxtags li input[type="checkbox"]:checked + label {
-    border: 2px solid #660066;
     background-color: #660066;
-    color: #fff;
+    color: #fff!important;
     transition: all 0.2s;
 }
 

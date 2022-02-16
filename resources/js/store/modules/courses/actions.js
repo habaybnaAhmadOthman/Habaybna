@@ -12,7 +12,7 @@ export default {
     // ******** get all categories ::: get
     async getCategories() {
         const resp = await callApi("GET", "/api/get-categories");
-        if (resp.status != 200) {
+        if (!resp || resp.status != 200) {
             const error = new Error("fail to get courses");
             throw error;
         }
