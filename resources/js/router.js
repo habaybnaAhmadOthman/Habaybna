@@ -21,6 +21,7 @@ import ClassRoom from "./components/parents/ClassRoom.vue";
 
 import HomePage from "./components/front/pages/HomePage.vue";
 import onlineCoursesPage from "./components/front/pages/onlineCoursesPage.vue";
+import allCoursesPage from "./components/front/pages/allCoursesPage.vue";
 // courses
 import CoursePage from "./components/front/pages/courses/CoursePage.vue";
 import CourseVideoPage from "./components/front/pages/courses/CourseVideo.vue";
@@ -121,6 +122,11 @@ const routes = [
         path: "/online-courses",
         component: onlineCoursesPage,
         name: "onlineCourses"
+    },
+    {
+        path: "/all-courses",
+        component: allCoursesPage,
+        name: "allCourses"
     },
     // *****************
     // auth pages

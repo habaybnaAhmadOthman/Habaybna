@@ -1,6 +1,6 @@
 <template>
     <div class="company-banner relative pt-25 pb-55">
-        <div class="container">
+        <div class="container z-1">
             <div class="w-85">
                 <h2 class="title-line mb-40">للمؤسسات</h2>
                 <p class="font-25 gray bold mb-20">هل أنتم أحد المؤسسات أو المراكز أو المدارس التي  ترغب بشراء حزمة لتدريب مموظفيكم أو عملائكم؟</p>
@@ -18,7 +18,7 @@
 
 <style scoped>
 .company-banner {
-    background:rgb(130 49 117 / 50%);
+    background:#f4f0f4;
 }
 .company-banner:before {
     content:'';

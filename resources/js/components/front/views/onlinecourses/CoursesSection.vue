@@ -1,27 +1,38 @@
 <template>
   <div>
     <section class="learn-section bg-gray">
-      <Banner></Banner>
-      <div class="container h-100">
-        <CoursesFeatures></CoursesFeatures>
+      <div class="container">
         <h2 class="title-line mb-40">الدورات التدريبية</h2>
         <Categories @change-filter="setFilters"></Categories>
-        <template v-if="appendedCourses.length">
-          <Courses :filtered-courses="appendedCourses"></Courses>
+        <template >
+          <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn" ></Courses>
         </template>
       </div>
     </section>
-    <CombaniesBanner></CombaniesBanner>
+    
+    
   </div>
 </template>
 <script>
 import Categories from './CoursesSection_Categories.vue'
 import Courses from './CoursesSection_Cards.vue'
-import Banner from './CoursesSection_Banner.vue'
-import CoursesFeatures from './CoursesFeatures.vue'
-import CombaniesBanner from '../../layouts/CompaniesBanner.vue'
 export default {
-  components: {Categories,Courses,Banner,CoursesFeatures,CombaniesBanner},
+  props: ['cardsCount','showMoreCard'],
+  computed: {
+    cardsCountFn(){
+      if (this.cardsCount)
+        return this.appendedCourses.slice(0,this.cardsCount)
+      else
+        return this.appendedCourses
+    },
+    showMoreCardFn(){
+      if (this.showMoreCard === true)
+        return true
+      else
+        return false
+    }
+  },
+  components: {Categories,Courses},
   data(){
     return {
       activeFilters: [],

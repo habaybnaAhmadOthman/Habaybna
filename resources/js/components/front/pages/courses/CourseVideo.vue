@@ -27,7 +27,7 @@ import CourseProgress from "../../views/coursepage/CourseVideo_Progress.vue";
 import VideoDescription from "../../views/coursepage/VideoDescription.vue";
 import CourseInfo from "../../views/coursepage/CourseInfo.vue";
 import CourseDetails from "../../views/coursepage/CourseDetails.vue";
-import AboutSpecialist from "../../views/coursepage/AboutSpecialist.vue";
+import AboutSpecialist from "../../views/coursepage/AboutSpecialists.vue";
 import ContactUs from "../../views/coursepage/ContactUs.vue";
 import Reviews from "../../views/coursepage/Reviews.vue";
 export default {

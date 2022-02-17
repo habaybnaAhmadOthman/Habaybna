@@ -105,7 +105,7 @@ header {
     padding-right: 1.2vw;
     transition: 0.5s ease-in-out;
     box-shadow: 10px 10px 10px -16px #000;
-    position: fixed;
+    position: relative;
     top: 0;
     width: 100%;
     z-index: 10;

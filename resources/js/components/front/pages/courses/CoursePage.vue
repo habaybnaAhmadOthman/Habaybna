@@ -1,11 +1,21 @@
 <template>
     <div class="course-page mt-50 pb-100">
+        <Banner :videoSrc="trailerSrc" :is-full="false"></Banner>
+        <div class="container page-info">
+            <CourseInfo :course-name="courseName" :specialist-name="specialistName" description="courseDescription" :lectures="lectures"></CourseInfo>
+            
+            <ContentTable class="pt-20"></ContentTable>
+
+            <AboutSpecialists :specialistID="1"></AboutSpecialists>
+
+            <RelatedCourses></RelatedCourses>
+
+        </div>
+
+
         <div class="container">
             <div class="d-flex structure flex-wrap space-between">
                 <div class="w-68">
-                    <Banner :videoSrc="trailerSrc" :is-full="false"></Banner>
-                    <CourseInfo :course-name="courseName" :specialist-name="specialistName" description="courseDescription" :lectures="lectures"></CourseInfo>
-                    <AboutSpecialist :specialistID="1"></AboutSpecialist>
                     <ContactUs></ContactUs>
                     <Reviews></Reviews>
                 </div>
@@ -20,11 +30,13 @@
 import Banner from "../../views/coursepage/Banner.vue";
 import CourseInfo from "../../views/coursepage/CourseInfo.vue";
 import CourseDetails from "../../views/coursepage/CourseDetails.vue";
-import AboutSpecialist from "../../views/coursepage/AboutSpecialist.vue";
+import AboutSpecialists from "../../views/coursepage/AboutSpecialists.vue";
 import ContactUs from "../../views/coursepage/ContactUs.vue";
+import ContentTable from "../../views/coursepage/ContentTable.vue";
+import RelatedCourses from "../../views/coursepage/RelatedCourses.vue";
 import Reviews from "../../views/coursepage/Reviews.vue";
 export default {
-    components: { CourseInfo,Banner,CourseDetails,AboutSpecialist,ContactUs,Reviews},
+    components: { CourseInfo,ContentTable,Banner,CourseDetails,AboutSpecialists,ContactUs,Reviews,RelatedCourses},
     props: ['course'],
     data() {
         return {
@@ -54,3 +66,8 @@ export default {
     }
 };
 </script>
+<style scoped>
+.page-info {
+    margin-top: 150px;
+}
+</style>
