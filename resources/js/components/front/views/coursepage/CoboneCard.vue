@@ -3,7 +3,7 @@
         <figure class="d-flex relative overflow-hidden radius-10 figure-box">
             <img class="w-100 course-card-img" src="/images/register-bg.jpg" width="100%" height="250" alt="">
             <div class="fav-box relative pointer"></div>
-            <img class="play-icon pointer" src="/images/play-icon.svg" />
+            <img class="play-icon pointer" src="/images/play-icon.svg" @click="checkLogin" />
         </figure>
         <div class="d-flex box-details flex-wrap">
             <router-link to="/" class="btn-register-now white-i font-18 mb-20 bold flex-all w-100">إشترك الآن</router-link>
@@ -17,7 +17,11 @@
 
 <script>
     export default {
-        
+        methods: {
+            checkLogin(){
+                this.$store.commit('loginModal',true);
+            }
+        }
     }
 </script>
 

@@ -69,4 +69,11 @@
 .our-features {
     padding-bottom: 80px;
 }
+.course-page .title-line {
+    margin-bottom: 40px;
+}
+.course-page .our-features {
+    padding-top: 20px;
+    padding-bottom: 60px;
+}
 </style>

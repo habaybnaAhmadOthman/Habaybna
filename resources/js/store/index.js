@@ -22,7 +22,9 @@ const store = new vuex.Store({
         specialist: SpecialistModule
     },
     state() {
-        return {};
+        return {
+            showLoginModal: false
+        };
     },
     getters,
     mutations,

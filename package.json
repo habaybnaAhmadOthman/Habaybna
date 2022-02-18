@@ -37,6 +37,7 @@
         "vue-multiselect": "^2.1.6",
         "vue-phone-number-input": "^1.1.12",
         "vue-router": "^3.5.2",
+        "vue-slick-carousel": "^1.0.6",
         "vuex": "^2.5.0",
         "vuex-persistedstate": "^4.1.0",
         "webpack": "^4.43.0"

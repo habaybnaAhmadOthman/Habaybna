@@ -1,8 +1,6 @@
 <template>
-    <div class="about-course pt-20">
-        <h2 class="title-line font-27 mb-40">نظرة عامة على الدورة</h2>
-        <h3 class="black-2 font-27 pre-line f-normal mb-40">في هذا الفيديو يتحدث المختص في العلاج الوظيفي عمر عن 
-            الأطفال المتأخرين في التطور وتقدير المسافات مع من حولهم</h3>
+    <div class="about-course">
+        <CourseInfoText :header="'نظرة عامة على الدورة'" :description="'في هذا الفيديو يتحدث المختص في العلاج الوظيفي عمر عن '"></CourseInfoText>
         <div class="mb-40 what-should-learn">
             <h3 class="title-line font-27 mb-40">ماذا سيتعلم المشاركون</h3>
             <div class="font-27 black-2">
@@ -53,6 +51,7 @@
 </template>
 
 <script>
+import CourseInfoText from './CourseInfoText.vue'
 export default {
     props: ['courseName','specialistName','description','lectures','documents'],
     data(){
@@ -64,7 +63,8 @@ export default {
         showMoreLess() {
             this.showMore = !this.showMore
         }
-    }
+    },
+    components: {CourseInfoText}
 }
 </script>
 <style scoped>

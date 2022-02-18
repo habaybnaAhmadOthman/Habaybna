@@ -20,6 +20,7 @@ import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 import HomePage from "./components/front/pages/HomePage.vue";
+import ErrorPage from "./components/front/pages/ErrorPage.vue";
 import onlineCoursesPage from "./components/front/pages/onlineCoursesPage.vue";
 import allCoursesPage from "./components/front/pages/allCoursesPage.vue";
 // courses
@@ -199,7 +200,7 @@ const routes = [
         path: "/courses/:course/:lesson",
         component: CourseVideoPage,
         meta: {
-            requiresAuth: true
+            // requiresAuth: true
         },
         props: true
     },
@@ -210,6 +211,7 @@ const routes = [
             requiresAuth: true
         }
     },
+    { path: "*", component: ErrorPage }
 ];
 
 const router = new Router({

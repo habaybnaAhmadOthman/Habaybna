@@ -327,6 +327,9 @@ body {
 .mt-50 {
     margin-top: 50px;
 }
+.mt-60 {
+    margin-top: 60px;
+}
 .mb-5 {
     margin-bottom: 5px;
 }
@@ -619,7 +622,7 @@ input[disabled] {
     font-weight: 100;
 }
 .bold {
-    font-family: "Baloo Bold";
+    font-family: "Baloo Bold"!important;
 }
 .bg-white {
     background: #fff;

@@ -15,7 +15,7 @@ export default {
             avatar: '/images/siteImgs/header/logo.png',
             firstName: null,
             lastName: null,
-            openAvatarModal: false,
+            openAvatarModal: false
         }
     },
     mutations,

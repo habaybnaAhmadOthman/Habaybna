@@ -32,9 +32,7 @@
         </figure>
 
         <div class="p-side-20 pb-20 pt-20">
-            <p class="font-20 black-2 mb-15 bold two-line">
-                {{ course.title }}
-            </p>
+            <p class="font-20 black-2 mb-15 bold two-line course-title">{{ course.title }}</p>
             <div class="d-flex space-between">
                 <div class="d-flex align-center">
                     <span
@@ -128,5 +126,8 @@ export default {
 .free-course-label span{
     position: relative;
     top: 4px;
+}
+.related-courses-section .course-box .course-title {
+    height: 60px;
 }
 </style>

@@ -1,37 +1,26 @@
 <template>
-    <div class="course-page mt-50 pb-100">
+    <div class="video-page">
+        <Banner :videoSrc="trailerSrc"></Banner>
         <div class="container">
-            <Banner :videoSrc="trailerSrc"></Banner>
+            <CourseInfoText :header="'لمحة عن الدرس'" :description="'في هذا الفيديو يتحدث المختص في العلاج الوظيفي عمر عن '"></CourseInfoText>
+            <ContentTable class="pt-20"></ContentTable>
+            <AboutSpecialists :specialistID="1"></AboutSpecialists>
         </div>
-        <div class="container">
-            <CourseProgress></CourseProgress>
-        </div>
-        <div class="container">
-            <div class="d-flex structure flex-wrap space-between">
-                <div class="w-50">
-                    <CourseInfo :course-name="courseName" :specialist-name="specialistName" :documents="documents" description="description" :lectures="lectures"></CourseInfo>
-                </div>
-                <VideoDescription :lectureInfo="lectureInfo"></VideoDescription>
-                <AboutSpecialist :specialistID="1"></AboutSpecialist>
-                <div class="w-100">
-                    <ContactUs></ContactUs>
-                </div>
-            </div>
+        <div class="page-footer">
+            <TheFooter></TheFooter>
         </div>
     </div>
 </template>
 
 <script>
 import Banner from "../../views/coursepage/Banner.vue";
-import CourseProgress from "../../views/coursepage/CourseVideo_Progress.vue";
-import VideoDescription from "../../views/coursepage/VideoDescription.vue";
-import CourseInfo from "../../views/coursepage/CourseInfo.vue";
-import CourseDetails from "../../views/coursepage/CourseDetails.vue";
-import AboutSpecialist from "../../views/coursepage/AboutSpecialists.vue";
-import ContactUs from "../../views/coursepage/ContactUs.vue";
-import Reviews from "../../views/coursepage/Reviews.vue";
+import CourseInfoText from "../../views/coursepage/CourseInfoText.vue";
+import ContentTable from "../../views/coursepage/ContentTable.vue";
+import AboutSpecialists from "../../views/coursepage/AboutSpecialists.vue";
+
+import TheFooter from '../../layouts/TheFooter.vue'
 export default {
-    components: { CourseInfo,Banner,CourseDetails,AboutSpecialist,ContactUs,Reviews,CourseProgress,VideoDescription},
+    components: { Banner,AboutSpecialists,CourseInfoText,ContentTable,TheFooter},
     props: ['course'],
     data() {
         return {
@@ -65,3 +54,8 @@ export default {
     }
 };
 </script>
+<style scoped>
+.page-footer {
+    margin-top: 120px;
+}
+</style>

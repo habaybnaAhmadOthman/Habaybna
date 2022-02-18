@@ -26,7 +26,8 @@ export default {
     },
     isLoggedIn(state) {
         return !!state.loggedIn;
-    }
+    },
+    
     // isAuthenticated: state => !!state.user, 
     // user(state,getters,rootState,rootGetters)
 };

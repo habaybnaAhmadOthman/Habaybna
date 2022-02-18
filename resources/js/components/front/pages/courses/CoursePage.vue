@@ -1,5 +1,7 @@
 <template>
-    <div class="course-page mt-50 pb-100">
+    <div class="course-page">
+         <button id="show-modal" @click="loginModal = true">Show Modal</button>
+         
         <Banner :videoSrc="trailerSrc" :is-full="false"></Banner>
         <div class="container page-info">
             <CourseInfo :course-name="courseName" :specialist-name="specialistName" description="courseDescription" :lectures="lectures"></CourseInfo>
@@ -7,21 +9,16 @@
             <ContentTable class="pt-20"></ContentTable>
 
             <AboutSpecialists :specialistID="1"></AboutSpecialists>
-
-            <RelatedCourses></RelatedCourses>
-
-        </div>
-
-
-        <div class="container">
-            <div class="d-flex structure flex-wrap space-between">
-                <div class="w-68">
-                    <ContactUs></ContactUs>
-                    <Reviews></Reviews>
-                </div>
-                <CourseDetails></CourseDetails>
+            <div class="mt-60">
+                <RelatedCourses></RelatedCourses>
             </div>
         </div>
+        <div class="mt-30">
+            <CombaniesBanner></CombaniesBanner>
+        </div>
+        <CoursesFeatures></CoursesFeatures>
+
+        <TheFooter></TheFooter>
         
     </div>
 </template>
@@ -29,14 +26,18 @@
 <script>
 import Banner from "../../views/coursepage/Banner.vue";
 import CourseInfo from "../../views/coursepage/CourseInfo.vue";
-import CourseDetails from "../../views/coursepage/CourseDetails.vue";
 import AboutSpecialists from "../../views/coursepage/AboutSpecialists.vue";
-import ContactUs from "../../views/coursepage/ContactUs.vue";
 import ContentTable from "../../views/coursepage/ContentTable.vue";
 import RelatedCourses from "../../views/coursepage/RelatedCourses.vue";
-import Reviews from "../../views/coursepage/Reviews.vue";
+import CoursesFeatures from '../../views/onlinecourses/CoursesFeatures.vue'
+
+
+import CombaniesBanner from '../../layouts/CompaniesBanner.vue'
+import TheFooter from '../../layouts/TheFooter.vue'
 export default {
-    components: { CourseInfo,ContentTable,Banner,CourseDetails,AboutSpecialists,ContactUs,Reviews,RelatedCourses},
+    components: { 
+        CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter
+    },
     props: ['course'],
     data() {
         return {
@@ -44,7 +45,7 @@ export default {
             courseName: '',
             specialistName: '',
             courseDescription: '',
-            lectures: [],
+            lectures: []
         }
     },
     created(){
@@ -67,7 +68,5 @@ export default {
 };
 </script>
 <style scoped>
-.page-info {
-    margin-top: 150px;
-}
+
 </style>
