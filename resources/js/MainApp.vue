@@ -4,7 +4,7 @@
             <router-view></router-view>
         </transition>
         
-        <LoginModal></LoginModal>
+        <LoginModal v-if="!isLoggedIn"></LoginModal>
         
     </main>
 </template>
@@ -18,7 +18,12 @@ import LoadingSpinner from "./components/front/layouts/LoadingSpinner.vue";
 Vue.component('loading-spinner',LoadingSpinner)
 Vue.component('alert-dialog',AlertDialog)
 export default {
-  components: {LoginModal}
+  components: {LoginModal},
+  computed: {
+      isLoggedIn() {
+          return this.$store.getters["user/isLoggedIn"];
+      }
+  },
 }
 </script>
 <style>

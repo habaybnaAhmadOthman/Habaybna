@@ -1,12 +1,10 @@
 <template>
     <div class="course-page">
-         <button id="show-modal" @click="loginModal = true">Show Modal</button>
-         
-        <Banner :videoSrc="trailerSrc" :is-full="false"></Banner>
+        <Banner :videoSrc="trailerSrc" :banner-title="courseName"></Banner>
         <div class="container page-info">
-            <CourseInfo :course-name="courseName" :specialist-name="specialistName" description="courseDescription" :lectures="lectures"></CourseInfo>
+            <CourseInfo :course-name="courseName" :description="courseDescription"></CourseInfo>
             
-            <ContentTable class="pt-20"></ContentTable>
+            <ContentTable :lectures="lectures" class="pt-20"></ContentTable>
 
             <AboutSpecialists :specialistID="1"></AboutSpecialists>
             <div class="mt-60">

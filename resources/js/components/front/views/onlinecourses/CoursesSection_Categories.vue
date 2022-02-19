@@ -1,39 +1,58 @@
+
 <template>
-    <div class="p-side-0-p">
-        <div class="d-flex flex-wrap">
-            <ul class="ks-cboxtags d-flex flex-wrap mb-35 w-100">
-                <li v-for="(category,index) of filters" :key="category.id" :index="index" class="ml-10">
-                    <input
-                        @change="setFilter"
-                        type="checkbox"
-                        :id="category.id"
-                        :value="category.val"
-                    /><label class="center gray radius-60 font-18" :for="category.id">{{category.val}}</label>
-                </li>
-            </ul>
+    <div class="p-side-0-p courses-filter" v-if="filters.length > 0">
+        <div class="relative mb-35">
+            <swiper
+                :slidesPerView="'auto'"
+                :space-between="30"
+                :loop="false"
+                class="pb-10"
+                :navigation="{ nextEl:'.categories-filter-prev', prevEl: '.categories-filter-next'}"
+            >
+                <swiper-slide v-for="(category, index) of filters" :key="index">
+                    <li class="">
+                        <input
+                            @change="setFilter"
+                            type="checkbox"
+                            :id="category.id"
+                            :value="category.val"
+                        /><label class="center gray radius-60 font-18" :for="category.id">{{category.val}}</label>
+                    </li>
+                </swiper-slide>
+            </swiper>
+            <div class="swiper-button-next categories-filter-next"></div>
+            <div class="swiper-button-prev categories-filter-prev"></div>
         </div>
     </div>
 </template>
 <script>
+import { Navigation, Pagination } from 'swiper'
+
+import { SwiperCore, Swiper, SwiperSlide } from 'swiper-vue2'
+// Import Swiper styles
+import 'swiper/swiper-bundle.css'
+SwiperCore.use([Navigation, Pagination])
 export default {
   emits: ['change-filter'],
+  components: {Swiper,SwiperSlide},
   data(){
     return {
       filters: []
     }
   },
   created(){
-      
       this.getCategories();
   },
   methods:{
     async getCategories(){
         const categories = await this.$store.dispatch('courses/getCategories');
+        let temp = []
         if (categories) {
             categories.forEach((category)=>{
                 // this.filters[category.id] = {id:category.id,val: category.title}
-                this.filters.push({id:category.id,val: category.title,isChecked: false})
+                temp.push({id:category.id,val: category.title,isChecked: false})
             });
+            this.filters = temp
         }
     },
     setFilter(e) {
@@ -53,7 +72,10 @@ export default {
 </script>
 
 <style scoped>
-ul.ks-cboxtags li label {
+.courses-filter .swiper-slide{
+    width: auto;
+}
+li label {
     display: inline-block;
         padding: 11px 23px;
     white-space: nowrap;
@@ -69,21 +91,24 @@ ul.ks-cboxtags li label {
     border: 1px solid #780d93;
 }
 
-ul.ks-cboxtags li input[type="checkbox"]:checked + label {
+li input[type="checkbox"]:checked + label {
     background-color: #660066;
     color: #fff!important;
     transition: all 0.2s;
 }
 
-ul.ks-cboxtags li input[type="checkbox"] {
+li input[type="checkbox"] {
     display: absolute;
 }
-ul.ks-cboxtags li input[type="checkbox"] {
+li input[type="checkbox"] {
     position: absolute;
     opacity: 0;
 }
+li {
+    width: 100px;
+}
 @media (max-width: 767px) {
-    ul.ks-cboxtags li label[data-v-3023a41f] {
+    li label[data-v-3023a41f] {
         padding: 4px 14px;
         min-width: auto;
     }

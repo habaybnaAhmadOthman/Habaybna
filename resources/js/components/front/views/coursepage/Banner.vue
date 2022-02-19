@@ -1,6 +1,6 @@
 <template>
     <!-- <div class="banner relative overflow-hidden radius-12">
-        <video ref="videoPlayer" class="video-js main-img w-100"></video>
+        
         <div class="fav-box relative">
             <img width="36" height="36" src="https://www.arabiaweather.com/farms/assets/images/favourite-add.svg" class="add pointer"> 
             <img width="36" height="36" src="https://www.arabiaweather.com/farms/assets/images/favourite-added-offer.svg" class="remove pointer">
@@ -10,68 +10,24 @@
         <div class="container h-100">
             <div class="d-flex h-100">
                 <div class="d-flex align-center box h-100 relative w-70">
-                    <h1 class="font-50 white bold pre-line">الأطفال المتأخرين في التطور وتقدير <br>المسافات مع من حولهم</h1>
+                    <h1 class="font-50 white bold pre-line">{{bannerTitle}}</h1>
                     <div class="d-flex details white font-20">
                         <p class="d-flex align-center ml-20"><img class="ml-10" src="/images/time-icon.svg" width="31" height="31" alt="">١٢ ساعة</p>
                         <p class="d-flex align-center ml-20"><img class="ml-10" src="/images/video-svgrepo.svg" width="39" height="34" alt="">٨ دروس</p>
                         <p class="d-flex align-center"><img class="ml-10" src="/images/share-icon.svg" width="34" height="36" alt="">مشاركة</p>
                     </div>
                 </div>
-                <CoboneCard></CoboneCard>
+                
+                <CoboneCard v-if="videoSrc" :videoSrc="videoSrc"></CoboneCard>
             </div>
         </div>
     </div>
 </template>
 <script>
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css'
 import CoboneCard from './CoboneCard.vue'
 export default {
-    props: ['videoSrc','isFull'],
-    components: {CoboneCard},
-    data() {
-        return {
-            player: null,
-            videoOptions: {
-                muted: false,
-				autoplay: true,
-				controls: true,
-				sources: [
-					{
-						src:
-							"https://cms.habaybna.net/sites/default/files/2021-10/IEP%20Teaser%20%281%29.mp4",
-						  type: "video/mp4"
-					}
-				],
-                playbackRates: [0.7, 1.0, 1.5, 2.0],
-			}
-        }
-    },
-    computed: {
-        fullContainer(){
-            return !!!this.isFull 
-        }
-    },
-    methods : {
-
-    },
-    mounted() {
-        this.player = videojs(this.$refs.videoPlayer, this.videoOptions, function onPlayerReady() {
-            console.log('onPlayerReady', this);
-        })
-        this.player.on('ready', function() {
-            // this.addClass('my-example');
-        });
-        this.player.on('ended', function() {
-            console.log('endddd');
-        });
-        // this.player.controlBar.progressControl.disable()
-    },
-    beforeDestroy() {
-        if (this.player) {
-            this.player.dispose()
-        }
-    }
+    props: ['videoSrc', 'bannerTitle'],
+    components: {CoboneCard}
 }
 </script>
 

@@ -1,12 +1,14 @@
 <template>
     <div class="course-card w-30 radius-10 overflow-hidden bg-white relative">
         <figure class="d-flex relative overflow-hidden radius-10 figure-box">
-            <img class="w-100 course-card-img" src="/images/register-bg.jpg" width="100%" height="250" alt="">
+            <!-- <img class="w-100 course-card-img" src="/images/register-bg.jpg" width="100%" height="250" alt="">
+            <img class="play-icon pointer" src="/images/play-icon.svg" @click="playTrailer" /> -->
             <div class="fav-box relative pointer"></div>
-            <img class="play-icon pointer" src="/images/play-icon.svg" @click="checkLogin" />
+            <video ref="videoPlayer" class="video-js main-img w-100"></video>
         </figure>
         <div class="d-flex box-details flex-wrap">
-            <router-link to="/" class="btn-register-now white-i font-18 mb-20 bold flex-all w-100">إشترك الآن</router-link>
+            <!-- <router-link to="/" class="btn-register-now white-i font-18 mb-20 bold flex-all w-100">إشترك الآن</router-link> -->
+            <button @click="checkLogin" class="btn-register-now white-i font-18 mb-20 bold flex-all w-100 pointer">إشترك الآن</button>
             <form class="cobone-form relative d-flex w-100">
                 <input type="text" class="w-80 cobone-input" placeholder="هل لديك كوبون أو قسيمة شرائية استخدمها الآن ؟">
                 <input type="submit" value="" class="apply-cobone w-10">
@@ -16,10 +18,53 @@
 </template>
 
 <script>
+    import videojs from 'video.js';
+    import 'video.js/dist/video-js.css'
     export default {
+        props: ['videoSrc'],
+        data() {
+            return {
+                player: null,
+                videoOptions: {
+                    muted: false,
+                    autoplay: true,
+                    controls: true,
+                    sources: [
+                        {
+                            src:
+                                "https://cms.habaybna.net/sites/default/files/2021-10/IEP%20Teaser%20%281%29.mp4",
+                            type: "video/mp4"
+                        }
+                    ],
+                    playbackRates: [0.7, 1.0, 1.5, 2.0],
+                }
+            }
+        },
         methods: {
             checkLogin(){
                 this.$store.commit('loginModal',true);
+            },
+            playTrailer(){
+                this.$emit('play-trailer',true);
+            }
+        },
+        mounted() {
+            this.videoOptions.sources[0].src =  this.videoSrc
+            console.log(this.videoSrc)
+            this.player = videojs(this.$refs.videoPlayer, this.videoOptions, function onPlayerReady() {
+                console.log('onPlayerReady', this);
+            })
+            this.player.on('ready', function() {
+                // this.addClass('my-example');
+            });
+            this.player.on('ended', function() {
+                console.log('endddd');
+            });
+            // this.player.controlBar.progressControl.disable()
+        },
+        beforeDestroy() {
+            if (this.player) {
+                this.player.dispose()
             }
         }
     }
@@ -30,6 +75,7 @@
     background:#632F63;
     border-radius: 25px;
     height: 60px;
+    border: 0;
 }
 .box-details {
     padding: 20px 20px 40px 20px;
@@ -72,6 +118,7 @@
     background-size: 22px 21px;
     background-position: center;
     transition: .3s;
+    z-index: 1;
 }
 .fav-box.active {
     background-image: url(/images/heart-icon-fill.svg);
@@ -86,4 +133,30 @@
     height: 55px;
     margin: auto;
 }
+.video-js {
+    height: 250px;
+}
+</style>
+<style>
+.vjs-big-play-button {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:  url(/images/play-icon.svg)!important;
+    background-repeat: no-repeat!important;
+    background-size: 84px 84px!important;
+    background-position: center center!important;
+    border: none !important;
+    box-shadow: none !important;
+    height: 84px!important;
+    width: 84px!important;
+}
+.video-js .vjs-big-play-button {
+    background-color:transparent !important;
+}
+.vjs-big-play-button:before, .video-js .vjs-big-play-button .vjs-icon-placeholder:before {
+    content: ""!important;
+    display: none;
+} 
 </style>

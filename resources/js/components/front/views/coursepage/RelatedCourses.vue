@@ -2,33 +2,39 @@
     <div class="related-courses-section">
         <h6 class="title-line font-27 mb-40">دورة ذات صلة</h6>
         
-        <div class="list" v-if="appendedCourses.length > 0">
-            <VueSlickCarousel :arrows="true" :dots="false" v-bind="sliderSettings">
-                <CourseCard v-for="(course, index) in appendedCourses" :course="course" :key="index"></CourseCard>
-            </VueSlickCarousel>
+        <div class="list relative" v-if="appendedCourses.length > 0">
+            <swiper
+                :slides-per-view="3"
+                :space-between="30"
+                :loop="false"
+                @swiper="onSwiper"
+                @slideChange="onSlideChange"
+                class="pb-10"
+                :navigation="{ nextEl:'.related-prev', prevEl: '.related-next'}"
+            >
+            <swiper-slide v-for="(course, index) in appendedCourses" :key="index">
+                <CourseCard :course="course" class="w-100-i" ></CourseCard>
+            </swiper-slide>
+            </swiper>
+            <div class="swiper-button-next related-next"></div>
+            <div class="swiper-button-prev related-prev"></div>
         </div>
     </div>
 </template>
 
 <script>
+    import { Navigation, Pagination } from 'swiper'
+
+    import { SwiperCore, Swiper, SwiperSlide } from 'swiper-vue2'
+    // Import Swiper styles
+    import 'swiper/swiper-bundle.css'
+    SwiperCore.use([Navigation, Pagination])
     import CourseCard from '../../views/onlinecourses/Course_Card.vue'
-    import VueSlickCarousel from 'vue-slick-carousel'
-  import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-  // optional style for arrows & dots
-  import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+
     export default {
-        components:{CourseCard,VueSlickCarousel},
+        components:{CourseCard,Swiper,SwiperSlide},
         data:()=>({
-            appendedCourses: [],
-            sliderSettings: {
-                "dots": false,
-                "infinite": true,
-                "speed": 500,
-                "slidesToShow": 3,
-                "slidesToScroll": 3,
-                "touchThreshold": 5,
-                "rtl": true,
-            }
+            appendedCourses: []
         }),
         created(){
             this.getCourses();
@@ -36,33 +42,32 @@
         methods: {
             async getCourses(){
                 this.appendedCourses = await this.$store.dispatch('courses/getAllCourses');
+            },
+            onSwiper (swiper) {
+                // console.log(swiper)
+            },
+            onSlideChange () {
+                // console.log('slide change')
             }
         }
     }
 </script>
 
 <style>
-.slick-slide {
-    padding: 0 10px!important;
-}
-.slick-list {
-    margin: 0 -10px!important;
-    padding-bottom: 10px!important;
-}
-.slick-next {
-    background: url(/images/arrow-right-color.svg) no-repeat!important;    
-    right: -60px;
-}
-.slick-prev {
-    background: url(/images/arrow-left-color.svg) no-repeat!important;
-    left: -60px;
-}
-.slick-next,.slick-prev {
+.swiper-button-prev,.swiper-button-next {
     background-size: 100% 100%!important;
     width: 32px;
     height: 52px;
 }
-.slick-next:before,.slick-prev:before {
+.swiper-button-prev:after,.swiper-button-next:after {
     content: none;
+}
+.swiper-button-next {
+    background: url(/images/arrow-right-color.svg) no-repeat!important;    
+    right: -60px;
+}
+.swiper-button-prev {
+    background: url(/images/arrow-left-color.svg) no-repeat!important;
+    left: -60px;
 }
 </style>

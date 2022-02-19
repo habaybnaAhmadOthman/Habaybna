@@ -1,56 +1,56 @@
 <template>
-    <div class="course-box shadow w-31 radius-10">
-        <figure class="d-flex relative radius-10 overflow-hidden figure-box">
-            <img
-                class="main-img w-100 object-fit"
-                :src="course.cover_photo"
-                height="206"
-                width="auto"
-            />
-            <div class="fav-box relative pointer"></div>
+    <div class="course-box shadow w-31 radius-10 relative">
+        <div class="fav-box relative pointer"></div>
+        <router-link :to="`/courses/${course.id}`">
+            <figure class="d-flex relative radius-10 overflow-hidden figure-box">
+                <img
+                    class="main-img w-100 object-fit"
+                    :src="course.cover_photo"
+                    height="206"
+                    width="auto"
+                />
 
-            <router-link :to="`/courses/${course.id}`">
-                <img class="play-icon pointer" src="/images/play-icon.svg" />
-            </router-link>
+                <!-- <img class="play-icon pointer" src="/images/play-icon.svg" /> -->
 
-            <!-- discount -->
-            <div
-                class="discount-label d-flex white pr-30 align-center"
-                v-if="!course.is_free && course.discount.has_discount"
-            >
-                <span class="font-16">خصم</span>
-                <span class="font-17 top-2 discount-val">{{
-                    course.discount.discount_value
-                }}</span>
-            </div>
-            <div
-                class="discount-label d-flex white align-center free-course-label"
-                v-if="course.is_free"
-            >
-                <span class="font-20">مجاناً</span>
-            </div>
-        </figure>
+                <!-- discount -->
+                <div
+                    class="discount-label d-flex white pr-30 align-center"
+                    v-if="!course.is_free && course.discount.has_discount"
+                >
+                    <span class="font-16">خصم</span>
+                    <span class="font-17 top-2 discount-val">{{
+                        course.discount.discount_value
+                    }}</span>
+                </div>
+                <div
+                    class="discount-label d-flex white align-center free-course-label"
+                    v-if="course.is_free"
+                >
+                    <span class="font-20">مجاناً</span>
+                </div>
+            </figure>
 
-        <div class="p-side-20 pb-20 pt-20">
-            <p class="font-20 black-2 mb-15 bold two-line course-title">{{ course.title }}</p>
-            <div class="d-flex space-between">
-                <div class="d-flex align-center">
-                    <span
-                        class="bold font-22 main-color ml-15"
-                        v-if="!course.is_free && course.price"
-                        >{{ course.price }} JD</span
-                    >
-                    <span
-                        class="gray font-19 before-discount bold"
-                        v-if="!course.is_free && course.discount.discount_price"
-                        >{{ course.discount.discount_price }} JD</span
+            <div class="p-side-20 pb-20 pt-20">
+                <p class="font-20 black-2 mb-15 bold two-line course-title">{{ course.title }}</p>
+                <div class="d-flex space-between">
+                    <div class="d-flex align-center">
+                        <span
+                            class="bold font-22 main-color ml-15"
+                            v-if="!course.is_free && course.price"
+                            >{{ course.price }} JD</span
+                        >
+                        <span
+                            class="gray font-19 before-discount bold"
+                            v-if="!course.is_free && course.discount.discount_price"
+                            >{{ course.discount.discount_price }} JD</span
+                        >
+                    </div>
+                    <span class="bold font-22 main-color"
+                        >{{ course.course_length }} ساعات</span
                     >
                 </div>
-                <span class="bold font-22 main-color"
-                    >{{ course.course_length }} ساعات</span
-                >
             </div>
-        </div>
+        </router-link>
     </div>
 </template>
 
@@ -58,7 +58,6 @@
 export default {
     props: ['course'],
     mounted(){
-        console.log(this.course,'ssss');
     }
 };
 </script>
@@ -77,6 +76,7 @@ export default {
     background-size: 22px 21px;
     background-position: center;
     transition: .3s;
+    z-index: 2;
 }
 .fav-box.active {
     background-image: url(/images/heart-icon-fill.svg);
