@@ -7,12 +7,20 @@
             <video ref="videoPlayer" class="video-js main-img w-100"></video>
         </figure>
         <div class="d-flex box-details flex-wrap">
-            <!-- <router-link to="/" class="btn-register-now white-i font-18 mb-20 bold flex-all w-100">إشترك الآن</router-link> -->
-            <button @click="checkLogin" class="btn-register-now white-i font-18 mb-20 bold flex-all w-100 pointer">إشترك الآن</button>
-            <form class="cobone-form relative d-flex w-100">
-                <input type="text" class="w-80 cobone-input" placeholder="هل لديك كوبون أو قسيمة شرائية استخدمها الآن ؟">
-                <input type="submit" value="" class="apply-cobone w-10">
-            </form>
+            
+            <!-- for course page -->
+            <template v-if="isCourse">
+                <button @click="checkLogin" class="btn-register-now white-i font-18 mb-20 bold flex-all w-100 pointer">إشترك الآن</button>
+                <form class="cobone-form relative d-flex w-100">
+                    <input type="text" class="w-80 cobone-input" placeholder="هل لديك كوبون أو قسيمة شرائية استخدمها الآن ؟">
+                    <input type="submit" value="" class="apply-cobone w-10">
+                </form>
+            </template>
+            <!-- for lesson page -->
+            <div v-else class="d-flex w-100">
+                <router-link class="btn-register-now white-i font-18 bold flex-all w-100 pointer ml-10" to="/courses/3/2">الدرس التالي</router-link>
+                <router-link class="btn-register-now white-i font-18 bold flex-all w-100 pointer" to="/">الدرس السابق</router-link>
+            </div>
         </div>
     </div>
 </template>
@@ -22,6 +30,11 @@
     import 'video.js/dist/video-js.css'
     export default {
         props: ['videoSrc'],
+        computed: {
+            isCourse(){
+                return !this.$route.params.lesson ? true : false
+            },
+        },
         data() {
             return {
                 player: null,

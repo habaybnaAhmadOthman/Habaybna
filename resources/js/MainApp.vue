@@ -1,7 +1,7 @@
 <template>
     <main>
         <transition name="fade">
-            <router-view></router-view>
+            <router-view :key="this.$route.path"></router-view>
         </transition>
         
         <LoginModal v-if="!isLoggedIn"></LoginModal>

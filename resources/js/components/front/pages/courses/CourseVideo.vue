@@ -1,5 +1,6 @@
 <template>
     <div class="video-page">
+        <TheHeader></TheHeader>
         <Banner :videoSrc="trailerSrc"></Banner>
         <div class="container">
             <CourseInfoText :header="'لمحة عن الدرس'" :description="'في هذا الفيديو يتحدث المختص في العلاج الوظيفي عمر عن '"></CourseInfoText>
@@ -19,8 +20,9 @@ import ContentTable from "../../views/coursepage/ContentTable.vue";
 import AboutSpecialists from "../../views/coursepage/AboutSpecialists.vue";
 
 import TheFooter from '../../layouts/TheFooter.vue'
+import TheHeader from '../../layouts/header/TheHeader.vue'
 export default {
-    components: { Banner,AboutSpecialists,CourseInfoText,ContentTable,TheFooter},
+    components: { Banner,AboutSpecialists,CourseInfoText,ContentTable,TheFooter,TheHeader},
     props: ['course'],
     data() {
         return {

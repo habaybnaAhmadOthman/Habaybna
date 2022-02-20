@@ -1,5 +1,6 @@
 <template>
     <div class="course-page">
+        <TheHeader></TheHeader>
         <Banner :videoSrc="trailerSrc" :banner-title="courseName"></Banner>
         <div class="container page-info">
             <CourseInfo :course-name="courseName" :description="courseDescription"></CourseInfo>
@@ -32,9 +33,10 @@ import CoursesFeatures from '../../views/onlinecourses/CoursesFeatures.vue'
 
 import CombaniesBanner from '../../layouts/CompaniesBanner.vue'
 import TheFooter from '../../layouts/TheFooter.vue'
+import TheHeader from '../../layouts/header/TheHeader.vue'
 export default {
     components: { 
-        CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter
+        CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter,TheHeader
     },
     props: ['course'],
     data() {

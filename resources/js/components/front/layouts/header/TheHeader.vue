@@ -8,18 +8,18 @@
                 <div class="do">
                     <menu class="d-flex align-center main-menu">
                         <router-link
-                            class="white-i nowrap p-side-10 h-100 flex-all bold"
+                            class="black nowrap p-side-10 h-100 flex-all bold"
                             to="/"
                             >الرئيسية</router-link
                         >
                         <router-link
-                            class="white-i nowrap p-side-10 h-100 flex-all bold"
+                            class="black nowrap p-side-10 h-100 flex-all bold"
                             to="/profile"
                             >حسابي</router-link
                         >
                         <div class="dropdown relative h-100 flex-all">
                             <router-link
-                                class="white-i nowrap p-side-10 h-100 flex-all bold"
+                                class="black nowrap p-side-10 h-100 flex-all bold"
                                 to="/"
                                 >مكتبة حبايبنا</router-link
                             >
@@ -47,22 +47,22 @@
                             </aside>
                         </div>
                         <router-link
-                            class="white-i nowrap p-side-10 h-100 flex-all bold"
+                            class="black nowrap p-side-10 h-100 flex-all bold"
                             to="/"
                             >دليل حبايبنا</router-link
                         >
                         <router-link
-                            class="white-i nowrap p-side-10 h-100 flex-all bold"
+                            class="black nowrap p-side-10 h-100 flex-all bold"
                             to="/"
                             >إسأل الأخصائيين</router-link
                         >
                         <router-link
-                            class="white-i nowrap p-side-10 h-100 flex-all bold"
+                            class="black nowrap p-side-10 h-100 flex-all bold"
                             to="/"
                             >من نحن</router-link
                         >
                         <router-link
-                            class="white-i nowrap p-side-10 h-100 flex-all bold"
+                            class="black nowrap p-side-10 h-100 flex-all bold"
                             to="/online-courses"
                             >الدورات التدريبية</router-link
                         >
@@ -109,7 +109,7 @@ header {
     top: 0;
     width: 100%;
     z-index: 10;
-    background: #000;
+    background: #fff;
 }
 .main-menu {
     align-self: stretch;

@@ -1,6 +1,6 @@
 <template>
     <div class="left-side d-flex align-center">
-        <router-link to="" class="white-i d-flex radius-60 free-call-btn ml-10">
+        <router-link to="/" class="white d-flex radius-60 free-call-btn ml-10">
             <img
                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAXCAYAAAARIY8tAAAABHNCSVQICAgIfAhkiAAAAUVJREFUSEvtletNw0AQhL+pAOggqQA6IHQAFRAqgFQAqQA6gA6ACog7oAPcAVDBorHuosNK/BCCP2Sl00m+8c7srM8rNkREzIBL4BR4BRaSViU0Iq4SZgI8JUzdTqf2g4jYB96AT+AhkRwCJ5kkIubAPfCcBJjsXdJ0CIHBt8BUUp0IrX7PCQoBlSRXSER4fyxFZKJNFdwA18CBpI+UwJa9ABeALfF5I6B1vq6yi8AJbJFVnxUkTuZ+HHkv1Btv9bZnkvFbCZIie3zn6tNur12Zk7kfyyTgHDDW/ZpJsoBvoYhwIw38jViYwCqHRJVUG+ueHA94qRpDsJRkm/zV5A+hj+NvCFyuV1+sios2/J2+rD89by7aQE/H9qC5dDuCrhbtLGp+2f/Iojzyukoee9GaibcemRHhSeWBvy3qYkR68Hj1Yr8A4IPu+TfvWYgAAAAASUVORK5CYII="
                 alt="gift"
@@ -14,19 +14,19 @@
                     alt="gift"
                     class="rounded object-fit ml-20 user-avatar"
                 />
-                <p class="white">{{ userName }}</p>
+                <p class="black">{{ userName }}</p>
             </div>
         </div>
         <div class="bar"></div>
         <template v-if="!isLoggedIn">
             <router-link
                 to="/signup"
-                class="signin-box-btn pr-30 relative bold white do"
+                class="signin-box-btn pr-30 relative bold black do"
                 >تسجيل</router-link
             >
             <router-link
                 to="/signin"
-                class="signin-box-btn pr-30 relative bold white do"
+                class="signin-box-btn pr-30 relative bold black do"
                 >تسجيل الدخول</router-link
             >
         </template>
@@ -34,7 +34,7 @@
             <button
                 @click="logout"
                 
-                class="sign-out-box bg-none border-0 pointer pr-30 relative bold white do"
+                class="sign-out-box bg-none border-0 pointer pr-30 relative bold black do"
             >
                 تسجيل الخروج
             </button>
