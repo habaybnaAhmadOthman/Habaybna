@@ -88,7 +88,7 @@ export default {
             }
             this.isLoading = true;
             try {
-                await this.$store.dispatch("user/login", {
+                await this.$store.dispatch("user/loginModal", {
                     password: this.password.val,
                     phone: this.email.val
                 });
