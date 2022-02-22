@@ -58,7 +58,6 @@ export default {
             self.atLeastOneSelected = true;
           }
           if ( isChecked ) {
-            // .id.includes(this.activeFilters[index].id)
             let selected = course.categories.filter(cat=>{
               return cat.id == this.activeFilters[index].id
             })
@@ -82,8 +81,13 @@ export default {
       this.activeFilters = updatedFilters;
       this.filteredCourses();
     },
-    async getCourses(){
-      this.courseTemp = await this.$store.dispatch('courses/getAllCourses');
+    async getCourses() {
+      const allCourses = await this.$store.getters['courses/courses']
+      if ( allCourses.length > 0) {
+        this.courseTemp = allCourses
+      } else {
+        this.courseTemp = await this.$store.dispatch('courses/getAllCourses');
+      }
       this.filteredCourses()
     }
   }

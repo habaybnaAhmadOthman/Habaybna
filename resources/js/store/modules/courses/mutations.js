@@ -1,5 +1,5 @@
 export default {
-    setCourses(state,courses) {
+    setAllCourses(state,courses) {
         state.courses = courses;
     }
 };

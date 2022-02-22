@@ -1,8 +1,6 @@
 <template>
     <div class="course-card w-30 radius-10 overflow-hidden bg-white relative">
         <figure class="d-flex relative overflow-hidden radius-10 figure-box">
-            <!-- <img class="w-100 course-card-img" src="/images/register-bg.jpg" width="100%" height="250" alt="">
-            <img class="play-icon pointer" src="/images/play-icon.svg" @click="playTrailer" /> -->
             <div class="fav-box relative pointer"></div>
             <video ref="videoPlayer" class="video-js main-img w-100"></video>
         </figure>
@@ -34,6 +32,9 @@
             isCourse(){
                 return !this.$route.params.lesson ? true : false
             },
+            isLoggedIn() {
+                return this.$store.getters["user/isLoggedIn"];
+            },
         },
         data() {
             return {
@@ -55,10 +56,11 @@
         },
         methods: {
             checkLogin(){
-                this.$store.commit('loginModal',true);
-            },
-            playTrailer(){
-                this.$emit('play-trailer',true);
+                if (this.isLoggedIn) {
+
+                } else {
+                    this.$store.commit('loginModal',true);
+                }
             }
         },
         mounted() {

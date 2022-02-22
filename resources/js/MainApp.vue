@@ -1,7 +1,7 @@
 <template>
     <main>
         <transition name="fade">
-            <router-view :key="this.$route.path"></router-view>
+            <router-view :key="forceRefresh"></router-view>
         </transition>
         
         <LoginModal v-if="!isLoggedIn"></LoginModal>
@@ -22,6 +22,10 @@ export default {
   computed: {
       isLoggedIn() {
           return this.$store.getters["user/isLoggedIn"];
+      },
+      forceRefresh(){
+        const key =  this.$store.getters["forceRefresh"]
+        return key
       }
   },
 }

@@ -41,7 +41,13 @@
         },
         methods: {
             async getCourses(){
-                this.appendedCourses = await this.$store.dispatch('courses/getAllCourses');
+                const allCourses = await this.$store.getters['courses/courses']
+                if ( allCourses.length > 0) {
+                    this.appendedCourses = allCourses
+                } else {
+                    
+                }
+                this.appendedCourses = await this.$store.dispatch('courses/getRelatedCourses');
             },
             onSwiper (swiper) {
                 // console.log(swiper)

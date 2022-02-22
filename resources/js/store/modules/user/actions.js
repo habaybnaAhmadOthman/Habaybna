@@ -62,14 +62,24 @@ export default {
         await context.dispatch('checkUserAuth')
     },
     // ******** logout :::
-    async logout(context){
+    async logout({commit,rootState}){
         const resp = await callApi("POST", "logoutt");
         if (resp.status != 200) {
             const error = new Error("fail to logout");
             throw error;
         }
-
-        context.commit('clearUser');
+        rootState.showLoginModal = false;
+        commit('clearUser');
+    },
+    // ******** logout modal :::
+    async logoutModal({commit,rootState}){
+        const resp = await callApi("POST", "/logoutt");
+        if (resp.status != 200) {
+            const error = new Error("fail to logout");
+            throw error;
+        }
+        rootState.showLoginModal = false;
+        commit('clearUser');
     },
     // ******** interests ::: post
     async addInterests(_, interests){

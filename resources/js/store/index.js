@@ -23,7 +23,8 @@ const store = new vuex.Store({
     },
     state() {
         return {
-            showLoginModal: false
+            showLoginModal: false,
+            forceRefresh: 1,
         };
     },
     getters,

@@ -25,7 +25,7 @@ import onlineCoursesPage from "./components/front/pages/onlineCoursesPage.vue";
 import allCoursesPage from "./components/front/pages/allCoursesPage.vue";
 // courses
 import CoursePage from "./components/front/pages/courses/CoursePage.vue";
-import CourseVideoPage from "./components/front/pages/courses/CourseVideo.vue";
+import ClassRoomPage from "./components/front/pages/courses/ClassRoom.vue";
 import Cirtificate from "./components/front/views/coursepage/Certificate.vue";
 
 
@@ -198,7 +198,7 @@ const routes = [
     },
     {
         path: "/courses/:course/:lesson",
-        component: CourseVideoPage,
+        component: ClassRoomPage,
         meta: {
             // requiresAuth: true
         },

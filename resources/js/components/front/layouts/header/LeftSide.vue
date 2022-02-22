@@ -60,7 +60,7 @@ export default {
     },
     methods: {
         async logout() {
-            await this.$store.dispatch("user/logout");
+            await this.$store.dispatch("user/logoutModal");
             if (this.$router.currentRoute.name != "home") {
                 this.$router.push("/");
             }

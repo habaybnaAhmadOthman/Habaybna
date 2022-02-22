@@ -1,7 +1,7 @@
 <template>
     <div class="course-page">
         <TheHeader></TheHeader>
-        <Banner :videoSrc="trailerSrc" :banner-title="courseName"></Banner>
+        <Banner :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"></Banner>
         <div class="container page-info">
             <CourseInfo :course-name="courseName" :description="courseDescription"></CourseInfo>
             
@@ -45,6 +45,8 @@ export default {
             courseName: '',
             specialistName: '',
             courseDescription: '',
+            courseLength: null,
+            videosCount: null,
             lectures: []
         }
     },
@@ -54,12 +56,18 @@ export default {
     methods: {
         async getCourseDetails(){
             try {
-                const data = await this.$store.dispatch('courses/getCourseDetails',this.course);
-                this.trailerSrc = data.trailerSrc;
-                this.courseName = data.courseName;
+                let data = await this.$store.dispatch('courses/getCourseDetails',this.course);
+                if (!data) {
+                    data =  await this.$store.dispatch('courses/getAllCourses');
+                    data = await this.$store.dispatch('courses/getCourseDetails',this.course);
+                }
+                
+                this.trailerSrc = 'data.trailerSrc';
+                this.courseName = data.title;
+                this.courseLength = +data.course_length.split(':')[0]
                 this.specialistName  = data.specialistName;
                 this.courseDescription  = data.courseDescription;
-                this.lectures   = data.lectures;
+                this.videosCount  = data.videos_count;
             } catch (e){
                 console.log(e);
             }

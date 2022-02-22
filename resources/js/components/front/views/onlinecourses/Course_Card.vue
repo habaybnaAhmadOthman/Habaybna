@@ -1,7 +1,7 @@
 <template>
     <div class="course-box shadow w-31 radius-10 relative">
         <div class="fav-box relative pointer"></div>
-        <router-link :to="`/courses/${course.id}`">
+        <router-link :to="`/courses/${courseSlog}`">
             <figure class="d-flex relative radius-10 overflow-hidden figure-box">
                 <img
                     class="main-img w-100 object-fit"
@@ -46,7 +46,7 @@
                         >
                     </div>
                     <span class="bold font-22 main-color"
-                        >{{ course.course_length }} ساعات</span
+                        >{{ +course.course_length.split(':')[0] }} ساعات</span
                     >
                 </div>
             </div>
@@ -57,7 +57,10 @@
 <script>
 export default {
     props: ['course'],
-    mounted(){
+    computed:{
+        courseSlog(){
+            return this.course.title.split(' ').join('-')
+        }
     }
 };
 </script>
