@@ -10,10 +10,20 @@ import Quiz from "./components/Quiz.vue";
 import UploadVideos from "./components/UploadVideos.vue";
 import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
+import Calls from "./components/admin/calls/Calls.vue";
 import Parents from "./components/admin/parent/Parents.vue";
+import CreateParent from "./components/admin/parent/Create.vue";
+import CreateCoupon from "./components/admin/coupon/Create.vue";
+import CreateCall from "./components/admin/calls/Create.vue";
+import CreateSpecialist from "./components/admin/specialist/Create.vue";
+import CreateOther from "./components/admin/other/Create.vue";
 import ShowSpecialist from "./components/admin/specialist/Show.vue";
+import ShowPackage from "./components/admin/calls/Show.vue";
 import ShowOther from "./components/admin/other/Show.vue";
 import Specialists from "./components/admin/specialist/Specialists.vue";
+import Coupons from "./components/admin/coupon/Coupons.vue";
+import PreviewCourse from "./components/admin/courses/Preview.vue";
+import ShowCoupon from "./components/admin/coupon/Show.vue";
 import Others from "./components/admin/other/Others.vue";
 import Show from "./components/admin/parent/Show.vue";
 import ClassRoom from "./components/parents/ClassRoom.vue";
@@ -44,8 +54,7 @@ import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfil
 
 import store from "./store/index";
 
-const routes = [
-    {
+const routes = [{
         path: "/admin/uploadVideos/:data",
         component: UploadVideos,
         name: "UploadVideo",
@@ -62,11 +71,31 @@ const routes = [
         name: "Parents"
     },
     {
+        path: "/admin/parent/create",
+        component: CreateParent,
+        name: "CreateParent"
+    },
+    {
+        path: "/admin/specialist/create",
+        component: CreateSpecialist,
+        name: "CreateSpecialist"
+    },
+    {
+        path: "/admin/other/create",
+        component: CreateOther,
+        name: "CreateOther"
+    },
+    {
         path: "/admin/specialist",
         component: Specialists,
         name: "Specialists"
     },
-     {
+    {
+        path: "/admin/coupons",
+        component: Coupons,
+        name: "Coupons"
+    },
+    {
         path: "/admin/others",
         component: Others,
         name: "Others"
@@ -77,9 +106,19 @@ const routes = [
         name: "Show"
     },
     {
+        path: "/admin/calls/package/:data",
+        component: ShowPackage,
+        name: "ShowPackage"
+    },
+    {
         path: "/admin/specialist/:data",
         component: ShowSpecialist,
         name: "ShowSpecialist"
+    },
+    {
+        path: "/admin/coupon/:data",
+        component: ShowCoupon,
+        name: "ShowCoupon"
     },
     {
         path: "/admin/other/:data",
@@ -97,6 +136,11 @@ const routes = [
         name: "EditCourseInfo"
     },
     {
+        path: "/admin/course/preview/:data",
+        component: PreviewCourse,
+        name: "PreviewCourse"
+    },
+    {
         path: "/parent-dashboard/class-room",
         component: ClassRoom,
         name: "VideoInfoComponent"
@@ -110,6 +154,21 @@ const routes = [
         path: "/admin/add-question/:data",
         component: AddQuestion,
         name: "AddQuestion"
+    },
+    {
+        path: "/admin/coupons/create",
+        component: CreateCoupon,
+        name: "CreateCoupon"
+    },
+    {
+        path: "/admin/calls/create",
+        component: CreateCall,
+        name: "CreateCall"
+    },
+    {
+        path: "/admin/calls",
+        component: Calls,
+        name: "Calls"
     },
     // ************
     // front
@@ -175,16 +234,14 @@ const routes = [
         meta: {
             requiresAuth: true
         },
-        children: [
-            {
-                path: "my-account",
-                component: UserProfile_MyAccount,
-                meta: {
-                    
-                },
-                name: 'myAccount'
-            }
-        ]
+        children: [{
+            path: "my-account",
+            component: UserProfile_MyAccount,
+            meta: {
+                header: false
+            },
+            name: 'myAccount'
+        }]
     },
     // *****************
     // courses
@@ -217,11 +274,14 @@ const routes = [
 const router = new Router({
     mode: "history",
     routes,
-    scrollBehavior (to, from, savedPosition) {
+    scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
-          return savedPosition
+            return savedPosition
         } else {
-          return { x: 0, y: 0 }
+            return {
+                x: 0,
+                y: 0
+            }
         }
     }
 });

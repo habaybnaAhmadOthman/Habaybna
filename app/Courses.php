@@ -50,8 +50,8 @@ class Courses extends Model
             // dd('providers',$this->courseProvider);
             foreach ($this->courseProvider as $one) {
                 $courseProviders[] = [
-                    'id'=>$one->specialist->user_id,
-                    'name'=>$one->specialist->firstName,
+                    'user_id'=>$one->specialist->user_id,
+                    'firstName'=>$one->specialist->firstName,
                     'avatar'=>$one->specialist->avatar,
                     'specialization'=>$one->specialist->specialization,
                 ];
@@ -74,9 +74,9 @@ class Courses extends Model
             $sum += (0 * 60 * 60) + ($parts[0] * 60) + $parts[1];
         }
 
-        return gmdate("H:i:s", $sum );
+        return gmdate("H:i", $sum );
        }
-       return gmdate("H:i:s", 0 );
+       return gmdate("H:i", 0 );
 
     }
 

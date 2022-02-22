@@ -45,20 +45,31 @@ Route::middleware('auth:sanctum')->group(function () {
     //admin routes
     Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function(){
 
+        //users
+        Route::post('/delete-user/{id}','UserController@delete');
+        Route::post('/user-status/{id}','UserController@changeStatus');
+        Route::get('/get-all-users','UserController@getAllUsers');
+
+
        // parent route
         Route::get('get-parents-data','ParentUsersController@getParentsData');
         Route::get('parent/{id}','ParentUsersController@show');
-        Route::post('admin/parent/update/{id}','ParentUsersController@update');
+        Route::post('/parent/update/{id}','ParentUsersController@update');
+        Route::post('/parent/create','ParentUsersController@create');
+
 
         //specialist route
         Route::get('get-specialists-data','SpecialistController@getSpecialistsData');
         Route::get('specialist/{id}','SpecialistController@show');
         Route::post('admin/specialist/update/{id}','SpecialistController@update');
+        Route::post('/specialist/create','SpecialistController@createSpecAdmin');
 
         //other route
         Route::get('get-others-data','OthersController@getOthersData');
         Route::get('other/{id}','OthersController@show');
         Route::post('other/update/{id}','OthersController@update');
+        Route::post('/other/create','OthersController@createOtherAdmin');
+
 
         // course route
         Route::get('course-init-data','CourseController@getCoursesInitData');
@@ -67,6 +78,48 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('uploadVideos/{id}','CourseController@uploadVideos');
         Route::post('/course/upload-video','CourseController@UploadCourseVideo');
         Route::get('/onlineCourse','CourseController@index');
+        Route::get('/edit-course/{course_id}','CourseController@getCoruseInfo')->name('getCoruseInfo');
+        Route::post('/edit-course/{course_id}','CourseController@updateCoruseInfo');
+        Route::post('/delete-course/{course_id}','CourseController@deleteCourse');
+        Route::post('/course-preview/{course_id}','CourseController@preview');
+        Route::post('/course/update-video/{id}','CourseController@updateVideo');
+
+        // quize
+
+        Route::get('/get-quiz/{id}','QuizController@getCourseQuiz');
+        Route::post('/edit-answer/{id}','QuizController@editAnswer')->name('editAnswer');
+        Route::post('/question-status/{id}','QuizController@changeQuestionStatus');
+        Route::post('/question-delete/{id}','QuizController@deleteQuestion');
+        Route::post('/question-store','QuizController@storeQuestion')->name('question.store');
+        Route::post('/set-correct-answer/{id}','QuizController@setCorrectAnswer')->name('setCorrectAnswer');
+
+        // coupons
+
+        Route::get('/coupons','PromoCodeController@index');
+        Route::post('/coupon/create','PromoCodeController@create');
+        Route::get('/coupons/{id}','PromoCodeController@show');
+        Route::post('/coupon/assign-to-users','PromoCodeController@assignToUsers');
+        Route::post('/coupon/edit/{id}','PromoCodeController@update');
+        Route::post('/delete-coupon/{id}','PromoCodeController@delete');
+        Route::post('/change-coupon-status/{id}','PromoCodeController@changeStatus');
+
+
+        // calls
+
+        Route::get('/calls/packages','CallsController@index');
+        Route::post('/calls/create','CallsController@create');
+        Route::get('/calls/package/{id}','CallsController@show');
+        Route::post('/calls/package/{id}','CallsController@update');
+        Route::post('/change-call-package-status/{id}','CallsController@changeStatus');
+        Route::post('/delete-call-package/{id}','CallsController@delete');
+
+
+
+
+
+
+
+
 
 
 

@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
-
-
+use App\CustomClass\GetAllUsers;
 use App\User;
 use App\Specialist;
 use App\UserInterest;
@@ -174,7 +173,7 @@ class UserController extends Controller
                 }
 
 
-             } catch (ModelNotFoundException $e){
+            } catch (ModelNotFoundException $e){
                 return response()->json([
                     'msg'=>'faild',
                     'status'=>false,
@@ -186,5 +185,63 @@ class UserController extends Controller
 
 
             }
+    }
+
+    public function delete($id)
+    {
+        try{
+            $user = User::findorfail($id);
+                if($user->user_data){
+                    $user->user_data->delete();
+                }
+
+            $userIntrests = UserInterest::where('user_id',$id)->get();
+            if(count($userIntrests) > 0){
+                foreach ($userIntrests as $one) {
+                   $one->delete();
+                }
+            }
+
+            $user->delete();
+
+            return response()->json('deleted',200);
+
+        } catch (ModelNotFoundException $e){
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
+           ]);
+
+    }
+    }
+
+    public function changeStatus($id)
+    {
+        try{
+            $user = User::findorfail($id);
+                if($target = $user->user_data){
+                    $target->status = !$target->status;
+                    $target->save();
+                }
+
+            return response()->json('changged',200);
+
+        } catch (ModelNotFoundException $e){
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
+           ]);
+
+        }
+    }
+
+    public function getAllUsers(GetAllUsers $getAllUsers)
+    {
+        $users = $getAllUsers->execute();
+
+        return response()->json($users, 200);
+
     }
 }

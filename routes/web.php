@@ -71,18 +71,17 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
     // Route::any('/{any}','CourseController@create')->name('course.any');
     // Route::get('course/create','CourseController@create')->name('course.create');
     // Route::post('storeCourseInfo','CourseController@storeCourseInfo')->name('storeCourseInfo');
-    Route::post('/course/upload-video','CourseController@UploadCourseVideo')->name('UploadCourseVideo');
-    Route::post('/course/update-video/{id}','CourseController@updateVideo')->name('updateVideo');
+    // Route::post('/course/upload-video','CourseController@UploadCourseVideo')->name('UploadCourseVideo');
+    // Route::post('/course/update-video/{id}','CourseController@updateVideo')->name('updateVideo');
     // Route::get('uploadVideos/{id}','CourseController@uploadVideos')->name('uploadVideos');
     //  Route::get('course-category','CourseController@getCoursesCategories')->name('getCoursesCategories');
-     Route::get('/getCourseVideos/{course_id}','CourseController@getCourseVideos')->name('getCourseVideos');
-     Route::get('/edit-course/{course_id}','CourseController@getCoruseInfo')->name('getCoruseInfo');
-     Route::post('/edit-course/{course_id}','CourseController@updateCoruseInfo')->name('updateCoruseInfo');
+    //  Route::get('/getCourseVideos/{course_id}','CourseController@getCourseVideos')->name('getCourseVideos');
+    //  Route::get('/edit-course/{course_id}','CourseController@getCoruseInfo')->name('getCoruseInfo');
+    //  Route::post('/edit-course/{course_id}','CourseController@updateCoruseInfo')->name('updateCoruseInfo');
 
-    Route::post('/question-store','CourseController@storeQuestion')->name('question.store');
-    Route::post('/set-correct-answer/{id}','CourseController@setCorrectAnswer')->name('setCorrectAnswer');
-    Route::get('/get-quiz/{id}','CourseController@getQuiz')->name('getQuiz');
-    Route::post('/edit-answer/{id}','CourseController@editAnswer')->name('editAnswer');
+    // Route::post('/question-store','CourseController@storeQuestion')->name('question.store');
+    // Route::post('/question-status/{id}','CourseController@storeQuestion')->name('question.store');
+    // Route::post('/set-correct-answer/{id}','CourseController@setCorrectAnswer')->name('setCorrectAnswer');
 
 
     // courses categories
