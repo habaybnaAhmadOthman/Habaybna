@@ -487,4 +487,9 @@ class CourseController extends Controller
 
     }
 
+    public function certificate($id)
+    {
+        dd('hi');
+    }
+
 }

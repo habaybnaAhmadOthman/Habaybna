@@ -77,6 +77,14 @@ export default {
         return resp.data
 
     },
+    async CourseCertificate(context, payload) {
+        const resp = await callApi('GET', '/api/admin/course-certificate/' + payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to create profile data");
+            throw error;
+        }
+        return resp.data
+    },
     async getCourseQuiz(context, payload) {
         const resp = await callApi('GET', '/api/admin/get-quiz/' + payload)
         if (resp.status != 200) {

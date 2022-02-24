@@ -90,6 +90,12 @@
             <Submenu name="4">
               <template slot="title">
                 <Icon type="ios-keypad"></Icon>
+                <router-link to="/admin/contents"> ادارة المحتوى </router-link>
+              </template>
+            </Submenu>
+            <Submenu name="4">
+              <template slot="title">
+                <Icon type="ios-keypad"></Icon>
                 <router-link to="/admin/calls"> المكالمات </router-link>
               </template>
             </Submenu>
