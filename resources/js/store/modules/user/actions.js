@@ -43,6 +43,12 @@ export default {
     async login(context, payload) {
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "login", payload);
+        debugger;
+        if (resp.status == 403) {
+            console.log('sss');
+            const error = new Error("لقد تم إلغاء تفعيلك، يرجى مراجعة إدارة الموقع");
+            throw error;
+        }
         if (!resp || resp.status != 200) {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
@@ -54,6 +60,10 @@ export default {
     async loginModal(context, payload) {
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "/login", payload);
+        if (resp== "banned") {
+            const error = new Error("لقد تم إلغاء تفعيلك، يرجى مراجعة إدارة الموقع");
+            throw error;
+        }
         if (!resp || resp.status != 200) {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
