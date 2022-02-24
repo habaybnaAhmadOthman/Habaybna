@@ -36,6 +36,15 @@ export default {
             const error = new Error("fail to get course");
             throw error;
         }
-    }
+    },
+    // ******** course PAYMENT ::: post
+    async buyCourse({_,getters},payload) {
+        const resp = await callApi("POST", "/course-payment",payload.courseID);
+        if (!resp || resp.status != 200) {
+            const error = new Error("please try again");
+            throw error;
+        }
+        return resp.data;
+    },
 };
 

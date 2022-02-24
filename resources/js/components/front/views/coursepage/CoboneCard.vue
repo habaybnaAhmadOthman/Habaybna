@@ -51,21 +51,25 @@
                         }
                     ],
                     playbackRates: [0.7, 1.0, 1.5, 2.0],
-                }
+                },
+                courseId: this.courseID
             }
         },
         methods: {
             checkLogin(){
                 if (this.isLoggedIn) {
-
+                    this.buyCourse()
                 } else {
                     this.$store.commit('loginModal',true);
                 }
+            },
+            async buyCourse(){
+                const id = this.$store.getters['courses/courseID']
+                this.$store.dispatch('courses/buyCourse',{courseID: id})
             }
         },
         mounted() {
             this.videoOptions.sources[0].src =  this.videoSrc
-            console.log(this.videoSrc)
             this.player = videojs(this.$refs.videoPlayer, this.videoOptions, function onPlayerReady() {
                 console.log('onPlayerReady', this);
             })

@@ -67,6 +67,7 @@ export default {
                 this.specialistName  = data.specialistName;
                 this.courseDescription  = data.courseDescription;
                 this.videosCount  = data.videos_count;
+                this.$store.commit('courses/setCourseID',data.id);
             } catch (e){
                 console.log(e);
             }
