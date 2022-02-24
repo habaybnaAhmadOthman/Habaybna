@@ -41,9 +41,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::middleware('auth:sanctum')->group(function () {
+    //payment test config
+    Route::post('/course-payment','PaymentController@coursePayment');
 
     //admin routes
     Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function(){
+
 
         //users
         Route::post('/delete-user/{id}','UserController@delete');
@@ -82,6 +85,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/edit-course/{course_id}','CourseController@updateCoruseInfo');
         Route::post('/delete-course/{course_id}','CourseController@deleteCourse');
         Route::post('/course-preview/{course_id}','CourseController@preview');
+        Route::get('/course-certificate/{id}','CourseController@certificate');
+
         Route::post('/course/update-video/{id}','CourseController@updateVideo');
 
         // quize

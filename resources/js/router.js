@@ -14,6 +14,7 @@ import Calls from "./components/admin/calls/Calls.vue";
 import Parents from "./components/admin/parent/Parents.vue";
 import CreateParent from "./components/admin/parent/Create.vue";
 import CreateCoupon from "./components/admin/coupon/Create.vue";
+import CreateContent from "./components/admin/contents/Create.vue";
 import CreateCall from "./components/admin/calls/Create.vue";
 import CreateSpecialist from "./components/admin/specialist/Create.vue";
 import CreateOther from "./components/admin/other/Create.vue";
@@ -23,6 +24,7 @@ import ShowOther from "./components/admin/other/Show.vue";
 import Specialists from "./components/admin/specialist/Specialists.vue";
 import Coupons from "./components/admin/coupon/Coupons.vue";
 import PreviewCourse from "./components/admin/courses/Preview.vue";
+import CourseCertificate from "./components/admin/courses/Certificate.vue";
 import ShowCoupon from "./components/admin/coupon/Show.vue";
 import Others from "./components/admin/other/Others.vue";
 import Show from "./components/admin/parent/Show.vue";
@@ -74,6 +76,11 @@ const routes = [{
         path: "/admin/parent/create",
         component: CreateParent,
         name: "CreateParent"
+    },
+    {
+        path: "/admin/content/create",
+        component: CreateContent,
+        name: "CreateContent"
     },
     {
         path: "/admin/specialist/create",
@@ -129,6 +136,11 @@ const routes = [{
         path: "/admin/course-create",
         component: VideoInfoComponent,
         name: "VideoInfoComponent"
+    },
+    {
+        path: "/admin/course-certificate/:data",
+        component: CourseCertificate,
+        name: "CourseCertificate"
     },
     {
         path: "/admin/course-edit/:data",

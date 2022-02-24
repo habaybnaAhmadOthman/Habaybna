@@ -9,9 +9,9 @@
             <!-- for course page -->
             <template v-if="isCourse">
                 <button @click="checkLogin" class="btn-register-now white-i font-18 mb-20 bold flex-all w-100 pointer">إشترك الآن</button>
-                <form class="cobone-form relative d-flex w-100">
-                    <input type="text" class="w-80 cobone-input" placeholder="هل لديك كوبون أو قسيمة شرائية استخدمها الآن ؟">
-                    <input type="submit" value="" class="apply-cobone w-10">
+                <form @submit.prevent="submitCoubon" class="cobone-form relative d-flex w-100">
+                    <input type="text" v-model="promoCode" class="w-80 cobone-input" placeholder="هل لديك كوبون أو قسيمة شرائية استخدمها الآن ؟">
+                    <input type="submit" value="" class="apply-cobone w-10 pointer">
                 </form>
             </template>
             <!-- for lesson page -->
@@ -52,24 +52,47 @@
                     ],
                     playbackRates: [0.7, 1.0, 1.5, 2.0],
                 },
-                courseId: this.courseID
+                promoCode: '',
             }
         },
         methods: {
             checkLogin(){
                 if (this.isLoggedIn) {
-                    this.buyCourse()
+                    this.buyCourse();
                 } else {
                     this.$store.commit('loginModal',true);
                 }
             },
             async buyCourse(){
-                const id = this.$store.getters['courses/courseID']
-                this.$store.dispatch('courses/buyCourse',{courseID: id})
+                this.isLoading(true)
+                const gatewayData = await this.$store.dispatch('courses/buyCourse',{courseID:this.getCourseID()}).SmartRouteParams;
+
+                this.isLoading(false)
+            },
+            async submitCoubon() {
+                if (this.promoCode == '') {
+                    this.$store.commit('alertDialogMsg','يرجى إدخال كود الخصم')
+                    return false;
+                }
+                isLoading(true)
+                const checkPromoCode = await this.$store.dispatch('courses/promoCode',{courseID:this.getCourseID(),promoCode:this.promoCode});
+                isLoading(false)
+                var dialogMsg = 'success!'
+                if (!checkPromoCode) {
+                    dialogMsg = 'We are sorry!'
+                }
+                this.$store.commit('alertDialogMsg',dialogMsg)
+            },
+            getCourseID(){
+                return this.$store.getters["courses/courseID"]
+            },
+            isLoading(status) {
+                this.$store.commit('isLoading',status)
             }
         },
         mounted() {
             this.videoOptions.sources[0].src =  this.videoSrc
+            console.log(this.videoSrc)
             this.player = videojs(this.$refs.videoPlayer, this.videoOptions, function onPlayerReady() {
                 console.log('onPlayerReady', this);
             })

@@ -1,7 +1,7 @@
 <template>
     <div class="course-box shadow w-31 radius-10 relative">
         <div class="fav-box relative pointer"></div>
-        <router-link :to="`/courses/${courseSlog}`">
+        <router-link @click.native="forceRefresh" :to="`/courses/${courseSlog}`">
             <figure class="d-flex relative radius-10 overflow-hidden figure-box">
                 <img
                     class="main-img w-100 object-fit"
@@ -60,6 +60,11 @@ export default {
     computed:{
         courseSlog(){
             return this.course.title.split(' ').join('-')
+        }
+    },
+    methods: {
+        forceRefresh(){
+            this.$store.commit("forceRefresh");
         }
     }
 };

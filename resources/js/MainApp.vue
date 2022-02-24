@@ -5,7 +5,15 @@
         </transition>
         
         <LoginModal v-if="!isLoggedIn"></LoginModal>
-        
+        <alert-dialog
+          :show="!!alertDialogMsg"
+          :title="alertDialogMsg"
+          @close="closeAlertDialogMsg"
+        >
+        </alert-dialog>
+        <div v-if="isLoading">
+            <loading-spinner></loading-spinner>
+        </div>
     </main>
 </template>
 
@@ -23,11 +31,23 @@ export default {
       isLoggedIn() {
           return this.$store.getters["user/isLoggedIn"];
       },
+      isLoading() {
+          return this.$store.getters["isLoading"];
+      },
       forceRefresh(){
         const key =  this.$store.getters["forceRefresh"]
         return key
+      },
+      alertDialogMsg(){
+        console.log(this.$store.getters["alertDialogMsg"]);
+        return this.$store.getters["alertDialogMsg"]
       }
   },
+  methods: {
+    closeAlertDialogMsg(){
+      this.$store.commit('alertDialogMsg',null)
+    }
+  }
 }
 </script>
 <style>

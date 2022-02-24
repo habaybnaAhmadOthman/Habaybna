@@ -37,14 +37,24 @@ export default {
             throw error;
         }
     },
-    // ******** course PAYMENT ::: post
+    // ******** Buy Course ::: post
     async buyCourse({_,getters},payload) {
-        const resp = await callApi("POST", "/course-payment",payload.courseID);
-        if (!resp || resp.status != 200) {
-            const error = new Error("please try again");
+        const resp = await callApi("POST", "/api/course-payment",payload);
+        if (!resp) {
+            const error = new Error("fail.");
             throw error;
         }
-        return resp.data;
+        return resp[0]
     },
+    // ******** PromoCode ::: post
+    async promoCode({_,getters},payload) {
+        // const resp = await callApi("POST", "/api/course-payment",payload);
+        // if (!resp) {
+        //     const error = new Error("fail.");
+        //     throw error;
+        // }
+        await console.log('ss')
+        return true
+    }
 };
 

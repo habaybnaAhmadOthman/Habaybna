@@ -23,7 +23,11 @@
 import CoboneCard from './CoboneCard.vue'
 export default {
     props: ['videoSrc', 'bannerTitle','videosCount','courseLength'],
-    components: {CoboneCard}
+    components: {CoboneCard},
+    methods: {
+        
+        
+    }
 }
 </script>
 
