@@ -39,7 +39,6 @@ export default {
         return key
       },
       alertDialogMsg(){
-        console.log(this.$store.getters["alertDialogMsg"]);
         return this.$store.getters["alertDialogMsg"]
       }
   },

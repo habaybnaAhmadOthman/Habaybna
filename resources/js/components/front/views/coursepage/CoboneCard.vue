@@ -13,6 +13,7 @@
                     <input type="text" v-model="promoCode" class="w-80 cobone-input" placeholder="هل لديك كوبون أو قسيمة شرائية استخدمها الآن ؟">
                     <input type="submit" value="" class="apply-cobone w-10 pointer">
                 </form>
+                <PaymentForm v-if="paymentFormData" :paymentData="paymentFormData" @clearPaymentData="clearPaymentData"></PaymentForm>
             </template>
             <!-- for lesson page -->
             <div v-else class="d-flex w-100">
@@ -26,8 +27,11 @@
 <script>
     import videojs from 'video.js';
     import 'video.js/dist/video-js.css'
+
+    import PaymentForm from './PaymentForm.vue'
     export default {
         props: ['videoSrc'],
+        components: {PaymentForm},
         computed: {
             isCourse(){
                 return !this.$route.params.lesson ? true : false
@@ -38,6 +42,8 @@
         },
         data() {
             return {
+                paymentFormData:null,
+                showPaymentForm: false,
                 player: null,
                 videoOptions: {
                     muted: false,
@@ -63,10 +69,13 @@
                     this.$store.commit('loginModal',true);
                 }
             },
+            clearPaymentData(){
+                this.paymentFormData = null
+            },
             async buyCourse(){
                 this.isLoading(true)
-                const gatewayData = await this.$store.dispatch('courses/buyCourse',{courseID:this.getCourseID()}).SmartRouteParams;
-
+                const resp = await this.$store.dispatch('courses/buyCourse',{courseID:this.getCourseID()});
+                this.paymentFormData = resp.SmartRouteParams
                 this.isLoading(false)
             },
             async submitCoubon() {
@@ -92,7 +101,6 @@
         },
         mounted() {
             this.videoOptions.sources[0].src =  this.videoSrc
-            console.log(this.videoSrc)
             this.player = videojs(this.$refs.videoPlayer, this.videoOptions, function onPlayerReady() {
                 console.log('onPlayerReady', this);
             })

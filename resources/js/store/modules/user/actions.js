@@ -44,7 +44,6 @@ export default {
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "login", payload);
         if (resp.status == 403) {
-            console.log('sss');
             const error = new Error("لقد تم إلغاء تفعيلك، يرجى مراجعة إدارة الموقع");
             throw error;
         }

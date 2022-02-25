@@ -44,7 +44,7 @@ export default {
             const error = new Error("fail.");
             throw error;
         }
-        return resp[0]
+        return resp.data[0]
     },
     // ******** PromoCode ::: post
     async promoCode({_,getters},payload) {
