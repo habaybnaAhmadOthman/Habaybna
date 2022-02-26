@@ -13,9 +13,13 @@ export default {
     // ******** get all courses ::: get
     async getRelatedCourses({_,getters},courseCategories) {
         let shuffledCourses = await shuffle(getters.courses);
-        // shuffledCourses.filter(course =>{
-        //     if ()
-        // })
+        let categories = [];
+        getters.course.categories.map((e,i) => {
+            categories.push(  e.id)
+        })
+        shuffledCourses.filter(course =>{
+            // if ()
+        })
         return shuffledCourses;
     },
     // ******** get all categories ::: get
@@ -41,7 +45,7 @@ export default {
     async buyCourse({_,getters},payload) {
         const resp = await callApi("POST", "/api/course-payment",payload);
         if (!resp) {
-            const error = new Error("fail.");
+            const error = new Error("something went wrong, please try again");
             throw error;
         }
         return resp.data[0]

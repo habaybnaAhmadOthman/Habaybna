@@ -74,8 +74,14 @@
             },
             async buyCourse(){
                 this.isLoading(true)
-                const resp = await this.$store.dispatch('courses/buyCourse',{courseID:this.getCourseID()});
-                this.paymentFormData = resp.SmartRouteParams
+                try {
+                    const resp = await this.$store.dispatch('courses/buyCourse',{courseID:this.getCourseID()});
+                    console.log(resp);
+                    this.paymentFormData = resp.SmartRouteParams
+
+                } catch (error) {
+                    this.$store.commit('alertDialogMsg',error.message);
+                }
                 this.isLoading(false)
             },
             async submitCoubon() {
@@ -93,7 +99,7 @@
                 this.$store.commit('alertDialogMsg',dialogMsg)
             },
             getCourseID(){
-                return this.$store.getters["courses/courseID"]
+                return this.$store.getters["courses/course"].id
             },
             isLoading(status) {
                 this.$store.commit('isLoading',status)
