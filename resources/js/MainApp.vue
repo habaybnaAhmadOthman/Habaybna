@@ -1,23 +1,52 @@
 <template>
     <main>
-        <TheHeader></TheHeader>
         <transition name="fade">
-            <router-view></router-view>
+            <router-view :key="forceRefresh"></router-view>
         </transition>
+        
+        <LoginModal v-if="!isLoggedIn"></LoginModal>
+        <alert-dialog
+          :show="!!alertDialogMsg"
+          :title="alertDialogMsg"
+          @close="closeAlertDialogMsg"
+        >
+        </alert-dialog>
+        <div v-if="isLoading">
+            <loading-spinner></loading-spinner>
+        </div>
     </main>
 </template>
 
 <script>
 import Vue from 'vue';
-import TheHeader from './components/front/layouts/header/TheHeader.vue';
+
 import AlertDialog from "./components/front/layouts/AlertDialog.vue";
+import LoginModal from "./components/front/layouts/LoginModal.vue";
 import LoadingSpinner from "./components/front/layouts/LoadingSpinner.vue";
 Vue.component('loading-spinner',LoadingSpinner)
 Vue.component('alert-dialog',AlertDialog)
 export default {
-    components: {
-        TheHeader
-    },
+  components: {LoginModal},
+  computed: {
+      isLoggedIn() {
+          return this.$store.getters["user/isLoggedIn"];
+      },
+      isLoading() {
+          return this.$store.getters["isLoading"];
+      },
+      forceRefresh(){
+        const key =  this.$store.getters["forceRefresh"]
+        return key
+      },
+      alertDialogMsg(){
+        return this.$store.getters["alertDialogMsg"]
+      }
+  },
+  methods: {
+    closeAlertDialogMsg(){
+      this.$store.commit('alertDialogMsg',null)
+    }
+  }
 }
 </script>
 <style>

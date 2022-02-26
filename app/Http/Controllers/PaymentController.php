@@ -10,10 +10,10 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function __construct()
-{
-   $this->middleware('isAdmin');
-}
+//     public function __construct()
+// {
+//    $this->middleware('isAdmin');
+// }
     public function coursePayment(Request $request,PaymentCoures $paymentCoures )
     {
         $data = $paymentCoures->execute($request->all());

@@ -58,11 +58,12 @@ class CourseController extends Controller
        $course = new Courses();
 
        if ($request->hasFile('coverImage')) {
-        $coverImage = $request->file('coverImage');
-        $imageName = 'courseCoverImg' . '-' . $coverImage->getClientOriginalName();
-        $pathImg = $coverImage->storeAs('public/images/courseCoverImg', $imageName);
+            $coverImage = $request->file('coverImage');
+            $imageName = 'courseCoverImg' . '-' . $coverImage->getClientOriginalName();
+            $pathImg = $coverImage->storeAs('public/images/courseCoverImg', $imageName);
 
-        $coverUrl = url('/storage/images/courseCoverImg/'.$imageName);
+            $coverUrl = url('/storage/images/courseCoverImg/'.$imageName);
+            $course->cover_photo = $coverUrl ? $coverUrl: '';
 
         }
         if ($request->hasFile('promoVideo')) {
@@ -70,6 +71,7 @@ class CourseController extends Controller
             $videoName = 'coursePromoVideo' . '-' . $promoVideo->getClientOriginalName();
             $pathVid = $promoVideo->storeAs('public/videos/promoVideo', $videoName);
             $promoUrl = url('/storage/videos/promoVideo/'.$videoName);
+            $course->promo_video= $promoUrl ? $promoUrl : '';
 
         }
 
@@ -80,8 +82,6 @@ class CourseController extends Controller
        $course->is_publish= $request->is_publish;
        $course->is_free= $request->is_free;
        $course->price= $request->price;
-       $course->promo_video= $promoUrl ? $promoUrl : '';
-       $course->cover_photo = $coverUrl ? $coverUrl: '';
 
        $course->save();
 
@@ -131,25 +131,25 @@ class CourseController extends Controller
 
 
     //     }
-        if ($request->hasFile('video')) {
+        if ($request->file('video')) {
             $track = GetId3::fromUploadedFile($request->file('video'));
             $length = $track->getPlaytime();
             $video = $request->file('video');
             $videoName = 'courseVideo' . '-' . $video->getClientOriginalName();
             $pathVid = $video->storeAs('public/videos/courseVideos', $videoName);
             $url = url('/storage/videos/courseVideos/'.$videoName);
+            $videoCourse->url= $url !== "" ? $url : '';
+            $videoCourse->length= $length ;
 
         }
 
 
 
-        $videoCourse->url= $url !== "" ? $url : '';
         $videoCourse->cover_image = '';
         $videoCourse->course_id= $request->course_id;
         $videoCourse->status= $request->is_publish =='true' ? true : false;
         $videoCourse->description= $request->description;
         $videoCourse->title= $request->title ;
-        $videoCourse->length= $length ;
         $videoCourse->save();
         if($videoCourse){
             $courseVideos = CourseVideos::where('course_id',$videoCourse->course_id)->get();
@@ -162,10 +162,10 @@ class CourseController extends Controller
             ]);
         }
         return response([
-         'msg'=>'fail',
-         'status'=>false,
-         201
-     ]);
+            'msg'=>'fail',
+            'status'=>false,
+            201
+        ]);
     }
 
    public function getCoursesInitData()

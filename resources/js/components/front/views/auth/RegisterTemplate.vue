@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex registration-template main-bg h-full h-auto-p overflow-hidden">
+    <div class="d-flex registration-template h-full h-auto-p overflow-hidden">
         <div class="right-side bg-white w-40 w-100-p pt-0-p pt-20-p" :class="padding">
             <slot></slot>
         </div>
@@ -24,7 +24,7 @@ export default {
 }
 @media (max-width: 767px) {
     .registration-template {
-            flex-direction: column-reverse;
+        flex-direction: column-reverse;
     }
 }
 </style>

@@ -1,17 +1,23 @@
 <template>
-    <div class="course-page mt-50 pb-100">
-        <div class="container">
-            <div class="d-flex structure flex-wrap space-between">
-                <div class="w-68">
-                    <Banner :videoSrc="trailerSrc" :is-full="false"></Banner>
-                    <CourseInfo :course-name="courseName" :specialist-name="specialistName" description="courseDescription" :lectures="lectures"></CourseInfo>
-                    <AboutSpecialist :specialistID="1"></AboutSpecialist>
-                    <ContactUs></ContactUs>
-                    <Reviews></Reviews>
-                </div>
-                <CourseDetails></CourseDetails>
+    <div class="course-page">
+        <TheHeader></TheHeader>
+        <Banner :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"></Banner>
+        <div class="container page-info">
+            <CourseInfo :course-name="courseName" :description="courseDescription"></CourseInfo>
+            
+            <ContentTable :lectures="lectures" class="pt-20"></ContentTable>
+
+            <AboutSpecialists :specialistID="1"></AboutSpecialists>
+            <div class="mt-60">
+                <RelatedCourses></RelatedCourses>
             </div>
         </div>
+        <div class="mt-30">
+            <CombaniesBanner></CombaniesBanner>
+        </div>
+        <CoursesFeatures></CoursesFeatures>
+
+        <TheFooter></TheFooter>
         
     </div>
 </template>
@@ -19,12 +25,19 @@
 <script>
 import Banner from "../../views/coursepage/Banner.vue";
 import CourseInfo from "../../views/coursepage/CourseInfo.vue";
-import CourseDetails from "../../views/coursepage/CourseDetails.vue";
-import AboutSpecialist from "../../views/coursepage/AboutSpecialist.vue";
-import ContactUs from "../../views/coursepage/ContactUs.vue";
-import Reviews from "../../views/coursepage/Reviews.vue";
+import AboutSpecialists from "../../views/coursepage/AboutSpecialists.vue";
+import ContentTable from "../../views/coursepage/ContentTable.vue";
+import RelatedCourses from "../../views/coursepage/RelatedCourses.vue";
+import CoursesFeatures from '../../views/onlinecourses/CoursesFeatures.vue'
+
+
+import CombaniesBanner from '../../layouts/CompaniesBanner.vue'
+import TheFooter from '../../layouts/TheFooter.vue'
+import TheHeader from '../../layouts/header/TheHeader.vue'
 export default {
-    components: { CourseInfo,Banner,CourseDetails,AboutSpecialist,ContactUs,Reviews},
+    components: { 
+        CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter,TheHeader
+    },
     props: ['course'],
     data() {
         return {
@@ -32,7 +45,9 @@ export default {
             courseName: '',
             specialistName: '',
             courseDescription: '',
-            lectures: [],
+            courseLength: null,
+            videosCount: null,
+            lectures: []
         }
     },
     created(){
@@ -41,12 +56,18 @@ export default {
     methods: {
         async getCourseDetails(){
             try {
-                const data = await this.$store.dispatch('courses/getCourseDetails',this.course);
-                this.trailerSrc = data.trailerSrc;
-                this.courseName = data.courseName;
+                let data = await this.$store.dispatch('courses/getCourseDetails',this.course);
+                if (!data) {
+                    data =  await this.$store.dispatch('courses/getAllCourses');
+                    data = await this.$store.dispatch('courses/getCourseDetails',this.course);
+                }
+                this.trailerSrc = 'data.trailerSrc';
+                this.courseName = data.title;
+                this.courseLength = +data.course_length.split(':')[0]
                 this.specialistName  = data.specialistName;
                 this.courseDescription  = data.courseDescription;
-                this.lectures   = data.lectures;
+                this.videosCount  = data.videos_count;
+                this.$store.commit('courses/setCourseID',data.id);
             } catch (e){
                 console.log(e);
             }
@@ -54,3 +75,6 @@ export default {
     }
 };
 </script>
+<style scoped>
+
+</style>

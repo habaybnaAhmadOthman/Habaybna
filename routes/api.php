@@ -41,11 +41,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::middleware('auth:sanctum')->group(function () {
+    //payment test config
+    Route::post('/course-payment','PaymentController@coursePayment');
 
     //admin routes
     Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function(){
 
-        //payment test config
 
         //users
         Route::post('/delete-user/{id}','UserController@delete');

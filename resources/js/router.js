@@ -32,9 +32,13 @@ import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 import HomePage from "./components/front/pages/HomePage.vue";
+import ErrorPage from "./components/front/pages/ErrorPage.vue";
+import onlineCoursesPage from "./components/front/pages/onlineCoursesPage.vue";
+import allCoursesPage from "./components/front/pages/allCoursesPage.vue";
 // courses
 import CoursePage from "./components/front/pages/courses/CoursePage.vue";
-import CourseVideoPage from "./components/front/pages/courses/CourseVideo.vue";
+import ClassRoomPage from "./components/front/pages/courses/ClassRoom.vue";
+import Cirtificate from "./components/front/views/coursepage/Certificate.vue";
 
 
 // register pages
@@ -186,13 +190,22 @@ const routes = [{
         component: HomePage,
         name: "home"
     },
+    {
+        path: "/online-courses",
+        component: onlineCoursesPage,
+        name: "onlineCourses"
+    },
+    {
+        path: "/all-courses",
+        component: allCoursesPage,
+        name: "allCourses"
+    },
     // *****************
     // auth pages
     {
         path: "/signup",
         component: RegisterPage,
         meta: {
-            header: false,
             anonymous: true
         }
     },
@@ -200,7 +213,6 @@ const routes = [{
         path: "/parent-complete-registration",
         component: RegisterParentComplete,
         meta: {
-            header: false,
             requiresAuth: true
         }
     },
@@ -208,7 +220,6 @@ const routes = [{
         path: "/specialist-complete-registration",
         component: RegisterSpecialistComplete,
         meta: {
-            header: false,
             requiresAuth: true
         }
     },
@@ -216,7 +227,6 @@ const routes = [{
         path: "/other-complete-registration",
         component: RegisterOtherComplete,
         meta: {
-            header: false,
             requiresAuth: true
         }
     },
@@ -224,7 +234,6 @@ const routes = [{
         path: "/signin",
         component: LoginPage,
         meta: {
-            header: false,
             requiresAuth: false,
             anonymous: true
         },
@@ -235,8 +244,7 @@ const routes = [{
         path: "/profile",
         component: UserProfile_Template,
         meta: {
-            requiresAuth: true,
-            header: false
+            requiresAuth: true
         },
         children: [{
             path: "my-account",
@@ -253,20 +261,26 @@ const routes = [{
         path: "/courses/:course",
         component: CoursePage,
         meta: {
-            header: false,
             requiresAuth: false
         },
         props: true
     },
     {
         path: "/courses/:course/:lesson",
-        component: CourseVideoPage,
+        component: ClassRoomPage,
         meta: {
-            header: false,
-            requiresAuth: true
+            // requiresAuth: true
         },
         props: true
     },
+    {
+        path: "/certificate",
+        component: Cirtificate,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    { path: "*", component: ErrorPage }
 ];
 
 const router = new Router({

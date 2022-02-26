@@ -1,65 +1,57 @@
 <template>
-    <div class="banner relative overflow-hidden radius-12">
-        <video ref="videoPlayer" class="video-js main-img w-100"></video>
-        <div class="fav-box relative">
-            <img width="36" height="36" src="https://www.arabiaweather.com/farms/assets/images/favourite-add.svg" class="add pointer"> 
-            <img width="36" height="36" src="https://www.arabiaweather.com/farms/assets/images/favourite-added-offer.svg" class="remove pointer">
+    <div class="banner relative">
+        <div class="container h-100">
+            <div class="d-flex h-100">
+                <div class="d-flex align-center box h-100 relative w-70">
+                    <div>
+                        <p class="yellow">دورة التدريب الرقمية</p>
+                        <h1 class="font-50 white bold pre-line">{{bannerTitle}}</h1>
+                    </div>
+                    <div class="d-flex details white font-20">
+                        <p class="d-flex align-center ml-20"><img class="ml-10" src="/images/time-icon.svg" width="31" height="31" alt="">{{courseLength}} ساعة</p>
+                        <p class="d-flex align-center ml-20"><img class="ml-10" src="/images/video-svgrepo.svg" width="39" height="34" alt="">{{videosCount}} دروس</p>
+                        <p class="d-flex align-center"><img class="ml-10" src="/images/share-icon.svg" width="34" height="36" alt="">مشاركة</p>
+                    </div>
+                </div>
+                
+                <CoboneCard v-if="videoSrc" :videoSrc="videoSrc"></CoboneCard>
+            </div>
         </div>
     </div>
 </template>
 <script>
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css'
+import CoboneCard from './CoboneCard.vue'
 export default {
-    props: ['videoSrc','isFull'],
-    data() {
-        return {
-            player: null,
-            videoOptions: {
-                muted: false,
-				autoplay: true,
-				controls: true,
-				sources: [
-					{
-						src:
-							"https://cms.habaybna.net/sites/default/files/2021-10/IEP%20Teaser%20%281%29.mp4",
-						  type: "video/mp4"
-					}
-				],
-                playbackRates: [0.7, 1.0, 1.5, 2.0],
-			}
-        }
-    },
-    computed: {
-        fullContainer(){
-            return !!!this.isFull 
-        }
-    },
-    methods : {
-
-    },
-    mounted() {
-        this.player = videojs(this.$refs.videoPlayer, this.videoOptions, function onPlayerReady() {
-            console.log('onPlayerReady', this);
-        })
-        this.player.on('ready', function() {
-            // this.addClass('my-example');
-        });
-        this.player.on('ended', function() {
-            console.log('endddd');
-        });
-        // this.player.controlBar.progressControl.disable()
-    },
-    beforeDestroy() {
-        if (this.player) {
-            this.player.dispose()
-        }
+    props: ['videoSrc', 'bannerTitle','videosCount','courseLength'],
+    components: {CoboneCard},
+    methods: {
+        
+        
     }
 }
 </script>
 
 <style scoped>
 .banner {
+    height:502px;
+    background-image: url(/images/course-details.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #823175;
+}
+.details {
+    position: absolute;
+    bottom: 42px;
+    left: 60px;
+}
+
+
+
+
+
+
+/* .banner {
     height:415px;
 }
 .banner:after  {
@@ -73,24 +65,7 @@ export default {
     pointer-events: none;
     background: rgb(0 0 0 / 20%);
     pointer-events: none;
-}
-.fav-box .remove {
-    position: absolute;
-    right: 0;
-    top: 0;
-    opacity: 0;
-    pointer-events: none;
-}
-.fav-box .add.active ~ .remove {
-    opacity: 1;
-    pointer-events: initial;
-}
-.fav-box {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1;
-}
+} */
 .vjs_video_3-dimensions {
     height: 100%;
 }

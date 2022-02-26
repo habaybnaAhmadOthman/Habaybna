@@ -10,6 +10,7 @@
             </OtpForm>
             <CodeForm
                 @complete-registration-form="submitForm"
+                @error-happen="showPopupMessage"
                 @send-otp="gotPhone"
                 v-else
             ></CodeForm>
@@ -18,9 +19,8 @@
                 @click="submitPhone"
                 class="btn-2 mt-30 flex-all m-side-auto font-20"
                 id="sign-in-button"
-            >
-                أرسل رمز التحقّق
-                <img src="/images/siteImgs/header/logo.png" class="mr-10" />
+            >أرسل رمز التحقق
+                <!-- <img src="/images/siteImgs/header/logo.png" class="mr-10" /> -->
             </button>
             <h3 class="mt-50 center light font-15 flex-all p-side-50">
                 <span class="main-color">هل أنت عضو في عائلة حبايبنا؟</span>
@@ -117,7 +117,7 @@ export default {
                 });
                 this.$router.replace(`/${this.type}-complete-registration`);
             } catch (e) {
-                this.showPopupMessage("حدث خطأ ما");
+                this.showPopupMessage(e.message);
             }
             this.isLoading = false;
         }
