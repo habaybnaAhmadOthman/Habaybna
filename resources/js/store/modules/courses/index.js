@@ -7,7 +7,8 @@ export default {
         return {
             categories: [],
             courses: [],
-            courseID: null
+            // courseID: null,
+            course: null
         };
     },
     mutations,

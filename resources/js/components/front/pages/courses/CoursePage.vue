@@ -61,13 +61,14 @@ export default {
                     data =  await this.$store.dispatch('courses/getAllCourses');
                     data = await this.$store.dispatch('courses/getCourseDetails',this.course);
                 }
+                this.$store.commit('courses/setCourse',data);
+                
                 this.trailerSrc = 'data.trailerSrc';
                 this.courseName = data.title;
                 this.courseLength = +data.course_length.split(':')[0]
                 this.specialistName  = data.specialistName;
                 this.courseDescription  = data.courseDescription;
                 this.videosCount  = data.videos_count;
-                this.$store.commit('courses/setCourseID',data.id);
             } catch (e){
                 console.log(e);
             }

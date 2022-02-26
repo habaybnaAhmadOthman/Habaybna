@@ -1,6 +1,6 @@
 <template>
 <div>
-    <form ref="form" method="post" :action="paymentData.RedirectURL" @submit.prevent="submitForm" class="payment-hidden-form">
+    <form ref="form" method="post" :action="'https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler'" @submit.prevent="submitForm" class="payment-hidden-form">
         <input type="hidden" name="secureHash" :value="paymentData.secureHash">
         <input type="hidden" name="MerchantID" :value="paymentData.MerchantID">
         <input type="hidden" name="Amount" :value="paymentData.Amount">
@@ -44,8 +44,8 @@
                 // try {
                 //     const resp =  await axios({
                 //         method: 'POST',
-                //         url: this.paymentData.RedirectURL,
-                //         data: obj
+                //         url: 'https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler',
+                //         data: JSON.stringify(obj)
                 //     })
                 //     this.$emit('clearPaymentData')
                 // } catch (e) {
