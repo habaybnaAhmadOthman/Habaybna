@@ -1,7 +1,6 @@
 <template>
 <div>
     <form ref="form" method="post" :action="'https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler'" @submit.prevent="submitForm" class="payment-hidden-form">
-        <input type="hidden" name="SecureHash" :value="paymentData.secureHash">
         <input type="hidden" name="MerchantID" :value="paymentData.MerchantID">
         <input type="hidden" name="Amount" :value="paymentData.Amount">
         <input type="hidden" name="CurrencyISOCode" :value="paymentData.CurrencyISOCode">
@@ -13,6 +12,7 @@
         <input type="hidden" name="Quantity" :value="paymentData.Quantity">
         <input type="hidden" name="Channel" :value="paymentData.Channel">
         <input type="hidden" name="Version" :value="paymentData.Version">
+        <input type="hidden" name="SecureHash" :value="paymentData.secureHash">
     </form>
     </div>
 </template>
@@ -22,7 +22,7 @@
         props: ['paymentData'],
         emits: ['clearPaymentData'],
         data:()=> ({
-            
+
         }),
         methods: {
             submitForm() {
@@ -51,7 +51,7 @@
                 // } catch (e) {
                 //     console.log(e);
                 // }
-                
+
             }
         },
         mounted() {
