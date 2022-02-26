@@ -13,10 +13,17 @@ export default {
     // ******** get all courses ::: get
     async getRelatedCourses({_,getters},courseCategories) {
         let shuffledCourses = await shuffle(getters.courses);
-        // shuffledCourses.filter(course =>{
-        //     if ()
-        // })
-        return shuffledCourses;
+        let categories = [];
+        let courseID = getters.course.id;
+        getters.course.categories.map((e,i) => {
+            categories.push(  e.id)
+        })
+        let RelatedCourses = []
+        RelatedCourses = shuffledCourses.filter(course => {
+            if (course.id != courseID)
+                return course.categories.filter(category=>categories.includes(category.id))
+        })
+        return RelatedCourses.slice(0,6);
     },
     // ******** get all categories ::: get
     async getCategories() {
@@ -41,7 +48,7 @@ export default {
     async buyCourse({_,getters},payload) {
         const resp = await callApi("POST", "/api/course-payment",payload);
         if (!resp) {
-            const error = new Error("fail.");
+            const error = new Error("something went wrong, please try again");
             throw error;
         }
         return resp.data[0]
