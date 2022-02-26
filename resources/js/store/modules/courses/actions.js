@@ -19,12 +19,11 @@ export default {
             categories.push(  e.id)
         })
         let RelatedCourses = []
-        RelatedCourses = shuffledCourses.filter(course =>{
-            return course.categories.filter(category=>categories.includes(category.id))
+        RelatedCourses = shuffledCourses.filter(course => {
+            if (course.id != courseID)
+                return course.categories.filter(category=>categories.includes(category.id))
         })
-        console.log(categories);
-        console.log(RelatedCourses)
-        return shuffledCourses;
+        return RelatedCourses.slice(0,6);
     },
     // ******** get all categories ::: get
     async getCategories() {
