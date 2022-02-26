@@ -36,6 +36,7 @@ class CourseData {
        $course_info['promo_video'] = $course-> promo_video;
        $course_info['is_free'] = $course-> is_free;
        $course_info['duration'] = $course-> course_length;
+       $course_info['videos_count'] = count($course-> videos);
 
        return $course_info;
     }

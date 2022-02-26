@@ -1,5 +1,9 @@
 export default {
-    setCourses(state,courses) {
+    setAllCourses(state,courses) {
         state.courses = courses;
-    }
+    },
+    setCourseID(state,courseID) {
+        state.courseID = courseID
+    },
+    
 };

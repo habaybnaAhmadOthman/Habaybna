@@ -232,18 +232,18 @@
 
 
             <div class="">
-                <div class="d-flex">
-                    <button class="btn-2 flex-all font-20 ml-20">
+                <div class="d-flex flex-wrap justify-center-p column-reverse">
+                    <button class="btn-2 flex-all font-20 ml-20 m-0-p w-100-p">
                         حفظ
                     </button>
                     <button
-                        class="btn-3 radius-12 ml-20"
+                        class="btn-3 radius-12 ml-20 mb-15-p m-0-p w-100-p"
                         @click.prevent="togglePrivateModeDialog"
                     >
                         نظام الخصوصية
                     </button>
                     <button
-                        class="btn-3 radius-12"
+                        class="btn-3 radius-12 mb-15-p m-0-p"
                         @click.prevent="showPasswordDialog"
                     >
                         تغيير كلمة المرور

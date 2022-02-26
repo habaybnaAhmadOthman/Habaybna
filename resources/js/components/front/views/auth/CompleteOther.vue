@@ -165,7 +165,6 @@
 
         <button class="btn-2 mt-30 flex-all m-side-auto font-20">
             إتمام التسجيل
-            <img src="/images/siteImgs/header/logo.png" class="mr-10" />
         </button>
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
