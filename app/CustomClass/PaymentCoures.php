@@ -23,7 +23,7 @@ class PaymentCoures {
                 $parameters = [];
                 // fill required parameters
                 $parameters["TransactionID"] = $transactionId;
-                $parameters["MerchantID"] = "2000000103";
+                $parameters["MerchantID"] = "8584098098";
                 $parameters["Amount"] = "2000";
                 $parameters["CurrencyISOCode"] = "400";
                 $parameters["MessageID"] = "1";
@@ -33,7 +33,7 @@ class PaymentCoures {
                 $parameters["Language"] = "en";
                 $parameters["ThemeID"] = "1000000001";
                 // $parameters['ResponseBackURL'] = "https://MerchantSite/RedirectPaymentResponsePage";
-                $parameters["Version"] = "1.0";
+                $parameters["Version"] = "2.0";
                 //Create an Ordered String of The Parameters Map with Secret Key
                 // $parameters["RedirectURL"] = "http://SmartrouteURL/SmartRoutePaymentWEB/SRPayMsgHandler";
 
@@ -45,7 +45,7 @@ class PaymentCoures {
                 }
 
                 $secureHash = hash('sha256', $orderedString, false);
-                // $parameters["RedirectURL"] = "https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler";
+                $parameters["RedirectURL"] = "https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler";
 
 
                 $parameters["secureHash"] = $secureHash;
