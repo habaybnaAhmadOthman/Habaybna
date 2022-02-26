@@ -12,6 +12,7 @@ use App\CourseSpecialist;
 use App\CategoryCourse;
 use App\Question;
 use App\CustomClass\CourseData;
+use App\CustomClass\AllCourses;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
