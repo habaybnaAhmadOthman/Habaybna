@@ -76,7 +76,6 @@
                 this.isLoading(true)
                 try {
                     const resp = await this.$store.dispatch('courses/buyCourse',{courseID:this.getCourseID()});
-                    console.log(resp);
                     this.paymentFormData = resp.SmartRouteParams
 
                 } catch (error) {

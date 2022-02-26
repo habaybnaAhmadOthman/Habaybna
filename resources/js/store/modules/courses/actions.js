@@ -14,13 +14,16 @@ export default {
     async getRelatedCourses({_,getters},courseCategories) {
         let shuffledCourses = await shuffle(getters.courses);
         let categories = [];
+        let courseID = getters.course.id;
         getters.course.categories.map((e,i) => {
             categories.push(  e.id)
         })
-        shuffledCourses.filter(course =>{
-            // if ()
+        let RelatedCourses = []
+        RelatedCourses = shuffledCourses.filter(course => {
+            if (course.id != courseID)
+                return course.categories.filter(category=>categories.includes(category.id))
         })
-        return shuffledCourses;
+        return RelatedCourses.slice(0,6);
     },
     // ******** get all categories ::: get
     async getCategories() {
