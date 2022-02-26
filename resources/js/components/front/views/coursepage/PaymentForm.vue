@@ -1,7 +1,7 @@
 <template>
 <div>
     <form ref="form" method="post" :action="'https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler'" @submit.prevent="submitForm" class="payment-hidden-form">
-        <input type="hidden" name="secureHash" :value="paymentData.secureHash">
+        <input type="hidden" name="SecureHash" :value="paymentData.secureHash">
         <input type="hidden" name="MerchantID" :value="paymentData.MerchantID">
         <input type="hidden" name="Amount" :value="paymentData.Amount">
         <input type="hidden" name="CurrencyISOCode" :value="paymentData.CurrencyISOCode">
@@ -25,7 +25,7 @@
             
         }),
         methods: {
-            async submitForm() {
+            submitForm() {
                 this.$refs.form.submit();
                 // const obj = {
                 //     secureHash: this.paymentData.secureHash,
