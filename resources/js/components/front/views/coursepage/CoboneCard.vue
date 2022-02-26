@@ -89,7 +89,11 @@
                     return false;
                 }
                 isLoading(true)
-                const checkPromoCode = await this.$store.dispatch('courses/promoCode',{courseID:this.getCourseID(),promoCode:this.promoCode});
+                try {
+                    const checkPromoCode = await this.$store.dispatch('courses/promoCode',{courseID:this.getCourseID(),promoCode:this.promoCode});
+                } catch (error) {
+                    console.log(error)
+                }
                 isLoading(false)
                 var dialogMsg = 'success!'
                 if (!checkPromoCode) {
