@@ -22,7 +22,7 @@
         props: ['paymentData'],
         emits: ['clearPaymentData'],
         data:()=> ({
-            
+
         }),
         methods: {
             submitForm() {
@@ -51,7 +51,7 @@
                 // } catch (e) {
                 //     console.log(e);
                 // }
-                
+
             }
         },
         mounted() {
