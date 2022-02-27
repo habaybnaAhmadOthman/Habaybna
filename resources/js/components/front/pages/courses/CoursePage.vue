@@ -3,11 +3,11 @@
         <TheHeader></TheHeader>
         <Banner :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"></Banner>
         <div class="container page-info">
-            <CourseInfo :course-name="courseName" :description="courseDescription"></CourseInfo>
+            <CourseInfo :course-name="courseName" :description="courseDescription" :whatShouldLearn="whatShouldLearn"></CourseInfo>
             
-            <ContentTable :lectures="lectures" class="pt-20"></ContentTable>
+            <ContentTable :rows="videosList" type="course" :title="'محتوى الدورة التدريبية'" :lectures="lectures" class="pt-20"></ContentTable>
 
-            <AboutSpecialists :specialistID="1"></AboutSpecialists>
+            <AboutSpecialists v-if="specialists" :specialists="specialists"></AboutSpecialists>
             <div class="mt-60">
                 <RelatedCourses></RelatedCourses>
             </div>
@@ -43,10 +43,12 @@ export default {
         return {
             trailerSrc: null,
             courseName: '',
-            specialistName: '',
+            specialists: '',
             courseDescription: '',
+            whatShouldLearn: '',
             courseLength: null,
             videosCount: null,
+            videosList: null,
             lectures: []
         }
     },
@@ -57,17 +59,20 @@ export default {
         async getCourseDetails(){
             try {
                 let data = await this.$store.dispatch('courses/getCourseDetails',this.course);
+                debugger;
                 if (!data) {
-                    data =  await this.$store.dispatch('courses/getAllCourses');
+                    await this.$store.dispatch('courses/getAllCourses');
                     data = await this.$store.dispatch('courses/getCourseDetails',this.course);
                 }
                 this.$store.commit('courses/setCourse',data);
                 
-                this.trailerSrc = 'data.trailerSrc';
+                this.trailerSrc = data.promo_video;
                 this.courseName = data.title;
                 this.courseLength = +data.course_length.split(':')[0]
-                this.specialistName  = data.specialistName;
-                this.courseDescription  = data.courseDescription;
+                this.specialists  = data.providers;
+                this.courseDescription  = data.description;
+                this.whatShouldLearn  = data.what_should_learn;
+                this.videosList  = data.videos_title_length;
                 this.videosCount  = data.videos_count;
             } catch (e){
                 console.log(e);

@@ -1,8 +1,8 @@
 <template>
-    <div class="related-courses-section">
+    <div class="related-courses-section" v-if="appendedCourses.length > 0">
         <h6 class="title-line font-27 mb-40">دورة ذات صلة</h6>
         
-        <div class="list relative" v-if="appendedCourses.length > 0">
+        <div class="list relative">
             <swiper
                 :slides-per-view="3"
                 :space-between="30"
@@ -33,6 +33,7 @@
 
     export default {
         components:{CourseCard,Swiper,SwiperSlide},
+        props: ['courses'],
         data:()=>({
             appendedCourses: []
         }),
@@ -40,13 +41,11 @@
             this.getCourses();
         },
         methods: {
-            async getCourses(){
-                const allCourses = await this.$store.getters['courses/courses']
-                if ( allCourses.length > 0) {
-                    this.appendedCourses = allCourses
-                } else {
-                    
+            async getCourses() {
+                if (!this.courses) {
+                    await this.$store.dispatch('courses/getAllCourses');
                 }
+
                 this.appendedCourses = await this.$store.dispatch('courses/getRelatedCourses');
             },
             onSwiper (swiper) {

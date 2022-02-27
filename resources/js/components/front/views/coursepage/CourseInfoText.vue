@@ -1,7 +1,7 @@
 <template>
-    <div class="banner-info">
+    <div class="banner-info mb-40">
         <h2 class="title-line font-27 mb-40">{{header}}</h2>
-        <h3 class="black-2 font-27 pre-line f-normal mb-40">{{description}}</h3>
+        <div class="black-2 font-20 pre-line f-normal" v-html="description"></div>
     </div>
 </template>
 

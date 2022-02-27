@@ -84,6 +84,10 @@
                 this.isLoading(false)
             },
             async submitCoubon() {
+                if (!this.isLoggedIn) {
+                    this.$store.commit('loginModal',true);
+                    return false;
+                }
                 if (this.promoCode == '') {
                     this.$store.commit('alertDialogMsg','يرجى إدخال كود الخصم')
                     return false;
@@ -91,7 +95,7 @@
                 let checkPromoCode
                 this.isLoading(true)
                 try {
-                    checkPromoCode = await this.$store.dispatch('courses/promoCode',{courseID:this.getCourseID(),promoCode:this.promoCode});
+                    checkPromoCode = await this.$store.dispatch('courses/promoCode',{courseID:this.getCourseID(),promoCode:this.promoCode,usage: 'Course'});
                 } catch (error) {
                     console.log(error)
                 }
