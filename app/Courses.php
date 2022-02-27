@@ -54,6 +54,8 @@ class Courses extends Model
                     'firstName'=>$one->specialist->firstName,
                     'avatar'=>$one->specialist->avatar,
                     'specialization'=>$one->specialist->specialization,
+                    'bio'=>$one->specialist->disorders_work_with,
+
                 ];
             }
             return $courseProviders;
