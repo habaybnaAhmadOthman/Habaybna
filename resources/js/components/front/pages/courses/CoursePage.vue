@@ -59,8 +59,7 @@ export default {
         async getCourseDetails(){
             try {
                 let data = await this.$store.dispatch('courses/getCourseDetails',this.course);
-                debugger;
-                if (!data) {
+                if (!data) { 
                     await this.$store.dispatch('courses/getAllCourses');
                     data = await this.$store.dispatch('courses/getCourseDetails',this.course);
                 }
