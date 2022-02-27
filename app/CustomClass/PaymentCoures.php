@@ -22,18 +22,18 @@ class PaymentCoures {
                         $transactionId = (int)microtime(true)*1000; //output to be like: 1495004320389
                 $parameters = [];
                 // fill required parameters
-                $parameters["TransactionID"] = $transactionId;
-                $parameters["MerchantID"] = "8584098098";
                 $parameters["Amount"] = "2000";
+                $parameters["Channel"] = "0";
                 $parameters["CurrencyISOCode"] = "400";
+                $parameters["Language"] = "en";
+                $parameters["MerchantID"] = "2000000103";
                 $parameters["MessageID"] = "1";
                 $parameters["Quantity"] = "1";
-                $parameters["Channel"] = "0";
-                //fill some optional parameters
-                $parameters["Language"] = "en";
-                $parameters["ThemeID"] = "1000000001";
-                // $parameters['ResponseBackURL'] = "https://MerchantSite/RedirectPaymentResponsePage";
+                $parameters['ResponseBackURL'] = "https://www.habaybna.net/courses/2268";
+                $parameters["TransactionID"] = $transactionId;
                 $parameters["Version"] = "2.0";
+                //fill some optional parameters
+                $parameters["ThemeID"] = "1000000001";
                 //Create an Ordered String of The Parameters Map with Secret Key
                 // $parameters["RedirectURL"] = "http://SmartrouteURL/SmartRoutePaymentWEB/SRPayMsgHandler";
 
