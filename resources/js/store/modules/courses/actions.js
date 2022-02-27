@@ -55,13 +55,12 @@ export default {
     },
     // ******** PromoCode ::: post
     async promoCode({_,getters},payload) {
-        // const resp = await callApi("POST", "/api/course-payment",payload);
-        // if (!resp) {
-        //     const error = new Error("fail.");
-        //     throw error;
-        // }
-        await console.log('ss')
-        return true
+        const resp = await callApi("POST", "/api/check-promocode",payload);
+        if (!resp) {
+            const error = new Error("fail.");
+            throw error;
+        }
+        return resp
     }
 };
 

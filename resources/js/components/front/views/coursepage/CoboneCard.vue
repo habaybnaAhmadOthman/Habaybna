@@ -88,13 +88,14 @@
                     this.$store.commit('alertDialogMsg','يرجى إدخال كود الخصم')
                     return false;
                 }
-                isLoading(true)
+                let checkPromoCode
+                this.isLoading(true)
                 try {
-                    const checkPromoCode = await this.$store.dispatch('courses/promoCode',{courseID:this.getCourseID(),promoCode:this.promoCode});
+                    checkPromoCode = await this.$store.dispatch('courses/promoCode',{courseID:this.getCourseID(),promoCode:this.promoCode});
                 } catch (error) {
                     console.log(error)
                 }
-                isLoading(false)
+                this.isLoading(false)
                 var dialogMsg = 'success!'
                 if (!checkPromoCode) {
                     dialogMsg = 'We are sorry!'
