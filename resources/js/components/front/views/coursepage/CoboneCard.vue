@@ -5,7 +5,7 @@
             <video ref="videoPlayer" class="video-js main-img w-100"></video>
         </figure>
         <div class="d-flex box-details flex-wrap">
-            
+
             <!-- for course page -->
             <template v-if="isCourse">
                 <button @click="checkLogin" class="btn-register-now white-i font-18 mb-20 bold flex-all w-100 pointer">إشترك الآن</button>
@@ -91,7 +91,7 @@
                 let checkPromoCode
                 this.isLoading(true)
                 try {
-                    checkPromoCode = await this.$store.dispatch('courses/promoCode',{courseID:this.getCourseID(),promoCode:this.promoCode});
+                    checkPromoCode = await this.$store.dispatch('courses/promoCode',{courseID:this.getCourseID(),promoCode:this.promoCode, usage:'Course'});
                 } catch (error) {
                     console.log(error)
                 }
@@ -218,5 +218,5 @@
 .vjs-big-play-button:before, .video-js .vjs-big-play-button .vjs-icon-placeholder:before {
     content: ""!important;
     display: none;
-} 
+}
 </style>
