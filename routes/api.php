@@ -158,6 +158,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // others route
     Route::post('/other-complete-register','OthersController@create')->name('create.others');
     Route::post('/edit-other-profile-data','OthersController@editProfileData');
+    Route::post('/course-payment','PaymentController@coursePayment');
 
 
 });
@@ -166,3 +167,4 @@ Route::post('register','AuthController@signup')->name('user.register');
 Route::post('login','AuthController@login')->name('user.login');
 Route::get('all-courses','CourseController@getAllcourses')->name('getAllcourses');
 Route::get('get-categories','CategoriesController@index');
+

@@ -12,6 +12,7 @@ use App\CourseSpecialist;
 use App\CategoryCourse;
 use App\Question;
 use App\CustomClass\CourseData;
+use App\CustomClass\AllCourses;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -190,34 +191,13 @@ class CourseController extends Controller
         ],204);
    }
 
-   public function getAllcourses()
+   public function getAllcourses(AllCourses $allCourses)
    {
-      $courses = Courses::all();
-      $data = [];
-      foreach ($courses as $course) {
-        $data [] =[
-            'id'=>$course->id,
-            'title'=>$course->courseTitle,
-            'providers'=>$course->course_providers,
-            'videos_count'=>count($course->videos),
-            'course_length'=>$course->course_length,
-            'cover_photo'=>$course->cover_photo,
-            'is_free'=>$course->is_free,
-            'price'=>$course->price,
-            'discount'=>[
-                'has_discount'=>true,
-                'discount_value'=>"50%",
-                'discount_price'=>$course->price - $course->price * (50/100),
-            ],
-            'categories'=>$course->category_name
-
-        ];
-      }
-    //   dd($data);
+       $courses = $allCourses->execute();
 
        if($courses){
         return response()->json([
-            'courses' => $data,
+            'courses' => $courses,
             'status'=>true,
             200
         ]);
