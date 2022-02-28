@@ -216,6 +216,7 @@ body {
     font-size: 30px;
     color: #780d93;
     font-family: "Baloo Bold";
+    display: block;
 }
 .f-normal {
     font-weight: 200;
