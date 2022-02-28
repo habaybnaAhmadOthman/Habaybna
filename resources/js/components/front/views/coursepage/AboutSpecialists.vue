@@ -2,7 +2,7 @@
     <div class="about-coach mt-50 pt-10">
         <h3 class="title-line mb-40">عن المدربين</h3>
         <div class="d-flex specialist-list flex-wrap row-3">
-            <SpecialistCard></SpecialistCard>
+            <SpecialistCard v-for="specialist in specialists" :key="specialist.user_id" :specialist="specialist"></SpecialistCard>
             <!-- <img class="rounded object-fit" :src="avatar" :alt="name" width="200" height="200">
             <div class="mr-30">
                 <p class="main-color font-40">{{name}}</p>
@@ -17,7 +17,7 @@
 import SpecialistCard from '../../views/specialists/SpecialistCard.vue'
 export default {
     components: {SpecialistCard},
-    props: ['specialistID'],
+    props: ['specialistID', 'specialists'],
     data(){
         return {
             name: '',

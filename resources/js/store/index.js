@@ -34,7 +34,7 @@ const store = new vuex.Store({
     plugins: [
         createPersistedState({
             key: "user",
-            path: ["user"],
+            paths: ["user"],
             storage: {
                 getItem: key => ls.get(key),
                 setItem: (key, value) => ls.set(key,value),

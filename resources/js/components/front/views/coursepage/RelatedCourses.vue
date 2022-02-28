@@ -45,7 +45,7 @@
                 if ( allCourses.length > 0) {
                     this.appendedCourses = allCourses
                 } else {
-                    
+                    await this.$store.dispatch('courses/getAllCourses');
                 }
                 this.appendedCourses = await this.$store.dispatch('courses/getRelatedCourses');
             },

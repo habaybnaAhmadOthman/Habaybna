@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\PromoCode;
 use Illuminate\Http\Request;
 use App\CustomClass\createCoupon;
+use App\CustomClass\CheckPromoCode;
 use App\CustomClass\editCoupon;
 use App\CustomClass\AssignToUsers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -127,8 +128,10 @@ class PromoCodeController extends Controller
 
         }
     }
-    public function getResultData(Request $dangers)
+    public function checkPromoCode(Request $request, CheckPromoCode $checkPromoCode)
     {
-        // write here
+       $data = $checkPromoCode->execute($request->all());
+       return response()->json($data, 200);
+
     }
 }

@@ -16,19 +16,52 @@ class AllCourses {
             if(count($allCourses) > 0 ){
                 $data = [] ;
                 foreach ($allCourses as $one) {
-                    $data [] = [
-                        'course_id' => $one->id,
-                        'title' => $one->courseTitle,
-                    ];
+                    if($one->videos && count($one->videos) > 0 ){
+                        $data [] = [
+                            'id' => $one->id,
+                            'title' => $one->courseTitle,
+                            'description' => $one->courseDescription,
+                            'what_should_learn' => $one->whatWeLearn,
+                            'providers'=>$one->course_providers,
+                            'videos_count'=>count($one->videos),
+                            'videos_title_length'=>$this->getCourseVideosTitleAndLingth($one),
+                            'course_length'=>$one->course_length,
+                            'cover_photo'=>$one->cover_photo,
+                            'is_free'=>$one->is_free,
+                            'price'=>$one->price,
+                            'promo_video'=>$one->promo_video,
+                            'discount'=>[
+                            'has_discount'=>true,
+                            'discount_value'=>"50%",
+                            'discount_price'=>$one->price - $one->price * (50/100),
+                            ],
+                            'categories'=>$one->category_name
+                        ];
+                    }
                 }
             }
-            dd($data);
+            // dd($data);
+            return $data;
 
         } catch (\Throwable $th) {
             throw $th;
         }
     }
 
+    private function getCourseVideosTitleAndLingth($course)
+    {
+        if(count($course->videos->where('status',1)) > 0 ){
+            $data = [] ;
+            foreach ($course->videos as $one ) {
+                $data [] = [
+                    'lesson_id' => $one->id,
+                    'lesson_title' => $one->title,
+                    'lesson_length' => $one->length,
+                ];
+            }
+            return $data ;
+        }
+    }
 
 
 
