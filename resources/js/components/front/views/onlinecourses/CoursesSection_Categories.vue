@@ -104,9 +104,7 @@ li input[type="checkbox"] {
     position: absolute;
     opacity: 0;
 }
-li {
-    width: 100px;
-}
+
 @media (max-width: 767px) {
     li label[data-v-3023a41f] {
         padding: 4px 14px;
