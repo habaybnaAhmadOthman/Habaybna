@@ -8,7 +8,7 @@
         <input type="hidden" name="MessageID" :value="paymentData.MessageID">
         <input type="hidden" name="TransactionID" :value="paymentData.TransactionID">
         <input type="hidden" name="ThemeID" :value="paymentData.ThemeID">
-        <input type="hidden" name="ResponseBackURL" :value="'http://localhost:8000'">
+        <input type="hidden" name="ResponseBackURL" :value="paymentData.ResponseBackURL">
         <input type="hidden" name="Quantity" :value="paymentData.Quantity">
         <input type="hidden" name="Channel" :value="paymentData.Channel">
         <input type="hidden" name="Version" :value="paymentData.Version">
@@ -26,7 +26,7 @@
         }),
         methods: {
             submitForm() {
-
+                this.$refs.form.submit();
                 // const obj = {
                 //     secureHash: this.paymentData.secureHash,
                 //     MerchantID: this.paymentData.MerchantID,
@@ -41,8 +41,6 @@
                 //     Channel: this.paymentData.Channel,
                 //     Version: this.paymentData.Version
                 // }
-                // console.log(this.paymentData.RedirectURL)
-                this.$refs.form.submit();
                 // try {
                 //     const resp =  await axios({
                 //         method: 'POST',
