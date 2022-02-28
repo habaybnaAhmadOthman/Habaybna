@@ -8,7 +8,7 @@
         <input type="hidden" name="MessageID" :value="paymentData.MessageID">
         <input type="hidden" name="TransactionID" :value="paymentData.TransactionID">
         <input type="hidden" name="ThemeID" :value="paymentData.ThemeID">
-        <input type="hidden" name="ResponseBackURL" :value="'http://localhost:8000/courses/%D8%AF%D9%88%D8%B1%D8%A9-%D8%AA%D8%AC%D8%B1%D9%8A%D8%A8%D9%8A%D8%A9-%D9%A1'">
+        <input type="hidden" name="ResponseBackURL" :value="'http://localhost:8000'">
         <input type="hidden" name="Quantity" :value="paymentData.Quantity">
         <input type="hidden" name="Channel" :value="paymentData.Channel">
         <input type="hidden" name="Version" :value="paymentData.Version">

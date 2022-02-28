@@ -96,10 +96,7 @@ class CheckPromoCode {
                 // to handel not found promo
                 return  $couponData['couponData'] =
                 [
-                    'id'=>$code->id,
-                    'code'=>$code->code,
                     'isValid'=>false,
-                    'usage'=>'course',
                     'discount_perc'=>0,
                     'msg'=>'promoNotFound'
                 ];
