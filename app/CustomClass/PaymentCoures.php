@@ -28,12 +28,13 @@ class PaymentCoures {
                 $parameters["Language"] = "en";
                 $parameters["MerchantID"] = "2000000103";
                 $parameters["MessageID"] = "1";
+                $parameters['PaymentDescription']='coursepayment';
                 $parameters["Quantity"] = "1";
                 $parameters['ResponseBackURL'] = $back_url;
+                $parameters["ThemeID"] = "1000000001";
                 $parameters["TransactionID"] = $transactionId;
                 $parameters["Version"] = "1.0";
                 //fill some optional parameters
-                $parameters["ThemeID"] = "1000000001";
 
                 //Create an Ordered String of The Parameters Map with Secret Key
 
@@ -43,7 +44,6 @@ class PaymentCoures {
                 foreach($parameters as  $k=>$param){
                 $orderedString .= $param;
                 }
-
                 $secureHash = hash('sha256', $orderedString, false);
                 $parameters["RedirectURL"] = "https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler";
 
