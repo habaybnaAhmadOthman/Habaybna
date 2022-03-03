@@ -49,32 +49,34 @@ export default {
       self = this;
       self.atLeastOneSelected = false;
       const courses = this.courseTemp;
-      const updatedList =  courses.filter(course=>{
-        for (let index = 0; index < this.activeFilters.length; index++) {
-          let isChecked =  this.activeFilters[index].isChecked;
+      if (courses) {
+        const updatedList =  courses.filter(course=>{
+          for (let index = 0; index < this.activeFilters.length; index++) {
+            let isChecked =  this.activeFilters[index].isChecked;
 
-          // check if user select one category at least
-          if (isChecked) {
-            self.atLeastOneSelected = true;
-          }
-          if ( isChecked ) {
-            let selected = course.categories.filter(cat=>{
-              return cat.id == this.activeFilters[index].id
-            })
-            if (selected.length > 0) {
-              return true;
+            // check if user select one category at least
+            if (isChecked) {
+              self.atLeastOneSelected = true;
+            }
+            if ( isChecked ) {
+              let selected = course.categories.filter(cat=>{
+                return cat.id == this.activeFilters[index].id
+              })
+              if (selected.length > 0) {
+                return true;
+              }
             }
           }
-        }
-      });
-      if (updatedList.length < 1) {
-        if (!self.atLeastOneSelected) {
-          this.appendedCourses = courses;
+        });
+        if (updatedList.length < 1) {
+          if (!self.atLeastOneSelected) {
+            this.appendedCourses = courses;
+          } else {
+            this.appendedCourses = [];
+          }
         } else {
-          this.appendedCourses = [];
+          this.appendedCourses = updatedList;
         }
-      } else {
-        this.appendedCourses = updatedList;
       }
     },
     setFilters(updatedFilters){
