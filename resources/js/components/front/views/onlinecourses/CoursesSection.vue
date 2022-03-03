@@ -49,7 +49,7 @@ export default {
       self = this;
       self.atLeastOneSelected = false;
       const courses = this.courseTemp;
-      if (courses) {
+      // if (courses) {
         const updatedList =  courses.filter(course=>{
           for (let index = 0; index < this.activeFilters.length; index++) {
             let isChecked =  this.activeFilters[index].isChecked;
@@ -77,7 +77,7 @@ export default {
         } else {
           this.appendedCourses = updatedList;
         }
-      }
+      // }
     },
     setFilters(updatedFilters){
       this.activeFilters = updatedFilters;

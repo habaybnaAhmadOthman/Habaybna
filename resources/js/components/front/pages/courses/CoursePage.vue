@@ -63,6 +63,7 @@ export default {
                     await this.$store.dispatch('courses/getAllCourses');
                     data = await this.$store.dispatch('courses/getCourseDetails',this.course);
                 }
+                console.log(data);
                 this.$store.commit('courses/setCourse',data);
                 
                 this.trailerSrc = data.promo_video;
