@@ -4,6 +4,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
       <meta name="csrf-token" content="{{ csrf_token() }}">
+      <meta property="og:image" content="https://iresizer.devops.arabiaweather.com/resize?url=http://adminassets.devops.arabiaweather.com/sites/default/files/field/image/rain-amount-2022-3-33.jpg&amp;size=850x0&amp;force_jpg=1">
       <title>Home | habaybna</title>
       <style>
          @font-face {

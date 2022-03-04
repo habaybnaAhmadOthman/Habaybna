@@ -1,8 +1,8 @@
 <template>
-    <div class="related-courses-section">
+    <div class="related-courses-section" v-if="appendedCourses.length > 0">
         <h6 class="title-line font-27 mb-40">دورة ذات صلة</h6>
         
-        <div class="list relative" v-if="appendedCourses.length > 0">
+        <div class="list relative">
             <swiper
                 :slides-per-view="3"
                 :space-between="30"
@@ -36,7 +36,7 @@
         data:()=>({
             appendedCourses: []
         }),
-        created(){
+        created() {
             this.getCourses();
         },
         methods: {

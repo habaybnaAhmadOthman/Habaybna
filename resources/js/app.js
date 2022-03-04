@@ -29,6 +29,13 @@ import './modules/auth.js';
 // portal
 import MainApp from './MainApp.vue'
 
+// import  portal plugins 
+import VueSocialSharing from 'vue-social-sharing'
+import VueMeta from 'vue-meta'
+// use portal plugins
+Vue.use(VueMeta)
+Vue.use(VueSocialSharing);
+
 Vue.use(VueCarousel);
 Vue.use(ViewUI,{ locale });
 Vue.mixin(common)
