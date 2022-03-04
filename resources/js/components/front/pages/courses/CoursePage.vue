@@ -9,7 +9,7 @@
 
             <AboutSpecialists v-if="specialists" :specialists="specialists"></AboutSpecialists>
             <div class="mt-60">
-                <RelatedCourses v-if="showRelatedCourses"></RelatedCourses>
+                <RelatedCourses v-if="isDataReady"></RelatedCourses>
             </div>
         </div>
         <div class="mt-30">
@@ -20,6 +20,11 @@
         <ShareCourseModal
             :show="showShareModal"
             @close-share-modal="showShareDialog"
+            :courseName="courseName"
+            :description="courseDescription"
+            :hashTags="'hashTags'"
+            :quote="'quote'"
+            :twitterUser="'twitterUser'"
         ></ShareCourseModal>
 
         <TheFooter></TheFooter>
@@ -57,7 +62,7 @@ export default {
             videosList: null,
             lectures: [],
             showShareModal: false,
-            showRelatedCourses: false,
+            isDataReady: false,
         }
     },
     created(){
@@ -66,7 +71,6 @@ export default {
     methods: {
         async getCourseDetails(){
             try {
-                
                 let data = await this.$store.dispatch('courses/getCourseDetails',this.course);
                 if (!data) { 
                     await this.$store.dispatch('courses/getAllCourses');
@@ -74,7 +78,7 @@ export default {
                 }
                 console.log(data);
                 // show related courses section
-                this.showRelatedCourses = true;
+                this.isDataReady = true;
 
                 this.$store.commit('courses/setCourse',data);
                 
