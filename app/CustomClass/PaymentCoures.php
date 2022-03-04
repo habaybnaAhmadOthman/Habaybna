@@ -12,8 +12,8 @@ class PaymentCoures {
     public function execute(array $data)
     {
         try {
-            $back_url = url('/') . "/api/course-payment-callback";
-
+            $back_url = url('/api/course-payment-callback');
+                
                 //Step 1: Generate Secure Hash
                 $SECRET_KEY = "NGIyNTQzOTc2ZTkxZGFhZDFlMjhjMTNk"; // Use Yours, Please Store
                         // Your Secret Key in safe Place(e.g. database)
