@@ -56,6 +56,7 @@ export default {
             courseName: '',
             specialists: '',
             courseDescription: '',
+            coverPhoto: '',
             whatShouldLearn: '',
             courseLength: null,
             videosCount: null,
@@ -76,13 +77,13 @@ export default {
                     await this.$store.dispatch('courses/getAllCourses');
                     data = await this.$store.dispatch('courses/getCourseDetails',this.course);
                 }
-                console.log(data);
                 // show related courses section
                 this.isDataReady = true;
-
+                
                 this.$store.commit('courses/setCourse',data);
                 
                 this.trailerSrc = data.promo_video;
+                this.coverPhoto = data.cover_photo;
                 this.courseName = data.title;
                 this.courseLength = +data.course_length.split(':')[0]
                 this.specialists  = data.providers;
@@ -90,6 +91,7 @@ export default {
                 this.whatShouldLearn  = data.what_should_learn;
                 this.videosList  = data.videos_title_length;
                 this.videosCount  = data.videos_count;
+                
             } catch (e){
                 console.log(e);
             }
@@ -108,7 +110,7 @@ export default {
                 // { property: 'og:description', content: 'Connect and follow ' + this.userData.name + ' on Epiloge - ' + this.userData.tagline},
                 // {property: 'og:type', content: 'profile'},
                 // {property: 'og:url', content: 'https://epiloge.com/@' + this.userData.username},
-                {property: 'og:image', content: 'https://iresizer.devops.arabiaweather.com/resize?url=http://adminassets.devops.arabiaweather.com/sites/default/files/field/image/rain-amount-2022-3-33.jpg&amp;size=850x0&amp;force_jpg=1' }    
+                {property: 'og:image', content: this.coverPhoto }
             ]
         }
     },

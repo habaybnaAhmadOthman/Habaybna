@@ -4,13 +4,13 @@
             <div class="share-course-modal">
                 <div class="social-list d-flex flex-wrap justify-center">
                         <ShareNetwork
-                            network="twitter"
-                            url="https://www.arabiaweather.com/ar/content/%D9%83%D9%85%D9%8A%D8%A7%D8%AA-%D8%A7%D9%84%D8%A3%D9%85%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D9%84%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%A3%D8%B1%D8%AF%D9%86-%D9%85%D9%86-%D8%B8%D9%8F%D9%87%D8%B1-%D9%8A%D9%88%D9%85-%D8%A7%D9%84%D8%AE%D9%85%D9%8A%D8%B3-%D9%88%D8%AD%D8%AA%D9%89-%D8%A7%D9%84%D8%B3%D8%A7%D8%B9%D8%A9-815-%D9%85%D9%86-%D9%85%D8%B3%D8%A7%D8%A1-%D9%8A%D9%88%D9%85-%D8%A7%D9%84%D8%AE%D9%85%D9%8A%D8%B3-3-3"
-                            title="فن الكلام والخبرة المجتمعية"
-                            description="This week, I’d like to introduce you to 'Vite', which means 'Fast'. It’s a brand new development setup created by Evan You."
-                            quote="The hot reload is so fast it\'s near instant. - Evan You"
-                            hashtags="كورس,توحد"
-                            twitterUser="zalloum"
+                            network="whatsapp"
+                            :url="courseUrl"
+                            :title="courseName"
+                            :description="description"
+                            :quote="description"
+                            :hashtags="hashTags"
+                            :twitterUser="twitterUser"
                             >
                             <div class="social-box d-flex align-center radius-10 white whats overflow-hidden">
                                 <div class="d-flex">
@@ -20,13 +20,13 @@
                             </div>
                         </ShareNetwork>
                         <ShareNetwork
-                            network="twitter"
-                            url="https://www.arabiaweather.com/ar/content/%D9%83%D9%85%D9%8A%D8%A7%D8%AA-%D8%A7%D9%84%D8%A3%D9%85%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D9%84%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%A3%D8%B1%D8%AF%D9%86-%D9%85%D9%86-%D8%B8%D9%8F%D9%87%D8%B1-%D9%8A%D9%88%D9%85-%D8%A7%D9%84%D8%AE%D9%85%D9%8A%D8%B3-%D9%88%D8%AD%D8%AA%D9%89-%D8%A7%D9%84%D8%B3%D8%A7%D8%B9%D8%A9-815-%D9%85%D9%86-%D9%85%D8%B3%D8%A7%D8%A1-%D9%8A%D9%88%D9%85-%D8%A7%D9%84%D8%AE%D9%85%D9%8A%D8%B3-3-3"
-                            title="فن الكلام والخبرة المجتمعية"
-                            description="This week, I’d like to introduce you to 'Vite', which means 'Fast'. It’s a brand new development setup created by Evan You."
-                            quote="The hot reload is so fast it\'s near instant. - Evan You"
-                            hashtags="كورس,توحد"
-                            twitterUser="zalloum"
+                            network="facebook"
+                            :url="courseUrl"
+                            :title="courseName"
+                            :description="description"
+                            :quote="description"
+                            :hashtags="hashTags"
+                            :twitterUser="twitterUser"
                             >
                             <div class="social-box d-flex align-center radius-10 white facebook overflow-hidden">
                                 <div class="d-flex">
@@ -36,13 +36,13 @@
                             </div>
                         </ShareNetwork>
                         <ShareNetwork
-                            network="twitter"
-                            url="https://www.arabiaweather.com/ar/content/%D9%83%D9%85%D9%8A%D8%A7%D8%AA-%D8%A7%D9%84%D8%A3%D9%85%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D9%84%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%A3%D8%B1%D8%AF%D9%86-%D9%85%D9%86-%D8%B8%D9%8F%D9%87%D8%B1-%D9%8A%D9%88%D9%85-%D8%A7%D9%84%D8%AE%D9%85%D9%8A%D8%B3-%D9%88%D8%AD%D8%AA%D9%89-%D8%A7%D9%84%D8%B3%D8%A7%D8%B9%D8%A9-815-%D9%85%D9%86-%D9%85%D8%B3%D8%A7%D8%A1-%D9%8A%D9%88%D9%85-%D8%A7%D9%84%D8%AE%D9%85%D9%8A%D8%B3-3-3"
-                            title="فن الكلام والخبرة المجتمعية"
-                            description="This week, I’d like to introduce you to 'Vite', which means 'Fast'. It’s a brand new development setup created by Evan You."
-                            quote="The hot reload is so fast it\'s near instant. - Evan You"
-                            hashtags="كورس,توحد"
-                            twitterUser="zalloum"
+                            network="messenger"
+                            :url="courseUrl"
+                            :title="courseName"
+                            :description="description"
+                            :quote="description"
+                            :hashtags="hashTags"
+                            :twitterUser="twitterUser"
                             >
                             <div class="social-box d-flex align-center radius-10 white messenger overflow-hidden">
                                 <div class="d-flex">
@@ -53,12 +53,12 @@
                         </ShareNetwork>
                         <ShareNetwork
                             network="twitter"
-                            url="https://www.arabiaweather.com/ar/content/%D9%83%D9%85%D9%8A%D8%A7%D8%AA-%D8%A7%D9%84%D8%A3%D9%85%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D9%84%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%A3%D8%B1%D8%AF%D9%86-%D9%85%D9%86-%D8%B8%D9%8F%D9%87%D8%B1-%D9%8A%D9%88%D9%85-%D8%A7%D9%84%D8%AE%D9%85%D9%8A%D8%B3-%D9%88%D8%AD%D8%AA%D9%89-%D8%A7%D9%84%D8%B3%D8%A7%D8%B9%D8%A9-815-%D9%85%D9%86-%D9%85%D8%B3%D8%A7%D8%A1-%D9%8A%D9%88%D9%85-%D8%A7%D9%84%D8%AE%D9%85%D9%8A%D8%B3-3-3"
-                            title="فن الكلام والخبرة المجتمعية"
-                            description="This week, I’d like to introduce you to 'Vite', which means 'Fast'. It’s a brand new development setup created by Evan You."
-                            quote="The hot reload is so fast it\'s near instant. - Evan You"
-                            hashtags="كورس,توحد"
-                            twitterUser="zalloum"
+                            :url="courseUrl"
+                            :title="courseName"
+                            :description="description"
+                            :quote="description"
+                            :hashtags="hashTags"
+                            :twitterUser="twitterUser"
                             >
                             <div class="social-box d-flex align-center radius-10 white twitter overflow-hidden">
                                 <div class="d-flex">
@@ -68,11 +68,11 @@
                             </div>
                         </ShareNetwork>
                         <ShareNetwork
-                            network="twitter"
+                            network="linkedin"
                             :url="courseUrl"
                             :title="courseName"
                             :description="description"
-                            :quote="quote"
+                            :quote="description"
                             :hashtags="hashTags"
                             :twitterUser="twitterUser"
                             >
@@ -98,7 +98,7 @@ export default {
     props: ['show','courseName','hashTags','description','quote','twitterUser'],
     computed: {
         courseUrl(){
-            return `http://test.habaybna.ps/`
+            return `${window.location.href}`
         }
     },
     methods: {

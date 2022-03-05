@@ -79,7 +79,7 @@ export default {
         }
       // }
     },
-    setFilters(updatedFilters){
+    setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
       this.filteredCourses();
     },
