@@ -57,24 +57,6 @@ class CourseController extends Controller
     //    dd($request->category);
        $course = new Courses();
 
-       if ($request->hasFile('coverImage')) {
-            $coverImage = $request->file('coverImage');
-            $imageName = 'courseCoverImg' . '-' . $coverImage->getClientOriginalName();
-            $pathImg = $coverImage->storeAs('public/images/courseCoverImg', $imageName);
-
-            $coverUrl = url('/storage/images/courseCoverImg/'.$imageName);
-            $course->cover_photo = $coverUrl ? $coverUrl: '';
-
-        }
-        if ($request->hasFile('promoVideo')) {
-            $promoVideo = $request->file('promoVideo');
-            $videoName = 'coursePromoVideo' . '-' . $promoVideo->getClientOriginalName();
-            $pathVid = $promoVideo->storeAs('public/videos/promoVideo', $videoName);
-            $promoUrl = url('/storage/videos/promoVideo/'.$videoName);
-            $course->promo_video= $promoUrl ? $promoUrl : '';
-
-        }
-
        $course->courseTitle = $request->title;
        $course->courseDescription= $request->description;
     //    $course->category_id= $request->category;
@@ -84,6 +66,26 @@ class CourseController extends Controller
        $course->price= $request->price;
 
        $course->save();
+
+       if ($request->hasFile('coverImage')) {
+            $coverImage = $request->file('coverImage');
+            $imageName = 'courseCoverImg' . '-' . $coverImage->getClientOriginalName();
+            $pathImg = $coverImage->storeAs('public/images/courseCoverImg', $imageName);
+
+            $coverUrl = url('/storage/images/courseCoverImg/'.$imageName);
+            $course->cover_photo = $coverUrl ? $coverUrl: '';
+            $course->save();
+        }
+        if ($request->hasFile('promoVideo')) {
+            $promoVideo = $request->file('promoVideo');
+            $videoName = 'coursePromoVideo' . '-' . $promoVideo->getClientOriginalName();
+            $pathVid = $promoVideo->storeAs('public/videos/promoVideo', $videoName);
+            $promoUrl = url('/storage/videos/promoVideo/'.$videoName);
+            $course->promo_video= $promoUrl ? $promoUrl : '';
+            $course->save();
+        }
+
+       
 
        if($request->has('category')){
         $categories = explode( ',', $request->category );

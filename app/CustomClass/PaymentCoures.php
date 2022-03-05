@@ -12,8 +12,8 @@ class PaymentCoures {
     public function execute(array $data)
     {
         try {
-            $back_url = url('/api/course-payment-callback');
-                
+            $back_url = url('/api/payment/course');
+
                 //Step 1: Generate Secure Hash
                 $SECRET_KEY = "NGIyNTQzOTc2ZTkxZGFhZDFlMjhjMTNk"; // Use Yours, Please Store
                         // Your Secret Key in safe Place(e.g. database)
@@ -30,7 +30,7 @@ class PaymentCoures {
                 $parameters["MessageID"] = "1";
                 $parameters['PaymentDescription']='coursepayment';
                 $parameters["Quantity"] = "1";
-                $parameters['ResponseBackURL'] = $back_url;
+                $parameters['ResponseBackURL'] = 'http://localhost:8000/api/payment/course';
                 $parameters["ThemeID"] = "1000000001";
                 $parameters["TransactionID"] = $transactionId;
                 $parameters["Version"] = "1.0";
@@ -61,4 +61,3 @@ class PaymentCoures {
     }
 
 }
-

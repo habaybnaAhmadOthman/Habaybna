@@ -34,8 +34,9 @@ export default {
         }
         return resp.data;
     },
-    async getCourseDetails({_,getters},title) {
+    async getCourseDetails({_,rootGetters,getters},title) {
         title = title.split('-').join(' ')
+        axios.defaults.headers.common.Authorization = `Bearer ${rootGetters['user/userData'].token}`;
         try {
              const resp = getters.courses.filter(course => course.title === title)[0]
              return resp

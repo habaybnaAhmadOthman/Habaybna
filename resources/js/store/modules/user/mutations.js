@@ -1,10 +1,15 @@
 export default {
     setUser(state, payload) {
-        state.firstName = payload.firstName || null;
-        state.lastName = payload.lastName || null;
-        state.type = payload.type || null;
-        state.avatar = payload.avatar || null;
-        state.token = payload.token || null;
+        if (payload.firstName)
+            state.firstName = payload.firstName;
+        if (payload.lastName)
+            state.lastName = payload.lastName;
+        if (payload.type)
+            state.type = payload.type;
+        if (payload.avatar)
+            state.avatar = payload.avatar;
+        if (payload.token)
+            state.token = payload.token;
         state.loggedIn = true;
         state.is_verify = true;
     },

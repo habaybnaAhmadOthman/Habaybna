@@ -186,6 +186,13 @@ const routes = [{
     // front
     // ************
     {
+        path: "/api/course-payment-callback",
+        component: Cirtificate,
+        // meta: {
+        //     requiresAuth: true
+        // }
+    },
+    {
         path: "/",
         component: HomePage,
         name: "home"
@@ -280,6 +287,8 @@ const routes = [{
             requiresAuth: true
         }
     },
+    
+    
     { path: "*", component: ErrorPage }
 ];
 
