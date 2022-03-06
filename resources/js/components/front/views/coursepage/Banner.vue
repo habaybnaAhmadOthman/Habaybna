@@ -14,7 +14,8 @@
                     </div>
                 </div>
                 
-                <CoboneCard v-if="videoSrc" :videoSrc="videoSrc"></CoboneCard>
+                <!-- <CoboneCard v-if="videoSrc" :videoSrc="videoSrc"></CoboneCard> -->
+                <CoboneCard  :videoSrc="videoSrc"></CoboneCard>
             </div>
         </div>
     </div>

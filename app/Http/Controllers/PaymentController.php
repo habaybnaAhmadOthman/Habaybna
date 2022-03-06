@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\CustomClass\PaymentCoures;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
+
 
 
 
@@ -23,7 +25,11 @@ class PaymentController extends Controller
 
     public function coursePaymentCallback(Request $request )
     {
+        $this->storeData($request);
+    }
+
+    public function storeData($request)
+    {
         dd($request);
-        // return response()->json($request);
     }
 }

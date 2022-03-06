@@ -47,7 +47,7 @@
                 player: null,
                 videoOptions: {
                     muted: false,
-                    autoplay: true,
+                    autoplay: false,
                     controls: true,
                     sources: [
                         {

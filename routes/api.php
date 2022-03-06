@@ -40,10 +40,10 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/check-user-authentication',CheckUserAuth::class);
+Route::post('/payment/course','PaymentController@coursePaymentCallback');
 Route::middleware('auth:sanctum')->group(function () {
     //payment test config
     Route::post('/course-payment','PaymentController@coursePayment');
-    Route::post('/payment/course','PaymentController@coursePaymentCallback');
     // check user promo code
     Route::post('/check-promocode','PromoCodeController@checkPromoCode');
     //admin routes
