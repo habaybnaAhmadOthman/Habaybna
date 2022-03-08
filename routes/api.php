@@ -43,6 +43,7 @@ Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::post('/payment/course','PaymentController@coursePaymentCallback');
 Route::middleware('auth:sanctum')->group(function () {
     //payment test config
+    Route::get('get-payment-status','PaymentController@checkPaymentStatus');
     Route::post('/course-payment','PaymentController@coursePayment');
     // check user promo code
     Route::post('/check-promocode','PromoCodeController@checkPromoCode');

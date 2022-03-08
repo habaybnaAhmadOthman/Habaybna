@@ -19,8 +19,7 @@ class PaymentCoures {
             // session(['SmartRouteParams' => $parameters]);
 
             $data['hasPromoCode']['id'] = '22'; // sent from zalum
-            $initData = $this->createInitOrder($data);
-            session(['order_id' => $initData->id]);
+            // $initData = $this->createInitOrder($data);
 
 
             $back_url = url('/api/payment/course');
@@ -60,6 +59,7 @@ class PaymentCoures {
 
 
                 $parameters["secureHash"] = $secureHash;
+                $initData = $this->createInitOrder($data,$parameters['TransactionID']);
 
                  session(['SmartRouteParams' => $parameters]);
                  $data = [session()->all()];
@@ -71,9 +71,11 @@ class PaymentCoures {
         }
     }
 
-    private function createInitOrder($data)
+    private function createInitOrder($data,$tranID)
     {
+
         try {
+
             $course = Courses::findorfail($data['courseID']);
 
             // store initial order data
@@ -83,6 +85,7 @@ class PaymentCoures {
             $initData->course_id = $data['courseID'];
             $initData->status = false;  // not complete change to true when payment complete success
             $initData->price = $course->price ;
+            $initData->transactionID = $tranID ;
             $initData->save();
 
                 // check hasPromoCode
