@@ -51,14 +51,17 @@ export default {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
-
+        context.commit('setUser',{
+            token: resp.data.token,
+        })
+        axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
         await context.dispatch('checkUserAuth')
     },
     // ******** login modal :::
     // !!!!!!!!!!!!!
-    // check error handling 
+    // check error handling
     async loginModal(context, payload) {
-        await axios.get("/sanctum/csrf-cookie");
+        // await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "/login", payload);
         if (resp && resp.data && resp.data.status && resp.data.status == 403) {
             const error = new Error("لقد تم إلغاء تفعيلك، يرجى مراجعة إدارة الموقع");
@@ -68,7 +71,10 @@ export default {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
-
+        context.commit('setUser',{
+            token: resp.data.token,
+        })
+        axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
         await context.dispatch('checkUserAuth')
     },
     // ******** logout :::
@@ -113,7 +119,7 @@ export default {
                 firstName: obj.firstName,
                 lastName: obj.lastName,
                 type: obj.type,
-                avatar: obj.avatar
+                avatar: obj.avatar,
             })
         } else { // is admin
 

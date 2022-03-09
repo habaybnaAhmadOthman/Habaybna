@@ -39,6 +39,8 @@ import allCoursesPage from "./components/front/pages/allCoursesPage.vue";
 import CoursePage from "./components/front/pages/courses/CoursePage.vue";
 import ClassRoomPage from "./components/front/pages/courses/ClassRoom.vue";
 import Cirtificate from "./components/front/views/coursepage/Certificate.vue";
+import PaymentStatus from "./components/front/pages/courses/PaymentStatus.vue";
+
 
 
 // register pages
@@ -186,6 +188,13 @@ const routes = [{
     // front
     // ************
     {
+        path: "/api/course-payment-callback",
+        component: Cirtificate,
+        // meta: {
+        //     requiresAuth: true
+        // }
+    },
+    {
         path: "/",
         component: HomePage,
         name: "home"
@@ -274,12 +283,22 @@ const routes = [{
         props: true
     },
     {
+        path: "/payment-success",
+        component: PaymentStatus,
+        meta: {
+            requiresAuth: true
+        },
+        
+    },
+    {
         path: "/certificate",
         component: Cirtificate,
         meta: {
             requiresAuth: true
         }
     },
+
+
     { path: "*", component: ErrorPage }
 ];
 
@@ -299,6 +318,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+    console.log('to: ',to, 'from: ',from);
     // if page require auth
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (store.getters['user/isLoggedIn']) {

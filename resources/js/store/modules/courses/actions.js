@@ -34,8 +34,9 @@ export default {
         }
         return resp.data;
     },
-    async getCourseDetails({_,getters},title) {
+    async getCourseDetails({_,rootGetters,getters},title) {
         title = title.split('-').join(' ')
+        axios.defaults.headers.common.Authorization = `Bearer ${rootGetters['user/userData'].token}`;
         try {
              const resp = getters.courses.filter(course => course.title === title)[0]
              return resp
@@ -56,11 +57,11 @@ export default {
     // ******** PromoCode ::: post
     async promoCode({_,getters},payload) {
         const resp = await callApi("POST", "/api/check-promocode",payload);
-        if (!resp) {
+        if (!resp.data.isValid) {
             const error = new Error("fail.");
             throw error;
         }
-        return resp
+        return resp.data
     }
 };
 
