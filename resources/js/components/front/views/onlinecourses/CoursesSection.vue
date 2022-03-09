@@ -97,6 +97,8 @@ export default {
 </script>
 
 <style scoped>
-
+.all-courses-page .title-line {
+  margin-bottom: 20px;
+}
 
 </style>

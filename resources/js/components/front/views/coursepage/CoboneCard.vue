@@ -16,9 +16,9 @@
                 <PaymentForm v-if="paymentFormData" :paymentData="paymentFormData" @clearPaymentData="clearPaymentData"></PaymentForm>
             </template>
             <!-- for lesson page -->
-            <div v-else class="d-flex w-100">
-                <router-link class="btn-register-now white-i font-18 bold flex-all w-100 pointer ml-10" to="/courses/3/2">الدرس التالي</router-link>
-                <router-link class="btn-register-now white-i font-18 bold flex-all w-100 pointer" to="/">الدرس السابق</router-link>
+            <div v-else class="w-100">
+                <router-link class="btn-register-now white-i font-18 bold flex-all w-100 pointer mb-20 next-arrow relative" to="/courses/3/2"> التالي</router-link>
+                <router-link class="btn-register-now white-i font-18 bold flex-all w-100 pointer relative prev-arrow" to="/"> السابق</router-link>
             </div>
         </div>
     </div>
@@ -199,6 +199,31 @@
 }
 .video-js {
     height: 250px;
+}
+.next-arrow:after, .prev-arrow:after {
+    content:'';
+    background:url(/images/right-arrow-white.png) no-repeat;
+    background-size: 15px 24px;
+    background-position: center;
+    width: 15px;
+    height: 24px;
+    position: absolute;
+    right: 40px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+.prev-arrow:after {
+    right: auto;
+    left: 40px;
+    transform: rotate(180deg);
+    background:url(/images/arrow-right-color.svg) no-repeat;
+    background-size: cover;
+}
+.prev-arrow {
+    background: transparent;
+    border: 1px solid #939598;
+    color: #363636!important;
 }
 </style>
 <style>

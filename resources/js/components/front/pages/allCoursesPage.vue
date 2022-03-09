@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="all-courses-page">
         <TheHeader></TheHeader>
         <section class="learn-section pt-100">
             <CoursesSection :showMoreCard="false"></CoursesSection>

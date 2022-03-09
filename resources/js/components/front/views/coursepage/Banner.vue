@@ -4,7 +4,7 @@
             <div class="d-flex h-100">
                 <div class="d-flex align-center box h-100 relative w-70">
                     <div>
-                        <p class="yellow">دورة التدريب الرقمية</p>
+                        <p class="yellow">{{headTitle}}</p>
                         <h1 class="font-50 white bold pre-line">{{bannerTitle}}</h1>
                     </div>
                     <div class="d-flex details white font-20">
@@ -26,11 +26,19 @@ import CoboneCard from './CoboneCard.vue'
 
 export default {
     emits: ['open-share-modal'],
-    props: ['videoSrc', 'bannerTitle','videosCount','courseLength'],
+    props: ['videoSrc', 'bannerTitle','videosCount','courseLength','is-lecture'],
     components: {CoboneCard},
     methods: {
         openShareModal(){
             this.$emit('open-share-modal')
+        }
+    },
+    computed:{
+        headTitle(){
+            if (this.isLecture && this.isLecture == true)
+                return 'الدرس 1'
+            else
+                return 'دورة التدريب الرقمية'
         }
     }
 }

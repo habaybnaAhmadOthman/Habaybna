@@ -22,9 +22,11 @@ import Vue from 'vue';
 
 import AlertDialog from "./components/front/layouts/AlertDialog.vue";
 import LoginModal from "./components/front/layouts/LoginModal.vue";
+import InfoModal from "./components/front/layouts/InfoModal.vue";
 import LoadingSpinner from "./components/front/layouts/LoadingSpinner.vue";
 Vue.component('loading-spinner',LoadingSpinner)
 Vue.component('alert-dialog',AlertDialog)
+Vue.component('info-modal',InfoModal)
 export default {
   components: {LoginModal},
   computed: {
