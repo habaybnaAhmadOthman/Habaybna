@@ -25,9 +25,10 @@ class PaymentController extends Controller
         return response()->json($data);
     }
 
-    public function coursePaymentCallback(Request $request )
+    public function coursePaymentCallback(Request $request, PaymentCoures $paymentCoures )
     {
-        $this->storeData($request);
+        $data = $paymentCoures->completeOrder($request->all());
+
     }
 
     public function storeData($request)

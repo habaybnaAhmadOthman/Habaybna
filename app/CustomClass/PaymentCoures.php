@@ -16,23 +16,31 @@ class PaymentCoures {
 
         try {
 
-            // session(['SmartRouteParams' => $parameters]);
 
             $data['hasPromoCode']['id'] = '22'; // sent from zalum
-            // $initData = $this->createInitOrder($data);
+            // $data['hasPromoCode']=[];
 
 
             $back_url = url('/api/payment/course');
 
                 //Step 1: Generate Secure Hash
-                $SECRET_KEY = "NGIyNTQzOTc2ZTkxZGFhZDFlMjhjMTNk"; // Use Yours, Please Store
+            $SECRET_KEY = "NGIyNTQzOTc2ZTkxZGFhZDFlMjhjMTNk"; // Use Yours, Please Store
                         // Your Secret Key in safe Place(e.g. database)
                 // put the parameters in a array to have the parameters to have them sorted
                         //alphabetically via ksort.
+                // $transactionId = (int)microtime(true)*1000; //output to be like: 1495004320389
+
+            do{
                 $transactionId = (int)microtime(true)*1000; //output to be like: 1495004320389
+                $transIdExist = Coursespurchaseorders::where('transactionID', $transactionId)->first();
+
+            } while ($transIdExist);
+
+              $initOrder = $this->createInitOrder($data, $transactionId);
+
                 $parameters = [];
                 // fill required parameters
-                $parameters["Amount"] = "2000";
+                $parameters["Amount"] =$initOrder->amount ;
                 $parameters["Channel"] = "0";
                 $parameters["CurrencyISOCode"] = "400";
                 $parameters["Language"] = "en";
@@ -40,7 +48,7 @@ class PaymentCoures {
                 $parameters["MessageID"] = "1";
                 $parameters['PaymentDescription']='coursepayment';
                 $parameters["Quantity"] = "1";
-                $parameters['ResponseBackURL'] = 'http://localhost:8000/api/payment/course';
+                $parameters['ResponseBackURL'] = $back_url;
                 $parameters["ThemeID"] = "1000000001";
                 $parameters["TransactionID"] = $transactionId;
                 $parameters["Version"] = "1.0";
@@ -56,15 +64,13 @@ class PaymentCoures {
                 }
                 $secureHash = hash('sha256', $orderedString, false);
                 $parameters["RedirectURL"] = "https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler";
-
+                
 
                 $parameters["secureHash"] = $secureHash;
-                $initData = $this->createInitOrder($data,$parameters['TransactionID']);
 
                  session(['SmartRouteParams' => $parameters]);
                  $data = [session()->all()];
                 return $data;
-
 
         } catch (\Throwable $th) {
             throw $th;
@@ -73,24 +79,24 @@ class PaymentCoures {
 
     private function createInitOrder($data,$tranID)
     {
-
         try {
 
             $course = Courses::findorfail($data['courseID']);
-
+        } catch (\Throwable $th) {
+            throw $th;
+        }
             // store initial order data
             $initData = new Coursespurchaseorders () ;
 
             $initData->user_id = Auth::id();
-            $initData->course_id = $data['courseID'];
+            $initData->course_id = $course->id;
             $initData->status = false;  // not complete change to true when payment complete success
             $initData->price = $course->price ;
             $initData->transactionID = $tranID ;
             $initData->save();
 
                 // check hasPromoCode
-            if($data['hasPromoCode'] !== ""){
-
+            if(array_key_exists('id',$data['hasPromoCode'])){
                 $promoCode = PromoCode::findorfail($data['hasPromoCode']['id']);
                 $disscountAmount = $course->price * $promoCode->discount_percentage/100 ;
                 $newPrice = $course->price - $disscountAmount ;
@@ -98,20 +104,32 @@ class PaymentCoures {
                 $initData->coupon_id = $promoCode->id;
                 $initData->discount_amount = $disscountAmount;
                 $initData->new_price = $newPrice;
-                $initData->amount = $newPrice;
+                $initData->amount = $newPrice * 1000;
 
                 $initData->save();
             }
             else {
-                $initData->amount = $course->price;
+                $initData->amount = $course->price * 1000;
 
                 $initData->save();
             }
             return $initData;
-        } catch (\Throwable $th) {
-            // throw $th->getMessage();
-        }
+
     }
+    public function completeOrder($data)
+    {
+        dd($data);
+        try {
+
+            $course = Courses::findorfail($data['courseID']);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+            // complete order
+
+
+    }
+
 
 
 
