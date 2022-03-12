@@ -1,7 +1,7 @@
 <template>
     <div class="video-page">
         <TheHeader></TheHeader>
-        <Banner :videoSrc="trailerSrc"></Banner>
+        <Banner :videoSrc="trailerSrc" :is-lecture="true"></Banner>
         <div class="container">
             <CourseInfoText :header="'لمحة عن الدرس'" :description="'في هذا الفيديو يتحدث المختص في العلاج الوظيفي عمر عن '"></CourseInfoText>
             <ContentTable class="pt-20"></ContentTable>
@@ -10,6 +10,12 @@
         <div class="page-footer">
             <TheFooter></TheFooter>
         </div>
+        <!-- <info-modal
+          :show="!!infoModalMsg"
+          :title="infoModalMsg"
+          @close="closeInfoModalMsg"
+        >
+        </info-modal> -->
     </div>
 </template>
 
@@ -33,6 +39,7 @@ export default {
             lectureInfo: '',
             documents: [],
             lectures: [],
+            infoModalMsg: 'null'
         }
     },
     created(){
@@ -53,6 +60,9 @@ export default {
                 console.log(e);
             }
         },
+        closeInfoModalMsg(){
+            this.infoModalMsg = null
+        }
     }
 };
 </script>

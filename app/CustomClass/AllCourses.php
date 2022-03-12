@@ -29,7 +29,7 @@ class AllCourses {
                             'cover_photo'=>$one->cover_photo,
                             'is_free'=>$one->is_free,
                             'price'=>$one->price,
-                            'promo_video'=>$one->promo_video,
+                            'promo_video'=>$one->url,
                             'discount'=>[
                             'has_discount'=>true,
                             'discount_value'=>"50%",

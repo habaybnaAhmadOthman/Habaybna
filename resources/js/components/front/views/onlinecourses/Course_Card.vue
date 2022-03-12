@@ -30,7 +30,8 @@
                 </div>
             </figure>
 
-            <div class="p-side-20 pb-20 pt-20">
+            <div class="p-side-20 pb-10 pt-10">
+                <p class="yellow font-18 bold mb-10">الدورة التدريبية</p>
                 <p class="font-20 black-2 mb-15 bold two-line course-title">{{ course.title }}</p>
                 <div class="d-flex space-between">
                     <div class="d-flex align-center">

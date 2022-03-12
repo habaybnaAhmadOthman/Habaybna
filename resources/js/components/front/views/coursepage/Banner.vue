@@ -4,29 +4,42 @@
             <div class="d-flex h-100">
                 <div class="d-flex align-center box h-100 relative w-70">
                     <div>
-                        <p class="yellow">دورة التدريب الرقمية</p>
+                        <p class="yellow">{{headTitle}}</p>
                         <h1 class="font-50 white bold pre-line">{{bannerTitle}}</h1>
                     </div>
                     <div class="d-flex details white font-20">
                         <p class="d-flex align-center ml-20"><img class="ml-10" src="/images/time-icon.svg" width="31" height="31" alt="">{{courseLength}} ساعة</p>
                         <p class="d-flex align-center ml-20"><img class="ml-10" src="/images/video-svgrepo.svg" width="39" height="34" alt="">{{videosCount}} دروس</p>
-                        <p class="d-flex align-center"><img class="ml-10" src="/images/share-icon.svg" width="34" height="36" alt="">مشاركة</p>
+                        <p class="d-flex align-center pointer" @click="openShareModal"><img class="ml-10" src="/images/share-icon.svg" width="34" height="36" alt="">مشاركة</p>
+                        
                     </div>
                 </div>
                 
-                <CoboneCard v-if="videoSrc" :videoSrc="videoSrc"></CoboneCard>
+                <!-- <CoboneCard v-if="videoSrc" :videoSrc="videoSrc"></CoboneCard> -->
+                <CoboneCard  :videoSrc="videoSrc"></CoboneCard>
             </div>
         </div>
     </div>
 </template>
 <script>
 import CoboneCard from './CoboneCard.vue'
+
 export default {
-    props: ['videoSrc', 'bannerTitle','videosCount','courseLength'],
+    emits: ['open-share-modal'],
+    props: ['videoSrc', 'bannerTitle','videosCount','courseLength','is-lecture'],
     components: {CoboneCard},
     methods: {
-        
-        
+        openShareModal(){
+            this.$emit('open-share-modal')
+        }
+    },
+    computed:{
+        headTitle(){
+            if (this.isLecture && this.isLecture == true)
+                return 'الدرس 1'
+            else
+                return 'دورة التدريب الرقمية'
+        }
     }
 }
 </script>

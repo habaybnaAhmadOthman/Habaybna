@@ -111,9 +111,9 @@ export default {
                     type: this.type,
                     code: otpCode,
                     phone: this.phoneNumber,
-                    token: document
-                        .querySelector('meta[name="csrf-token"]')
-                        .getAttribute("content")
+                    // token: document
+                    //     .querySelector('meta[name="csrf-token"]')
+                    //     .getAttribute("content")
                 });
                 this.$router.replace(`/${this.type}-complete-registration`);
             } catch (e) {

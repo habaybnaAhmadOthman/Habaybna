@@ -2,39 +2,31 @@
 <template>
     <div class="p-side-0-p courses-filter" v-if="filters.length > 0">
         <div class="relative mb-35">
-            <swiper
-                :slidesPerView="'auto'"
-                :space-between="30"
-                :loop="false"
-                class="pb-10"
-                :navigation="{ nextEl:'.categories-filter-prev', prevEl: '.categories-filter-next'}"
-            >
-                <swiper-slide v-for="(category, index) of filters" :key="index">
-                    <li class="">
-                        <input
-                            @change="setFilter"
-                            type="checkbox"
-                            :id="category.id"
-                            :value="category.val"
-                        /><label class="center gray radius-60 font-18" :for="category.id">{{category.val}}</label>
-                    </li>
-                </swiper-slide>
-            </swiper>
-            <div class="swiper-button-next categories-filter-next"></div>
-            <div class="swiper-button-prev categories-filter-prev"></div>
+            <div class="courses-categories-swiper my-swiper" dir="rtl">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div v-for="(category, index) of filters" :key="index" :index="index" class="swiper-slide">
+                        <li class="">
+                            <input
+                                @change="setFilter"
+                                type="checkbox"
+                                :id="category.id"
+                                :value="category.val"
+                            /><label class="center gray radius-60 font-18" :for="category.id">{{category.val}}</label>
+                        </li>
+                    </div>
+                </div>
+                <div class="swiper-button-next categories-filter-next"></div>
+                <div class="swiper-button-prev categories-filter-prev"></div>
+            </div>
         </div>
     </div>
 </template>
 <script>
-import { Navigation, Pagination } from 'swiper'
-
-import { SwiperCore, Swiper, SwiperSlide } from 'swiper-vue2'
-// Import Swiper styles
 import 'swiper/swiper-bundle.css'
-SwiperCore.use([Navigation, Pagination])
 export default {
   emits: ['change-filter'],
-  components: {Swiper,SwiperSlide},
   data(){
     return {
       filters: []
@@ -52,13 +44,16 @@ export default {
                 // this.filters[category.id] = {id:category.id,val: category.title}
                 temp.push({id:category.id,val: category.title,isChecked: false})
             });
-            this.filters = temp
+            this.filters = temp;
+            setTimeout(()=>{
+                this.initSwiper();
+            },1000)
         }
     },
     setFilter(e) {
     //   const inputID = e.target.id;
       const isActive = e.target.checked;
-      const index = +e.target.parentNode.getAttribute('index');
+      const index = +e.target.parentNode.parentNode.getAttribute('index');
       this.filters[index].isChecked = isActive;
     //   const updateFilters = {
     //     ...this.filters,
@@ -66,6 +61,16 @@ export default {
     //   }
     //   this.filters = updateFilters;
       this.$emit('change-filter',this.filters)
+    },
+    initSwiper(){
+        var swiper2 = new Swiper(".courses-categories-swiper", {
+            navigation: {
+                nextEl: ".categories-filter-next",
+                prevEl: ".categories-filter-prev",
+            },
+            slidesPerView: 'auto',
+            spaceBetween: 12,
+        });
     }
   }
 }
@@ -104,9 +109,7 @@ li input[type="checkbox"] {
     position: absolute;
     opacity: 0;
 }
-li {
-    width: 100px;
-}
+
 @media (max-width: 767px) {
     li label[data-v-3023a41f] {
         padding: 4px 14px;

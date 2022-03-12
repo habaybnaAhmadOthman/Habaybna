@@ -1,7 +1,7 @@
 <template>
     <div class="course-page">
         <TheHeader></TheHeader>
-        <Banner :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"></Banner>
+        <Banner @open-share-modal="showShareDialog" :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"></Banner>
         <div class="container page-info">
             <CourseInfo :course-name="courseName" :description="courseDescription" :whatShouldLearn="whatShouldLearn"></CourseInfo>
             
@@ -9,13 +9,23 @@
 
             <AboutSpecialists v-if="specialists" :specialists="specialists"></AboutSpecialists>
             <div class="mt-60">
-                <RelatedCourses></RelatedCourses>
+                <RelatedCourses v-if="isDataReady"></RelatedCourses>
             </div>
         </div>
         <div class="mt-30">
             <CombaniesBanner></CombaniesBanner>
         </div>
         <CoursesFeatures></CoursesFeatures>
+
+        <ShareCourseModal
+            :show="showShareModal"
+            @close-share-modal="showShareDialog"
+            :courseName="courseName"
+            :description="courseDescription"
+            :hashTags="'hashTags'"
+            :quote="'quote'"
+            :twitterUser="'twitterUser'"
+        ></ShareCourseModal>
 
         <TheFooter></TheFooter>
         
@@ -29,14 +39,15 @@ import AboutSpecialists from "../../views/coursepage/AboutSpecialists.vue";
 import ContentTable from "../../views/coursepage/ContentTable.vue";
 import RelatedCourses from "../../views/coursepage/RelatedCourses.vue";
 import CoursesFeatures from '../../views/onlinecourses/CoursesFeatures.vue'
-
+import ShareCourseModal from '../../views/coursepage/ShareCourseModal.vue'
 
 import CombaniesBanner from '../../layouts/CompaniesBanner.vue'
 import TheFooter from '../../layouts/TheFooter.vue'
 import TheHeader from '../../layouts/header/TheHeader.vue'
 export default {
     components: { 
-        CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter,TheHeader
+        CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter,TheHeader,
+        ShareCourseModal
     },
     props: ['course'],
     data() {
@@ -45,11 +56,14 @@ export default {
             courseName: '',
             specialists: '',
             courseDescription: '',
+            coverPhoto: '',
             whatShouldLearn: '',
             courseLength: null,
             videosCount: null,
             videosList: null,
-            lectures: []
+            lectures: [],
+            showShareModal: false,
+            isDataReady: false,
         }
     },
     created(){
@@ -63,9 +77,13 @@ export default {
                     await this.$store.dispatch('courses/getAllCourses');
                     data = await this.$store.dispatch('courses/getCourseDetails',this.course);
                 }
+                // show related courses section
+                this.isDataReady = true;
+                
                 this.$store.commit('courses/setCourse',data);
                 
                 this.trailerSrc = data.promo_video;
+                this.coverPhoto = data.cover_photo;
                 this.courseName = data.title;
                 this.courseLength = +data.course_length.split(':')[0]
                 this.specialists  = data.providers;
@@ -73,11 +91,29 @@ export default {
                 this.whatShouldLearn  = data.what_should_learn;
                 this.videosList  = data.videos_title_length;
                 this.videosCount  = data.videos_count;
+                
             } catch (e){
                 console.log(e);
             }
         },
-    }
+        showShareDialog() {
+            this.showShareModal = !this.showShareModal;
+        },
+    },
+    metaInfo() {
+        return {
+            title: `${this.courseName}`,
+            meta: [
+                // { name: 'description', content: 'Connect and follow ' + this.userData.name + ' on Epiloge - ' + this.userData.tagline},
+                // { property: 'og:title', content: this.userData.name + ' - Epiloge'},
+                // { property: 'og:site_name', content: 'Epiloge'},
+                // { property: 'og:description', content: 'Connect and follow ' + this.userData.name + ' on Epiloge - ' + this.userData.tagline},
+                // {property: 'og:type', content: 'profile'},
+                // {property: 'og:url', content: 'https://epiloge.com/@' + this.userData.username},
+                {property: 'og:image', content: this.coverPhoto }
+            ]
+        }
+    },
 };
 </script>
 <style scoped>
