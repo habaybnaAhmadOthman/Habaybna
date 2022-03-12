@@ -37,7 +37,7 @@
           @close="closeInfoModal"
           :description="infoModal.description"
           :success="infoModal.status"
-          :fixed="true"
+          :fixed="false"
         >
         <router-link to="/" class="btn">مشاهدة</router-link>
         </info-modal>
