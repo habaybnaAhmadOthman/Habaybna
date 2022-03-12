@@ -1,7 +1,7 @@
 <template>
     <div class="course-card w-30 radius-10 overflow-hidden bg-white relative">
         <figure class="d-flex relative overflow-hidden radius-10 figure-box">
-            <div class="fav-box relative pointer"></div>
+            <div v-if="isCourse" class="fav-box relative pointer"></div>
             <video ref="videoPlayer" class="video-js main-img w-100"></video>
         </figure>
         <div class="d-flex box-details flex-wrap">
@@ -30,6 +30,7 @@
 
     import PaymentForm from './PaymentForm.vue'
     export default {
+        emits: ['paid-course'],
         props: ['videoSrc'],
         components: {PaymentForm},
         computed: {
@@ -43,6 +44,9 @@
         data() {
             return {
                 paymentFormData:null,
+                hasPromoCode: {
+                    id: ''
+                },
                 showPaymentForm: false,
                 player: null,
                 videoOptions: {
@@ -75,7 +79,10 @@
             async buyCourse(){
                 this.isLoading(true)
                 try {
-                    const resp = await this.$store.dispatch('courses/buyCourse',{courseID:this.getCourseID()});
+                    const resp = await this.$store.dispatch('courses/buyCourse',{
+                        courseID:this.getCourseID(),
+                        hasPromoCode:this.hasPromoCode
+                    });
                     this.paymentFormData = resp.SmartRouteParams
 
                 } catch (error) {
@@ -95,16 +102,28 @@
                 let checkPromoCode
                 this.isLoading(true)
                 try {
-                    checkPromoCode = await this.$store.dispatch('courses/promoCode',{courseID:this.getCourseID(),promoCode:this.promoCode, usage:'Course'});
+                    checkPromoCode = await this.$store.dispatch('courses/promoCode',{
+                        courseID:this.getCourseID(),
+                        promoCode:this.promoCode,
+                        usage:'Course'
+                    });
+                    if (checkPromoCode.isValid) {
+                        this.hasPromoCode.id = checkPromoCode.id
+                    }
                 } catch (error) {
                     console.log(error)
                 }
                 this.isLoading(false)
-                var dialogMsg = 'success!'
+                var dialogMsg = 'success'
                 if (!checkPromoCode) {
                     dialogMsg = 'We are sorry!'
                 }
-                this.$store.commit('alertDialogMsg',dialogMsg)
+                
+                if (checkPromoCode.discount_perc == 100) {
+                    this.$emit('paid-course')
+                } else {
+                    this.$store.commit('alertDialogMsg',dialogMsg)
+                }
             },
             getCourseID(){
                 return this.$store.getters["courses/course"].id
@@ -182,7 +201,7 @@
     background-size: 22px 21px;
     background-position: center;
     transition: .3s;
-    z-index: 1;
+    z-index: 10;
 }
 .fav-box.active {
     background-image: url(/images/heart-icon-fill.svg);

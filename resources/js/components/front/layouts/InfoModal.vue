@@ -8,7 +8,13 @@
                 open
             >
                 <div class="modal-body">
-                    <img src="/images/success-icon.png" />
+                    <img v-if="!fixed" @click="tryClose" class="close-icon-modal pointer" src="/images/close-icon-color.png" width="34" height="34" />
+                    <img class="mb-40" :src="`/images/${statusIcon}.png`" width="100" height="100" />
+                    <p class="title-line font-27 mb-20">{{title}}</p>
+                    <p class="black-2 font-27 mb-40">{{description}}</p>
+                    <div class="d-flex modal-options flex-end">
+                        <slot></slot>
+                    </div>
                 </div>
             </dialog>
             <!-- <dialog
@@ -47,15 +53,40 @@ export default {
             type: String,
             required: false
         },
+        description: {
+            type: String,
+            required: false
+        },
+        success: {
+            type: Boolean,
+            required: false
+        },
         modalClass: {
             type: String,
             required: false
+        },
+        fixed: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
     emits: ["close"],
     methods: {
         tryClose() {
+            if (!this.fixed)
+                this.forceClose()
+        },
+        forceClose() {
             this.$emit("close");
+        }
+    },
+    computed: {
+        statusIcon() {
+            if (!this.success) {
+                return 'error-icon'
+            }
+            return 'success-icon'
         }
     }
 };
@@ -71,14 +102,16 @@ export default {
 }
 dialog {
     position: fixed;
-    top: 20vh;
+    top: 10vh;
     left: 10%;
     z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     right: 0;
     left: 0;
     margin: auto;
-    width:500px;
+    width:800px;
+    box-shadow: 0px 0px 10px #0000001A;
+    border-radius: 20px;
+    padding: 60px 80px;
 }
 
 .modal-enter-active {
@@ -91,6 +124,18 @@ dialog {
 .body {
     max-height: 450px;
     overflow-y: auto;
+}
+.close-icon-modal {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+}
+.btn {
+    width: 340px;
+    font-size: 18px;
+    font-weight: bold;
+    height: 60px;
+    border-radius: 25px;
 }
 @keyframes modal {
     from {

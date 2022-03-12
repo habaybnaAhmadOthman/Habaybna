@@ -8,5 +8,8 @@ export default {
     setCourse(state,courseData) {
         state.course = courseData
     },
+    infoModal(state,isShow) {
+        state.infoModal.show = isShow;
+    },
     
 };

@@ -170,8 +170,12 @@ body {
 .space-between {
     justify-content: space-between;
 }
+
 .shadow {
     box-shadow: 0px 3px 6px #00000029;
+}
+.shadow-2 {
+    box-shadow: 0px 0px 10px #0000001A;
 }
 .flex-1 {
     flex: 1;
@@ -508,6 +512,9 @@ body {
 .pb-30 {
     padding-bottom: 30px;
 }
+.pb-40 {
+    padding-bottom: 40px;
+}
 .pb-55 {
     padding-bottom: 55px;
 }
@@ -637,6 +644,14 @@ input[disabled] {
 .bg-gray-2 {
     background: #f8f8f8;
 }
+.bg-soft {
+    background: #FAFAFA;
+}
+.card-1 {
+    background: #FAFAFA;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px #0000001A;
+}
 .bg-none {
     background: none;
 }
@@ -648,6 +663,9 @@ input[disabled] {
 }
 .radius-12 {
     border-radius: 12px;
+}
+.radius-20 {
+    border-radius: 20px;
 }
 .radius-60 {
     border-radius: 60px;
@@ -706,7 +724,7 @@ a:hover {
     color: #780d93;
 }
 .btn,
-.btn-2 {
+.btn-2{
     background: #780d93;
     padding: 13px 35px;
     border-radius: 12px;
@@ -725,7 +743,20 @@ a:hover {
     cursor: pointer;
     background: transparent;
 }
-.btn:hover{
+.btn-main {
+    background: #780d93;
+    width: 340px;
+    height: 60px;
+    border-radius: 25px;
+    color: #fff;
+    transition: 0.3s;
+    border: 1px solid #780d93;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn:hover, .btn-main:hover{
     color: #780d93;
     background: #fff;
 }
