@@ -13,7 +13,13 @@
             :show="!!error"
             :title="error"
             @close="closeModal"
-        ></alert-dialog>
+        >
+        <template v-if="isBanned" #actions>
+            <router-link to="/contact-us" class="btn mb-10 ml-10">
+                اضغط هنا للمتابعة
+            </router-link>
+        </template>
+        </alert-dialog>
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
         </div>
@@ -34,13 +40,15 @@ export default {
     data() {
         return {
             type: "",
-            code: ""
+            code: "",
+            isBanned: false,
         };
     },
 
     methods: {
         async login(data) {
             this.isLoading = true;
+            this.isBanned = false
             try {
                 await this.$store.dispatch("user/login", {
                     password: data.password,
@@ -55,6 +63,9 @@ export default {
                     this.$router.replace("/");
                 }
             } catch (e) {
+                if (e.message == 'تم إيقاف حسابك') { 
+                    this.isBanned = true
+                }
                 this.showPopupMessage(e.message);
             }
             this.isLoading = false;

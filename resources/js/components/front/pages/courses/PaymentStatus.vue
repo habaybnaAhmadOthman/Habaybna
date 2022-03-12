@@ -29,10 +29,15 @@ export default {
 
     methods: {
         checkStatus(){
+            this.isLoading(true)
             axios({method:'GET', url:'/api/get-payment-status'})
             .then(res=>{
-                console.log(res);
+                this.$router.replace(`/courses/${res.data.course_id}?payment=true`);
+                this.isLoading(false)
             })
+        },
+        isLoading(status) {
+            this.$store.commit('isLoading',status)
         }
     }
 };

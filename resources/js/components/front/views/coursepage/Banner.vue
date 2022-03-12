@@ -10,13 +10,12 @@
                     <div class="d-flex details white font-20">
                         <p class="d-flex align-center ml-20"><img class="ml-10" src="/images/time-icon.svg" width="31" height="31" alt="">{{courseLength}} ساعة</p>
                         <p class="d-flex align-center ml-20"><img class="ml-10" src="/images/video-svgrepo.svg" width="39" height="34" alt="">{{videosCount}} دروس</p>
-                        <p class="d-flex align-center pointer" @click="openShareModal"><img class="ml-10" src="/images/share-icon.svg" width="34" height="36" alt="">مشاركة</p>
-                        
+                        <p class="d-flex align-center pointer" v-if="!isLectureFn" @click="openShareModal"><img class="ml-10" src="/images/share-icon.svg" width="34" height="36" alt="">مشاركة</p>
                     </div>
                 </div>
                 
                 <!-- <CoboneCard v-if="videoSrc" :videoSrc="videoSrc"></CoboneCard> -->
-                <CoboneCard  :videoSrc="videoSrc"></CoboneCard>
+                <CoboneCard  :videoSrc="videoSrc" @paid-course="userBoughtCourse"></CoboneCard>
             </div>
         </div>
     </div>
@@ -25,20 +24,31 @@
 import CoboneCard from './CoboneCard.vue'
 
 export default {
-    emits: ['open-share-modal'],
+    emits: ['open-share-modal','user-bought-course'],
     props: ['videoSrc', 'bannerTitle','videosCount','courseLength','is-lecture'],
     components: {CoboneCard},
     methods: {
         openShareModal(){
             this.$emit('open-share-modal')
+        },
+        // from cobone card , #fired when the user entered a cobone for free course
+        userBoughtCourse(){
+            this.$emit('user-bought-course')
         }
     },
-    computed:{
+    computed: {
+        // get yellowed header 
         headTitle(){
-            if (this.isLecture && this.isLecture == true)
+            if (this.isLectureFn)
                 return 'الدرس 1'
             else
                 return 'دورة التدريب الرقمية'
+        },
+        isLectureFn(){
+            if (this.isLecture && this.isLecture == true)
+                return true
+
+            return false;
         }
     }
 }
@@ -58,27 +68,6 @@ export default {
     bottom: 42px;
     left: 60px;
 }
-
-
-
-
-
-
-/* .banner {
-    height:415px;
-}
-.banner:after  {
-    content: '';
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    position: absolute;
-    opacity: 0.98;
-    pointer-events: none;
-    background: rgb(0 0 0 / 20%);
-    pointer-events: none;
-} */
 .vjs_video_3-dimensions {
     height: 100%;
 }

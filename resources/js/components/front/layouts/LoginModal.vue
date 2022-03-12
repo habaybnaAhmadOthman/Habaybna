@@ -128,7 +128,13 @@
             :show="!!error"
             :title="error"
             @close="closeModal"
-        ></alert-dialog>
+        >
+        <template v-if="isBanned" #actions>
+            <router-link to="/contact-us" class="btn mb-10 ml-10">
+                اضغط هنا للمتابعة
+            </router-link>
+        </template>
+        </alert-dialog>
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
         </div>
@@ -157,7 +163,8 @@ export default {
             isValid: true
         },
         viaPhone: true,
-        formIsValid: true
+        formIsValid: true,
+        isBanned: false
     }),
     methods: {
         changeLoginMethod() {
@@ -205,6 +212,7 @@ export default {
             }
 
             this.isLoading = true;
+            this.isBanned = false
             try {
                 await this.$store.dispatch("user/loginModal", {
                     phone: phone,
@@ -218,6 +226,9 @@ export default {
                     this.$store.commit("forceRefresh");
                 }
             } catch (e) {
+                if (e.message == 'تم إيقاف حسابك') { 
+                    this.isBanned = true
+                }
                 this.showPopupMessage(e.message);
             }
             this.isLoading = false;
