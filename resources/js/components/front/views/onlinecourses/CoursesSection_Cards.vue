@@ -46,9 +46,9 @@ export default {
     position: absolute;
     pointer-events: none;
 }
-.course-box.more a {
+/* .course-box.more a {
     display: flex;
     align-items: end;
     padding:32px;
-}
+} */
 </style>

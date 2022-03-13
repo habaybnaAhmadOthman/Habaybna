@@ -25,7 +25,7 @@
             :show="showShareModal"
             @close-share-modal="showShareDialog"
             :courseName="courseName"
-            :description="courseDescription"
+            :description="courseDescription | stripHTML"
             :hashTags="'hashTags'"
             :quote="'quote'"
             :twitterUser="'twitterUser'"
@@ -39,7 +39,7 @@
           :success="infoModal.status"
           :fixed="infoModal.isFixed"
         >
-        <button @click="goToClassRoom" class="btn">مشاهدة</button>
+        <button v-if="infoModal.isFixed" @click="goToClassRoom" class="btn">مشاهدة</button>
         </info-modal>
 
         <TheFooter></TheFooter>

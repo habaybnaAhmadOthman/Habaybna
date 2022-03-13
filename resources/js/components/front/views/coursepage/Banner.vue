@@ -25,7 +25,7 @@ import CoboneCard from './CoboneCard.vue'
 
 export default {
     emits: ['open-share-modal','user-bought-course'],
-    props: ['videoSrc', 'bannerTitle','videosCount','courseLength','is-lecture'],
+    props: ['videoSrc', 'bannerTitle','videosCount','courseLength','is-lecture','test'],
     components: {CoboneCard},
     methods: {
         openShareModal(){
