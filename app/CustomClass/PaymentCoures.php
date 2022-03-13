@@ -14,31 +14,19 @@ class PaymentCoures {
 
     public function execute(array $data)
     {
-
         try {
-
-
-            // $data['hasPromoCode']['id'] = '22'; // sent from zalum
-            // $data['hasPromoCode']=[];
-
-
             $back_url = url('/api/payment/course');
-
                 //Step 1: Generate Secure Hash
             $SECRET_KEY = "NGIyNTQzOTc2ZTkxZGFhZDFlMjhjMTNk"; // Use Yours, Please Store
                         // Your Secret Key in safe Place(e.g. database)
                 // put the parameters in a array to have the parameters to have them sorted
                         //alphabetically via ksort.
-                // $transactionId = (int)microtime(true)*1000; //output to be like: 1495004320389
-
             do{
                 $transactionId = (int)microtime(true)*1000; //output to be like: 1495004320389
                 $transIdExist = Coursespurchaseorders::where('transactionID', $transactionId)->first();
-
             } while ($transIdExist);
 
               $initOrder = $this->createInitOrder($data, $transactionId);
-
                 $parameters = [];
                 // fill required parameters
                 $parameters["Amount"] =$initOrder->amount * 1000 ;
@@ -54,21 +42,16 @@ class PaymentCoures {
                 $parameters["TransactionID"] = $transactionId;
                 $parameters["Version"] = "1.0";
                 //fill some optional parameters
-
                 //Create an Ordered String of The Parameters Map with Secret Key
                 // echo $transactionId;
                 ksort($parameters);
-
                 $orderedString = $SECRET_KEY;
                 foreach($parameters as  $k=>$param){
                 $orderedString .= $param;
                 }
                 $secureHash = hash('sha256', $orderedString, false);
                 $parameters["RedirectURL"] = "https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler";
-
-
                 $parameters["secureHash"] = $secureHash;
-
                  session(['SmartRouteParams' => $parameters]);
                  $data = [session()->all()];
                 return $data;
@@ -95,13 +78,11 @@ class PaymentCoures {
             $initData->price = $course->price ;
             $initData->transactionID = $tranID ;
             $initData->save();
-
                 // check hasPromoCode
             if(array_key_exists('id',$data['hasPromoCode']) && isset($data['hasPromoCode']['id']) ){
                 $promoCode = PromoCode::findorfail($data['hasPromoCode']['id']);
                 $disscountAmount = $course->price * $promoCode->discount_percentage/100 ;
                 $newPrice = $course->price - $disscountAmount ;
-
                 $initData->coupon_id = $promoCode->id;
                 $initData->discount_amount = $disscountAmount;
                 $initData->new_price = $newPrice;
@@ -115,11 +96,10 @@ class PaymentCoures {
                 $initData->save();
             }
             return $initData;
-
     }
+
     public function completeOrder($data)
     {
-        // dd($data);
         try {
             $order = Coursespurchaseorders::where('transactionID',$data['Response_TransactionID'] )->first();
             $user = User::findorfail($order->user_id);
@@ -149,8 +129,6 @@ class PaymentCoures {
         // dd('accepted');
         //}
 
-
-
         $order->status = $data['Response_StatusCode'] == "00000" ? true : false;
         $order->status_description = $data['Response_StatusDescription'];
         $order->card_holder_name = $data['Response_CardHolderName'];
@@ -162,15 +140,12 @@ class PaymentCoures {
         $order->approval_code = $data['Response_ApprovalCode'];
 
         $order->save();
-        // dd($order->all());
 
         if(!$order->status){
             return redirect()->to('payment-success')->send();
         }
-
-        // complete promo code process
-        $coupon = PromoCode::findorfail($order->coupon_id);
         if(isset($order->coupon_id) && $order->coupon_id !==""){
+            $coupon = PromoCode::findorfail($order->coupon_id);
             $coupon->increment('usage_count');
             $coupon->save();
         }
