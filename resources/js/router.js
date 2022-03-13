@@ -40,6 +40,7 @@ import CoursePage from "./components/front/pages/courses/CoursePage.vue";
 import ClassRoomPage from "./components/front/pages/courses/ClassRoom.vue";
 import Cirtificate from "./components/front/views/coursepage/Certificate.vue";
 import PaymentStatus from "./components/front/pages/courses/PaymentStatus.vue";
+import ExamPage from "./components/front/pages/courses/ExamPage.vue";
 
 
 
@@ -275,13 +276,22 @@ const routes = [{
         props: true
     },
     {
-        path: "/courses/:course/:lesson",
-        component: ClassRoomPage,
+        path: "/courses/:course/exam",
+        component: ExamPage,
         meta: {
-            // requiresAuth: true
+            requiresAuth: true
         },
         props: true
     },
+    {
+        path: "/courses/:course/:lesson",
+        component: ClassRoomPage,
+        meta: {
+            requiresAuth: true
+        },
+        props: true
+    },
+
     {
         path: "/payment-success",
         component: PaymentStatus,
@@ -318,7 +328,6 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    console.log('to: ',to, 'from: ',from);
     // if page require auth
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (store.getters['user/isLoggedIn']) {

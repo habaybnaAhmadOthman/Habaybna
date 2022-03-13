@@ -8,7 +8,10 @@ export default {
             categories: [],
             courses: [],
             // courseID: null,
-            course: null
+            course: null,
+            infoModal: {
+                show: false,
+            }
         };
     },
     mutations,

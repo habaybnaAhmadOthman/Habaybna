@@ -41,10 +41,11 @@ export default {
     },
     // ******** login :::
     async login(context, payload) {
+        console.log('xxxxxxxx');
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "login", payload);
         if (resp && resp.data && resp.data.status && resp.data.status == 403) {
-            const error = new Error("لقد تم إلغاء تفعيلك، يرجى مراجعة إدارة الموقع");
+            const error = new Error("تم إيقاف حسابك");
             throw error;
         }
         if (!resp || resp.status != 200) {
@@ -64,7 +65,7 @@ export default {
         // await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "/login", payload);
         if (resp && resp.data && resp.data.status && resp.data.status == 403) {
-            const error = new Error("لقد تم إلغاء تفعيلك، يرجى مراجعة إدارة الموقع");
+            const error = new Error("تم إيقاف حسابك");
             throw error;
         }
         if (!resp || resp.status != 200) {

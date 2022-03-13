@@ -10,12 +10,7 @@
         <div class="page-footer">
             <TheFooter></TheFooter>
         </div>
-        <!-- <info-modal
-          :show="!!infoModalMsg"
-          :title="infoModalMsg"
-          @close="closeInfoModalMsg"
-        >
-        </info-modal> -->
+        
     </div>
 </template>
 
@@ -39,7 +34,7 @@ export default {
             lectureInfo: '',
             documents: [],
             lectures: [],
-            infoModalMsg: 'null'
+            
         }
     },
     created(){
@@ -60,9 +55,7 @@ export default {
                 console.log(e);
             }
         },
-        closeInfoModalMsg(){
-            this.infoModalMsg = null
-        }
+        
     }
 };
 </script>
@@ -70,4 +63,5 @@ export default {
 .page-footer {
     margin-top: 120px;
 }
+
 </style>
