@@ -367,6 +367,5 @@ export default {
 .question-form span {
   display: block !important ;
 }
-.virtical {
-}
+
 </style>
