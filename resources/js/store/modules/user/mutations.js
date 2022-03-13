@@ -10,6 +10,8 @@ export default {
             state.avatar = payload.avatar;
         if (payload.token)
             state.token = payload.token;
+        if (!state.avatar || state.avatar == 'default.jpg')
+            state.avatar = '/images/avatars/default.svg'
         state.loggedIn = true;
         state.is_verify = true;
     },

@@ -17,7 +17,7 @@
 
 <script>
     export default {
-        emits: ['submitQuestion'],
+        emits: ['submitQuestion','wrongAnswerDialog'],
         props: ['question'],
         data(){
             return {
@@ -26,6 +26,11 @@
         },
         methods: {
             submitQuestion() {
+                if (!!this.answer && this.answer != this.question.correctAnswer) {
+                    this.$emit('wrongAnswerDialog')
+                    return 
+                }
+
                 if (this.answer) {
                     this.$emit('submitQuestion',this.answer)
                     this.answer = null

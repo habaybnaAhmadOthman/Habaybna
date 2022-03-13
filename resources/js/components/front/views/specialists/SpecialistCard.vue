@@ -1,7 +1,7 @@
 <template>
     <div class="specialist-card bg-white shadow pt-20 pb-30 radius-10" :class="{'active':!showMore}">
         <figure class="d-flex center" v-if="specialist.avatar">
-            <img :src="specialist.avatar" class="m-side-auto object-fit overflow-hidden rounded" width="170" height="170" alt="">
+            <img :src="specialist.avatar | defaultAvatar" class="m-side-auto object-fit overflow-hidden rounded" width="170" height="170" alt="">
         </figure>
         <div class="details">
             <p class="black-2 mt-20 font-22 bold mb-15 center">{{specialist.firstName}}</p>
@@ -23,6 +23,12 @@
         methods: {
             showMoreFn(){
                 this.showMore = !this.showMore
+            }
+        },
+        filters: {
+            defaultAvatar: function (avatar) {
+                if (avatar == 'default.jpg') return '/images/avatars/default.svg'
+                return avatar
             }
         }
     }

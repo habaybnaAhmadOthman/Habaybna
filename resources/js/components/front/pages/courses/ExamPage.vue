@@ -8,7 +8,7 @@
                     <StatusBar :questionsCount="questionsCount" :currentQuestion="currentQuestion"></StatusBar>
                 </div>
                 <div class="questions-box">
-                    <ExamQuestion @submitQuestion="submitQuestion" :question="questions[currentQuestion]"></ExamQuestion>
+                    <ExamQuestion @wrongAnswerDialog="wrongAnswerDialog" @submitQuestion="submitQuestion" :question="questions[currentQuestion]"></ExamQuestion>
                 </div>
             </div>  
         </div>
@@ -22,9 +22,9 @@
           @close="closeInfoModal"
           :description="infoModal.description"
           :success="infoModal.status"
-          :fixed="true"
+          :fixed="infoModal.isFixed"
         >
-        <router-link to="/certificate" class="btn-main bold font-18">إصدار الشهادة</router-link>
+        <router-link v-if="infoModal.status" to="/certificate" class="btn-main bold font-18">إصدار الشهادة</router-link>
         </info-modal>
     </div>
 </template>
@@ -47,10 +47,7 @@ export default {
                 this.currentQuestion += 1;
             } else {
                 // api call to get user result
-                this.infoModal.title = 'لقد اجتزت الامتحان بنجاح';
-                this.infoModal.description = 'يمكنك إصدار الشهادة الآن';
-
-                this.infoModal.show = true
+                this.correctAnswerDialog()
             }
         },
         shuffle(arr) {
@@ -59,7 +56,13 @@ export default {
                 [arr[i], arr[j]] = [arr[j], arr[i]];
             }
             return arr;
-        }
+        },
+        wrongAnswerDialog(){
+            this.setInfoModal('إجابة خاطئة','يرجى التأكد من الإجابة', false,false,true)
+        },
+        correctAnswerDialog(){
+            this.setInfoModal('لقد اجتزت الامتحان بنجاح','يمكنك إصدار الشهادة الآن',true,true,true)
+        },
     },
     data() {
         return {

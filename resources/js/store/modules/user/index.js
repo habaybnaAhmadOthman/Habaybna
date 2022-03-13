@@ -12,7 +12,7 @@ export default {
             token: null,
             loggedIn: false,
             userID: null,
-            avatar: '/images/siteImgs/header/logo.png',
+            avatar: '/images/avatars/default.svg',
             firstName: null,
             lastName: null,
             openAvatarModal: false,

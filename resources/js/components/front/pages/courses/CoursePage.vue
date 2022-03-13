@@ -96,7 +96,7 @@ export default {
                     await this.$store.dispatch('courses/getAllCourses');
                     data = await this.$store.dispatch('courses/getCourseDetails',this.course);
                 }
-                
+                console.log(data)
                 this.$store.commit('courses/setCourse',data);
                 this.courseID = data.id;
                 this.trailerSrc = data.promo_video;
@@ -123,10 +123,10 @@ export default {
             if (this.$route.query.payment) {
                 if (this.$route.query.payment == 'true') {
                     this.infoModal.isFixed = true;
+                    this.showWatchCourseDialog()
                 } else {
-                    this.setInfoModal('حصل خطأ في عملية الشراء','يرجى التأكد من المعلومات والمحاولة مرة أخرى' ,false,false)
+                    this.setInfoModal('حصل خطأ في عملية الشراء','يرجى التأكد من المعلومات والمحاولة مرة أخرى' ,false,false,true)
                 }
-                this.showWatchCourseDialog()
             }
         },
         goToClassRoom(){
