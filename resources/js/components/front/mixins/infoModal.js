@@ -5,13 +5,20 @@ export default {
                 title: 'لقد أتممت عملية الشراء بنجاح',
                 description: 'يمكنك الآن مشاهدة الدورة',
                 status: true,
-                show: false
+                show: false,
+                isFixed: false,
             }
         };
     },
     methods: {
         closeInfoModal(){
             this.infoModal.show = false
+        },
+        setInfoModal(title,desc,status,isFixed){
+            this.infoModal.title = title
+            this.infoModal.description = desc
+            this.infoModal.status = status
+            this.infoModal.isFixed = isFixed
         }
     }
 }
