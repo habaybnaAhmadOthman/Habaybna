@@ -5,10 +5,11 @@ use Illuminate\Support\Facades\Http;
 use App\Courses;
 use App\Coursespurchaseorders;
 use App\PromoCode;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Object_ as TypesObject_;
 use PhpParser\Node\Expr\Cast\Object_;
-
+use Session;
 class PaymentCoures {
 
     public function execute(array $data)
@@ -17,7 +18,7 @@ class PaymentCoures {
         try {
 
 
-            $data['hasPromoCode']['id'] = '22'; // sent from zalum
+            // $data['hasPromoCode']['id'] = '22'; // sent from zalum
             // $data['hasPromoCode']=[];
 
 
@@ -40,7 +41,7 @@ class PaymentCoures {
 
                 $parameters = [];
                 // fill required parameters
-                $parameters["Amount"] =$initOrder->amount ;
+                $parameters["Amount"] =$initOrder->amount * 1000 ;
                 $parameters["Channel"] = "0";
                 $parameters["CurrencyISOCode"] = "400";
                 $parameters["Language"] = "en";
@@ -64,7 +65,7 @@ class PaymentCoures {
                 }
                 $secureHash = hash('sha256', $orderedString, false);
                 $parameters["RedirectURL"] = "https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler";
-                
+
 
                 $parameters["secureHash"] = $secureHash;
 
@@ -96,7 +97,7 @@ class PaymentCoures {
             $initData->save();
 
                 // check hasPromoCode
-            if(array_key_exists('id',$data['hasPromoCode'])){
+            if(array_key_exists('id',$data['hasPromoCode']) && isset($data['hasPromoCode']['id']) ){
                 $promoCode = PromoCode::findorfail($data['hasPromoCode']['id']);
                 $disscountAmount = $course->price * $promoCode->discount_percentage/100 ;
                 $newPrice = $course->price - $disscountAmount ;
@@ -104,12 +105,12 @@ class PaymentCoures {
                 $initData->coupon_id = $promoCode->id;
                 $initData->discount_amount = $disscountAmount;
                 $initData->new_price = $newPrice;
-                $initData->amount = $newPrice * 1000;
+                $initData->amount = $newPrice ;
 
                 $initData->save();
             }
             else {
-                $initData->amount = $course->price * 1000;
+                $initData->amount = $course->price;
 
                 $initData->save();
             }
@@ -118,14 +119,64 @@ class PaymentCoures {
     }
     public function completeOrder($data)
     {
-        dd($data);
+        // dd($data);
         try {
+            $order = Coursespurchaseorders::where('transactionID',$data['Response_TransactionID'] )->first();
+            $user = User::findorfail($order->user_id);
+            Auth::login($user);
 
-            $course = Courses::findorfail($data['courseID']);
         } catch (\Throwable $th) {
-            throw $th;
+                throw $th;
+            }
+
+        // complete order
+        // $SECRET_KEY = "NGIyNTQzOTc2ZTkxZGFhZDFlMjhjMTNk"; // Use Yours, Please Store
+        // $parameterNames = isset($data)?array_keys($data):[] ;
+        // $responseParameters = [];
+        // foreach($parameterNames as $paramName){
+        //     $responseParameters[$paramName] = filter_input(INPUT_POST,$paramName);
+        // }
+        // ksort($responseParameters);
+        // $orderedString = $SECRET_KEY;
+        // foreach($responseParameters as $k=>$param){
+        // $orderedString .= $param;
+        // }
+        // $secureHash = hash('sha256', $orderedString, false);
+        // if($data['Response_SecureHash'] !== $secureHash){
+        //  dd ("Received Secure Hash does not Equal generated Secure hash");
+        // }
+        //     else{
+        // dd('accepted');
+        //}
+
+
+
+        $order->status = $data['Response_StatusCode'] == "00000" ? true : false;
+        $order->status_description = $data['Response_StatusDescription'];
+        $order->card_holder_name = $data['Response_CardHolderName'];
+        $order->card_expiry_date = $data['Response_CardExpiryDate'];
+        $order->card_number = $data['Response_CardNumber'];
+        $order->approval_code = $data['Response_ApprovalCode'];
+        $order->secure_hash = $data['Response_SecureHash'];
+        $order->approval_code = $data['Response_ApprovalCode'];
+        $order->approval_code = $data['Response_ApprovalCode'];
+
+        $order->save();
+        // dd($order->all());
+
+        if(!$order->status){
+            return redirect()->to('payment-success')->send();
         }
-            // complete order
+
+        // complete promo code process
+        $coupon = PromoCode::findorfail($order->coupon_id);
+        if(isset($order->coupon_id) && $order->coupon_id !==""){
+            $coupon->increment('usage_count');
+            $coupon->save();
+        }
+
+        return redirect()->to('payment-success')->send();
+
 
 
     }

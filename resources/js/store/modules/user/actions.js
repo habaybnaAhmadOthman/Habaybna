@@ -41,6 +41,7 @@ export default {
     },
     // ******** login :::
     async login(context, payload) {
+        console.log('xxxxxxxx');
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "login", payload);
         if (resp && resp.data && resp.data.status && resp.data.status == 403) {
