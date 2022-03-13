@@ -293,6 +293,25 @@ class ParentUsersController extends Controller
 
             }
 
+            if(count($request->interests) > 0 ){
+                $oldInterest = UserInterest::where('user_id', Auth::user()->id )->get() ;
+
+                if(count($oldInterest) > 0 ){
+                    foreach ($oldInterest as $old) {
+                    $old->delete();
+                    }
+                }
+
+                foreach ($request->interests as $interest) {
+                    $userInterest = new UserInterest();
+                    $userInterest->user_id =  Auth::user()->id;
+                    $userInterest->interest_id = $interest;
+
+                    $userInterest->save();
+                 }
+
+
+            }
             $parent->dob = $request->dob ;
             $parent->lastName = $request->gender ;
             $parent->relative = $request->relative ;
