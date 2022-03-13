@@ -37,9 +37,9 @@
           @close="closeInfoModal"
           :description="infoModal.description"
           :success="infoModal.status"
-          :fixed="false"
+          :fixed="infoModal.isFixed"
         >
-        <router-link to="/" class="btn">مشاهدة</router-link>
+        <button @click="goToClassRoom" class="btn">مشاهدة</button>
         </info-modal>
 
         <TheFooter></TheFooter>
@@ -96,11 +96,9 @@ export default {
                     await this.$store.dispatch('courses/getAllCourses');
                     data = await this.$store.dispatch('courses/getCourseDetails',this.course);
                 }
-                // show related courses section
-                this.isDataReady = true;
                 
                 this.$store.commit('courses/setCourse',data);
-                console.log(data);
+                this.courseID = data.id;
                 this.trailerSrc = data.promo_video;
                 this.coverPhoto = data.cover_photo;
                 this.courseName = data.title;
@@ -110,6 +108,9 @@ export default {
                 this.whatShouldLearn  = data.what_should_learn;
                 this.videosList  = data.videos_title_length;
                 this.videosCount  = data.videos_count;
+
+                // show related courses section
+                this.isDataReady = true;
                 
             } catch (e){
                 console.log(e);
@@ -119,13 +120,24 @@ export default {
             this.showShareModal = !this.showShareModal;
         },
         isFromPaymentPage(){
-            if (this.$route.query.payment && this.$route.query.payment == 'true') {
+            if (this.$route.query.payment) {
+                if (this.$route.query.payment == 'true') {
+                    this.infoModal.isFixed = true;
+                } else {
+                    this.setInfoModal('حصل خطأ في عملية الشراء','يرجى التأكد من المعلومات والمحاولة مرة أخرى' ,false,false)
+                }
                 this.showWatchCourseDialog()
             }
         },
+        goToClassRoom(){
+            this.$store.dispatch('courses/getCourseLectures',{
+                courseID: this.courseID
+            })
+        },
         showWatchCourseDialog(){
             this.infoModal.show = true
-        }
+        },
+
     },
     metaInfo() {
         return {

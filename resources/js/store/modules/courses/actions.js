@@ -56,6 +56,16 @@ export default {
         }
         return resp.data[0]
     },
+    // ******** Course Lectures ::: get
+    async getCourseLectures({_,getters},payload) {
+        console.log(payload);
+        const resp = await callApi("POST", "/api/course/course-lectures",payload);
+        if (!resp) {
+            const error = new Error("something went wrong, please try again");
+            throw error;
+        }
+        return resp.data
+    },
     // ******** PromoCode ::: post
     async promoCode({_,getters},payload) {
         const resp = await callApi("POST", "/api/check-promocode",payload);

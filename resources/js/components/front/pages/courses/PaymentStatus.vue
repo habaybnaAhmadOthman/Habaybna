@@ -32,7 +32,11 @@ export default {
             this.isLoading(true)
             axios({method:'GET', url:'/api/get-payment-status'})
             .then(res=>{
-                this.$router.replace(`/courses/${res.data.course_id}?payment=true`);
+                var paymentStatus = true
+                if (res.status != 200 ) {
+                    paymentStatus = false
+                }
+                this.$router.replace(`/courses/${res.data.course_id}?payment=${paymentStatus}`);
                 this.isLoading(false)
             })
         },

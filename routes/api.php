@@ -111,6 +111,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //orders
     Route::get('/orders/courses','PaymentController@index')->name('index.orders');
+    // courses
+    Route::post('/course/course-lectures','CourseController@getClassRoomLectures');
+
 
 });
 
