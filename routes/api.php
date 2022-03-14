@@ -163,6 +163,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/edit-other-profile-data','OthersController@editProfileData');
     Route::post('/course-payment','PaymentController@coursePayment');
 
+    // courses
+    Route::post('/course/course-lectures','CourseController@getClassRoomLectures');
+
 
 });
 

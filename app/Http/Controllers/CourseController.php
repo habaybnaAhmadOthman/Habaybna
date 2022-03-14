@@ -13,6 +13,7 @@ use App\CategoryCourse;
 use App\Question;
 use App\CustomClass\CourseData;
 use App\CustomClass\AllCourses;
+use App\CustomClass\GetClassRoomLectures;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -85,7 +86,7 @@ class CourseController extends Controller
             $course->save();
         }
 
-       
+
 
        if($request->has('category')){
         $categories = explode( ',', $request->category );
@@ -472,6 +473,26 @@ class CourseController extends Controller
     public function certificate($id)
     {
         dd('hi');
+    }
+
+    // check if the user purchase the course if yes return lectures of course
+    public function getClassRoomLectures(Request $request, GetClassRoomLectures $getClassRoomLectures)
+    {
+        $courseLectures = $getClassRoomLectures->execute($request->all());
+
+        // if(isset($courseLectures['status']) && !$courseLectures['status'] ){
+            // return response('false',404);
+        // }else{
+            return response(
+                $courseLectures
+                ->makeHidden([
+                'cover_image',
+                'created_at',
+                'status',
+                'updated_at',
+                ]), 200);
+        // }
+
     }
 
 }
