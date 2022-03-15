@@ -80,13 +80,11 @@ class User extends Authenticatable
         $courses = [];
         if($this->coursePurchaseOrder && $this->coursePurchaseOrder->count() > 0){
             foreach ($this->coursePurchaseOrder as $one) {
-
                 if($one->status){
-                    $courses[] = [
-                       'id'=> $one->id,
-                    ];
+                    array_push($courses,$one->course_id);
                 }
             }
+            return $courses ;
         }
     }
 }
