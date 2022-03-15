@@ -79,17 +79,27 @@ export default {
     },
     // ******** logout :::
     async logout({commit,rootState}){
-        const resp = await callApi("POST", "logoutt");
-        if (resp.status != 200) {
+        const resp = await callApi("POST", "logout");
+        if (resp.status != 204) {
             const error = new Error("fail to logout");
             throw error;
         }
         rootState.showLoginModal = false;
         commit('clearUser');
     },
+    //****logout admin */
+    async Adminlogout({commit,rootState}){
+        const resp = await callApi("POST", "/logout");
+        if (resp.status != 204) {
+            const error = new Error("fail to logout");
+            throw error;
+        }
+        rootState.showLoginModal = false;
+        commit('clearAdmin');
+    },
     // ******** logout modal :::
     async logoutModal({commit,rootState}){
-        const resp = await callApi("POST", "/logoutt");
+        const resp = await callApi("POST", "/logout");
         if (resp.status != 200) {
             const error = new Error("fail to logout");
             throw error;

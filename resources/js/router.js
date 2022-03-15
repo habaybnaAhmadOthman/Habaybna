@@ -14,6 +14,7 @@ import Calls from "./components/admin/calls/Calls.vue";
 import Parents from "./components/admin/parent/Parents.vue";
 import CreateParent from "./components/admin/parent/Create.vue";
 import CreateCoupon from "./components/admin/coupon/Create.vue";
+import CoursesOrders from "./components/admin/orders/courses/Index.vue";
 import CreateContent from "./components/admin/contents/Create.vue";
 import CreateCall from "./components/admin/calls/Create.vue";
 import CreateSpecialist from "./components/admin/specialist/Create.vue";
@@ -177,6 +178,11 @@ const routes = [{
         name: "CreateCoupon"
     },
     {
+        path: "/admin/orders/courses-orders",
+        component: CoursesOrders,
+        name: "CoursesOrders"
+    },
+    {
         path: "/admin/calls/create",
         component: CreateCall,
         name: "CreateCall"
@@ -309,7 +315,7 @@ const routes = [{
         meta: {
             requiresAuth: true
         },
-        
+
     },
     {
         path: "/certificate",

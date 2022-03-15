@@ -18,13 +18,13 @@ export default {
             if (coursesFromAPI.length == 0) {
                 coursesFromAPI = await dispatch('getAllCourses')
             }
-            // const resp = await callApi("GET", "/api/courses/get-user-courses");
-            // if (resp.status != 200) {
-            //     const error = new Error("fail to get courses");
-            //     throw error;
-            // }
-            let x = [13]
-            let myCourses = coursesFromAPI.filter(course => x.includes(course.id))
+            const resp = await callApi("GET", "/api/courses/get-user-courses");
+            if (resp.status != 200) {
+                const error = new Error("fail to get my courses");
+                throw error;
+            }
+            debugger;
+            let myCourses = coursesFromAPI.filter(course => resp.data.includes(course.id))
             return myCourses
         } catch (err) {
             const error = new Error("fail to get course");
