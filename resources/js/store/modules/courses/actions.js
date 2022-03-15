@@ -11,7 +11,27 @@ export default {
         context.commit('setAllCourses',resp.data.courses)
         return resp.data.courses;
     },
-    // ******** get all courses ::: get
+    // ******** get user courses ::: get
+    async getMyCourses({_,rootGetters,getters,commit,dispatch}) {
+        try {
+            var coursesFromAPI = getters.courses;
+            if (coursesFromAPI.length == 0) {
+                coursesFromAPI = await dispatch('getAllCourses')
+            }
+            // const resp = await callApi("GET", "/api/courses/get-user-courses");
+            // if (resp.status != 200) {
+            //     const error = new Error("fail to get courses");
+            //     throw error;
+            // }
+            let x = [13]
+            let myCourses = coursesFromAPI.filter(course => x.includes(course.id))
+            return myCourses
+        } catch (err) {
+            const error = new Error("fail to get course");
+            throw error;
+        }
+    },
+    // ******** get related courses ::: get
     async getRelatedCourses({_,getters},courseCategories) {
         let shuffledCourses = await shuffle(getters.courses);
         let categories = [];
