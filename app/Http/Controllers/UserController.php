@@ -244,4 +244,9 @@ class UserController extends Controller
         return response()->json($users, 200);
 
     }
+
+    public function userCourses()
+    {
+        return Auth::user()->user_courses ;
+    }
 }
