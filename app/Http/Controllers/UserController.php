@@ -247,6 +247,6 @@ class UserController extends Controller
 
     public function userCourses()
     {
-        return Auth::user()->user_courses ;
+        return response( Auth::user()->user_courses,200) ;
     }
 }
