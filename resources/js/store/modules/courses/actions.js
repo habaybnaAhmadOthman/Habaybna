@@ -23,7 +23,6 @@ export default {
                 const error = new Error("fail to get my courses");
                 throw error;
             }
-            debugger;
             let myCourses = coursesFromAPI.filter(course => resp.data.includes(course.id))
             return myCourses
         } catch (err) {
