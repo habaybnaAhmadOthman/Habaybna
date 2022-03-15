@@ -22,6 +22,12 @@ export default {
         state.loggedIn = false;
         state.is_verify = false;
     },
+    clearAdmin(state) {
+        state.loggedIn = false;
+        state.is_verify = false;
+        state.type = null;
+
+    },
     type(state,userType) {
         state.type = userType;
     },

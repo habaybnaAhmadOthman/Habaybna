@@ -86,14 +86,23 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/calls/package/{id}','CallsController@update');
         Route::post('/change-call-package-status/{id}','CallsController@changeStatus');
         Route::post('/delete-call-package/{id}','CallsController@delete');
+
+        //orders
+        Route::get('/orders/courses','PaymentController@index')->name('index.orders'); // will moved to CoursespurchaseordersController
+        Route::post('/orders-courses/export-to-excel','CoursespurchaseordersController@exportToExcel')->name('create.others');
+
+        // courses
+        Route::post('/course/course-lectures','CourseController@getClassRoomLectures');
+
     });
 
     // general routes
     Route::get('get-profile-data','UserController@getUserData');
-    Route::post('logoutt','AuthController@logout')->name('user.logoutt');
+    // Route::post('logoutt','AuthController@logout')->name('user.logoutt');
     Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
     route::post('set-new-password','UserController@setNewPassword');
     Route::post('/edit-profile-image','UserController@editProfileImage');
+    Route::get('/courses/get-user-courses','UserController@userCourses');
 
     // parent routes
     Route::post('/parent-complete-register','ParentUsersController@completeRegister');
@@ -109,10 +118,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/edit-other-profile-data','OthersController@editProfileData');
     Route::post('/course-payment','PaymentController@coursePayment');
 
-    //orders
-    Route::get('/orders/courses','PaymentController@index')->name('index.orders');
-    // courses
-    Route::post('/course/course-lectures','CourseController@getClassRoomLectures');
+
+
 
 
 });

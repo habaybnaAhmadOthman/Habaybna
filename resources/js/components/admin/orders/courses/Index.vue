@@ -12,72 +12,80 @@ th {
   padding: 0 2px;
   overflow-x: scroll;
 }
+.cat-tag {
+  background-color: #348eff;
+  color: #fff;
+  width: 72%;
+  border-radius: 4px;
+  font-size: 11px;
+  padding: 1px 0;
+  margin-bottom: 1.5px;
+}
+.phone-td {
+  direction: ltr !important;
+}
 </style>
 <template>
   <div>
-    <!-- <div class="title">
-      <h2>الكوبونات</h2>
-      <Button :to="'/admin/coupons/create'" type="primary" size="large" ghost
-        >انشاء كوبون</Button
+    <div class="title">
+      <h2>طلبات شراء الدورات التدريبية</h2>
+      <Button type="success" size="large" ghost v-on:click="exportToExcel()">
+        export to excel</Button
       >
-    </div> -->
+      <Button type="error" size="large" ghost v-on:click="exportToPdf()">
+        export to pdf</Button
+      >
+    </div>
     <!-- <Table border :columns="columns7" :data="data6"></Table> -->
     <div class="search-wrapper">
-      <Input
-        type="text"
-        v-model="keyword"
-        placeholder="ابحث عن رمز الكوبون"
-      />
+      <Input type="text" v-model="keyword" placeholder="ابحث عن رمز الكوبون" />
     </div>
-    <div class="coupon-table">
-      <table class="table">
+    <div class="coupon-table" ref="toPdf">
+      <table class="table" id="table">
         <thead class="thead-dark">
           <tr>
             <th>#</th>
             <th class="sortted" v-on:click="sortTable('name')">عنوان الدورة</th>
             <th>فئة الدورة</th>
             <th class="sortted" v-on:click="sortTable('status')">حالة الطلب</th>
-            <th>
-               مدة الدورة
-            </th>
-            <th>  سعر الدورة</th>
-            <th> اسم المستخدم</th>
-            <th> رقم الهاتف</th>
+            <th>مدة الدورة</th>
+            <th>سعر الدورة</th>
+            <th>اسم المستخدم</th>
+            <th>رقم الهاتف</th>
             <th>تاريخ الطلب</th>
             <th>الاجراءات</th>
           </tr>
         </thead>
         <tbody>
-          <!-- <tr v-for="(coupon, index) in filteredList" :key="index">
-            <th scope="row">{{ index + 1 }}</th>
-            <td>{{ coupon.code }}</td>
-            <td>{{ coupon.usage }}</td>
-            <td>{{ coupon.type }}</td>
+          <tr v-for="(order, index) in filteredList" :key="index">
+            <th scope="row">{{ index + 1 }} -</th>
+            <td>{{ order.course_title }}</td>
+            <td>
+              <ul v-if="order.course_categories.length > 0">
+                <li
+                  v-for="(cat, i) in order.course_categories"
+                  :key="i"
+                  class="cat-tag"
+                >
+                  {{ cat.title }}
+                </li>
+              </ul>
+            </td>
             <td class="status">
-              <Button
-                type="success"
-                ghost
-                v-if="coupon.status"
-                v-on:click="changeStatus(index, coupon.id)"
-              >
-                <span>نشط</span>
+              <Button type="success" ghost v-if="order.order_status">
+                <span>دفع بنجاح</span>
               </Button>
-              <Button
-                type="error"
-                ghost
-                v-if="!coupon.status"
-                v-on:click="changeStatus(index, coupon.id)"
-              >
-                <span>غير نشط</span>
+              <Button type="error" ghost v-if="!order.order_status">
+                <span> دفع مرفوض</span>
               </Button>
             </td>
-            <td>{{ coupon.max_usage }}</td>
-            <td>{{ coupon.usage_count }}</td>
-            <td>{{ coupon.discount_percentage }} %</td>
-            <td>{{ coupon.start_date }}</td>
-            <td>{{ coupon.end_date }}</td>
+            <td>{{ order.course_length }}</td>
+            <td>{{ order.course_price }}</td>
+            <td>{{ order.user_name }}</td>
+            <td class="phone-td">{{ order.user_phone }}</td>
+            <td>{{ order.date }}</td>
             <td>
-              <Button
+              <!-- <Button
                 :to="'/admin/coupon/' + coupon.id"
                 type="dashed"
                 size="small"
@@ -85,42 +93,26 @@ th {
               >
               <Button @click="deleteDaialog(coupon.id, index)">
                 <Icon size="20" color="red" type="md-trash" />
-              </Button>
+              </Button> -->
             </td>
-          </tr> -->
+          </tr>
         </tbody>
       </table>
     </div>
-    <!-- <Modal v-model="dialogDelete" width="360">
-      <p slot="header" style="color: #f60; text-align: center">
-        <Icon type="ios-information-circle"></Icon>
-        <span>حذف</span>
-      </p>
-      <div style="text-align: center">
-        <p>هل انت متأكد من حذف الكوبون ؟</p>
-      </div>
-      <div slot="footer">
-        <Button
-          type="error"
-          size="large"
-          long
-          :loading="modal_loading"
-          @click="del(indexDeleteUser)"
-          >حذف</Button
-        >
-      </div>
-    </Modal> -->
   </div>
 </template>
 <script>
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+
 export default {
   data() {
     return {
       orders: [],
-      dialogDelete: false,
-      modal_loading: false,
-      idDeleteUser: "",
-      indexDeleteUser: "",
+      //   dialogDelete: false,
+      //   modal_loading: false,
+      //   idDeleteUser: "",
+      //   indexDeleteUser: "",
       keyword: "",
       ascending: false,
     };
@@ -132,48 +124,21 @@ export default {
     }
   },
   methods: {
-    deleteDaialog(id, index) {
-        console.log(id, index);
-      this.dialogDelete = true;
-      this.idDeleteUser = id;
-      this.indexDeleteUser = index;
-    },
-    del(index) {
-      console.log(this.idDeleteUser);
-      this.modal_loading = true;
-      const resp = this.$store.dispatch("admin/deleteCoupon", this.idDeleteUser);
-      setTimeout(() => {
-        this.modal_loading = false;
-        this.dialogDelete = false;
-        this.$Message.success("Successfully delete");
-      }, 1500);
-      this.coupons.splice(index, 1);
-    },
-    changeStatus(i, id) {
-      this.loading = true;
-        console.log(i, id);
-      const resp = this.$store.dispatch("admin/CouponChangeStatus", id);
-      setTimeout(() => {
-        this.$Message.success("تم تغيير الحالة");
-        this.coupons[i].status = !this.coupons[i].status;
-        this.loading = false;
-      }, 1000);
-    },
     sortTable(type) {
       if (type == "name") {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.coupons.sort((a, b) =>
+        return this.orders.sort((a, b) =>
           isAscending
-            ? a.code > b.code
+            ? a.course_title > b.course_title
               ? 1
-              : b.code > a.code
+              : b.course_title > a.course_title
               ? -1
               : 0
-            : a.code < b.code
+            : a.course_title < b.course_title
             ? 1
-            : b.code < a.code
+            : b.course_title < a.course_title
             ? -1
             : 0
         );
@@ -182,44 +147,42 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.coupons.sort((a, b) =>
+        return this.orders.sort((a, b) =>
           isAscending
-            ? a.status > b.status
+            ? a.order_status > b.order_status
               ? 1
-              : b.status > a.status
+              : b.order_status > a.order_status
               ? -1
               : 0
-            : a.status < b.status
+            : a.order_status < b.order_status
             ? 1
-            : b.status < a.status
-            ? -1
-            : 0
-        );
-      }
-      if (type == "gender") {
-        //   console.log(this.ascending);
-        let isAscending = this.ascending;
-        this.ascending = !this.ascending;
-        return this.others.sort((a, b) =>
-          isAscending
-            ? a.gender > b.gender
-              ? 1
-              : b.gender > a.gender
-              ? -1
-              : 0
-            : a.gender < b.gender
-            ? 1
-            : b.gender < a.gender
+            : b.order_status < a.order_status
             ? -1
             : 0
         );
       }
     },
+    exportToExcel() {
+      /* generate workbook object from table */
+      var wb = XLSX.utils.table_to_book(document.getElementById("table"));
+      /* generate file and force a download*/
+      XLSX.writeFile(wb, "courses_orders.xlsx");
+    },
+    exportToPdf() {
+      // Default export is a4 paper, portrait, using millimeters for units
+      const doc = new jsPDF();
+    //   doc.addFont("Roboto-Regular",9 ,"Roboto-Regular", "normal");
+      doc.setFont("Baloo Bhaijaan 2");
+      doc.text('Arabic Text Not Available Rania but pdf work i will add arabic font later', 10, 10);
+      doc.save("a4.pdf");
+    },
   },
   computed: {
     filteredList() {
-      return this.coupons.filter((coupon) => {
-        return coupon.code.toLowerCase().includes(this.keyword.toLowerCase());
+      return this.orders.filter((order) => {
+        return order.course_title
+          .toLowerCase()
+          .includes(this.keyword.toLowerCase());
       });
     },
   },

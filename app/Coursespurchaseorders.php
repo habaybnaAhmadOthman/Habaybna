@@ -12,4 +12,9 @@ class Coursespurchaseorders extends Model
     {
         return $this->hasOne(Courses::class,'id','course_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

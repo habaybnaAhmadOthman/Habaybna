@@ -1,10 +1,21 @@
 <style scoped>
-.layout {
+/* .layout {
   border: 1px solid #d7dde4;
   background: #f5f7f9;
   position: relative;
   border-radius: 4px;
   overflow: hidden;
+  height:100vh;
+  min-height:100vh !important;
+
+
+} */
+.ivu-layout-content {
+  width: 95%;
+  padding: 5px;
+  min-height: 100vh !important;
+  margin: 10px auto;
+  /* border-radius: 5px; */
 }
 .layout-logo {
   width: 100px;
@@ -21,94 +32,97 @@
   margin: 0 auto;
   margin-right: 20px;
 }
+.ivu-layout-sider {
+  text-align: right !important;
+}
+footer {
+  background-color: #515a6e;
+  clear: both;
+  position: relative;
+  min-height: 60px;
+  margin-top: auto;
+}
+
 </style>
 <template>
   <div class="layout">
     <Layout>
       <Header>
         <Menu mode="horizontal" theme="dark">
-          <!-- active-name="1" -->
           <div class="layout-logo"></div>
           <div class="layout-nav">
-            <MenuItem name="1">
-              <Icon type="ios-navigate"></Icon>
-              Dashboard
-            </MenuItem>
-            <MenuItem name="2">
-              <Icon type="ios-keypad"></Icon>
-              Item 2
-            </MenuItem>
             <MenuItem name="3">
-              <Icon type="ios-analytics"></Icon>
               <Button @click="logoutUser()">Logout</Button>
             </MenuItem>
-            <MenuItem name="4"> </MenuItem>
           </div>
         </Menu>
       </Header>
       <Layout>
         <Sider hide-trigger :style="{ background: '#fff' }">
-          <!--
-                        active-name="1-2"
-
-                     -->
           <Menu theme="light" width="auto" :open-names="[]">
-            <Submenu name="1">
-              <template slot="title">
-                <Icon type="ios-navigate"></Icon>
-                <router-link to="/admin/courses">الدورات التدريبية</router-link>
-              </template>
-              <MenuItem name="1-1">
-                <router-link to="/admin/course-create"
-                  >انشاء دورة تدريبية</router-link
-                >
-              </MenuItem>
-              <MenuItem name="1-2">Option 2</MenuItem>
-              <MenuItem name="1-3">Option 3</MenuItem>
-            </Submenu>
+            <MenuItem name="1">
+              <Icon type="ios-videocam-outline" size="24" />
+              <router-link to="/admin/courses">الدورات التدريبية</router-link>
+            </MenuItem>
             <Submenu name="2">
               <template slot="title">
-                <Icon type="ios-keypad"></Icon>
+                <Icon type="ios-people" size="24" :style="{ margin: '1px' }" />
                 ادارة المستخدمين
               </template>
               <MenuItem name="2-1">
+                <Icon type="ios-contacts" size="16" />
                 <router-link to="/admin/parents"> الأهالي </router-link>
               </MenuItem>
               <MenuItem name="2-2">
+                <Icon type="md-contact" size="16" />
                 <router-link to="/admin/specialist"> الأخصائيين </router-link>
               </MenuItem>
               <MenuItem name="2-3">
+                <Icon type="ios-people" size="16" />
                 <router-link to="/admin/others"> الاخرون </router-link>
               </MenuItem>
             </Submenu>
-            <Submenu name="3">
+            <MenuItem name="3">
+              <Icon type="ios-code" size="24" />
+              <router-link to="/admin/coupons"> الكوبونات </router-link>
+            </MenuItem>
+            <MenuItem name="4">
+              <Icon type="ios-call-outline" size="24" />
+              <router-link to="/admin/calls"> المكالمات </router-link>
+            </MenuItem>
+            <Submenu name="5">
               <template slot="title">
-                <Icon type="ios-keypad"></Icon>
-                <router-link to="/admin/coupons"> الكوبونات </router-link>
+                <Icon
+                  type="ios-paper-outline"
+                  size="24"
+                  :style="{ margin: '1px' }"
+                />
+                طلبات الشراء
               </template>
-            </Submenu>
-            <Submenu name="4">
-              <template slot="title">
-                <Icon type="ios-keypad"></Icon>
-                <router-link to="/admin/contents"> ادارة المحتوى </router-link>
-              </template>
-            </Submenu>
-            <Submenu name="4">
-              <template slot="title">
-                <Icon type="ios-keypad"></Icon>
-                <router-link to="/admin/calls"> المكالمات </router-link>
-              </template>
+              <MenuItem name="5-1">
+                <Icon type="ios-videocam" size="16" />
+                <router-link to="/admin/orders/courses-orders">
+                  دورات تدريبية
+                </router-link>
+              </MenuItem>
+              <MenuItem name="5-2">
+                <Icon type="ios-call" size="16" />
+                <router-link to="/admin/orders/courses-orders">
+                  مكالمات
+                </router-link>
+              </MenuItem>
             </Submenu>
           </Menu>
         </Sider>
-        <Layout :style="{ padding: '0 24px 24px' }">
+        <Layout :style="{ padding: '0 5px' }">
           <Content
-            :style="{ padding: '24px', minHeight: '280px', background: '#fff' }"
+            :style="{ padding: '5px', minHeight: '280px', background: '#fff' }"
           >
             <router-view></router-view>
           </Content>
         </Layout>
       </Layout>
+      <footer>Footer</footer>
     </Layout>
   </div>
 </template>
@@ -119,9 +133,21 @@ export default {
   },
   methods: {
     logoutUser() {
-      this.$store.dispatch("user/logout");
-      this.$router.replace("/");
+      this.$store.dispatch("user/Adminlogout");
+      location.href = "/";
     },
   },
 };
 </script>
+
+
+
+
+
+
+
+
+
+
+
+

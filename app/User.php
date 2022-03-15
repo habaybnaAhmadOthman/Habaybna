@@ -70,5 +70,23 @@ class User extends Authenticatable
         return $this->is_verify ? true : false ;
     }
 
+    public function coursePurchaseOrder()
+    {
+        return $this->hasMany(Coursespurchaseorders::class,'user_id');
+    }
 
+    public function getUserCoursesAttribute()
+    {
+        $courses = [];
+        if($this->coursePurchaseOrder && $this->coursePurchaseOrder->count() > 0){
+            foreach ($this->coursePurchaseOrder as $one) {
+
+                if($one->status){
+                    $courses[] = [
+                       'id'=> $one->id,
+                    ];
+                }
+            }
+        }
+    }
 }
