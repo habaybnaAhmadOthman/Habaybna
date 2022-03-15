@@ -9,7 +9,7 @@
         <div class="container page-info">
             <CourseInfo :course-name="courseName" :description="courseDescription" :whatShouldLearn="whatShouldLearn"></CourseInfo>
             
-            <ContentTable :rows="videosList" type="course" :title="'محتوى الدورة التدريبية'" :lectures="lectures" class="pt-20"></ContentTable>
+            <ContentTable :rows="videosList" type="course" :title="'محتوى الدورة التدريبية'" class="pt-20"></ContentTable>
 
             <AboutSpecialists v-if="specialists" :specialists="specialists"></AboutSpecialists>
             <div class="mt-60">
@@ -26,10 +26,17 @@
             @close-share-modal="showShareDialog"
             :courseName="courseName"
             :description="courseDescription | stripHTML"
+        ></ShareCourseModal>
+        <!-- <ShareCourseModal
+            :show="showShareModal"
+            @close-share-modal="showShareDialog"
+            :courseName="courseName"
+            :description="courseDescription | stripHTML"
             :hashTags="'hashTags'"
             :quote="'quote'"
             :twitterUser="'twitterUser'"
-        ></ShareCourseModal>
+        ></ShareCourseModal> -->
+
         <!-- showed when user came from payment gateway -->
         <info-modal
           :show="infoModal.show"
@@ -92,12 +99,6 @@ export default {
             try {
                 this.isFromPaymentPage()
                 let data = await this.$store.dispatch('courses/getCourseDetails',this.course);
-                if (!data) { 
-                    await this.$store.dispatch('courses/getAllCourses');
-                    data = await this.$store.dispatch('courses/getCourseDetails',this.course);
-                }
-                console.log(data)
-                this.$store.commit('courses/setCourse',data);
                 this.courseID = data.id;
                 this.trailerSrc = data.promo_video;
                 this.coverPhoto = data.cover_photo;
@@ -129,10 +130,11 @@ export default {
                 }
             }
         },
-        goToClassRoom(){
-            this.$store.dispatch('courses/getCourseLectures',{
+        async goToClassRoom(){
+            const courseLectures = await this.$store.dispatch('courses/getCourseLectures',{
                 courseID: this.courseID
             })
+            this.$router.replace(`/courses/${this.courseName.split(' ').join('-')}/${courseLectures[0].title.split(' ').join('-')}`)
         },
         showWatchCourseDialog(){
             this.infoModal.show = true
