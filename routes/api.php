@@ -92,9 +92,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/orders-courses/export-to-excel','CoursespurchaseordersController@exportToExcel')->name('create.others');
 
         // courses
-        Route::post('/course/course-lectures','CourseController@getClassRoomLectures');
+        Route::match(['get','post'],'/course/course-lectures','CourseController@getClassRoomLectures');
 
     });
+    Route::match(['post'],'/course/course-lectures','CourseController@getClassRoomLectures');
 
     // general routes
     Route::get('get-profile-data','UserController@getUserData');
