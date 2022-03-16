@@ -25,9 +25,13 @@ export default {
         state.is_verify = false;
     },
     clearAdmin(state) {
+        state.firstName = null;
+        state.lastName = null;
+        state.type = null;
+        state.avatar = null;
+        state.token = null;
         state.loggedIn = false;
         state.is_verify = false;
-        state.type = null;
 
     },
     type(state,userType) {

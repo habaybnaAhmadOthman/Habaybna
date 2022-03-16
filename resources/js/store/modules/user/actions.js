@@ -47,7 +47,7 @@ export default {
             const error = new Error("تم إيقاف حسابك");
             throw error;
         }
-        if (!resp || resp.status != 200) {
+    if (!resp || resp.status != 200) {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
@@ -86,6 +86,9 @@ export default {
         }
         rootState.showLoginModal = false;
         commit('clearUser');
+        commit('clearAdmin');
+
+
     },
     //****logout admin */
     async Adminlogout({commit,rootState}){
@@ -100,12 +103,13 @@ export default {
     // ******** logout modal :::
     async logoutModal({commit,rootState}){
         const resp = await callApi("POST", "/logout");
-        if (resp.status != 200) {
+        if (resp.status != 204) {
             const error = new Error("fail to logout");
             throw error;
         }
         rootState.showLoginModal = false;
         commit('clearUser');
+        commit('clearAdmin');
     },
     // ******** interests ::: post
     async addInterests(_, interests){
