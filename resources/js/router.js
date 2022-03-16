@@ -57,6 +57,7 @@ import LoginPage from "./components/front/pages/auth/LoginPage.vue";
 
 import UserProfile_Template from "./components/front/views/userprofile/UserProfile_Template";
 import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfile.vue";
+import UserProfile_MyCourses from "./components/front/pages/dashboard/MyCourses.vue";
 
 import store from "./store/index";
 
@@ -262,14 +263,24 @@ const routes = [{
         meta: {
             requiresAuth: true
         },
-        children: [{
-            path: "my-account",
-            component: UserProfile_MyAccount,
-            meta: {
-                header: false
+        children: [
+            {
+                path: "my-account",
+                component: UserProfile_MyAccount,
+                meta: {
+                    header: false
+                },
+                name: 'myAccount'
             },
-            name: 'myAccount'
-        }]
+            {
+                path: "my-courses",
+                component: UserProfile_MyCourses,
+                meta: {
+                    header: false
+                },
+                name: 'myCourses'
+            },
+    ]
     },
     // *****************
     // courses

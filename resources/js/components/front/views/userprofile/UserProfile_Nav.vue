@@ -28,6 +28,11 @@
                     >الإستشارات</router-link
                 >
             </li>
+            <li>
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-courses" @click.native="closeNavMenu"
+                    >دوراتي</router-link
+                >
+            </li>
             <li class="mo">
                 <button @click="logout" class="d-block p-side-15 pt-10 pb-10 trans bg-none w-100 border-0"
                     >تسجيل خروج</button

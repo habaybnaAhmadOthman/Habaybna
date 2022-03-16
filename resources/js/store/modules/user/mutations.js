@@ -10,6 +10,8 @@ export default {
             state.avatar = payload.avatar;
         if (payload.token)
             state.token = payload.token;
+        if (!state.avatar || state.avatar == 'default.jpg')
+            state.avatar = '/images/avatars/default.svg'
         state.loggedIn = true;
         state.is_verify = true;
     },
@@ -23,9 +25,13 @@ export default {
         state.is_verify = false;
     },
     clearAdmin(state) {
+        state.firstName = null;
+        state.lastName = null;
+        state.type = null;
+        state.avatar = null;
+        state.token = null;
         state.loggedIn = false;
         state.is_verify = false;
-        state.type = null;
 
     },
     type(state,userType) {

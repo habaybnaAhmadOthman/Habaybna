@@ -2,6 +2,7 @@ import {callApi, shuffle} from "../../common";
 export default {
     // ******** get all courses ::: get
     async getAllCourses(context) {
+        
         const resp = await callApi("GET", "/api/all-courses");
         if (resp.status != 200) {
             const error = new Error("fail to get courses");
@@ -10,7 +11,26 @@ export default {
         context.commit('setAllCourses',resp.data.courses)
         return resp.data.courses;
     },
-    // ******** get all courses ::: get
+    // ******** get user courses ::: get
+    async getMyCourses({_,rootGetters,getters,commit,dispatch}) {
+        try {
+            var coursesFromAPI = getters.courses;
+            if (coursesFromAPI.length == 0) {
+                coursesFromAPI = await dispatch('getAllCourses')
+            }
+            const resp = await callApi("GET", "/api/courses/get-user-courses");
+            if (resp.status != 200) {
+                const error = new Error("fail to get my courses");
+                throw error;
+            }
+            let myCourses = coursesFromAPI.filter(course => resp.data.includes(course.id))
+            return myCourses
+        } catch (err) {
+            const error = new Error("fail to get course");
+            throw error;
+        }
+    },
+    // ******** get related courses ::: get
     async getRelatedCourses({_,getters},courseCategories) {
         let shuffledCourses = await shuffle(getters.courses);
         let categories = [];
@@ -34,18 +54,34 @@ export default {
         }
         return resp.data;
     },
-    async getCourseDetails({_,rootGetters,getters},title) {
-        title = title.split('-').join(' ')
-        axios.defaults.headers.common.Authorization = `Bearer ${rootGetters['user/userData'].token}`;
+    async getCourseDetails({_,rootGetters,getters,commit,dispatch},title) {
         try {
-             const resp = getters.courses.filter(course => course.title === title)[0]
-             if (!resp)
-                getters.courses.filter(course => course.id === title)[0]
-             return resp
+            var coursesFromAPI = getters.courses;
+            if (coursesFromAPI.length == 0) {
+                coursesFromAPI = await dispatch('getAllCourses')
+            }
+            title = title.split('-').join(' ')
+            axios.defaults.headers.common.Authorization = `Bearer ${rootGetters['user/userData'].token}`;
+            let resp = coursesFromAPI.find(course => course.title == title)
+            if (!resp)
+                resp = coursesFromAPI.find(course => course.id == +title)
+            
+            commit('setCourse',resp);
+            return resp
         } catch (err) {
             const error = new Error("fail to get course");
             throw error;
         }
+    },
+    // ******** Course Lectures ::: get
+    async getCourseLectures({commit,getters},payload) {
+        const resp = await callApi("POST", "/api/course/course-lectures",payload);
+        if (!resp) {
+            const error = new Error("something went wrong, please try again");
+            throw error;
+        }
+        commit('courseLectures',resp.data)
+        return resp.data
     },
     // ******** Buy Course ::: post
     async buyCourse({_,getters},payload) {
@@ -55,16 +91,6 @@ export default {
             throw error;
         }
         return resp.data[0]
-    },
-    // ******** Course Lectures ::: get
-    async getCourseLectures({_,getters},payload) {
-        console.log(payload);
-        const resp = await callApi("POST", "/api/course/course-lectures",payload);
-        if (!resp) {
-            const error = new Error("something went wrong, please try again");
-            throw error;
-        }
-        return resp.data
     },
     // ******** PromoCode ::: post
     async promoCode({_,getters},payload) {

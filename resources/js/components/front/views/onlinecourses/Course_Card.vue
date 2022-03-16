@@ -1,5 +1,5 @@
 <template>
-    <div class="course-box shadow w-31 radius-10 relative">
+    <div class="course-box bg-white shadow w-31 radius-10 relative">
         <div class="fav-box relative pointer"></div>
         <router-link @click.native="forceRefresh" :to="`/courses/${courseSlog}`">
             <figure class="d-flex relative radius-10 overflow-hidden figure-box">

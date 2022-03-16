@@ -11,5 +11,11 @@ export default {
     infoModal(state,isShow) {
         state.infoModal.show = isShow;
     },
+    courseLectures(state,videos) {
+        state.courseLectures = videos;
+    },
+    currentLecture(state,data) {
+        state.currentLecture = data;
+    },
     
 };

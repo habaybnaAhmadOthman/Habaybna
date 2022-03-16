@@ -8,14 +8,13 @@
                         <h1 class="font-50 white bold pre-line">{{bannerTitle}}</h1>
                     </div>
                     <div class="d-flex details white font-20">
-                        <p class="d-flex align-center ml-20"><img class="ml-10" src="/images/time-icon.svg" width="31" height="31" alt="">{{courseLength}} ساعة</p>
-                        <p class="d-flex align-center ml-20"><img class="ml-10" src="/images/video-svgrepo.svg" width="39" height="34" alt="">{{videosCount}} دروس</p>
+                        <p class="d-flex align-center ml-20"><img class="ml-10" src="/images/time-icon.svg" width="31" height="31" alt=""><span class="ml-5">{{courseLength}}</span> <span v-if="!isLectureFn">ساعة</span> <span v-else>دقائق</span></p>
+                        <p class="d-flex align-center ml-20" v-if="!isLectureFn"><img class="ml-10" src="/images/video-svgrepo.svg" width="39" height="34" alt="">{{videosCount}} دروس</p>
                         <p class="d-flex align-center pointer" v-if="!isLectureFn" @click="openShareModal"><img class="ml-10" src="/images/share-icon.svg" width="34" height="36" alt="">مشاركة</p>
                     </div>
                 </div>
                 
-                <!-- <CoboneCard v-if="videoSrc" :videoSrc="videoSrc"></CoboneCard> -->
-                <CoboneCard  :videoSrc="videoSrc" @paid-course="userBoughtCourse"></CoboneCard>
+                <CoboneCard v-if="videoSrc" :videoSrc="videoSrc" @paid-course="userBoughtCourse"></CoboneCard>
             </div>
         </div>
     </div>
@@ -25,7 +24,7 @@ import CoboneCard from './CoboneCard.vue'
 
 export default {
     emits: ['open-share-modal','user-bought-course'],
-    props: ['videoSrc', 'bannerTitle','videosCount','courseLength','is-lecture'],
+    props: ['videoSrc', 'bannerTitle','videosCount','courseLength','is-lecture','lectureNumber'],
     components: {CoboneCard},
     methods: {
         openShareModal(){
@@ -40,7 +39,7 @@ export default {
         // get yellowed header 
         headTitle(){
             if (this.isLectureFn)
-                return 'الدرس 1'
+                return 'الدرس ' + this.lectureNumber
             else
                 return 'دورة التدريب الرقمية'
         },

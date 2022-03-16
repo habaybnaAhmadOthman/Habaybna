@@ -12,12 +12,7 @@
                             :hashtags="hashTags"
                             :twitterUser="twitterUser"
                             >
-                            <div class="social-box d-flex align-center radius-10 white whats overflow-hidden">
-                                <div class="d-flex">
-                                    <img src="/images/whatsapp-icon.svg" width="20" height="20">
-                                </div>
-                                <span class="pr-10">واتساب</span>
-                            </div>
+                            <img src="/images/whatsapp-icon.svg" width="50" height="50">
                         </ShareNetwork>
                         <ShareNetwork
                             network="facebook"
@@ -28,12 +23,7 @@
                             :hashtags="hashTags"
                             :twitterUser="twitterUser"
                             >
-                            <div class="social-box d-flex align-center radius-10 white facebook overflow-hidden">
-                                <div class="d-flex">
-                                    <img src="/images/facebook-icon.svg" width="20" height="20">
-                                </div>
-                                <span class="pr-10">فيسبوك</span>
-                            </div>
+                            <img src="/images/facebook-icon.svg" width="50" height="50">
                         </ShareNetwork>
                         <ShareNetwork
                             network="messenger"
@@ -44,12 +34,7 @@
                             :hashtags="hashTags"
                             :twitterUser="twitterUser"
                             >
-                            <div class="social-box d-flex align-center radius-10 white messenger overflow-hidden">
-                                <div class="d-flex">
-                                    <img src="/images/messenger-icon.svg" width="20" height="20">
-                                </div>
-                                <span class="pr-10">ماسنجر</span>
-                            </div>
+                            <img src="/images/messenger-icon.svg" width="50" height="50">
                         </ShareNetwork>
                         <ShareNetwork
                             network="twitter"
@@ -60,12 +45,7 @@
                             :hashtags="hashTags"
                             :twitterUser="twitterUser"
                             >
-                            <div class="social-box d-flex align-center radius-10 white twitter overflow-hidden">
-                                <div class="d-flex">
-                                    <img src="/images/twitter-icon.svg" width="20" height="20">
-                                </div>
-                                <span class="pr-10">تويتر</span>
-                            </div>
+                            <img src="/images/twitter-icon.svg" width="50" height="50">
                         </ShareNetwork>
                         <ShareNetwork
                             network="linkedin"
@@ -76,12 +56,7 @@
                             :hashtags="hashTags"
                             :twitterUser="twitterUser"
                             >
-                            <div class="social-box d-flex align-center radius-10 white linkedin overflow-hidden">
-                                <div class="d-flex">
-                                    <img src="/images/linkedin-icon.svg" width="20" height="20">
-                                </div>               
-                                <span class="pr-10">لينكد ان</span>
-                            </div>
+                            <img src="/images/linkedin-icon.svg" width="50" height="50">
                         </ShareNetwork>
                 </div>
             </div>

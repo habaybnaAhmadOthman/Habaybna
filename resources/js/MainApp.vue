@@ -27,6 +27,14 @@ import LoadingSpinner from "./components/front/layouts/LoadingSpinner.vue";
 Vue.component('loading-spinner',LoadingSpinner)
 Vue.component('alert-dialog',AlertDialog)
 Vue.component('info-modal',InfoModal)
+// to remove html tags and return normal text
+Vue.filter('stripHTML', function (value) {
+  const div = document.createElement('div')
+  div.innerHTML = value
+  const text = div.textContent || div.innerText || ''
+  return text
+});
+
 export default {
   components: {LoginModal},
   computed: {

@@ -92,9 +92,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/orders-courses/export-to-excel','CoursespurchaseordersController@exportToExcel')->name('create.others');
 
         // courses
-        Route::post('/course/course-lectures','CourseController@getClassRoomLectures');
+        Route::match(['get','post'],'/course/course-lectures','CourseController@getClassRoomLectures');
 
     });
+    Route::match(['post'],'/course/course-lectures','CourseController@getClassRoomLectures');
+    Route::post('/course/video-actions','CourseController@setVideoActions');
 
     // general routes
     Route::get('get-profile-data','UserController@getUserData');
@@ -114,7 +116,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/edit-specialist-profile-data','SpecialistController@editProfileData');
 
     // others route
-    Route::post('/other-complete-register','OthersController@create')->name('create.others');
+    Route::post('/other-complete-register','OthersController@create');
     Route::post('/edit-other-profile-data','OthersController@editProfileData');
     Route::post('/course-payment','PaymentController@coursePayment');
 

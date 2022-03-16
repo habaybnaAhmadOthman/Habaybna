@@ -14,11 +14,12 @@ export default {
         closeInfoModal(){
             this.infoModal.show = false
         },
-        setInfoModal(title,desc,status,isFixed){
+        setInfoModal(title,desc,status,isFixed,show){
             this.infoModal.title = title
             this.infoModal.description = desc
             this.infoModal.status = status
             this.infoModal.isFixed = isFixed
+            this.infoModal.show = show
         }
     }
 }

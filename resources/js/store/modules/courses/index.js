@@ -9,9 +9,8 @@ export default {
             courses: [],
             // courseID: null,
             course: null,
-            infoModal: {
-                show: false,
-            }
+            courseLectures: [],
+            currentLecture: null
         };
     },
     mutations,

@@ -11,43 +11,28 @@
                 <p class="main-color font-22 font-18-p">اختر شخصية</p>
                 <div class="d-flex flex-wrap space-between images-box radius-12 p-10">
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15 mb-5-p" >
-                        <input type="radio" value="/images/siteImgs/header/logo.png" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
+                        <input type="radio" value="/images/avatars/MEN-1.svg" v-model="selectedImage" />
+                        <img src="/images/avatars/MEN-1.svg" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15 mb-5-p">
-                        <input type="radio" value="/images/siteImgs/home-banner.jpg" v-model="selectedImage" />
-                        <img src="/images/siteImgs/home-banner.jpg" width="88" height="83" class="z-1 radius-12" />
+                        <input type="radio" value="/images/avatars/MEN-2.svg" v-model="selectedImage" />
+                        <img src="/images/avatars/MEN-2.svg" width="88" height="83" class="z-1 radius-12" />
                         <span></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15 mb-5-p">
-                        <input type="radio" value="A3" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
+                        <input type="radio" value="/images/avatars/WOMAN-1.svg" v-model="selectedImage" />
+                        <img src="/images/avatars/WOMAN-1.svg" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative mb-15 mb-5-p">
-                        <input type="radio" value="A4" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
+                        <input type="radio" value="/images/avatars/WOMAN-2.svg" v-model="selectedImage" />
+                        <img src="/images/avatars/WOMAN-2.svg" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="A5" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
-                        <span class="trans"></span>
-                    </label>
-                    <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="A6" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
-                        <span class="trans"></span>
-                    </label>
-                    <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="A7" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
-                        <span class="trans"></span>
-                    </label>
-                    <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="A8" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
+                        <input type="radio" value="/images/avatars/WOMAN-3.svg" v-model="selectedImage" />
+                        <img src="/images/avatars/WOMAN-3.svg" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                 </div>
