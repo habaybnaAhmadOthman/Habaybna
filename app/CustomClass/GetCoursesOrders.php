@@ -22,9 +22,7 @@ class GetCoursesOrders {
 
     private function getOrdersData($data)
     {
-
        try {
-
         if($data->count() > 0){
             $sortedData = [] ;
             foreach ($data as $one) {
@@ -38,18 +36,27 @@ class GetCoursesOrders {
                   'user_name'=>$one->user->user_data->firstName,
                   'user_phone'=>$one->user->phone,
                   'date'=>$one->created_at->format('Y-m-d'),
+                  'course_progress'=> $this->getCourseProgress($one)
                 ];
             }
             return $sortedData;
-
         }
 
-    } catch (\Throwable $th) {
-
-        return response(false, 404) ;
+        } catch (\Throwable $th) {
+            dd($th);
+            return response(false, 404) ;
+        }
     }
-    }
 
+    private function getCourseProgress($cc)
+    {
+        $progress = [] ;
+        if(!$cc->status){
+            return $progress ;
+        }
+        dd($cc->courseProgress);
+        return $cc->courseProgress;
+    }
 
 
 }

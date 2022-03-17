@@ -17,4 +17,14 @@ class Coursespurchaseorders extends Model
     {
         return $this->belongsTo(User::class,'user_id');
     }
+
+    public function courseProgress()
+    {
+        return $this->hasMany(UserCourseProgress::class);
+    }
+
+    // public function getCourseProgressAtribute()
+    // {
+    //     dd($this->courseProgress);
+    // }
 }
