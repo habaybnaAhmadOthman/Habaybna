@@ -17,4 +17,8 @@ class Coursespurchaseorders extends Model
     {
         return $this->belongsTo(User::class,'user_id');
     }
+    public function courseVideos()
+    {
+        $this->hasMany(UserCourseProgress::class,'order_id');
+    }
 }

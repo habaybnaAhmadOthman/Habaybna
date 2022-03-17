@@ -87,4 +87,11 @@ class User extends Authenticatable
             return $courses ;
         }
     }
+
+    
+
+    public function userVideoProgress()
+    {
+        return $this->hasMany(UserCourseProgress::class,'user_id');
+    }
 }
