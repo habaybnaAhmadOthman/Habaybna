@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\CustomClass\GetAllUsers;
 use App\User;
 use App\Specialist;
+use App\UserCourseProgress;
 use App\UserInterest;
 
 // use App\Specialist;
@@ -250,25 +251,66 @@ class UserController extends Controller
 
     public function setVideoActions(Request $request)
     {
-        dd($request->isComplete);
         // User::findorfail(48)
         $order = Auth::user()->coursePurchaseOrder->where('course_id',$request->courseID)->first();
         if(!$order) {
             return response(['msg'=>'nocourse','status'=>403]);
         }
-        Auth::user()->userVideoProgress->updateOrCreate(
-            ['video_id' => $request->videoID , 'user_id' => Auth::id(), 'course_id' => $request->courseID, 'order_id' =>$order->id ],
-            ['in_progress' => $request->isComplete ? '100' :  $request->inProgress, 'is_complete' => $request->isComplete ?$request->isComplete : 0]
-        );
-        $data = Auth::user()->userVideoProgress->where('order_id',$order->id)->get();
+        // dd($request->videoID ,  $request->courseID,$order->id,$request->isComplete,$request->inProgress);
+        // Auth::user()->userVideoProgress->updateOrCreate(
+        //     ['video_id' => $request->videoID , 'user_id' => Auth::id(), 'course_id' => $request->courseID, 'order_id' =>$order->id ],
+        //     ['in_progress' => '35:5', 'is_complete' =>  0]
+        // );
+        $prgr = UserCourseProgress::where('order_id',$order->id)
+                                    ->where('user_id',Auth::id())
+                                    ->where('video_id',$request->videoID)->first();
+                if($request->type == "progress"){
+                    if($prgr && $prgr != null){
+                        $prgr->in_progress = $request->inProgress ;
+                        $prgr->save();
+                    }
+                    else{
+                        $prgr = new UserCourseProgress();
 
-        if(!$data){
-            return response(['msg'=>'something went wronge try again ','status'=>403]);
-        }
+                        $prgr->video_id = $request->videoID;
+                        $prgr->user_id = Auth::id();
+                        $prgr->course_id = $request->courseID;
+                        $prgr->in_progress = $request->inProgress;
+                        $prgr->is_complete = 0;
+                        $prgr->order_id = $order->id;
+                        $prgr->save();
 
-        $data->makeHidden(['created_at','updated_at','user_id','order_id','id']);
+                    }
+                }
+                if($request->type == "isComplete"){
+                    if($prgr && $prgr != null){
+                        $prgr->in_progress = $request->inProgress ;
+                        $prgr->save();
+                    }
+                    else{
+                        $prgr = new UserCourseProgress();
 
-        return response([$data,200]);
+                        $prgr->video_id = $request->videoID;
+                        $prgr->user_id = Auth::id();
+                        $prgr->course_id = $request->courseID;
+                        $prgr->in_progress = '100';
+                        $prgr->is_complete = 1;
+                        $prgr->order_id = $order->id;
+                        $prgr->save();
+
+                    }
+                }
+
+
+        // $data = Auth::user()->userVideoProgress->where('order_id',$order->id)->get();
+
+        // if(!$data){
+        //     return response(['msg'=>'something went wronge try again ','status'=>403]);
+        // }
+
+        // $data->makeHidden(['created_at','updated_at','user_id','order_id','id']);
+
+        return response([$prgr,200]);
 
     }
 }
