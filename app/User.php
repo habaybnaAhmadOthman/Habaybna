@@ -82,11 +82,10 @@ class User extends Authenticatable
             foreach ($this->coursePurchaseOrder as $one) {
 
                 if($one->status){
-                    $courses[] = [
-                       'id'=> $one->id,
-                    ];
+                        array_push($courses, $one->course_id);
                 }
             }
+            return $courses;
         }
     }
 

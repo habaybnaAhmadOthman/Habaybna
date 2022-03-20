@@ -2,7 +2,7 @@ import {callApi, shuffle} from "../../common";
 export default {
     // ******** get all courses ::: get
     async getAllCourses(context) {
-        
+
         const resp = await callApi("GET", "/api/all-courses");
         if (resp.status != 200) {
             const error = new Error("fail to get courses");
@@ -23,6 +23,7 @@ export default {
                 const error = new Error("fail to get my courses");
                 throw error;
             }
+            console.log(coursesFromAPI);
             let myCourses = coursesFromAPI.filter(course => resp.data.includes(course.id))
             return myCourses
         } catch (err) {
@@ -65,7 +66,7 @@ export default {
             let resp = coursesFromAPI.find(course => course.title == title)
             if (!resp)
                 resp = coursesFromAPI.find(course => course.id == +title)
-            
+
             commit('setCourse',resp);
             return resp
         } catch (err) {
