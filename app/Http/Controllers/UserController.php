@@ -250,14 +250,15 @@ class UserController extends Controller
 
     public function setVideoActions(Request $request)
     {
+        dd($request->isComplete);
         // User::findorfail(48)
         $order = Auth::user()->coursePurchaseOrder->where('course_id',$request->courseID)->first();
         if(!$order) {
             return response(['msg'=>'nocourse','status'=>403]);
         }
         Auth::user()->userVideoProgress->updateOrCreate(
-            ['video_id' => $request->videoID , 'user_id' => 48, 'course_id' => $request->courseID, 'order_id' =>$order->id ],
-            ['in_progress' => $request->isComplete ? '100' :  $request->inProgress, 'is_complete' => $request->isComplete]
+            ['video_id' => $request->videoID , 'user_id' => Auth::id(), 'course_id' => $request->courseID, 'order_id' =>$order->id ],
+            ['in_progress' => $request->isComplete ? '100' :  $request->inProgress, 'is_complete' => $request->isComplete ?$request->isComplete : 0]
         );
         $data = Auth::user()->userVideoProgress->where('order_id',$order->id)->get();
 
