@@ -17,14 +17,29 @@ class Coursespurchaseorders extends Model
     {
         return $this->belongsTo(User::class,'user_id');
     }
-
-    public function courseProgress()
+    public function courseVideos()
     {
-        return $this->hasMany(UserCourseProgress::class);
+        return $this->hasMany(CourseVideos::class,'course_id');
     }
 
-    // public function getCourseProgressAtribute()
-    // {
-    //     dd($this->courseProgress);
-    // }
+    public function coupon()
+    {
+        return $this->hasOne(PromoCode::class,'id','coupon_id');
+    }
+
+    public function getCourseVideosProgressAttribute()
+    {
+        $data = [];
+        foreach ($this->course->videos as $key) {
+            if($this->course->videos->count() > 0){
+                $data[] = [
+                    'course_id'=>$key->course_id,
+                    'video_id'=>$key->id,
+                    'in_progress'=>$key->videoProgress ? 1 : 0,
+                    'is_complete'=>$key->videoProgress ? $key->videoProgress->is_complete : 0,
+                ];
+            }
+        }
+        return $data;
+    }
 }

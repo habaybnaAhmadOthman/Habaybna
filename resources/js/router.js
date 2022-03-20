@@ -26,6 +26,7 @@ import Specialists from "./components/admin/specialist/Specialists.vue";
 import Coupons from "./components/admin/coupon/Coupons.vue";
 import PreviewCourse from "./components/admin/courses/Preview.vue";
 import CourseCertificate from "./components/admin/courses/Certificate.vue";
+import UsersProgress from "./components/admin/courses/UsersProgress.vue";
 import ShowCoupon from "./components/admin/coupon/Show.vue";
 import Others from "./components/admin/other/Others.vue";
 import Show from "./components/admin/parent/Show.vue";
@@ -81,6 +82,11 @@ const routes = [{
         path: "/admin/parent/create",
         component: CreateParent,
         name: "CreateParent"
+    },
+    {
+        path: "/admin/courses/users-progress",
+        component: UsersProgress,
+        name: "UsersProgress"
     },
     {
         path: "/admin/content/create",
