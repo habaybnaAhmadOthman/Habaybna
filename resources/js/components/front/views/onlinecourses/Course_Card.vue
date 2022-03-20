@@ -13,21 +13,9 @@
                 <!-- <img class="play-icon pointer" src="/images/play-icon.svg" /> -->
 
                 <!-- discount -->
-                <div
-                    class="discount-label d-flex white pr-30 align-center"
-                    v-if="!course.is_free && course.discount.has_discount"
-                >
-                    <span class="font-16">خصم</span>
-                    <span class="font-17 top-2 discount-val">{{
-                        course.discount.discount_value
-                    }}</span>
-                </div>
-                <div
-                    class="discount-label d-flex white align-center free-course-label"
-                    v-if="course.is_free"
-                >
-                    <span class="font-20">مجاناً</span>
-                </div>
+                <DiscountLabel :is-free="course.is_free" 
+                :hasDiscount="course.discount.has_discount" 
+                :discountValue="course.discount.discount_value" />
             </figure>
 
             <div class="p-side-20 pb-10 pt-10">
@@ -56,8 +44,10 @@
 </template>
 
 <script>
+import DiscountLabel from './Card_DiscountLabel.vue'
 export default {
     props: ['course'],
+    components: {DiscountLabel},
     computed:{
         courseSlog(){
             return this.course.title.split(' ').join('-')
@@ -72,6 +62,21 @@ export default {
 </script>
 
 <style scoped>
+.before-discount {
+    position: relative;
+    top: 1px;
+}
+.before-discount:after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: -3px;
+    bottom: 0;
+    margin: auto;
+    width: 120%;
+    height: 1px;
+    background: red;
+}
 .fav-box {
     position: absolute;
     background-color: rgb(255 255 255 / 90%);
@@ -99,42 +104,6 @@ export default {
     width: 55px;
     height: 55px;
     margin: auto;
-}
-.before-discount {
-    position: relative;
-    top: 1px;
-}
-.before-discount:after {
-    content: '';
-    position: absolute;
-    left: -4px;
-    top: -3px;
-    bottom: 0;
-    margin: auto;
-    width: 120%;
-    height: 1px;
-    background: red;
-}
-.discount-label {
-    background: url(/images/discount-label.svg) no-repeat;
-    background-size: 100% 100%;
-    width: 130px;
-    height: 53px;
-    position: absolute;
-    bottom: 20px;
-    right: 0;
-}
-.discount-val {
-    padding-right:3px;
-}
-
-.free-course-label {
-    padding-right: 40px;
-    background: url(/images/free-label.svg) no-repeat;
-}
-.free-course-label span{
-    position: relative;
-    top: 4px;
 }
 .related-courses-section .course-box .course-title {
     height: 60px;

@@ -11,6 +11,17 @@ export default {
         context.commit('setAllCourses',resp.data.courses)
         return resp.data.courses;
     },
+    // ******** get lesson data  ::: get
+    async getLessonData(context,payload) {
+        
+        const resp = await callApi("GET", "/api/course/video-actions",payload);
+        if (resp.status != 200) {
+            const error = new Error("fail to get courses");
+            throw error;
+        }
+        context.commit('setAllCourses',resp.data.courses)
+        return resp.data.courses;
+    },
     // ******** get user courses ::: get
     async getMyCourses({_,rootGetters,getters,commit,dispatch}) {
         try {
@@ -40,8 +51,13 @@ export default {
         })
         let RelatedCourses = []
         RelatedCourses = shuffledCourses.filter(course => {
-            if (course.id != courseID)
-                return course.categories.filter(category=>categories.includes(category.id))
+            if (course.id != courseID ) {
+                let hasRelatedCategories =  course.categories.filter(category=>{
+                    return categories.includes(category.id)
+                })
+                if (hasRelatedCategories.length > 0) return course;
+                
+            }
         })
         return RelatedCourses.slice(0,6);
     },

@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 
-                <CoboneCard v-if="videoSrc" :videoSrc="videoSrc" @paid-course="userBoughtCourse"></CoboneCard>
+                <CoboneCard v-if="videoSrc" :videoSrc="videoSrc"></CoboneCard>
             </div>
         </div>
     </div>
@@ -23,17 +23,13 @@
 import CoboneCard from './CoboneCard.vue'
 
 export default {
-    emits: ['open-share-modal','user-bought-course'],
+    emits: ['open-share-modal'],
     props: ['videoSrc', 'bannerTitle','videosCount','courseLength','is-lecture','lectureNumber'],
     components: {CoboneCard},
     methods: {
         openShareModal(){
             this.$emit('open-share-modal')
         },
-        // from cobone card , #fired when the user entered a cobone for free course
-        userBoughtCourse(){
-            this.$emit('user-bought-course')
-        }
     },
     computed: {
         // get yellowed header 
@@ -67,18 +63,5 @@ export default {
     bottom: 42px;
     left: 60px;
 }
-.vjs_video_3-dimensions {
-    height: 100%;
-}
 </style>
 <style>
-.vjs-big-play-button {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-}
-
-</style>

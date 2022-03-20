@@ -1,19 +1,42 @@
 <template>
     <div class="course-card w-30 radius-10 overflow-hidden bg-white relative">
         <figure class="d-flex relative overflow-hidden radius-10 figure-box">
+            
+            <!-- favourite -->
             <div v-if="isCourse" class="fav-box relative pointer"></div>
-            <video ref="videoPlayer" class="video-js main-img w-100"></video>
-        </figure>
-        <div class="d-flex box-details flex-wrap">
+            
+            <!-- video player container -->
+            <div class="art-app w-100 video-box"></div>
+            
+            <!-- discount label -->
+            <template v-if="isCourse && courseData">
+                <DiscountLabel class="course-discount" :is-free="courseData.is_free" 
+                :hasDiscount="courseData.discount.has_discount" 
+                :discountValue="courseData.discount.discount_value" />
+            </template>
 
+        </figure>
+        <div class="d-flex box-details flex-wrap" :class="{'course-options':isCourse}">
             <!-- for course page -->
             <template v-if="isCourse">
                 <button @click="checkLogin" class="btn-register-now white-i font-18 mb-20 bold flex-all w-100 pointer">إشترك الآن</button>
-                <form @submit.prevent="submitCoubon" class="cobone-form relative d-flex w-100">
-                    <input type="text" v-model="promoCode" class="w-80 cobone-input" placeholder="هل لديك كوبون أو قسيمة شرائية استخدمها الآن ؟">
-                    <input type="submit" value="" class="apply-cobone w-10 pointer">
-                </form>
+                <CoboneForm @buyCourse="buyCourse" @getPromoCode="setPromoCode" :coursePrice="courseData && courseData.price" :courseID="getCourseID" :courseName="courseData && courseData.title" :isLoggedIn="isLoggedIn" />
+                
+                <!-- hidden form -->
                 <PaymentForm v-if="paymentFormData" :paymentData="paymentFormData" @clearPaymentData="clearPaymentData"></PaymentForm>
+
+                <!-- discount amount -->
+                <div v-if="isCourse && courseData" class="d-flex space-between mt-25 align-center w-100">
+                    <span
+                        class="gray font-35 before-discount bold"
+                        ><template v-if="!courseData.is_free && courseData.discount.discount_price">{{ courseData.discount.discount_price }} JD</template></span
+                    >
+                    <span
+                        class="bold font-35 main-color"
+                        v-if="!courseData.is_free && courseData.price"
+                        >{{ courseData.price }} JD</span
+                    >
+                </div>
             </template>
             <!-- for lesson page -->
             <LectureOptions v-else-if="!isCourse"></LectureOptions>
@@ -22,22 +45,20 @@
 </template>
 
 <script>
-    import videojs from 'video.js';
-    import 'video.js/dist/video-js.css'
-
     import PaymentForm from './PaymentForm.vue'
+    import CoboneForm from './CoboneCard_CoboneForm.vue'
+    import DiscountLabel from '../onlinecourses/Card_DiscountLabel.vue'
     import LectureOptions from './CoboneCard_LectureOptions.vue'
     export default {
-        emits: ['paid-course'],
         props: ['videoSrc'],
-        components: {PaymentForm,LectureOptions},
+        components: {PaymentForm,LectureOptions,DiscountLabel,CoboneForm},
         computed: {
             isCourse(){
                 return !this.$route.params.lesson ? true : false
             },
             isLoggedIn() {
                 return this.$store.getters["user/isLoggedIn"];
-            }
+            },
         },
         data() {
             return {
@@ -47,23 +68,14 @@
                 },
                 showPaymentForm: false,
                 player: null,
-                videoOptions: {
-                    muted: false,
-                    autoplay: false,
-                    controls: true,
-                    sources: [
-                        {
-                            src:
-                                "https://cms.habaybna.net/sites/default/files/2021-10/IEP%20Teaser%20%281%29.mp4",
-                            type: "video/mp4"
-                        }
-                    ],
-                    playbackRates: [0.7, 1.0, 1.5, 2.0],
-                },
-                promoCode: '',
+                videoSource: null,
+                courseData: null,
             }
         },
         methods: {
+            setPromoCode(id){
+                this.hasPromoCode.id = id;
+            },
             checkLogin(){
                 if (this.isLoggedIn) {
                     this.buyCourse();
@@ -88,64 +100,62 @@
                 }
                 this.isLoading(false)
             },
-            async submitCoubon() {
-                if (!this.isLoggedIn) {
-                    this.$store.commit('loginModal',true);
-                    return false;
-                }
-                if (this.promoCode == '') {
-                    this.$store.commit('alertDialogMsg','يرجى إدخال كود الخصم')
-                    return false;
-                }
-                let checkPromoCode
-                this.isLoading(true)
-                try {
-                    checkPromoCode = await this.$store.dispatch('courses/promoCode',{
-                        courseID:this.getCourseID(),
-                        promoCode:this.promoCode,
-                        usage:'Course'
-                    });
-                    if (checkPromoCode.isValid) {
-                        this.hasPromoCode.id = checkPromoCode.id
-                    }
-                } catch (error) {
-                    console.log(error)
-                }
-                this.isLoading(false)
-                var dialogMsg = 'success'
-                if (!checkPromoCode) {
-                    dialogMsg = 'We are sorry!'
-                }
-                
-                if (checkPromoCode.discount_perc == 100) {
-                    this.$emit('paid-course')
-                } else {
-                    this.$store.commit('alertDialogMsg',dialogMsg)
-                }
-            },
             getCourseID(){
                 return this.$store.getters["courses/course"].id
             },
+            getCourseData(){
+                this.courseData =  this.$store.getters["courses/course"]
+            },
             isLoading(status) {
                 this.$store.commit('isLoading',status)
+            },
+            async beforeVideoInit(){
+                if (this.isCourse) {
+                    
+                } else {
+
+                }
+            },
+            initPlayer() {
+                const Artplayer = require('artplayer');
+                this.player = new Artplayer({
+                    container: '.art-app',
+                    playbackRate: true,
+                    setting: true,
+                    url: this.videoSrc,
+                    // url: 'https://test.habaybna.ps/storage/videos/promoVideo/coursePromoVideo-261944810_331247015097629_6572692877204065541_n.mp4',
+                    theme: '#632F63',
+                    // isLive: true,
+                    // playsInline: true,
+                    fullscreen: true,
+                    hotkey: false,
+                    miniProgressBar: true,
+                    icons: {
+                        indicator: '<img width="16" heigth="16" src="/images/indicator-video.svg">',
+                    },
+                });
+                this.player.on('ready', () => {
+                    // art.switchUrl(this.videoSrc, '');
+                    // this.player.seek = 4;
+                });
+                this.player.on('pause', () => {
+                    console.info(this.player.currentTime)
+                });
+            },
+            async initVideoPlayer() {
+                await this.beforeVideoInit()
+                this.initPlayer()
             }
         },
-        mounted() {
-            this.videoOptions.sources[0].src =  this.videoSrc
-            this.player = videojs(this.$refs.videoPlayer, this.videoOptions, function onPlayerReady() {
-                console.log('onPlayerReady', this);
-            })
-            this.player.on('ready', function() {
-                // this.addClass('my-example');
-            });
-            this.player.on('ended', function() {
-                console.log('endddd');
-            });
-            this.player.controlBar.progressControl.disable()
+        async mounted() {
+            if (this.isCourse)
+                this.getCourseData()
+            this.initVideoPlayer()
         },
         beforeDestroy() {
             if (this.player) {
-                this.player.dispose()
+                document.querySelector('.art-app').remove();
+                // this.player.destroy()
             }
         }
     }
@@ -161,31 +171,15 @@
 .box-details {
     padding: 20px 20px 40px 20px;
 }
+.course-options {
+    padding: 20px 20px 8px 20px;
+}
 .course-card {
     box-shadow: 0px 3px 6px #00000029;
     align-self: end;
     top: 170px;
 }
-.cobone-form {
-    height: 60px;
-}
-.cobone-input {
-    border: 1px solid #939598;
-    border-radius: 0 25px 25px 0;
-    color: #939598;
-    font-size: 12px;
-    padding: 20px 8px;
-}
-.apply-cobone {
-    background-color: #632F63;
-    position: relative;
-    border-radius: 25px 0 0 25px;
-    border: 0;
-    width: 20%;
-    background-image: url(/images/arrow-left.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-}
+
 .fav-box {
     position: absolute;
     background-color: rgb(255 255 255 / 90%);
@@ -214,17 +208,35 @@
     height: 55px;
     margin: auto;
 }
-.video-js {
-    height: 250px;
+.video-box {
+    height: 321px;
+}
+.before-discount {
+    position: relative;
+    top: 1px;
+}
+.before-discount:after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: -3px;
+    bottom: 0;
+    margin: auto;
+    width: 108%;
+    height: 1px;
+    background: red;
 }
 </style>
 <style>
-.vjs-big-play-button {
+.art-video-player .art-bottom .art-progress {
+    pointer-events: none !important;
+}
+.art-video-player .art-mask .art-state {
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-image:  url(/images/play-icon.svg)!important;
+    right: 0!important;
+    bottom: 0!important;
+    background-image: url(/images/play-icon.svg)!important;
     background-repeat: no-repeat!important;
     background-size: 84px 84px!important;
     background-position: center center!important;
@@ -232,12 +244,11 @@
     box-shadow: none !important;
     height: 84px!important;
     width: 84px!important;
+    opacity: 1!important;
+    margin: auto;
 }
-.video-js .vjs-big-play-button {
-    background-color:transparent !important;
+.art-video-player .art-mask .art-state svg {
+    display: none !important;
 }
-.vjs-big-play-button:before, .video-js .vjs-big-play-button .vjs-icon-placeholder:before {
-    content: ""!important;
-    display: none;
-}
+
 </style>

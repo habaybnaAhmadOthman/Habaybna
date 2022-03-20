@@ -4,7 +4,6 @@
         <Banner 
         @open-share-modal="showShareDialog"
         :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"
-        @user-bought-course="showWatchCourseDialog"
         ></Banner>
         <div class="container page-info">
             <CourseInfo :course-name="courseName" :description="courseDescription" :whatShouldLearn="whatShouldLearn"></CourseInfo>
@@ -109,7 +108,6 @@ export default {
                 this.whatShouldLearn  = data.what_should_learn;
                 this.videosList  = data.videos_title_length;
                 this.videosCount  = data.videos_count;
-
                 // show related courses section
                 this.isDataReady = true;
                 

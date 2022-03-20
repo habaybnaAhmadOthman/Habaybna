@@ -57,7 +57,6 @@ export default {
                     courseLectures = await this.$store.dispatch('courses/getCourseLectures',{courseID:courseData.id});
                 }
                 let {lectureData,lectureIndex}  = this.getLectureDetails(courseLectures)
-                console.log(lectureData)
                 if ( lectureData) {
                     this.lectureNumber = lectureIndex + 1
                     lectureData.index = lectureIndex

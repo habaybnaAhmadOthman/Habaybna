@@ -12,7 +12,7 @@
                     <img class="mb-40" :src="`/images/${statusIcon}.png`" width="100" height="100" />
                     <p class="title-line font-27 mb-20">{{title}}</p>
                     <p class="black-2 font-27 mb-40">{{description}}</p>
-                    <div class="d-flex modal-options flex-end">
+                    <div class="d-flex modal-options flex-end" :class="optionsClass">
                         <slot></slot>
                     </div>
                 </div>
@@ -69,6 +69,11 @@ export default {
             type: Boolean,
             required: false,
             default: false
+        },
+        optionsClass: {
+            type: String,
+            required: false,
+            default: ''
         }
     },
     emits: ["close"],
@@ -148,5 +153,7 @@ dialog {
         transform: translateY(0) scale(1);
     }
 }
-
+.space-between-i {
+    justify-content: space-between!important;
+}
 </style>
