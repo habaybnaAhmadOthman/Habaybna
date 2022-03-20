@@ -113,7 +113,7 @@ export default {
     // ******** logout modal :::
     async logoutModal({commit,rootState}){
         const resp = await callApi("POST", "/logout");
-        if (resp.status != 200) {
+        if (resp.status != 204) {
             const error = new Error("fail to logout");
             throw error;
         }

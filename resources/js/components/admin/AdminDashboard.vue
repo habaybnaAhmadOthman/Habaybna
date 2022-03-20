@@ -42,7 +42,6 @@ footer {
   min-height: 60px;
   margin-top: auto;
 }
-
 </style>
 <template>
   <div class="layout">
@@ -60,10 +59,6 @@ footer {
       <Layout>
         <Sider hide-trigger :style="{ background: '#fff' }">
           <Menu theme="light" width="auto" :open-names="[]">
-            <MenuItem name="1">
-              <Icon type="ios-videocam-outline" size="24" />
-              <router-link to="/admin/courses">الدورات التدريبية</router-link>
-            </MenuItem>
             <Submenu name="2">
               <template slot="title">
                 <Icon type="ios-people" size="24" :style="{ margin: '1px' }" />
@@ -82,6 +77,25 @@ footer {
                 <router-link to="/admin/others"> الاخرون </router-link>
               </MenuItem>
             </Submenu>
+            <Submenu name="1">
+              <template slot="title">
+                <Icon type="ios-videocam-outline" size="24" />
+                الدورات التدريبية
+              </template>
+              <MenuItem name="1-1">
+                <Icon type="ios-videocam-outline" size="24" />
+                <router-link to="/admin/courses">
+                  جميع الدورات التدريبية</router-link
+                >
+              </MenuItem>
+              <MenuItem name="1-2">
+                <Icon type="ios-videocam-outline" size="24" />
+                <router-link to="/admin/courses/users-progress">
+                    الدورات-حالة المستخدمين</router-link
+                >
+              </MenuItem>
+            </Submenu>
+
             <MenuItem name="3">
               <Icon type="ios-code" size="24" />
               <router-link to="/admin/coupons"> الكوبونات </router-link>

@@ -7,9 +7,5 @@ use App\Exports\CoursesOrdersExport;
 
 class CoursespurchaseordersController extends Controller
 {
-    public function exportToExcel(Request $request)
-    {
-
-
-    }
+    
 }

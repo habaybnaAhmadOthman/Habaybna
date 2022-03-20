@@ -14,10 +14,11 @@ class PaymentController extends Controller
 {
     public function index(GetCoursesOrders $getAllCoursesOrders)
     {
+       
         $orders = $getAllCoursesOrders->execute();
         return response($orders, 200);
     }
-    
+
     public function coursePayment(Request $request,PaymentCoures $paymentCoures )
     {
         $data = $paymentCoures->execute($request->all());

@@ -70,9 +70,14 @@
                 player: null,
                 videoSource: null,
                 courseData: null,
+                lectureData: null,
             }
         },
         methods: {
+            getLectureData(){
+                this.lectureData = this.$store.getters["courses/currentLecture"];
+                console.log(this.lectureData)
+            },
             setPromoCode(id){
                 this.hasPromoCode.id = id;
             },
@@ -139,7 +144,12 @@
                     // this.player.seek = 4;
                 });
                 this.player.on('pause', () => {
-                    console.info(this.player.currentTime)
+                    this.$store.dispatch('courses/videoAction',{
+                        videoID: this.lectureData.id,
+                        courseID: this.lectureData.course_id,
+                        inProgress: this.player.currentTime,
+                        type: 'progress'
+                    })
                 });
             },
             async initVideoPlayer() {
@@ -150,6 +160,8 @@
         async mounted() {
             if (this.isCourse)
                 this.getCourseData()
+            else 
+                this.getLectureData()
             this.initVideoPlayer()
         },
         beforeDestroy() {

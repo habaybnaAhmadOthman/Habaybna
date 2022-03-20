@@ -82,5 +82,10 @@ class Courses extends Model
 
     }
 
+    public function courseProgress()
+    {
+        return $this->hasMany(courseProgress::class,'course_id');
+    }
+
 
 }

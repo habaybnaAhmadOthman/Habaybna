@@ -14,8 +14,6 @@ use App\UserInterest;
 
 // use App\Specialist;
 
-
-
 class UserController extends Controller
 {
     public function getUserData()
@@ -247,6 +245,29 @@ class UserController extends Controller
 
     public function userCourses()
     {
-        return Auth::user()->user_courses ;
+        return response( Auth::user()->user_courses,200) ;
+    }
+
+    public function setVideoActions(Request $request)
+    {
+        // User::findorfail(48)
+        $order = Auth::user()->coursePurchaseOrder->where('course_id',$request->courseID)->first();
+        if(!$order) {
+            return response(['msg'=>'nocourse','status'=>403]);
+        }
+        Auth::user()->userVideoProgress->updateOrCreate(
+            ['video_id' => $request->videoID , 'user_id' => 48, 'course_id' => $request->courseID, 'order_id' =>$order->id ],
+            ['in_progress' => $request->isComplete ? '100' :  $request->inProgress, 'is_complete' => $request->isComplete]
+        );
+        $data = Auth::user()->userVideoProgress->where('order_id',$order->id)->get();
+
+        if(!$data){
+            return response(['msg'=>'something went wronge try again ','status'=>403]);
+        }
+
+        $data->makeHidden(['created_at','updated_at','user_id','order_id','id']);
+
+        return response([$data,200]);
+
     }
 }

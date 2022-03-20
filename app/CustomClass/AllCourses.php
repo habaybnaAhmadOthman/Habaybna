@@ -3,6 +3,7 @@ namespace app\CustomClass;
 
 use App\AssignedCoupons;
 use App\Courses;
+use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Object_ as TypesObject_;
 use PhpParser\Node\Expr\Cast\Object_;
 
@@ -35,10 +36,13 @@ class AllCourses {
                             'discount_value'=>"50%",
                             'discount_price'=>$one->price - $one->price * (50/100),
                             ],
-                            'categories'=>$one->category_name
+                            'categories'=>$one->category_name,
+                            'course_progress' => Auth::check() ? $this->getCourseProgress($one) : [],
                         ];
-                    }
+
+
                 }
+            }
             }
             // dd($data);
             return $data;
@@ -63,7 +67,24 @@ class AllCourses {
         }
     }
 
+    private function getCourseProgress($one)
+    {
+        $data=[];
+        if( Auth::user()->user_courses > 0){
+            foreach (Auth::user()->user_courses  as $key) {
+                if($one->id == $key){
 
+                    return $data []=  [
+                          Auth::user()->userVideoProgress->where('course_id',$one->id)
+                    ];
+             array_push($data,$key);
+                }
+
+            }
+
+             $data;
+        }
+    }
 
 
 
