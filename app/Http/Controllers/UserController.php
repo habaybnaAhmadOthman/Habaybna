@@ -250,7 +250,6 @@ class UserController extends Controller
 
     public function setVideoActions(Request $request)
     {
-        dd($request->isComplete);
         // User::findorfail(48)
         $order = Auth::user()->coursePurchaseOrder->where('course_id',$request->courseID)->first();
         if(!$order) {
