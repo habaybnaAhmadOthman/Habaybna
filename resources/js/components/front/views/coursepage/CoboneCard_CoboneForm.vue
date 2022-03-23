@@ -155,4 +155,9 @@ export default {
     align-items: center;
     justify-content: center;
 }
+@media (max-width: 767px) {
+    .cobone-form {
+        height: 50px;
+    }
+}
 </style>

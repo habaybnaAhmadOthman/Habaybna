@@ -142,7 +142,12 @@ header {
 }
 @media (max-width: 767px) {
     .logo img {
-        width:90px;
+        width:50px;
+        height: 34px;
+    }
+    header {
+        padding-left: 12px;
+        padding-right: 12px;
     }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="course-box bg-white shadow w-31 radius-10 relative">
+    <div class="course-box bg-white shadow w-31 radius-10 relative w-100-p">
         <div class="fav-box relative pointer"></div>
         <router-link @click.native="forceRefresh" :to="`/courses/${courseSlog}`">
             <figure class="d-flex relative radius-10 overflow-hidden figure-box">
@@ -20,7 +20,7 @@
 
             <div class="p-side-20 pb-10 pt-10">
                 <p class="yellow font-18 bold mb-10">الدورة التدريبية</p>
-                <p class="font-20 black-2 mb-15 bold two-line course-title">{{ course.title }}</p>
+                <p class="font-20 font-18-p black-2 mb-15 bold two-line course-title">{{ course.title }}</p>
                 <div class="d-flex space-between">
                     <div class="d-flex align-center">
                         <span
@@ -107,5 +107,11 @@ export default {
 }
 .related-courses-section .course-box .course-title {
     height: 60px;
+}
+@media (max-width: 767px) {
+    .fav-box {
+        width: 40px;
+        height: 40px;
+    }
 }
 </style>

@@ -2,6 +2,9 @@ export default {
     setAllCourses(state,courses) {
         state.courses = courses;
     },
+    setMyCourses(state,courses) {
+        state.myCourses = courses;
+    },
     // setCourseID(state,courseID) {
     //     state.courseID = courseID
     // },

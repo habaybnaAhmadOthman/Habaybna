@@ -1,7 +1,7 @@
 <template>
     <div class="w-100 lectures-options">
-        <router-link class="btn-register-now white-i font-18 bold flex-all w-100 pointer mb-20 next-arrow relative" @click.native="forceRefresh" :to="getLectureURL('next')" v-if="hasNextLecture"> التالي</router-link>
-        <router-link class="btn-register-now white-i font-18 bold flex-all w-100 pointer relative prev-arrow" @click.native="forceRefresh" :to="getLectureURL('prev')" v-if="hasPrevLecture"> السابق</router-link>
+        <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer mb-20 next-arrow relative" @click.native="forceRefresh" :to="getLectureURL('next')" v-if="hasNextLecture"> التالي</router-link>
+        <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative prev-arrow" @click.native="forceRefresh" :to="getLectureURL('prev')" v-if="hasPrevLecture"> السابق</router-link>
     </div>
 </template>
 
@@ -83,5 +83,10 @@
 }
 .lectures-options:only-child a {
     margin-bottom: 0!important;
+}
+@media (max-width: 767px) {
+    .btn-register-now {
+        height: 50px;
+    }
 }
 </style>

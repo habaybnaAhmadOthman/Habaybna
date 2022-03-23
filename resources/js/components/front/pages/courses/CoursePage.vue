@@ -6,11 +6,18 @@
         :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"
         ></Banner>
         <div class="container page-info">
-            <CourseInfo :course-name="courseName" :description="courseDescription" :whatShouldLearn="whatShouldLearn"></CourseInfo>
-            
-            <ContentTable :rows="videosList" type="course" :title="'محتوى الدورة التدريبية'" class="pt-20"></ContentTable>
-
-            <AboutSpecialists v-if="specialists" :specialists="specialists"></AboutSpecialists>
+            <div class="mo p-side-12-p mt-20-p">
+                <TabsToggle :tabs="mobileTabs"></TabsToggle>
+            </div>
+            <div tab-name="about" class="active">
+                <CourseInfo  :course-name="courseName" :description="courseDescription" :whatShouldLearn="whatShouldLearn"></CourseInfo>
+            </div>
+            <div tab-name="table">
+                <ContentTable  :rows="videosList" type="course" :title="'محتوى الدورة التدريبية'" class="pt-20"></ContentTable>
+            </div>
+            <div tab-name="coaches" class="mt-50 pt-10 mt-20-p pt-0-p">
+                <AboutSpecialists v-if="specialists" :specialists="specialists"></AboutSpecialists>
+            </div>
             <div class="mt-60">
                 <RelatedCourses v-if="isDataReady"></RelatedCourses>
             </div>
@@ -65,13 +72,14 @@ import ShareCourseModal from '../../views/coursepage/ShareCourseModal.vue'
 import CombaniesBanner from '../../layouts/CompaniesBanner.vue'
 import TheFooter from '../../layouts/TheFooter.vue'
 import TheHeader from '../../layouts/header/TheHeader.vue'
+import TabsToggle from '../../layouts/TabsToggle.vue'
 import infoModalMixin from '../../mixins/infoModal'
 export default {
     props: ['course'],
     mixins: [infoModalMixin],
     components: { 
         CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter,TheHeader,
-        ShareCourseModal
+        ShareCourseModal,TabsToggle
     },
     data() {
         return {
@@ -87,17 +95,38 @@ export default {
             lectures: [],
             showShareModal: false,
             isDataReady: false,
-            
+            mobileTabs: [
+                {
+                    title: 'عن الدورة' ,
+                    name: 'about'
+                },
+                {
+                    title: 'الدروس' ,
+                    name: 'table'
+                },
+                {
+                    title: 'المدربين' ,
+                    name: 'coaches'
+                },
+            ]
         }
     },
     created() {
         this.getCourseDetails()
+    },
+    computed: {
+        // isLoggedIn(){
+        //     return this.$store.getters["user/isLoggedIn"];
+        // }
     },
     methods: {
         async getCourseDetails(){
             try {
                 this.isFromPaymentPage()
                 let data = await this.$store.dispatch('courses/getCourseDetails',this.course);
+                // if (!data && this.isLoggedIn) {
+                //     await this.$store.dispatch('courses/getCourseDetails',this.course);
+                // }
                 this.courseID = data.id;
                 this.trailerSrc = data.promo_video;
                 this.coverPhoto = data.cover_photo;

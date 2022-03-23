@@ -1,9 +1,9 @@
 <template>
     <div class="exam-question">
-        <h2 class="main-color font-27 bold mb-30">{{question.title}}</h2>
+        <h2 class="main-color font-27 font-20-p mb-20-p bold mb-30">{{question.title}}</h2>
         <div class="quiz-box">
             <div class="form-group" v-for="item in question.options" :key="item.id">
-                <label class="checkbox black-2 font-27" :for="item.id">
+                <label class="checkbox black-2 font-27 font-16-p" :for="item.id">
                     <input type="radio" :id="item.id" :value="item.id" v-model="answer"  />
                     {{item.title}}
                 </label>
@@ -88,5 +88,25 @@ input[type="radio"]:checked::before {
 }
 .submit-box {
     margin-top: 190px;
+}
+@media (max-width: 767px) {
+    input[type="radio"] {
+        min-width: 25px;
+        min-height: 25px;
+        width: 25px;
+        height: 25px;
+        margin-left: 10px;
+        transform: translateY(0px);
+    }
+    input[type="radio"]:checked::before {
+        width: 32px;
+        height: 32px;
+    }
+    .quiz-box .form-group:not(:last-of-type) {
+        margin-bottom: 20px;
+    }
+    .submit-box {
+        margin-top: 30px;
+    }
 }
 </style>

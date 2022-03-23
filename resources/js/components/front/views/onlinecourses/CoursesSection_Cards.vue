@@ -1,11 +1,11 @@
 <template>
-    <div class="training-courses-section pb-30">
+    <div class="training-courses-section pb-30 pb-20-p">
         <div class="container">
             <div class="courses-container">
                 <template v-if="filteredCourses.length">
                     <div class="courses-list d-flex flex-wrap">
                         <CourseCard v-for="(course, index) in filteredCourses" :course="course" :key="index"></CourseCard>
-                        <div class="course-box shadow w-31 radius-10 more main-bg" v-if="showMoreCard">
+                        <div class="course-box shadow w-31 radius-10 more main-bg w-100-p" v-if="showMoreCard">
                             <router-link to="/all-courses" class="white-i font-23 h-100 d-block w-100">اكتشف المزيد</router-link>
                         </div>
                     </div>
@@ -46,9 +46,23 @@ export default {
     position: absolute;
     pointer-events: none;
 }
-/* .course-box.more a {
+.course-box.more a {
     display: flex;
     align-items: end;
     padding:32px;
-} */
+}
+@media (max-width: 767px) {
+    .courses-list {
+        row-gap: 20px;
+    }
+    .course-box.more {
+        min-height: 202px;
+    }
+    .course-box.more::before {
+        background-image: url(/images/more-courses-mo.png); 
+    }
+    .course-box.more a {
+        padding: 30px;
+    }
+}
 </style>

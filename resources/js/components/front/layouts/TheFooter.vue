@@ -1,8 +1,8 @@
 <template>
     <footer class="main-footer bg-gray-2 pt-30 pb-30">
         <div class="container">
-                <div class="d-flex footer-row">
-                    <div class="d-flex w-70">
+                <div class="d-flex footer-row flex-wrap-p p-side-12-p">
+                    <div class="d-flex w-70 flex-wrap-p w-100-p">
                         <div class="hab-library footer-col">
                             <h6 class="black bold font-20 mb-20">مكتبة حبايبنا</h6>
                             <ul>
@@ -47,7 +47,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="left-side-info w-30 pr-30">
+                    <div class="left-side-info w-30 pr-30 w-100-p">
                         <h6 class="black bold font-20 mb-20">المشاركة معنا</h6>
                         <p class="black font-16 mb-10">هل ترغب بالمشاركة في منصة حبايبنا؟</p>
                         <p class="font-15"> هل ترغب بأن تساهم بتجربتك أو خبرتك في مجال الإعاقات الذهنية والتطورية؟ هل تود أن تترك أثر مستدام قد يغير حياة طفل ذو إعاقة ذهنية  وحياة عائلة بأكملها وأن تكون جزء جميل من حبايبنا.نت؟</p>
@@ -83,5 +83,15 @@ li {
 }
 .left-side-info {
     border-right: 2px solid #c4c4c4;
+}
+@media (max-width: 767px) {
+    .footer-col {
+        flex: auto;
+        width: 50%;
+    }
+    .left-side-info {
+        padding: 0;
+        border: 0;
+    }
 }
 </style>

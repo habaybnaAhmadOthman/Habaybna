@@ -9,35 +9,14 @@
             >
                 <div class="modal-body">
                     <img v-if="!fixed" @click="tryClose" class="close-icon-modal pointer" src="/images/close-icon-color.png" width="34" height="34" />
-                    <img class="mb-40" :src="`/images/${statusIcon}.png`" width="100" height="100" />
+                    <img class="mb-40 mb-20-p d-block m-side-auto-p status-img" :src="`/images/${statusIcon}.png`" width="100" height="100" />
                     <p class="title-line font-27 mb-20">{{title}}</p>
-                    <p class="black-2 font-27 mb-40">{{description}}</p>
+                    <p class="black-2 font-20-p font-27 mb-40">{{description}}</p>
                     <div class="d-flex modal-options flex-end" :class="optionsClass">
                         <slot></slot>
                     </div>
                 </div>
             </dialog>
-            <!-- <dialog
-                class="overflow-hidden bg-white w-50 w-90-p radius-12 border-0 m-0 p-0 alert-modal"
-                v-if="show"
-                open
-            >
-                <div class="header white w-100 p-side-15 pt-15 pb-15 pt-10-p pb-10-p">
-                    <slot name="header">
-                        <p class="bold font-20 font-16-p">{{ title }}</p>
-                    </slot>
-                </div>
-                <section class="p-side-15 pt-15 pb-15 body">
-                    <slot></slot>
-                </section>
-                <menu class="d-flex flex-end ml-10 mb-10 modal-footer">
-                    <slot name="actions">
-                        <button class="btn mb-10 ml-10" @click="tryClose">
-                            حسنا
-                        </button>
-                    </slot>
-                </menu>
-            </dialog> -->
         </transition>
     </aside>
 </template>
@@ -155,5 +134,18 @@ dialog {
 }
 .space-between-i {
     justify-content: space-between!important;
+}
+@media (max-width: 767px) {
+    .close-icon-modal {
+        left: 18px;
+        top: 18px;
+    }
+    dialog {
+        padding: 20px 12px;
+    }
+    .status-img {
+        width: 58px;
+        height: 58px;
+    }
 }
 </style>

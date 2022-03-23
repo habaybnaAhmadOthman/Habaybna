@@ -1,7 +1,7 @@
 <template>
     <div class="all-courses-page">
         <TheHeader></TheHeader>
-        <section class="learn-section pt-100">
+        <section class="learn-section pt-100 pt-20-p">
             <CoursesSection :showMoreCard="false"></CoursesSection>
         </section>
         <CombaniesBanner></CombaniesBanner>
