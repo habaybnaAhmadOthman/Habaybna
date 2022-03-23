@@ -284,13 +284,20 @@ export default {
         );
         this.$Message.success("تم انشاء الدورة");
         self.push({
-          name: "UploadVideo",
+            name: "UploadVideo",
           params: { data: resp.data.course_id },
         });
         this.loading = false;
       }
     },
     validatForm() {
+            console.log(this.form.is_free );
+
+        if (this.form.coursePrice == "" && !this.form.is_free ) {
+          this.formValidation.coursePrice = false;
+        } else {
+          this.formValidation.coursePrice = true;
+        }
       if (this.form.courseTitle == "") {
         this.formValidation.courseTitle = false;
       } else {
@@ -326,11 +333,6 @@ export default {
       } else {
         this.formValidation.is_free = true;
       }
-      if (this.form.coursePrice == "") {
-        this.formValidation.coursePrice = false;
-      } else {
-        this.formValidation.coursePrice = true;
-      }
       if (this.form.courseCategory.length < 1) {
         this.formValidation.courseCategory = false;
       } else {
@@ -362,7 +364,7 @@ export default {
   margin: 10px 0;
 }
 .text-area p {
-  min-height: 90px !important;
+  /* min-height: 90px !important; */
 }
 .question-form span {
   display: block !important ;

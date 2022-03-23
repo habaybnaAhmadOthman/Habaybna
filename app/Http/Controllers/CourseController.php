@@ -177,7 +177,7 @@ class CourseController extends Controller
         $specialists = Specialist::all();
         $data = [];
         foreach ($specialists as  $specialist) {
-            $specialist->user->toArray();
+            $specialist->user;
             $specialist->toArray();
             array_push($data,$specialist);
         }
