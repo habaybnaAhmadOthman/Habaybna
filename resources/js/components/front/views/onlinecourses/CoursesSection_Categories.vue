@@ -1,10 +1,10 @@
 
 <template>
     <div class="p-side-0-p courses-filter" v-if="filters.length > 0">
-        <div class="relative mb-35">
+        <div class="relative mb-35 mb-20-p">
             <div class="courses-categories-swiper my-swiper" dir="rtl">
                 <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
+                <div class="swiper-wrapper swipe-box-p p-0-p">
                     <!-- Slides -->
                     <div v-for="(category, index) of filters" :key="index" :index="index" class="swiper-slide">
                         <li class="">
@@ -13,12 +13,12 @@
                                 type="checkbox"
                                 :id="category.id"
                                 :value="category.val"
-                            /><label class="center gray radius-60 font-18" :for="category.id">{{category.val}}</label>
+                            /><label class="center gray radius-60 font-18 font-16-p" :for="category.id">{{category.val}}</label>
                         </li>
                     </div>
                 </div>
-                <div class="swiper-button-next categories-filter-next"></div>
-                <div class="swiper-button-prev categories-filter-prev"></div>
+                <div class="swiper-button-next categories-filter-next do"></div>
+                <div class="swiper-button-prev categories-filter-prev do"></div>
             </div>
         </div>
     </div>
@@ -45,9 +45,12 @@ export default {
                 temp.push({id:category.id,val: category.title,isChecked: false})
             });
             this.filters = temp;
-            setTimeout(()=>{
-                this.initSwiper();
-            },1000)
+            // desktop only
+            if (!window.matchMedia("(max-width: 677px)").matches) {
+                setTimeout(()=>{
+                    this.initSwiper();
+                },1000)
+            }
         }
     },
     setFilter(e) {
@@ -111,8 +114,8 @@ li input[type="checkbox"] {
 }
 
 @media (max-width: 767px) {
-    li label[data-v-3023a41f] {
-        padding: 4px 14px;
+    li label {
+        padding: 9px 23px;
         min-width: auto;
     }
 }

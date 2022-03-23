@@ -1,5 +1,5 @@
 <template>
-    <div class="course-card w-30 radius-10 overflow-hidden bg-white relative">
+    <div class="course-card w-30 radius-10 overflow-hidden bg-white relative w-100-p m-side-12-p">
         <figure class="d-flex relative overflow-hidden radius-10 figure-box">
             
             <!-- favourite -->
@@ -19,14 +19,14 @@
         <div class="d-flex box-details flex-wrap" :class="{'course-options':isCourse}">
             <!-- for course page -->
             <template v-if="isCourse">
-                <button @click="checkLogin" class="btn-register-now white-i font-18 mb-20 bold flex-all w-100 pointer">إشترك الآن</button>
+                <button @click="checkLogin" class="btn-register-now white-i font-18 font-16-p mb-20 bold flex-all w-100 pointer mb-10-p">إشترك الآن</button>
                 <CoboneForm @buyCourse="buyCourse" @getPromoCode="setPromoCode" :coursePrice="courseData && courseData.price" :courseID="getCourseID" :courseName="courseData && courseData.title" :isLoggedIn="isLoggedIn" />
                 
                 <!-- hidden form -->
                 <PaymentForm v-if="paymentFormData" :paymentData="paymentFormData" @clearPaymentData="clearPaymentData"></PaymentForm>
 
                 <!-- discount amount -->
-                <div v-if="isCourse && courseData" class="d-flex space-between mt-25 align-center w-100">
+                <div v-if="isCourse && courseData" class="d-flex space-between mt-25 align-center w-100 mt-10-p">
                     <span
                         class="gray font-35 before-discount bold"
                         ><template v-if="!courseData.is_free && courseData.discount.discount_price">{{ courseData.discount.discount_price }} JD</template></span
@@ -114,13 +114,13 @@
             isLoading(status) {
                 this.$store.commit('isLoading',status)
             },
-            async beforeVideoInit(){
-                if (this.isCourse) {
+            // async beforeVideoInit(){
+            //     if (this.isCourse) {
                     
-                } else {
+            //     } else {
 
-                }
-            },
+            //     }
+            // },
             initPlayer() {
                 const Artplayer = require('artplayer');
                 this.player = new Artplayer({
@@ -131,7 +131,7 @@
                     // url: 'https://test.habaybna.ps/storage/videos/promoVideo/coursePromoVideo-261944810_331247015097629_6572692877204065541_n.mp4',
                     theme: '#632F63',
                     // isLive: true,
-                    // playsInline: true,
+                    playsInline: true,
                     fullscreen: true,
                     hotkey: false,
                     miniProgressBar: true,
@@ -139,29 +139,60 @@
                         indicator: '<img width="16" heigth="16" src="/images/indicator-video.svg">',
                     },
                 });
+                // player events fired only for LESSONS
+                if (!this.isCourse)
+                    this.addPlayerEvents()
+            },
+            addPlayerEvents(){
                 this.player.on('ready', () => {
                     // art.switchUrl(this.videoSrc, '');
-                    // this.player.seek = 4;
+                    
+                    console.log(this.lectureData.progress)
+                    if (this.lectureData.progress) {
+                        setTimeout(() => {
+                            this.player.seek = this.lectureData.progress
+                        },2000)
+                    }
                 });
                 this.player.on('pause', () => {
-                    this.$store.dispatch('courses/videoAction',{
-                        videoID: this.lectureData.id,
-                        courseID: this.lectureData.course_id,
-                        inProgress: this.player.currentTime,
-                        type: 'progress'
-                    })
+                    console.log('pause :: ')
+                    this.addVideoAction('progress')
+                });
+
+                this.player.on('video:ended', () => {
+                    this.addVideoAction('complete')
                 });
             },
-            async initVideoPlayer() {
-                await this.beforeVideoInit()
+            addVideoAction(type) {
+                var params =  {
+                    videoID: this.lectureData.id,
+                    courseID: this.lectureData.course_id,
+                    inProgress: this.player.currentTime,
+                    type: type // complete || progress
+                }
+                
+                console.log(this.player.currentTime)
+                this.$store.dispatch('courses/videoAction',params)
+            },
+            initVideoPlayer() {
+                // await this.beforeVideoInit()
                 this.initPlayer()
+            },
+            getLectureProgress(){
+                this.lectureData.progress = ''
+                if (this.courseData.course_progress && this.courseData.course_progress[0] && this.courseData.course_progress[0][this.lectureData.index]) {
+                    this.lectureData.progress = this.courseData.course_progress[0][this.lectureData.index].in_progress
+                }
             }
         },
-        async mounted() {
-            if (this.isCourse)
-                this.getCourseData()
-            else 
+        mounted() {
+            this.getCourseData()
+            if (!this.isCourse) {
                 this.getLectureData()
+                this.getLectureProgress()
+            }
+            
+                
             this.initVideoPlayer()
         },
         beforeDestroy() {
@@ -238,8 +269,25 @@
     height: 1px;
     background: red;
 }
+@media (max-width: 767px) {
+    .btn-register-now {
+        height: 50px;
+    }
+    .video-box {
+        height: 216px;
+    }
+    .course-options {
+        padding: 10px 16px 10px 16px;
+    }
+    .course-card {
+        z-index: 0;
+    }
+}
 </style>
 <style>
+.art-video-player {
+    z-index: 1!important;
+}
 .art-video-player .art-bottom .art-progress {
     pointer-events: none !important;
 }

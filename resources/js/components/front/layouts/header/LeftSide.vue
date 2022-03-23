@@ -39,9 +39,7 @@
                 تسجيل الخروج
             </button>
         </template>
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAXCAYAAAARIY8tAAAABHNCSVQICAgIfAhkiAAAAUVJREFUSEvtletNw0AQhL+pAOggqQA6IHQAFRAqgFQAqQA6gA6ACog7oAPcAVDBorHuosNK/BCCP2Sl00m+8c7srM8rNkREzIBL4BR4BRaSViU0Iq4SZgI8JUzdTqf2g4jYB96AT+AhkRwCJ5kkIubAPfCcBJjsXdJ0CIHBt8BUUp0IrX7PCQoBlSRXSER4fyxFZKJNFdwA18CBpI+UwJa9ABeALfF5I6B1vq6yi8AJbJFVnxUkTuZ+HHkv1Btv9bZnkvFbCZIie3zn6tNur12Zk7kfyyTgHDDW/ZpJsoBvoYhwIw38jViYwCqHRJVUG+ueHA94qRpDsJRkm/zV5A+hj+NvCFyuV1+sios2/J2+rD89by7aQE/H9qC5dDuCrhbtLGp+2f/Iojzyukoee9GaibcemRHhSeWBvy3qYkR68Hj1Yr8A4IPu+TfvWYgAAAAASUVORK5CYII="
-            class="mo"
-            @click="toggleMobileMenu">
+        <img src="/images/menu-icon.svg" class="mo" @click="toggleMobileMenu">
             <transition name="swing">
                 <MobileMenu :isLoggedIn="isLoggedIn" @closeMobileMenu="toggleMobileMenu" @logout="logout" v-if="isMobileMenuOpened" :userAvatar="userAvatar"></MobileMenu>
             </transition>

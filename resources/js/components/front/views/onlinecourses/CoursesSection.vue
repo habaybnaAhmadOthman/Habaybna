@@ -1,8 +1,8 @@
 <template>
   <div>
     <section class="learn-section bg-gray">
-      <div class="container">
-        <h2 class="title-line mb-40">الدورات التدريبية</h2>
+      <div class="container p-side-12-p">
+        <h2 class="title-line mb-40 mb-20-p">الدورات التدريبية</h2>
         <Categories @change-filter="setFilters"></Categories>
         <template >
           <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn" ></Courses>

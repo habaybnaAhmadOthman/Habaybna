@@ -1,42 +1,10 @@
 <template>
-    <div class="about-course">
+    <div class="about-course p-side-12-p">
         <CourseInfoText :header="'نظرة عامة على الدورة'" :description="description"></CourseInfoText>
-        <div class="mb-40 what-should-learn mt-20">
-            <h3 class="title-line font-27 mb-40">ماذا سيتعلم المشاركون</h3>
-            <div class="font-27 black-2 pt-20" v-html="whatShouldLearn">
-
-                <!-- <div class="d-flex learn-points flex-wrap space-between">
-                 <h3 class="mb-40">في هذا المساق سوف نتعلم:</h3>
-                    <p>المفاهيم والمصطلحات الأساسية</p>
-                    <p>المفاهيم والمصطلحات الأساسية</p>
-                    <p>المفاهيم والمصطلحات الأساسية</p>
-                    <p>المفاهيم والمصطلحات الأساسية</p>
-                    <p>المفاهيم والمصطلحات الأساسية</p>
-                    <p>المفاهيم والمصطلحات الأساسية</p>
-                    <p>المفاهيم والمصطلحات الأساسية</p>
-                    <p>المفاهيم والمصطلحات الأساسية</p>
-                    <p>المفاهيم والمصطلحات الأساسية</p>
-                    <p>المفاهيم والمصطلحات الأساسية</p>
-                </div>  -->
-            </div>
+        <div class="mb-40 what-should-learn mt-20 mb-20-p">
+            <h3 class="title-line font-27 mb-40 mb-20-p">ماذا سيتعلم المشاركون</h3>
+            <div class="font-27 black-2 pt-20 pt-0-p font-20-p" v-html="whatShouldLearn"></div>
         </div>
-        
-
-        <!-- <div class="course-lectures mt-20">
-            <p class="main-color font-26 mb-10">محتوى الدورة التدريبية</p>
-            <div class="box" show-more-less :class="{'active': showMore}">
-                <div class="to-show" v-for="(lecture,index) in lectures" :key="index">
-                    <div class="lecture d-flex space-between gray font-14">
-                        <p>{{lecture.title}}</p>
-                        <p>{{lecture.time}} دقيقة</p>
-                    </div>
-                </div>
-                <template v-if="lectures.length > 4">
-                    <div more @click="showMoreLess" class="btn mt-15" ><span class="d-flex align-center justify-center">أظهر المزيد <img class="mr-10" src="/images/siteImgs/header/logo.png" alt="" width="16" height="24"></span></div>
-                    <div less @click="showMoreLess" class="btn mt-15" ><span class="d-flex align-center justify-center">عرض أقل <img class="mr-10" src="/images/siteImgs/header/logo.png" alt="" width="16" height="24"></span></div>
-                </template>
-            </div>
-        </div>  -->
     </div>
 </template>
 

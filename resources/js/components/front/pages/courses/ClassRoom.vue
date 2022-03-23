@@ -50,8 +50,10 @@ export default {
                 let courseData = await this.$store.getters['courses/course'];
                 // check course info
                 if (!courseData) {
-                    courseData = await this.$store.dispatch('courses/getCourseDetails',this.course);
+                    courseData = await this.$store.dispatch('courses/getMyCourseData',this.course);
                 }
+                console.log(courseData)
+                
                 // check lectures
                 if (courseLectures.length == 0) {
                     courseLectures = await this.$store.dispatch('courses/getCourseLectures',{courseID:courseData.id});
@@ -61,6 +63,7 @@ export default {
                     this.lectureNumber = lectureIndex + 1
                     lectureData.index = lectureIndex
                 }
+                
                 this.$store.commit('courses/currentLecture',lectureData)
                 this.currentLecture = lectureData
 

@@ -1,8 +1,8 @@
 <template>
-    <div class="course-content-table" >
-        <h3 class="title-line font-27 mb-40">{{title}}</h3>
+    <div class="course-content-table p-side-12-p" >
+        <h3 class="title-line font-27 mb-40 do">{{title}}</h3>
         <div class="list radius-10 overflow-hidden">
-            <div v-for="(row,index) in rows" :key="row.lesson_id" class="lecture-box d-flex align-center black-2 font-27 regular">
+            <div v-for="(row,index) in rows" :key="row.lesson_id" class="relative lecture-box d-flex align-center black-2 font-27 regular">
                 <!-- :active -->
                 <template v-if="type == 'course'">
                     <div class="tag">
@@ -34,7 +34,7 @@
                     </div>
                 </template>
             </div>
-            <div class="lecture-box d-flex align-center black-2 font-27 regular">
+            <div class="relative test lecture-box d-flex align-center black-2 font-27 regular">
                 <div class="tag">
                     <div class="play-video d-flex">
                         <img class="play-icon" src="/images/test-icon.svg" width="50" height="50" alt="" />
@@ -47,15 +47,15 @@
                     </div>
                 </div>
             </div>
-            <div class="lecture-box d-flex align-center black-2 font-27 regular">
+            <div class="relative certificate lecture-box d-flex align-center black-2 font-27 regular">
                 <div class="tag">
                     <div class="play-video d-flex">
                         <img class="play-icon" src="/images/certificate-icon.svg" width="50" height="50" alt="" />
-                        <div class="duration">
+                        <div class="duration do">
                             <span class="nowrap">إصدار الشهادة</span>
                         </div>
                         <div class="video-name">
-                            <span></span>
+                            <span class="mo">إصدار الشهادة</span>
                         </div>
                     </div>
                 </div>
@@ -153,5 +153,25 @@ export default {
 }
 [href="/"] + .prevent-click {
     display: block;
+}
+@media (max-width: 767px) {
+    .lecture-box .tag {
+        padding: 25px 16px 25px 16px;
+    }
+    .duration {
+        position: absolute;
+        left: 8px;
+        bottom: 8px;
+        margin: 0;
+        font-size: 14px;
+    }
+    .video-name {
+        font-size: 16px;
+        margin-right: 16px;
+        margin-left: 0;
+        display: flex;
+        align-items: center;
+        justify-content:center;
+    }
 }
 </style>

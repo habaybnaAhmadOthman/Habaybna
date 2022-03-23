@@ -10,6 +10,7 @@ export default {
             course: null,
             courseLectures: [],
             currentLecture: null,
+            myCourses: [],
         };
     },
     mutations,

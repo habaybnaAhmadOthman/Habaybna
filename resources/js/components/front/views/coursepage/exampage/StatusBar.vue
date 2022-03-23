@@ -1,8 +1,7 @@
 <template>
     <div class="status-bar p-side-20 d-flex align-center">
-        <img src="/images/status-arrow.png" width="48" height="48" />
-        <div class="status-prog relative overflow-hidden"><span class="progress" :style="calculateProgress"></span></div>
-        <p class="main-color font-20 mr-20 top-2"><span class="from">{{currentQuestion + 1}}</span>/<span class="to">{{questionsCount + 1}}</span></p>
+        <div class="status-prog relative overflow-hidden mb-5-p"><span class="progress" :style="calculateProgress"></span></div>
+        <p class="main-color font-20 mr-20 top-2 font-14-p current-q"><span class="from">{{currentQuestion + 1}}</span>/<span class="to">{{questionsCount + 1}}</span></p>
     </div>
 </template>
 
@@ -38,5 +37,13 @@
     background: #3FC4E0;
     border-radius: 4px;
     transition: .3s;
+}
+@media (max-width: 767px) {
+    .status-bar {
+        flex-direction: column;
+    }
+    .current-q {
+        align-self: end;
+    }
 }
 </style>

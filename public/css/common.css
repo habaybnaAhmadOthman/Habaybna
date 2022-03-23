@@ -852,7 +852,7 @@ a:hover {
     .mo {
         display: block !important;
     }
-    .do {
+    .do,[tab-name]:not(.active) {
         display: none !important;
     }
     .w-100-p {
@@ -866,6 +866,9 @@ a:hover {
         max-width: none;
         flex: auto;
         margin-bottom: 15px;
+    }
+    .title-line {
+        font-size: 20px;
     }
     .row {
         flex-wrap: wrap;
@@ -904,6 +907,12 @@ a:hover {
     .mt-0-p-i {
         margin-top: 0!important;
     }
+    .mt-20-p {
+        margin-top: 20px;
+    }
+    .mt-15-p {
+        margin-top: 15px;
+    }
     .mt-10-p {
         margin-top: 10px;
     }
@@ -919,6 +928,18 @@ a:hover {
     .mb-15-p {
         margin-bottom: 15px;
     }
+    .mb-20-p {
+        margin-bottom: 20px;
+    }
+    .mb-25-p {
+        margin-bottom: 25px;
+    }
+    .mb-30-p {
+        margin-bottom: 30px;
+    }
+    .p-0-p {
+        padding: 0!important;
+    }
     .p-side-0-p {
         padding-left: 0!important;
         padding-right: 0!important;
@@ -932,18 +953,40 @@ a:hover {
     .pb-10-p {
         padding-bottom: 10px;
     }
+    .pb-20-p {
+        padding-bottom: 20px;
+    }
     .pt-20-p {
         padding-top: 20px;
+    }
+    .pt-25-p {
+        padding-top: 25px;
     }
     .p-side-12-p {
         padding-left: 12px;
         padding-right: 12px;
+    }
+    .m-side-12-p {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+    .font-13-p {
+        font-size: 13px;
+    }
+    .font-14-p {
+        font-size: 14px;
+    }
+    .font-15-p {
+        font-size: 15px;
     }
     .font-16-p {
         font-size: 16px;
     }
     .font-18-p {
         font-size: 18px;
+    }
+    .font-20-p {
+        font-size: 20px;
     }
     .font-28-p {
         font-size: 28px;
@@ -957,5 +1000,32 @@ a:hover {
     .p-side-15-p {
         padding-left: 15px;
         padding-right: 15px;
+    }
+    .title-line:after {
+        margin-top: 10px;
+    }
+    .half-p {
+        width: 48%;
+    }
+    .shadow-p {
+        box-shadow: 0px 3px 6px #00000029;
+    }
+    .radius-3-p {
+        border-radius: 3px;
+    }
+    .swipe-box-p {
+        width: 100%;
+        overflow-x: scroll!important;
+        white-space: nowrap;
+    }
+    .bold-p {
+        font-family: "Baloo Bold";
+    }
+    .btn-main {
+        height: 50px;
+    }
+    .m-side-auto-p {
+        margin-left: auto;
+        margin-right: auto;
     }
 }

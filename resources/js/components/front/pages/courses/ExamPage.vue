@@ -2,8 +2,8 @@
     <div class="exam-page">
         <TheHeader></TheHeader>
         <div class="container">
-            <h1 class="title-line font-27 mb-20 mt-50">يمكنك الآن الالتحاق بالإختبار</h1>
-            <div class="exam-container card-1 pt-50  pb-40">
+            <h1 class="title-line font-27 mb-20 mb-30-p mt-50">يمكنك الآن الالتحاق بالإختبار</h1>
+            <div class="exam-container card-1 pt-50 m-side-12-p pt-20-p pb-40">
                 <div class="mb-40">
                     <StatusBar :questionsCount="questionsCount" :currentQuestion="currentQuestion"></StatusBar>
                 </div>
@@ -121,5 +121,10 @@ export default {
 }
 .questions-box {
     padding: 0 90px 0 80px;
+}
+@media (max-width: 767px) {
+    .questions-box {
+        padding: 0 12px;
+    }
 }
 </style>

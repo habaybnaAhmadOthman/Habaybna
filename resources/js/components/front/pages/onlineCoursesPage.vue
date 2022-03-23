@@ -2,7 +2,7 @@
     <div>
         <TheHeader></TheHeader>
         <Banner></Banner>
-        <section class="learn-section">
+        <section class="learn-section pt-45 pt-20-p">
             <CoursesFeatures></CoursesFeatures>
             <CoursesSection :cardsCount="5" :showMoreCard="true"></CoursesSection>
             
