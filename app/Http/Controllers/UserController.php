@@ -284,7 +284,9 @@ class UserController extends Controller
                 }
                 if($request->type == "isComplete"){
                     if($prgr && $prgr != null){
-                        $prgr->in_progress = $request->inProgress ;
+                        $prgr->in_progress = '100' ;
+                        $prgr->is_complete = 1;
+
                         $prgr->save();
                     }
                     else{

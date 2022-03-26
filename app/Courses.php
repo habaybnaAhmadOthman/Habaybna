@@ -71,14 +71,24 @@ class Courses extends Model
             array_push($time,$video->length);
         }
         $sum = 0 ;
+
         foreach ($time as $key) {
             $parts = explode(':', $key);
-            $sum += (0 * 60 * 60) + ($parts[0] * 60) + $parts[1];
-        }
 
-        return gmdate("H:i", $sum );
+            $sum +=  ($parts[0] * 60) + $parts[1];
+        }
+        $s = $sum%60;
+        $m = floor(($sum%3600)/60);
+        $h = floor(($sum%86400)/3600);
+
+        // $min =  gmdate("H:i:", $sum );
+        // dd($min);
+        $length = $h.':'.$m.':'.$s ;
+        // dd($length);
+       return $length ;
+
        }
-       return gmdate("H:i", 0 );
+       return '00:00:00';
 
     }
 
