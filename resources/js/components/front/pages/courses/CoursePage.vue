@@ -95,6 +95,7 @@ export default {
             lectures: [],
             showShareModal: false,
             isDataReady: false,
+            isPurchased: false,
             mobileTabs: [
                 {
                     title: 'عن الدورة' ,
@@ -115,18 +116,18 @@ export default {
         this.getCourseDetails()
     },
     computed: {
-        // isLoggedIn(){
-        //     return this.$store.getters["user/isLoggedIn"];
-        // }
+        isLoggedIn(){
+            return this.$store.getters["user/isLoggedIn"];
+        }
     },
     methods: {
         async getCourseDetails(){
             try {
                 this.isFromPaymentPage()
                 let data = await this.$store.dispatch('courses/getCourseDetails',this.course);
-                // if (!data && this.isLoggedIn) {
-                //     await this.$store.dispatch('courses/getCourseDetails',this.course);
-                // }
+                if (!data && this.isLoggedIn) {
+                    data = await this.$store.dispatch('courses/getCourseDetails',this.course);
+                }
                 this.courseID = data.id;
                 this.trailerSrc = data.promo_video;
                 this.coverPhoto = data.cover_photo;
@@ -137,9 +138,10 @@ export default {
                 this.whatShouldLearn  = data.what_should_learn;
                 this.videosList  = data.videos_title_length;
                 this.videosCount  = data.videos_count;
+                
                 // show related courses section
                 this.isDataReady = true;
-                
+                    
             } catch (e){
                 console.log(e);
             }
@@ -152,6 +154,7 @@ export default {
                 if (this.$route.query.payment == 'true') {
                     this.infoModal.isFixed = true;
                     this.showWatchCourseDialog()
+                    this.$store.dispatch('courses/getAllCourses')
                 } else {
                     this.setInfoModal('حصل خطأ في عملية الشراء','يرجى التأكد من المعلومات والمحاولة مرة أخرى' ,false,false,true)
                 }

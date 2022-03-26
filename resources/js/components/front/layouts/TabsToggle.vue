@@ -26,6 +26,7 @@
 <style scoped>
 .tabs-toggle {
     display: flex;
+    border-bottom: 1px solid #939598;
 }
 button {
     flex: 1;
@@ -47,5 +48,7 @@ button.active:after {
     background: #E58C01;
     height: 3px;
     bottom: 0;
+    border-radius: 10px;
+    bottom: -1.5px;
 }
 </style>

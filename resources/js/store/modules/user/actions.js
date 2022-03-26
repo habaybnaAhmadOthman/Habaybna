@@ -47,10 +47,12 @@ export default {
             const error = new Error("تم إيقاف حسابك");
             throw error;
         }
-    if (!resp || resp.status != 200) {
+        if (!resp || resp.status != 200) {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
+        context.commit('clearUser');
+        context.commit('clearAdmin');
         context.commit('setUser',{
             token: resp.data.token,
         })
@@ -71,6 +73,8 @@ export default {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
+        context.commit('clearUser');
+        context.commit('clearAdmin');
         context.commit('setUser',{
             token: resp.data.token,
         })
@@ -78,7 +82,7 @@ export default {
         await context.dispatch('checkUserAuth')
     },
     // ******** logout :::
-    async logout({commit,rootState}){
+    async logout({commit,rootState,dispatch}){
         const resp = await callApi("POST", "logout");
         if (resp.status != 204) {
             const error = new Error("fail to logout");
@@ -87,20 +91,10 @@ export default {
         rootState.showLoginModal = false;
         commit('clearUser');
         commit('clearAdmin');
-
+        await dispatch('courses/getAllCourses',{}, {root:true})
 
     },
-    //****logout admin */
-    async Adminlogout({commit,rootState}){
-        const resp = await callApi("POST", "/logout");
-        if (resp.status != 204) {
-            const error = new Error("fail to logout");
-            throw error;
-        }
-        rootState.showLoginModal = false;
-        commit('clearAdmin');
-    },
-    //****logout admin */
+    //**** logout admin */
     async Adminlogout({commit,rootState}){
         const resp = await callApi("POST", "/logout");
         if (resp.status != 204) {
@@ -111,7 +105,7 @@ export default {
         commit('clearAdmin');
     },
     // ******** logout modal :::
-    async logoutModal({commit,rootState}){
+    async logoutModal({commit,rootState,dispatch}){
         const resp = await callApi("POST", "/logout");
         if (resp.status != 204) {
             const error = new Error("fail to logout");
@@ -120,6 +114,7 @@ export default {
         rootState.showLoginModal = false;
         commit('clearUser');
         commit('clearAdmin');
+        await dispatch('courses/getAllCourses',{}, {root:true})
     },
     // ******** interests ::: post
     async addInterests(_, interests){
@@ -130,25 +125,26 @@ export default {
         }
     },
     // ******** retreive user data ::: get
-    async checkUserAuth(context) {
+    async checkUserAuth({commit,dispatch}) {
         const resp = await callApi("GET", "/api/check-user-authentication");
         if (resp.status == 404) {
-            context.commit('clearUser');
+            commit('clearUser');
             return false;
         }
 
         const obj = resp.data.userData;
         if (obj.role != 'admin') {
-            context.commit('setUser',{
+            commit('setUser',{
                 firstName: obj.firstName,
                 lastName: obj.lastName,
                 type: obj.type,
                 avatar: obj.avatar,
             })
+            await dispatch('courses/getAllCourses',{}, {root:true})
         } else { // is admin
 
-            context.commit('type',obj.role)
-            context.commit('login')
+            commit('type',obj.role)
+            commit('login')
         }
         return true
 

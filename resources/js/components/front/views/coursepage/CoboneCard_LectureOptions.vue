@@ -1,7 +1,8 @@
 <template>
     <div class="w-100 lectures-options">
         <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer mb-20 next-arrow relative" @click.native="forceRefresh" :to="getLectureURL('next')" v-if="hasNextLecture"> التالي</router-link>
-        <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative prev-arrow" @click.native="forceRefresh" :to="getLectureURL('prev')" v-if="hasPrevLecture"> السابق</router-link>
+        <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative prev-arrow" @click.native="forceRefresh" :to="getLectureURL('prev')" v-if="hasPrevLecture && !isReadyToExam"> السابق</router-link>
+        <router-link v-if="isReadyToExam" class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative next-arrow" :to="goToExam"> الذهاب الى الإختبار</router-link>
     </div>
 </template>
 
@@ -17,6 +18,18 @@
             hasNextLecture(){
                 return (this.getLecture().index  != this.$store.getters['courses/courseLectures'].length - 1)
             },
+            isReadyToExam(){
+                if (this.getLecture().index  == this.$store.getters['courses/courseLectures'].length - 1)
+                    if (this.getCourseData.course_progress && this.getCourseData.course_progress[0][this.$store.getters['courses/courseLectures'].length - 1].is_complete == 1)
+                        return true
+                return  false
+            },
+            goToExam(){
+                return `/courses/${this.getCourseData.title.split(' ').join('-')}/exam`
+            },
+            getCourseData(){
+                return this.$store.getters['courses/course']
+            }
         },
         data() {
             return {
@@ -25,23 +38,23 @@
             }
         },
         methods: {
-           getLectureByIndex(index) {
-               return this.$store.getters["courses/courseLectures"][index]
-           },
-           getLecture(){
-               return this.$store.getters["courses/currentLecture"]
-           },
-           getLectureURL(type){
-                let lectureTitle;
-                if (type == 'prev') {
-                    lectureTitle = this.getLectureByIndex(this.getLecture().index - 1)
-                } else {
-                    lectureTitle = this.getLectureByIndex(this.getLecture().index + 1)
-                }
-                lectureTitle = lectureTitle.title.split(' ').join('-')
-                return `/courses/${this.$store.getters['courses/course'].title.split(' ').join('-')}/${lectureTitle}`
-           },
-           forceRefresh(){
+            getLectureByIndex(index) {
+                return this.$store.getters["courses/courseLectures"][index]
+            },
+            getLecture(){
+                return this.$store.getters["courses/currentLecture"]
+            },
+            getLectureURL(type){
+                    let lectureTitle;
+                    if (type == 'prev') {
+                        lectureTitle = this.getLectureByIndex(this.getLecture().index - 1)
+                    } else {
+                        lectureTitle = this.getLectureByIndex(this.getLecture().index + 1)
+                    }
+                    lectureTitle = lectureTitle.title.split(' ').join('-')
+                    return `/courses/${this.getCourseData.title.split(' ').join('-')}/${lectureTitle}`
+            },
+            forceRefresh(){
                 this.$store.commit("forceRefresh");
             }
         },

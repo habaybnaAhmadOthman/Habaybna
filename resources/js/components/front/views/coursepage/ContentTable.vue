@@ -5,23 +5,26 @@
             <div v-for="(row,index) in rows" :key="row.lesson_id" class="relative lecture-box d-flex align-center black-2 font-27 regular">
                 <!-- :active -->
                 <template v-if="type == 'course'">
-                    <div class="tag">
-                        <div class="play-video d-flex">
-                            <img class="play-icon" src="/images/lock-icon.svg" width="50" height="50" alt="" />
-                            <div class="duration">
-                                <span class="nowrap">{{row.lesson_length | lessonTime(row.lesson_length)}}</span>
+                    <div class="relative w-100">
+                        <router-link @click.native="forceRefresh" class="d-flex tag" :to="getVideoURLIfAvailable(index,row.lesson_title)">
+                            <div class="play-video d-flex">
+                                <img class="play-icon" :src="getCourseVideoIcon(index)" width="50" height="50" alt="" />
+                                <div class="duration">
+                                    <span class="nowrap black-2">{{row.lesson_length | lessonTime(row.lesson_length)}}</span>
+                                </div>
+                                <div class="video-name black-2">
+                                    <span>{{row.lesson_title}}</span>
+                                </div>
                             </div>
-                            <div class="video-name">
-                                <span>{{row.lesson_title}}</span>
-                            </div>
-                        </div>
+                        </router-link>
+                        <span class="prevent-click"></span>
                     </div>
                 </template>
                 <template v-else-if="type == 'lecture'">
                     <div class="relative w-100">
-                        <router-link :class="{'active':isCurrentVideo(row.title)}" class="d-flex tag" :to="getVideoURL(row.title,row.is_complete,index)">
+                        <router-link @click.native="forceRefresh" :class="{'active':isCurrentVideo(row.title)}" class="d-flex tag" :to="getVideoURLIfAvailable(index,row.title)">
                             <div class="play-video d-flex">
-                                <img class="play-icon" :src="getVideoIcon(row.is_complete,index)" width="50" height="50" alt="" />
+                                <img class="play-icon" :src="getCourseVideoIcon(index)" width="50" height="50" alt="" />
                                 <div class="duration">
                                     <span class="nowrap black-2">{{row.length | lessonTime(row.length)}}</span>
                                 </div>
@@ -35,22 +38,26 @@
                 </template>
             </div>
             <div class="relative test lecture-box d-flex align-center black-2 font-27 regular">
-                <div class="tag">
-                    <div class="play-video d-flex">
-                        <img class="play-icon" src="/images/test-icon.svg" width="50" height="50" alt="" />
-                        <div class="duration">
-                            <span class="nowrap">٢٠ دقيقة</span>
+                <div class=" w-100">
+                    <router-link class="d-flex tag" :to="isReadyToExam">
+                        <div class="play-video d-flex">
+                            <img class="play-icon" src="/images/test-icon.svg" width="50" height="50" alt="" />
+                            <div class="duration">
+                                <span class="nowrap black-2">٢٠ دقيقة</span>
+                            </div>
+                            <div class="video-name black-2">
+                                <span>الإختبار</span>
+                            </div>
                         </div>
-                        <div class="video-name">
-                            <span>الإختبار</span>
-                        </div>
-                    </div>
+                    </router-link>
+                    <span class="prevent-click"></span>
                 </div>
             </div>
             <div class="relative certificate lecture-box d-flex align-center black-2 font-27 regular">
                 <div class="tag">
                     <div class="play-video d-flex">
                         <img class="play-icon" src="/images/certificate-icon.svg" width="50" height="50" alt="" />
+                        <!-- <img class="play-icon" src="/images/certificate-icon-color.svg" width="50" height="50" alt="" /> -->
                         <div class="duration do">
                             <span class="nowrap">إصدار الشهادة</span>
                         </div>
@@ -70,6 +77,7 @@ export default {
     data(){
         return {
             currentLecture: null,
+            courseData: null,
             isDataReady: false,
         }
     },
@@ -86,10 +94,54 @@ export default {
         courseTitle(){
             return this.$store.getters['courses/course'].title;
         },
+        isReadyToExam(){
+            if (this.courseData && this.courseData.course_progress && this.courseData.course_progress[0] && this.courseData.course_progress[0][this.courseData.course_progress[0].length - 1].is_complete) {
+                return `/courses/${this.courseData.title.split(' ').join('-')}/exam`
+            } else
+                return '/'
+        },
     },
     methods: {
         isCurrentVideo(title){
             return this.currentVideo.title == title
+        },
+        getCourseProgress(){
+            this.courseData = this.$store.getters['courses/course']
+        },
+        // for course page use
+        getCourseVideoIcon(index){
+            if (
+                index == 0 ||
+                // this.courseData.course_progress[0][index].is_complete == 1 ||
+                (
+                    this.courseData.course_progress && 
+                    this.courseData.course_progress[0][index - 1].is_complete == 1
+                )
+            ) {
+                return `/images/play-icon.svg`
+            } else {
+                if (this.type == 'course')
+                    return `/images/lock-icon.svg`
+                else
+                    return `/images/unavailable-play-icon.svg`
+            }
+        },
+        // for course page use
+        getVideoURLIfAvailable(index,title){
+            if (!this.courseData)
+                this.getCourseProgress()
+            
+            if (
+                index == 0 ||
+                // this.courseData.course_progress[0][index].is_complete == 1 ||
+                (this.courseData.course_progress && this.courseData.course_progress[0][index - 1].is_complete == 1)
+                ) {
+                    title = title.split(' ').join('-')
+                    return `/courses/${this.courseTitle.split(' ').join('-')}/${title.split(' ').join('-')}`
+                } else {
+                    return `/`
+                }
+                
         },
         getVideoIcon(isComplete, index){
             if (isComplete || index == 0) {
@@ -98,15 +150,12 @@ export default {
                 return `/images/unavailable-play-icon.svg`
             }
         },
-        getVideoURL(title,isComplete,index) {
-            if (isComplete || index == 0) {
-                return `/courses/${this.courseTitle.split(' ').join('-')}/${title.split(' ').join('-')}`
-            } else {
-                return `/`
-            }
-        }
+        forceRefresh(){
+            this.$store.commit("forceRefresh");
+        },
     },
-    created(){
+    mounted(){
+        // to get available lectures
         
     },
 };

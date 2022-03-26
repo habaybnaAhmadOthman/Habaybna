@@ -33,7 +33,7 @@ export default {
             axios({method:'GET', url:'/api/get-payment-status'})
             .then(res=>{
                 var paymentStatus = true
-                if (res.status != 200 ) {
+                if (res.data.approval_code == 'null' ) {
                     paymentStatus = false
                 }
                 this.$router.replace(`/courses/${res.data.course_id}?payment=${paymentStatus}`);

@@ -1,7 +1,7 @@
 <template>
     <aside class="user-side-nav bg-white z-1">
         <img
-            src="/images/close-icon.svg"
+            src="/images/close-icon-color.png"
             width="30"
             height="30"
             @click="closeNavMenu"
@@ -20,6 +20,11 @@
             <li>
                 <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/" @click.native="closeNavMenu"
                     >الصفحة الرئيسية</router-link
+                >
+            </li>
+            <li>
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/online-courses" @click.native="closeNavMenu"
+                    > الدورات التدريبية</router-link
                 >
             </li>
             <li v-if="isLoggedIn">

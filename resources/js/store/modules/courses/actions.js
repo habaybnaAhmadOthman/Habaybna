@@ -1,11 +1,16 @@
 import {callApi, shuffle} from "../../common";
+function isPurchased(course){
+    return course.course_progress !== null && course.course_progress[0]
+}
+function allCourses(restCourses,myCourses){
+    return [...restCourses,...myCourses]
+}
 export default {
     // ******** get all courses ::: get
     async getAllCourses({_,rootGetters,getters,commit,dispatch}) {
-
         const resp = await callApi("GET", "/api/all-courses");
         if (resp.status != 200) {
-            const error = new Error("fail to get courses");
+            const error = new Error("fail getAllCourses ::");
             throw error;
         }
         // const myCourses = resp.data.courses.filter(course=>course.course_progress !== null);
@@ -13,7 +18,7 @@ export default {
         let restCourses = [];
         if (rootGetters['user/isLoggedIn']) {
             for (let i =0; i < resp.data.courses.length; i++) {
-                if (resp.data.courses[i].course_progress !== null) { // it's my course
+                if (isPurchased(resp.data.courses[i])) { // it's my course
                     myCourses.push(resp.data.courses[i])
                 } else {
                     restCourses.push(resp.data.courses[i])
@@ -33,13 +38,14 @@ export default {
         console.log(getters.course) 
     },
     // ******** get lesson data  ::: get
-    async videoAction(context,payload) {
+    async videoAction({commit},payload) {
         
         const resp = await callApi("POST", "/api/course/video-actions",payload);
         if (resp.status != 200) {
             const error = new Error("fail to take action");
             throw error;
         }
+        return resp.data
     },
     // ******** get user courses ::: get
     async getMyCourses({_,rootGetters,getters,commit,dispatch}) {
@@ -48,17 +54,9 @@ export default {
             if (myCourses.length == 0) {
                 await dispatch('getAllCourses')
             }
-            
-            // const resp = await callApi("GET", "/api/courses/get-user-courses");
-            // if (resp.status != 200) {
-            //     const error = new Error("fail to get my courses");
-            //     throw error;
-            // }
-            // console.log(coursesFromAPI);
-            // let myCourses = coursesFromAPI.filter(course => resp.data.includes(course.id))
             return getters.myCourses
         } catch (err) {
-            const error = new Error("fail to get course");
+            const error = new Error("fail getMyCourses ::",err);
             throw error;
         }
     },
@@ -95,16 +93,24 @@ export default {
         try {
             
             var coursesFromAPI = getters.courses;
+            // if (rootGetters['user/isLoggedIn']) {
+            //     coursesFromAPI = getters.myCourses;
+            // } else 
+            //     coursesFromAPI = getters.courses;
+
             if (coursesFromAPI.length == 0) {
-                coursesFromAPI = await dispatch('getAllCourses')
+                await dispatch('getAllCourses')
             }
+            
+            coursesFromAPI = allCourses(getters.courses,getters.myCourses)
             title = title.split('-').join(' ')
             axios.defaults.headers.common.Authorization = `Bearer ${rootGetters['user/userData'].token}`;
             let resp = coursesFromAPI.find(course => course.title == title)
             if (!resp)
                 resp = coursesFromAPI.find(course => course.id == +title)
+            const isPurchase = isPurchased(resp)
 
-            commit('setCourse',resp);
+            commit('setCourse',{...resp,isPurchased: isPurchase});
             return resp
         } catch (err) {
             const error = new Error("fail getCourseDetails ::",err);
@@ -119,7 +125,7 @@ export default {
                 myCourses = await dispatch('getMyCourses')
             }
             title = title.split('-').join(' ')
-            axios.defaults.headers.common.Authorization = `Bearer ${rootGetters['user/userData'].token}`;
+            
             let resp = myCourses.find(course => course.title == title)
             if (!resp)
                 resp = myCourses.find(course => course.id == +title)
@@ -133,6 +139,13 @@ export default {
     },
     // ******** Course Lectures ::: get
     async getCourseLectures({commit,getters},payload) {
+        // to check if the user still in the same course
+        console.log(getters.courseLectures)
+        if ((payload.courseID == getters.course.id) && 
+            getters.courseLectures.length != 0 && getters.courseLectures[0].title == getters.course.videos_title_length[0].lesson_title) {
+                return getters.courseLectures
+        }
+        
         const resp = await callApi("POST", "/api/course/course-lectures",payload);
         if (!resp) {
             const error = new Error("something went wrong, please try again");
