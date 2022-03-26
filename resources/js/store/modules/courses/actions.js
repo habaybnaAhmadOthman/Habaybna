@@ -1,6 +1,6 @@
 import {callApi, shuffle} from "../../common";
 function isPurchased(course){
-    return course.course_progress !== null && course.course_progress[0]
+    return course.course_progress.length != 0
 }
 function allCourses(restCourses,myCourses){
     return [...restCourses,...myCourses]
@@ -13,7 +13,6 @@ export default {
             const error = new Error("fail getAllCourses ::");
             throw error;
         }
-        // const myCourses = resp.data.courses.filter(course=>course.course_progress !== null);
         let myCourses = [];
         let restCourses = [];
         if (rootGetters['user/isLoggedIn']) {

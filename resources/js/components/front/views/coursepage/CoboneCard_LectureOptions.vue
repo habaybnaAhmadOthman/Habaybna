@@ -1,7 +1,7 @@
 <template>
     <div class="w-100 lectures-options">
         <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer mb-20 next-arrow relative" @click.native="forceRefresh" :to="getLectureURL('next')" v-if="hasNextLecture"> التالي</router-link>
-        <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative prev-arrow" @click.native="forceRefresh" :to="getLectureURL('prev')" v-if="hasPrevLecture && !isReadyToExam"> السابق</router-link>
+        <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative prev-arrow" @click.native="forceRefresh" :to="getLectureURL('prev')" v-if="hasPrevLecture"> السابق</router-link>
         <router-link v-if="isReadyToExam" class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative next-arrow" :to="goToExam"> الذهاب الى الإختبار</router-link>
     </div>
 </template>
@@ -20,7 +20,7 @@
             },
             isReadyToExam(){
                 if (this.getLecture().index  == this.$store.getters['courses/courseLectures'].length - 1)
-                    if (this.getCourseData.course_progress && this.getCourseData.course_progress[0][this.$store.getters['courses/courseLectures'].length - 1].is_complete == 1)
+                    if (this.getCourseData.course_progress && this.getCourseData.course_progress[this.$store.getters['courses/courseLectures'].length - 1].is_complete == 1)
                         return true
                 return  false
             },
@@ -94,7 +94,7 @@
     border: 1px solid #939598;
     color: #363636!important;
 }
-.lectures-options:only-child a {
+.lectures-options a:only-of-type {
     margin-bottom: 0!important;
 }
 @media (max-width: 767px) {

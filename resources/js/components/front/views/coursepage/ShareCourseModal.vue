@@ -3,6 +3,7 @@
         <template>
             <div class="share-course-modal">
                 <div class="social-list d-flex flex-wrap justify-center">
+                    <div class="mo">
                         <ShareNetwork
                             network="whatsapp"
                             :url="courseUrl"
@@ -14,6 +15,7 @@
                             >
                             <img src="/images/whatsapp-icon.svg" width="50" height="50">
                         </ShareNetwork>
+                    </div>
                         <ShareNetwork
                             network="facebook"
                             :url="courseUrl"
@@ -25,17 +27,19 @@
                             >
                             <img src="/images/facebook-icon.svg" width="50" height="50">
                         </ShareNetwork>
-                        <ShareNetwork
-                            network="messenger"
-                            :url="courseUrl"
-                            :title="courseName"
-                            :description="description"
-                            :quote="description"
-                            :hashtags="hashTags"
-                            :twitterUser="twitterUser"
-                            >
-                            <img src="/images/messenger-icon.svg" width="50" height="50">
-                        </ShareNetwork>
+                        <div class="mo">
+                            <ShareNetwork
+                                network="messenger"
+                                :url="courseUrl"
+                                :title="courseName"
+                                :description="description"
+                                :quote="description"
+                                :hashtags="hashTags"
+                                :twitterUser="twitterUser"
+                                >
+                                <img src="/images/messenger-icon.svg" width="50" height="50">
+                            </ShareNetwork>
+                        </div>
                         <ShareNetwork
                             network="twitter"
                             :url="courseUrl"

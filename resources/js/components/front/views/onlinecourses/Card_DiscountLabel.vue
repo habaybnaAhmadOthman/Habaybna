@@ -11,7 +11,7 @@
             class="discount-label d-flex white align-center free-course-label"
             v-if="isFree"
         >
-            <span class="font-20">مجاناً</span>
+            <span class="font-20"></span>
         </div>
     </div>
 </template>

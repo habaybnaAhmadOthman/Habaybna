@@ -17,7 +17,7 @@
                 <div class="d-flex space-between">
                     
                     <span class="bold font-22 main-color"
-                        >{{ +course.course_length.split(':')[0] }} ساعات</span
+                        >{{ course.course_length }} ساعات</span
                     >
                 </div>
             </div>

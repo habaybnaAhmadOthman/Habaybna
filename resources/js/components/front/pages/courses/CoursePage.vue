@@ -132,7 +132,7 @@ export default {
                 this.trailerSrc = data.promo_video;
                 this.coverPhoto = data.cover_photo;
                 this.courseName = data.title;
-                this.courseLength = +data.course_length.split(':')[0]
+                this.courseLength = data.course_length
                 this.specialists  = data.providers;
                 this.courseDescription  = data.description;
                 this.whatShouldLearn  = data.what_should_learn;

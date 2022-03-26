@@ -95,7 +95,7 @@ export default {
             return this.$store.getters['courses/course'].title;
         },
         isReadyToExam(){
-            if (this.courseData && this.courseData.course_progress && this.courseData.course_progress[0] && this.courseData.course_progress[0][this.courseData.course_progress[0].length - 1].is_complete) {
+            if (this.courseData && this.courseData.course_progress && this.courseData.course_progress && this.courseData.course_progress[this.courseData.course_progress.length - 1].is_complete) {
                 return `/courses/${this.courseData.title.split(' ').join('-')}/exam`
             } else
                 return '/'
@@ -112,10 +112,10 @@ export default {
         getCourseVideoIcon(index){
             if (
                 index == 0 ||
-                // this.courseData.course_progress[0][index].is_complete == 1 ||
+                // this.courseData.course_progress[index].is_complete == 1 ||
                 (
                     this.courseData.course_progress && 
-                    this.courseData.course_progress[0][index - 1].is_complete == 1
+                    this.courseData.course_progress[index - 1].is_complete == 1
                 )
             ) {
                 return `/images/play-icon.svg`
@@ -133,8 +133,8 @@ export default {
             
             if (
                 index == 0 ||
-                // this.courseData.course_progress[0][index].is_complete == 1 ||
-                (this.courseData.course_progress && this.courseData.course_progress[0][index - 1].is_complete == 1)
+                // this.courseData.course_progress[index].is_complete == 1 ||
+                (this.courseData.course_progress && this.courseData.course_progress[index - 1].is_complete == 1)
                 ) {
                     title = title.split(' ').join('-')
                     return `/courses/${this.courseTitle.split(' ').join('-')}/${title.split(' ').join('-')}`

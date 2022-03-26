@@ -83,7 +83,14 @@ class Courses extends Model
 
         // $min =  gmdate("H:i:", $sum );
         // dd($min);
-        $length = $h.':'.$m.':'.$s ;
+        if ($h < 1) {
+            $h = "00";
+        }
+        if ($m < 1) {
+            $m = "00";
+        }
+        $length = $h.':'.$m ;
+        
         // dd($length);
        return $length ;
 

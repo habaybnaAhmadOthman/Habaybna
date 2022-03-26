@@ -1,7 +1,7 @@
 <template>
     <div class="course-card w-30 radius-10 overflow-hidden bg-white relative w-100-p m-side-12-p">
         <figure class="d-flex relative overflow-hidden radius-10 figure-box">
-            <button @click="addVideoAction('isComplete')">Complete</button>
+            <!-- <button @click="addVideoAction('isComplete')">Complete</button> -->
             <!-- favourite -->
             <div v-if="isCourse" class="fav-box relative pointer"></div>
             
@@ -137,7 +137,7 @@
                 this.$store.commit('isLoading',status)
             },
             continueWatching() {
-                var goToLectureNumber = this.courseData.course_progress[0].findIndex(c => c.is_complete == 0);
+                var goToLectureNumber = this.courseData.course_progress.findIndex(c => c.is_complete == 0);
                 const goToLecture = this.courseData.videos_title_length[goToLectureNumber].lesson_title.split(' ').join('-')
                 this.$router.push(`/courses/${this.courseData.title.split(' ').join('-')}/${goToLecture}`)
             },
@@ -171,8 +171,8 @@
             },
             getLectureProgress(){
                 this.lectureData.progress = ''
-                if (this.courseData.course_progress && this.courseData.course_progress[0] && this.courseData.course_progress[0][this.lectureData.index]) {
-                    this.lectureData.progress = this.courseData.course_progress[0][this.lectureData.index].in_progress
+                if (this.courseData.course_progress && this.courseData.course_progress && this.courseData.course_progress[this.lectureData.index]) {
+                    this.lectureData.progress = this.courseData.course_progress[this.lectureData.index].in_progress
                 }
             }
         },

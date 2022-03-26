@@ -36,7 +36,7 @@
                         >
                     </div>
                     <span class="bold font-22 main-color"
-                        >{{ +course.course_length.split(':')[0] }} ساعات</span
+                        >{{ course.course_length }} ساعات</span
                     >
                 </div>
             </div>
@@ -58,6 +58,9 @@ export default {
         forceRefresh(){
             this.$store.commit("forceRefresh");
         }
+    },
+    mounted(){
+        console.log(this.course.course_length)
     }
 };
 </script>
