@@ -6,9 +6,9 @@
             @click="closeLoginModal"
         ></div>
         <transition name="modal">
-            <dialog class="login-modal" v-if="showModal" open>
+            <dialog class="login-modal w-90-p" v-if="showModal" open>
                 <img
-                    src="/images/close-icon.svg"
+                    src="/images/close-icon-color.png"
                     @click="closeLoginModal"
                     class="close-modal-icon"
                     width="24"
@@ -17,7 +17,7 @@
 
                 <form class="login-form" @submit.prevent="submitForm">
                     <template>
-                        <p class="font-27 bold pr-10 main-color mb-40">تسجيل الدخول</p>
+                        <p class="font-27 bold pr-10 main-color mb-40 font-20-p mb-20-p">تسجيل الدخول</p>
                         <div
                             v-if="viaPhone"
                             class="form-group ltr mb-20 input-box"
@@ -61,7 +61,7 @@
                     <!-- password -->
                     
                     <div
-                        class="form-group relative pass-group mb-20 input-box"
+                        class="form-group relative pass-group mb-20 input-box mb-10-p"
                         :class="{ invalid: !password.isValid }"
                     >
                         <input
@@ -81,18 +81,18 @@
                             هذا الحقل مطلوب
                         </p>
                     </div>
-                    <div class="d-flex space-between mb-40">
-                        <router-link class="main-color font-20 bold" to="/"
+                    <div class="d-flex space-between mb-40 flex-wrap-p mb-10-p">
+                        <router-link class="main-color font-20 bold mb-10-p font-16-p" to="/"
                             >هل نسيت كلمة السر؟</router-link
                         >
-                        <p class="black-2 bold font-20">
+                        <p class="black-2 bold font-20 font-16-p">
                             هل أنت مستخدم جديد؟
-                            <router-link class="main-color pr-10" to="/register"
+                            <router-link class="main-color pr-10 p-0-p" to="/register"
                                 >سجل من هنا</router-link
                             >
                         </p>
                     </div>
-                    <input type="submit" class="main-bg white submit-btn font-20 bold flex-all pointer" value="تسجيل دخول">
+                    <input type="submit" class="main-bg white submit-btn font-20 bold flex-all pointer font-16-p" value="تسجيل دخول">
                     <div
                         class="main-color mt-15 pointer center-p"
                         v-if="viaPhone"
@@ -101,7 +101,7 @@
                         تسجيل الدخول عبر البريد الإلكتروني
                     </div>
                     <div
-                        class="main-color mt-15 pointer center-p"
+                        class="main-color mt-15 mt-10-p pointer center-p"
                         @click="changeLoginMethod"
                         v-else
                     >
@@ -109,19 +109,6 @@
                     </div>
                 </form>
 
-                <!-- <form class="login-form" @submit.prevent="submitForm">
-                    <p class="font-27 bold pr-10 main-color mb-40">تسجيل الدخول</p>
-                    <div class="input-box mb-20" :class="{ invalid: !email.isValid }">
-                        <input id="email" @blur="checkValidity" v-model.trim="email.val" type="text" placeholder="اسم المستخدم">
-                        <p class="main-color mt-5 font-12 req">هذا الحقل مطلوب</p>
-                    </div>
-                    <div class="input-box mb-20" :class="{ invalid: !password.isValid }">
-                        <input id="password" @blur="checkValidity" type="password" v-model.trim="password.val" placeholder="كلمة السر">
-                        <p class="main-color mt-5 font-12 req">هذا الحقل مطلوب</p>
-                    </div>
-                    
-                    <input type="submit" class="main-bg white submit-btn font-20 bold flex-all pointer" value="تسجيل دخول">
-                </form> -->
             </dialog>
         </transition>
         <alert-dialog
@@ -293,7 +280,7 @@ dialog {
     width: 100%;
     border-radius: 25px;
     border: 0;
-    height: 60px;
+    height: 50px;
 }
 @keyframes modal {
     from {
@@ -304,11 +291,6 @@ dialog {
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
-    }
-}
-@media (max-width: 767px) {
-    dialog {
-        top: 5%;
     }
 }
 .req {
@@ -322,6 +304,23 @@ input::placeholder {
 }
 .input-box.invalid .req {
     text-align: right;
+}
+@media (max-width: 767px) {
+    .close-modal-icon {
+        left: 18px;
+        right: auto;
+        top: 18px;
+    }
+    .login-form {
+        padding: 20px 12px 20px 12px;
+    }
+    .input-box input {
+        font-size: 16px!important;
+    }
+    dialog {
+        height: auto;
+        padding: 0;
+    }
 }
 </style>
 <style>
@@ -342,5 +341,14 @@ input::placeholder {
 .login-modal .vue-phone-number-input {
     box-shadow: 0px 1px 3px #00000029;
     border-radius: 10px;
+}
+@media (max-width: 767px) {
+    .country-selector__list {
+        right: 0!important;
+    }
+    .lang-en .country-selector__list {
+        right: auto!important;
+        left: 0!important;
+    }
 }
 </style>

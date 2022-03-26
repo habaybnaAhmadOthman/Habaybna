@@ -861,6 +861,10 @@ a:hover {
     .w-90-p {
         width: 90% !important;
     }
+    .w-80-p {
+        width: 80% !important;
+    }
+
     .col-md-4,
     .col-md-3 {
         max-width: none;
@@ -962,6 +966,14 @@ a:hover {
     .pt-25-p {
         padding-top: 25px;
     }
+    .pr-12-p {
+        padding-right: 12px;
+        padding-left: 0;
+    }
+    .lang-en .pr-12-p {
+        padding-left: 12px;
+        padding-right: 0;
+    }
     .p-side-12-p {
         padding-left: 12px;
         padding-right: 12px;
@@ -1017,9 +1029,23 @@ a:hover {
         width: 100%;
         overflow-x: scroll!important;
         white-space: nowrap;
+        display: flex;
+    }
+    .column-gap-20-p {
+        column-gap: 20px;
+    }
+    .column-gap-20-p > *:last-of-type {
+        margin-left: 20px;
+    }
+    .lang-en .column-gap-20-p > *:last-of-type {
+        margin-left: 0;
+        margin-right: 20px;
     }
     .bold-p {
         font-family: "Baloo Bold";
+    }
+    .d-flex-p {
+        display: flex;
     }
     .btn-main {
         height: 50px;
@@ -1027,5 +1053,8 @@ a:hover {
     .m-side-auto-p {
         margin-left: auto;
         margin-right: auto;
+    }
+    dialog {
+        max-height: 95%;
     }
 }

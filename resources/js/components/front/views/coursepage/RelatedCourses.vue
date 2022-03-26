@@ -1,18 +1,18 @@
 <template>
-    <div class="related-courses-section" v-if="appendedCourses.length > 0">
-        <h6 class="title-line font-27 mb-40">دورة ذات صلة</h6>
+    <div class="related-courses-section " v-if="appendedCourses.length > 0">
+        <h6 class="title-line font-27 mb-40 mb-20-p p-side-12-p">دورة ذات صلة</h6>
         
         <div class="list relative">
             <div class="related-courses-swiper my-swiper" dir="rtl">
                 <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
+                <div class="swiper-wrapper swipe-box-p column-gap-20-p p-side-12-p">
                     <!-- Slides -->
-                    <div v-for="(course, index) in appendedCourses" :key="index" class="swiper-slide">
+                    <div v-for="(course, index) in appendedCourses" :key="index" class="swiper-slide w-80-p">
                         <CourseCard :course="course" class="w-100-i" ></CourseCard>
                     </div>
                 </div>
-                <div class="swiper-button-next related-next"></div>
-                <div class="swiper-button-prev related-prev"></div>
+                <div class="swiper-button-next related-next do"></div>
+                <div class="swiper-button-prev related-prev do"></div>
             </div>
             
         </div>
@@ -42,14 +42,16 @@
                 this.initSwiper()
             },
             initSwiper(){
-                 var swiper = new Swiper(".related-courses-swiper", {
-                    navigation: {
-                        nextEl: ".related-next",
-                        prevEl: ".related-prev",
-                    },
-                    slidesPerView: 3,
-                    spaceBetween: 12,
-                });
+                if (!window.matchMedia("(max-width: 677px)").matches) {
+                    var swiper = new Swiper(".related-courses-swiper", {
+                        navigation: {
+                            nextEl: ".related-next",
+                            prevEl: ".related-prev",
+                        },
+                        slidesPerView: 3,
+                        spaceBetween: 12,
+                    });
+                }
             }
         }
     }
@@ -82,5 +84,10 @@
 }
 .swiper-slide {
     padding: 0 5px;
+}
+@media (max-width: 767px) {
+    .swiper-slide {
+        padding: 0;
+    }
 }
 </style>

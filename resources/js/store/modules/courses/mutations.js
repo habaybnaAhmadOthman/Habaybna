@@ -5,6 +5,11 @@ export default {
     setMyCourses(state,courses) {
         state.myCourses = courses;
     },
+    lectureComplete(state,payload) {
+        state.myCourses.filter(course=> {
+            course.course_progress
+        })
+    },
     // setCourseID(state,courseID) {
     //     state.courseID = courseID
     // },

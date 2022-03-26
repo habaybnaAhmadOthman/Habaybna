@@ -3,10 +3,19 @@
         <TheHeader></TheHeader>
         <Banner :courseLength="videoLength" :lectureNumber="lectureNumber" :bannerTitle="lectureName" :videoSrc="lectureSrc" :is-lecture="true"></Banner>
         <div class="container">
-            <div class="under-banner">
-                <CourseInfoText v-if="isDataReady" :header="'لمحة عن الدرس'" :description="description"></CourseInfoText>
-                <ContentTable v-if="isDataReady" :currentVideo="currentLecture" :rows="videosList" type="lecture" :title="'محتوى الدورة التدريبية'" class="pt-20"></ContentTable>
-                <AboutSpecialists v-if="specialists" :specialists="specialists"></AboutSpecialists>
+            <div class="under-banner mt-0-p-i">
+                <div class="mo p-side-12-p mt-20-p">
+                    <TabsToggle :tabs="mobileTabs"></TabsToggle>
+                </div>
+                <div tab-name="about" class="active p-side-12-p">
+                    <CourseInfoText v-if="isDataReady" :header="'لمحة عن الدرس'" :description="description"></CourseInfoText>
+                </div>
+                <div tab-name="table">
+                    <ContentTable v-if="isDataReady" :currentVideo="currentLecture" :rows="videosList" type="lecture" :title="'محتوى الدورة التدريبية'" class="pt-20"></ContentTable>
+                </div>
+                <div tab-name="coaches" class="mt-50 pt-10 mt-20-p pt-0-p">
+                    <AboutSpecialists v-if="specialists" :specialists="specialists"></AboutSpecialists>
+                </div>
             </div>
         </div>
         <div class="page-footer">
@@ -21,11 +30,12 @@ import Banner from "../../views/coursepage/Banner.vue";
 import CourseInfoText from "../../views/coursepage/CourseInfoText.vue";
 import ContentTable from "../../views/coursepage/ContentTable.vue";
 import AboutSpecialists from "../../views/coursepage/AboutSpecialists.vue";
+import TabsToggle from '../../layouts/TabsToggle.vue'
 
 import TheFooter from '../../layouts/TheFooter.vue'
 import TheHeader from '../../layouts/header/TheHeader.vue'
 export default {
-    components: { Banner,AboutSpecialists,CourseInfoText,ContentTable,TheFooter,TheHeader},
+    components: { Banner,AboutSpecialists,CourseInfoText,ContentTable,TheFooter,TheHeader,TabsToggle},
     props: ['course','lesson'],
     data() {
         return {
@@ -37,7 +47,21 @@ export default {
             isDataReady: false,
             lectureNumber: '',
             specialists: '',
-            currentLecture: null
+            currentLecture: null,
+            mobileTabs: [
+                {
+                    title: 'عن الدورة' ,
+                    name: 'about'
+                },
+                {
+                    title: 'الدروس' ,
+                    name: 'table'
+                },
+                {
+                    title: 'المدربين' ,
+                    name: 'coaches'
+                },
+            ]
         }
     },
     created(){
@@ -46,18 +70,11 @@ export default {
     methods: {
         async getCourseDetails(){
             try {
-                let courseLectures = await this.$store.getters['courses/courseLectures'];
-                let courseData = await this.$store.getters['courses/course'];
-                // check course info
-                if (!courseData) {
-                    courseData = await this.$store.dispatch('courses/getMyCourseData',this.course);
-                }
-                console.log(courseData)
+                let courseData = await this.$store.dispatch('courses/getMyCourseData',this.course);
+                const courseLectures = await this.$store.dispatch('courses/getCourseLectures',{
+                    courseID: courseData.id
+                })
                 
-                // check lectures
-                if (courseLectures.length == 0) {
-                    courseLectures = await this.$store.dispatch('courses/getCourseLectures',{courseID:courseData.id});
-                }
                 let {lectureData,lectureIndex}  = this.getLectureDetails(courseLectures)
                 if ( lectureData) {
                     this.lectureNumber = lectureIndex + 1

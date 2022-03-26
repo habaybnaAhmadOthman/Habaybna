@@ -37,7 +37,7 @@ export default {
         }
     },
     mounted(){
-        console.log(this.course)
+        // console.log(this.course)
     }
 };
 </script>

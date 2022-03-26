@@ -6,6 +6,7 @@ use App\Courses;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Object_ as TypesObject_;
 use PhpParser\Node\Expr\Cast\Object_;
+use App\UserCourseProgress;
 
 class AllCourses {
 
@@ -39,8 +40,6 @@ class AllCourses {
                             'categories'=>$one->category_name,
                             'course_progress' => Auth::check() ? $this->getCourseProgress($one) : [],
                         ];
-
-
                 }
             }
             }
@@ -69,24 +68,9 @@ class AllCourses {
 
     private function getCourseProgress($one)
     {
-        $data=[];
         if( Auth::user()->user_courses > 0){
-            foreach (Auth::user()->user_courses  as $key) {
-                if($one->id == $key){
-
-                    return $data []=  [
-                          Auth::user()->userVideoProgress->where('course_id',$one->id)
-                    ];
-             array_push($data,$key);
-                }
-
-            }
-
-             $data;
+                       return  UserCourseProgress::where('user_id',Auth::id())
+                                                      ->where('course_id',$one->id)->get();
         }
     }
-
-
-
-
 }

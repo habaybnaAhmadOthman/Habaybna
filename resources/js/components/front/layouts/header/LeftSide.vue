@@ -17,7 +17,7 @@
                 <p class="black">{{ userName }}</p>
             </div>
         </div>
-        <div class="bar"></div>
+        <div class="bar do"></div>
         <template v-if="!isLoggedIn">
             <router-link
                 to="/signup"
@@ -62,6 +62,10 @@ export default {
             if (this.$router.currentRoute.name != "home") {
                 this.$router.push("/");
             }
+            this.forceRefresh();
+        },
+        forceRefresh(){
+            this.$store.commit("forceRefresh");
         },
         toggleMobileMenu(){
             this.isMobileMenuOpened = !this.isMobileMenuOpened

@@ -2,9 +2,9 @@
     <header id="header" class="pt-5 pb-5">
         <div class="d-flex align-center space-between">
             <div class="d-flex align-center">
-                <div class="logo d-flex">
+                <router-link to="/" class="logo d-flex">
                     <img src="/images/siteImgs/header/logo.png" width="120" />
-                </div>
+                </router-link>
                 <div class="do">
                     <menu class="d-flex align-center main-menu">
                         <router-link
@@ -148,6 +148,8 @@ header {
     header {
         padding-left: 12px;
         padding-right: 12px;
+        background:#F4F4F4;
     }
+    
 }
 </style>

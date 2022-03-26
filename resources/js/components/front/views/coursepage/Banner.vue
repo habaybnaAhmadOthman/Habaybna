@@ -45,6 +45,9 @@ export default {
 
             return false;
         }
+    },
+    mounted(){
+        
     }
 }
 </script>
