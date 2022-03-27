@@ -105,7 +105,8 @@ export default {
                 index == 0 ||
                 // this.courseData.course_progress[index].is_complete == 1 ||
                 (
-                    this.courseData.course_progress && 
+                    this.courseData.course_progress &&
+                    this.courseData.course_progress.length > 0 &&
                     this.courseData.course_progress[index - 1].is_complete == 1
                 )
             ) {
@@ -121,18 +122,18 @@ export default {
         getVideoURLIfAvailable(index,title){
             if (!this.courseData)
                 this.getCourseProgress()
-            
+
             if (
                 index == 0 ||
                 // this.courseData.course_progress[index].is_complete == 1 ||
-                (this.courseData.course_progress && this.courseData.course_progress[index - 1].is_complete == 1)
+                (this.courseData.course_progress && this.courseData.course_progress.length > 0 && this.courseData.course_progress[index - 1].is_complete == 1)
                 ) {
                     title = title.split(' ').join('-')
                     return `/courses/${this.courseTitle.split(' ').join('-')}/${title.split(' ').join('-')}`
                 } else {
                     return `/`
                 }
-                
+
         },
         getVideoIcon(isComplete, index){
             if (isComplete || index == 0) {
@@ -147,7 +148,7 @@ export default {
     },
     mounted(){
         // to get available lectures
-        
+
     },
 };
 </script>

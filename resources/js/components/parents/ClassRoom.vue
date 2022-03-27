@@ -163,11 +163,9 @@ export default {
     this.getCourseVideos(course_id);
   },
   updated() {
-      console.log('xxxxxxzzzzz');
     // this.getLessonDouration();
   },
   mounted(){
-      console.log('xxxxxxx');
   },
   data() {
     return {
@@ -238,7 +236,6 @@ export default {
         this.currentVideo.title = video.title;
         this.currentVideo.description = video.description;
         window.scroll({top: 0, behavior: "smooth"})
-        console.log("xxxxxx");
       }
     },
     getLessonDouration() {
