@@ -199,8 +199,13 @@ class CourseController extends Controller
        $courses = $allCourses->execute();
 
        if($courses){
+           $my_courses = [];
+           if(Auth::check()){
+               $my_courses = Auth::user()->user_courses ? Auth::user()->user_courses : [];
+           }
         return response()->json([
             'courses' => $courses,
+            'my_courses'=>$my_courses ,
             'status'=>true,
             200
         ]);
