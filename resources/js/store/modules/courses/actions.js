@@ -162,6 +162,15 @@ export default {
         }
         return resp.data[0]
     },
+    // ******** Take Free Course ::: post
+    async getFreeCourse({_,getters},payload) {
+        const resp = await callApi("POST", "/api/courses/free-course",payload);
+        if (!resp) {
+            const error = new Error("something went wrong, please try again");
+            throw error;
+        }
+        return resp.data[0]
+    },
     // ******** PromoCode ::: post
     async promoCode({_,getters},payload) {
         const resp = await callApi("POST", "/api/check-promocode",payload);

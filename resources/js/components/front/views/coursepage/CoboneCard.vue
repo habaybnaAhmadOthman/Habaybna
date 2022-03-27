@@ -20,7 +20,7 @@
             <!-- for course page -->
             <template v-if="isCourse && courseData && !courseData.isPurchased">
                 <template v-if="courseData.is_free">
-                    <button @click="continueWatching" class="btn-register-now white-i font-18 font-16-p mb-20 bold flex-all w-100 pointer mb-10-p">إبدأ التعلم الآن</button>
+                    <button @click="getFreeCourse" class="btn-register-now white-i font-18 font-16-p mb-20 bold flex-all w-100 pointer mb-10-p">إبدأ التعلم الآن</button>
                 </template>
                 <template v-else>
                     <button @click="checkLogin" class="btn-register-now white-i font-18 font-16-p mb-20 bold flex-all w-100 pointer mb-10-p">إشترك الآن</button>
@@ -140,6 +140,11 @@
                 var goToLectureNumber = this.courseData.course_progress.findIndex(c => c.is_complete == 0);
                 const goToLecture = this.courseData.videos_title_length[goToLectureNumber].lesson_title.split(' ').join('-')
                 this.$router.push(`/courses/${this.courseData.title.split(' ').join('-')}/${goToLecture}`)
+            },
+            async getFreeCourse(){
+                const freeCourse = await this.$store.dispatch('courses/getFreeCourse',{
+                    courseID: this.courseData.id
+                })
             },
             // ************
             // player methods
