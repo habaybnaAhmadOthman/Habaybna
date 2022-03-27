@@ -69,8 +69,13 @@ class AllCourses {
     private function getCourseProgress($one)
     {
         if( Auth::user()->user_courses > 0){
-                       return  UserCourseProgress::where('user_id',Auth::id())
-                                                      ->where('course_id',$one->id)->get();
+            foreach(Auth::user()->user_courses  as $course){
+                if($course === $one->id)
+
+                    return  UserCourseProgress::where('user_id',Auth::id())
+                                            ->where('course_id',$one->id)->get();
+            }
+            
         }
     }
 }
