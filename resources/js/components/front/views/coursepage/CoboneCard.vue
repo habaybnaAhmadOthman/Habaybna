@@ -4,14 +4,14 @@
             <!-- <button @click="addVideoAction('isComplete')">Complete</button> -->
             <!-- favourite -->
             <div v-if="isCourse" class="fav-box relative pointer"></div>
-            
+
             <!-- video player container -->
             <video ref="videoPlayer" class="video-js main-img w-100"></video>
-            
+
             <!-- discount label -->
             <template v-if="isCourse && courseData && !courseData.isPurchased">
-                <DiscountLabel class="course-discount" :is-free="courseData.is_free" 
-                :hasDiscount="courseData.discount.has_discount" 
+                <DiscountLabel class="course-discount" :is-free="courseData.is_free"
+                :hasDiscount="courseData.discount.has_discount"
                 :discountValue="courseData.discount.discount_value" />
             </template>
 
@@ -26,7 +26,7 @@
                     <button @click="checkLogin" class="btn-register-now white-i font-18 font-16-p mb-20 bold flex-all w-100 pointer mb-10-p">إشترك الآن</button>
                     <CoboneForm @buyCourse="buyCourse" @getPromoCode="setPromoCode" :coursePrice="courseData && courseData.price" :courseID="getCourseID" :courseName="courseData && courseData.title" :isLoggedIn="isLoggedIn" />
                 </template>
-                
+
                 <!-- hidden form -->
                 <PaymentForm v-if="paymentFormData" :paymentData="paymentFormData" @clearPaymentData="clearPaymentData"></PaymentForm>
 
