@@ -10,7 +10,7 @@
                             <div class="play-video d-flex">
                                 <img class="play-icon" :src="getCourseVideoIcon(index)" width="50" height="50" alt="" />
                                 <div class="duration">
-                                    <span class="nowrap black-2">{{row.lesson_length | lessonTime(row.lesson_length)}}</span>
+                                    <span class="nowrap black-2">{{row.lesson_length }} دقيقة</span>
                                 </div>
                                 <div class="video-name black-2">
                                     <span>{{row.lesson_title}}</span>
@@ -26,7 +26,7 @@
                             <div class="play-video d-flex">
                                 <img class="play-icon" :src="getCourseVideoIcon(index)" width="50" height="50" alt="" />
                                 <div class="duration">
-                                    <span class="nowrap black-2">{{row.length | lessonTime(row.length)}}</span>
+                                    <span class="nowrap black-2">{{row.length }} دقيقة</span>
                                 </div>
                                 <div class="video-name">
                                     <span class="black-2">{{row.title}}</span>
@@ -79,15 +79,6 @@ export default {
             currentLecture: null,
             courseData: null,
             isDataReady: false,
-        }
-    },
-    filters: {
-        lessonTime(videoLength){
-            if (+videoLength.split(':')[0] > 0) {
-                return `${videoLength} ساعة`
-            } else {
-                return `${videoLength} دقيقة`
-            }
         }
     },
     computed: {
