@@ -159,11 +159,12 @@
                     this.addPlayerEvents()
             },
             addPlayerEvents(){
+                var self = this;
                 this.player.on('ready', function() {
                     // this.addClass('my-example');
                 });
                 this.player.on('ended', function() {
-                    this.addVideoAction('isComplete')
+                    self.addVideoAction('isComplete')
                 });
             },
             addVideoAction(type) {
