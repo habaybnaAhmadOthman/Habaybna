@@ -13,18 +13,16 @@ export default {
             const error = new Error("fail getAllCourses ::");
             throw error;
         }
-        let myCourses = [];
-        let restCourses = [];
-        if (rootGetters['user/isLoggedIn']) {
-            for (let i =0; i < resp.data.courses.length; i++) {
-                if (isPurchased(resp.data.courses[i])) { // it's my course
-                    myCourses.push(resp.data.courses[i])
-                } else {
-                    restCourses.push(resp.data.courses[i])
-                }
+        let allCourses = resp.data.courses;
+        let myCoursesIDs = resp.data.my_courses;
+        let myCourses = []
+        let restCourses = []
+        for (let i =0; i < allCourses.length; i++) {
+            if (myCoursesIDs.includes(allCourses[i].id)) { // it's my course
+                myCourses.push({...allCourses[i],isPurchased:true})
+            } else {
+                restCourses.push({...allCourses[i],isPurchased:false})
             }
-        } else {
-            restCourses = resp.data.courses
         }
         
         commit('setMyCourses',myCourses)
@@ -44,6 +42,7 @@ export default {
             const error = new Error("fail to take action");
             throw error;
         }
+        commit('completeLecture',payload)
         return resp.data
     },
     // ******** get user courses ::: get
@@ -107,9 +106,8 @@ export default {
             let resp = coursesFromAPI.find(course => course.title == title)
             if (!resp)
                 resp = coursesFromAPI.find(course => course.id == +title)
-            const isPurchase = isPurchased(resp)
-
-            commit('setCourse',{...resp,isPurchased: isPurchase});
+            
+            commit('setCourse',resp);
             return resp
         } catch (err) {
             const error = new Error("fail getCourseDetails ::",err);

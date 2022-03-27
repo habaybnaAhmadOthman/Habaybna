@@ -5,11 +5,6 @@ export default {
     setMyCourses(state,courses) {
         state.myCourses = courses;
     },
-    lectureComplete(state,payload) {
-        state.myCourses.filter(course=> {
-            course.course_progress
-        })
-    },
     // setCourseID(state,courseID) {
     //     state.courseID = courseID
     // },
@@ -25,5 +20,16 @@ export default {
     currentLecture(state,data) {
         state.currentLecture = data;
     },
-    
+    completeLecture(state, payload) {
+        var isLectureHasProgress = state.course.course_progress.findIndex(lesson=> lesson.video_id == +payload.videoID)
+        if (isLectureHasProgress){
+            state.course.course_progress[isLectureHasProgress].is_complete = 1
+        } else {
+            state.course.course_progress.push({
+                ...state.course.course_progress[0],
+                is_complete:1,
+                video_id:payload.videoID
+            })
+        }
+    }
 };

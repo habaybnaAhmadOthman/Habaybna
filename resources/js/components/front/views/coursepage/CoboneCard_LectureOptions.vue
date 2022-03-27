@@ -1,6 +1,6 @@
 <template>
     <div class="w-100 lectures-options">
-        <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer mb-20 next-arrow relative" @click.native="forceRefresh" :to="getLectureURL('next')" v-if="hasNextLecture"> التالي</router-link>
+        <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer mb-20 next-arrow relative trans" :disabled="isLectureFinished" @click.native="forceRefresh" :to="getLectureURL('next')" v-if="hasNextLecture"> التالي</router-link>
         <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative prev-arrow" @click.native="forceRefresh" :to="getLectureURL('prev')" v-if="hasPrevLecture"> السابق</router-link>
         <router-link v-if="isReadyToExam" class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative next-arrow" :to="goToExam"> الذهاب الى الإختبار</router-link>
     </div>
@@ -18,9 +18,13 @@
             hasNextLecture(){
                 return (this.getLecture().index  != this.$store.getters['courses/courseLectures'].length - 1)
             },
+            isLectureFinished(){
+                var progress = this.$store.getters['courses/course'].course_progress
+                return !(progress.length > 0 &&  progress[this.getLecture().index] !== undefined && progress[this.getLecture().index].is_complete)
+            },
             isReadyToExam(){
                 if (this.getLecture().index  == this.$store.getters['courses/courseLectures'].length - 1)
-                    if (this.getCourseData.course_progress && this.getCourseData.course_progress[this.$store.getters['courses/courseLectures'].length - 1].is_complete == 1)
+                    if (this.getCourseData && this.getCourseData.course_progress.length > 0 && this.getCourseData.course_progress[this.getLecture().index] !== undefined && this.getCourseData.course_progress[this.getLecture().index].is_complete == 1)
                         return true
                 return  false
             },
@@ -96,6 +100,9 @@
 }
 .lectures-options a:only-of-type {
     margin-bottom: 0!important;
+}
+a[disabled] {
+    opacity: 0.2;
 }
 @media (max-width: 767px) {
     .btn-register-now {

@@ -167,13 +167,14 @@
                     self.addVideoAction('isComplete')
                 });
             },
-            addVideoAction(type) {
+            async addVideoAction(type) {
                 var params =  {
                     videoID: this.lectureData.id,
                     courseID: this.lectureData.course_id,
                     type: type // isComplete || progress
                 }
-                this.$store.dispatch('courses/videoAction',params)
+                const resp = await this.$store.dispatch('courses/videoAction',params);
+                
             },
             getLectureProgress(){
                 this.lectureData.progress = ''
