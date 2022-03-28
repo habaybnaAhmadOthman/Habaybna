@@ -1,6 +1,5 @@
 <template>
     <div class="course-box bg-white shadow w-31 radius-10 relative w-100-p">
-        <!-- <div class="fav-box relative pointer"></div> -->
         <router-link :to="`/courses/${courseSlog}/${getLectureUrl}`">
             <figure class="d-flex relative radius-10 overflow-hidden figure-box">
                 <img
