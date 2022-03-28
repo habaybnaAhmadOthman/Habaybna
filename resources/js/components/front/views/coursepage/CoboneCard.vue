@@ -123,7 +123,6 @@
             async buyCourse(){
                 this.isLoading(true)
                 try {
-                    debugger;
                     const resp = await this.$store.dispatch('courses/buyCourse',{
                         courseID:this.getCourseID(),
                         hasPromoCode:this.hasPromoCode
