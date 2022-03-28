@@ -24,7 +24,7 @@
                 </template>
                 <template v-else>
                     <button @click="checkLogin" class="btn-register-now white-i font-18 font-16-p mb-20 bold flex-all w-100 pointer mb-10-p">إشترك الآن</button>
-                    <CoboneForm @buyCourse="buyCourse" @getPromoCode="setPromoCode" :coursePrice="courseData && courseData.price" :courseID="getCourseID" :courseName="courseData && courseData.title" :isLoggedIn="isLoggedIn" />
+                    <CoboneForm @buyCourse="buyCourse" @getPromoCode="setPromoCode" :coursePrice="coboneCoursePrice" :courseID="getCourseID" :courseName="courseData && courseData.title" :isLoggedIn="isLoggedIn" />
                 </template>
 
                 <!-- hidden form -->
@@ -70,6 +70,13 @@
             isLoggedIn() {
                 return this.$store.getters["user/isLoggedIn"];
             },
+            coboneCoursePrice(){
+                if (this.courseData && this.courseData.discount.discount_price) {
+                    return this.courseData.discount.discount_price
+                } else if (this.courseData && this.courseData.price){
+                    return this.courseData.price
+                }
+            }
         },
         data() {
             return {
