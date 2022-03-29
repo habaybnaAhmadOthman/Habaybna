@@ -46,13 +46,18 @@ export default {
         return resp.data
     },
     // ******** Favourite actions  ::: post
-    async addToFavourite({commit},payload) {
+    async addToFavourite({commit,getters},payload) {
         const resp = await callApi("POST", "/api/course/add-to-fav",payload);
         if (resp.status != 200) {
             const error = new Error("can't add to favourites");
             throw error;
         }
-        return resp.data
+        const targetedCourseIndex = getters.courses.findIndex(course => course.id == payload.courseID);
+        const targetedCourse = getters.courses[targetedCourseIndex]
+        targetedCourse.is_favourite = !targetedCourse.is_favourite
+        getters.courses[targetedCourseIndex] = targetedCourse
+        
+        commit('setAllCourses',getters.courses)
     },
     // ******** get user courses ::: get
     async getMyCourses({_,rootGetters,getters,commit,dispatch}) {
@@ -176,6 +181,8 @@ export default {
             const error = new Error("something went wrong, please try again");
             throw error;
         }
+        debugger;
+        // commit('setMyCourses',[...getters.myCourses,])
         return resp.data[0]
     },
     // ******** PromoCode ::: post

@@ -149,14 +149,14 @@ export default {
         showShareDialog() {
             this.showShareModal = !this.showShareModal;
         },
-        isFromPaymentPage(){
+        async isFromPaymentPage(){
             if (this.$route.query.payment) {
                 if (this.$route.query.payment == 'true') {
                     this.infoModal.isFixed = true;
                     this.showWatchCourseDialog()
-                    this.$store.dispatch('courses/getAllCourses')
+                    await this.$store.dispatch('courses/getAllCourses')
                 } else {
-                    this.setInfoModal('حصل خطأ في عملية الشراء','يرجى التأكد من المعلومات والمحاولة مرة أخرى' ,false,false,true)
+                    await this.setInfoModal('حصل خطأ في عملية الشراء','يرجى التأكد من المعلومات والمحاولة مرة أخرى' ,false,false,true)
                 }
             }
         },

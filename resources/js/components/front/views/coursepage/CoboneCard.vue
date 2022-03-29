@@ -1,9 +1,8 @@
 <template>
     <div class="course-card w-30 radius-10 overflow-hidden bg-white relative w-100-p m-side-12-p">
         <figure class="d-flex relative overflow-hidden radius-10 figure-box">
-            <!-- <button @click="addVideoAction('isComplete')">Complete</button> -->
             <!-- favourite -->
-            <div v-if="isCourse" class="fav-box relative pointer"></div>
+            <div v-if="isCourse" @click="addToFavourite" :class="{'active':courseData && courseData.is_favourite}" class="fav-box relative pointer"></div>
 
             <!-- video player container -->
             <video ref="videoPlayer" class="video-js main-img w-100"></video>
@@ -20,7 +19,7 @@
             <!-- for course page -->
             <template v-if="isCourse && courseData && !courseData.isPurchased">
                 <template v-if="courseData.is_free">
-                    <button @click="getFreeCourse" class="btn-register-now white-i font-18 font-16-p mb-20 bold flex-all w-100 pointer mb-10-p">إبدأ التعلم الآن</button>
+                    <button @click="getFreeCourse" class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer">إبدأ التعلم الآن</button>
                 </template>
                 <template v-else>
                     <button @click="checkLogin" class="btn-register-now white-i font-18 font-16-p mb-20 bold flex-all w-100 pointer mb-10-p">إشترك الآن</button>
@@ -104,6 +103,17 @@
             }
         },
         methods: {
+            async addToFavourite(event) {
+                var msg = 'تمت الإضافة إلى المفضلة'
+                if (event.target.classList.contains('active')) {
+                    msg = 'تمت الإزالة من المفضلة'
+                }
+                event.target.classList.toggle('active')
+                await this.$store.dispatch("courses/addToFavourite",{
+                    courseID:this.getCourseID()
+                });
+                this.$store.commit("alertDialogMsg", msg);
+            },
             getLectureData(){
                 this.lectureData = this.$store.getters["courses/currentLecture"];
             },

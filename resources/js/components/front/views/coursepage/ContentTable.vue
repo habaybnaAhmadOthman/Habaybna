@@ -12,7 +12,7 @@
                                 <div class="duration">
                                     <span class="nowrap black-2">{{row.lesson_length }} دقيقة</span>
                                 </div>
-                                <div class="video-name black-2">
+                                <div class="video-name black-2 relative">
                                     <span>{{row.lesson_title}}</span>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                                 <div class="duration">
                                     <span class="nowrap black-2">{{row.length }} دقيقة</span>
                                 </div>
-                                <div class="video-name">
+                                <div class="video-name relative">
                                     <span class="black-2">{{row.title}}</span>
                                 </div>
                             </div>
@@ -192,6 +192,9 @@ export default {
 }
 [href="/"] + .prevent-click {
     display: block;
+}
+.video-name {
+    font-weight: 200;
 }
 @media (max-width: 767px) {
     .lecture-box .tag {

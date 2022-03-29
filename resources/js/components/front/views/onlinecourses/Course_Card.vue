@@ -1,6 +1,6 @@
 <template>
     <div class="course-box bg-white shadow w-31 radius-10 relative w-100-p">
-        <div @click="addToFavourite" class="fav-box relative pointer"></div>
+        <div @click="addToFavourite" :class="{'active':course.is_favourite}" class="fav-box relative pointer"></div>
         <router-link @click.native="forceRefresh" :to="`/courses/${courseSlog}`">
             <figure class="d-flex relative radius-10 overflow-hidden figure-box">
                 <img
@@ -59,15 +59,19 @@ export default {
             this.$store.commit("forceRefresh");
         },
         async addToFavourite(event) {
-            const resp = await this.$store.dispatch("courses/addToFavourite",{
+            var msg = 'تمت الإضافة إلى المفضلة'
+            if (event.target.classList.contains('active')) {
+                msg = 'تمت الإزالة من المفضلة'
+            }
+            event.target.classList.toggle('active')
+            await this.$store.dispatch("courses/addToFavourite",{
                 courseID:this.course.id
             });
-            this.$store.commit("alertDialogMsg", "تمت الإضافة إلى المفضلة");
-            event.target.classList.add('active')
+            this.$store.commit("alertDialogMsg", msg);
         }
     },
     mounted(){
-        console.log(this.course.course_length)
+        
     }
 };
 </script>
