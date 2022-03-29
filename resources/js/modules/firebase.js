@@ -19,6 +19,6 @@ const firebaseConfig = {
     measurementId: "G-TDED180GFL"
 };
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+const auth = getAuth(app);
 
 export default auth;
