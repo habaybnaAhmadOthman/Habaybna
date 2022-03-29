@@ -49,7 +49,7 @@ export default {
     async addToFavourite({commit},payload) {
         const resp = await callApi("POST", "/api/course/favourite-action",payload);
         if (resp.status != 200) {
-            const error = new Error("fail to take action");
+            const error = new Error("can't add to favourites");
             throw error;
         }
         return resp.data

@@ -149,9 +149,14 @@
                 this.$router.push(`/courses/${this.courseData.title.split(' ').join('-')}/${goToLecture}`)
             },
             async getFreeCourse(){
-                const freeCourse = await this.$store.dispatch('courses/getFreeCourse',{
-                    courseID: this.courseData.id
-                })
+                if (this.isLoggedIn) {
+                    const freeCourse = await this.$store.dispatch('courses/getFreeCourse',{
+                        courseID: this.courseData.id
+                    })
+                    debugger;
+                } else {
+                    this.$store.commit('loginModal',true);
+                }
             },
             // ************
             // player methods
