@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 

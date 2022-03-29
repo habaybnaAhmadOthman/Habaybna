@@ -7,6 +7,7 @@ use App\Courses;
 use App\Specialist;
 use App\Quize;
 use App\CourseCategory;
+use App\UsersFavouriteCourses;
 use App\CourseVideos;
 use App\CourseSpecialist;
 use App\CategoryCourse;
@@ -497,6 +498,46 @@ class CourseController extends Controller
                 'updated_at',
                 ]), 200);
         // }
+
+    }
+
+    public function addToFavourite(Request $request)
+    {
+        try {
+            $course = Courses::findorfail($request->courseID) ;
+
+            if($course)
+            {
+                if(UsersFavouriteCourses::where('user_id',Auth::id())
+                                        ->where('course_id',$request->courseID)
+                                        ->first())
+                {
+                    UsersFavouriteCourses::where('user_id',Auth::id())
+                                        ->where('course_id',$request->courseID)->delete();
+
+                    return response(
+                                        UsersFavouriteCourses::where('user_id',Auth::id())->get()
+                                        ,
+                                        200
+                                    );
+
+                }
+
+                $courseFav = UsersFavouriteCourses::create([
+                   'user_id'=> Auth::id(),
+                   'course_id'=> $request->courseID
+                ]);
+
+            }
+            return response($courseFav,200);
+
+        }catch (ModelNotFoundException $e){
+            return response()->json([
+                'msg'=>'faild',
+                'status'=>false,
+                404
+        ]);
+        }
 
     }
 

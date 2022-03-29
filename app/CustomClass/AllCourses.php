@@ -39,7 +39,9 @@ class AllCourses {
                             ],
                             'categories'=>$one->category_name,
                             'course_progress' => Auth::check() ? $this->getCourseProgress($one) : [],
+                            'is_favourite'=> Auth::check() && $one->favouriteUsers->count() > 0  ? true : false   ,
                         ];
+
                 }
             }
             }
@@ -75,7 +77,8 @@ class AllCourses {
                     return  UserCourseProgress::where('user_id',Auth::id())
                                             ->where('course_id',$one->id)->get();
             }
-            
+            return  [];
+
         }
     }
 }
