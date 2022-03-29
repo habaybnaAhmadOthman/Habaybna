@@ -95,4 +95,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserCourseProgress::class,'user_id');
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany('App\Courses','users_favourite_courses','user_id','course_id');
+
+    }
+
+
 }

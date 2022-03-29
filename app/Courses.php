@@ -90,7 +90,7 @@ class Courses extends Model
             $m = "00";
         }
         $length = $h.':'.$m ;
-        
+
         // dd($length);
        return $length ;
 
@@ -104,5 +104,10 @@ class Courses extends Model
         return $this->hasMany(courseProgress::class,'course_id');
     }
 
+    public function favouriteUsers()
+    {
+        return $this->belongsToMany('App\User','users_favourite_courses','course_id')->withPivot('course_id','user_id');
 
+
+    }
 }

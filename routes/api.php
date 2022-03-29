@@ -18,7 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //payment test config
     Route::get('get-payment-status','PaymentController@checkPaymentStatus');
     Route::post('/course-payment','PaymentController@coursePayment');
-    Route::post('courses/free-course','PaymentController@joinFreeCourse');
+    Route::post('course/add-to-fav','CourseController@addToFavourite');
 
 
     // check user promo code

@@ -24,7 +24,7 @@ export default {
                 restCourses.push({...allCourses[i],isPurchased:false})
             }
         }
-        
+
         commit('setMyCourses',myCourses)
         commit('setAllCourses',restCourses)
         return restCourses;
@@ -32,11 +32,11 @@ export default {
 
     // ******** get lesson progress ::: get
     async getLectureProgress({getters},payload) {
-        console.log(getters.course) 
+        console.log(getters.course)
     },
     // ******** get lesson data  ::: get
     async videoAction({commit},payload) {
-        
+
         const resp = await callApi("POST", "/api/course/video-actions",payload);
         if (resp.status != 200) {
             const error = new Error("fail to take action");
@@ -47,7 +47,7 @@ export default {
     },
     // ******** Favourite actions  ::: post
     async addToFavourite({commit},payload) {
-        const resp = await callApi("POST", "/api/course/favourite-action",payload);
+        const resp = await callApi("POST", "/api/course/add-to-fav",payload);
         if (resp.status != 200) {
             const error = new Error("can't add to favourites");
             throw error;
@@ -82,7 +82,7 @@ export default {
                     return categories.includes(category.id)
                 })
                 if (hasRelatedCategories.length > 0) return course;
-                
+
             }
         })
         return RelatedCourses.slice(0,6);
@@ -98,24 +98,24 @@ export default {
     },
     async getCourseDetails({_,rootGetters,getters,commit,dispatch},title) {
         try {
-            
+
             var coursesFromAPI = getters.courses;
             // if (rootGetters['user/isLoggedIn']) {
             //     coursesFromAPI = getters.myCourses;
-            // } else 
+            // } else
             //     coursesFromAPI = getters.courses;
 
             if (coursesFromAPI.length == 0) {
                 await dispatch('getAllCourses')
             }
-            
+
             coursesFromAPI = allCourses(getters.courses,getters.myCourses)
             title = title.split('-').join(' ')
             axios.defaults.headers.common.Authorization = `Bearer ${rootGetters['user/userData'].token}`;
             let resp = coursesFromAPI.find(course => course.title == title)
             if (!resp)
                 resp = coursesFromAPI.find(course => course.id == +title)
-            
+
             commit('setCourse',resp);
             return resp
         } catch (err) {
@@ -125,13 +125,13 @@ export default {
     },
     async getMyCourseData({_,rootGetters,getters,commit,dispatch},title) {
         try {
-            
+
             var myCourses = getters.myCourses;
             if (myCourses.length == 0) {
                 myCourses = await dispatch('getMyCourses')
             }
             title = title.split('-').join(' ')
-            
+
             let resp = myCourses.find(course => course.title == title)
             if (!resp)
                 resp = myCourses.find(course => course.id == +title)
@@ -147,11 +147,11 @@ export default {
     async getCourseLectures({commit,getters},payload) {
         // to check if the user still in the same course
         console.log(getters.courseLectures)
-        if ((payload.courseID == getters.course.id) && 
+        if ((payload.courseID == getters.course.id) &&
             getters.courseLectures.length != 0 && getters.courseLectures[0].title == getters.course.videos_title_length[0].lesson_title) {
                 return getters.courseLectures
         }
-        
+
         const resp = await callApi("POST", "/api/course/course-lectures",payload);
         if (!resp) {
             const error = new Error("something went wrong, please try again");
