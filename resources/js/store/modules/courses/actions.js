@@ -72,6 +72,23 @@ export default {
             throw error;
         }
     },
+    // ******** get favourite courses ::: get
+    async getMyFavourites({_,rootGetters,getters,commit,dispatch}) {
+        try {
+            var courses = getters.courses;
+            if (courses.length == 0) {
+                await dispatch('getAllCourses')
+            }
+            courses = getters.courses;
+            const favouriteCourses =  courses.filter(course=>{
+                return course.is_favourite
+            })
+            return favouriteCourses
+        } catch (err) {
+            const error = new Error("fail getMyFavourites ::",err);
+            throw error;
+        }
+    },
     // ******** get related courses ::: get
     async getRelatedCourses({_,getters},courseCategories) {
         let shuffledCourses = await shuffle(getters.courses);

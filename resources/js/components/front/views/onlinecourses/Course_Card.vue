@@ -52,23 +52,30 @@ export default {
     computed:{
         courseSlog(){
             return this.course.title.split(' ').join('-')
-        }
+        },
+        isLoggedIn() {
+            return this.$store.getters["user/isLoggedIn"];
+        },
     },
     methods: {
         forceRefresh(){
             this.$store.commit("forceRefresh");
         },
         async addToFavourite(event) {
-            var msg = 'تمت الإضافة إلى المفضلة'
-            if (event.target.classList.contains('active')) {
-                msg = 'تمت الإزالة من المفضلة'
+            if (this.isLoggedIn) {
+                var msg = 'تمت الإضافة إلى المفضلة'
+                if (event.target.classList.contains('active')) {
+                    msg = 'تمت الإزالة من المفضلة'
+                }
+                event.target.classList.toggle('active')
+                await this.$store.dispatch("courses/addToFavourite",{
+                    courseID:this.course.id
+                });
+                this.$store.commit("alertDialogMsg", msg);
+            } else {
+                this.$store.commit('loginModal',true);
             }
-            event.target.classList.toggle('active')
-            await this.$store.dispatch("courses/addToFavourite",{
-                courseID:this.course.id
-            });
-            this.$store.commit("alertDialogMsg", msg);
-        }
+        },
     },
     mounted(){
         
