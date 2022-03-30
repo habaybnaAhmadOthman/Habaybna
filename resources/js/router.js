@@ -59,6 +59,7 @@ import LoginPage from "./components/front/pages/auth/LoginPage.vue";
 import UserProfile_Template from "./components/front/views/userprofile/UserProfile_Template";
 import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfile.vue";
 import UserProfile_MyCourses from "./components/front/pages/dashboard/MyCourses.vue";
+import UserProfile_MyFavourites from "./components/front/pages/dashboard/MyFavourites.vue";
 
 import store from "./store/index";
 
@@ -285,6 +286,14 @@ const routes = [{
                     header: false
                 },
                 name: 'myCourses'
+            },
+            {
+                path: "my-favourites",
+                component: UserProfile_MyFavourites,
+                meta: {
+                    header: false
+                },
+                name: 'myFavourites'
             },
     ]
     },

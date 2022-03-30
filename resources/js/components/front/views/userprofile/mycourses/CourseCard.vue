@@ -1,5 +1,6 @@
 <template>
     <div class="course-box bg-white shadow w-31 radius-10 relative w-100-p">
+        <div v-if="withFavourite" @click="addToFavourite" :class="{'active':course.is_favourite}" class="fav-box relative pointer"></div>
         <router-link :to="`/courses/${courseSlog}/${getLectureUrl}`">
             <figure class="d-flex relative radius-10 overflow-hidden figure-box">
                 <img
@@ -26,7 +27,7 @@
 
 <script>
 export default {
-    props: ['course'],
+    props: ['course','withFavourite'],
     computed:{
         courseSlog(){
             return this.course.title.split(' ').join('-')
@@ -35,9 +36,19 @@ export default {
             return this.course.videos_title_length[0].lesson_title.split(' ').join('-')
         }
     },
-    mounted(){
-        // console.log(this.course)
-    }
+    methods:{
+        async addToFavourite(event) {
+            var msg = 'تمت الإضافة إلى المفضلة'
+            if (event.target.classList.contains('active')) {
+                msg = 'تمت الإزالة من المفضلة'
+            }
+            event.target.classList.toggle('active')
+            await this.$store.dispatch("courses/addToFavourite",{
+                courseID:this.course.id
+            });
+            this.$store.commit("alertDialogMsg", msg);
+        },
+    },
 };
 </script>
 
