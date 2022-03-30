@@ -9,7 +9,7 @@
             >
                 <div class="modal-body">
                     <img v-if="!fixed" @click="tryClose" class="close-icon-modal pointer" src="/images/close-icon-color.png" width="34" height="34" />
-                    <img class="mb-40 mb-20-p d-block m-side-auto-p status-img" :src="`/images/${statusIcon}.png`" width="100" height="100" />
+                    <img class="mb-40 mb-20-p d-block m-side-auto-p status-img" :src="`/images/${statusIcon}`" width="100" height="100" />
                     <p class="title-line font-27 mb-20">{{title}}</p>
                     <p class="black-2 font-20-p font-27 mb-40">{{description}}</p>
                     <div class="d-flex modal-options flex-end" :class="optionsClass">
@@ -68,9 +68,9 @@ export default {
     computed: {
         statusIcon() {
             if (!this.success) {
-                return 'error-icon'
+                return 'error-icon.svg'
             }
-            return 'success-icon'
+            return 'success-icon.png'
         }
     }
 };

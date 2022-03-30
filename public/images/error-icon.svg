@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="118" height="118" viewBox="0 0 118 118">
+  <defs>
+    <filter id="Ellipse_17968" x="0" y="0" width="118" height="118" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_53781" data-name="Group 53781" transform="translate(-10965 -6345)">
+    <g transform="matrix(1, 0, 0, 1, 10965, 6345)" filter="url(#Ellipse_17968)">
+      <circle id="Ellipse_17968-2" data-name="Ellipse 17968" cx="50" cy="50" r="50" transform="translate(9 6)" fill="#fff"/>
+    </g>
+    <g id="error-svgrepo-com" transform="translate(10988 6364)">
+      <path id="Path_156351" data-name="Path 156351" d="M36.561,0A36.561,36.561,0,1,0,73.121,36.561,36.6,36.6,0,0,0,36.561,0Zm0,70.309A33.748,33.748,0,1,1,70.309,36.561,33.788,33.788,0,0,1,36.561,70.309Z" fill="#823175"/>
+      <path id="Path_156352" data-name="Path 156352" d="M43.712,16.412a1.4,1.4,0,0,0-1.988,0L30.062,28.074,18.4,16.412A1.406,1.406,0,0,0,16.412,18.4L28.074,30.062,16.412,41.723A1.406,1.406,0,1,0,18.4,43.712L30.062,32.05,41.723,43.712a1.406,1.406,0,0,0,1.988-1.988L32.05,30.062,43.712,18.4A1.4,1.4,0,0,0,43.712,16.412Z" transform="translate(6.499 6.499)" fill="#f49f21"/>
+    </g>
+  </g>
+</svg>
