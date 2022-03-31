@@ -22,7 +22,7 @@ export default {
     },
     completeLecture(state, payload) {
         var isLectureHasProgress = state.course.course_progress.findIndex(lesson=> lesson.video_id == +payload.videoID)
-        if (isLectureHasProgress){
+        if (isLectureHasProgress > -1){
             state.course.course_progress[isLectureHasProgress].is_complete = 1
         } else {
             state.course.course_progress.push({

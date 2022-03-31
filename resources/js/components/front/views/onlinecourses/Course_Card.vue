@@ -127,13 +127,16 @@ export default {
     height: 55px;
     margin: auto;
 }
-.related-courses-section .course-box .course-title {
+.course-box .course-title {
     height: 60px;
 }
 @media (max-width: 767px) {
     .fav-box {
         width: 40px;
         height: 40px;
+    }
+    .course-box .course-title {
+        height: auto;
     }
 }
 </style>

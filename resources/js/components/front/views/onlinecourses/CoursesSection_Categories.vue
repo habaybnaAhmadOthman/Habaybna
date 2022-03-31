@@ -112,7 +112,12 @@ li input[type="checkbox"] {
     position: absolute;
     opacity: 0;
 }
-
+.categories-filter-prev,.categories-filter-next {
+    display: none !important;
+}
+.courses-categories-swiper.swiper-initialized .categories-filter-next,.courses-categories-swiper.swiper-initialized .categories-filter-prev{
+    display: block !important;
+}
 @media (max-width: 767px) {
     li label {
         padding: 9px 23px;

@@ -86,7 +86,7 @@ export default {
             return this.$store.getters['courses/course'].title;
         },
         isReadyToExam(){
-            if (this.courseData && this.courseData.course_progress.length > 0 && this.courseData.course_progress[this.courseData.videos_count] !== undefined && this.courseData.course_progress[this.courseData.videos_count].is_complete) {
+            if (this.courseData && this.courseData.course_progress.length > 0 && this.courseData.course_progress[this.courseData.videos_count - 1] !== undefined && this.courseData.course_progress[this.courseData.videos_count - 1].is_complete) {
                 return `/courses/${this.courseData.title.split(' ').join('-')}/exam`
             } else
                 return '/'

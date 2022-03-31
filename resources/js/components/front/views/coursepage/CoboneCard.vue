@@ -165,10 +165,10 @@
             },
             async getFreeCourse(){
                 if (this.isLoggedIn) {
-                    const freeCourse = await this.$store.dispatch('courses/getFreeCourse',{
+                    await this.$store.dispatch('courses/getFreeCourse',{
                         courseID: this.courseData.id
                     })
-                    debugger;
+                    await this.$store.dispatch('courses/getAllCourses')
                 } else {
                     this.$store.commit('loginModal',true);
                 }
@@ -202,26 +202,14 @@
                 }
                 const resp = await this.$store.dispatch('courses/videoAction',params);
                 
-            },
-            getLectureProgress(){
-                this.lectureData.progress = ''
-                if (this.courseData.course_progress && this.courseData.course_progress && this.courseData.course_progress[this.lectureData.index]) {
-                    this.lectureData.progress = this.courseData.course_progress[this.lectureData.index].in_progress
-                }
             }
         },
         mounted() {
             this.getCourseData()
             if (!this.isCourse) {
                 this.getLectureData()
-                // this.getLectureProgress()
             }
             this.initPlayer()
-        },
-        beforeDestroy() {
-            if (this.player) {
-                // this.player.destroy()
-            }
         }
     }
 </script>

@@ -81,7 +81,12 @@ export default {
     height: 55px;
     margin: auto;
 }
+.course-title {
+    height: 60px;
+}
 @media (max-width: 767px) {
-
+    .course-title {
+        height: auto;
+    }   
 }
 </style>
