@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CheckOtp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     //payment test config
+    Route::post('check-otp', \CheckOtp::class);
     Route::get('get-payment-status','PaymentController@checkPaymentStatus');
     Route::post('/course-payment','PaymentController@coursePayment');
     Route::post('course/add-to-fav','CourseController@addToFavourite');
+    Route::post('courses/free-course','PaymentController@joinFreeCourse');
+
 
 
     // check user promo code

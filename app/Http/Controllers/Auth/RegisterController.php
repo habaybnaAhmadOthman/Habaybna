@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\Providers\VerifyUser;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -64,15 +65,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // dd($data);
         $user = User::create([
             'role' => $data['type'], // parent, specialist, other
             // 'email' => $data['email'],
             'phone' => $data['phone'], // ex: +962792819107
-            'is_verify'=> 1,
-            'otp'=>'123432'
+            'is_verify'=> 0,
+            'otp'=>random_int(100000, 999999)
         ]);
-
+        event(new VerifyUser($user->phone, $user->otp));
         return $user;
     }
 

@@ -192,5 +192,14 @@ export default {
             throw error;
         }
         return resp.data.url
+    },
+
+    async checkOtp(_,payload) {
+        const resp = await callApi("POST", "/api/check-otp", payload);
+        if (resp.status != 200) {
+            const error = new Error("  رمز التحقق غير صحيح");
+            throw error;
+        }
+        return resp.data.url
     }
 };
