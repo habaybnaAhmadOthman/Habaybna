@@ -80,5 +80,7 @@ class AllCourses {
             return  [];
 
         }
+        return  [];
+
     }
 }
