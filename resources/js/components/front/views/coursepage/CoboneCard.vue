@@ -48,6 +48,16 @@
             <!-- for lesson page -->
             <LectureOptions v-else-if="!isCourse"></LectureOptions>
         </div>
+        <info-modal
+          :show="infoModal.show"
+          :title="infoModal.title"
+          @close="closeInfoModal"
+          :description="infoModal.description"
+          :success="infoModal.status"
+          :fixed="infoModal.isFixed"
+        >
+        <button v-if="infoModal.isFixed" @click="goToClassRoom" class="btn">مشاهدة</button>
+        </info-modal>
     </div>
 </template>
 
@@ -59,8 +69,11 @@
     import CoboneForm from './CoboneCard_CoboneForm.vue'
     import DiscountLabel from '../onlinecourses/Card_DiscountLabel.vue'
     import LectureOptions from './CoboneCard_LectureOptions.vue'
+
+    import infoModalMixin from '../../mixins/infoModal'
     export default {
         props: ['videoSrc'],
+        mixins: [infoModalMixin],
         components: {PaymentForm,LectureOptions,DiscountLabel,CoboneForm},
         computed: {
             isCourse(){
@@ -163,15 +176,31 @@
                 const goToLecture = this.courseData.videos_title_length[goToLectureNumber].lesson_title.split(' ').join('-')
                 this.$router.push(`/courses/${this.courseData.title.split(' ').join('-')}/${goToLecture}`)
             },
+            isLoading(status) {
+                this.$store.commit('isLoading',status)
+            },
+            showWatchCourseDialog(){
+                this.infoModal.show = true
+            },
             async getFreeCourse(){
                 if (this.isLoggedIn) {
+                    this.isLoading(true)
                     await this.$store.dispatch('courses/getFreeCourse',{
                         courseID: this.courseData.id
                     })
                     await this.$store.dispatch('courses/getAllCourses')
+                    this.infoModal.isFixed = true;
+                    this.isLoading(false)
+                    this.setInfoModal('يمكنك الآن مشاهدة الدورة','لقد أتممت عملية الشراء بنجاح' ,true,true,true)
                 } else {
                     this.$store.commit('loginModal',true);
                 }
+            },
+            async goToClassRoom(){
+                const courseLectures = await this.$store.dispatch('courses/getCourseLectures',{
+                    courseID: this.courseData.id
+                })
+                this.$router.replace(`/courses/${this.courseData.title.split(' ').join('-')}/${courseLectures[0].title.split(' ').join('-')}`)
             },
             // ************
             // player methods

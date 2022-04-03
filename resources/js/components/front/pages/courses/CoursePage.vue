@@ -153,8 +153,9 @@ export default {
             if (this.$route.query.payment) {
                 if (this.$route.query.payment == 'true') {
                     this.infoModal.isFixed = true;
-                    this.showWatchCourseDialog()
                     await this.$store.dispatch('courses/getAllCourses')
+                    this.setInfoModal('يمكنك الآن مشاهدة الدورة','لقد أتممت عملية الشراء بنجاح' ,true,true,true)
+                    this.showWatchCourseDialog()
                 } else {
                     await this.setInfoModal('حصل خطأ في عملية الشراء','يرجى التأكد من المعلومات والمحاولة مرة أخرى' ,false,false,true)
                 }
