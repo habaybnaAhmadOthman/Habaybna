@@ -160,6 +160,18 @@
           * يجب تعبئة هذا الحقل
         </span>
       </div>
+            <div class="question-form">
+        <label> نسبة الخصم</label>
+        <input
+          type="number"
+          v-model="form.discount"
+          name="discount"
+          class="form-control"
+          :disabled="form.is_free == 1 ? true : false"
+          placeholder="100 يعني free"
+        />
+
+      </div>
       <div class="question-form">
         <label>مقدمي الدورة</label>
         <multiselect
@@ -226,6 +238,7 @@ export default {
         coursePrice: 0,
         is_publish: "",
         is_free: "",
+        discount:"",
       },
       categories: [],
       loading: false,
@@ -276,6 +289,7 @@ export default {
         formData.append("is_publish", this.form.is_publish);
         formData.append("is_free", this.form.is_free);
         formData.append("price", this.form.coursePrice);
+        formData.append("discount", this.form.discount);
         formData.append("specialists", tagIDs);
 
         let resp = await this.$store.dispatch(
