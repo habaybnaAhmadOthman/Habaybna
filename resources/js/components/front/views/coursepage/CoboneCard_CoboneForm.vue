@@ -93,7 +93,11 @@ export default {
 
             if (checkPromoCode.discount_perc == 100) { // free
                 await this.$store.dispatch('courses/getFreeCourse',{
-                        courseID: this.courseID()
+                        courseID: this.courseID(),
+                        hasPromoCode: {
+                            id: checkPromoCode.id
+                        },
+                        usage: "Course"
                 })
                 await this.$store.dispatch('courses/getAllCourses')
                 this.setInfoModal('يمكنك الآن مشاهدة الدورة','لقد قمت بإدخال رقم الكوبون بنجاح',true,true,true)
