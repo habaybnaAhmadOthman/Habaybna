@@ -56,7 +56,7 @@ class CourseController extends Controller
 
    public function storeCourseInfo(Request $request)
    {
-    //    dd($request->category);
+
        $course = new Courses();
 
        $course->courseTitle = $request->title;
@@ -66,6 +66,8 @@ class CourseController extends Controller
        $course->is_publish= $request->is_publish;
        $course->is_free= $request->is_free;
        $course->price= $request->price;
+       $course->discount= $request->discount > 0 ? $request->discount : 0 ;
+
 
        $course->save();
 
