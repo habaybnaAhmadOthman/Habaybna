@@ -198,8 +198,7 @@ export default {
             const error = new Error("something went wrong, please try again");
             throw error;
         }
-        debugger;
-        // commit('setMyCourses',[...getters.myCourses,])
+
         return resp.data[0]
     },
     // ******** PromoCode ::: post

@@ -92,13 +92,17 @@ export default {
             }
 
             if (checkPromoCode.discount_perc == 100) { // free
+                await this.$store.dispatch('courses/getFreeCourse',{
+                        courseID: this.courseID()
+                })
+                await this.$store.dispatch('courses/getAllCourses')
                 this.setInfoModal('يمكنك الآن مشاهدة الدورة','لقد قمت بإدخال رقم الكوبون بنجاح',true,true,true)
             } else { // discount success
                 this.discountVal = (this.coursePrice * (checkPromoCode.discount_perc / 100));
                 this.setInfoModal('يمكنك إتمام عملية الشراء','لقد قمت بإدخال رقم الكوبون بنجاح',true,false,true)
             }
         },
-        async goToClassRoom(){
+        async goToClassRoom() {
             const courseLectures = await this.$store.dispatch('courses/getCourseLectures',{
                 courseID: this.courseID()
             })
