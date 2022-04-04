@@ -153,7 +153,7 @@ class CourseController extends Controller
 
         $videoCourse->cover_image = '';
         $videoCourse->course_id= $request->course_id;
-        $videoCourse->status= $request->is_publish =='true' ? true : false;
+        $videoCourse->status= true;
         $videoCourse->description= $request->description;
         $videoCourse->title= $request->title ;
         $videoCourse->save();
@@ -391,6 +391,8 @@ class CourseController extends Controller
     }
 
            $course->courseTitle = $request->title;
+           $course->discount = $request->discount > 0 ? $request->discount : 0 ;
+
            $course->courseDescription= $request->description;
         //    $course->category_id= $request->category;
            $course->whatWeLearn= $request->watWeLearn;

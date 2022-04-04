@@ -33,9 +33,9 @@ class AllCourses {
                             'price'=>$one->price,
                             'promo_video'=>$one->promo_video,
                             'discount'=>[
-                            'has_discount'=>true,
-                            'discount_value'=>"50%",
-                            'discount_price'=>$one->price - $one->price * (50/100),
+                            'has_discount'=>$one->discount > 0 ? true : false,
+                            'discount_value'=>$one->discount > 0 ? $one->discount ."%" : 0,
+                            'discount_price'=>round($one->price - $one->price * ($one->discount/100),2),
                             ],
                             'categories'=>$one->category_name,
                             'course_progress' => Auth::check() ? $this->getCourseProgress($one) : [],

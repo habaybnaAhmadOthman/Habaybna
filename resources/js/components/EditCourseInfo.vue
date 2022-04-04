@@ -18,8 +18,8 @@
   padding: 0;
   color: lawngreen !important;
 }
- .custom label {
-    display:inline-block !important;
+.custom label {
+  display: inline-block !important;
 }
 </style>
 <template>
@@ -96,7 +96,7 @@
                 />
               </div>
               <div class="form-group custom">
-                <label> حالة الدورة :  </label>
+                <label> حالة الدورة : </label>
 
                 <div class="form-group">
                   <input
@@ -145,6 +145,17 @@
                   class="form-control"
                   v-model="form.coursePrice"
                   name="price"
+                />
+              </div>
+              <div class="question-form">
+                <label> نسبة الخصم</label>
+                <input
+                  type="number"
+                  v-model="form.discount"
+                  name="discount"
+                  class="form-control"
+                  :disabled="form.is_free == 1 ? true : false"
+                  placeholder="100 يعني free"
                 />
               </div>
               <div class="form-group admin-control">
@@ -218,6 +229,8 @@ export default {
           this.form.is_publish = resp.data.course.is_publish;
           this.form.is_free = resp.data.course.is_free;
           this.form.coursePrice = resp.data.course.price;
+          this.form.discount = resp.data.course.discount;
+          console.log(this.form);
         }
       });
     }
@@ -238,6 +251,7 @@ export default {
         promoVideo: "",
         is_publish: false,
         is_free: false,
+        discount:""
       },
       tags: "",
       categories: [],
@@ -274,6 +288,7 @@ export default {
       formData.append("is_publish", this.form.is_publish);
       formData.append("is_free", this.form.is_free);
       formData.append("price", this.form.coursePrice);
+      formData.append("discount", this.form.discount);
       const config = {
         headers: {
           "content-type": "multipart/form-data",
