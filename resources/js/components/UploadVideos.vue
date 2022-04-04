@@ -18,7 +18,7 @@
   padding: 0 !important;
 }
 .ck p {
-  display: block !important;
+  display: inline-block !important;
 }
 .ck.ck-editor__editable_inline {
   text-align: right !important;

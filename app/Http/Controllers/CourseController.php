@@ -127,7 +127,7 @@ class CourseController extends Controller
 
    public function UploadCourseVideo(Request $request)
    {
-
+    // dd($request->file('video'));
        $videoCourse = new CourseVideos();
 
     //    if ($request->hasFile('coverImage')) {
@@ -291,7 +291,7 @@ class CourseController extends Controller
             $video->status= $request->is_publish == 1 ? true : false;
             $video->description= $request->description;
             $video->title= $request->title ;
-            // $video->url= $url ? $url :$video->url;
+            $video->url= $request->hasFile('video') ? $url : $video->url;
 
             $video->save();
         return response()->json([

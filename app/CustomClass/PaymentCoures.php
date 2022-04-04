@@ -90,6 +90,12 @@ class PaymentCoures {
 
                 $initData->save();
             }
+            elseif($course->discount !== ""){
+                $disscountAmount = $course->price * $course->discount/100 ;
+                $initData->discount_amount = $disscountAmount;
+
+                $initData->amount = $course->price - $disscountAmount ;
+            }
             else {
                 $initData->amount = $course->price;
 
