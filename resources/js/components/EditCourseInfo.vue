@@ -9,6 +9,10 @@
 .ivu-notice-title {
   color: #5cbf6c !important;
 }
+.cover-image {
+  margin: auto;
+  width: 100%;
+}
 .ivu-notice-custom-content {
   position: relative;
   padding: 0 5px;
@@ -77,8 +81,10 @@
                   :config="form.editorConfig"
                 ></ckeditor>
               </div>
+
               <div class="form-group">
                 <strong>صورة غلاف الدورة</strong>
+                <img class="cover-image" :src="form.coverImage" alt="" />
                 <input
                   name="coverImage"
                   type="file"
@@ -88,6 +94,11 @@
               </div>
               <div class="form-group">
                 <strong>الفيديو الترويجي للدورة</strong>
+                <video ref="videoPlayer" controls  seeking="true">
+                  <source :src="form.promoVideo ? form.promoVideo : ''" type="video/mp4" />
+                  <source src="movie.ogg" type="video/ogg" />
+                  Your browser does not support the video tag.
+                </video>
                 <input
                   name="promoVideo"
                   type="file"
@@ -229,7 +240,11 @@ export default {
           this.form.is_publish = resp.data.course.is_publish;
           this.form.is_free = resp.data.course.is_free;
           this.form.coursePrice = resp.data.course.price;
+          this.form.coverImage = resp.data.course.cover_photo;
+          this.form.promoVideo = resp.data.course.promo_video;
           this.form.discount = resp.data.course.discount;
+
+          this.$refs.videoPlayer.load()
           console.log(this.form);
         }
       });
@@ -251,7 +266,7 @@ export default {
         promoVideo: "",
         is_publish: false,
         is_free: false,
-        discount:""
+        discount: "",
       },
       tags: "",
       categories: [],
