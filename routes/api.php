@@ -22,6 +22,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/course-payment','PaymentController@coursePayment');
     Route::post('course/add-to-fav','CourseController@addToFavourite');
     Route::post('courses/free-course','PaymentController@joinFreeCourse');
+    Route::post('course/get-course-quize','QuizController@getCourseQuiz');
+
+    Route::post('course/user-complete-quize','QuizController@completeQuiz');
+
 
 
 

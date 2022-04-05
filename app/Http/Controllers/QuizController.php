@@ -11,6 +11,7 @@ use App\CourseVideos;
 use App\CourseSpecialist;
 use App\CategoryCourse;
 use App\Question;
+use App\UsersQuiz;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -193,4 +194,26 @@ public function setCorrectAnswer($id)
     ]);
  }
 }
+
+    public function completeQuiz(Request $request)
+    {
+        $course = Courses::findorfail($request->courseID);
+        if($course){
+            if($course->quiz){
+                $userQuiz = new UsersQuiz();
+
+                $userQuiz->user_id = Auth::id();
+                $userQuiz->course_id = $request->courseID;
+                $userQuiz->quiz_id = $course->quiz->id;
+                $userQuiz->is_complete =true;
+
+                $userQuiz->save();
+
+                return response(['is_complete'=>true],200);
+            }
+        }
+
+
+
+    }
 }
