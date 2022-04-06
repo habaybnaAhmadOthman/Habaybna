@@ -157,7 +157,7 @@ class SpecialistController extends Controller
             $data = [];
             foreach ($specialists as  $specialist) {
                 $specialist->user->toArray();
-                $specialist->toArray();
+                // $specialist->toArray();
                 array_push($data,$specialist);
             }
 

@@ -49,7 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
         //specialist route
         Route::get('get-specialists-data','SpecialistController@getSpecialistsData');
         Route::get('specialist/{id}','SpecialistController@show');
-        Route::post('admin/specialist/update/{id}','SpecialistController@update');
+        Route::post('specialist/update/{id}','SpecialistController@update');
         Route::post('/specialist/create','SpecialistController@createSpecAdmin');
 
         //other route
