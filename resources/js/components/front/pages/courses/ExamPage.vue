@@ -63,17 +63,24 @@ export default {
         correctAnswerDialog(){
             this.setInfoModal('لقد اجتزت الامتحان بنجاح','يمكنك إصدار الشهادة الآن',true,true,true)
         },
+        async getQuestions(){
+            this.courseData = await this.$store.dispatch('courses/getMyCourseData',this.course);
+            let ExamQuestions = await this.$store.dispatch('courses/getExam',{
+                courseID: this.courseData.id
+            })
+            this.questions = this.shuffle(ExamQuestions)
+        }
     },
     data() {
         return {
             questionsCount: 1,
             currentQuestion:0,
-            questions: [
-                
-            ],
+            courseData: null,
+            questions: [],
         }
     },
-    created(){
+    async created(){
+        await this.getQuestions();
         var temp = [{
                     title: 'ما هو تعريف مرض التوحد',
                     userAnswer: null,

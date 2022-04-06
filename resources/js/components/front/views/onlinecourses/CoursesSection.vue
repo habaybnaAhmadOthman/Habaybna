@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="learn-section bg-gray">
+    <section class="learn-section bg-gray mt-20-p">
       <div class="container p-side-12-p">
         <h2 class="title-line mb-40 mb-20-p">الدورات التدريبية</h2>
         <Categories @change-filter="setFilters"></Categories>

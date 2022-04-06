@@ -4,7 +4,7 @@
         <div class="relative mb-35 mb-20-p">
             <div class="courses-categories-swiper my-swiper" dir="rtl">
                 <!-- Additional required wrapper -->
-                <div class="swiper-wrapper swipe-box-p p-0-p">
+                <div class="swiper-wrapper swipe-box-p p-0-p column-gap-10-p">
                     <!-- Slides -->
                     <div v-for="(category, index) of filters" :key="index" :index="index" class="swiper-slide">
                         <li class="">

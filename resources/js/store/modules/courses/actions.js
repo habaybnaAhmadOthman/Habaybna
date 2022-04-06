@@ -30,10 +30,6 @@ export default {
         return restCourses;
     },
 
-    // ******** get lesson progress ::: get
-    async getLectureProgress({getters},payload) {
-        console.log(getters.course)
-    },
     // ******** get lesson data  ::: get
     async videoAction({commit},payload) {
 
@@ -208,6 +204,16 @@ export default {
             const error = new Error("fail.");
             throw error;
         }
+        return resp.data
+    },
+    // ******** get exam questions ::: get
+    async getExam({commit},payload) {
+        const resp = await callApi("POST", "/api/course/get-course-quize",payload);
+        if (resp.status != 200) {
+            const error = new Error("fail to get exam");
+            throw error;
+        }
+        debugger;
         return resp.data
     },
 };

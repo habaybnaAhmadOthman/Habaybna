@@ -15,6 +15,9 @@
 .li-auto li{
     list-style: inherit;
 }
+.li-auto ul{
+    padding-right: 20px;
+}
 </style>
 <style scoped>
 .banner-info {

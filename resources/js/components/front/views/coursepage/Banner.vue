@@ -7,9 +7,9 @@
                         <p class="yellow font-18-p bold-p mb-10-p">{{headTitle}}</p>
                         <h1 class="font-50 white bold pre-line font-20-p">{{bannerTitle}}</h1>
                     </div>
-                    <div class="d-flex details white font-20 pb-10 w-100-p">
-                        <p class="d-flex align-center icon ml-20"><img class="ml-10" src="/images/time-icon.svg" width="31" height="31" alt=""><span class="ml-5">{{courseLength}}</span> <span v-if="!isLectureFn">ساعة</span> <span v-else>دقائق</span></p>
-                        <p class="d-flex align-center icon ml-20" v-if="!isLectureFn"><img class="ml-10 video" src="/images/video-svgrepo.svg" width="39" height="34" alt="">{{videosCount}} دروس</p>
+                    <div class="d-flex details white font-20 pb-10 w-100-p space-between">
+                        <p class="d-flex align-center icon ml-20 m-0-p"><img class="ml-10" src="/images/time-icon.svg" width="31" height="31" alt=""><span class="ml-5">{{courseLength}}</span> <span v-if="!isLectureFn">ساعة</span> <span v-else>دقائق</span></p>
+                        <p class="d-flex align-center icon ml-20 m-0-p" v-if="!isLectureFn"><img class="ml-10 video" src="/images/video-svgrepo.svg" width="39" height="34" alt="">{{videosCount}} دروس</p>
                         <p class="d-flex align-center icon pointer" v-if="!isLectureFn" @click="openShareModal"><img class="ml-10 share" src="/images/share-icon.svg" width="34" height="36" alt="">مشاركة</p>
                     </div>
                 </div>
@@ -76,7 +76,7 @@ export default {
         justify-content: space-between;
     }
     .details .icon {
-        font-size: 18px;
+        font-size: 15px;
     }
     .details .icon img{
         width: 25px;

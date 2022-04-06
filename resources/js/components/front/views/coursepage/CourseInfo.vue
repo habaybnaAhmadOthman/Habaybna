@@ -1,7 +1,7 @@
 <template>
     <div class="about-course p-side-12-p">
         <CourseInfoText :header="'نظرة عامة على الدورة'" :description="description"></CourseInfoText>
-        <div class="mb-40 what-should-learn mt-20 mb-20-p">
+        <div class="mb-40 what-should-learn mt-20 mb-20-p pt-20-p">
             <h3 class="title-line font-27 mb-40 mb-20-p">ماذا سيتعلم المشاركون</h3>
             <div class="font-27 black-2 font-20-p li-auto" v-html="whatShouldLearn"></div>
         </div>

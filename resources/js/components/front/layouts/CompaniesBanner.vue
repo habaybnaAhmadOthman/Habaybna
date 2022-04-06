@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="title-line mb-20 mo p-side-12-p">للمؤسسات</h2>
+        <h2 class="title-line mb-20 mo p-side-12-p mt-20-p">للمؤسسات</h2>
         <div class="company-banner relative pt-25 pb-55 pt-20-p pb-10-p">
             <div class="container z-1 p-side-12-p">
                 <div class="w-85 w-100-p">
