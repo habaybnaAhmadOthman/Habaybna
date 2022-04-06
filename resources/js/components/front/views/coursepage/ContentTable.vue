@@ -101,6 +101,9 @@ export default {
         },
         // for course page use
         getCourseVideoIcon(index){
+            if (!this.courseData.isPurchased) {
+                return `/images/lock-icon.svg`
+            }   
             if (
                 index == 0 ||
                 // this.courseData.course_progress[index].is_complete == 1 ||
@@ -121,7 +124,8 @@ export default {
         getVideoURLIfAvailable(index,title){
             if (!this.courseData)
                 this.getCourseProgress()
-
+            if (!this.courseData.isPurchased)
+                return `/`
             if (
                 index == 0 ||
                 (this.courseData && this.courseData.course_progress.length > 0 && this.courseData.course_progress[index - 1].is_complete == 1)
@@ -132,13 +136,6 @@ export default {
                     return `/`
                 }
 
-        },
-        getVideoIcon(isComplete, index){
-            if (isComplete || index == 0) {
-                return `/images/play-icon.svg`
-            } else {
-                return `/images/unavailable-play-icon.svg`
-            }
         },
         forceRefresh(){
             this.$store.commit("forceRefresh");
