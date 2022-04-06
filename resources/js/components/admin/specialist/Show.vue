@@ -6,6 +6,14 @@
 </style>
 <template>
   <div class="profile">
+          <div class="question-form-title">
+      <div class="right-side">
+        <h3>الاخصائيين - تعديل أخصائي</h3>
+      </div>
+      <div class="left-side">
+        <Button type="info" to="/admin/specialist">رجوع</Button>
+      </div>
+    </div>
     <form @submit.prevent="submitForm" class="card-body">
       <div class="form-group mb-0-p">
         <label class="form-control-label">الاسم كامل</label>
@@ -330,6 +338,8 @@ export default {
         education: educationValue,
         interests: tagIDs,
       });
+        this.$Message.success("تم التعديل بنجاح ");
+
     },
   },
 };
