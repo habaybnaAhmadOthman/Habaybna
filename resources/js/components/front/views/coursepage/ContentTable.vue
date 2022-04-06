@@ -41,12 +41,12 @@
                 <div class=" w-100">
                     <router-link class="d-flex tag" :to="isReadyToExam">
                         <div class="play-video d-flex">
-                            <img class="play-icon" src="/images/test-icon.svg" width="50" height="50" alt="" />
-                            <div class="duration">
-                                <span class="nowrap black-2"></span>
+                            <img class="play-icon" :src="`/images/test-icon${isExamCompleted}.svg`" width="50" height="50" alt="" />
+                            <div class="duration do">
+                                <span class="nowrap black-2">الإختبار</span>
                             </div>
-                            <div class="video-name black-2">
-                                <span>الإختبار</span>
+                            <div class="video-name">
+                                <span class="mo black-2">الإختبار</span>
                             </div>
                         </div>
                     </router-link>
@@ -91,6 +91,9 @@ export default {
             } else
                 return '/'
         },
+        isExamCompleted(){
+            return this.courseData && this.courseData.completed_course ? '-color' : ''
+        }
     },
     methods: {
         isCurrentVideo(title){

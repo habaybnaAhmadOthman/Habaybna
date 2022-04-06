@@ -28,6 +28,7 @@
 <script>
 export default {
     props: ['course','withFavourite'],
+    emits: ['updateFavouriteCoursesList'],
     computed:{
         courseSlog(){
             return this.course.title.split(' ').join('-')
@@ -38,15 +39,11 @@ export default {
     },
     methods:{
         async addToFavourite(event) {
-            var msg = 'تمت الإضافة إلى المفضلة'
-            if (event.target.classList.contains('active')) {
-                msg = 'تمت الإزالة من المفضلة'
-            }
             event.target.classList.toggle('active')
             await this.$store.dispatch("courses/addToFavourite",{
                 courseID:this.course.id
             });
-            this.$store.commit("alertDialogMsg", msg);
+            this.$emit('updateFavouriteCoursesList')
         },
     },
 };

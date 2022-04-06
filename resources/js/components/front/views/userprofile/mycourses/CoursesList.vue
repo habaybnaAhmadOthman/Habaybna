@@ -4,7 +4,7 @@
             <div class="courses-container">
                 <template v-if="filteredCourses.length">
                     <div class="courses-list d-flex flex-wrap">
-                        <CourseCard :with-favourite="withFavourite" v-for="(course, index) in filteredCourses" :course="course" :key="index"></CourseCard>
+                        <CourseCard @updateFavouriteCoursesList="updateFavouriteCoursesList" :with-favourite="withFavourite" v-for="(course, index) in filteredCourses" :course="course" :key="index"></CourseCard>
                     </div>
                 </template>
                 <div v-else class="w-100 center">
@@ -18,7 +18,13 @@
 import CourseCard from "./CourseCard.vue"
 export default {
     props: ["filteredCourses","showMoreCard","with-favourite"],
-    components: {CourseCard}
+    emits: ['updateFavouriteCoursesList'],
+    components: {CourseCard},
+    methods: {
+        updateFavouriteCoursesList(){
+            this.$emit('updateFavouriteCoursesList')
+        }
+    }
 };
 </script>
 

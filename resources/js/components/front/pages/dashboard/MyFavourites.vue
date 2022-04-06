@@ -7,7 +7,7 @@
             <section class="profile-section pt-50 pb-50">
                 <div class="">
                     <div class="">
-                        <CoursesList :with-favourite="true" :filtered-courses="courseTemp" :showMoreCard="false" ></CoursesList>
+                        <CoursesList @updateFavouriteCoursesList="getCourses" :with-favourite="true" :filtered-courses="courseTemp" :showMoreCard="false" ></CoursesList>
                     </div>
                 </div>
             </section>
