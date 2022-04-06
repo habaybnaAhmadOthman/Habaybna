@@ -216,4 +216,33 @@ public function setCorrectAnswer($id)
 
 
     }
+
+    public function getUserCourseQuiz(Request $request)
+    {
+
+        try{
+             $course = Courses::findorfail($request->courseID);
+
+             $data = [];
+             $data['course_title'] = $course->courseTitle;
+             $data['quiz_title'] = $course->quiz? $course->quiz->title:null;
+             $question = $course->quiz ?
+                $course->quiz->questions()->with('answers')->get()
+                :null;
+            //  $question = $course->quiz->questions()->with('answers')->get();
+             $data['quiz']=$question;
+
+         return response()->json(
+              $data,
+              200
+         );
+     } catch (ModelNotFoundException $e){
+         return response()->json([
+             'msg'=>'faild',
+             'status'=>false,
+             404
+
+        ]);
+     }
+    }
 }

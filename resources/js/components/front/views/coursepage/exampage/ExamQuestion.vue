@@ -28,7 +28,7 @@
             submitQuestion() {
                 if (!!this.answer && this.answer != this.question.correctAnswer) {
                     this.$emit('wrongAnswerDialog')
-                    return 
+                    return
                 }
 
                 if (this.answer) {
@@ -74,7 +74,7 @@ input[type="radio"]::before {
     transform: scale(0);
     transform-origin: center;
     transition: 120ms transform ease-in-out;
-    background: url(/images/right-icon-checkbox.png) no-repeat;    
+    background: url(/images/right-icon-checkbox.png) no-repeat;
 }
 
 input[type="radio"]:checked::before {

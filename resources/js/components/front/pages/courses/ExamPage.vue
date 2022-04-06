@@ -10,7 +10,7 @@
                 <div class="questions-box">
                     <ExamQuestion @wrongAnswerDialog="wrongAnswerDialog" @submitQuestion="submitQuestion" :question="questions[currentQuestion]"></ExamQuestion>
                 </div>
-            </div>  
+            </div>
         </div>
 
         <div class="page-footer">
@@ -68,6 +68,7 @@ export default {
             let ExamQuestions = await this.$store.dispatch('courses/getExam',{
                 courseID: this.courseData.id
             })
+            console.log(ExamQuestions);
             this.questions = this.shuffle(ExamQuestions)
         }
     },
@@ -85,7 +86,7 @@ export default {
                     title: 'ما هو تعريف مرض التوحد',
                     userAnswer: null,
                     correctAnswer:1,
-                    options: 
+                    options:
                     [
                         {
                             id: 1,
@@ -96,30 +97,30 @@ export default {
                             title: 'هو اضطراب عصبي نمائي مهم تظهر فيه أعراض في مرحلة الطفولة المبكرة.',
                         },
                     ],
-                    
+
                 },
                 {
                     title: 'ما هو ',
                     userAnswer: null,
                     correctAnswer: 2,
-                    options: 
+                    options:
                     [
                         {
                             id: 1,
                             title: 'هو اضطراب عصبي نمائي مهم تظهر فيه أعراض في مرحلة الطفولة المبكرة.',
-                            
+
                         },
                         {
                             id: 2,
                             title: 'هو اضطراب عصبي نمائي مهم تظهر فيه أعراض في مرحلة الطفولة المبكرة.',
                         },
                     ],
-                    
+
                 }
             ]
         this.questions = this.shuffle(temp)
     },
-    
+
 };
 </script>
 <style scoped>
