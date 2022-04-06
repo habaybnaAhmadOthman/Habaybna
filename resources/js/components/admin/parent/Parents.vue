@@ -65,7 +65,7 @@ h3 {
         <tr v-for="(parent, index) in filteredList" :key="index">
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ parent.firstName }}</td>
-          <td>{{ parent.user.phone }}</td>
+          <td class="phone-td">{{ parent.user.phone }}</td>
           <td>{{ parent.user.email }}</td>
           <td class="status">
             <Button

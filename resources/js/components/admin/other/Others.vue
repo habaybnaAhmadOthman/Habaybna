@@ -40,7 +40,7 @@ th {
         <tr v-for="(other, index) in filteredList" :key="index">
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ other.firstName }}</td>
-          <td>{{ other.user.phone }}</td>
+          <td class="phone-td">{{ other.user.phone }}</td>
           <td>{{ other.user.email }}</td>
           <td class="status">
             <Button
