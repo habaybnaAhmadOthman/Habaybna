@@ -1,7 +1,7 @@
 <template>
     <div class="status-bar p-side-20 d-flex align-center">
         <div class="status-prog relative overflow-hidden mb-5-p"><span class="progress" :style="calculateProgress"></span></div>
-        <p class="main-color font-20 mr-20 top-2 font-14-p current-q"><span class="from">{{currentQuestion + 1}}</span>/<span class="to">{{questionsCount + 1}}</span></p>
+        <p class="main-color font-20 mr-20 top-2 font-14-p current-q"><span class="from">{{currentQuestion + 1}}</span>/<span class="to">{{questionsCount}}</span></p>
     </div>
 </template>
 
@@ -15,7 +15,7 @@
         },
         computed: {
             calculateProgress(){
-                return `width:${((this.currentQuestion + 1) / (this.questionsCount + 1)) * 100}%;`
+                return `width:${((this.currentQuestion + 1) / (this.questionsCount )) * 100}%;`
             }
         }
     }

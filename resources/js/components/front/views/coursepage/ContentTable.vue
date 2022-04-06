@@ -43,7 +43,7 @@
                         <div class="play-video d-flex">
                             <img class="play-icon" src="/images/test-icon.svg" width="50" height="50" alt="" />
                             <div class="duration">
-                                <span class="nowrap black-2">٢٠ دقيقة</span>
+                                <span class="nowrap black-2"></span>
                             </div>
                             <div class="video-name black-2">
                                 <span>الإختبار</span>

@@ -307,7 +307,7 @@
     background: red;
 }
 .figure-box,.video-js {
-    height: 222px!important;
+    height: 199px!important;
 }
 @media (max-width: 767px) {
     .btn-register-now {
@@ -323,7 +323,7 @@
         z-index: 0;
     }
     .figure-box,.video-js {
-        height: 210px!important;
+        height: 197px!important;
     }
 }
 

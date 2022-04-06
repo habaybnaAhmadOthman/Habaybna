@@ -213,8 +213,27 @@ export default {
             const error = new Error("fail to get exam");
             throw error;
         }
-        debugger;
-        return resp.data
+        let data = []
+        resp.data.quiz.map(function(question,index){
+            let correctAnswer = 0;
+            data.push({
+                title:question.title,
+                options:question.answers.map((opt)=> {if (opt.is_correct) correctAnswer = opt.id; return {id: opt.id,title: opt.title}})
+            })
+            data[index].correctAnswer = correctAnswer
+        })  
+
+        return data
+    },
+    // ******** get exam questions ::: get
+    async passExam({commit},payload) {
+        const resp = await callApi("POST", "/api/course/user-complete-quize",payload);
+        if (resp.status != 200) {
+            const error = new Error("fail passExam");
+            throw error;
+        }
+        
+        return resp.data.is_complete || false
     },
 };
 

@@ -333,11 +333,12 @@ const routes = [{
 
     },
     {
-        path: "/certificate",
+        path: "/course/:course/certificate",
         component: Cirtificate,
         meta: {
             requiresAuth: true
-        }
+        },
+        props: true
     },
 
 

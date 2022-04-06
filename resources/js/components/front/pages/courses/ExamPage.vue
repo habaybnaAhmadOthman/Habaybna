@@ -3,7 +3,7 @@
         <TheHeader></TheHeader>
         <div class="container">
             <h1 class="title-line font-27 mb-20 mb-30-p mt-50 m-side-12-p">يمكنك الآن الالتحاق بالإختبار</h1>
-            <div class="exam-container card-1 pt-50 m-side-12-p pt-20-p pb-40">
+            <div class="exam-container card-1 pt-50 m-side-12-p pt-20-p pb-40" v-if="isDataReady">
                 <div class="mb-40">
                     <StatusBar :questionsCount="questionsCount" :currentQuestion="currentQuestion"></StatusBar>
                 </div>
@@ -24,7 +24,7 @@
           :success="infoModal.status"
           :fixed="infoModal.isFixed"
         >
-        <router-link v-if="infoModal.status" to="/certificate" class="btn-main bold font-18">إصدار الشهادة</router-link>
+        <button @click="getCertificate" class="btn-main bold font-18">إصدار الشهادة</button>
         </info-modal>
     </div>
 </template>
@@ -41,14 +41,18 @@ export default {
     mixins: [infoModalMixin],
     components: {TheFooter,TheHeader,StatusBar,ExamQuestion},
     methods: {
+        isLoading(status) {
+            this.$store.commit("isLoading", status);
+        },
         submitQuestion(answer) {
-            if (this.currentQuestion < this.questionsCount) {
+            
+            if (this.currentQuestion < this.questionsCount - 1) {
                 this.questions[this.currentQuestion].userAnswer = answer;
                 this.currentQuestion += 1;
             } else {
-                // api call to get user result
-                this.correctAnswerDialog()
+                this.passExam()    
             }
+            
         },
         shuffle(arr) {
             for (let i = arr.length - 1; i > 0; i--) {
@@ -63,13 +67,35 @@ export default {
         correctAnswerDialog(){
             this.setInfoModal('لقد اجتزت الامتحان بنجاح','يمكنك إصدار الشهادة الآن',true,true,true)
         },
-        async getQuestions(){
-            this.courseData = await this.$store.dispatch('courses/getMyCourseData',this.course);
-            let ExamQuestions = await this.$store.dispatch('courses/getExam',{
+        // pass exam
+        async passExam(){
+            this.isLoading(true);
+            let isPassed = await this.$store.dispatch('courses/passExam',{
                 courseID: this.courseData.id
             })
-            console.log(ExamQuestions);
-            this.questions = this.shuffle(ExamQuestions)
+            this.isLoading(false);
+            if (isPassed)
+                this.correctAnswerDialog()
+        },
+        getCertificate(){
+            this.$router.replace(`/course/${this.course}/certificate`)
+        },
+        async getQuestions() {
+            try {
+                this.isLoading(true);
+                this.courseData = await this.$store.dispatch('courses/getMyCourseData',this.course);
+                let exam = await this.$store.dispatch('courses/getExam',{
+                    courseID: this.courseData.id
+                })
+                
+                this.questions = this.shuffle(exam)
+                this.questionsCount = this.questions.length
+                
+                this.isDataReady = true;
+            } catch (e) {
+                console.log('error')
+            }
+            this.isLoading(false);
         }
     },
     data() {
@@ -78,47 +104,13 @@ export default {
             currentQuestion:0,
             courseData: null,
             questions: [],
+            isDataReady: false,
         }
     },
     async created(){
         await this.getQuestions();
-        var temp = [{
-                    title: 'ما هو تعريف مرض التوحد',
-                    userAnswer: null,
-                    correctAnswer:1,
-                    options:
-                    [
-                        {
-                            id: 1,
-                            title: 'هو اضطراب عصبي نمائي مهم تظهر فيه أعراض في مرحلة الطفولة المبكرة.',
-                        },
-                        {
-                            id: 2,
-                            title: 'هو اضطراب عصبي نمائي مهم تظهر فيه أعراض في مرحلة الطفولة المبكرة.',
-                        },
-                    ],
-
-                },
-                {
-                    title: 'ما هو ',
-                    userAnswer: null,
-                    correctAnswer: 2,
-                    options:
-                    [
-                        {
-                            id: 1,
-                            title: 'هو اضطراب عصبي نمائي مهم تظهر فيه أعراض في مرحلة الطفولة المبكرة.',
-
-                        },
-                        {
-                            id: 2,
-                            title: 'هو اضطراب عصبي نمائي مهم تظهر فيه أعراض في مرحلة الطفولة المبكرة.',
-                        },
-                    ],
-
-                }
-            ]
-        this.questions = this.shuffle(temp)
+        
+        
     },
 
 };
