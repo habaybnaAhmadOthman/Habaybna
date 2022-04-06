@@ -2,7 +2,7 @@
     <div class="w-100 lectures-options">
         <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer mb-20 next-arrow relative trans" :disabled="isLectureFinished" @click.native="forceRefresh" :to="getLectureURL('next')" v-if="hasNextLecture"> التالي</router-link>
         <router-link class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative prev-arrow" @click.native="forceRefresh" :to="getLectureURL('prev')" v-if="hasPrevLecture"> السابق</router-link>
-        <router-link v-if="isReadyToExam" class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative next-arrow" :to="goToExam"> الذهاب الى الإختبار</router-link>
+        <router-link v-if="isReadyToExam" class="btn-register-now white-i font-18 font-16-p bold flex-all w-100 pointer relative next-arrow ready-btn" :to="goToExam"> الذهاب الى الإختبار</router-link>
     </div>
 </template>
 
@@ -103,6 +103,9 @@
 }
 a[disabled] {
     opacity: 0.2;
+}
+.prev-arrow ~ .ready-btn {
+    margin-top: 20px;
 }
 @media (max-width: 767px) {
     .btn-register-now {

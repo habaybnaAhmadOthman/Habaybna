@@ -118,10 +118,6 @@ export default {
         try {
 
             var coursesFromAPI = getters.courses;
-            // if (rootGetters['user/isLoggedIn']) {
-            //     coursesFromAPI = getters.myCourses;
-            // } else
-            //     coursesFromAPI = getters.courses;
 
             if (coursesFromAPI.length == 0) {
                 await dispatch('getAllCourses')
@@ -226,14 +222,17 @@ export default {
         return data
     },
     // ******** get exam questions ::: get
-    async passExam({commit},payload) {
+    async passExam({commit,getters},payload) {
         const resp = await callApi("POST", "/api/course/user-complete-quize",payload);
         if (resp.status != 200) {
             const error = new Error("fail passExam");
             throw error;
         }
-        
-        return resp.data.is_complete || false
+        const targetedCourseIndex = getters.myCourses.findIndex(course => course.id == payload.courseID);
+        const targetedCourse = getters.myCourses[targetedCourseIndex]
+        targetedCourse.completed_course = resp.data.is_complete
+        getters.myCourses[targetedCourseIndex] = targetedCourse;
+        return resp.data.is_complete
     },
 };
 
