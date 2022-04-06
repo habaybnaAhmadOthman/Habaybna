@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Object_ as TypesObject_;
 use PhpParser\Node\Expr\Cast\Object_;
 use App\UserCourseProgress;
+use App\UsersQuiz;
 
 class AllCourses {
 
@@ -19,7 +20,8 @@ class AllCourses {
                 $data = [] ;
                 foreach ($allCourses as $one) {
                     if($one->videos && count($one->videos) > 0 ){
-                        $data [] = [
+                        $data [] =
+                        [
                             'id' => $one->id,
                             'title' => $one->courseTitle,
                             'description' => $one->courseDescription,
@@ -39,13 +41,12 @@ class AllCourses {
                             ],
                             'categories'=>$one->category_name,
                             'course_progress' => Auth::check() ? $this->getCourseProgress($one) : [],
-                            'is_favourite'=> Auth::check() && $one->favouriteUsers->count() > 0  ? true : false   ,
+                            'is_favourite'=> Auth::check() && $one->favouriteUsers->count() > 0  ? true : false ,
+                            'completed_course'=> Auth::check() && $this->checkExamIsPassed($one) ? true : false ,
                         ];
-
+                    }
                 }
             }
-            }
-            // dd($data);
             return $data;
 
         } catch (\Throwable $th) {
@@ -82,5 +83,14 @@ class AllCourses {
         }
         return  [];
 
+    }
+
+    private function checkExamIsPassed($one)
+    {
+        $userExamp = UsersQuiz::where('user_id',Auth::id())
+                   ->where('course_id',$one->id)->first();
+        if($userExamp && $userExamp != null)
+            {return true ;}
+            return false ;
     }
 }
