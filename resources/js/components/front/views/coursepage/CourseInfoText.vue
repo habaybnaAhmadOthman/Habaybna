@@ -15,7 +15,7 @@
 .li-auto li{
     list-style: inherit;
 }
-.li-auto ul{
+.li-auto ul, .li-auto ol{
     padding-right: 20px;
 }
 </style>
