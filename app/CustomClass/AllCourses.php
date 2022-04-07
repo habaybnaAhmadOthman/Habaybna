@@ -37,7 +37,7 @@ class AllCourses {
                             'discount'=>[
                             'has_discount'=>$one->discount > 0 ? true : false,
                             'discount_value'=>$one->discount > 0 ? $one->discount ."%" : 0,
-                            'discount_price'=>round($one->price - $one->price * ($one->discount/100),2),
+                            'discount_price'=>$one->discount > 0 ? round($one->price - $one->price * ($one->discount/100),2):null,
                             ],
                             'categories'=>$one->category_name,
                             'course_progress' => Auth::check() ? $this->getCourseProgress($one) : [],
