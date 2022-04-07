@@ -243,6 +243,11 @@
                 this.getLectureData()
             }
             this.initPlayer()
+        },
+        beforeDestroy() {
+            if (this.player) {
+                this.player.dispose()
+            }
         }
     }
 </script>

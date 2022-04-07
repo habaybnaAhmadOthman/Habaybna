@@ -58,7 +58,7 @@ export default {
             return this.course.videos_title_length[0].lesson_title.split(' ').join('-')
         },
         cardLink(){
-            if (this.withFavourite)
+            if (this.withFavourite) // go to course page
                 return `/courses/${this.courseSlog}`    
             return `/courses/${this.courseSlog}/${this.getLectureUrl}`
         }
