@@ -1,7 +1,7 @@
 <template>
     <div class="course-box bg-white shadow w-31 radius-10 relative w-100-p">
         <div v-if="withFavourite" @click="addToFavourite" :class="{'active':course.is_favourite}" class="fav-box relative pointer"></div>
-        <router-link :to="`/courses/${courseSlog}/${getLectureUrl}`">
+        <router-link :to="cardLink">
             <figure class="d-flex relative radius-10 overflow-hidden figure-box">
                 <img
                     class="main-img w-100 object-fit"
@@ -15,7 +15,28 @@
                 <p class="yellow font-18 bold mb-10">الدورة التدريبية</p>
                 <p class="font-20 font-18-p black-2 mb-15 bold two-line course-title">{{ course.title }}</p>
                 <div class="d-flex space-between">
-                    
+                    <div class="d-flex align-center" v-if="withFavourite">
+                        <template v-if="course.discount.has_discount">
+                        <span
+                            class="bold font-22 main-color ml-15"
+                            v-if="!course.is_free && course.discount.discount_price"
+                            >{{ course.discount.discount_price }} JD</span
+                        >
+                        <span
+                            class="gray font-19 before-discount bold"
+                            v-if="!course.is_free && course.price"
+                            
+                            >{{ course.price }} JD</span
+                        >
+                        </template>
+                        <template v-else-if="!course.is_free && course.price">
+                            <span
+                            class="bold font-22 main-color ml-15"
+                            v-if="!course.is_free && course.price"
+                            >{{ course.price }} JD</span
+                        >
+                        </template>
+                    </div>
                     <span class="bold font-22 main-color"
                         >{{ course.course_length }} ساعات</span
                     >
@@ -35,6 +56,11 @@ export default {
         },
         getLectureUrl(){
             return this.course.videos_title_length[0].lesson_title.split(' ').join('-')
+        },
+        cardLink(){
+            if (this.withFavourite)
+                return `/courses/${this.courseSlog}`    
+            return `/courses/${this.courseSlog}/${this.getLectureUrl}`
         }
     },
     methods:{
@@ -80,6 +106,21 @@ export default {
 }
 .course-title {
     height: 60px;
+}
+.before-discount {
+    position: relative;
+    top: 1px;
+}
+.before-discount:after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: -3px;
+    bottom: 0;
+    margin: auto;
+    width: 120%;
+    height: 1px;
+    background: red;
 }
 @media (max-width: 767px) {
     .course-title {

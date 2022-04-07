@@ -145,7 +145,6 @@ export default {
                 myCourses = await dispatch('getMyCourses')
             }
             title = title.split('-').join(' ')
-
             let resp = myCourses.find(course => course.title == title)
             if (!resp)
                 resp = myCourses.find(course => course.id == +title)

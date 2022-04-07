@@ -847,7 +847,12 @@ a:hover {
 .ls-3 {
     letter-spacing: 3.3px;
 }
-
+.left {
+    text-align: left;
+}
+.lang-en .left {
+    text-align: right;
+}
 @media (max-width: 767px) {
     .mo {
         display: block !important;
