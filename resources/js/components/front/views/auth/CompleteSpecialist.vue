@@ -85,6 +85,7 @@
         <div class="form-group mb-15" :class="{ invalid: !email.isValid }">
             <input
                 type="email"
+                autocomplete="off"
                 class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
                 placeholder="البريد الالكتروني"
                 id="email"
