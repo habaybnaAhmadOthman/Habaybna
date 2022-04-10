@@ -77,25 +77,26 @@ class Courses extends Model
 
             $sum +=  ($parts[0] * 60) + $parts[1];
         }
-        $s = $sum%60;
-        $m = floor(($sum%3600)/60);
-        $h = floor(($sum%86400)/3600);
+        // dd($sum);
+        // $s = $sum%60;
+        // $m = floor(($sum%3600)/60);
+        // $h = floor(($sum%86400)/3600);
 
-        // $min =  gmdate("H:i:", $sum );
-        // dd($min);
-        if ($h < 1) {
-            $h = "00";
-        }
-        if ($m < 1) {
-            $m = "00";
-        }
-        $length = $h.':'.$m ;
+        // // $min =  gmdate("H:i:", $sum );
+        // // dd($min);
+        // if ($h < 1) {
+        //     $h = "00";
+        // }
+        // if ($m < 1) {
+        //     $m = "00";
+        // }
+        // $length = $h.':'.$m ;
 
         // dd($length);
-       return $length ;
+       return $sum ;
 
        }
-       return '00:00:00';
+       return 0;
 
     }
 
