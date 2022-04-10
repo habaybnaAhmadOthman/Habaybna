@@ -44,6 +44,12 @@ import Cirtificate from "./components/front/views/coursepage/Certificate.vue";
 import PaymentStatus from "./components/front/pages/courses/PaymentStatus.vue";
 import ExamPage from "./components/front/pages/courses/ExamPage.vue";
 
+// library
+import LibraryPage from "./components/front/pages/library/LibraryPage.vue";
+import ArticlePage from "./components/front/pages/library/ArticlePage.vue";
+// specialist
+import SpecialistPage from "./components/front/pages/SpecialistPage.vue";
+
 
 
 // register pages
@@ -340,8 +346,22 @@ const routes = [{
         },
         props: true
     },
-
-
+    // *****************
+    // content pages
+    {
+        path: "/library",
+        component: LibraryPage
+    },
+    {
+        path: "/content/:article",
+        component: ArticlePage
+    },
+    // *****************
+    // specialist page
+    {
+        path: "/specialist/:specialist",
+        component: SpecialistPage
+    },
     { path: "*", component: ErrorPage }
 ];
 

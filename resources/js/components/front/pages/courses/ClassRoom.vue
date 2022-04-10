@@ -7,14 +7,14 @@
                 <div class="mo p-side-12-p mt-20-p">
                     <TabsToggle :tabs="mobileTabs"></TabsToggle>
                 </div>
-                <div tab-name="about" class="active p-side-12-p">
+                <div tab-name="about" mo class="active p-side-12-p">
                     <CourseInfoText v-if="isDataReady" :header="'لمحة عن الدرس'" :description="description"></CourseInfoText>
                 </div>
-                <div tab-name="table">
+                <div tab-name="table" mo>
                     <ContentTable v-if="isDataReady" :currentVideo="currentLecture" :rows="videosList" type="lecture" :title="'محتوى الدورة التدريبية'" class="pt-20"></ContentTable>
                 </div>
-                <div tab-name="coaches" class="mt-50 pt-10 mt-20-p pt-0-p">
-                    <AboutSpecialists v-if="specialists" :specialists="specialists"></AboutSpecialists>
+                <div tab-name="coaches" mo class="mt-50 pt-10 mt-20-p pt-0-p">
+                    <AboutSpecialists :title="'عن المدربين'" v-if="specialists" :specialists="specialists"></AboutSpecialists>
                 </div>
             </div>
         </div>

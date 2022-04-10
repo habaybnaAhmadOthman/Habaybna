@@ -139,7 +139,7 @@ body {
     z-index: 1;
 }
 .container {
-    width: 1180px;
+    max-width: 1140px;
     margin: auto;
 }
 .container-fluid {
@@ -334,6 +334,9 @@ body {
 }
 .mt-30 {
     margin-top: 30px;
+}
+.mt-40 {
+    margin-top: 40px;
 }
 .mt-50 {
     margin-top: 50px;
@@ -650,6 +653,9 @@ input[disabled] {
 .bg-soft {
     background: #FAFAFA;
 }
+.bg-yellow {
+    background: #FF9E00;
+}
 .card-1 {
     background: #FAFAFA;
     border-radius: 20px;
@@ -853,11 +859,36 @@ a:hover {
 .lang-en .left {
     text-align: right;
 }
+.gap-10 {
+    gap: 10px;
+}
+.gap-20 {
+    gap: 20px;
+}
+.gap-20 > *{
+    width: 49%;
+}
+.two-side {
+    display: flex;
+    column-gap: 23px;
+}
+.right-side {
+    width: 67.3333333333%;
+}
+.left-side {
+    width: 30.6666666667%;
+}
+.mpu {
+    min-height: 250px;
+}
+[do][tab-name]:not(.active), [all][tab-name]:not(.active) {
+    display: none !important;
+}
 @media (max-width: 767px) {
     .mo {
         display: block !important;
     }
-    .do,[tab-name]:not(.active) {
+    .do,[mo][tab-name]:not(.active), [all][tab-name]:not(.active) {
         display: none !important;
     }
     .w-100-p {

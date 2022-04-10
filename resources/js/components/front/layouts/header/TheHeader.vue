@@ -20,7 +20,7 @@
                         <div class="dropdown relative h-100 flex-all">
                             <router-link
                                 class="black nowrap p-side-10 h-100 flex-all bold"
-                                to="/"
+                                to="/library"
                                 >مكتبة حبايبنا</router-link
                             >
                             <aside class="radius-5 overflow-hidden trans">

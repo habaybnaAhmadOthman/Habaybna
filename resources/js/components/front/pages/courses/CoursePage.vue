@@ -9,17 +9,17 @@
             <div class="mo p-side-12-p mt-20-p">
                 <TabsToggle :tabs="mobileTabs"></TabsToggle>
             </div>
-            <div tab-name="about" class="active">
+            <div tab-name="about" mo class="active">
                 <CourseInfo  :course-name="courseName" :description="courseDescription" :whatShouldLearn="whatShouldLearn"></CourseInfo>
             </div>
-            <div tab-name="table">
+            <div tab-name="table" mo>
                 <ContentTable  :rows="videosList" type="course" :title="'محتوى الدورة التدريبية'" class="pt-20"></ContentTable>
             </div>
-            <div tab-name="coaches" class="mt-50 pt-10 mt-20-p pt-0-p">
-                <AboutSpecialists v-if="specialists" :specialists="specialists"></AboutSpecialists>
+            <div tab-name="coaches" mo class="mt-50 pt-10 mt-20-p pt-0-p">
+                <AboutSpecialists :title="'عن المدربين'" v-if="specialists" :specialists="specialists"></AboutSpecialists>
             </div>
             <div class="mt-60">
-                <RelatedCourses v-if="isDataReady"></RelatedCourses>
+                <RelatedCourses :title="`دورة ذات صلة`" v-if="isDataReady"></RelatedCourses>
             </div>
         </div>
         <div class="mt-30">

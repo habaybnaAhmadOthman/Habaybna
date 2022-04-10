@@ -1,6 +1,6 @@
 <template>
-    <div class="related-courses-section " v-if="appendedCourses.length > 0">
-        <h6 class="title-line font-27 mb-40 mb-20-p p-side-12-p">دورة ذات صلة</h6>
+    <div class="related-courses-section" v-if="appendedCourses.length > 0">
+        <h6 class="title-line font-27 mb-40 mb-20-p p-side-12-p">{{title}}</h6>
         
         <div class="list relative">
             <div class="related-courses-swiper my-swiper" dir="rtl">
@@ -23,6 +23,7 @@
     import CourseCard from '../../views/onlinecourses/Course_Card.vue'
 
     export default {
+        props: ['title'],
         components:{CourseCard},
         data:()=>({
             appendedCourses: []

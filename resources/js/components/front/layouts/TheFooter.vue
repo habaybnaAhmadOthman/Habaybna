@@ -84,6 +84,9 @@ li {
 .left-side-info {
     border-right: 2px solid #c4c4c4;
 }
+footer {
+    margin-top: 60px;
+}
 @media (max-width: 767px) {
     .footer-col {
         flex: auto;
@@ -92,6 +95,9 @@ li {
     .left-side-info {
         padding: 0;
         border: 0;
+    }
+    footer {
+        margin-top: 40px;
     }
 }
 </style>

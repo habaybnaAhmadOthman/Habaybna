@@ -30,7 +30,7 @@ export default {
 
 <style scoped>
 .courses-list {
-    column-gap: 40px;
+    column-gap: 39px;
     row-gap: 40px;
 }
 .course-box.more {

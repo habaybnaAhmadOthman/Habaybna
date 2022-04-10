@@ -24,6 +24,7 @@
 </script>
 
 <style scoped>
+
 .tabs-toggle {
     display: flex;
     border-bottom: 1px solid #939598;
@@ -50,5 +51,16 @@ button.active:after {
     bottom: 0;
     border-radius: 10px;
     bottom: -1.5px;
+}
+@media (min-width: 768px) {
+    button {
+        font-size: 22px;
+        cursor: pointer;
+        flex: inherit;
+        margin-left: 30px;
+    }
+    .tabs-toggle {
+        border-bottom: 1px solid #00000029;
+    }
 }
 </style>

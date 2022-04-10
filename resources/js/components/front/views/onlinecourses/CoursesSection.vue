@@ -3,9 +3,9 @@
     <section class="learn-section bg-gray mt-20-p">
       <div class="container p-side-12-p">
         <h2 class="title-line mb-40 mb-20-p">الدورات التدريبية</h2>
-        <Categories @change-filter="setFilters"></Categories>
+        <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection>
         <template >
-          <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn" ></Courses>
+          <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses>
         </template>
       </div>
     </section>
@@ -14,8 +14,8 @@
   </div>
 </template>
 <script>
-import Categories from './CoursesSection_Categories.vue'
 import Courses from './CoursesSection_Cards.vue'
+import CategoryFilterSection from '../../layouts/CategoryFilterSection.vue'
 export default {
   props: ['cardsCount','showMoreCard'],
   computed: {
@@ -32,13 +32,14 @@ export default {
         return false
     }
   },
-  components: {Categories,Courses},
+  components: {Courses,CategoryFilterSection},
   data(){
     return {
       activeFilters: [],
       atLeastOneSelected: false,
       appendedCourses: [],
-      courseTemp: []
+      courseTemp: [],
+      api: 'courses/getCategories'
     }
   },
   created(){
@@ -100,5 +101,4 @@ export default {
 .all-courses-page .title-line {
   margin-bottom: 20px;
 }
-
 </style>

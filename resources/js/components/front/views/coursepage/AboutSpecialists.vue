@@ -1,6 +1,6 @@
 <template>
     <div class="about-coach p-side-12-p">
-        <h3 class="title-line mb-40 do">عن المدربين</h3>
+        <h3 class="title-line mb-40 do">{{title}}</h3>
         <!-- desktop -->
         <div class="d-flex specialist-list flex-wrap row-3" v-if="!isMobile">
             <SpecialistCard v-for="specialist in specialists" :key="specialist.user_id" :specialist="specialist"></SpecialistCard>
@@ -14,7 +14,6 @@
                     <div v-for="specialist in specialists" :key="specialist.user_id" class="swiper-slide mobile-slide">
                         <SpecialistCard :specialist="specialist"></SpecialistCard>
                     </div>
-
                 </div>
                 <div class="swiper-button-next coaches-next mobile-arrow"></div>
                 <div class="swiper-button-prev coaches-prev mobile-arrow"></div>
@@ -28,13 +27,10 @@
 import SpecialistCard from '../../views/specialists/SpecialistCard.vue'
 export default {
     components: {SpecialistCard},
-    props: ['specialistID', 'specialists'],
+    props: ['specialists','title'],
     data(){
         return {
-            name: '',
-            speciality: '',
-            description: '',
-            avatar: ''
+            
         }
     },
     computed: {
@@ -42,20 +38,11 @@ export default {
             return window.matchMedia("(max-width: 677px)").matches
         }
     },
-    created(){
+    mounted(){
         this.getSpecialistDetails()
     },
     methods: {
         async getSpecialistDetails(){
-            try {
-                const data = await this.$store.dispatch('specialist/getSpecialistDetails',this.specialistID);
-                this.name = data.specialistName;
-                this.speciality = data.speciality;
-                this.description  = data.description;
-                this.avatar  = data.avatar;
-            } catch (e){
-                console.log(e);
-            }
             if (this.isMobile){
                 this.initSwiper()
             }
