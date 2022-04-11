@@ -38,7 +38,7 @@
                         </template>
                     </div>
                     <span class="bold font-22 main-color"
-                        >{{ course.course_length }} ساعات</span
+                        >{{ getTime(course.course_length) }}</span
                     >
                 </div>
             </div>
@@ -71,6 +71,16 @@ export default {
             });
             this.$emit('updateFavouriteCoursesList')
         },
+        getTime(seconds){
+            var hms = new Date(seconds * 1000).toISOString().substr(11, 8);
+            if (+hms.split(':')[0] > 0) {
+                return `${+hms.split(':')[0]} ساعة`
+            } else if (+hms.split(':')[1] > 0) {
+                return `${+hms.split(':')[1]} دقيقة`
+            } else {
+                return `${+hms.split(':')[2]} ثواني`
+            }
+        }
     },
 };
 </script>

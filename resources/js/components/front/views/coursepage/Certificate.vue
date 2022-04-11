@@ -1,22 +1,19 @@
 <template>
     <div>
-        <button @click="capture">Save</button>
-        <div class="certificate m-side-auto center mt-50 relative" id="photo">
-            <img src="/images/certificate/Frame.png" alt="" width="751" height="501">
-            <img src="/images/certificate/شهادة إنجاز-01.png" alt="" width="751" height="501" class="c-el">
-            <img src="/images/certificate/إنجاز جديد-01.png" alt="" width="751" height="501" class="c-el">
-            <img src="/images/certificate/بشغفكم وتعلمكم المستمر-01.png" alt="" width="751" height="501" class="c-el">
-            <img src="/images/certificate/بواقع-01.png" alt="" width="751" height="501" class="c-el">
-            <img src="/images/certificate/تاريخ-01.png" alt="" width="751" height="501" class="c-el">
-            <img src="/images/certificate/توقيع الاخصائي-01.png" alt="" width="751" height="501" class="c-el">
-            <img src="/images/certificate/ساعات-01.png" alt="" width="751" height="501" class="c-el">
-            <img src="/images/certificate/شعار حبايبنا-01.png" alt="" width="751" height="501" class="c-el">
-            <img src="/images/certificate/لقد أتممت-01.png" alt="" width="751" height="501" class="c-el">
-            <img src="/images/certificate/مبروك-01.png" alt="" width="751" height="501" class="c-el">
-            <div class="name blue-2 font-26">منتصر خليل زلوم</div>
-            <div class="cource-title blue-2 font-26">دورة الحاسوب المتقدم والمهارات</div>
-            <div class="hours blue-2">15</div>
-            <div class="date blue-2">dd/mm/yy</div>
+        <div class="d-flex justify-center">
+            <button class="btn-main font-30 bold" @click="capture">حفظ الشهادة</button>
+        </div>
+        <div class="certificate m-side-auto center  mt-10 relative" id="photo">
+            <img src="/images/frame.png" alt="" width="908" height="651">
+            <div class="main-color font-30 bold name"><span>مبروك </span> <span>ريم</span></div>
+            <div class="cource-title black-2 font-26"><span class="cr p-side-15">لقد أتممت بنجاح <span>دورة التدريب الرقمية </span></span></div>
+            <div class="course-descc black-2 font-23">الأطفال المتأخرين بالتطور </div>
+            <div class="date black-2 font-26"><span class="dr p-side-15"><span>30</span><span class="p-side-30 month">June</span><span>2022</span></span></div>
+            <div class="hours black-2 font-23">15 ساعة</div>
+            <div class="slogan black-2 font-20">بشغفكم و تعلمكم المستمر أصبحتم تملكون أحد <br>مفاتيح المستقبل لأبنائنا بمختلف قدراتهم</div>
+            <div class="logos">
+                <img src="/images/cer-logo.png" alt="" width="85" height="75">
+            </div>
         </div>
     </div>
 </template>
@@ -45,8 +42,8 @@ export default {
 
 <style scoped>
 .certificate {
-    width: 751px;
-    height: 501px;
+    width: 908px;
+    height: 651px;
 }
 .c-el {
     position: absolute;
@@ -55,28 +52,67 @@ export default {
 }
 .name {
     position: absolute;
-    top: 0;
-    margin-top: 126px;
-    right: 310px;
+    top: 140px;
+    width: 100%;
+    padding: 0 220px;
 }
 .cource-title {
     position: absolute;
-    top: 234px;
+    top: 204px;
     right: 0;
     text-align: center;
     width: 100%;
-    padding: 0 60px;
+    padding: 0 110px;
+}
+.cource-title .cr, .dr{
+    border-bottom: 1px solid #363636;
+    padding-bottom: 10px;
+}
+.course-descc {
+    position: absolute;
+    top: 275px;
+    width: 100%;
+    padding: 0 90px;
+    max-height: 63px;
+    overflow: hidden;
+}
+.month:before,.month:after {
+    content: '';
+    background: url(/images/line.png);
+    width: 13px;
+    height: 21px;
+    display: inline-block;
+    background-size: 100% 100%;
+    transform: translate(-10px, 3px);
+}
+.month:after {
+    transform: translate(10px, 3px)!important;
 }
 .hours {
     position: absolute;
-    top: 279px;
-    right: 247px;
+    top: 394px;
+    width: 100%;
+}
+.slogan {
+    position: absolute;
+    top: 429px;
+    width: 100%;
 }
 .date {
     position: absolute;
-    top: 280px;
-    left: 218px;
+    top: 350px;
     direction: ltr;
-    text-align: left;
+    text-align: center;
+    width: 100%;
+}
+.dr {
+    padding-bottom: 0;
+}
+.logos {
+    position: absolute;
+    width: 100%;
+    top: 499px;
+    padding: 0 240px;
+    text-align: right;
 }
 </style>

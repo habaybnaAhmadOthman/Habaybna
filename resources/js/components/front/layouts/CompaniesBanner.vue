@@ -5,8 +5,8 @@
             <div class="container z-1 p-side-12-p">
                 <div class="w-85 w-100-p">
                     <h2 class="title-line mb-40 do">للمؤسسات</h2>
-                    <p class="font-25 gray bold mb-20 font-18-p">هل أنتم أحد المؤسسات أو المراكز أو المدارس التي  ترغب بشراء حزمة لتدريب مموظفيكم أو عملائكم؟</p>
-                    <p class="font-22 gray bold font-16-p desc">يمكنكم الاستفادة من خصم المجموعة للمؤسسات والشركات تواصلوا معنا عبر <span class="main-color bold font-24 mr-10 font-16-p m-0-p">community@habaybna.net</span> وسيقوم فريق منصة حبايبنا.نت بالتواصل معكم</p>
+                    <p class="font-25 black-2 bold mb-20 font-18-p">هل أنتم أحد المؤسسات أو المراكز أو المدارس التي  ترغب بشراء حزمة لتدريب موظفيكم أو عملائكم؟</p>
+                    <p class="font-22 black-2 bold font-16-p desc">يمكنكم الاستفادة من خصم المجموعة للمؤسسات والشركات تواصلوا معنا عبر <span class="main-color bold font-24 mr-10 font-16-p m-0-p">community@habaybna.net</span> وسيقوم فريق منصة حبايبنا.نت بالتواصل معكم</p>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
     height: 100%;
     background: url(/images/company-banner.png) no-repeat;
     position: absolute;
-    opacity: 0.1;
+    opacity: 0.05;
     background-size: contain;
 }
 @media (max-width: 767px) {
