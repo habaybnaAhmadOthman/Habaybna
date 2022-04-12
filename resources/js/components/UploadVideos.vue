@@ -17,8 +17,11 @@
 .ivu-card-body {
   padding: 0 !important;
 }
-.ck p {
+/* .ck p {
   display: inline-block !important;
+} */
+.ck-editor__editable {
+  min-height: 150px !important;
 }
 .ck.ck-editor__editable_inline {
   text-align: right !important;

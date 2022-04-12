@@ -316,7 +316,7 @@
     background: red;
 }
 .figure-box,.video-js {
-    height: 199px!important;
+    height: 193px!important;
 }
 @media (max-width: 767px) {
     .btn-register-now {
@@ -339,7 +339,10 @@
 </style>
 <style>
 .video-js {
-    height: 222px!important;
+    height: 193px!important;
+}
+.video-js video {
+    object-fit: cover;
 }
 .vjs-big-play-button {
     top: 0!important;
