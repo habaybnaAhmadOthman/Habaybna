@@ -10,7 +10,7 @@
                             <div class="play-video d-flex">
                                 <img class="play-icon" :src="getCourseVideoIcon(index)" width="50" height="50" alt="" />
                                 <div class="duration">
-                                    <span class="nowrap black-2">{{row.lesson_length }} دقيقة</span>
+                                    <span class="nowrap black-2">{{getTime(row.lesson_length)}}</span>
                                 </div>
                                 <div class="video-name black-2 relative">
                                     <span>{{row.lesson_title}}</span>
@@ -26,7 +26,7 @@
                             <div class="play-video d-flex">
                                 <img class="play-icon" :src="getCourseVideoIcon(index)" width="50" height="50" alt="" />
                                 <div class="duration">
-                                    <span class="nowrap black-2">{{row.length }} دقيقة</span>
+                                    <span class="nowrap black-2">{{getTime(row.length)}}</span>
                                 </div>
                                 <div class="video-name relative">
                                     <span class="black-2">{{row.title}}</span>
@@ -109,6 +109,13 @@ export default {
         },
         getCourseProgress(){
             this.courseData = this.$store.getters['courses/course']
+        },
+        getTime(minutes) {
+            if (+minutes.split(':')[0] > 0) {
+                return `${+minutes.split(':')[0]} دقيقة`
+            } else {
+                return `${+minutes.split(':')[1]} ثواني`
+            }
         },
         // for course page use
         getCourseVideoIcon(index){

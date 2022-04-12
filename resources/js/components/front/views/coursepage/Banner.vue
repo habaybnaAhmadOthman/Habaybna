@@ -33,15 +33,17 @@ export default {
     },
     computed: {
         getTime(){
-            // var hms = new Date(this.courseLength * 1000).toISOString().substr(11, 8);
-            // if (+hms.split(':')[0] > 0) {
-            //     return `${+hms.split(':')[0]} ساعة`
-            // } else if (+hms.split(':')[1] > 0) {
-            //     return `${+hms.split(':')[1]} دقيقة`
-            // } else {
-            //     return `${+hms.split(':')[2]} ثواني`
-            // }
-            return `${this.courseLength} دقيقة`
+            if (typeof this.courseLength != 'number') {
+                return `${this.courseLength} دقيقة`
+            }
+            var hms = new Date(this.courseLength * 1000).toISOString().substr(11, 8);
+            if (+hms.split(':')[0] > 0) {
+                return `${+hms.split(':')[0]} ساعة`
+            } else if (+hms.split(':')[1] > 0) {
+                return `${+hms.split(':')[1]} دقيقة`
+            } else {
+                return `${+hms.split(':')[2]} ثواني`
+            }
         },
         // get yellowed header 
         headTitle(){
