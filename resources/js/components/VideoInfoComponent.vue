@@ -52,7 +52,7 @@
           * يجب اختيار واحد على الاقل
         </span>
       </div>
-      <div class="text-area" v-if="form && form.editor">
+      <div class="text-area">
         <label> وصف الدورة</label>
         <textarea id="courseDescription"></textarea>
         <!-- <ckeditor
@@ -207,7 +207,8 @@
 </template>
 
 <script>
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
 import UploadAdapter from './UploadAdapter'
@@ -230,10 +231,10 @@ export default {
         courseTitle: "",
         courseCategory: "",
         courseDescription: null,
-        editor: ClassicEditor,
+        // editor: Editor,
         watWeLearn: "",
         editorConfig: {
-          extraPlugins: [this.uploader],
+          // extraPlugins: [this.uploader],
           enterMode: "br",
         },
         coverImage: "",

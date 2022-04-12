@@ -8,7 +8,7 @@ require('./bootstrap');
 
 
 window.Vue = require('vue');
-import CKEditor from '../../node_modules/@ckeditor/ckeditor5-vue2';
+// import CKEditor from '../../node_modules/@ckeditor/ckeditor5-vue2';
 import VideoInfoComponent from './components/VideoInfoComponent.vue';
 import AdminDashboard from './components/admin/AdminDashboard.vue'
 import ParentDashboard from './components/parents/ParentDashboard.vue'
@@ -41,7 +41,7 @@ Vue.use(ViewUI,{ locale });
 Vue.mixin(common)
 
 
-Vue.use(CKEditor);
+// Vue.use(CKEditor);
 Vue.use(VueCoreVideoPlayer)
 /**
  * The following block of code may be used to automatically register your
