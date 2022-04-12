@@ -24,7 +24,7 @@
           :success="infoModal.status"
           :fixed="infoModal.isFixed"
         >
-        <button @click="getCertificate" class="btn-main bold font-18">إصدار الشهادة</button>
+        <button v-if="isExamFinished" @click="getCertificate" class="btn-main bold font-18">إصدار الشهادة</button>
         </info-modal>
     </div>
 </template>
@@ -45,7 +45,6 @@ export default {
             this.$store.commit("isLoading", status);
         },
         submitQuestion(answer) {
-            
             if (this.currentQuestion < this.questionsCount - 1) {
                 this.questions[this.currentQuestion].userAnswer = answer;
                 this.currentQuestion += 1;
@@ -73,6 +72,7 @@ export default {
             let isPassed = await this.$store.dispatch('courses/passExam',{
                 courseID: this.courseData.id
             })
+            this.isExamFinished = true
             this.isLoading(false);
             if (isPassed)
                 this.correctAnswerDialog()
@@ -105,6 +105,7 @@ export default {
             courseData: null,
             questions: [],
             isDataReady: false,
+            isExamFinished: false
         }
     },
     async created(){

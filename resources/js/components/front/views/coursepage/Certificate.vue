@@ -1,7 +1,9 @@
 <template>
     <div class="bg-white big-container" v-if="courseData">
-        <div class="d-flex justify-center">
-            <button class="btn-main font-30 bold mt-5" @click="capture">حفظ الشهادة</button>
+        <div class="d-flex justify-center mt-5">
+            <button class="btn-main font-22 bold " @click="capture">حفظ الشهادة</button>
+            <router-link class="btn-main font-22 bold mr-20" to="/">عودة إلى الرئيسية</router-link>
+            
         </div>
         <div class="certificate do m-side-auto center  mt-10 relative" id="photo">
             <img src="/images/frame.png" alt="" width="908" height="651">
