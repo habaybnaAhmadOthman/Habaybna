@@ -52,18 +52,19 @@
           * يجب اختيار واحد على الاقل
         </span>
       </div>
-      <div class="text-area">
+      <div class="text-area" v-if="form && form.editor">
         <label> وصف الدورة</label>
-        <ckeditor
+        <textarea id="courseDescription"></textarea>
+        <!-- <ckeditor
           :editor="form.editor"
           v-model="form.courseDescription"
           :config="form.editorConfig"
-        ></ckeditor>
+        ></ckeditor> -->
         <span class="error" v-if="!this.formValidation.courseDescription">
           * يجب تعبئة هذا الحقل
         </span>
       </div>
-      <div class="text-area">
+      <!-- <div class="text-area">
         <label>ماذا سوف نتعلم</label>
         <ckeditor
           :editor="form.editor"
@@ -73,7 +74,7 @@
         <span class="error" v-if="!this.formValidation.watWeLearn">
           * يجب تعبئة هذا الحقل
         </span>
-      </div>
+      </div> -->
       <div class="question-form">
         <label>صورة غلاف الدورة</label>
         <input
@@ -209,6 +210,7 @@
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
+import UploadAdapter from './UploadAdapter'
 export default {
   components: { Multiselect },
 
@@ -227,10 +229,11 @@ export default {
         specialistsList: [],
         courseTitle: "",
         courseCategory: "",
-        courseDescription: "",
+        courseDescription: null,
         editor: ClassicEditor,
         watWeLearn: "",
         editorConfig: {
+          extraPlugins: [this.uploader],
           enterMode: "br",
         },
         coverImage: "",
@@ -259,6 +262,13 @@ export default {
   },
 
   methods: {
+    uploader() {
+          this.form.courseDescription.plugins.get(
+              "FileRepository"
+          ).createUploadAdapter = loader => {
+              return new UploadAdapter(loader);
+          };
+      },
     uploadCoverImage(event) {
       this.form.coverImage = event.target.files[0];
     },
@@ -282,7 +292,7 @@ export default {
         let formData = new FormData();
         formData.append("title", this.form.courseTitle);
         formData.append("category", CategorytagIDs);
-        formData.append("description", this.form.courseDescription);
+        formData.append("description", this.form.courseDescription.getData());
         formData.append("watWeLearn", this.form.watWeLearn);
         formData.append("coverImage", this.form.coverImage);
         formData.append("promoVideo", this.form.promoVideo);
@@ -317,7 +327,7 @@ export default {
       } else {
         this.formValidation.courseTitle = true;
       }
-      if (this.form.courseDescription == "") {
+      if (this.form.courseDescription.getData() == "") {
         this.formValidation.courseDescription = false;
       } else {
         this.formValidation.courseDescription = true;
@@ -369,7 +379,23 @@ export default {
         }
       }
     },
+    initCKeditor(){
+      ClassicEditor
+      // Note that you do not have to specify the plugin and toolbar configuration — using defaults from the build.
+      .create( document.querySelector( '#courseDescription' ) )
+      .then( editor => {
+          console.log( 'Editor was initialized', editor );
+          this.form.courseDescription = editor;
+          this.form.courseDescription.extraPlugins = this.uploader()
+      } )
+      .catch( error => {
+          console.error( error.stack );
+      });
+    }
   },
+  mounted(){
+    this.initCKeditor()
+  }
 };
 </script>
 <style>
