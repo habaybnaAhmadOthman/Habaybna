@@ -54,17 +54,19 @@
                 </div>
             </div>
             <div class="relative certificate lecture-box d-flex align-center black-2 font-27 regular">
-                <div class="tag">
-                    <div class="play-video d-flex">
-                        <img class="play-icon" src="/images/certificate-icon.svg" width="50" height="50" alt="" />
-                        <!-- <img class="play-icon" src="/images/certificate-icon-color.svg" width="50" height="50" alt="" /> -->
-                        <div class="duration do">
-                            <span class="nowrap">إصدار الشهادة</span>
+                <div class=" w-100">
+                    <router-link class="d-flex tag" :to="certificateURL">
+                        <div class="play-video d-flex">
+                            <img class="play-icon" :src="`/images/certificate-icon${isExamCompleted}.svg`" width="50" height="50" alt="" />
+                            <div class="duration do">
+                                <span class="nowrap black-2">إصدار الشهادة</span>
+                            </div>
+                            <div class="video-name">
+                                <span class="mo black-2">إصدار الشهادة</span>
+                            </div>
                         </div>
-                        <div class="video-name">
-                            <span class="mo">إصدار الشهادة</span>
-                        </div>
-                    </div>
+                    </router-link>
+                    <span class="prevent-click"></span>
                 </div>
             </div>
         </div>
@@ -88,6 +90,12 @@ export default {
         isReadyToExam(){
             if (this.courseData && this.courseData.course_progress.length > 0 && this.courseData.course_progress[this.courseData.videos_count - 1] !== undefined && this.courseData.course_progress[this.courseData.videos_count - 1].is_complete) {
                 return `/courses/${this.courseData.title.split(' ').join('-')}/exam`
+            } else
+                return '/'
+        },
+        certificateURL(){
+            if (this.courseData && this.courseData.course_progress.length > 0 && this.courseData.course_progress[this.courseData.videos_count - 1] !== undefined && this.courseData.course_progress[this.courseData.videos_count - 1].is_complete) {
+                return `/course/${this.courseData.title.split(' ').join('-')}/certificate`
             } else
                 return '/'
         },

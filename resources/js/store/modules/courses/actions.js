@@ -233,5 +233,15 @@ export default {
         getters.myCourses[targetedCourseIndex] = targetedCourse;
         return resp.data.is_complete
     },
+    // ******** get Certificate logos ::: get
+    async getCertificateData({commit,getters},payload) {
+        // const resp = await callApi("POST", "/api/course/user-complete-quize",payload);
+        // if (resp.status != 200) {
+        //     const error = new Error("fail getCertificateData");
+        //     throw error;
+        // }
+        
+        return true
+    },
 };
 
