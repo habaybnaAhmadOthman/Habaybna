@@ -54,22 +54,23 @@
       </div>
       <div class="text-area">
         <label> وصف الدورة</label>
-        <ckeditor
+        <!-- <ckeditor
           :editor="form.editor"
           v-model="form.courseDescription"
           :config="form.editorConfig"
-        ></ckeditor>
+        ></ckeditor> -->
+        <textarea name="" id="courseDescription" cols="30" rows="10"></textarea>
         <span class="error" v-if="!this.formValidation.courseDescription">
           * يجب تعبئة هذا الحقل
         </span>
       </div>
       <div class="text-area">
         <label>ماذا سوف نتعلم</label>
-        <ckeditor
+        <!-- <ckeditor
           :editor="form.editor"
           v-model="form.watWeLearn"
           :config="form.editorConfig"
-        ></ckeditor>
+        ></ckeditor> -->
         <span class="error" v-if="!this.formValidation.watWeLearn">
           * يجب تعبئة هذا الحقل
         </span>
@@ -160,7 +161,7 @@
           * يجب تعبئة هذا الحقل
         </span>
       </div>
-            <div class="question-form">
+      <div class="question-form">
         <label> نسبة الخصم</label>
         <input
           type="number"
@@ -170,7 +171,6 @@
           :disabled="form.is_free == 1 ? true : false"
           placeholder="100 يعني free"
         />
-
       </div>
       <div class="question-form">
         <label>مقدمي الدورة</label>
@@ -206,7 +206,8 @@
 </template>
 
 <script>
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Editor from "ckeditor5-custom-build/build/ckeditor";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
 export default {
@@ -238,7 +239,7 @@ export default {
         coursePrice: 0,
         is_publish: "",
         is_free: "",
-        discount:"",
+        discount: "",
       },
       categories: [],
       loading: false,
@@ -298,20 +299,20 @@ export default {
         );
         this.$Message.success("تم انشاء الدورة");
         self.push({
-            name: "UploadVideo",
+          name: "UploadVideo",
           params: { data: resp.data.course_id },
         });
         this.loading = false;
       }
     },
     validatForm() {
-            console.log(this.form.is_free );
+      console.log(this.form.is_free);
 
-        if (this.form.coursePrice == "" && !this.form.is_free ) {
-          this.formValidation.coursePrice = false;
-        } else {
-          this.formValidation.coursePrice = true;
-        }
+      if (this.form.coursePrice == "" && !this.form.is_free) {
+        this.formValidation.coursePrice = false;
+      } else {
+        this.formValidation.coursePrice = true;
+      }
       if (this.form.courseTitle == "") {
         this.formValidation.courseTitle = false;
       } else {
@@ -322,11 +323,11 @@ export default {
       } else {
         this.formValidation.courseDescription = true;
       }
-      if (this.form.watWeLearn == "") {
-        this.formValidation.watWeLearn = false;
-      } else {
-        this.formValidation.watWeLearn = true;
-      }
+    //   if (this.form.watWeLearn == "") {
+    //     this.formValidation.watWeLearn = false;
+    //   } else {
+    //     this.formValidation.watWeLearn = true;
+    //   }
       if (this.form.coverImage == "") {
         this.formValidation.coverImage = false;
       } else {
@@ -369,6 +370,38 @@ export default {
         }
       }
     },
+    initCKeditor() {
+      ClassicEditor
+        // Note that you do not have to specify the plugin and toolbar configuration — using defaults from the build.
+        .create(document.querySelector("#courseDescription"), {
+          simpleUpload: {
+            // The URL that the images are uploaded to.
+            uploadUrl: "/api/ckeditor/upload-image",
+
+            // Enable the XMLHttpRequest.withCredentials property.
+            withCredentials: true,
+
+            // Headers sent along with the XMLHttpRequest to the upload server.
+            headers: {
+              "X-CSRF-TOKEN": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
+              Accept: "application/json",
+            },
+          },
+        })
+        .then((editor) => {
+          console.log("Editor was initialized", editor);
+          this.form.courseDescription = editor;
+          //   this.form.courseDescription.extraPlugins = this.uploader()
+        })
+        .catch((error) => {
+          console.error(error.stack);
+        });
+    },
+  },
+  mounted() {
+    this.initCKeditor();
   },
 };
 </script>
@@ -383,5 +416,4 @@ export default {
 .question-form span {
   display: block !important ;
 }
-
 </style>
