@@ -89,7 +89,7 @@
                   * يجب تعبئة هذا الحقل
                 </span>
               </div>
-              <div class="form-group">
+              <div class="">
                 <strong>وصف الحلقة</strong>
                 <ckeditor
                   :editor="form.editor"
@@ -166,7 +166,7 @@
 </template>
 
 <script>
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default {
   updated() {},
   mounted() {
