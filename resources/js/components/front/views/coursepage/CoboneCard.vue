@@ -1,5 +1,5 @@
 <template>
-    <div class="course-card w-30 radius-10 overflow-hidden bg-white relative w-100-p m-side-12-p">
+    <div class="course-card w-30 radius-10 overflow-hidden bg-white relative w-100-p m-side-12-p trans">
         <figure class="d-flex relative overflow-hidden radius-10 figure-box">
             <!-- favourite -->
             <div v-if="isCourse" @click="addToFavourite" :class="{'active':courseData && courseData.is_favourite}" class="fav-box relative pointer"></div>
@@ -96,7 +96,7 @@
                 } else if (this.courseData && this.courseData.price){
                     return this.courseData.price
                 }
-            }
+            },
         },
         data() {
             return {
@@ -121,9 +121,20 @@
                 },
                 courseData: null,
                 lectureData: null,
+                isDataReady: false,
             }
         },
         methods: {
+             // add css class depend on the # of buttons
+            moveCard(){
+                if (!window.matchMedia("(max-width: 677px)").matches) {
+                    if (document.querySelector(".course-card .box-details") && document.querySelector(".course-card .box-details").offsetHeight < 130) {
+                        document.querySelector(".course-card").classList.add('active')
+                    }
+                } else {
+                    document.querySelector(".course-card").classList.remove('active')
+                }
+            },
             async addToFavourite(event) {
                 if (this.isLoggedIn) {
                     event.target.classList.toggle('active')
@@ -195,7 +206,7 @@
                     await this.$store.dispatch('courses/getAllCourses')
                     this.infoModal.isFixed = true;
                     this.isLoading(false)
-                    this.setInfoModal('يمكنك الآن مشاهدة الدورة','لقد أتممت عملية الشراء بنجاح' ,true,true,true)
+                    this.setInfoModal('يمكنك البدء بالتعلم الآن','لقد أتممت التسجيل بنجاح' ,true,true,true)
                 } else {
                     this.$store.commit('loginModal',true);
                 }
@@ -217,6 +228,7 @@
                 // player events fired only for LESSONS
                 if (!this.isCourse)
                     this.addPlayerEvents()
+                this.isDataReady = true
             },
             addPlayerEvents(){
                 var self = this;
@@ -243,6 +255,9 @@
                 this.getLectureData()
             }
             this.initPlayer()
+            setTimeout(() => {
+                this.moveCard()
+            },1000)
         },
         beforeDestroy() {
             if (this.player) {
@@ -316,7 +331,12 @@
     background: red;
 }
 .figure-box,.video-js {
-    height: 199px!important;
+    height: 193px!important;
+}
+@media (min-width: 768px) {
+    .course-card.active {
+        top: 50px;
+    }
 }
 @media (max-width: 767px) {
     .btn-register-now {
@@ -339,7 +359,10 @@
 </style>
 <style>
 .video-js {
-    height: 222px!important;
+    height: 193px!important;
+}
+.video-js video {
+    object-fit: cover;
 }
 .vjs-big-play-button {
     top: 0!important;

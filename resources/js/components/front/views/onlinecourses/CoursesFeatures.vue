@@ -55,17 +55,7 @@
 </template>
 
 <style scoped>
-.box:not(:last-of-type):after {
-  content: "";
-  background: #E58C01;
-  height: 61px;
-  width: 2px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-}
+
 .our-features {
     padding-bottom: 80px;
 }
@@ -77,11 +67,10 @@
     padding-bottom: 60px;
 }
 @media (max-width: 767px) {
-    .box:not(:last-of-type):after {
-        content: none;
-    }
+
     .box {
-        background: #fff;
+        background: transparent;
+        box-shadow: none;
     }
     .box img {
         width: 42px;

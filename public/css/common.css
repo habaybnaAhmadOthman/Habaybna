@@ -872,10 +872,10 @@ a:hover {
     display: flex;
     column-gap: 23px;
 }
-.right-side {
+.right-side-col {
     width: 67.3333333333%;
 }
-.left-side {
+.left-side-col {
     width: 30.6666666667%;
 }
 .mpu {

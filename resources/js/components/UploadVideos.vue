@@ -17,8 +17,11 @@
 .ivu-card-body {
   padding: 0 !important;
 }
-.ck p {
+/* .ck p {
   display: inline-block !important;
+} */
+.ck-editor__editable {
+  min-height: 150px !important;
 }
 .ck.ck-editor__editable_inline {
   text-align: right !important;
@@ -86,7 +89,7 @@
                   * يجب تعبئة هذا الحقل
                 </span>
               </div>
-              <div class="form-group">
+              <div class="">
                 <strong>وصف الحلقة</strong>
                 <ckeditor
                   :editor="form.editor"

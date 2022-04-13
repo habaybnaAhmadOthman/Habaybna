@@ -10,7 +10,7 @@
                             <div class="play-video d-flex">
                                 <img class="play-icon" :src="getCourseVideoIcon(index)" width="50" height="50" alt="" />
                                 <div class="duration">
-                                    <span class="nowrap black-2">{{row.lesson_length }} دقيقة</span>
+                                    <span class="nowrap black-2">{{getTime(row.lesson_length)}}</span>
                                 </div>
                                 <div class="video-name black-2 relative">
                                     <span>{{row.lesson_title}}</span>
@@ -26,7 +26,7 @@
                             <div class="play-video d-flex">
                                 <img class="play-icon" :src="getCourseVideoIcon(index)" width="50" height="50" alt="" />
                                 <div class="duration">
-                                    <span class="nowrap black-2">{{row.length }} دقيقة</span>
+                                    <span class="nowrap black-2">{{getTime(row.length)}}</span>
                                 </div>
                                 <div class="video-name relative">
                                     <span class="black-2">{{row.title}}</span>
@@ -54,17 +54,19 @@
                 </div>
             </div>
             <div class="relative certificate lecture-box d-flex align-center black-2 font-27 regular">
-                <div class="tag">
-                    <div class="play-video d-flex">
-                        <img class="play-icon" src="/images/certificate-icon.svg" width="50" height="50" alt="" />
-                        <!-- <img class="play-icon" src="/images/certificate-icon-color.svg" width="50" height="50" alt="" /> -->
-                        <div class="duration do">
-                            <span class="nowrap">إصدار الشهادة</span>
+                <div class=" w-100">
+                    <router-link class="d-flex tag" :to="certificateURL">
+                        <div class="play-video d-flex">
+                            <img class="play-icon" :src="`/images/certificate-icon${isExamCompleted}.svg`" width="50" height="50" alt="" />
+                            <div class="duration do">
+                                <span class="nowrap black-2">إصدار الشهادة</span>
+                            </div>
+                            <div class="video-name">
+                                <span class="mo black-2">إصدار الشهادة</span>
+                            </div>
                         </div>
-                        <div class="video-name">
-                            <span class="mo">إصدار الشهادة</span>
-                        </div>
-                    </div>
+                    </router-link>
+                    <span class="prevent-click"></span>
                 </div>
             </div>
         </div>
@@ -91,6 +93,12 @@ export default {
             } else
                 return '/'
         },
+        certificateURL(){
+            if (this.courseData && this.courseData.course_progress.length > 0 && this.courseData.course_progress[this.courseData.videos_count - 1] !== undefined && this.courseData.course_progress[this.courseData.videos_count - 1].is_complete) {
+                return `/course/${this.courseData.title.split(' ').join('-')}/certificate`
+            } else
+                return '/'
+        },
         isExamCompleted(){
             return this.courseData && this.courseData.completed_course ? '-color' : ''
         }
@@ -101,6 +109,13 @@ export default {
         },
         getCourseProgress(){
             this.courseData = this.$store.getters['courses/course']
+        },
+        getTime(minutes) {
+            if (+minutes.split(':')[0] > 0) {
+                return `${+minutes.split(':')[0]} دقيقة`
+            } else {
+                return `${+minutes.split(':')[1]} ثواني`
+            }
         },
         // for course page use
         getCourseVideoIcon(index){

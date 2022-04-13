@@ -4,11 +4,11 @@
             <div class="d-flex flex-wrap-p h-100">
                 <div class="d-flex banner-mo align-center box h-100 relative w-70 w-100-p p-side-12-p flex-wrap-p pt-25-p">
                     <div class="w-100 mb-25-p">
-                        <p class="yellow font-18-p bold-p mb-10-p">{{headTitle}}</p>
-                        <h1 class="font-50 white bold pre-line font-20-p">{{bannerTitle}}</h1>
+                        <p class="yellow font-13-p bold-p mb-10-p">{{headTitle}}</p>
+                        <h1 class="font-40 white bold pre-line font-18-p">{{bannerTitle}}</h1>
                     </div>
                     <div class="d-flex details white font-20 pb-10 w-100-p space-between">
-                        <p class="d-flex align-center icon ml-20 m-0-p"><img class="ml-10" src="/images/time-icon.svg" width="31" height="31" alt=""><span class="ml-5">{{courseLength}}</span> <span v-if="!isLectureFn">ساعة</span> <span v-else>دقائق</span></p>
+                        <p class="d-flex align-center icon ml-20 m-0-p"><img class="ml-10" src="/images/time-icon.svg" width="31" height="31" alt=""><span class="ml-5">{{ getTime }}</span></p>
                         <p class="d-flex align-center icon ml-20 m-0-p" v-if="!isLectureFn"><img class="ml-10 video" src="/images/video-svgrepo.svg" width="39" height="34" alt="">{{videosCount}} دروس</p>
                         <p class="d-flex align-center icon pointer" v-if="!isLectureFn" @click="openShareModal"><img class="ml-10 share" src="/images/share-icon.svg" width="34" height="36" alt="">مشاركة</p>
                     </div>
@@ -32,6 +32,19 @@ export default {
         },
     },
     computed: {
+        getTime(){
+            if (typeof this.courseLength != 'number') {
+                return `${this.courseLength} دقيقة`
+            }
+            var hms = new Date(this.courseLength * 1000).toISOString().substr(11, 8);
+            if (+hms.split(':')[0] > 0) {
+                return `${+hms.split(':')[0]} ساعة`
+            } else if (+hms.split(':')[1] > 0) {
+                return `${+hms.split(':')[1]} دقيقة`
+            } else {
+                return `${+hms.split(':')[2]} ثواني`
+            }
+        },
         // get yellowed header 
         headTitle(){
             if (this.isLectureFn)
