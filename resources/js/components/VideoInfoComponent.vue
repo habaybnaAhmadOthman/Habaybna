@@ -66,11 +66,7 @@
       </div>
       <div class="text-area">
         <label>ماذا سوف نتعلم</label>
-        <!-- <ckeditor
-          :editor="form.editor"
-          v-model="form.watWeLearn"
-          :config="form.editorConfig"
-        ></ckeditor> -->
+        <textarea name="" id="watWeLearn" cols="30" rows="10"></textarea>
         <span class="error" v-if="!this.formValidation.watWeLearn">
           * يجب تعبئة هذا الحقل
         </span>
@@ -210,9 +206,10 @@
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
+import initEditor from '../components/front/mixins/initEditor'
 export default {
   components: { Multiselect },
-
+  mixins: [initEditor],
   async created() {
     const resp = await this.callApi("get", "/api/admin/course-init-data");
     if (resp.status == 200) {
@@ -228,9 +225,9 @@ export default {
         specialistsList: [],
         courseTitle: "",
         courseCategory: "",
-        courseDescription: "",
+        courseDescription: null,
         editor: ClassicEditor,
-        watWeLearn: "",
+        watWeLearn: null,
         editorConfig: {
           enterMode: "br",
         },
@@ -283,8 +280,8 @@ export default {
         let formData = new FormData();
         formData.append("title", this.form.courseTitle);
         formData.append("category", CategorytagIDs);
-        formData.append("description", this.form.courseDescription);
-        formData.append("watWeLearn", this.form.watWeLearn);
+        formData.append("description", this.form.courseDescription.getData());
+        formData.append("watWeLearn", this.form.watWeLearn.getData());
         formData.append("coverImage", this.form.coverImage);
         formData.append("promoVideo", this.form.promoVideo);
         formData.append("is_publish", this.form.is_publish);
@@ -306,8 +303,6 @@ export default {
       }
     },
     validatForm() {
-      console.log(this.form.is_free);
-
       if (this.form.coursePrice == "" && !this.form.is_free) {
         this.formValidation.coursePrice = false;
       } else {
@@ -318,16 +313,16 @@ export default {
       } else {
         this.formValidation.courseTitle = true;
       }
-      if (this.form.courseDescription == "") {
+      if (this.form.courseDescription.getData() == "") {
         this.formValidation.courseDescription = false;
       } else {
         this.formValidation.courseDescription = true;
       }
-    //   if (this.form.watWeLearn == "") {
-    //     this.formValidation.watWeLearn = false;
-    //   } else {
-    //     this.formValidation.watWeLearn = true;
-    //   }
+      if (this.form.watWeLearn.getData() == "") {
+        this.formValidation.watWeLearn = false;
+      } else {
+        this.formValidation.watWeLearn = true;
+      }
       if (this.form.coverImage == "") {
         this.formValidation.coverImage = false;
       } else {
@@ -370,38 +365,10 @@ export default {
         }
       }
     },
-    initCKeditor() {
-      ClassicEditor
-        // Note that you do not have to specify the plugin and toolbar configuration — using defaults from the build.
-        .create(document.querySelector("#courseDescription"), {
-          simpleUpload: {
-            // The URL that the images are uploaded to.
-            uploadUrl: "/api/ckeditor/upload-image",
-
-            // Enable the XMLHttpRequest.withCredentials property.
-            withCredentials: true,
-
-            // Headers sent along with the XMLHttpRequest to the upload server.
-            headers: {
-              "X-CSRF-TOKEN": document
-                .querySelector('meta[name="csrf-token"]')
-                .getAttribute("content"),
-              Accept: "application/json",
-            },
-          },
-        })
-        .then((editor) => {
-          console.log("Editor was initialized", editor);
-          this.form.courseDescription = editor;
-          //   this.form.courseDescription.extraPlugins = this.uploader()
-        })
-        .catch((error) => {
-          console.error(error.stack);
-        });
-    },
   },
   mounted() {
-    this.initCKeditor();
+    this.initEditor('#courseDescription','form.courseDescription',function(){});
+    this.initEditor('#watWeLearn','form.watWeLearn',function(){});
   },
 };
 </script>

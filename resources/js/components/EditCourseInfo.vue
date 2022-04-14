@@ -65,21 +65,13 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="mb-15">
                 <strong>وصف الدورة</strong>
-                <ckeditor
-                  :editor="form.editor"
-                  v-model="form.courseDescription"
-                  :config="form.editorConfig"
-                ></ckeditor>
+                <textarea name="" id="courseDescription" cols="30" rows="10"></textarea>
               </div>
-              <div class="form-group">
+              <div class="mb-15">
                 <strong>ماذا سوف نتعلم</strong>
-                <ckeditor
-                  :editor="form.editor"
-                  v-model="form.watWeLearn"
-                  :config="form.editorConfig"
-                ></ckeditor>
+                <textarea name="" id="watWeLearn" cols="30" rows="10"></textarea>
               </div>
 
               <div class="form-group">
@@ -217,48 +209,22 @@
 
 <script>
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Editor from "ckeditor5-custom-build/build/ckeditor";
+import initEditor from '../components/front/mixins/initEditor'
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
 export default {
   components: { Multiselect },
-  async created() {
-    const resp = await this.callApi("get", "/api/admin/course-init-data");
-    if (resp.status == 200) {
-      this.categories = resp.data.categories;
-      this.specialists = resp.data.specialists;
-      var course_id = this.$router.currentRoute.params.data;
-
-      axios.get("/api/admin/edit-course/" + course_id).then((resp) => {
-        if (resp.status == 200) {
-          this.tags = resp.data.coursecat;
-          this.SpecialistTags = resp.data.courseProviders;
-          this.courseId = course_id;
-          this.form.courseTitle = resp.data.course.courseTitle;
-          this.form.courseCategory = resp.data.course.category_id;
-          this.form.courseDescription = resp.data.course.courseDescription;
-          this.form.watWeLearn = resp.data.course.whatWeLearn;
-          this.form.is_publish = resp.data.course.is_publish;
-          this.form.is_free = resp.data.course.is_free;
-          this.form.coursePrice = resp.data.course.price;
-          this.form.coverImage = resp.data.course.cover_photo;
-          this.form.promoVideo = resp.data.course.promo_video;
-          this.form.discount = resp.data.course.discount;
-
-          this.$refs.videoPlayer.load()
-          console.log(this.form);
-        }
-      });
-    }
-  },
+  mixins: [initEditor],
   data() {
     return {
       courseId: null,
       form: {
         courseTitle: "",
         courseCategory: [],
-        courseDescription: "",
+        courseDescription: null,
         editor: ClassicEditor,
-        watWeLearn: "",
+        watWeLearn: null,
         editorConfig: {
           // The configuration of the editor.
         },
@@ -296,8 +262,8 @@ export default {
       formData.append("title", this.form.courseTitle);
       formData.append("category", tagIDs);
       formData.append("specialists", specIDs);
-      formData.append("description", this.form.courseDescription);
-      formData.append("watWeLearn", this.form.watWeLearn);
+      formData.append("description", this.form.courseDescription.getData());
+      formData.append("watWeLearn", this.form.watWeLearn.getData());
       formData.append("coverImage", this.form.coverImage);
       formData.append("promoVideo", this.form.promoVideo);
       formData.append("is_publish", this.form.is_publish);
@@ -328,6 +294,43 @@ export default {
         title: "تم حفظ التغييرات بنجاح",
       });
     },
+    async loadPageData(){
+      const resp = await this.callApi("get", "/api/admin/course-init-data");
+      if (resp.status == 200) {
+        this.categories = resp.data.categories;
+        this.specialists = resp.data.specialists;
+        var course_id = this.$router.currentRoute.params.data;
+
+        axios.get("/api/admin/edit-course/" + course_id).then((resp) => {
+          if (resp.status == 200) {
+            this.tags = resp.data.coursecat;
+            this.SpecialistTags = resp.data.courseProviders;
+            this.courseId = course_id;
+            this.form.courseTitle = resp.data.course.courseTitle;
+            this.form.courseCategory = resp.data.course.category_id;
+            this.form.courseDescription.setData(resp.data.course.courseDescription);
+            this.form.watWeLearn.setData(resp.data.course.whatWeLearn);
+            this.form.is_publish = resp.data.course.is_publish;
+            this.form.is_free = resp.data.course.is_free;
+            this.form.coursePrice = resp.data.course.price;
+            this.form.coverImage = resp.data.course.cover_photo;
+            this.form.promoVideo = resp.data.course.promo_video;
+            this.form.discount = resp.data.course.discount;
+
+            this.$refs.videoPlayer.load()
+          }
+        });
+      }
+    }
+  },
+  mounted() {
+    const self = this;
+    this.initEditor('#courseDescription','form.courseDescription',function(){
+      self.initEditor('#watWeLearn','form.watWeLearn',function(){
+        self.loadPageData();
+      });
+    });
+    
   },
 };
 </script>

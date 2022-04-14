@@ -91,11 +91,7 @@
               </div>
               <div class="">
                 <strong>وصف الحلقة</strong>
-                <ckeditor
-                  :editor="form.editor"
-                  v-model="form.videoDescription"
-                  :config="form.editorConfig"
-                ></ckeditor>
+                <textarea id="videoDescription"></textarea>
                 <span
                   class="error"
                   v-if="!this.formValidation.videoDescription"
@@ -166,17 +162,19 @@
 </template>
 
 <script>
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Editor from "ckeditor5-custom-build/build/ckeditor";
+import initEditor from '../components/front/mixins/initEditor'
 export default {
-  updated() {},
+  mixins: [initEditor],
   mounted() {
+    this.initEditor('#videoDescription','form.videoDescription',function(){});
   },
   data() {
     return {
       form: {
         id: "",
         videoTitle: "",
-        videoDescription: "",
+        videoDescription: null,
         editor: ClassicEditor,
         editorConfig: {
           enterMode: "br",
@@ -225,7 +223,7 @@ export default {
         this.form.is_publish = this.form.is_publish;
         let formData = new FormData();
         formData.append("title", this.form.videoTitle);
-        formData.append("description", this.form.videoDescription);
+        formData.append("description", this.form.videoDescription.getData());
         formData.append("video", this.form.video);
         formData.append("is_publish", this.form.is_publish);
         formData.append("course_id", this.form.course_id);
@@ -239,7 +237,7 @@ export default {
           this.$Message.success("Video Uploaded success");
 
           this.form.videoTitle = "";
-          this.form.videoDescription = "";
+          this.form.videoDescription.setData('');
           this.form.video = "";
           this.form.videoTitle = "";
           this.loading = false;
@@ -252,7 +250,7 @@ export default {
                 this.$Message.success("Video Uploaded success");
 
                 this.form.videoTitle = "";
-                this.form.videoDescription = "";
+                this.form.videoDescription.setData("");
                 this.form.video = "";
                 this.form.videoTitle = "";
                 this.getCourseVideos();
@@ -286,7 +284,7 @@ export default {
 
       this.form.id = video.id;
       this.form.videoTitle = video.title;
-      this.form.videoDescription = video.description;
+      this.form.videoDescription.setData(video.description);
       this.loadingUrl = video.url;
       this.form.is_publish = video.status ? "1" : "0";
       this.value1 = "2";
@@ -299,7 +297,7 @@ export default {
         this.formValidation.videoTitle = false;
       }
 
-      if (this.form.videoDescription !== "" ) {
+      if (this.form.videoDescription.getData() !== "" ) {
         this.formValidation.videoDescription = true;
       } else {
         this.formValidation.videoDescription = false;
