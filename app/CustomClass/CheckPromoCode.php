@@ -23,7 +23,7 @@ class CheckPromoCode {
                                 $now = Carbon::now()->isoFormat('YYYY-MM-DD');
                                 $expDate = unserialize($code->date)->end;
 
-                                if($now < $expDate) {
+                                if($now <= $expDate) {
                                     if($code->type == 'free'){
                                         return  $couponData['couponData'] =
                                                 [

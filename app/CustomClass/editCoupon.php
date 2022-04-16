@@ -19,8 +19,8 @@ class editCoupon {
 
             if($data['coupone_durations']){
                 $date = new \stdClass();
-                $date->start = date("Y-m-d", strtotime($data['coupone_durations']['start_date']));
-                $date->end = date("Y-m-d", strtotime($data['coupone_durations']['end_date']));
+                $date->start = date("Y-m-d", strtotime($data['coupone_durations']['start_date']. ' +1 day'));
+                $date->end = date("Y-m-d", strtotime($data['coupone_durations']['end_date'].' +1 day'));
                 $date= serialize($date);
                 // $coupon->date = $date ;
             }
