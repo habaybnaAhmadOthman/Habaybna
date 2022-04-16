@@ -187,7 +187,6 @@ export default {
 .lecture-box  .tag.active {
     background: rgb(167 167 167 / 50%);
     box-shadow: 0px 3px 6px #00000029;
-    mix-blend-mode: multiply;
 }
 .duration {
     margin-right: 117px;
