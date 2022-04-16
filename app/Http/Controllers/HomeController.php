@@ -76,8 +76,8 @@ class HomeController extends Controller
             $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
 
             // Render HTML output
-            @header('Content-type: text/html; charset=utf-8');
-            return response([$re] ,200);
+            // @header('Content-type: text/html; charset=utf-8');
+            return response([$url] ,200);
         }
     }
 
