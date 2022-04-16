@@ -59,8 +59,9 @@ class HomeController extends Controller
             $filenamewithextension = $request->file('upload')->getClientOriginalName();
 
             //get filename without extension
-            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-
+            // $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+            $filename = str_replace(' ', '', pathinfo($filenamewithextension, PATHINFO_FILENAME));
+            
             //get file extension
             $extension = $request->file('upload')->getClientOriginalExtension();
 

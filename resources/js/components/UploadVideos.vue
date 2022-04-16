@@ -223,7 +223,7 @@ export default {
         this.form.is_publish = this.form.is_publish;
         let formData = new FormData();
         formData.append("title", this.form.videoTitle);
-        formData.append("description", this.form.videoDescription.getData());
+        formData.append("description", this.form.videoDescription.getData().replaceAll('srcset','src').replace(" 0w\"","\""));
         formData.append("video", this.form.video);
         formData.append("is_publish", this.form.is_publish);
         formData.append("course_id", this.form.course_id);

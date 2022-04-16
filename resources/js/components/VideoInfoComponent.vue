@@ -280,8 +280,9 @@ export default {
         let formData = new FormData();
         formData.append("title", this.form.courseTitle);
         formData.append("category", CategorytagIDs);
-        formData.append("description", this.form.courseDescription.getData());
-        formData.append("watWeLearn", this.form.watWeLearn.getData());
+        
+        formData.append("description", this.form.courseDescription.getData().replaceAll('srcset','src').replace(" 0w\"","\""));
+        formData.append("watWeLearn", this.form.watWeLearn.getData().replaceAll('srcset','src').replace(" 0w\"","\""));
         formData.append("coverImage", this.form.coverImage);
         formData.append("promoVideo", this.form.promoVideo);
         formData.append("is_publish", this.form.is_publish);
