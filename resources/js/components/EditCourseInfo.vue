@@ -262,8 +262,8 @@ export default {
       formData.append("title", this.form.courseTitle);
       formData.append("category", tagIDs);
       formData.append("specialists", specIDs);
-      formData.append("description", this.form.courseDescription.getData().replaceAll('srcset','src').replace(" 0w\"","\""));
-      formData.append("watWeLearn", this.form.watWeLearn.getData().replaceAll('srcset','src').replace(" 0w\"","\""));
+      formData.append("description", this.form.courseDescription.getData().replaceAll('srcset','src').replaceAll(" 0w\"","\""));
+      formData.append("watWeLearn", this.form.watWeLearn.getData().replaceAll('srcset','src').replaceAll(" 0w\"","\""));
       formData.append("coverImage", this.form.coverImage);
       formData.append("promoVideo", this.form.promoVideo);
       formData.append("is_publish", this.form.is_publish);
@@ -330,7 +330,7 @@ export default {
         self.loadPageData();
       });
     });
-    
+
   },
 };
 </script>

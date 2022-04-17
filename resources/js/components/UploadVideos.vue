@@ -71,8 +71,13 @@
         قائمة الحلقات
         <h1 slot="content" class="text-center">لا يوجد حلقات 😢</h1>
       </Panel>
-      <Panel name="2">
+    </Collapse>
+
+          <span
+          >
+
         أضف حلقة
+          </span>
         <div class="card" slot="content">
           <div class="card-body">
             <form @submit="formSubmit" enctype="multipart/form-data">
@@ -156,8 +161,6 @@
             </form>
           </div>
         </div>
-      </Panel>
-    </Collapse>
   </div>
 </template>
 
@@ -167,7 +170,8 @@ import initEditor from '../components/front/mixins/initEditor'
 export default {
   mixins: [initEditor],
   mounted() {
-    this.initEditor('#videoDescription','form.videoDescription',function(){});
+          this.initEditor('#videoDescription','form.videoDescription',function(){})
+
   },
   data() {
     return {
@@ -208,6 +212,7 @@ export default {
     this.getCourseVideos();
   },
   methods: {
+
     getCourseId() {
       this.form.course_id = this.$router.currentRoute.params.data;
     },
@@ -223,7 +228,7 @@ export default {
         this.form.is_publish = this.form.is_publish;
         let formData = new FormData();
         formData.append("title", this.form.videoTitle);
-        formData.append("description", this.form.videoDescription.getData().replaceAll('srcset','src').replace(" 0w\"","\""));
+        formData.append("description", this.form.videoDescription.getData().replaceAll('srcset','src').replaceAll(" 0w\"","\""));
         formData.append("video", this.form.video);
         formData.append("is_publish", this.form.is_publish);
         formData.append("course_id", this.form.course_id);
@@ -279,6 +284,7 @@ export default {
     },
     editVideo(i) {
       this.isUpdate = true;
+        //   this.initEditor('#videoDescription','form.videoDescription',function(){})
 
       let video = this.allVideos.videos[i];
 
