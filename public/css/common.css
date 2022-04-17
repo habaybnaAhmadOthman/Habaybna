@@ -884,6 +884,9 @@ a:hover {
 [do][tab-name]:not(.active), [all][tab-name]:not(.active) {
     display: none !important;
 }
+img {
+    max-width: 100%;
+}
 @media (max-width: 767px) {
     .mo {
         display: block !important;

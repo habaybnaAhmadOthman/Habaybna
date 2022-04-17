@@ -32,7 +32,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // check user promo code
     Route::post('/check-promocode','PromoCodeController@checkPromoCode');
 
+    // ckeditor upload images
+
+    Route::post('ckeditor/upload-image','HomeController@ckUploadImages');
+
     //admin routes
+
     Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function(){
 
         //users

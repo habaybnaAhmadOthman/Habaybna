@@ -54,22 +54,19 @@
       </div>
       <div class="text-area">
         <label> وصف الدورة</label>
-        <ckeditor
+        <!-- <ckeditor
           :editor="form.editor"
           v-model="form.courseDescription"
           :config="form.editorConfig"
-        ></ckeditor>
+        ></ckeditor> -->
+        <textarea name="" id="courseDescription" cols="30" rows="10"></textarea>
         <span class="error" v-if="!this.formValidation.courseDescription">
           * يجب تعبئة هذا الحقل
         </span>
       </div>
       <div class="text-area">
         <label>ماذا سوف نتعلم</label>
-        <ckeditor
-          :editor="form.editor"
-          v-model="form.watWeLearn"
-          :config="form.editorConfig"
-        ></ckeditor>
+        <textarea name="" id="watWeLearn" cols="30" rows="10"></textarea>
         <span class="error" v-if="!this.formValidation.watWeLearn">
           * يجب تعبئة هذا الحقل
         </span>
@@ -160,7 +157,7 @@
           * يجب تعبئة هذا الحقل
         </span>
       </div>
-            <div class="question-form">
+      <div class="question-form">
         <label> نسبة الخصم</label>
         <input
           type="number"
@@ -170,7 +167,6 @@
           :disabled="form.is_free == 1 ? true : false"
           placeholder="100 يعني free"
         />
-
       </div>
       <div class="question-form">
         <label>مقدمي الدورة</label>
@@ -207,11 +203,13 @@
 
 <script>
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Editor from "ckeditor5-custom-build/build/ckeditor";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
+import initEditor from '../components/front/mixins/initEditor'
 export default {
   components: { Multiselect },
-
+  mixins: [initEditor],
   async created() {
     const resp = await this.callApi("get", "/api/admin/course-init-data");
     if (resp.status == 200) {
@@ -227,9 +225,9 @@ export default {
         specialistsList: [],
         courseTitle: "",
         courseCategory: "",
-        courseDescription: "",
+        courseDescription: null,
         editor: ClassicEditor,
-        watWeLearn: "",
+        watWeLearn: null,
         editorConfig: {
           enterMode: "br",
         },
@@ -238,7 +236,7 @@ export default {
         coursePrice: 0,
         is_publish: "",
         is_free: "",
-        discount:"",
+        discount: "",
       },
       categories: [],
       loading: false,
@@ -282,8 +280,9 @@ export default {
         let formData = new FormData();
         formData.append("title", this.form.courseTitle);
         formData.append("category", CategorytagIDs);
-        formData.append("description", this.form.courseDescription);
-        formData.append("watWeLearn", this.form.watWeLearn);
+
+        formData.append("description", this.form.courseDescription.getData().replaceAll('srcset','src').replaceAll(" 0w\"","\""));
+        formData.append("watWeLearn", this.form.watWeLearn.getData().replaceAll('srcset','src').replaceAll(" 0w\"","\""));
         formData.append("coverImage", this.form.coverImage);
         formData.append("promoVideo", this.form.promoVideo);
         formData.append("is_publish", this.form.is_publish);
@@ -298,31 +297,29 @@ export default {
         );
         this.$Message.success("تم انشاء الدورة");
         self.push({
-            name: "UploadVideo",
+          name: "UploadVideo",
           params: { data: resp.data.course_id },
         });
         this.loading = false;
       }
     },
     validatForm() {
-            console.log(this.form.is_free );
-
-        if (this.form.coursePrice == "" && !this.form.is_free ) {
-          this.formValidation.coursePrice = false;
-        } else {
-          this.formValidation.coursePrice = true;
-        }
+      if (this.form.coursePrice == "" && !this.form.is_free) {
+        this.formValidation.coursePrice = false;
+      } else {
+        this.formValidation.coursePrice = true;
+      }
       if (this.form.courseTitle == "") {
         this.formValidation.courseTitle = false;
       } else {
         this.formValidation.courseTitle = true;
       }
-      if (this.form.courseDescription == "") {
+      if (this.form.courseDescription.getData() == "") {
         this.formValidation.courseDescription = false;
       } else {
         this.formValidation.courseDescription = true;
       }
-      if (this.form.watWeLearn == "") {
+      if (this.form.watWeLearn.getData() == "") {
         this.formValidation.watWeLearn = false;
       } else {
         this.formValidation.watWeLearn = true;
@@ -370,6 +367,10 @@ export default {
       }
     },
   },
+  mounted() {
+    this.initEditor('#courseDescription','form.courseDescription',function(){});
+    this.initEditor('#watWeLearn','form.watWeLearn',function(){});
+  },
 };
 </script>
 <style>
@@ -383,5 +384,4 @@ export default {
 .question-form span {
   display: block !important ;
 }
-
 </style>

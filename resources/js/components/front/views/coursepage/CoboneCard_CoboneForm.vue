@@ -90,7 +90,6 @@ export default {
                 this.$store.commit("alertDialogMsg", "كود الخصم غير صحيح");
                 return;
             }
-
             if (checkPromoCode.discount_perc == 100) { // free
                 await this.$store.dispatch('courses/getFreeCourse',{
                         courseID: this.courseID(),
@@ -102,7 +101,8 @@ export default {
                 await this.$store.dispatch('courses/getAllCourses')
                 this.setInfoModal('يمكنك الآن مشاهدة الدورة','لقد قمت بإدخال رقم الكوبون بنجاح',true,true,true)
             } else { // discount success
-                this.discountVal = (this.coursePrice * (checkPromoCode.discount_perc / 100));
+            
+                this.discountVal = this.coursePrice - (this.coursePrice * (checkPromoCode.discount_perc / 100));
                 this.setInfoModal('يمكنك إتمام عملية الشراء','لقد قمت بإدخال رقم الكوبون بنجاح',true,false,true)
             }
         },
