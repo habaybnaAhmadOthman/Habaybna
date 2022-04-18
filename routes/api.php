@@ -148,4 +148,6 @@ Route::get('all-courses','CourseController@getAllcourses')->name('getAllcourses'
 Route::get('get-categories','CategoriesController@index');
 Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::post('/payment/course','PaymentController@coursePaymentCallback');
+Route::post('/user/forget-password','HomeController@forgetPassword');
+
 

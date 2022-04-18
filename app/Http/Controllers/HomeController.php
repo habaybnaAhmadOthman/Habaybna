@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 // use App\Http\Controllers\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Stevebauman\Location\Facades\Location;
+use App\CustomClass\SendSms;
+use App\Providers\VerifyUser;
+
+
 
 
 use Auth;
@@ -61,7 +66,7 @@ class HomeController extends Controller
             //get filename without extension
             // $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
             $filename = str_replace(' ', '', pathinfo($filenamewithextension, PATHINFO_FILENAME));
-            
+
             //get file extension
             $extension = $request->file('upload')->getClientOriginalExtension();
 
@@ -80,6 +85,25 @@ class HomeController extends Controller
             // @header('Content-type: text/html; charset=utf-8');
             return response([$url] ,200);
         }
+    }
+
+    public function forgetPassword (Request $request) {
+
+        if($request->mobileNumber && $request->mobileNumber != ""){
+            $user = User::where('phone',$request->mobileNumber)->first();
+                if($user){
+                    $user->otp = random_int(100000, 999999);
+                    $user->save();
+                    event(new VerifyUser($user->phone, $user->otp));
+
+                    return response($user->phone,200);
+
+                }
+                return response('invalidPhoneNumber',403);
+
+        }
+        return response('invalidPhoneNumber',403);
+
     }
 
 
