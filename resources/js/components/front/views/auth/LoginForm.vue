@@ -74,19 +74,26 @@
             >
                 تسجيل الدخول
             </button>
-            <div
-                class="main-color mt-15 pointer center-p"
-                v-if="viaPhone"
-                @click="changeLoginMethod"
-            >
-                تسجيل الدخول عبر البريد الإلكتروني
-            </div>
-            <div
-                class="main-color mt-15 pointer center-p"
-                @click="changeLoginMethod"
-                v-else
-            >
-                تسجيل الدخول عن طريق رقم الهاتف
+            <div class="d-flex flex-wrap space-between">
+                <template>
+                    <div
+                        class="main-color mt-15 pointer center-p font-13 bold"
+                        v-if="viaPhone"
+                        @click="changeLoginMethod"
+                    >
+                        تسجيل الدخول عبر البريد الإلكتروني
+                    </div>
+                    <div
+                        class="main-color mt-15 pointer center-p font-13 bold"
+                        @click="changeLoginMethod"
+                        v-else
+                    >
+                        تسجيل الدخول عن طريق رقم الهاتف
+                    </div>
+                </template>
+                <div class="blue mt-15 pointer center-p font-13">
+                    <router-link to="/forget-password">نسيت كلمة المرور</router-link>
+                </div>
             </div>
         </form>
     </div>

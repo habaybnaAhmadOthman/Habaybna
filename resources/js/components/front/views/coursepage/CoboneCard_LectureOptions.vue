@@ -81,17 +81,18 @@
     width: 15px;
     height: 24px;
     position: absolute;
-    right: 40px;
+    left: 40px;
     top: 0;
     bottom: 0;
     margin: auto;
+    transform: rotate(180deg);
 }
 .prev-arrow:after {
-    right: auto;
-    left: 40px;
-    transform: rotate(180deg);
+    left: auto;
+    right: 40px;
     background:url(/images/arrow-right-color.svg) no-repeat;
     background-size: cover;
+    transform: rotate(0deg);
 }
 .prev-arrow {
     background: transparent;

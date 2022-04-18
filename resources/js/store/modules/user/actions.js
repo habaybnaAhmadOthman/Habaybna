@@ -81,6 +81,25 @@ export default {
         axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
         await context.dispatch('checkUserAuth')
     },
+    async forgetPassword(context, payload) {
+        // await axios.get("/sanctum/csrf-cookie");
+        const resp = await callApi("POST", "/api/user/forget-password", payload);
+        if (resp && resp.data && resp.data.status && resp.data.status == 403) {
+            const error = new Error("تم إيقاف حسابك");
+            throw error;
+        }
+        if (!resp || resp.status != 200) {
+            const error = new Error("يرجى التأكد من الحقول المدخلة");
+            throw error;
+        }
+        context.commit('clearUser');
+        context.commit('clearAdmin');
+        context.commit('setUser',{
+            token: resp.data.token,
+        })
+        axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
+        await context.dispatch('checkUserAuth')
+    },
     // ******** logout :::
     async logout({commit,rootState,dispatch}){
         const resp = await callApi("POST", "logout");
