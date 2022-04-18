@@ -106,5 +106,23 @@ class HomeController extends Controller
 
     }
 
+    public function checkForgetPassword (Request $request) {
+
+        if($request->mobileNumber && $request->mobileNumber != ""){
+            $user = User::where('phone',$request->mobileNumber)->first();
+                if($user){
+                    if($user->otp == $request->otp){
+                        $user->is_verify = 1 ;
+                        $user->save() ;
+                    }
+                    return response($user->phone,200);
+                }
+                return response('invalidOtp',403);
+
+        }
+        return response('invalidOtp',403);
+
+    }
+
 
 }
