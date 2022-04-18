@@ -4,7 +4,7 @@
             إستعادة كلمة المرور
         </h2>
         <form @submit.prevent="submitForm">
-            <template>
+            <template v-if="!hasPhoneNumber">
                 <div
                     v-if="viaPhone"
                     class="form-group ltr mb-30"
@@ -17,7 +17,7 @@
                         :show-code-on-list="true"
                         :translations="{
                             countrySelectorLabel: 'رمز الدولة',
-                            phoneNumberLabel: 'رقم الهاتف'
+                            phoneNumberLabel: 'رقم الهاتف',
                         }"
                         id="phoneNumber"
                         :default-country-code="countryCode"
@@ -41,6 +41,21 @@
                     </div>
                 </div> -->
             </template>
+            <template v-else>
+                <p class="main-color font-14 center mb-15">
+                    تم ارسال رمز التحقق برسالة نصية
+                </p>
+                <div class="form-group" :class="{ invalid: !code.isValid }">
+                    <input
+                        class="bg-main-color border-0 radius-5 w-100 p-10 pointer form-control trans"
+                        placeholder="أدخل رمز التحقق"
+                        id="code"
+                        @blur="checkValidity"
+                        v-model.trim="code.val"
+                    />
+                    <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+                </div>
+            </template>
             <button
                 class="btn mt-30 border-0 pointer flex-all white m-side-auto font-17"
             >
@@ -62,10 +77,11 @@ export default {
         return {
             email: {
                 val: "",
-                isValid: true
+                isValid: true,
             },
             viaPhone: true,
-            formIsValid: true
+            formIsValid: true,
+            hasPhoneNumber: false,
         };
     },
     methods: {
@@ -94,35 +110,40 @@ export default {
                 this[e.target.id].isValid = false;
             }
         },
-        submitForm() {
+        async submitForm() {
             this.validateForm();
             if (!this.formIsValid) {
                 return;
             }
-            let phone = this.phoneNumber.val;
+            let phone = await this.phoneNumber.val;
             // this.$emit("save-form", {
             //     phone: phone,
             //     password: this.password.val
             // });
             try {
-                const resp = await this.$store.dispatch("user/forgetPassword", {
-                    mobileNumber: data.phone
-                });
-                debugger;
-                // if (userType == 'admin') {
-                //     window.location.href = '/admin'
-                // } else {
+                // const resp = await this.$store.dispatch("user/forgetPassword", {
+                //     mobileNumber: data.phone
+                // });
+                // debugger;
                 //     this.$router.replace("/");
-                // }
             } catch (e) {
-                if (e.message == 'تم إيقاف حسابك') { 
-                    this.isBanned = true
+                if (e.message == "تم إيقاف حسابك") {
+                    this.isBanned = true;
                 }
                 this.showPopupMessage(e.message);
             }
+        },
+        sendOtpCode() {
+            try {
+                // call api
+                await this.$store.dispatch("user/checkOtp", {otpCode : this.code.val});
+
+            } catch (e) {
+                    console.log('error',e)
+            }
         }
     },
-    components: { VuePhoneNumberInput }
+    components: { VuePhoneNumberInput },
 };
 </script>
 
