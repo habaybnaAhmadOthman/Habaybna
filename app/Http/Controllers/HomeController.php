@@ -114,10 +114,10 @@ class HomeController extends Controller
                     if($user->otp == $request->otp){
                         $user->is_verify = 1 ;
                         $user->save() ;
+                        return response($user->phone,200);
                     }
-                    return response($user->phone,200);
+                    return response('invalidOtp',403);
                 }
-                return response('invalidOtp',403);
 
         }
         return response('invalidOtp',403);
