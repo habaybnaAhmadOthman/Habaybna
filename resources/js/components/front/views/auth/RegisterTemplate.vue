@@ -14,7 +14,10 @@ export default {
     props: { padding: { default: "pt-100" } },
     components: {
         LeftSide
-    }
+    },
+    mounted(){
+        document.querySelector('body').classList.add('h-full', 'bg-white');
+    },
 };
 </script>
 

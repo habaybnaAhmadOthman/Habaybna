@@ -96,7 +96,7 @@ export default {
             viaPhone: true,
             formIsValid: true,
             hasPhoneNumber: false,
-            showPasswordModal: false,
+            showPasswordModal: true,
             code: ""
         };
     },

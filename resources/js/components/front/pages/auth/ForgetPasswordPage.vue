@@ -33,7 +33,6 @@ export default {
             isBanned: false,
         };
     },
-
     methods: {
         async login(data) {
             this.isLoading = true;

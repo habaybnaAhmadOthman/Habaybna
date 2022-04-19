@@ -39,23 +39,7 @@
                     <small
                         class="d-block relative"
                         v-if="!password.has_minimum_lenth"
-                        >يجب أن لا تقل كلمة السر عن ٨ خانات</small
-                    >
-                    <small class="d-block relative" v-if="!password.has_number"
-                        >يجب أن تحتوي على أرقام</small
-                    >
-                    <small
-                        class="d-block relative"
-                        v-if="!password.has_lowercase"
-                        >يجب أن تحتوي على حروف صغيرة</small
-                    >
-                    <small
-                        class="d-block relative"
-                        v-if="!password.has_uppercase"
-                        >يجب أن تحتوي على حروف كبيرة</small
-                    >
-                    <small class="d-block relative" v-if="!password.has_special"
-                        >يجب أن تحتوي على رموز خاصة</small
+                        >يجب أن لا تقل كلمة السر عن ٦ خانات</small
                     >
                 </div>
                 <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
@@ -176,10 +160,10 @@ export default {
             this.password.val = "";
             this.oldPassword.val = "";
             this.password.has_minimum_lenth = false;
-            this.password.has_number = false;
-            this.password.has_lowercase = false;
-            this.password.has_uppercase = false;
-            this.password.has_special = false;
+            // this.password.has_number = false;
+            // this.password.has_lowercase = false;
+            // this.password.has_uppercase = false;
+            // this.password.has_special = false;
         },
     },
 };
