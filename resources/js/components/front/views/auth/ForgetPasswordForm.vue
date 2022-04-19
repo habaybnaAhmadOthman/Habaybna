@@ -71,6 +71,7 @@
         <ChangePassword
             :show="showPasswordModal"
             @alert-password-modal="alertPasswordDialog"
+            :mobileNumber="phoneNumber.val"
             :from="'forget'"
         ></ChangePassword>
             <!-- @close-password-modal="showPasswordDialog" -->
@@ -96,8 +97,11 @@ export default {
             viaPhone: true,
             formIsValid: true,
             hasPhoneNumber: false,
-            showPasswordModal: true,
-            code: ""
+            showPasswordModal: false,
+            code: {
+                val: "",
+                isValid: true,
+            }
         };
     },
     methods: {
@@ -159,7 +163,7 @@ export default {
                 });
                 this.showPasswordModal = true;
             } catch (e) {
-                console.log("error", e);
+                this.$store.commit("alertDialogMsg", "رمز التحقق غير صحيح");
             }
         },
         alertPasswordDialog(isShow) {

@@ -73,7 +73,7 @@ import loadingMixin from "../../../mixins/loading.js";
 export default {
     emits: ["close-password-modal", "alert-password-modal"],
     mixins: [passwordMixin, loadingMixin],
-    props: ["show", "from"],
+    props: ["show", "from","mobileNumber"],
     data() {
         return {
             isOpened: true,
@@ -90,6 +90,7 @@ export default {
     methods: {
         async submitForm() {
             this.passwordCheck();
+            debugger;
             if (this.from == "change") {
                 this.changePasswordSubmit();
             } else {
@@ -108,7 +109,9 @@ export default {
             this.isLoading = true;
             try {
                 await this.$store.dispatch("user/changePassword", {
-                    newPassword: this.password.val,
+                    password: this.password.val,
+                    mobileNumber: this.mobileNumber,
+                    from: 'forget'
                 });
                 this.alertModal(true);
             } catch (e) {

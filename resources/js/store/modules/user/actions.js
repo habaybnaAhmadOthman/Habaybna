@@ -88,8 +88,6 @@ export default {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
-
-        axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
     },
     // ******** logout :::
     async logout({commit,rootState,dispatch}){
@@ -181,8 +179,14 @@ export default {
     // ******** userProfile ::: password
     async changePassword(_,payload) {
         const resp = await callApi("POST", "/api/user/forget-password/change-password",payload);
+        if (payload.hasOwnProperty('type') && payload.type == 'forget') {
+            if (!resp || resp == 'notVerify') {
+                const error = new Error('حصل خطأ ما');
+                throw error;
+            }
+        }
         if (!resp.data.status) {
-            const error = new Error("كلمة المرور القديمة غير صحيحة");
+            const error = new Error('كلمة المرور القديمة غير صحيحة');
             throw error;
         }
     },
@@ -211,10 +215,10 @@ export default {
 
         const resp = await callApi("POST", url, payload);
         if (resp.status != 200) {
-            const error = new Error("sرمز التحقق غير صحيح");
+            const error = new Error("رمز التحقق غير صحيح");
             throw error;
         }
-        debugger;
-        return resp.data.url
+        if (!payload.hasOwnProperty('type'))
+            return resp.data.url
     }
 };
