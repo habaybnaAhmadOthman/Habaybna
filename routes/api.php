@@ -147,9 +147,10 @@ Route::post('login','AuthController@login')->name('user.login');
 Route::get('all-courses','CourseController@getAllcourses')->name('getAllcourses');
 Route::get('get-categories','CategoriesController@index');
 Route::get('/check-user-authentication',CheckUserAuth::class);
-Route::post('/payment/course','PaymentController@coursePaymentCallback');
+Route::post('/payment/course','PaymentController@forgetPassword');
 Route::post('/user/forget-password','Controller@coursePaymentCallback');
 Route::post('/user/forget-password/check-otp','HomeController@checkForgetPassword');
+Route::post('/user/forget-password/change-password','HomeController@changePassword');
 
 
 

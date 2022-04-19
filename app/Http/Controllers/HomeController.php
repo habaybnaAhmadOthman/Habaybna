@@ -124,5 +124,22 @@ class HomeController extends Controller
 
     }
 
+    public function changePassword (Request $request) {
+
+        if($request->mobileNumber && $request->mobileNumber != ""){
+            $user = User::where('phone',$request->mobileNumber)->first();
+                if($user->is_verify){
+                    if($user->password == $request->password){
+                        $user->save() ;
+                    }
+                    return response($user->phone,200);
+                }
+                return response('notVerify',403);
+
+        }
+        return response('invalidPhoneNumber',403);
+
+    }
+
 
 }
