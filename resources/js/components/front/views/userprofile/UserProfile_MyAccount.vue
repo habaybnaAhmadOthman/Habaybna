@@ -11,6 +11,7 @@
             :show="showPasswordModal"
             @alert-password-modal="alertPasswordDialog"
             @close-password-modal="showPasswordDialog"
+            :from="'change'"
         ></ChangePassword>
         <UserImage
             :show="showUserImageModalGlobal"

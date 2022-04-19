@@ -81,6 +81,16 @@ export default {
         axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
         await context.dispatch('checkUserAuth')
     },
+    async forgetPassword(context, payload) {
+        // await axios.get("/sanctum/csrf-cookie");
+        const resp = await callApi("POST", "/api/user/forget-password", payload);
+        if (!resp || resp.status != 200) {
+            const error = new Error("يرجى التأكد من الحقول المدخلة");
+            throw error;
+        }
+
+        axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
+    },
     // ******** logout :::
     async logout({commit,rootState,dispatch}){
         const resp = await callApi("POST", "logout");
@@ -195,11 +205,16 @@ export default {
     },
 
     async checkOtp(_,payload) {
-        const resp = await callApi("POST", "/api/check-otp", payload);
+        let url = '/api/check-otp'
+        if (payload.hasOwnProperty('type') && payload.type == 'forget')
+            url = '/api/user/forget-password/check-otp'
+
+        const resp = await callApi("POST", url, payload);
         if (resp.status != 200) {
-            const error = new Error("  رمز التحقق غير صحيح");
+            const error = new Error("sرمز التحقق غير صحيح");
             throw error;
         }
+        debugger;
         return resp.data.url
     }
 };

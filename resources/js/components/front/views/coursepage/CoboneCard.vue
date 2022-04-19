@@ -225,19 +225,30 @@
                 this.player = videojs(this.$refs.videoPlayer, this.videoOptions, function onPlayerReady() {
                     console.log('onPlayerReady', this);
                 })
-                // player events fired only for LESSONS
-                if (!this.isCourse)
-                    this.addPlayerEvents()
+
+                // player events
+                this.addPlayerEvents()
+
                 this.isDataReady = true
             },
             addPlayerEvents(){
                 var self = this;
-                this.player.on('ready', function() {
-                    // this.addClass('my-example');
-                });
-                this.player.on('ended', function() {
-                    self.addVideoAction('isComplete')
-                });
+                // for lessons ONLY
+                if (!this.isCourse) {
+                    this.player.on('ready', function() {
+                        // this.addClass('my-example');
+                    });
+                    this.player.on('ended', function() {
+                        self.addVideoAction('isComplete')
+                    });
+                }
+                this.player.on('fullscreenchange', (event) => {
+                    const isFullscreen = event.currentTarget.player.isFullscreen_
+                    if (isFullscreen) 
+                        document.querySelector('.video-js video').classList.add('fullscreen')
+                    else
+                        document.querySelector('.video-js video').classList.remove('fullscreen')
+                })
             },
             async addVideoAction(type) {
                 var params =  {
@@ -363,6 +374,9 @@
 }
 .video-js video {
     object-fit: cover;
+}
+.video-js video.fullscreen {
+    object-fit: inherit!important;
 }
 .vjs-big-play-button {
     top: 0!important;

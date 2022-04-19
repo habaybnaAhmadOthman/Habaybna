@@ -1,17 +1,20 @@
 <template>
     <alert-dialog :show="show" title="تغيير كلمة المرور" @close="closeModal">
         <template>
-            <div class="form-group mb-15" :class="{ invalid: !oldPassword.isValid }">
-                <input class="form-control" 
-                type="text"
-                id="oldPassword"
-                placeholder="كلمة السر القديمة"
-                v-model="oldPassword.val"
-                @blur="checkValidity"
+            <div
+                v-if="from == 'change'"
+                class="form-group mb-15"
+                :class="{ invalid: !oldPassword.isValid }"
+            >
+                <input
+                    class="form-control"
+                    type="text"
+                    id="oldPassword"
+                    placeholder="كلمة السر القديمة"
+                    v-model="oldPassword.val"
+                    @blur="checkValidity"
                 />
-                <p class="main-color mt-5 font-12">
-                    هذا الحقل مطلوب
-                </p>
+                <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
             <div
                 class="form-group relative pass-group mb-15"
@@ -55,13 +58,26 @@
                         >يجب أن تحتوي على رموز خاصة</small
                     >
                 </div>
-                <p class="main-color mt-5 font-12">
-                    هذا الحقل مطلوب
-                </p>
+                <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+            </div>
+            <div
+                v-if="from == 'forget'"
+                class="form-group mb-15"
+                :class="{ invalid: !rePassword.isValid }"
+            >
+                <input
+                    class="form-control"
+                    type="password"
+                    id="rePassword"
+                    placeholder="تأكيد كلمة السر"
+                    v-model="rePassword.val"
+                    @blur="checkValidity"
+                />
+                <p class="main-color mt-5 font-12">كلمة السر غير متطابقة</p>
             </div>
         </template>
         <template #actions>
-            <button class="btn ml-25" @click="closeModal">إغلاق</button>
+            <button v-if="from == 'change'" class="btn ml-25" @click="closeModal">إغلاق</button>
             <button class="btn" @click="submitForm">حفظ</button>
         </template>
     </alert-dialog>
@@ -71,39 +87,69 @@
 import passwordMixin from "../../../mixins/password.js";
 import loadingMixin from "../../../mixins/loading.js";
 export default {
-    emits: ["close-password-modal","alert-password-modal"],
-    mixins: [passwordMixin,loadingMixin],
-    props: ['show'],
-    data(){
+    emits: ["close-password-modal", "alert-password-modal"],
+    mixins: [passwordMixin, loadingMixin],
+    props: ["show", "from"],
+    data() {
         return {
             isOpened: true,
             oldPassword: {
-                isValid:true,
-                val: ''
-            }
-        }
+                isValid: true,
+                val: "",
+            },
+            rePassword: {
+                isValid: true,
+                val: "",
+            },
+        };
     },
     methods: {
         async submitForm() {
             this.passwordCheck();
-            if (this.oldPassword.val == '') {
-                this.oldPassword.isValid = false;
+            if (this.from == "change") {
+                this.changePasswordSubmit();
+            } else {
+                this.forgetPasswordSubmit();
             }
-            if (!this.oldPassword.isValid || !this.password.isValid) {
-                return ;
+        },
+        async forgetPasswordSubmit() {
+            if (this.rePassword.val == "" || this.password.val != this.rePassword.val) {
+                this.rePassword.isValid = false;
+            }
+            if (
+                !this.rePassword.isValid 
+            ) {
+                return;
             }
             this.isLoading = true;
             try {
-                await this.$store.dispatch('user/changePassword',{
-                    oldPassword: this.oldPassword.val,
-                    newPassword: this.password.val
-                })
-                this.alertModal(true)
+                await this.$store.dispatch("user/changePassword", {
+                    newPassword: this.password.val,
+                });
+                this.alertModal(true);
             } catch (e) {
-                this.alertModal(false)
+                this.alertModal(false);
             }
             this.isLoading = false;
-            // submit then
+        },
+        async changePasswordSubmit() {
+            if (this.oldPassword.val == "") {
+                this.oldPassword.isValid = false;
+            }
+            if (!this.oldPassword.isValid || !this.password.isValid) {
+                return;
+            }
+            this.isLoading = true;
+            try {
+                await this.$store.dispatch("user/changePassword", {
+                    oldPassword: this.oldPassword.val,
+                    newPassword: this.password.val,
+                });
+                this.alertModal(true);
+            } catch (e) {
+                this.alertModal(false);
+            }
+            this.isLoading = false;
         },
         checkValidity(e) {
             if (e.target.value != "") {
@@ -114,25 +160,28 @@ export default {
             if (e.target.id == "password") {
                 this.passwordCheck();
             }
+            if (e.target.id == "rePassword" && this.password.val != this.rePassword.val) {
+                this.rePassword.isValid = false;
+            }
         },
-        alertModal(isShow){
+        alertModal(isShow) {
             this.clearFields();
-            this.$emit('alert-password-modal',isShow)
+            this.$emit("alert-password-modal", isShow);
         },
-        closeModal(){
+        closeModal() {
             this.clearFields();
-            this.$emit('close-password-modal')
+            this.$emit("close-password-modal");
         },
-        clearFields(){
-            this.password.val = '';
-            this.oldPassword.val = '';
+        clearFields() {
+            this.password.val = "";
+            this.oldPassword.val = "";
             this.password.has_minimum_lenth = false;
             this.password.has_number = false;
             this.password.has_lowercase = false;
             this.password.has_uppercase = false;
-            this.password.has_special = false
-        }
-    }
+            this.password.has_special = false;
+        },
+    },
 };
 </script>
 <style scoped>

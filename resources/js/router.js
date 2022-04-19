@@ -60,6 +60,7 @@ import RegisterOtherComplete from "./components/front/pages/auth/Register_OtherC
 
 // login
 import LoginPage from "./components/front/pages/auth/LoginPage.vue";
+import ForgetPasswordPage from "./components/front/pages/auth/ForgetPasswordPage.vue";
 
 
 import UserProfile_Template from "./components/front/views/userprofile/UserProfile_Template";
@@ -268,6 +269,15 @@ const routes = [{
             anonymous: true
         },
         name: "login"
+    },
+    {
+        path: "/forget-password",
+        component: ForgetPasswordPage,
+        meta: {
+            requiresAuth: false,
+            anonymous: true
+        },
+        name: "forgetPassword"
     },
     // user profile #dashboard
     {
