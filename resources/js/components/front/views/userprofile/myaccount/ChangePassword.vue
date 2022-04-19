@@ -90,7 +90,6 @@ export default {
     methods: {
         async submitForm() {
             this.passwordCheck();
-            debugger;
             if (this.from == "change") {
                 this.changePasswordSubmit();
             } else {
@@ -102,7 +101,7 @@ export default {
                 this.rePassword.isValid = false;
             }
             if (
-                !this.rePassword.isValid 
+                !this.rePassword.isValid
             ) {
                 return;
             }
