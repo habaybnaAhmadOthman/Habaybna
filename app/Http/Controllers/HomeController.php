@@ -131,8 +131,10 @@ class HomeController extends Controller
                 if($user->is_verify){
                     if($user->password == $request->password){
                         $user->save() ;
+                        return response($user->phone,200);
                     }
-                    return response($user->phone,200);
+                return response('notVerify',403);
+
                 }
                 return response('notVerify',403);
 
