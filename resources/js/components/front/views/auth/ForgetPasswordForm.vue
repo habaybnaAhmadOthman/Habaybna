@@ -96,7 +96,7 @@ export default {
             viaPhone: true,
             formIsValid: true,
             hasPhoneNumber: false,
-            showPasswordModal: true,
+            showPasswordModal: false,
             code: ""
         };
     },
@@ -153,8 +153,11 @@ export default {
             try {
                 // call api
                 await this.$store.dispatch("user/checkOtp", {
-                    otpCode: this.code.val,
+                    otp: this.code.val,
+                    mobileNumber: this.phoneNumber.val,
+                    type:'forget'
                 });
+                this.showPasswordModal = true;
             } catch (e) {
                 console.log("error", e);
             }
