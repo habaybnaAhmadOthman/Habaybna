@@ -1,5 +1,6 @@
 <template>
     <form @submit.prevent="submitForm" class="p-side-50">
+        <input autocomplete="false" name="hidden" type="text" style="display:none;">
         <h2 class="main-color text-shadow font-40 bold center mb-30 font-28-p">
             أكمل معلوماتك
         </h2>

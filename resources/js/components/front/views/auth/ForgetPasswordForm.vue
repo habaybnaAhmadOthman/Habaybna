@@ -40,6 +40,11 @@
                         <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
                     </div>
                 </div> -->
+                <button
+                    class="btn mt-30 border-0 pointer flex-all white m-side-auto font-17"
+                >
+                    إرسال رمز التحقق
+                </button>
             </template>
             <template v-else>
                 <p class="main-color font-14 center mb-15">
@@ -55,13 +60,21 @@
                     />
                     <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
                 </div>
+                <button
+                    class="btn mt-30 border-0 pointer flex-all white m-side-auto font-17"
+                >
+                    متابعة
+                </button>
             </template>
-            <button
-                class="btn mt-30 border-0 pointer flex-all white m-side-auto font-17"
-            >
-                إرسال رمز التحقق
-            </button>
         </form>
+        <div class="profile">
+        <ChangePassword
+            :show="showPasswordModal"
+            @alert-password-modal="alertPasswordDialog"
+            :from="'forget'"
+        ></ChangePassword>
+            <!-- @close-password-modal="showPasswordDialog" -->
+        </div>
     </div>
 </template>
 
@@ -71,6 +84,7 @@ import "vue-phone-number-input/dist/vue-phone-number-input.css";
 
 import phoneNumberMixin from "./../../mixins/phoneNumber.js";
 import passwordMixin from "./../../mixins/password.js";
+import ChangePassword from "../../views/userprofile/myaccount/ChangePassword.vue";
 export default {
     mixins: [phoneNumberMixin, passwordMixin],
     data() {
@@ -82,6 +96,8 @@ export default {
             viaPhone: true,
             formIsValid: true,
             hasPhoneNumber: false,
+            showPasswordModal: true,
+            code: ""
         };
     },
     methods: {
@@ -98,10 +114,6 @@ export default {
                     this.formIsValid = false;
                 }
             }
-            if (this.password.val == "") {
-                this.password.isValid = false;
-                this.formIsValid = false;
-            }
         },
         checkValidity(e) {
             if (e.target.value != "") {
@@ -110,40 +122,52 @@ export default {
                 this[e.target.id].isValid = false;
             }
         },
+        isLoading(status) {
+            this.$store.commit('isLoading',status)
+        },
         async submitForm() {
             this.validateForm();
             if (!this.formIsValid) {
                 return;
             }
-            let phone = await this.phoneNumber.val;
-            // this.$emit("save-form", {
-            //     phone: phone,
-            //     password: this.password.val
-            // });
-            try {
-                // const resp = await this.$store.dispatch("user/forgetPassword", {
-                //     mobileNumber: data.phone
-                // });
-                // debugger;
-                //     this.$router.replace("/");
-            } catch (e) {
-                if (e.message == "تم إيقاف حسابك") {
-                    this.isBanned = true;
+            this.isLoading(true)
+            if (!this.hasPhoneNumber) {
+                let phone = this.phoneNumber.val;
+                try {
+                    const resp = await this.$store.dispatch("user/forgetPassword", {
+                        mobileNumber: phone,
+                    });
+                    this.hasPhoneNumber = true;
+                } catch (e) {
+                    if (e.message == "تم إيقاف حسابك") {
+                        this.isBanned = true;
+                    }
+                    // this.showPopupMessage(e.message);
                 }
-                this.showPopupMessage(e.message);
+            } else {
+                this.sendOtpCode()
             }
+            this.isLoading(false)
         },
-        sendOtpCode() {
+        async sendOtpCode() {
             try {
                 // call api
-                await this.$store.dispatch("user/checkOtp", {otpCode : this.code.val});
-
+                await this.$store.dispatch("user/checkOtp", {
+                    otpCode: this.code.val,
+                });
             } catch (e) {
-                    console.log('error',e)
+                console.log("error", e);
             }
-        }
+        },
+        alertPasswordDialog(isShow) {
+            this.$store.commit("alertDialogMsg", "تم تغيير كلمة المرور بنجاح");
+            this.$router.replace('/signin');
+        },
+        // showPasswordDialog() {
+        //     this.showPasswordModal = !this.showPasswordModal;
+        // },
     },
-    components: { VuePhoneNumberInput },
+    components: { VuePhoneNumberInput ,ChangePassword},
 };
 </script>
 
