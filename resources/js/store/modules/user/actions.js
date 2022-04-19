@@ -180,7 +180,7 @@ export default {
     },
     // ******** userProfile ::: password
     async changePassword(_,payload) {
-        const resp = await callApi("POST", "/api/set-new-password",payload);
+        const resp = await callApi("POST", "/api/user/forget-password/change-password",payload);
         if (!resp.data.status) {
             const error = new Error("كلمة المرور القديمة غير صحيحة");
             throw error;
