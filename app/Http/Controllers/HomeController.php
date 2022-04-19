@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 // use App\Http\Controllers\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Stevebauman\Location\Facades\Location;
-use App\CustomClass\SendSms;
 use App\Providers\VerifyUser;
+use Illuminate\Support\Facades\Hash;
+
 
 
 
@@ -88,7 +89,6 @@ class HomeController extends Controller
     }
 
     public function forgetPassword (Request $request) {
-
         if($request->mobileNumber && $request->mobileNumber != ""){
             $user = User::where('phone',$request->mobileNumber)->first();
                 if($user){
@@ -128,16 +128,13 @@ class HomeController extends Controller
 
         if($request->mobileNumber && $request->mobileNumber != ""){
             $user = User::where('phone',$request->mobileNumber)->first();
-                if($user->is_verify){
-                    if($user->password == $request->password){
-                        $user->save() ;
-                        return response($user->phone,200);
-                    }
-                return response('notVerify',403);
-
+                if($user && $user->is_verify){
+                    $user->password = Hash::make($request->password) ;
+                    $user->save() ;
+                    return response($user->phone,200);
                 }
-                return response('notVerify',403);
 
+                return response('notVerify',403);
         }
         return response('invalidPhoneNumber',403);
 
