@@ -61,7 +61,7 @@ export default {
             return arr;
         },
         wrongAnswerDialog(){
-            this.setInfoModal('إجابة خاطئة','يرجى التأكد من الإجابة', false,false,true)
+            this.setInfoModal('إجابة خاطئة','عليك المحاولة مرة أخرى  للوصول للإجابة الصحيحة', false,false,true)
         },
         correctAnswerDialog(){
             this.setInfoModal('لقد اجتزت الامتحان بنجاح','يمكنك إصدار الشهادة الآن',true,true,true)

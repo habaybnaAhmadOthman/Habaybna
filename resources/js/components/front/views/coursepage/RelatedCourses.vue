@@ -26,7 +26,8 @@
         props: ['title'],
         components:{CourseCard},
         data:()=>({
-            appendedCourses: []
+            appendedCourses: [],
+            desktopSwiper:null
         }),
         created() {
             this.getCourses();
@@ -44,7 +45,7 @@
             },
             initSwiper(){
                 if (!window.matchMedia("(max-width: 677px)").matches) {
-                    var swiper = new Swiper(".related-courses-swiper", {
+                    this.desktopSwiper = new Swiper(".related-courses-swiper", {
                         navigation: {
                             nextEl: ".related-next",
                             prevEl: ".related-prev",
@@ -54,6 +55,12 @@
                     });
                 }
             }
+        },
+        beforeDestroy(){
+            if (this.desktopSwiper) {
+                document.querySelector('.related-courses-swiper').remove();
+            }
+            
         }
     }
 </script>

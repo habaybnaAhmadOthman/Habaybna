@@ -3,8 +3,8 @@
         <router-link class="radius-10 shadow d-flex p-10 bg-white box" to="/">
             <figure class="d-flex relative">
                 <!-- favourite -->
-            <div class="fav-box relative pointer shadow-2"></div>
-                <img class="radius-20 object-fit" src="/images/test.jpg" width="100" height="100">
+                <div class="fav-box relative pointer shadow-2"></div>
+                <img class="radius-20 object-fit main-img" src="/images/test.jpg" width="100" height="100">
             </figure>
             <div class="body mr-15 d-flex flex-column space-between">
                 <p class="black-2 font-20">لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم</p>
@@ -52,5 +52,8 @@ export default {};
 }
 .fav-box.active {
     background-image: url(/images/heart-icon-fill.svg);
+}
+.main-img {
+    min-width: 100px;
 }
 </style>
