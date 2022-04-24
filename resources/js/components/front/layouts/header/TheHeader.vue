@@ -1,25 +1,45 @@
 <template>
     <header id="header" class="pt-5 pb-5">
         <div class="d-flex align-center space-between">
-            <div class="d-flex align-center">
+            <div class="d-flex align-center w-100 header-right">
                 <router-link to="/" class="logo d-flex">
                     <img src="/images/siteImgs/header/logo.png" width="120" />
                 </router-link>
-                <div class="do">
-                    <menu class="d-flex align-center main-menu">
+                <div class="do w-100">
+                    <menu class="d-flex align-center main-menu space-around pl-30">
                         <router-link
-                            class="black nowrap p-side-10 h-100 flex-all bold"
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
                             to="/"
                             >الرئيسية</router-link
                         >
                         <router-link
-                            class="black nowrap p-side-10 h-100 flex-all bold"
-                            to="/profile"
-                            >حسابي</router-link
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                            to="/online-courses"
+                            >الدورات الرقمية</router-link
                         >
-                        <div class="dropdown relative h-100 flex-all">
+                        <router-link
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                            to="/ask-specialists"
+                            >الاستشارات مع المختصين</router-link
+                        >
+                        <router-link
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                            to="/library"
+                            >مكتبة المعلومات</router-link
+                        >
+                        <router-link
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                            to="/a"
+                            >تواصلوا معنا</router-link
+                        >
+                        <router-link
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                            to="/s"
+                            >مكالمات</router-link
+                        >
+                        <!-- <div class="dropdown relative h-100 flex-all">
                             <router-link
-                                class="black nowrap p-side-10 h-100 flex-all bold"
+                                class="black-2 nowrap p-side-10 h-100 flex-all bold"
                                 to="/library"
                                 >مكتبة حبايبنا</router-link
                             >
@@ -45,31 +65,24 @@
                                     >شارك معنا</router-link
                                 >
                             </aside>
-                        </div>
-                        <router-link
-                            class="black nowrap p-side-10 h-100 flex-all bold"
-                            to="/"
-                            >دليل حبايبنا</router-link
-                        >
-                        <router-link
-                            class="black nowrap p-side-10 h-100 flex-all bold"
-                            to="/"
-                            >إسأل الأخصائيين</router-link
-                        >
-                        <router-link
-                            class="black nowrap p-side-10 h-100 flex-all bold"
-                            to="/"
-                            >من نحن</router-link
-                        >
-                        <router-link
-                            class="black nowrap p-side-10 h-100 flex-all bold"
-                            to="/online-courses"
-                            >الدورات التدريبية</router-link
-                        >
+                        </div> -->
+                        
                     </menu>
                 </div>
+                <!-- mobile buttons -->
+                <template>
+                    <router-link to="/profile" class="profile-mo mo center mobile-link">
+                        <img src="/images/profile-avatar-mo.svg" >
+                        <p class="font-10 mobile-icon-color">حسابي</p>
+                    </router-link>
+                    <div to="/profile" class="profile-mo mo center mobile-link">
+                        <img src="/images/menu-icon-mobile.svg" @click="toggleMobileMenu">
+                        <p class="font-10 mobile-icon-color">المزيد</p>
+                    </div>
+
+                </template>
             </div>
-            <LeftSide :isLoggedIn="isLoggedIn"></LeftSide>
+            <LeftSide :isMobileMenuOpened="isMobileMenuOpened" :toggleMobileMenu="toggleMobileMenu" @toggleMobileMenu="toggleMobileMenu" :isLoggedIn="isLoggedIn"></LeftSide>
         </div>
     </header>
 </template>
@@ -79,6 +92,11 @@ import LeftSide from "./LeftSide.vue";
 export default {
     components: {
         LeftSide
+    },
+    data(){
+        return {
+            isMobileMenuOpened: false,
+        }
     },
     computed: {
         isLoggedIn() {
@@ -95,6 +113,9 @@ export default {
         handleScroll(event) {
             // Any code to be executed when the window is scrolled
             // console.log(event);
+        },
+        toggleMobileMenu(){
+            this.isMobileMenuOpened = !this.isMobileMenuOpened
         }
     }
 };
@@ -105,10 +126,10 @@ header {
     padding-right: 1.2vw;
     transition: 0.5s ease-in-out;
     box-shadow: 10px 10px 10px -16px #000;
-    position: relative;
+    position: sticky;
     top: 0;
     width: 100%;
-    z-index: 10;
+    z-index: 9999;
     background: #fff;
 }
 .main-menu {
@@ -117,6 +138,9 @@ header {
 .main-menu > a,
 .main-menu .dropdown > a {
     padding: 0 10px;
+}
+.main-menu > a {
+    padding: 24px 10px;
 }
 .dropdown > aside {
     position: absolute;
@@ -140,6 +164,29 @@ header {
     visibility: visible;
     opacity: 1;
 }
+a {
+    position: relative;
+}
+.main-menu .router-link-exact-active:before {
+    content: '';
+    width: 100%;
+    height: calc(100% + 14px);
+    background: #E58C00;
+    right: 0;
+    top: -6px;
+    position: absolute;
+    z-index: -1;
+    box-shadow: 0px 3px 6px #00000029;
+}
+.main-menu .router-link-exact-active {
+    color: #fff!important;
+}
+.header-right {
+    height: 100%;
+}
+.mobile-icon-color{
+    color: #6E6D6D;
+}
 @media (max-width: 767px) {
     .logo img {
         width:50px;
@@ -150,6 +197,11 @@ header {
         padding-right: 12px;
         background:#F4F4F4;
     }
-    
+    .header-right {
+        justify-content: space-between;
+    }
+    .mobile-link p {
+        margin-top: -7px;
+    }
 }
 </style>

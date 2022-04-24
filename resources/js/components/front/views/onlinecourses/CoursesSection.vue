@@ -1,8 +1,8 @@
 <template>
   <div>
     <section class="learn-section bg-gray mt-20-p">
-      <div class="container p-side-12-p">
-        <h2 class="title-line mb-40 mb-20-p">الدورات التدريبية</h2>
+      <div class="container">
+        <h2 class="title-line mb-40 mb-20-p p-side-12-p">الدورات التدريبية</h2>
         <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection>
         <template >
           <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses>
@@ -20,9 +20,9 @@ export default {
   props: ['cardsCount','showMoreCard'],
   computed: {
     cardsCountFn(){
-      if (this.cardsCount)
-        return this.appendedCourses.slice(0,this.cardsCount)
-      else
+      if (this.cardsCount) {
+        return this.shuffle(this.appendedCourses).slice(0,this.cardsCount)
+      } else
         return this.appendedCourses
     },
     showMoreCardFn(){
@@ -46,6 +46,13 @@ export default {
     this.getCourses();
   },
   methods:{
+    shuffle(a) {
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    },
     filteredCourses() {
       self = this;
       self.atLeastOneSelected = false;

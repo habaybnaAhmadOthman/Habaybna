@@ -49,6 +49,7 @@ import LibraryPage from "./components/front/pages/library/LibraryPage.vue";
 import ArticlePage from "./components/front/pages/library/ArticlePage.vue";
 // specialist
 import SpecialistPage from "./components/front/pages/SpecialistPage.vue";
+import SpecialistsPage from "./components/front/pages/SpecialistsPage.vue";
 
 
 
@@ -368,6 +369,10 @@ const routes = [{
     },
     // *****************
     // specialist page
+    {
+        path: "/ask-specialists",
+        component: SpecialistsPage
+    },
     {
         path: "/specialist/:specialist",
         component: SpecialistPage

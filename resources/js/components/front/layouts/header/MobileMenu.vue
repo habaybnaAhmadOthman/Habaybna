@@ -27,6 +27,11 @@
                     > الدورات التدريبية</router-link
                 >
             </li>
+            <li>
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/library" @click.native="closeNavMenu"
+                    >مكتبة المعلومات</router-link
+                >
+            </li>
             <li v-if="isLoggedIn">
                 <router-link
                     class="d-block p-side-15 pt-10 pb-10 trans"

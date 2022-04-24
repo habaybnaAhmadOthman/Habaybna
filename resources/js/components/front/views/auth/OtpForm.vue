@@ -157,7 +157,6 @@ select::-ms-expand {
 </style>
 <style>
 .country-selector__input {
-    border-radius:21px 0 0 21px!important;
     border-color:#606!important;
     border-radius: 0 21px 21px 0!important;
 }
@@ -165,6 +164,10 @@ select::-ms-expand {
     border-radius:21px 0 0 21px!important;
     text-align:right;
     margin-left: 1px;
+}
+.vue-phone-number-input .input-tel__input:not(.no-country-selector) {
+    border-top-left-radius:21px!important;
+    border-bottom-left-radius:21px!important;
 }
 .input-tel.is-focused .input-tel__input {
     box-shadow: 0 0 0 0.2rem rgb(121 106 238 / 25%)!important;

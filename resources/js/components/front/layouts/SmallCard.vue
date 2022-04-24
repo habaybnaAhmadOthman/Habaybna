@@ -1,5 +1,5 @@
 <template>
-    <div class="small-card relative">
+    <div class="small-card w-100-p relative">
         <router-link class="radius-10 shadow d-flex p-10 bg-white box" to="/">
             <figure class="d-flex relative">
                 <!-- favourite -->
@@ -7,7 +7,7 @@
                 <img class="radius-20 object-fit main-img" src="/images/test.jpg" width="100" height="100">
             </figure>
             <div class="body mr-15 d-flex flex-column space-between">
-                <p class="black-2 font-20">لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم</p>
+                <p class="black-2 font-20 font-15-p three-line">لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم</p>
                 <span class="bg-yellow date font-14 white radius-20">1996/11/4</span>
             </div>
        </router-link>
@@ -56,4 +56,5 @@ export default {};
 .main-img {
     min-width: 100px;
 }
+
 </style>

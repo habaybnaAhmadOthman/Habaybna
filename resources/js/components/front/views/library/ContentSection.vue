@@ -2,12 +2,14 @@
   <div>
     <section class="learn-section mt-20">
       <div class="container p-side-12-p">
-        <template v-if="!listOnly">
+        <template v-if="title || !listOnly">
           <h2 class="title-line mb-40 mb-20-p">المقالات</h2>
+        </template>
+        <template v-if="!listOnly">
           <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection>
           <!-- <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses> -->
         </template>
-          <ContentList></ContentList>
+          <ContentList :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
       </div>
     </section>
     
@@ -19,7 +21,7 @@
 import ContentList from '../../layouts/SmallCardList.vue'
 import CategoryFilterSection from '../../layouts/CategoryFilterSection.vue'
 export default {
-  props: ['cardsCount','showMoreCard','list-only'],
+  props: ['cardsCount','showMoreCard','list-only','title'],
   computed: {
     cardsCountFn(){
       if (this.cardsCount)
@@ -71,7 +73,7 @@ export default {
             }
           }
         });
-        if (updatedList.length < 1) {
+       if (updatedList.length < 1) {
           if (!self.atLeastOneSelected) {
             this.appendedCourses = courses;
           } else {

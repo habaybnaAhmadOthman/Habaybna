@@ -1,32 +1,26 @@
 <template>
-    <div class="d-flex align-center">
-        <router-link to="/" class="white d-flex radius-60 free-call-btn ml-10">
-            <img
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAXCAYAAAARIY8tAAAABHNCSVQICAgIfAhkiAAAAUVJREFUSEvtletNw0AQhL+pAOggqQA6IHQAFRAqgFQAqQA6gA6ACog7oAPcAVDBorHuosNK/BCCP2Sl00m+8c7srM8rNkREzIBL4BR4BRaSViU0Iq4SZgI8JUzdTqf2g4jYB96AT+AhkRwCJ5kkIubAPfCcBJjsXdJ0CIHBt8BUUp0IrX7PCQoBlSRXSER4fyxFZKJNFdwA18CBpI+UwJa9ABeALfF5I6B1vq6yi8AJbJFVnxUkTuZ+HHkv1Btv9bZnkvFbCZIie3zn6tNur12Zk7kfyyTgHDDW/ZpJsoBvoYhwIw38jViYwCqHRJVUG+ueHA94qRpDsJRkm/zV5A+hj+NvCFyuV1+sios2/J2+rD89by7aQE/H9qC5dDuCrhbtLGp+2f/Iojzyukoee9GaibcemRHhSeWBvy3qYkR68Hj1Yr8A4IPu+TfvWYgAAAAASUVORK5CYII="
-                alt="gift"
-                class="ml-20"
-            />إهداء مكالمة مجانیة</router-link
-        >
+    <div class="d-flex align-center ">
+        <div class="bar do"></div>
         <div class="do" v-if="isLoggedIn">
-            <div class="d-flex align-center">
+            <router-link to="/profile" class="d-flex align-center user-box">
                 <img
                     :src="userAvatar"
                     alt="gift"
-                    class="rounded object-fit ml-20 user-avatar"
+                    class="rounded object-fit ml-10 user-avatar"
                 />
-                <p class="black">{{ userName }}</p>
-            </div>
+                <p class="black one-line">{{ userName }}</p>
+            </router-link>
         </div>
-        <div class="bar do"></div>
+        
         <template v-if="!isLoggedIn">
             <router-link
                 to="/signup"
-                class="signin-box-btn pr-30 relative bold black do"
+                class="signin-box-btn pr-30 relative bold black do nowrap"
                 >تسجيل</router-link
             >
             <router-link
                 to="/signin"
-                class="signin-box-btn pr-30 relative bold black do"
+                class="signin-box-btn pr-30 relative bold black do nowrap"
                 >تسجيل الدخول</router-link
             >
         </template>
@@ -34,12 +28,12 @@
             <button
                 @click="logout"
                 
-                class="sign-out-box bg-none border-0 pointer pr-30 relative bold black do"
+                class="sign-out-box bg-none border-0 pointer pr-30 relative bold black do nowrap"
             >
                 تسجيل الخروج
             </button>
         </template>
-        <img src="/images/menu-icon.svg" class="mo" @click="toggleMobileMenu">
+        <!-- <img src="/images/menu-icon.svg" class="mo" @click="toggleMobileMenu"> -->
             <transition name="swing">
                 <MobileMenu :isLoggedIn="isLoggedIn" @closeMobileMenu="toggleMobileMenu" @logout="logout" v-if="isMobileMenuOpened" :userAvatar="userAvatar"></MobileMenu>
             </transition>
@@ -49,13 +43,9 @@
 <script>
 import MobileMenu from "./MobileMenu.vue"
 export default {
-    props: ["isLoggedIn"],
+    emits: ["toggleMobileMenu"],
+    props: ["isLoggedIn","isMobileMenuOpened"],
     components: {MobileMenu},
-    data(){
-        return {
-            isMobileMenuOpened: false
-        }
-    },
     methods: {
         async logout() {
             await this.$store.dispatch("user/logoutModal");
@@ -68,7 +58,7 @@ export default {
             this.$store.commit("forceRefresh");
         },
         toggleMobileMenu(){
-            this.isMobileMenuOpened = !this.isMobileMenuOpened
+            this.$emit("toggleMobileMenu");
         }
     },
     computed: {
@@ -86,7 +76,7 @@ export default {
 <style scoped>
 .bar {
     width: 1px;
-    border: 0.9px solid #fff;
+    border-left: 1px solid #e1e1e1;
     height: 35px;
     margin: 0 22px;
 }
@@ -114,6 +104,9 @@ export default {
 
 .swing-leave-active {
     animation: swing 0.3s ease-in reverse;
+}
+.user-box {
+    width: 150px;
 }
 @keyframes swing {
     from {

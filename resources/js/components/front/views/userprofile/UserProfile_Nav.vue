@@ -101,6 +101,7 @@ export default {
         min-height: 100%;
         max-height: 100%;
         overflow-y: auto;
+        z-index: 10;
     }
     .user-side-nav.active {
         opacity: 1;

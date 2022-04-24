@@ -4,7 +4,7 @@
         <div class="relative mb-35 mb-20-p">
             <div class="courses-categories-swiper my-swiper" dir="rtl">
                 <!-- Additional required wrapper -->
-                <div class="swiper-wrapper swipe-box-p p-0-p column-gap-10-p">
+                <div class="swiper-wrapper swipe-box-p p-0-p column-gap-10-p no-scrollbar-p">
                     <!-- Slides -->
                     <div v-for="(category, index) of filters" :key="index" :index="index" class="swiper-slide">
                         <CategoryFilter @change-filter="setFilter" :id="category.id" :value="category.val"></CategoryFilter>
@@ -78,5 +78,10 @@ export default {
 .courses-categories-swiper.swiper-initialized .categories-filter-next,.courses-categories-swiper.swiper-initialized .categories-filter-prev{
     display: block !important;
 }
-
+@media (max-width: 767px) {
+    .swiper-wrapper{
+        padding-right: 10px!important;
+        padding-bottom: 1px!important;
+    }
+}
 </style>

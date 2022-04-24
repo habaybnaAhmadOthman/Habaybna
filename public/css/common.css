@@ -170,6 +170,9 @@ body {
 .space-between {
     justify-content: space-between;
 }
+.space-around {
+    justify-content: space-around;
+}
 
 .shadow {
     box-shadow: 0px 3px 6px #00000029;
@@ -704,6 +707,10 @@ a:hover {
     padding-left: 50px;
     padding-right: 50px;
 }
+.p-side-100 {
+    padding-left: 100px;
+    padding-right: 100px;
+}
 .p-side-20 {
     padding-left: 20px;
     padding-right: 20px;
@@ -829,14 +836,16 @@ a:hover {
     width: 49%;
     margin-bottom: 15px;
 }
-.one-line, .three-line, .two-line {
+.three-line, .two-line {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
 }
 .one-line {
-    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .two-line {
     -webkit-line-clamp: 2;
@@ -886,6 +895,24 @@ a:hover {
 }
 img {
     max-width: 100%;
+}
+.next-arrow {
+    position: relative;
+}
+
+.next-arrow:after {
+    content: '';
+    background: url(/images/right-arrow-white.png) no-repeat;
+    background-size: 15px 24px;
+    background-position: center;
+    width: 15px;
+    height: 24px;
+    position: absolute;
+    left: 40px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    transform: rotate(180deg);
 }
 @media (max-width: 767px) {
     .mo {
@@ -1069,6 +1096,7 @@ img {
         overflow-x: scroll!important;
         white-space: nowrap;
         display: flex;
+        flex-wrap: nowrap;
     }
     .column-gap-20-p {
         column-gap: 20px;
@@ -1105,5 +1133,12 @@ img {
     }
     dialog {
         max-height: 95%;
+    }
+    .no-scrollbar-p {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .no-scrollbar-p::-webkit-scrollbar { 
+        display: none;  /* Safari and Chrome */
     }
 }
