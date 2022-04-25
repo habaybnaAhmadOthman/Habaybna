@@ -84,12 +84,12 @@
         </span>
       </div>
       <div class="question-form">
-        <label>فيديو ترويجي للدورة</label>
+        <label>رابط الفيديو الترويجي للدورة</label>
         <input
           name="promoVideo"
-          type="file"
+          type="text"
           class="form-control"
-          @change="uploadPromoVideo"
+          v-model="form.promoVideo"
         />
         <span class="error" v-if="!this.formValidation.promoVideo">
           * يجب تعبئة هذا الحقل
@@ -260,9 +260,9 @@ export default {
     uploadCoverImage(event) {
       this.form.coverImage = event.target.files[0];
     },
-    uploadPromoVideo(event) {
-      this.form.promoVideo = event.target.files[0];
-    },
+    // uploadPromoVideo(event) {
+    //   this.form.promoVideo = event.target.files[0];
+    // },
     async formSubmit(e) {
       this.validatForm();
       if (this.isValidToSubmit) {

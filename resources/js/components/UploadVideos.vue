@@ -115,9 +115,8 @@
                 <strong>تحميل فيديو جديد :</strong>
                 <input
                   name="video"
-                  type="file"
+                  type="text"
                   class="cdk-ed form-control"
-                  @change="uploadvideo"
                 />
                 <span class="error" v-if="!this.formValidation.video">
                   * يجب تعبئة هذا الحقل
@@ -216,9 +215,9 @@ export default {
     getCourseId() {
       this.form.course_id = this.$router.currentRoute.params.data;
     },
-    uploadvideo(event) {
-      this.form.video = event.target.files[0];
-    },
+    // uploadvideo(event) {
+    //   this.form.video = event.target.files[0];
+    // },
     async formSubmit(e) {
       this.validatForm();
       if (this.isFormValid) {
