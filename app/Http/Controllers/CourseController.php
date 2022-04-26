@@ -150,7 +150,8 @@ class CourseController extends Controller
         // $videoCourse->url= $url !== "" ? $url : '';
 
 
-
+        $videoCourse->url = $request->video;
+        $videoCourse->length = $request->length;
         $videoCourse->cover_image = '';
         $videoCourse->course_id= $request->course_id;
         $videoCourse->status= true;
