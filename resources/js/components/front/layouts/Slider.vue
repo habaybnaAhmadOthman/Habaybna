@@ -4,37 +4,36 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper p-0">
                 <!-- Slides -->
-                <div class="swiper-slide d-flex">
-                    <img src="/images/test.jpg" alt="" class="w-100-i">
+                <div class="swiper-slide">
+                    <div class="w-100-i fig d-flex">
+                        <img src="/images/test.jpg" alt="" class="w-100-i">
+                    </div>
                 </div>
-                <div class="swiper-slide d-flex">
-                    <img src="/images/test.jpg" alt="" class="w-100-i">
+                <div class="swiper-slide">
+                    <div class="w-100-i fig d-flex">
+                        <img src="/images/test.jpg" alt="" class="w-100-i">
+                    </div>
                 </div>
-                <div class="swiper-slide d-flex">
-                    <img src="/images/test.jpg" alt="" class="w-100-i">
+                <div class="swiper-slide">
+                    <div class="w-100-i fig d-flex">
+                        <img src="/images/test.jpg" alt="" class="w-100-i">
+                    </div>
                 </div>
-                <div class="swiper-slide d-flex">
-                    <img src="/images/test.jpg" alt="" class="w-100-i">
+                <div class="swiper-slide">
+                    <div class="w-100-i fig d-flex">
+                        <img src="/images/test.jpg" alt="" class="w-100-i">
+                    </div>
                 </div>
-                <div class="swiper-slide d-flex">
-                    <img src="/images/test.jpg" alt="" class="w-100-i">
+                <div class="swiper-slide">
+                    <div class="w-100-i fig d-flex">
+                        <img src="/images/test.jpg" alt="" class="w-100-i">
+                    </div>
                 </div>
-                <div class="swiper-slide d-flex">
-                    <img src="/images/test.jpg" alt="" class="w-100-i">
+                <div class="swiper-slide">
+                    <div class="w-100-i fig d-flex">
+                        <img src="/images/test.jpg" alt="" class="w-100-i">
+                    </div>
                 </div>
-                <div class="swiper-slide d-flex">
-                    <img src="/images/test.jpg" alt="" class="w-100-i">
-                </div>
-                <div class="swiper-slide d-flex">
-                    <img src="/images/test.jpg" alt="" class="w-100-i">
-                </div>
-                <div class="swiper-slide d-flex">
-                    <img src="/images/test.jpg" alt="" class="w-100-i">
-                </div>
-                <div class="swiper-slide d-flex">
-                    <img src="/images/test.jpg" alt="" class="w-100-i">
-                </div>
-                
             </div>
 
             <div class="swiper-pagination" :class="`swiper-pagination-${this.selector}`"></div>
@@ -130,5 +129,8 @@
 }
 .swiper-pagination-bullet-active {
     background: #823175;
+}
+.fig {
+    max-height: 100px;
 }
 </style>

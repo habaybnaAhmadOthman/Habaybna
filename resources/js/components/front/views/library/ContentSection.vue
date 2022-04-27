@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="learn-section mt-20">
-      <div class="container p-side-12-p">
+      <div class="container p-side-12-p" :class="classList">
         <template v-if="title || !listOnly">
           <h2 class="title-line mb-40 mb-20-p">المقالات</h2>
         </template>
@@ -9,7 +9,7 @@
           <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection>
           <!-- <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses> -->
         </template>
-          <ContentList :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
+          <ContentList  :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
       </div>
     </section>
     
@@ -21,7 +21,7 @@
 import ContentList from '../../layouts/SmallCardList.vue'
 import CategoryFilterSection from '../../layouts/CategoryFilterSection.vue'
 export default {
-  props: ['cardsCount','showMoreCard','list-only','title'],
+  props: ['cardsCount','showMoreCard','list-only','title','class-list'],
   computed: {
     cardsCountFn(){
       if (this.cardsCount)
