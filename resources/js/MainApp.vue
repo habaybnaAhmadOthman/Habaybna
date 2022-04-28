@@ -14,6 +14,13 @@
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
         </div>
+        <portal-target name="destination">
+        <!--
+        This component can be located anwhere in your App
+        (i.e. right before the </body> tag, good for overlays).
+        The slot content of the above portal component will be rendered here.
+        -->
+      </portal-target>
     </main>
 </template>
 
@@ -24,6 +31,8 @@ import AlertDialog from "./components/front/layouts/AlertDialog.vue";
 import LoginModal from "./components/front/layouts/LoginModal.vue";
 import InfoModal from "./components/front/layouts/InfoModal.vue";
 import LoadingSpinner from "./components/front/layouts/LoadingSpinner.vue";
+import PortalVue from 'portal-vue'
+Vue.use(PortalVue)
 Vue.component('loading-spinner',LoadingSpinner)
 Vue.component('alert-dialog',AlertDialog)
 Vue.component('info-modal',InfoModal)

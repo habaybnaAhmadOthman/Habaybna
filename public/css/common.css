@@ -193,11 +193,11 @@ body {
     white-space: pre-line;
 }
 .row-3 {
-    column-gap: 25px;
-    row-gap: 25px;
+    gap: 25px;
     display:flex;
     flex-wrap: wrap;
 }
+
 .row-3 > * {
     width: 31.92%;
 }
@@ -1094,6 +1094,7 @@ img {
     .swipe-box-p {
         width: 100%;
         overflow-x: scroll!important;
+        overflow-y: hidden;
         white-space: nowrap;
         display: flex;
         flex-wrap: nowrap;
@@ -1140,5 +1141,8 @@ img {
     }
     .no-scrollbar-p::-webkit-scrollbar { 
         display: none;  /* Safari and Chrome */
+    }
+    button {
+        max-width: 100%!important;
     }
 }

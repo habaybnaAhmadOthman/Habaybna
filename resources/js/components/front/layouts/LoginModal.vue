@@ -1,131 +1,133 @@
 <template>
-    <aside>
-        <div
-            v-if="showModal"
-            class="w-100 h-100 backdrop"
-            @click="closeLoginModal"
-        ></div>
-        <transition name="modal">
-            <dialog class="login-modal w-90-p" v-if="showModal" open>
-                <img
-                    src="/images/close-icon-color.png"
-                    @click="closeLoginModal"
-                    class="close-modal-icon"
-                    width="24"
-                    height="24"
-                />
+    <portal to="destination">
+        <aside>
+            <div
+                v-if="showModal"
+                class="w-100 h-100 backdrop"
+                @click="closeLoginModal"
+            ></div>
+            <transition name="modal">
+                <dialog class="login-modal w-90-p" v-if="showModal" open>
+                    <img
+                        src="/images/close-icon-color.png"
+                        @click="closeLoginModal"
+                        class="close-modal-icon"
+                        width="24"
+                        height="24"
+                    />
 
-                <form class="login-form" @submit.prevent="submitForm">
-                    <template>
-                        <p class="font-27 bold pr-10 main-color mb-40 font-20-p mb-20-p">تسجيل الدخول</p>
-                        <div
-                            v-if="viaPhone"
-                            class="form-group ltr mb-20 input-box"
-                            :class="{ invalid: !phoneNumber.isValid }"
-                        >
-                            <VuePhoneNumberInput
-                                v-model="phoneNumber.input"
-                                @update="getPhoneVal"
-                                @input="checkPhoneNumber"
-                                :show-code-on-list="true"
-                                :translations="{
-                                    countrySelectorLabel: 'رمز الدولة',
-                                    phoneNumberLabel: 'رقم الهاتف'
-                                }"
-                                id="phoneNumber"
-                                :default-country-code="countryCode"
-                            />
-                            <p class="main-color mt-5 font-12 req">
-                                رقم الهاتف غير صحيح
-                            </p>
-                        </div>
-                        <div v-else>
+                    <form class="login-form" @submit.prevent="submitForm">
+                        <template>
+                            <p class="font-27 bold pr-10 main-color mb-40 font-20-p mb-20-p">تسجيل الدخول</p>
                             <div
-                                class="form-group mb-20 input-box relative"
-                                :class="{ invalid: !email.isValid }"
+                                v-if="viaPhone"
+                                class="form-group ltr mb-20 input-box"
+                                :class="{ invalid: !phoneNumber.isValid }"
                             >
-                                <input
-                                    @blur="checkValidity"
-                                    v-model.trim="email.val"
-                                    id="email"
-                                    type="email"
-                                    class="form-control font-18 holder-center w-100 user-input"
-                                    placeholder=" البريد الالكتروني"
+                                <VuePhoneNumberInput
+                                    v-model="phoneNumber.input"
+                                    @update="getPhoneVal"
+                                    @input="checkPhoneNumber"
+                                    :show-code-on-list="true"
+                                    :translations="{
+                                        countrySelectorLabel: 'رمز الدولة',
+                                        phoneNumberLabel: 'رقم الهاتف'
+                                    }"
+                                    id="phoneNumber"
+                                    :default-country-code="countryCode"
                                 />
                                 <p class="main-color mt-5 font-12 req">
-                                    هذا الحقل مطلوب
+                                    رقم الهاتف غير صحيح
                                 </p>
                             </div>
-                        </div>
-                    </template>
-                    <!-- password -->
-                    
-                    <div
-                        class="form-group relative pass-group mb-20 input-box mb-10-p"
-                        :class="{ invalid: !password.isValid }"
-                    >
-                        <input
-                            :type="!password.show ? 'password' : ''"
-                            class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                            placeholder="كلمة السر"
-                            id="password"
-                            @blur="checkValidity"
-                            v-model.trim="password.val"
-                        />
+                            <div v-else>
+                                <div
+                                    class="form-group mb-20 input-box relative"
+                                    :class="{ invalid: !email.isValid }"
+                                >
+                                    <input
+                                        @blur="checkValidity"
+                                        v-model.trim="email.val"
+                                        id="email"
+                                        type="email"
+                                        class="form-control font-18 holder-center w-100 user-input"
+                                        placeholder=" البريد الالكتروني"
+                                    />
+                                    <p class="main-color mt-5 font-12 req">
+                                        هذا الحقل مطلوب
+                                    </p>
+                                </div>
+                            </div>
+                        </template>
+                        <!-- password -->
+                        
                         <div
-                            class="pass-visible pointer"
-                            :class="{ active: !password.show }"
-                            @click="passwordVisibility"
-                        ></div>
-                        <p class="main-color mt-5 font-12">
-                            هذا الحقل مطلوب
-                        </p>
-                    </div>
-                    <div class="d-flex space-between mb-40 flex-wrap-p mb-10-p">
-                        <router-link class="main-color font-20 bold mb-10-p font-16-p" to="/"
-                            >هل نسيت كلمة السر؟</router-link
+                            class="form-group relative pass-group mb-20 input-box mb-10-p"
+                            :class="{ invalid: !password.isValid }"
                         >
-                        <p class="black-2 bold font-20 font-16-p">
-                            هل أنت مستخدم جديد؟
-                            <router-link class="main-color pr-10 p-0-p" to="/register"
-                                >سجل من هنا</router-link
+                            <input
+                                :type="!password.show ? 'password' : ''"
+                                class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
+                                placeholder="كلمة السر"
+                                id="password"
+                                @blur="checkValidity"
+                                v-model.trim="password.val"
+                            />
+                            <div
+                                class="pass-visible pointer"
+                                :class="{ active: !password.show }"
+                                @click="passwordVisibility"
+                            ></div>
+                            <p class="main-color mt-5 font-12">
+                                هذا الحقل مطلوب
+                            </p>
+                        </div>
+                        <div class="d-flex space-between mb-40 flex-wrap-p mb-10-p">
+                            <router-link class="main-color font-20 bold mb-10-p font-16-p" to="/"
+                                >هل نسيت كلمة السر؟</router-link
                             >
-                        </p>
-                    </div>
-                    <input type="submit" class="main-bg white submit-btn font-20 bold flex-all pointer font-16-p" value="تسجيل دخول">
-                    <div
-                        class="main-color mt-15 pointer center-p"
-                        v-if="viaPhone"
-                        @click="changeLoginMethod"
-                    >
-                        تسجيل الدخول عبر البريد الإلكتروني
-                    </div>
-                    <div
-                        class="main-color mt-15 mt-10-p pointer center-p"
-                        @click="changeLoginMethod"
-                        v-else
-                    >
-                        تسجيل الدخول عن طريق رقم الهاتف
-                    </div>
-                </form>
+                            <p class="black-2 bold font-20 font-16-p">
+                                هل أنت مستخدم جديد؟
+                                <router-link class="main-color pr-10 p-0-p" to="/register"
+                                    >سجل من هنا</router-link
+                                >
+                            </p>
+                        </div>
+                        <input type="submit" class="main-bg white submit-btn font-20 bold flex-all pointer font-16-p" value="تسجيل دخول">
+                        <div
+                            class="main-color mt-15 pointer center-p"
+                            v-if="viaPhone"
+                            @click="changeLoginMethod"
+                        >
+                            تسجيل الدخول عبر البريد الإلكتروني
+                        </div>
+                        <div
+                            class="main-color mt-15 mt-10-p pointer center-p"
+                            @click="changeLoginMethod"
+                            v-else
+                        >
+                            تسجيل الدخول عن طريق رقم الهاتف
+                        </div>
+                    </form>
 
-            </dialog>
-        </transition>
-        <alert-dialog
-            :show="!!error"
-            :title="error"
-            @close="closeModal"
-        >
-        <template v-if="isBanned" #actions>
-            <router-link to="/contact-us" class="btn mb-10 ml-10">
-                اضغط هنا للمتابعة
-            </router-link>
-        </template>
-        </alert-dialog>
-        <div v-if="isLoading">
-            <loading-spinner></loading-spinner>
-        </div>
-    </aside>
+                </dialog>
+            </transition>
+            <alert-dialog
+                :show="!!error"
+                :title="error"
+                @close="closeModal"
+            >
+            <template v-if="isBanned" #actions>
+                <router-link to="/contact-us" class="btn mb-10 ml-10">
+                    اضغط هنا للمتابعة
+                </router-link>
+            </template>
+            </alert-dialog>
+            <div v-if="isLoading">
+                <loading-spinner></loading-spinner>
+            </div>
+        </aside>
+    </portal>
 </template>
 
 <script>
@@ -229,14 +231,14 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 999;
+    z-index: 10000;
     background-color: rgba(0, 0, 0, 0.75);
 }
 dialog {
     position: fixed;
     top: 3%;
     left: 10%;
-    z-index: 1000;
+    z-index: 10000000;
     right: 0;
     left: 0;
     margin: auto;

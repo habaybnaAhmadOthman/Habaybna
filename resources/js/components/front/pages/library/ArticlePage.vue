@@ -4,8 +4,8 @@
         <div class="container">
             <ArticleBanner></ArticleBanner>
             <ArticleContent></ArticleContent>
-            <div class=" mt-50">
-                <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists"></AboutSpecialists>
+            <div class="mt-50">
+                <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
             </div>
             <div class="mt-60">
                 <RelatedCourses :title="`دورات تدريب ذات صلة`" v-if="isDataReady"></RelatedCourses>

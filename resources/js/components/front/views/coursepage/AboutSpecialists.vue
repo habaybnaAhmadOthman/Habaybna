@@ -1,6 +1,7 @@
 <template>
     <div class="about-coach p-side-12-p">
         <h3 class="title-line mb-40 do">{{title}}</h3>
+        <h3 class="title-line mb-40 mo" v-if="moTitle">{{title}}</h3>
         <!-- desktop -->
         <div class="d-flex specialist-list flex-wrap row-3" v-if="!isMobile">
             <SpecialistCard v-for="specialist in specialists" :key="specialist.user_id" :specialist="specialist"></SpecialistCard>
@@ -27,7 +28,7 @@
 import SpecialistCard from '../../views/specialists/SpecialistCard.vue'
 export default {
     components: {SpecialistCard},
-    props: ['specialists','title'],
+    props: ['specialists','title','mo-title'],
     data(){
         return {
             

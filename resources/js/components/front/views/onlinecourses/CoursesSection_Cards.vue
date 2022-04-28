@@ -3,7 +3,7 @@
         <div class="container">
             <div class="courses-container">
                 <template v-if="filteredCourses.length">
-                    <div class="courses-list d-flex flex-wrap p-side-12-p">
+                    <div class="courses-list d-flex flex-wrap p-side-12-p" :class="listClass">
                         <CourseCard v-for="(course, index) in filteredCourses" :course="course" :key="index"></CourseCard>
                         <div class="course-box shadow w-31 radius-10 more main-bg w-100-p do" v-if="showMoreCard">
                             <router-link to="/all-courses" class="white-i font-23 h-100 d-block w-100">اكتشف المزيد</router-link>
@@ -25,7 +25,7 @@
 <script>
 import CourseCard from "./Course_Card.vue"
 export default {
-    props: ["filteredCourses","showMoreCard"],
+    props: ["filteredCourses","showMoreCard","list-class"],
     components: {CourseCard}
 };
 </script>

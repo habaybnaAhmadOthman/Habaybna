@@ -1,5 +1,5 @@
 <template>
-    <div class="small-card-list d-flex flex-wrap gap-20">
+    <div class="small-card-list d-flex flex-wrap gap-20" :class="classList">
        <SmallCard></SmallCard>
        <SmallCard></SmallCard>
        <SmallCard></SmallCard>
@@ -14,7 +14,7 @@
 <script>
 import SmallCard from './SmallCard.vue'
 export default {
-    props: ['filtered-articles','showMoreCard'],
+    props: ['filtered-articles','showMoreCard','class-list'],
     components: {SmallCard},
     mounted(){
         console.log(this.showMoreCard)
