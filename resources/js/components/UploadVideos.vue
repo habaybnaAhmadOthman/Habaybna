@@ -73,105 +73,114 @@
       </Panel>
     </Collapse>
 
-          <span
-          >
+    <span> أضف حلقة </span>
+    <div class="card" slot="content">
+      <div class="card-body">
+        <form @submit="formSubmit" enctype="multipart/form-data">
+          <div class="form-group">
+            <strong>عنوان الحلقة</strong>
 
-        أضف حلقة
-          </span>
-        <div class="card" slot="content">
-          <div class="card-body">
-            <form @submit="formSubmit" enctype="multipart/form-data">
-              <div class="form-group">
-                <strong>عنوان الحلقة</strong>
-
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.videoTitle"
-                  name="title"
-                />
-                <span class="error" v-if="!this.formValidation.videoTitle">
-                  * يجب تعبئة هذا الحقل
-                </span>
-              </div>
-              <div class="">
-                <strong>وصف الحلقة</strong>
-                <textarea id="videoDescription"></textarea>
-                <span
-                  class="error"
-                  v-if="!this.formValidation.videoDescription"
-                >
-                  * يجب تعبئة هذا الحقل
-                </span>
-              </div>
-              <div v-if="isUpdate" class="form-group">
-                <video ref="videoPlayer" controls autoplay seeking=true>
-                  <source :src="onLoad ? onLoad : ''" type="video/mp4" />
-                  <source src="movie.ogg" type="video/ogg" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-              <div class="form-group">
-                <strong>تحميل فيديو جديد :</strong>
-                <input
-                  name="video"
-                  type="file"
-                  class="cdk-ed form-control"
-                  @change="uploadvideo"
-                />
-                <span class="error" v-if="!this.formValidation.video">
-                  * يجب تعبئة هذا الحقل
-                </span>
-              </div>
-              <div class="form-group">
-                <RadioGroup v-model="form.is_publish" vertical>
-                  <Radio label="1">
-                    <span>نشر</span>
-                  </Radio>
-                  <Radio label="0">
-                    <span>عدم النشر</span>
-                  </Radio>
-                </RadioGroup>
-                <span class="error" v-if="!this.formValidation.is_publish">
-                  * يجب تعبئة هذا الحقل
-                </span>
-              </div>
-              <Button
-                v-if="isUpdate"
-                :style="{ float: 'right' }"
-                type="info"
-                :loading="loading"
-                @click="formSubmit"
-                class="publish"
-              >
-                <span v-if="!loading">تعديل</span>
-                <span v-else>جاري التعديل...</span>
-              </Button>
-              <Button
-                v-else
-                :style="{ float: 'right' }"
-                type="info"
-                ghost
-                :loading="loading"
-                @click="formSubmit"
-              >
-                <span v-if="!loading">حفظ</span>
-                <span v-else>حاري الحفظ...</span>
-              </Button>
-            </form>
+            <input
+              type="text"
+              class="form-control"
+              v-model="form.videoTitle"
+              name="title"
+            />
+            <span class="error" v-if="!this.formValidation.videoTitle">
+              * يجب تعبئة هذا الحقل
+            </span>
           </div>
-        </div>
+          <div class="">
+            <strong>وصف الحلقة</strong>
+            <textarea id="videoDescription"></textarea>
+            <span class="error" v-if="!this.formValidation.videoDescription">
+              * يجب تعبئة هذا الحقل
+            </span>
+          </div>
+          <div v-if="isUpdate" class="form-group">
+            <video ref="videoPlayer" controls autoplay seeking="true">
+              <source :src="onLoad ? onLoad : ''" type="video/mp4" />
+              <source src="movie.ogg" type="video/ogg" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="form-group">
+            <strong>رابط فيديو الحلقة :</strong>
+            <input
+              name="video"
+              type="text"
+              class="cdk-ed form-control"
+              v-model="form.video"
+            />
+            <span class="error" v-if="!this.formValidation.video">
+              * يجب تعبئة هذا الحقل
+            </span>
+          </div>
+          <div class="form-group">
+            <strong>  مدة الحلقة :</strong>
+            <input
+              name="length"
+              type="text"
+              class="cdk-ed form-control"
+              v-model="form.length"
+              placeholder="10:30"
+            />
+            <span class="error" v-if="!this.formValidation.length">
+              * يجب تعبئة هذا الحقل
+            </span>
+          </div>
+          <div class="form-group">
+            <RadioGroup v-model="form.is_publish" vertical>
+              <Radio label="1">
+                <span>نشر</span>
+              </Radio>
+              <Radio label="0">
+                <span>عدم النشر</span>
+              </Radio>
+            </RadioGroup>
+            <span class="error" v-if="!this.formValidation.is_publish">
+              * يجب تعبئة هذا الحقل
+            </span>
+          </div>
+          <Button
+            v-if="isUpdate"
+            :style="{ float: 'right' }"
+            type="info"
+            :loading="loading"
+            @click="formSubmit"
+            class="publish"
+          >
+            <span v-if="!loading">تعديل</span>
+            <span v-else>جاري التعديل...</span>
+          </Button>
+          <Button
+            v-else
+            :style="{ float: 'right' }"
+            type="info"
+            ghost
+            :loading="loading"
+            @click="formSubmit"
+          >
+            <span v-if="!loading">حفظ</span>
+            <span v-else>حاري الحفظ...</span>
+          </Button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Editor from "ckeditor5-custom-build/build/ckeditor";
-import initEditor from '../components/front/mixins/initEditor'
+import initEditor from "../components/front/mixins/initEditor";
 export default {
   mixins: [initEditor],
   mounted() {
-          this.initEditor('#videoDescription','form.videoDescription',function(){})
-
+    this.initEditor(
+      "#videoDescription",
+      "form.videoDescription",
+      function () {}
+    );
   },
   data() {
     return {
@@ -184,6 +193,7 @@ export default {
           enterMode: "br",
         },
         video: "",
+        length:"",
         is_publish: "",
         course_id: "",
       },
@@ -196,13 +206,14 @@ export default {
         courseTitle: "",
       },
       isUpdate: false,
-      loadingUrl:'',
+      loadingUrl: "",
       onLoad: "",
       formValidation: {
         videoTitle: true,
         videoDescription: true,
         video: true,
         is_publish: true,
+        length:true,
       },
       isFormValid: true,
     };
@@ -212,13 +223,12 @@ export default {
     this.getCourseVideos();
   },
   methods: {
-
     getCourseId() {
       this.form.course_id = this.$router.currentRoute.params.data;
     },
-    uploadvideo(event) {
-      this.form.video = event.target.files[0];
-    },
+    // uploadvideo(event) {
+    //   this.form.video = event.target.files[0];
+    // },
     async formSubmit(e) {
       this.validatForm();
       if (this.isFormValid) {
@@ -228,8 +238,15 @@ export default {
         this.form.is_publish = this.form.is_publish;
         let formData = new FormData();
         formData.append("title", this.form.videoTitle);
-        formData.append("description", this.form.videoDescription.getData().replaceAll('srcset','src').replaceAll(" 0w\"","\""));
+        formData.append(
+          "description",
+          this.form.videoDescription
+            .getData()
+            .replaceAll("srcset", "src")
+            .replaceAll(' 0w"', '"')
+        );
         formData.append("video", this.form.video);
+        formData.append("length", this.form.length);
         formData.append("is_publish", this.form.is_publish);
         formData.append("course_id", this.form.course_id);
         this.isUpdate ? formData.append("video_id", this.form.id) : "";
@@ -242,9 +259,10 @@ export default {
           this.$Message.success("Video Uploaded success");
 
           this.form.videoTitle = "";
-          this.form.videoDescription.setData('');
+          this.form.videoDescription.setData("");
           this.form.video = "";
           this.form.videoTitle = "";
+          this.form.length = "";
           this.loading = false;
         } else {
           axios
@@ -257,6 +275,7 @@ export default {
                 this.form.videoTitle = "";
                 this.form.videoDescription.setData("");
                 this.form.video = "";
+                this.form.length = "";
                 this.form.videoTitle = "";
                 this.getCourseVideos();
                 this.isUpdate = false;
@@ -284,12 +303,14 @@ export default {
     },
     editVideo(i) {
       this.isUpdate = true;
-        //   this.initEditor('#videoDescription','form.videoDescription',function(){})
+      //   this.initEditor('#videoDescription','form.videoDescription',function(){})
 
       let video = this.allVideos.videos[i];
 
       this.form.id = video.id;
       this.form.videoTitle = video.title;
+      this.form.length = video.length;
+      this.form.video = video.url;
       this.form.videoDescription.setData(video.description);
       this.loadingUrl = video.url;
       this.form.is_publish = video.status ? "1" : "0";
@@ -303,10 +324,16 @@ export default {
         this.formValidation.videoTitle = false;
       }
 
-      if (this.form.videoDescription.getData() !== "" ) {
+      if (this.form.videoDescription.getData() !== "") {
         this.formValidation.videoDescription = true;
       } else {
         this.formValidation.videoDescription = false;
+      }
+
+      if (this.form.length !== "") {
+        this.formValidation.length = true;
+      } else {
+        this.formValidation.length = false;
       }
 
       if (this.form.video !== "" || this.isUpdate) {

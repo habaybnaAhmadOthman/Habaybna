@@ -67,6 +67,7 @@ class CourseController extends Controller
        $course->is_free= $request->is_free;
        $course->price= $request->price;
        $course->discount= $request->discount > 0 ? $request->discount : 0 ;
+       $course->promo_video= $request->promoVideo;
 
 
        $course->save();
@@ -80,14 +81,13 @@ class CourseController extends Controller
             $course->cover_photo = $coverUrl ? $coverUrl: '';
             $course->save();
         }
-        if ($request->hasFile('promoVideo')) {
-            $promoVideo = $request->file('promoVideo');
-            $videoName = 'coursePromoVideo' . '-' . $promoVideo->getClientOriginalName();
-            $pathVid = $promoVideo->storeAs('public/videos/promoVideo', $videoName);
-            $promoUrl = url('/storage/videos/promoVideo/'.$videoName);
-            $course->promo_video= $promoUrl ? $promoUrl : '';
-            $course->save();
-        }
+        // if ($request->hasFile('promoVideo')) {
+        //     $promoVideo = $request->file('promoVideo');
+        //     $videoName = 'coursePromoVideo' . '-' . $promoVideo->getClientOriginalName();
+        //     $pathVid = $promoVideo->storeAs('public/videos/promoVideo', $videoName);
+        //     $promoUrl = url('/storage/videos/promoVideo/'.$videoName);
+        //     $course->save();
+        // }
 
 
 
@@ -137,20 +137,21 @@ class CourseController extends Controller
 
 
     //     }
-        if ($request->file('video')) {
-            $track = GetId3::fromUploadedFile($request->file('video'));
-            $length = $track->getPlaytime();
-            $video = $request->file('video');
-            $videoName = 'courseVideo' . '-' . $video->getClientOriginalName();
-            $pathVid = $video->storeAs('public/videos/courseVideos', $videoName);
-            $url = url('/storage/videos/courseVideos/'.$videoName);
-            $videoCourse->url= $url !== "" ? $url : '';
-            $videoCourse->length= $length ;
+        // if ($request->file('video')) {
+        //     $track = GetId3::fromUploadedFile($request->file('video'));
+        //     $length = $track->getPlaytime();
+        //     $video = $request->file('video');
+        //     $videoName = 'courseVideo' . '-' . $video->getClientOriginalName();
+        //     $pathVid = $video->storeAs('public/videos/courseVideos', $videoName);
+        //     $url = url('/storage/videos/courseVideos/'.$videoName);
+        //     $videoCourse->length= $length ;
 
-        }
+        // }
+        // $videoCourse->url= $url !== "" ? $url : '';
 
 
-
+        $videoCourse->url = $request->video;
+        $videoCourse->length = $request->length;
         $videoCourse->cover_image = '';
         $videoCourse->course_id= $request->course_id;
         $videoCourse->status= true;

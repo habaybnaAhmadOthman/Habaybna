@@ -68,7 +68,7 @@
                             </figure>
                             00962 799760238
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -104,12 +104,12 @@
                     this.message.isValid = false;
                     this.formIsValid = false;
                 }
-            
+
                 if (this.email.val == "") {
                     this.email.isValid = false;
                     this.formIsValid = false;
                 }
-                
+
             },
             submitForm(){
                 this.validateForm();
@@ -136,10 +136,14 @@
                 function send() {
                     var subject = 'Contact Us Form';
                     var message = $('#message').val();
+                    var name = $('#name').val();
+                    var email = $('#email').val();
                     data['subject'] = subject;
                     data['text'] = message;
+                    data['name'] = name;
+                    data['email'] = email;
 
-                    $.post('https://postmail.invotes.com/send',
+                    $.post('/api/contact-us',
                         data,
                         onSuccess
                     ).fail(onError);
