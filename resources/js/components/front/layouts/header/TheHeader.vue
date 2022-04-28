@@ -1,11 +1,13 @@
 <template>
     <header id="header" class="pt-5 pb-5">
         <div class="d-flex align-center space-between">
-            <div class="d-flex align-center w-100 mobile-top-header space-between">
-                <router-link to="/" class="logo d-flex">
-                    <img src="/images/siteImgs/header/logo.png" width="120" />
-                </router-link>
-                <a @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/home-icon.svg" /></a>
+            <div class="mo w-100-p">
+                <div class="d-flex align-center w-100 mobile-top-header space-between">
+                    <router-link to="/" class="logo d-flex">
+                        <img src="/images/siteImgs/header/logo.png" width="120" />
+                    </router-link>
+                    <a @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/home-icon.svg" /></a>
+                </div>
             </div>
             <div class="d-flex align-center w-100 header-right">
                 <div class="do">
