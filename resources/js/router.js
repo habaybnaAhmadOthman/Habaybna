@@ -11,15 +11,19 @@ import UploadVideos from "./components/UploadVideos.vue";
 import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
 import Calls from "./components/admin/calls/Calls.vue";
+import ContactUs from "./components/admin/contactUs/ContactUs.vue";
 import Parents from "./components/admin/parent/Parents.vue";
 import CreateParent from "./components/admin/parent/Create.vue";
 import CreateCoupon from "./components/admin/coupon/Create.vue";
 import CoursesOrders from "./components/admin/orders/courses/Index.vue";
+import Contents from "./components/admin/contents/Contents.vue";
 import CreateContent from "./components/admin/contents/Create.vue";
+import UpdateContent from "./components/admin/contents/Show.vue";
 import CreateCall from "./components/admin/calls/Create.vue";
 import CreateSpecialist from "./components/admin/specialist/Create.vue";
 import CreateOther from "./components/admin/other/Create.vue";
 import ShowSpecialist from "./components/admin/specialist/Show.vue";
+import ShowMessage from "./components/admin/contactUs/Show.vue";
 import ShowPackage from "./components/admin/calls/Show.vue";
 import ShowOther from "./components/admin/other/Show.vue";
 import Specialists from "./components/admin/specialist/Specialists.vue";
@@ -88,6 +92,11 @@ const routes = [{
         name: "Parents"
     },
     {
+        path: "/admin/contact-us",
+        component: ContactUs,
+        name: "ContactUs"
+    },
+    {
         path: "/admin/parent/create",
         component: CreateParent,
         name: "CreateParent"
@@ -123,6 +132,11 @@ const routes = [{
         name: "Coupons"
     },
     {
+        path: "/admin/contents",
+        component: Contents,
+        name: "Contents"
+    },
+    {
         path: "/admin/others",
         component: Others,
         name: "Others"
@@ -131,6 +145,16 @@ const routes = [{
         path: "/admin/parent/:data",
         component: Show,
         name: "Show"
+    },
+    {
+        path: "/admin/content/:data",
+        component: UpdateContent,
+        name: "UpdateContent"
+    },
+    {
+        path: "/admin/contact-us/:data",
+        component: ShowMessage,
+        name: "ShowMessage"
     },
     {
         path: "/admin/calls/package/:data",

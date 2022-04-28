@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\CustomClass\CreateContent;
 use Illuminate\Http\Request;
+use App\Content;
+
 
 class ContentController extends Controller
 {
@@ -13,14 +15,43 @@ class ContentController extends Controller
         return response()->json($content, 200);
     }
 
-   public function index(Request $request)
+   public function index()
    {
-       dd('xxxxxxxx');
+
+
+    // $contents = Content::where('article_type','Text');
+    // foreach($contents as $content){
+    //     if($content->image){
+    //         $rest = substr($content->image, 39);  // returns "abcde"
+
+
+    //         $newUrl = "http://localhost:8000/storage/media/".$rest;
+
+    //         $content->image = $newUrl ;
+    //         $content->save();
+    //     }
+    // }
+    //     foreach($contents as $content){
+    //     if($content->image){
+    //         $rest = substr($content->image, 39);  // returns "abcde"
+
+
+    //         $newUrl = "http://localhost:8000/storage/media/".$rest;
+
+    //         $content->image = $newUrl ;
+    //         $content->save();
+    //     }
+    // }
+      $contents = Content::paginate(15);
+        return response()->json($contents);
    }
 
-   public function update(Request $request)
+   public function update(Request $request, $id)
    {
-       dd('xxxxxxxx');
+    $content = Content::findorfail($id);
+    return response()->json($content);
+
+
    }
 
 
