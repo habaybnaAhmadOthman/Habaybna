@@ -5,6 +5,7 @@ import UserModule from "./modules/user/index.js";
 import CoursesModule from "./modules/courses/index.js";
 import AdminModule from "./modules/admin/index.js";
 import SpecialistModule from "./modules/specialist/index.js";
+import ContentModule from "./modules/content/index.js";
 
 import getters from "./getters";
 import mutations from "./mutations";
@@ -19,7 +20,8 @@ const store = new vuex.Store({
         user: UserModule,
         courses: CoursesModule,
         admin:AdminModule,
-        specialist: SpecialistModule
+        specialist: SpecialistModule,
+        content: ContentModule
     },
     state() {
         return {

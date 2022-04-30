@@ -14,6 +14,9 @@
     import TheFooter from '../../layouts/TheFooter.vue'
     export default {
         components: { TheHeader,Banner,ContentSection,TheFooter},
+        async created(){
+            await this.$store.dispatch('content/getContent')
+        }
     }
 </script>
 

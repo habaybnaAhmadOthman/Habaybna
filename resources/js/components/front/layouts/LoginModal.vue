@@ -1,5 +1,5 @@
 <template>
-    <portal to="destination">
+    <portal to="login-modal">
         <aside>
             <div
                 v-if="showModal"

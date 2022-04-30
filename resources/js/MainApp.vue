@@ -21,6 +21,8 @@
         The slot content of the above portal component will be rendered here.
         -->
       </portal-target>
+        <portal-target name="info-modal"></portal-target>
+        <portal-target name="login-modal"></portal-target>
     </main>
 </template>
 

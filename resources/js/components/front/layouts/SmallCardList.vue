@@ -5,7 +5,7 @@
        <SmallCard></SmallCard>
        <SmallCard></SmallCard>
        <SmallCard></SmallCard>
-       <div class="show-more-articles relative shadow w-31 radius-10 more w-100-p" v-if="showMoreCard">
+       <div class="show-more-articles bg-blue relative shadow w-31 radius-10 more w-100-p" v-if="showMoreCard">
             <router-link to="/library" class="white-i flex-all relative next-arrow font-27 h-100 d-block w-100">اكتشف المزيد</router-link>
         </div>
     </div>
@@ -23,9 +23,7 @@ export default {
 </script>
 
 <style scoped>
-.show-more-articles {
-    background: #FF9E00;
-}
+
 .show-more-articles:before {
         content: "";
     top: 0;

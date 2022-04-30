@@ -645,19 +645,22 @@ input[disabled] {
     font-family: "Baloo Bold"!important;
 }
 .bg-white {
-    background: #fff;
+    background-color: #fff;
 }
 .bg-gray {
-    background: #F4F4F4;
+    background-color: #F4F4F4;
 }
 .bg-gray-2 {
-    background: #f8f8f8;
+    background-color: #f8f8f8;
 }
 .bg-soft {
-    background: #FAFAFA;
+    background-color: #FAFAFA;
 }
 .bg-yellow {
-    background: #FF9E00;
+    background-color: #FF9E00;
+}
+.bg-blue {
+    background-color: #3FC4E0;
 }
 .card-1 {
     background: #FAFAFA;

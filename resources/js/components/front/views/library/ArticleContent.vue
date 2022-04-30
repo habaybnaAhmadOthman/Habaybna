@@ -1,7 +1,7 @@
 <template>
     <div class="">
-        <div class="box two-side mt-30 flex-wrap-p p-side-12-p">
-            <div class="right-side-col content w-100-p">
+        <div class="box mt-30 flex-wrap-p p-side-12-p">
+            <div class=" content w-100-p">
                 <h1 class="font-40 bold black font-28-p">تعليم الطفل المتأخر في النطق واللغة مهارة التصنيف</h1>
                 <div class="author-box bold mb-20 mt-10">
                     <p class="font-16 main-color">سعاد الدميري</p>
@@ -16,7 +16,7 @@
                     </div>   
                 </div>
             </div>
-            <div class="left-side-col w-100-p mt-20-p">
+            <!-- <div class="left-side-col w-100-p mt-20-p">
                 <div class="floating-ads">
                     <div class="shadow-2 radius-10 ad-box bg-yellow p-10 mpu">
                         ad 1 
@@ -25,7 +25,7 @@
                         ad 2
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
