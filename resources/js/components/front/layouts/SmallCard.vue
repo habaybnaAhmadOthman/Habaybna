@@ -1,21 +1,23 @@
 <template>
     <div class="small-card w-100-p relative">
         <div class="fav-box relative pointer shadow-2"></div>
-        <router-link class="radius-10 shadow d-flex p-10 bg-white box" to="/content/aa">
-            <div class="body ml-15 d-flex flex-column space-between">
-                <p class="black-2 font-20 font-15-p desc three-line">لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم لوريم ايبسوم</p>
+        <router-link class="radius-10 shadow d-flex p-10 bg-white box" :to="`/content/${item.title.split(' ').join('-')}`">
+            <div class="body ml-15 d-flex flex-column space-between flex-1">
+                <p class="black-2 font-20 font-15-p desc three-line">{{item.title}}</p>
                 <span class="date font-14 white radius-20 gray">1996/11/4</span>
             </div>
             <figure class="d-flex relative">
                 <!-- favourite -->
-                <img class="radius-10 object-fit main-img" src="/images/test.jpg" width="100" height="100">
+                <img class="radius-10 object-fit main-img" :src="item.image" width="100" height="100">
             </figure>
        </router-link>
     </div>
 </template>
 
 <script>
-export default {};
+export default {
+    props: ['item']
+};
 </script>
 
 <style scoped>

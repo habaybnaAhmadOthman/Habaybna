@@ -1,10 +1,6 @@
 <template>
-    <div class="small-card-list d-flex flex-wrap gap-20" :class="classList">
-       <SmallCard></SmallCard>
-       <SmallCard></SmallCard>
-       <SmallCard></SmallCard>
-       <SmallCard></SmallCard>
-       <SmallCard></SmallCard>
+    <div class="small-card-list d-flex flex-wrap gap-20" :class="classList">       
+       <SmallCard v-for="(item) in filteredArticles" :key="item.id" :item="item"></SmallCard>
        <div class="show-more-articles bg-blue relative shadow w-31 radius-10 more w-100-p" v-if="showMoreCard">
             <router-link to="/library" class="white-i flex-all relative next-arrow font-27 h-100 d-block w-100">اكتشف المزيد</router-link>
         </div>
