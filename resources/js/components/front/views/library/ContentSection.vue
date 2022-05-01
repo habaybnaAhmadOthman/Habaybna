@@ -6,7 +6,7 @@
           <h2 class="title-line mb-40 mb-20-p">المقالات</h2>
         </template>
         <template v-if="!listOnly">
-          <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection>
+          <!-- <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection> -->
           <!-- <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses> -->
         </template>
           <ContentList  :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
