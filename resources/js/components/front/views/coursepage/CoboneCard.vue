@@ -5,8 +5,8 @@
             <div v-if="isCourse" @click="addToFavourite" :class="{'active':courseData && courseData.is_favourite}" class="fav-box relative pointer"></div>
 
             <!-- video player container -->
-            <video ref="videoPlayer" class="video-js main-img w-100"></video>
-
+            <div class="vimeoPlayer video-js main-img w-100"></div>
+            
             <!-- discount label -->
             <template v-if="isCourse && courseData && !courseData.isPurchased">
                 <DiscountLabel class="course-discount" :is-free="courseData.is_free"
@@ -68,10 +68,7 @@
         </info-modal>
     </div>
 </template>
-
 <script>
-    import videojs from 'video.js';
-    import 'video.js/dist/video-js.css'
 
     import PaymentForm from './PaymentForm.vue'
     import CoboneForm from './CoboneCard_CoboneForm.vue'
@@ -79,6 +76,7 @@
     import LectureOptions from './CoboneCard_LectureOptions.vue'
 
     import infoModalMixin from '../../mixins/infoModal'
+    import Player from '@vimeo/player'
     export default {
         props: ['videoSrc'],
         mixins: [infoModalMixin],
@@ -106,25 +104,37 @@
                 },
                 showPaymentForm: false,
                 player: null,
-                videoOptions: {
-                    muted: false,
-                    autoplay: false,
-                    controls: true,
-                    sources: [
-                        {
-                            src:
-                                "https://cms.habaybna.net/sites/default/files/2021-10/IEP%20Teaser%20%281%29.mp4",
-                            type: "video/mp4"
-                        }
-                    ],
-                    playbackRates: [0.7, 1.0, 1.5, 2.0],
-                },
                 courseData: null,
                 lectureData: null,
                 isDataReady: false,
             }
         },
         methods: {
+            // ************
+            // player methods
+            // ************
+            initPlayer() {
+                // this.videoOptions.sources[0].src =  this.videoSrc
+                const self = this
+                this.player = new Player( document.querySelector('.vimeoPlayer') , {
+                    id: this.videoSrc
+                })
+                .on("ended", function() {
+                        console.log('video ended!')
+                        if (!self.isCourse) {
+                            self.addVideoAction('isComplete')
+                        }
+                    })
+                this.isDataReady = true
+            },
+            async addVideoAction(type) {
+                var params =  {
+                    videoID: this.lectureData.id,
+                    courseID: this.lectureData.course_id,
+                    type: type // isComplete || progress
+                }
+                const resp = await this.$store.dispatch('courses/videoAction',params);
+            },
              // add css class depend on the # of buttons
             moveCard(){
                 if (!window.matchMedia("(max-width: 677px)").matches) {
@@ -217,48 +227,6 @@
                 })
                 this.$router.replace(`/courses/${this.courseData.title.split(' ').join('-')}/${courseLectures[0].title.split(' ').join('-')}`)
             },
-            // ************
-            // player methods
-            // ************
-            initPlayer() {
-                this.videoOptions.sources[0].src =  this.videoSrc
-                this.player = videojs(this.$refs.videoPlayer, this.videoOptions, function onPlayerReady() {
-                    console.log('onPlayerReady', this);
-                })
-
-                // player events
-                this.addPlayerEvents()
-
-                this.isDataReady = true
-            },
-            addPlayerEvents(){
-                var self = this;
-                // for lessons ONLY
-                if (!this.isCourse) {
-                    this.player.on('ready', function() {
-                        // this.addClass('my-example');
-                    });
-                    this.player.on('ended', function() {
-                        self.addVideoAction('isComplete')
-                    });
-                }
-                this.player.on('fullscreenchange', (event) => {
-                    const isFullscreen = event.currentTarget.player.isFullscreen_
-                    if (isFullscreen) 
-                        document.querySelector('.video-js video').classList.add('fullscreen')
-                    else
-                        document.querySelector('.video-js video').classList.remove('fullscreen')
-                })
-            },
-            async addVideoAction(type) {
-                var params =  {
-                    videoID: this.lectureData.id,
-                    courseID: this.lectureData.course_id,
-                    type: type // isComplete || progress
-                }
-                const resp = await this.$store.dispatch('courses/videoAction',params);
-                
-            }
         },
         mounted() {
             this.getCourseData()
@@ -271,9 +239,7 @@
             },1000)
         },
         beforeDestroy() {
-            if (this.player) {
-                this.player.dispose()
-            }
+            document.querySelector('.vimeoPlayer').remove();
         }
     }
 </script>
@@ -344,6 +310,7 @@
 .figure-box,.video-js {
     height: 193px!important;
 }
+
 @media (min-width: 768px) {
     .course-card.active {
         top: 50px;
@@ -372,34 +339,11 @@
 .video-js {
     height: 193px!important;
 }
-.video-js video {
-    object-fit: cover;
+.video-js iframe {
+    width: 100%;
+    height: 100%;
 }
-.video-js video.fullscreen {
-    object-fit: inherit!important;
-}
-.vjs-big-play-button {
-    top: 0!important;
-    left: 0!important;
-    right: 0!important;
-    bottom: 0!important;
-    background-image:  url(/images/play-icon.svg)!important;
-    background-repeat: no-repeat!important;
-    background-size: 84px 84px!important;
-    background-position: center center!important;
-    border: none !important;
-    box-shadow: none !important;
-    height: 84px!important;
-    width: 84px!important;
-    margin: auto!important;
-}
-.video-js .vjs-big-play-button {
-    background-color:transparent !important;
-}
-.vjs-big-play-button:before, .video-js .vjs-big-play-button .vjs-icon-placeholder:before {
-    content: ""!important;
-    display: none;
-}
+
 @media (max-width: 767px) {
     .video-js {
         height: 210px!important;

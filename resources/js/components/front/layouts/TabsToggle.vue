@@ -62,5 +62,8 @@ button.active:after {
     .tabs-toggle {
         border-bottom: 1px solid #00000029;
     }
+    .swipe-box-p button.active:after{
+        bottom: 0;
+    }
 }
 </style>

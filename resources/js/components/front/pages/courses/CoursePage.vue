@@ -74,12 +74,14 @@ import TheFooter from '../../layouts/TheFooter.vue'
 import TheHeader from '../../layouts/header/TheHeader.vue'
 import TabsToggle from '../../layouts/TabsToggle.vue'
 import infoModalMixin from '../../mixins/infoModal'
+import { vueVimeoPlayer } from 'vue-vimeo-player'
 export default {
     props: ['course'],
     mixins: [infoModalMixin],
     components: { 
         CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter,TheHeader,
-        ShareCourseModal,TabsToggle
+        ShareCourseModal,TabsToggle,
+        vueVimeoPlayer
     },
     data() {
         return {

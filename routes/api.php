@@ -40,6 +40,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function(){
 
+        // contact us
+        Route::get('/contact-us/all-messages','ContactUsController@index');
+        Route::get('/contact-us/{id}','ContactUsController@show');
+
+
+
         //users
         Route::post('/delete-user/{id}','UserController@delete');
         Route::post('/user-status/{id}','UserController@changeStatus');
@@ -109,6 +115,11 @@ Route::middleware('auth:sanctum')->group(function () {
         // courses
         Route::match(['get','post'],'/course/course-lectures','CourseController@getClassRoomLectures');
 
+        // contents
+        Route::get('/contents','ContentController@index');
+        Route::get('/content/{id}','ContentController@update');
+
+
     });
     Route::match(['post'],'/course/course-lectures','CourseController@getClassRoomLectures');
     Route::post('/course/video-actions','UserController@setVideoActions');
@@ -151,6 +162,9 @@ Route::post('/payment/course','PaymentController@coursePaymentCallback');
 Route::post('/user/forget-password','HomeController@forgetPassword');
 Route::post('/user/forget-password/check-otp','HomeController@checkForgetPassword');
 Route::post('/user/forget-password/change-password','HomeController@changePassword');
+Route::get('/contents','ContentController@index');
+Route::post('/contact-us','HomeController@contactUs');
+
 
 
 

@@ -94,7 +94,7 @@ export default {
                 return '/'
         },
         certificateURL(){
-            if (this.courseData && this.courseData.course_progress.length > 0 && this.courseData.course_progress[this.courseData.videos_count - 1] !== undefined && this.courseData.course_progress[this.courseData.videos_count - 1].is_complete) {
+            if (this.courseData && this.courseData.completed_course) {
                 return `/course/${this.courseData.title.split(' ').join('-')}/certificate`
             } else
                 return '/'
@@ -127,6 +127,7 @@ export default {
                 // this.courseData.course_progress[index].is_complete == 1 ||
                 (
                     this.courseData.course_progress.length > 0 &&
+                    this.courseData.course_progress[index - 1] &&
                     this.courseData.course_progress[index - 1].is_complete == 1
                 )
             ) {
@@ -146,7 +147,7 @@ export default {
                 return `/`
             if (
                 index == 0 ||
-                (this.courseData && this.courseData.course_progress.length > 0 && this.courseData.course_progress[index - 1].is_complete == 1)
+                (this.courseData && this.courseData.course_progress.length > 0 && this.courseData.course_progress[index - 1] && this.courseData.course_progress[index - 1].is_complete == 1)
                 ) {
                     title = title.split(' ').join('-')
                     return `/courses/${this.courseTitle.split(' ').join('-')}/${title.split(' ').join('-')}`

@@ -1,24 +1,26 @@
 <template>
-    <aside :class="modalClass">
-        <div v-if="show" class="w-100 h-100 backdrop" @click="tryClose"></div>
-        <transition name="modal">
-            <dialog
-                class="overflow-hidden bg-white w-50 w-90-p info-modal"
-                v-if="show"
-                open
-            >
-                <div class="modal-body">
-                    <img v-if="!fixed" @click="tryClose" class="close-icon-modal pointer" src="/images/close-icon-color.png" width="34" height="34" />
-                    <img class="mb-40 mb-20-p d-block m-side-auto-p status-img" :src="`/images/${statusIcon}`" width="100" height="100" />
-                    <p class="title-line font-27 mb-20">{{title}}</p>
-                    <p class="black-2 font-20-p font-27 mb-40">{{description}}</p>
-                    <div class="d-flex modal-options flex-end" :class="optionsClass">
-                        <slot></slot>
+    <portal to="info-modal">
+        <aside :class="modalClass">
+            <div v-if="show" class="w-100 h-100 backdrop" @click="tryClose"></div>
+            <transition name="modal">
+                <dialog
+                    class="overflow-hidden bg-white w-50 w-90-p info-modal"
+                    v-if="show"
+                    open
+                >
+                    <div class="modal-body">
+                        <img v-if="!fixed" @click="tryClose" class="close-icon-modal pointer" src="/images/close-icon-color.png" width="34" height="34" />
+                        <img class="mb-40 mb-20-p d-block m-side-auto-p status-img" :src="`/images/${statusIcon}`" width="100" height="100" />
+                        <p class="title-line font-27 mb-20">{{title}}</p>
+                        <p class="black-2 font-20-p font-27 mb-40">{{description}}</p>
+                        <div class="d-flex modal-options flex-end" :class="optionsClass">
+                            <slot></slot>
+                        </div>
                     </div>
-                </div>
-            </dialog>
-        </transition>
-    </aside>
+                </dialog>
+            </transition>
+        </aside>
+    </portal>
 </template>
 
 <script>
@@ -81,14 +83,14 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 999;
+    z-index: 10000;
     background-color: rgba(0, 0, 0, 0.75);
 }
 dialog {
     position: fixed;
     top: 10vh;
     left: 10%;
-    z-index: 1000;
+    z-index: 100000;
     right: 0;
     left: 0;
     margin: auto;
@@ -146,6 +148,9 @@ dialog {
     .status-img {
         width: 58px;
         height: 58px;
+    }
+    .modal-options {
+        flex-direction: column;
     }
 }
 </style>

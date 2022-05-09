@@ -58,7 +58,7 @@
         },
         beforeDestroy(){
             if (this.desktopSwiper) {
-                document.querySelector('.related-courses-swiper').remove();
+                document.querySelector('.related-courses-swiper') && document.querySelector('.related-courses-swiper').remove();
             }
             
         }

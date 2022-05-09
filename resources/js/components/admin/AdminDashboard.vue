@@ -91,7 +91,7 @@ footer {
               <MenuItem name="1-2">
                 <Icon type="ios-videocam-outline" size="24" />
                 <router-link to="/admin/courses/users-progress">
-                    الدورات-حالة المستخدمين</router-link
+                  الدورات-حالة المستخدمين</router-link
                 >
               </MenuItem>
             </Submenu>
@@ -126,6 +126,14 @@ footer {
                 </router-link>
               </MenuItem>
             </Submenu>
+            <MenuItem name="6">
+              <Icon type="ios-call" size="16" />
+              <router-link to="/admin/contents"> المحتوى </router-link>
+            </MenuItem>
+            <MenuItem name="7">
+              <Icon type="ios-call" size="16" />
+              <router-link to="/admin/contact-us"> تواصل معنا </router-link>
+            </MenuItem>
           </Menu>
         </Sider>
         <Layout :style="{ padding: '0 5px' }">
@@ -142,6 +150,14 @@ footer {
 </template>
 <script>
 export default {
+    created() {
+    //         this.callApi(
+    //   "get",
+    //   "/api/admin/contact-us/all-messages"
+    // ).then(res=>{
+
+    // })
+    },
   data() {
     return {};
   },

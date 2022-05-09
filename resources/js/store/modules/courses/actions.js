@@ -159,7 +159,6 @@ export default {
     // ******** Course Lectures ::: get
     async getCourseLectures({commit,getters},payload) {
         // to check if the user still in the same course
-        console.log(getters.courseLectures)
         if ((payload.courseID == getters.course.id) &&
             getters.courseLectures.length != 0 && getters.courseLectures[0].title == getters.course.videos_title_length[0].lesson_title) {
                 return getters.courseLectures

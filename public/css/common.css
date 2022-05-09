@@ -193,11 +193,11 @@ body {
     white-space: pre-line;
 }
 .row-3 {
-    column-gap: 25px;
-    row-gap: 25px;
+    gap: 25px;
     display:flex;
     flex-wrap: wrap;
 }
+
 .row-3 > * {
     width: 31.92%;
 }
@@ -645,19 +645,22 @@ input[disabled] {
     font-family: "Baloo Bold"!important;
 }
 .bg-white {
-    background: #fff;
+    background-color: #fff;
 }
 .bg-gray {
-    background: #F4F4F4;
+    background-color: #F4F4F4;
 }
 .bg-gray-2 {
-    background: #f8f8f8;
+    background-color: #f8f8f8;
 }
 .bg-soft {
-    background: #FAFAFA;
+    background-color: #FAFAFA;
 }
 .bg-yellow {
-    background: #FF9E00;
+    background-color: #FF9E00;
+}
+.bg-blue {
+    background-color: #3FC4E0;
 }
 .card-1 {
     background: #FAFAFA;
@@ -1094,6 +1097,7 @@ img {
     .swipe-box-p {
         width: 100%;
         overflow-x: scroll!important;
+        overflow-y: hidden;
         white-space: nowrap;
         display: flex;
         flex-wrap: nowrap;
@@ -1140,5 +1144,8 @@ img {
     }
     .no-scrollbar-p::-webkit-scrollbar { 
         display: none;  /* Safari and Chrome */
+    }
+    button {
+        max-width: 100%!important;
     }
 }

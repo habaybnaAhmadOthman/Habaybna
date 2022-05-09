@@ -1,10 +1,20 @@
 <template>
     <header id="header" class="pt-5 pb-5">
         <div class="d-flex align-center space-between">
+            <div class="mo w-100-p">
+                <div class="d-flex align-center w-100 mobile-top-header space-between">
+                    <router-link to="/" class="logo d-flex">
+                        <img src="/images/siteImgs/header/logo.png" width="120" />
+                    </router-link>
+                    <a @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/home-icon.svg" /></a>
+                </div>
+            </div>
             <div class="d-flex align-center w-100 header-right">
-                <router-link to="/" class="logo d-flex">
-                    <img src="/images/siteImgs/header/logo.png" width="120" />
-                </router-link>
+                <div class="do">
+                    <router-link to="/" class="logo d-flex">
+                        <img src="/images/siteImgs/header/logo.png" width="120" />
+                    </router-link>
+                </div>
                 <div class="do w-100">
                     <menu class="d-flex align-center main-menu space-around pl-30">
                         <router-link
@@ -71,6 +81,10 @@
                 </div>
                 <!-- mobile buttons -->
                 <template>
+                    <router-link to="/" class="home-mo mo center mobile-link">
+                        <img src="/images/home-icon.svg" >
+                        <p class="font-10 mobile-icon-color">الرئيسية</p>
+                    </router-link>
                     <router-link to="/profile" class="profile-mo mo center mobile-link">
                         <img src="/images/profile-avatar-mo.svg" >
                         <p class="font-10 mobile-icon-color">حسابي</p>
@@ -103,20 +117,24 @@ export default {
             return this.$store.getters["user/isLoggedIn"];
         }
     },
-    created() {
-        window.addEventListener("scroll", this.handleScroll);
-    },
-    destroyed() {
-        window.removeEventListener("scroll", this.handleScroll);
-    },
+    // created() {
+    //     window.addEventListener("scroll", this.handleScroll);
+    // },
+    // destroyed() {
+    //     window.removeEventListener("scroll", this.handleScroll);
+    // },
     methods: {
-        handleScroll(event) {
-            // Any code to be executed when the window is scrolled
-            // console.log(event);
-        },
+        // handleScroll(event) {
+        //     // Any code to be executed when the window is scrolled
+        //     // console.log(event);
+        // },
+        // goBack(){
+        //     this.$router.back()
+        // },
         toggleMobileMenu(){
             this.isMobileMenuOpened = !this.isMobileMenuOpened
-        }
+        },
+        
     }
 };
 </script>
@@ -196,12 +214,24 @@ a {
         padding-left: 12px;
         padding-right: 12px;
         background:#F4F4F4;
+        position: relative;
     }
     .header-right {
         justify-content: space-between;
     }
     .mobile-link p {
         margin-top: -7px;
+    }
+    .header-right {
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        padding-left: 12px;
+        padding-right: 12px;
+        background: #F4F4F4;
+        box-shadow: 2px -1px 8px 0px rgb(0 0 0 / 30%);
+        right: 0;
+        height: 48px;
     }
 }
 </style>

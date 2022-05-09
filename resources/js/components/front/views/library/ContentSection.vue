@@ -1,15 +1,22 @@
 <template>
   <div>
     <section class="learn-section mt-20">
-      <div class="container p-side-12-p">
+      <div class="container p-side-12-p" :class="classList">
         <template v-if="title || !listOnly">
           <h2 class="title-line mb-40 mb-20-p">المقالات</h2>
         </template>
         <template v-if="!listOnly">
-          <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection>
+          <!-- <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection> -->
           <!-- <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses> -->
         </template>
-          <ContentList :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
+          <ContentList  :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
+          <div class="portal-pagination mt-40 mt-40 justify-center d-flex" v-if="!showMoreCardFn">
+            <Pagination
+              :data="contentTemp"
+              @pagination-change-page="getPageDate"
+              :limit="10"
+            ></Pagination>
+          </div>
       </div>
     </section>
     
@@ -17,17 +24,17 @@
   </div>
 </template>
 <script>
-// import Courses from './CoursesSection_Cards.vue'
 import ContentList from '../../layouts/SmallCardList.vue'
 import CategoryFilterSection from '../../layouts/CategoryFilterSection.vue'
+import LaravelVuePagination from "laravel-vue-pagination";
 export default {
-  props: ['cardsCount','showMoreCard','list-only','title'],
+  props: ['cardsCount','showMoreCard','list-only','title','class-list'],
   computed: {
     cardsCountFn(){
       if (this.cardsCount)
-        return this.appendedCourses.slice(0,this.cardsCount)
+        return this.articles.slice(0,this.cardsCount)
       else
-        return this.appendedCourses
+        return this.articles
     },
     showMoreCardFn(){
       if (this.showMoreCard === true)
@@ -36,24 +43,24 @@ export default {
         return false
     }
   },
-  components: {CategoryFilterSection,ContentList},
+  components: {CategoryFilterSection,ContentList,Pagination: LaravelVuePagination,},
   data(){
     return {
       activeFilters: [],
       atLeastOneSelected: false,
-      appendedCourses: [],
-      courseTemp: [],
-      api: 'courses/getCategories'
+      articles: [],
+      contentTemp: {},
+      api: 'courses/getCategories',
     }
   },
   created(){
-    this.getCourses();
+    this.getPageDate()
   },
   methods:{
-    filteredCourses() {
+    filteredContents() {
       self = this;
       self.atLeastOneSelected = false;
-      const courses = this.courseTemp;
+      const courses = this.articles;
       // if (courses) {
         const updatedList =  courses.filter(course=>{
           for (let index = 0; index < this.activeFilters.length; index++) {
@@ -75,28 +82,33 @@ export default {
         });
        if (updatedList.length < 1) {
           if (!self.atLeastOneSelected) {
-            this.appendedCourses = courses;
+            this.articles = courses;
           } else {
-            this.appendedCourses = [];
+            this.articles = [];
           }
         } else {
-          this.appendedCourses = updatedList;
+          this.articles = updatedList;
         }
       // }
     },
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
-      this.filteredCourses();
+      this.filteredContents();
     },
-    async getCourses() {
-      const allCourses = await this.$store.getters['courses/courses']
-      if ( allCourses.length > 0) {
-        this.courseTemp = allCourses
-      } else {
-        this.courseTemp = await this.$store.dispatch('courses/getAllCourses');
-      }
-      this.filteredCourses()
-    }
+    async getPageDate(page){
+        if (typeof page === "undefined") {
+            page = 1;
+        }
+        this.isLoading(true)
+        const resp = await this.$store.dispatch('content/getContent',{page})
+        this.isLoading(false)
+        this.contentTemp = resp
+        this.articles = resp.data
+        this.filteredContents()
+    },
+    isLoading(status) {
+      this.$store.commit('isLoading',status)
+    },
   }
 }
 </script>
@@ -104,5 +116,29 @@ export default {
 <style scoped>
 .all-courses-page .title-line {
   margin-bottom: 20px;
+}
+</style>
+<style>
+  .portal-pagination .pagination .page-link {
+      position: relative;
+      display: block;
+      padding: 0.5rem 0.75rem;
+      margin-left: -1px;
+      line-height: 1.25;
+      color: #000;
+      background-color: #fff;
+      border: 1px solid #dee2e6;
+  }
+.portal-pagination .page-item.active a{
+  z-index: 3;
+    color: #fff;
+    background-color: #780d93;
+    border-color: #780d93;
+}
+.portal-pagination .pagination {
+  display: flex;
+}
+.portal-pagination .page-item .sr-only{
+  display: none;
 }
 </style>

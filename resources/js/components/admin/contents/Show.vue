@@ -72,7 +72,7 @@
           * يجب تعبئة هذا الحقل
         </span>
       </div>
-      <div class="question-form">
+      <!-- <div class="question-form">
         <label> حالة المقال : </label>
         <input
           type="radio"
@@ -92,7 +92,7 @@
         <span class="error" v-if="!this.formValidation.is_publish">
           * يجب اختيار الحالة
         </span>
-      </div>
+      </div> -->
       <div class="question-form">
         <label>   تاريخ النشر</label>
         <input
@@ -155,10 +155,27 @@ export default {
       this.categories = resp.data.categories;
       this.form.specialistsList = resp.data.specialists;
     }
+        this.callApi("get", "/api/admin/content/" + this.$route.params.data).then(
+      (res) => {
+          console.log(res);
+        if (res.status == 200) {
+          this.form.content_id = res.data.id;
+          this.form.contentTitle = res.data.title;
+          this.form.courseDescription = res.data.body;
+          this.form.coverImage = res.data.image;
+          this.form.contTags = res.data.tags;
+          this.form.is_publish = res.data.discount_percentage;
+        //   this.form.coupone_durations.start_date = res.data.start_date;
+        //   this.form.coupone_durations.end_date = res.data.end_date;
+        //   this.form.status = res.data.status;
+        }
+      }
+    );
   },
   data() {
     return {
       form: {
+          content_id:null,
         tags: "",
         tagsValid: true,
         specialistsList: [],
@@ -247,7 +264,10 @@ export default {
     },
   },
   mounted() {
-    this.initEditor('#courseDescription','form.courseDescription',function(){});
+    const self = this;
+    this.initEditor('#courseDescription','form.courseDescription',function(){
+    });
+
   },
 };
 </script>

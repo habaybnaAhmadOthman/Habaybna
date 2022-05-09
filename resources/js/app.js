@@ -15,6 +15,8 @@ import ParentDashboard from './components/parents/ParentDashboard.vue'
 import ClassRoom from './components/parents/ClassRoom.vue'
 import Player from './components/Player.vue'
 
+
+
 import UploadVideos from './components/UploadVideos.vue'
 import router from './router';
 import ViewUI from 'view-design';
@@ -29,12 +31,14 @@ import './modules/auth.js';
 // portal
 import MainApp from './MainApp.vue'
 
-// import  portal plugins 
+// import  portal plugins
 import VueSocialSharing from 'vue-social-sharing'
 import VueMeta from 'vue-meta'
 // use portal plugins
 Vue.use(VueMeta)
 Vue.use(VueSocialSharing);
+
+
 
 Vue.use(VueCarousel);
 Vue.use(ViewUI,{ locale });

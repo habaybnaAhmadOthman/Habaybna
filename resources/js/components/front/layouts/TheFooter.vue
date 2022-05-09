@@ -1,5 +1,5 @@
 <template>
-    <footer class="main-footer pb-10-p pb-30">
+    <footer class="main-footer pb-30">
         <div class="container">
             <div class="d-flex footer-row flex-wrap-p p-side-12-p">
                 <div class="d-flex w-70 flex-wrap-p w-100-p">
@@ -142,6 +142,7 @@ select {
     }
     footer {
         margin-top: 40px;
+        padding-bottom: 60px;
     }
     .all-rights {
         order:3;
@@ -164,6 +165,9 @@ select {
     }
     footer {
         padding-top: 15px;
+    }
+    .hab-dectionary {
+        order: 3;
     }
 }
 </style>

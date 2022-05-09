@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ContactUs;
 use App\User;
 use Illuminate\Http\Request;
 // use App\Http\Controllers\Auth;
@@ -138,6 +139,18 @@ class HomeController extends Controller
         }
         return response('invalidPhoneNumber',403);
 
+    }
+
+    public function contactUs(Request $request)
+    {
+        $message = new ContactUs() ;
+
+        $message->name = $request->name ;
+        $message->email = $request->email ;
+        $message->message = $request->text ;
+
+        $message->save();
+        return response('success',200);
     }
 
 

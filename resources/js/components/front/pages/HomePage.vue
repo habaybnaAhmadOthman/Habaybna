@@ -8,7 +8,7 @@
         <div class="mt-50">
             <CoursesSection :cardsCount="5" :showMoreCard="true"></CoursesSection>
         </div>
-        <Articles :cardsCount="2" :showMoreCard="true" :title="true" :list-only="true"></Articles>
+        <Articles :cardsCount="5" :showMoreCard="true" :title="true" :list-only="true"></Articles>
         <div class="mt-50">
             <HabaybnaMedia></HabaybnaMedia>
         </div>
