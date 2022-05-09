@@ -429,10 +429,10 @@ class CourseController extends Controller
         return response()->json($data, 200);
    }
 
-    public function deleteCourse($id)
+    public function deleteCourse(Request $request)
     {
         try {
-            $course = Courses::findorfail($id) ;
+            $course = Courses::findorfail($request->id) ;
 
             // delete course videos
             if(count($course->videos) > 0)

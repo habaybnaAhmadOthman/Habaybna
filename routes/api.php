@@ -78,10 +78,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/onlineCourse','CourseController@index');
         Route::get('/edit-course/{course_id}','CourseController@getCoruseInfo')->name('getCoruseInfo');
         Route::post('/edit-course/{course_id}','CourseController@updateCoruseInfo');
-        Route::post('/delete-course/{course_id}','CourseController@deleteCourse');
+        Route::post('/delete-course','CourseController@deleteCourse');
         Route::post('/course-preview/{course_id}','CourseController@preview');
         Route::get('/course-certificate/{id}','CourseController@certificate');
         Route::post('/course/update-video/{id}','CourseController@updateVideo');
+
+        // media
+
+        Route::post('/create-media','MediaController@create');
+        Route::get('/media','MediaController@index');
 
         // quize
         Route::get('/get-quiz/{id}','QuizController@getCourseQuiz');
@@ -164,6 +169,10 @@ Route::post('/user/forget-password/check-otp','HomeController@checkForgetPasswor
 Route::post('/user/forget-password/change-password','HomeController@changePassword');
 Route::get('/contents','ContentController@index');
 Route::post('/contact-us','HomeController@contactUs');
+Route::post('/show-article','ContentController@showArticle');
+Route::get('/media','MediaController@index');
+
+
 
 
 
