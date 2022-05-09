@@ -189,6 +189,25 @@ export default {
         return resp
 
     },
+    async createMedia(context, payload) {
+        const resp = await callApi('POST', '/api/admin/create-media', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to update profile data");
+            throw error;
+        }
+        return resp
+
+    },
+    async deleteCourse(context, payload) {
+        console.log('context', context);
+        const resp = await callApi('POST', '/api/admin/delete-course', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to update profile data");
+            throw error;
+        }
+        return resp
+
+    },
     async uploadVideo(context, payload) {
         console.log('context', context);
         const resp = await callApi('POST', '/api/admin/course/upload-video', payload)

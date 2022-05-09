@@ -54,5 +54,15 @@ class ContentController extends Controller
 
    }
 
+   public function showArticle(Request $request)
+   {
+       $article = Content::where('title',$request->title)->first();
+       if($article){
+           return response($article,200);
+       }
+       return response('notFound',404);
+
+   }
+
 
 }

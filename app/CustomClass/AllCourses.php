@@ -16,8 +16,8 @@ class AllCourses {
         try {
             $allCourses = Courses::where('is_publish',1)->get();
 
+            $data = [] ;
             if(count($allCourses) > 0 ){
-                $data = [] ;
                 foreach ($allCourses as $one) {
                     if($one->videos && count($one->videos) > 0 ){
                         $data [] =
@@ -46,8 +46,10 @@ class AllCourses {
                         ];
                     }
                 }
+                return $data;
             }
             return $data;
+
 
         } catch (\Throwable $th) {
             throw $th;

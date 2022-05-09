@@ -105,7 +105,7 @@
         <span>حذف</span>
       </p>
       <div style="text-align: center">
-        <p>هل انت متأكد من حذف المستخدم؟</p>
+        <p>هل انت متأكد من حذف الدورة ؟</p>
       </div>
       <div slot="footer">
         <Button
@@ -155,9 +155,13 @@ export default {
     del(index) {
       console.log(this.idDeleteUser);
       this.modal_loading = true;
+           let obj = {
+           id : this.idDeleteUser
+
+            }
       const resp = this.$store.dispatch(
         "admin/deleteCourse",
-        this.idDeleteUser
+            obj
       );
       setTimeout(() => {
         this.modal_loading = false;

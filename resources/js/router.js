@@ -11,6 +11,8 @@ import UploadVideos from "./components/UploadVideos.vue";
 import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
 import Calls from "./components/admin/calls/Calls.vue";
+import Media from "./components/admin/media/Index.vue";
+import CreateMedia from "./components/admin/media/Create.vue";
 import ContactUs from "./components/admin/contactUs/ContactUs.vue";
 import Parents from "./components/admin/parent/Parents.vue";
 import CreateParent from "./components/admin/parent/Create.vue";
@@ -85,6 +87,16 @@ const routes = [{
         path: "/admin/courses",
         component: Courses,
         name: "Courses"
+    },
+    {
+        path: "/admin/media",
+        component: Media,
+        name: "Media"
+    },
+    {
+        path: "/admin/media-create",
+        component: CreateMedia,
+        name: "CreateMedia"
     },
     {
         path: "/admin/parents",
