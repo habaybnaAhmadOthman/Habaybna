@@ -23,6 +23,7 @@
     import RelatedCourses from "../../views/coursepage/RelatedCourses.vue";
     import TheFooter from '../../layouts/TheFooter.vue'
     export default {
+        props: ['article'],
         components: { TheHeader,ArticleBanner,ArticleContent,AboutSpecialists,RelatedCourses,TheFooter},
         data(){
             return {
@@ -32,7 +33,7 @@
         },
         methods: { 
             async getPageData(){
-                let data = await this.$store.dispatch('courses/getCourseDetails','فيصلي');
+                let data = await this.$store.dispatch('content/getArticle',{title: this.article.split('-').join(' ')});
                 this.specialists  = data.providers;
                 this.isDataReady = true
             }

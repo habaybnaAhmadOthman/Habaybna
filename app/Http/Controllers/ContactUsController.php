@@ -17,7 +17,7 @@ class ContactUsController extends Controller
    {
        $message = ContactUs::findorfail($id);
        $message->seen = true ;
-       $message->save() ;
+       $message->save();
        return response($message,200);
    }
 

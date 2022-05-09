@@ -9,4 +9,13 @@ export default {
         }
         return resp.data;
     },
+    // ******** get Article By Name ::: get
+    async getArticle(context,payload) {
+        const resp = await callApi("POST", `/api/show-article`,payload);
+        if (resp.status != 200) {
+            const error = new Error("fail to get article");
+            throw error;
+        }
+        return resp.data;
+    },
 };
