@@ -56,7 +56,8 @@
         </info-modal>
 
         <TheFooter></TheFooter>
-        
+        <portal-target name="cobone-modal"></portal-target>
+        <portal-target name="cobone-card"></portal-target>
     </div>
 </template>
 
