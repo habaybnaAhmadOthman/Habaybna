@@ -232,18 +232,18 @@
 
 
             <div class="">
-                <div class="d-flex">
-                    <button class="btn-2 flex-all font-20 ml-20">
+                <div class="d-flex flex-wrap justify-center-p column-reverse">
+                    <button class="btn-2 flex-all font-20 ml-20 m-0-p w-100-p">
                         حفظ
                     </button>
                     <button
-                        class="btn-3 radius-12 ml-20"
+                        class="btn-3 radius-12 ml-20 mb-15-p m-0-p w-100-p"
                         @click.prevent="togglePrivateModeDialog"
                     >
                         نظام الخصوصية
                     </button>
                     <button
-                        class="btn-3 radius-12"
+                        class="btn-3 radius-12 mb-15-p m-0-p"
                         @click.prevent="showPasswordDialog"
                     >
                         تغيير كلمة المرور
@@ -268,7 +268,7 @@ import "vue-multiselect/dist/vue-multiselect.min.css";
 import PrivateModeDialog from './PrivateModeDialog.vue';
 
 export default {
-    emits: ["submit-form", "open-password-dialog"],
+    emits: ["submit-form", "open-password-dialog","loading"],
     components: { Multiselect,PrivateModeDialog },
     props: ['years'],
     mounted() {
@@ -334,6 +334,7 @@ export default {
             this.PrivateModeDialog = !this.PrivateModeDialog;
         },
         async getProfileData() {
+            this.$emit('loading',true)
             const obj = await this.$store.dispatch("user/getProfileData");
             const data = obj.userData;
             this.firstName = data.firstName;
@@ -354,6 +355,7 @@ export default {
             this.employment.val = data.employment || 'no';
             this.jobTitle.val = data.job_title;
             this.privateMode = data.private_mode;
+            this.$emit('loading',false)
         },
         showPasswordDialog() {
             this.$emit("open-password-dialog");

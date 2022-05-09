@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <img
-                        src="/images/siteImgs/header/logo.png"
+                        src="/images/bars-icon.svg"
                         width="20"
                         height="20"
                         @click="openNavMenu"
@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import {userImageModalBus} from './../../views/userprofile/UserProfile_Template.vue'
 export default {
     data() {
         return {
@@ -68,10 +67,9 @@ export default {
     methods: { 
         openNavMenu(){
             document.querySelector('.user-side-nav').classList.add('active')
-            document.querySelector("body").classList.add("overflow-hidden");
         },
         openUserImageModal(){
-            userImageModalBus.$emit('openImageModal',document.querySelector('.user-avatar-get').getAttribute('src'));
+            this.$store.commit('user/openAvatarModal',true);
         },
         logout(){
             this.$store.dispatch('user/logout');

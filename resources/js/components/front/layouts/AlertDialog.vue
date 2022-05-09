@@ -1,30 +1,32 @@
 <template>
-    <aside :class="modalClass">
-        <div v-if="show" class="w-100 h-100 backdrop" @click="tryClose"></div>
-        <transition name="modal">
-            <dialog
-                class="overflow-hidden bg-white w-50 w-90-p radius-12 border-0 m-0 p-0 alert-modal"
-                v-if="show"
-                open
-            >
-                <div class="header white w-100 p-side-15 pt-15 pb-15">
-                    <slot name="header">
-                        <p class="bold font-20">{{ title }}</p>
-                    </slot>
-                </div>
-                <section class="p-side-15 pt-15 pb-15 body">
-                    <slot></slot>
-                </section>
-                <menu class="d-flex flex-end ml-10 mb-10 modal-footer">
-                    <slot name="actions">
-                        <button class="btn mb-10 ml-10" @click="tryClose">
-                            حسنا
-                        </button>
-                    </slot>
-                </menu>
-            </dialog>
-        </transition>
-    </aside>
+    <portal to="destination">
+        <aside :class="modalClass">
+            <div v-if="show" class="w-100 h-100 backdrop" @click="tryClose"></div>
+            <transition name="modal">
+                <dialog
+                    class="overflow-hidden bg-white w-50 w-90-p radius-12 border-0 m-0 p-0 alert-modal"
+                    v-if="show"
+                    open
+                >
+                    <div class="header white w-100 p-side-15 pt-15 pb-15 pt-10-p pb-10-p">
+                        <slot name="header">
+                            <p class="bold font-20 font-16-p">{{ title }}</p>
+                        </slot>
+                    </div>
+                    <section class="p-side-15 pt-15 pb-15 body">
+                        <slot></slot>
+                    </section>
+                    <menu class="d-flex flex-end ml-10 mb-10 modal-footer">
+                        <slot name="actions">
+                            <button class="btn mb-10 ml-10" @click="tryClose">
+                                حسنا
+                            </button>
+                        </slot>
+                    </menu>
+                </dialog>
+            </transition>
+        </aside>
+    </portal>
 </template>
 
 <script>
@@ -57,14 +59,14 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 999;
+    z-index: 10000;
     background-color: rgba(0, 0, 0, 0.75);
 }
 dialog {
     position: fixed;
     top: 20vh;
     left: 10%;
-    z-index: 1000;
+    z-index: 100000;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     right: 0;
     left: 0;
@@ -105,7 +107,17 @@ dialog {
 }
 @media (max-width: 767px) {
     dialog {
-        top: 10vh;
+        top: 5%;
+    }
+    .body {
+        max-height: 320px;
+    }
+    .modal-body, .user-image-modal .modal-footer,.user-image-modal .modal-footer {
+        width: 100%!important;
+    }
+    .user-image-modal .modal-footer {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }
 </style>

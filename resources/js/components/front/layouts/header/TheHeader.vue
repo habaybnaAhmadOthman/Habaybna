@@ -1,73 +1,102 @@
 <template>
-    <header v-if="$route.meta.header != false" id="header" class="">
+    <header id="header" class="pt-5 pb-5">
         <div class="d-flex align-center space-between">
-            <div class="d-flex align-center">
-                <div class="logo">
-                    <img src="/images/siteImgs/header/logo.png" />
+            <div class="mo w-100-p">
+                <div class="d-flex align-center w-100 mobile-top-header space-between">
+                    <router-link to="/" class="logo d-flex">
+                        <img src="/images/siteImgs/header/logo.png" width="120" />
+                    </router-link>
+                    <a @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/home-icon.svg" /></a>
                 </div>
-                <menu class="d-flex align-center main-menu">
-                    <router-link
-                        class="white-i nowrap p-side-10 h-100 flex-all bold"
-                        to="/"
-                        >الرئيسية</router-link
-                    >
-                    <router-link
-                            class="white-i nowrap p-side-10 h-100 flex-all bold"
-                            to="/profile"
-                            >حسابي</router-link
-                        >
-                    <div class="dropdown relative h-100 flex-all">
-                        <router-link
-                            class="white-i nowrap p-side-10 h-100 flex-all bold"
-                            to="/"
-                            >مكتبة حبايبنا</router-link
-                        >
-                        <aside class="radius-5 overflow-hidden trans">
-                            <router-link
-                                class="white nowrap d-block trans pt-15 pb-15 p-5"
-                                to="/"
-                                >الفيديوهات</router-link
-                            >
-                            <router-link
-                                class="white nowrap d-block trans pt-15 pb-15 p-5"
-                                to="/"
-                                >المقالات</router-link
-                            >
-                            <router-link
-                                class="white nowrap d-block trans pt-15 pb-15 p-5"
-                                to="/"
-                                >مقدمي المحتوى</router-link
-                            >
-                            <router-link
-                                class="white nowrap d-block trans pt-15 pb-15 p-5"
-                                to="/"
-                                >شارك معنا</router-link
-                            >
-                        </aside>
-                    </div>
-                    <router-link
-                        class="white-i nowrap p-side-10 h-100 flex-all bold"
-                        to="/"
-                        >دليل حبايبنا</router-link
-                    >
-                    <router-link
-                        class="white-i nowrap p-side-10 h-100 flex-all bold"
-                        to="/"
-                        >إسأل الأخصائيين</router-link
-                    >
-                    <router-link
-                        class="white-i nowrap p-side-10 h-100 flex-all bold"
-                        to="/"
-                        >من نحن</router-link
-                    >
-                    <router-link
-                        class="white-i nowrap p-side-10 h-100 flex-all bold"
-                        to="/"
-                        >الدورات التدريبية</router-link
-                    >
-                </menu>
             </div>
-            <LeftSide :isLoggedIn="isLoggedIn"></LeftSide>
+            <div class="d-flex align-center w-100 header-right">
+                <div class="do">
+                    <router-link to="/" class="logo d-flex">
+                        <img src="/images/siteImgs/header/logo.png" width="120" />
+                    </router-link>
+                </div>
+                <div class="do w-100">
+                    <menu class="d-flex align-center main-menu space-around pl-30">
+                        <router-link
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                            to="/"
+                            >الرئيسية</router-link
+                        >
+                        <router-link
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                            to="/online-courses"
+                            >الدورات الرقمية</router-link
+                        >
+                        <router-link
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                            to="/ask-specialists"
+                            >الاستشارات مع المختصين</router-link
+                        >
+                        <router-link
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                            to="/library"
+                            >مكتبة المعلومات</router-link
+                        >
+                        <router-link
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                            to="/a"
+                            >تواصلوا معنا</router-link
+                        >
+                        <router-link
+                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                            to="/s"
+                            >مكالمات</router-link
+                        >
+                        <!-- <div class="dropdown relative h-100 flex-all">
+                            <router-link
+                                class="black-2 nowrap p-side-10 h-100 flex-all bold"
+                                to="/library"
+                                >مكتبة حبايبنا</router-link
+                            >
+                            <aside class="radius-5 overflow-hidden trans">
+                                <router-link
+                                    class="white nowrap d-block trans pt-15 pb-15 p-5"
+                                    to="/"
+                                    >الفيديوهات</router-link
+                                >
+                                <router-link
+                                    class="white nowrap d-block trans pt-15 pb-15 p-5"
+                                    to="/"
+                                    >المقالات</router-link
+                                >
+                                <router-link
+                                    class="white nowrap d-block trans pt-15 pb-15 p-5"
+                                    to="/"
+                                    >مقدمي المحتوى</router-link
+                                >
+                                <router-link
+                                    class="white nowrap d-block trans pt-15 pb-15 p-5"
+                                    to="/"
+                                    >شارك معنا</router-link
+                                >
+                            </aside>
+                        </div> -->
+                        
+                    </menu>
+                </div>
+                <!-- mobile buttons -->
+                <template>
+                    <router-link to="/" class="home-mo mo center mobile-link">
+                        <img src="/images/home-icon.svg" >
+                        <p class="font-10 mobile-icon-color">الرئيسية</p>
+                    </router-link>
+                    <router-link to="/profile" class="profile-mo mo center mobile-link">
+                        <img src="/images/profile-avatar-mo.svg" >
+                        <p class="font-10 mobile-icon-color">حسابي</p>
+                    </router-link>
+                    <div to="/profile" class="profile-mo mo center mobile-link">
+                        <img src="/images/menu-icon-mobile.svg" @click="toggleMobileMenu">
+                        <p class="font-10 mobile-icon-color">المزيد</p>
+                    </div>
+
+                </template>
+            </div>
+            <LeftSide :isMobileMenuOpened="isMobileMenuOpened" :toggleMobileMenu="toggleMobileMenu" @toggleMobileMenu="toggleMobileMenu" :isLoggedIn="isLoggedIn"></LeftSide>
         </div>
     </header>
 </template>
@@ -78,22 +107,34 @@ export default {
     components: {
         LeftSide
     },
+    data(){
+        return {
+            isMobileMenuOpened: false,
+        }
+    },
     computed: {
         isLoggedIn() {
             return this.$store.getters["user/isLoggedIn"];
         }
     },
-    created() {
-        window.addEventListener("scroll", this.handleScroll);
-    },
-    destroyed() {
-        window.removeEventListener("scroll", this.handleScroll);
-    },
+    // created() {
+    //     window.addEventListener("scroll", this.handleScroll);
+    // },
+    // destroyed() {
+    //     window.removeEventListener("scroll", this.handleScroll);
+    // },
     methods: {
-        handleScroll(event) {
-            // Any code to be executed when the window is scrolled
-            // console.log(event);
-        }
+        // handleScroll(event) {
+        //     // Any code to be executed when the window is scrolled
+        //     // console.log(event);
+        // },
+        // goBack(){
+        //     this.$router.back()
+        // },
+        toggleMobileMenu(){
+            this.isMobileMenuOpened = !this.isMobileMenuOpened
+        },
+        
     }
 };
 </script>
@@ -103,19 +144,21 @@ header {
     padding-right: 1.2vw;
     transition: 0.5s ease-in-out;
     box-shadow: 10px 10px 10px -16px #000;
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
-    z-index: 10;
-    background:#000;
+    z-index: 9999;
+    background: #fff;
 }
 .main-menu {
     align-self: stretch;
 }
 .main-menu > a,
 .main-menu .dropdown > a {
-    min-width: 112px;
     padding: 0 10px;
+}
+.main-menu > a {
+    padding: 24px 10px;
 }
 .dropdown > aside {
     position: absolute;
@@ -138,5 +181,57 @@ header {
 .dropdown:hover > aside {
     visibility: visible;
     opacity: 1;
+}
+a {
+    position: relative;
+}
+.main-menu .router-link-exact-active:before {
+    content: '';
+    width: 100%;
+    height: calc(100% + 14px);
+    background: #E58C00;
+    right: 0;
+    top: -6px;
+    position: absolute;
+    z-index: -1;
+    box-shadow: 0px 3px 6px #00000029;
+}
+.main-menu .router-link-exact-active {
+    color: #fff!important;
+}
+.header-right {
+    height: 100%;
+}
+.mobile-icon-color{
+    color: #6E6D6D;
+}
+@media (max-width: 767px) {
+    .logo img {
+        width:50px;
+        height: 34px;
+    }
+    header {
+        padding-left: 12px;
+        padding-right: 12px;
+        background:#F4F4F4;
+        position: relative;
+    }
+    .header-right {
+        justify-content: space-between;
+    }
+    .mobile-link p {
+        margin-top: -7px;
+    }
+    .header-right {
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        padding-left: 12px;
+        padding-right: 12px;
+        background: #F4F4F4;
+        box-shadow: 2px -1px 8px 0px rgb(0 0 0 / 30%);
+        right: 0;
+        height: 48px;
+    }
 }
 </style>

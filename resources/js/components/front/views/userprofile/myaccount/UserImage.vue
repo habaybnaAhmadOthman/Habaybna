@@ -8,46 +8,31 @@
                     height="100"
                     class="m-side-auto d-block radius-60 user-img object-fit"
                 />
-                <p class="main-color font-22">اختر شخصية</p>
+                <p class="main-color font-22 font-18-p">اختر شخصية</p>
                 <div class="d-flex flex-wrap space-between images-box radius-12 p-10">
-                    <label class="img-box radio-img pointer flex-all radius-12 relative mb-15" >
-                        <input type="radio" value="/images/siteImgs/header/logo.png" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
+                    <label class="img-box radio-img pointer flex-all radius-12 relative mb-15 mb-5-p" >
+                        <input type="radio" value="/images/avatars/MEN-1.svg" v-model="selectedImage" />
+                        <img src="/images/avatars/MEN-1.svg" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
-                    <label class="img-box radio-img pointer flex-all radius-12 relative mb-15">
-                        <input type="radio" value="/images/siteImgs/home-banner.jpg" v-model="selectedImage" />
-                        <img src="/images/siteImgs/home-banner.jpg" width="88" height="83" class="z-1 radius-12" />
+                    <label class="img-box radio-img pointer flex-all radius-12 relative mb-15 mb-5-p">
+                        <input type="radio" value="/images/avatars/MEN-2.svg" v-model="selectedImage" />
+                        <img src="/images/avatars/MEN-2.svg" width="88" height="83" class="z-1 radius-12" />
                         <span></span>
                     </label>
-                    <label class="img-box radio-img pointer flex-all radius-12 relative mb-15">
-                        <input type="radio" value="A3" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
+                    <label class="img-box radio-img pointer flex-all radius-12 relative mb-15 mb-5-p">
+                        <input type="radio" value="/images/avatars/WOMAN-1.svg" v-model="selectedImage" />
+                        <img src="/images/avatars/WOMAN-1.svg" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
-                    <label class="img-box radio-img pointer flex-all radius-12 relative mb-15">
-                        <input type="radio" value="A4" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
-                        <span class="trans"></span>
-                    </label>
-                    <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="A5" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
+                    <label class="img-box radio-img pointer flex-all radius-12 relative mb-15 mb-5-p">
+                        <input type="radio" value="/images/avatars/WOMAN-2.svg" v-model="selectedImage" />
+                        <img src="/images/avatars/WOMAN-2.svg" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                     <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="A6" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
-                        <span class="trans"></span>
-                    </label>
-                    <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="A7" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
-                        <span class="trans"></span>
-                    </label>
-                    <label class="img-box radio-img pointer flex-all radius-12 relative">
-                        <input type="radio" value="A8" v-model="selectedImage" />
-                        <img src="/images/siteImgs/header/logo.png" width="88" height="83" class="z-1 radius-12" />
+                        <input type="radio" value="/images/avatars/WOMAN-3.svg" v-model="selectedImage" />
+                        <img src="/images/avatars/WOMAN-3.svg" width="88" height="83" class="z-1 radius-12" />
                         <span class="trans"></span>
                     </label>
                 </div>
@@ -75,10 +60,6 @@ export default {
     emits: ["close-image-modal","popup-alert"],
     mixins: [loadingMixin],
     props: {
-        userAvatar: {
-            type: String,
-            default: '/images/siteImgs/header/logo.png'
-        },
         show: Boolean
     },
     data() {
@@ -94,12 +75,14 @@ export default {
             this.userAvatarTemp = newV;
         }
     },
+    mounted(){
+        this.userAvatarTemp = this.$store.getters['user/userData'].avatar
+    },
     methods: {
         async submitForm() {
             this.formIsValid = true;
             self = this
             // submit then
-            // this.closeModal();
             if (!this.uploadedImage && !this.selectedImage) {
                 this.formIsValid = false;
                 return false;
@@ -111,34 +94,22 @@ export default {
             } else {
                 formData.append("avatar", this.selectedImage);
             }
-
-            await $.ajax({
-                "url": "/api/edit-profile-image",
-                "method": "POST",
-                "timeout": 0,
-                "headers": {
-                    "enctype": "multipart/form-data",
-                    "X-CSRF-TOKEN": document.querySelector('[name="csrf-token"]').getAttribute('content')
-                },
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": formData
-            }).done(function (response) {
+            try {
+                let resultURL  = await this.$store.dispatch("user/profileAvatar", formData);
                 self.$emit('popup-alert','showUserImageModal','تم حفظ التغييرات')
-                response = JSON.parse(response)
-                self.$store.commit('user/userAvatar',response.url);
-                self.userAvatarTemp = response.url;
-                document.querySelector('.user-avatar-get').setAttribute('src',response.url)
-            }).fail(function(err){
+                self.$store.commit('user/userAvatar',resultURL);
+                self.userAvatarTemp = resultURL;
+                document.querySelector('.user-avatar-get').setAttribute('src',resultURL)
+            } catch (e) {
                 self.$emit('popup-alert','showUserImageModal','حصل خطأ ما')
-            });
+                self.$emit('loading',false);
+            }
             
             self.$emit('loading',false);
 
         },
         closeModal() {
-            this.$emit("close-image-modal");
+            this.$store.commit('user/openAvatarModal',false);
         },
         processFile(event){
             self = this
@@ -213,5 +184,25 @@ input[type="file"] {
 }
 .user-img {
     border: 2px solid #660066;
+}
+@media (max-width: 767px) {
+    .modal-body, .user-image-modal .modal-footer,.user-image-modal .modal-footer {
+        width: 100%!important;
+    }
+    .img-box {
+        width: 65px;
+        height: 65px;
+    }
+    .img-box img {
+        width: 55px;
+        height: 55px;
+    }
+    .user-image-modal dialog {
+        top: 5%!important;
+    }
+    .user-img {
+        width: 70px;
+        height: 70px;
+    }
 }
 </style>

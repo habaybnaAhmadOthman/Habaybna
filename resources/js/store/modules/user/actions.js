@@ -12,8 +12,8 @@ export default {
     async registerFirstStep(context, payload) {
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "register", payload);
-        if (resp.status != 201) {
-            const error = new Error("fail to register");
+        if (!resp || resp.status != 201) {
+            const error = new Error("رقم الهاتف مستخدم، يرجى تجربة رقم آخر");
             throw error;
         }
         context.commit("setUser",{
@@ -43,22 +43,86 @@ export default {
     async login(context, payload) {
         await axios.get("/sanctum/csrf-cookie");
         const resp = await callApi("POST", "login", payload);
+        if (resp && resp.data && resp.data.status && resp.data.status == 403) {
+            const error = new Error("تم إيقاف حسابك");
+            throw error;
+        }
         if (!resp || resp.status != 200) {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
-
+        context.commit('clearUser');
+        context.commit('clearAdmin');
+        context.commit('setUser',{
+            token: resp.data.token,
+        })
+        axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
         await context.dispatch('checkUserAuth')
     },
+    // ******** login modal :::
+    // !!!!!!!!!!!!!
+    // check error handling
+    async loginModal(context, payload) {
+        // await axios.get("/sanctum/csrf-cookie");
+        const resp = await callApi("POST", "/login", payload);
+        if (resp && resp.data && resp.data.status && resp.data.status == 403) {
+            const error = new Error("تم إيقاف حسابك");
+            throw error;
+        }
+        if (!resp || resp.status != 200) {
+            const error = new Error("يرجى التأكد من الحقول المدخلة");
+            throw error;
+        }
+        context.commit('clearUser');
+        context.commit('clearAdmin');
+        context.commit('setUser',{
+            token: resp.data.token,
+        })
+        axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
+        await context.dispatch('checkUserAuth')
+    },
+    async forgetPassword(context, payload) {
+        // await axios.get("/sanctum/csrf-cookie");
+        const resp = await callApi("POST", "/api/user/forget-password", payload);
+        if (!resp || resp.status != 200) {
+            const error = new Error("يرجى التأكد من الحقول المدخلة");
+            throw error;
+        }
+    },
     // ******** logout :::
-    async logout(context){
-        const resp = await callApi("POST", "logoutt");
-        if (resp.status != 200) {
+    async logout({commit,rootState,dispatch}){
+        const resp = await callApi("POST", "logout");
+        if (resp.status != 204) {
             const error = new Error("fail to logout");
             throw error;
         }
+        rootState.showLoginModal = false;
+        commit('clearUser');
+        commit('clearAdmin');
+        await dispatch('courses/getAllCourses',{}, {root:true})
 
-        context.commit('clearUser');
+    },
+    //**** logout admin */
+    async Adminlogout({commit,rootState}){
+        const resp = await callApi("POST", "/logout");
+        if (resp.status != 204) {
+            const error = new Error("fail to logout");
+            throw error;
+        }
+        rootState.showLoginModal = false;
+        commit('clearAdmin');
+    },
+    // ******** logout modal :::
+    async logoutModal({commit,rootState,dispatch}){
+        const resp = await callApi("POST", "/logout");
+        if (resp.status != 204) {
+            const error = new Error("fail to logout");
+            throw error;
+        }
+        rootState.showLoginModal = false;
+        commit('clearUser');
+        commit('clearAdmin');
+        await dispatch('courses/getAllCourses',{}, {root:true})
     },
     // ******** interests ::: post
     async addInterests(_, interests){
@@ -69,25 +133,26 @@ export default {
         }
     },
     // ******** retreive user data ::: get
-    async checkUserAuth(context) {
+    async checkUserAuth({commit,dispatch}) {
         const resp = await callApi("GET", "/api/check-user-authentication");
         if (resp.status == 404) {
-            context.commit('clearUser');
+            commit('clearUser');
             return false;
         }
 
         const obj = resp.data.userData;
         if (obj.role != 'admin') {
-            context.commit('setUser',{
+            commit('setUser',{
                 firstName: obj.firstName,
                 lastName: obj.lastName,
                 type: obj.type,
-                avatar: obj.avatar
+                avatar: obj.avatar,
             })
+            await dispatch('courses/getAllCourses',{}, {root:true})
         } else { // is admin
 
-            context.commit('type',obj.role)
-            context.commit('login')
+            commit('type',obj.role)
+            commit('login')
         }
         return true
 
@@ -113,9 +178,15 @@ export default {
     },
     // ******** userProfile ::: password
     async changePassword(_,payload) {
-        const resp = await callApi("POST", "/api/set-new-password",payload);
+        const resp = await callApi("POST", "/api/user/forget-password/change-password",payload);
+        if (payload.hasOwnProperty('type') && payload.type == 'forget') {
+            if (!resp || resp == 'notVerify') {
+                const error = new Error('حصل خطأ ما');
+                throw error;
+            }
+        }
         if (!resp.data.status) {
-            const error = new Error("كلمة المرور القديمة غير صحيحة");
+            const error = new Error('كلمة المرور القديمة غير صحيحة');
             throw error;
         }
     },
@@ -126,5 +197,28 @@ export default {
             const error = new Error("هناك خطأ ما");
             throw error;
         }
+    },
+    // ******** userProfile ::: upload profile avatar
+    async profileAvatar(_,payload) {
+        const resp = await callApi("POST", "/api/edit-profile-image", payload);
+        if (resp.status != 200) {
+            const error = new Error("هناك خطأ ما");
+            throw error;
+        }
+        return resp.data.url
+    },
+
+    async checkOtp(_,payload) {
+        let url = '/api/check-otp'
+        if (payload.hasOwnProperty('type') && payload.type == 'forget')
+            url = '/api/user/forget-password/check-otp'
+
+        const resp = await callApi("POST", url, payload);
+        if (resp.status != 200) {
+            const error = new Error("رمز التحقق غير صحيح");
+            throw error;
+        }
+        if (!payload.hasOwnProperty('type'))
+            return resp.data.url
     }
 };

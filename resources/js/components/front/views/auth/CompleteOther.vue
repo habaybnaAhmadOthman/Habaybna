@@ -1,5 +1,6 @@
 <template>
     <form @submit.prevent="submitForm" class="p-side-50">
+        <input autocomplete="false" name="hidden" type="text" style="display:none;">
         <h2 class="main-color text-shadow font-40 bold center mb-30 font-28-p">
             أكمل معلوماتك
         </h2>
@@ -62,19 +63,7 @@
                 <small
                     class="d-block relative"
                     v-if="!password.has_minimum_lenth"
-                    >يجب أن لا تقل كلمة السر عن ٨ خانات</small
-                >
-                <small class="d-block relative" v-if="!password.has_number"
-                    >يجب أن تحتوي على أرقام</small
-                >
-                <small class="d-block relative" v-if="!password.has_lowercase"
-                    >يجب أن تحتوي على حروف صغيرة</small
-                >
-                <small class="d-block relative" v-if="!password.has_uppercase"
-                    >يجب أن تحتوي على حروف كبيرة</small
-                >
-                <small class="d-block relative" v-if="!password.has_special"
-                    >يجب أن تحتوي على رموز خاصة</small
+                    >يجب أن لا تقل كلمة السر عن ٦ خانات</small
                 >
             </div>
             <p class="main-color mt-5 font-12">
@@ -85,6 +74,7 @@
         <div class="form-group mb-15" :class="{ invalid: !email.isValid }">
             <input
                 type="email"
+                autocomplete="off"
                 class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
                 placeholder="البريد الالكتروني"
                 id="email"
@@ -165,7 +155,6 @@
 
         <button class="btn-2 mt-30 flex-all m-side-auto font-20">
             إتمام التسجيل
-            <img src="/images/siteImgs/header/logo.png" class="mr-10" />
         </button>
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>

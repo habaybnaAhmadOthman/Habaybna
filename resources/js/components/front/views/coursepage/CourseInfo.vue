@@ -1,29 +1,17 @@
 <template>
-    <div class="about-course pt-20 w-50">
-        <h1 class="title- font-30 main-color">{{courseName}}</h1>
-        <h2 class="by main-color font-18 mb-10"><span> بواسطة الاخصائي :</span> <span class="bold">{{specialistName}}</span></h2>
-        <p class="desc">{{courseDescription}}</p>
-        <div class="course-lectures mt-20">
-            <p class="main-color font-26 mb-10">محتوى الدورة التدريبية</p>
-            <div class="box" show-more-less :class="{'active': showMore}">
-                <div class="to-show" v-for="(lecture,index) in lectures" :key="index">
-                    <div class="lecture d-flex space-between gray font-14">
-                        <p>{{lecture.title}}</p>
-                        <p>{{lecture.time}} دقيقة</p>
-                    </div>
-                </div>
-                <template v-if="lectures.length > 4">
-                    <div more @click="showMoreLess" class="btn mt-15" ><span class="d-flex align-center justify-center">أظهر المزيد <img class="mr-10" src="/images/siteImgs/header/logo.png" alt="" width="16" height="24"></span></div>
-                    <div less @click="showMoreLess" class="btn mt-15" ><span class="d-flex align-center justify-center">عرض أقل <img class="mr-10" src="/images/siteImgs/header/logo.png" alt="" width="16" height="24"></span></div>
-                </template>
-            </div>
+    <div class="about-course p-side-12-p">
+        <CourseInfoText :header="'نظرة عامة على الدورة'" :description="description"></CourseInfoText>
+        <div class="mb-40 what-should-learn mb-20-p pt-20-p">
+            <h3 class="title-line font-27 pt-30 mb-40 mb-20-p">ماذا سيتعلم المشاركون</h3>
+            <div class="font-20 black-2 font-20-p li-auto" v-html="whatShouldLearn"></div>
         </div>
     </div>
 </template>
 
 <script>
+import CourseInfoText from './CourseInfoText.vue'
 export default {
-    props: ['courseName','specialistName','courseDescription','lectures'],
+    props: ['courseName','description','lectures','documents','whatShouldLearn'],
     data(){
         return {
             showMore: false,
@@ -33,10 +21,23 @@ export default {
         showMoreLess() {
             this.showMore = !this.showMore
         }
-    }
+    },
+    components: {CourseInfoText}
 }
 </script>
 <style scoped>
+.learn-points p {
+    width: 45%;
+    margin-bottom: 30px;
+    position: relative;
+    display: flex;
+}
+.learn-points p:before {
+    content:'-';
+    margin-left: 5px;
+}
+
+
 [show-more-less] [less], .to-show, [show-more-less].active [more]  {
     display: none;
 }
@@ -44,7 +45,8 @@ export default {
 [show-more-less].active [less]{
     display: block;
 }
-.course-lectures .btn {
+/* .course-lectures .btn {
     padding:8px;
-}
+} */
+
 </style>

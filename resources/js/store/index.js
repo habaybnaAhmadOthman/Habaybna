@@ -5,6 +5,7 @@ import UserModule from "./modules/user/index.js";
 import CoursesModule from "./modules/courses/index.js";
 import AdminModule from "./modules/admin/index.js";
 import SpecialistModule from "./modules/specialist/index.js";
+import ContentModule from "./modules/content/index.js";
 
 import getters from "./getters";
 import mutations from "./mutations";
@@ -19,22 +20,28 @@ const store = new vuex.Store({
         user: UserModule,
         courses: CoursesModule,
         admin:AdminModule,
-        specialist: SpecialistModule
+        specialist: SpecialistModule,
+        content: ContentModule
     },
     state() {
-        return {};
+        return {
+            showLoginModal: false,
+            isLoading: false,
+            forceRefresh: 1,
+            alertDialogMsg: null
+        };
     },
     getters,
     mutations,
     plugins: [
         createPersistedState({
             key: "user",
-            path: ["user"],
+            paths: ["user"],
             storage: {
                 getItem: key => ls.get(key),
                 setItem: (key, value) => ls.set(key,value),
                 removeItem: key => ls.remove(key)
-            }
+            },
         })
     ]
 });

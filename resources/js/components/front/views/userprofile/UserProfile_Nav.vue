@@ -1,26 +1,41 @@
 <template>
     <aside class="user-side-nav bg-white z-1">
         <img
-            src="/images/siteImgs/header/logo.png"
-            width="20"
-            height="20"
+            src="/images/close-icon.svg"
+            width="30"
+            height="30"
             @click="closeNavMenu"
             class="close-nav-menu mo"
         />
         <ul class="user-side-nav-list">
+            <li class="mo">
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans"  to="/"
+                    >الصفحة الرئيسية</router-link
+                >
+            </li>
             <li>
-                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-account"
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans"  to="/profile/my-account" @click.native="closeNavMenu"
                     >حسابي</router-link
                 >
             </li>
             <li>
-                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/"
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/" @click.native="closeNavMenu"
                     >حساب الطفل</router-link
                 >
             </li>
             <li>
-                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/"
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/" @click.native="closeNavMenu"
                     >الإستشارات</router-link
+                >
+            </li>
+            <li>
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-courses" @click.native="closeNavMenu"
+                    >دوراتي</router-link
+                >
+            </li>
+            <li>
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-favourites" @click.native="closeNavMenu"
+                    >المفضلة</router-link
                 >
             </li>
             <li class="mo">
@@ -42,7 +57,6 @@ export default {
     methods: {
         closeNavMenu() {
             document.querySelector(".user-side-nav").classList.remove("active");
-            document.querySelector("body").classList.remove("overflow-hidden");
         },
         logout(){
             this.$store.dispatch('user/logout');
@@ -87,6 +101,7 @@ export default {
         min-height: 100%;
         max-height: 100%;
         overflow-y: auto;
+        z-index: 10;
     }
     .user-side-nav.active {
         opacity: 1;

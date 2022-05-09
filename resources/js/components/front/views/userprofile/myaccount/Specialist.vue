@@ -126,6 +126,14 @@
             <div class="form-group mb-0-p">
                 <div class="row">
                     <div class="col-md-4">
+                        <label class="form-control-label">المدينة</label>
+                        <input
+                            class="form-control"
+                            placeholder="المدينة"
+                            v-model="city.val"
+                        />
+                    </div>
+                    <div class="col-md-4">
                         <label class="form-control-label">سنة الميلاد</label>
                         <select
                             class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
@@ -214,12 +222,12 @@
             </div>
 
             <div class="">
-                <div class="d-flex">
-                    <button class="btn-2 flex-all font-20 ml-20">
+                <div class="d-flex flex-wrap justify-center-p column-reverse">
+                    <button class="btn-2 flex-all font-20 ml-20 m-0-p w-100-p">
                         حفظ
                     </button>
                     <button
-                        class="btn-3 radius-12"
+                        class="btn-3 radius-12 mb-15-p m-0-p w-100-p"
                         @click.prevent="showPasswordDialog"
                     >
                         تغيير كلمة المرور
@@ -231,10 +239,10 @@
 </template>
 <script>
 import Multiselect from "vue-multiselect";
-import "vue-multiselect/dist/vue-multiselect.min.css";
+// import "vue-multiselect/dist/vue-multiselect.min.css";
 
 export default {
-    emits: ["submit-form", "open-password-dialog"],
+    emits: ["submit-form", "open-password-dialog","loading"],
     components: { Multiselect },
     props: ['years'],
     mounted() {
@@ -259,6 +267,10 @@ export default {
             },
             education: {
                 val: "no",
+                isValid: true
+            },
+            city: {
+                val: "",
                 isValid: true
             },
             whyToJoin: {
@@ -286,6 +298,7 @@ export default {
     },
     methods: {
         async getProfileData() {
+            this.$emit('loading',true)
             const obj = await this.$store.dispatch("user/getProfileData");
             const data = obj.userData;
             this.firstName = data.firstName;
@@ -301,8 +314,10 @@ export default {
             this.gender.parsed = data.gender == 'f' ? 'أنثى' : ('ذكر') ;
             this.whyToJoin.val = data.disorders_work_with;
             this.interestsList = data.interestsList;
+            this.city.val = data.city;
             this.tags = data.interests;
             this.education.val = data.edu_level || 'no';
+            this.$emit('loading',false)
         },
         showPasswordDialog() {
             this.$emit("open-password-dialog");
@@ -346,6 +361,7 @@ export default {
                 experience: this.experience.val,
                 gender: this.gender.val,
                 whyToJoin: this.whyToJoin.val,
+                city: this.city.val,
                 education: educationValue,
                 interests: tagIDs
             });

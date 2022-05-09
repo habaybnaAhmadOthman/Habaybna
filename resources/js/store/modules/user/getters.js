@@ -5,6 +5,12 @@ export default {
     type(state) {
         return state.type;
     },
+    openAvatarModal(state) {
+        return state.openAvatarModal;
+    },
+    avatar(state) {
+        return state.avatar;
+    },
     userData(state) {
         const obj = {
             firstName: state.firstName,
@@ -20,7 +26,8 @@ export default {
     },
     isLoggedIn(state) {
         return !!state.loggedIn;
-    }
+    },
+    
     // isAuthenticated: state => !!state.user, 
     // user(state,getters,rootState,rootGetters)
 };

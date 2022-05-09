@@ -1,43 +1,73 @@
 <template>
-    <div class="left-side d-flex align-center">
-        <router-link to="" class="white-i d-flex radius-60 free-call-btn">
-            <img
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAXCAYAAAARIY8tAAAABHNCSVQICAgIfAhkiAAAAUVJREFUSEvtletNw0AQhL+pAOggqQA6IHQAFRAqgFQAqQA6gA6ACog7oAPcAVDBorHuosNK/BCCP2Sl00m+8c7srM8rNkREzIBL4BR4BRaSViU0Iq4SZgI8JUzdTqf2g4jYB96AT+AhkRwCJ5kkIubAPfCcBJjsXdJ0CIHBt8BUUp0IrX7PCQoBlSRXSER4fyxFZKJNFdwA18CBpI+UwJa9ABeALfF5I6B1vq6yi8AJbJFVnxUkTuZ+HHkv1Btv9bZnkvFbCZIie3zn6tNur12Zk7kfyyTgHDDW/ZpJsoBvoYhwIw38jViYwCqHRJVUG+ueHA94qRpDsJRkm/zV5A+hj+NvCFyuV1+sios2/J2+rD89by7aQE/H9qC5dDuCrhbtLGp+2f/Iojzyukoee9GaibcemRHhSeWBvy3qYkR68Hj1Yr8A4IPu+TfvWYgAAAAASUVORK5CYII="
-                alt="gift"
-                class="ml-20"
-            />إهداء مكالمة مجانیة</router-link>
-        <div class="bar"></div>
+    <div class="d-flex align-center ">
+        <div class="bar do"></div>
+        <div class="do" v-if="isLoggedIn">
+            <router-link to="/profile" class="d-flex align-center user-box">
+                <img
+                    :src="userAvatar"
+                    alt="gift"
+                    class="rounded object-fit ml-10 user-avatar"
+                />
+                <p class="black one-line">{{ userName }}</p>
+            </router-link>
+        </div>
+        
         <template v-if="!isLoggedIn">
             <router-link
                 to="/signup"
-                class="signin-box-btn pr-30 relative bold white"
+                class="signin-box-btn pr-30 relative bold black do nowrap"
                 >تسجيل</router-link
             >
             <router-link
                 to="/signin"
-                class="signin-box-btn pr-30 relative bold white"
+                class="signin-box-btn pr-30 relative bold black do nowrap"
                 >تسجيل الدخول</router-link
             >
         </template>
-        <button
-            @click="logout"
-            v-else
-            class="sign-out-box bg-none border-0 pointer pr-30 relative bold white"
-        >
-            تسجيل الخروج
-        </button>
+        <template v-else>
+            <button
+                @click="logout"
+                
+                class="sign-out-box bg-none border-0 pointer pr-30 relative bold black do nowrap"
+            >
+                تسجيل الخروج
+            </button>
+        </template>
+        <!-- <img src="/images/menu-icon.svg" class="mo" @click="toggleMobileMenu"> -->
+            <transition name="swing">
+                <MobileMenu :isLoggedIn="isLoggedIn" @closeMobileMenu="toggleMobileMenu" @logout="logout" v-if="isMobileMenuOpened" :userAvatar="userAvatar"></MobileMenu>
+            </transition>
     </div>
 </template>
 
 <script>
+import MobileMenu from "./MobileMenu.vue"
 export default {
-    props: ["isLoggedIn"],
+    emits: ["toggleMobileMenu"],
+    props: ["isLoggedIn","isMobileMenuOpened"],
+    components: {MobileMenu},
     methods: {
         async logout() {
-            await this.$store.dispatch("user/logout");
+            await this.$store.dispatch("user/logoutModal");
             if (this.$router.currentRoute.name != "home") {
                 this.$router.push("/");
             }
+            this.forceRefresh();
+        },
+        forceRefresh(){
+            this.$store.commit("forceRefresh");
+        },
+        toggleMobileMenu(){
+            this.$emit("toggleMobileMenu");
+        }
+    },
+    computed: {
+        userAvatar() {
+            return this.$store.getters["user/userData"].avatar;
+        },
+        userName() {
+            const user = this.$store.getters["user/userData"];
+            return user.firstName + " " + user.lastName;
         }
     }
 };
@@ -46,7 +76,7 @@ export default {
 <style scoped>
 .bar {
     width: 1px;
-    border: 0.9px solid #fff;
+    border-left: 1px solid #e1e1e1;
     height: 35px;
     margin: 0 22px;
 }
@@ -63,6 +93,31 @@ export default {
 .free-call-btn {
     background: #606;
     padding: 10px 15px;
+}
+.user-avatar {
+    width: 50px;
+    height: 50px;
+}
+.swing-enter-active {
+    animation: swing 0.3s ease-out;
+}
+
+.swing-leave-active {
+    animation: swing 0.3s ease-in reverse;
+}
+.user-box {
+    width: 150px;
+}
+@keyframes swing {
+    from {
+        right:-100%;
+        opacity:0;
+    }
+
+    to {
+        right:0;
+        opacity:1;
+    }
 }
 @media (max-width: 1200px) {
     .free-call-btn {

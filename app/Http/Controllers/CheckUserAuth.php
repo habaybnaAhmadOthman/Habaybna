@@ -32,15 +32,18 @@ class CheckUserAuth extends Controller
                     ]);
                 }
                 $user = Auth::user();
-                $userData['avatar']= $user->user_data->avatar;
-                $userData['firstName']= $user->user_data->firstName;
-                $userData['lastName']= $user->user_data->lastName;
-                $userData['type']= Auth::user()->role;
-                return response()->json([
-                    'status'=>true,
-                    'msg'=>'success',
-                    'userData'=>$userData
-                ]);
+                if($user != null){
+                    $userData['avatar']= $user->user_data->avatar;
+                    $userData['firstName']= $user->user_data->firstName;
+                    $userData['lastName']= $user->user_data->lastName;
+                    $userData['type']= $user->role;
+                    return response()->json([
+                        'status'=>true,
+                        'msg'=>'success',
+                        'userData'=>$userData
+                    ]);
+                }
+
 
             }
             return response()->json([

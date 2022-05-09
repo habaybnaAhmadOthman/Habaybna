@@ -10,13 +10,51 @@ import Quiz from "./components/Quiz.vue";
 import UploadVideos from "./components/UploadVideos.vue";
 import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
+import Calls from "./components/admin/calls/Calls.vue";
+import ContactUs from "./components/admin/contactUs/ContactUs.vue";
 import Parents from "./components/admin/parent/Parents.vue";
+import CreateParent from "./components/admin/parent/Create.vue";
+import CreateCoupon from "./components/admin/coupon/Create.vue";
+import CoursesOrders from "./components/admin/orders/courses/Index.vue";
+import Contents from "./components/admin/contents/Contents.vue";
+import CreateContent from "./components/admin/contents/Create.vue";
+import UpdateContent from "./components/admin/contents/Show.vue";
+import CreateCall from "./components/admin/calls/Create.vue";
+import CreateSpecialist from "./components/admin/specialist/Create.vue";
+import CreateOther from "./components/admin/other/Create.vue";
+import ShowSpecialist from "./components/admin/specialist/Show.vue";
+import ShowMessage from "./components/admin/contactUs/Show.vue";
+import ShowPackage from "./components/admin/calls/Show.vue";
+import ShowOther from "./components/admin/other/Show.vue";
+import Specialists from "./components/admin/specialist/Specialists.vue";
+import Coupons from "./components/admin/coupon/Coupons.vue";
+import PreviewCourse from "./components/admin/courses/Preview.vue";
+import CourseCertificate from "./components/admin/courses/Certificate.vue";
+import UsersProgress from "./components/admin/courses/UsersProgress.vue";
+import ShowCoupon from "./components/admin/coupon/Show.vue";
+import Others from "./components/admin/other/Others.vue";
 import Show from "./components/admin/parent/Show.vue";
 import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
 import HomePage from "./components/front/pages/HomePage.vue";
-import CoursePage from "./components/front/pages/CoursePage.vue";
+import ErrorPage from "./components/front/pages/ErrorPage.vue";
+import onlineCoursesPage from "./components/front/pages/onlineCoursesPage.vue";
+import allCoursesPage from "./components/front/pages/allCoursesPage.vue";
+// courses
+import CoursePage from "./components/front/pages/courses/CoursePage.vue";
+import ClassRoomPage from "./components/front/pages/courses/ClassRoom.vue";
+import Cirtificate from "./components/front/views/coursepage/Certificate.vue";
+import PaymentStatus from "./components/front/pages/courses/PaymentStatus.vue";
+import ExamPage from "./components/front/pages/courses/ExamPage.vue";
+
+// library
+import LibraryPage from "./components/front/pages/library/LibraryPage.vue";
+import ArticlePage from "./components/front/pages/library/ArticlePage.vue";
+// specialist
+import SpecialistPage from "./components/front/pages/SpecialistPage.vue";
+import SpecialistsPage from "./components/front/pages/SpecialistsPage.vue";
+
 
 
 // register pages
@@ -27,15 +65,17 @@ import RegisterOtherComplete from "./components/front/pages/auth/Register_OtherC
 
 // login
 import LoginPage from "./components/front/pages/auth/LoginPage.vue";
+import ForgetPasswordPage from "./components/front/pages/auth/ForgetPasswordPage.vue";
 
 
 import UserProfile_Template from "./components/front/views/userprofile/UserProfile_Template";
 import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfile.vue";
+import UserProfile_MyCourses from "./components/front/pages/dashboard/MyCourses.vue";
+import UserProfile_MyFavourites from "./components/front/pages/dashboard/MyFavourites.vue";
 
 import store from "./store/index";
 
-const routes = [
-    {
+const routes = [{
         path: "/admin/uploadVideos/:data",
         component: UploadVideos,
         name: "UploadVideo",
@@ -52,9 +92,89 @@ const routes = [
         name: "Parents"
     },
     {
+        path: "/admin/contact-us",
+        component: ContactUs,
+        name: "ContactUs"
+    },
+    {
+        path: "/admin/parent/create",
+        component: CreateParent,
+        name: "CreateParent"
+    },
+    {
+        path: "/admin/courses/users-progress",
+        component: UsersProgress,
+        name: "UsersProgress"
+    },
+    {
+        path: "/admin/content/create",
+        component: CreateContent,
+        name: "CreateContent"
+    },
+    {
+        path: "/admin/specialist/create",
+        component: CreateSpecialist,
+        name: "CreateSpecialist"
+    },
+    {
+        path: "/admin/other/create",
+        component: CreateOther,
+        name: "CreateOther"
+    },
+    {
+        path: "/admin/specialist",
+        component: Specialists,
+        name: "Specialists"
+    },
+    {
+        path: "/admin/coupons",
+        component: Coupons,
+        name: "Coupons"
+    },
+    {
+        path: "/admin/contents",
+        component: Contents,
+        name: "Contents"
+    },
+    {
+        path: "/admin/others",
+        component: Others,
+        name: "Others"
+    },
+    {
         path: "/admin/parent/:data",
         component: Show,
         name: "Show"
+    },
+    {
+        path: "/admin/content/:data",
+        component: UpdateContent,
+        name: "UpdateContent"
+    },
+    {
+        path: "/admin/contact-us/:data",
+        component: ShowMessage,
+        name: "ShowMessage"
+    },
+    {
+        path: "/admin/calls/package/:data",
+        component: ShowPackage,
+        name: "ShowPackage"
+    },
+    {
+        path: "/admin/specialist/:data",
+        component: ShowSpecialist,
+        name: "ShowSpecialist"
+    },
+    {
+        path: "/admin/coupon/:data",
+        component: ShowCoupon,
+        name: "ShowCoupon"
+    },
+    {
+        path: "/admin/other/:data",
+        component: ShowOther,
+        name: "ShowOther"
     },
     {
         path: "/admin/course-create",
@@ -62,9 +182,19 @@ const routes = [
         name: "VideoInfoComponent"
     },
     {
+        path: "/admin/course-certificate/:data",
+        component: CourseCertificate,
+        name: "CourseCertificate"
+    },
+    {
         path: "/admin/course-edit/:data",
         component: EditCourseInfo,
         name: "EditCourseInfo"
+    },
+    {
+        path: "/admin/course/preview/:data",
+        component: PreviewCourse,
+        name: "PreviewCourse"
     },
     {
         path: "/parent-dashboard/class-room",
@@ -81,13 +211,50 @@ const routes = [
         component: AddQuestion,
         name: "AddQuestion"
     },
+    {
+        path: "/admin/coupons/create",
+        component: CreateCoupon,
+        name: "CreateCoupon"
+    },
+    {
+        path: "/admin/orders/courses-orders",
+        component: CoursesOrders,
+        name: "CoursesOrders"
+    },
+    {
+        path: "/admin/calls/create",
+        component: CreateCall,
+        name: "CreateCall"
+    },
+    {
+        path: "/admin/calls",
+        component: Calls,
+        name: "Calls"
+    },
     // ************
     // front
     // ************
+    // {
+    //     path: "/api/course-payment-callback",
+    //     component: Cirtificate,
+    //     // meta: {
+    //     //     requiresAuth: true
+    //     // }
+    // },
     {
         path: "/",
         component: HomePage,
         name: "home"
+    },
+    {
+        path: "/online-courses",
+        component: onlineCoursesPage,
+        name: "onlineCourses"
+    },
+    {
+        path: "/all-courses",
+        component: allCoursesPage,
+        name: "allCourses"
     },
     // *****************
     // auth pages
@@ -95,7 +262,6 @@ const routes = [
         path: "/signup",
         component: RegisterPage,
         meta: {
-            header: false,
             anonymous: true
         }
     },
@@ -103,7 +269,6 @@ const routes = [
         path: "/parent-complete-registration",
         component: RegisterParentComplete,
         meta: {
-            header: false,
             requiresAuth: true
         }
     },
@@ -111,7 +276,6 @@ const routes = [
         path: "/specialist-complete-registration",
         component: RegisterSpecialistComplete,
         meta: {
-            header: false,
             requiresAuth: true
         }
     },
@@ -119,7 +283,6 @@ const routes = [
         path: "/other-complete-registration",
         component: RegisterOtherComplete,
         meta: {
-            header: false,
             requiresAuth: true
         }
     },
@@ -127,19 +290,26 @@ const routes = [
         path: "/signin",
         component: LoginPage,
         meta: {
-            header: false,
             requiresAuth: false,
             anonymous: true
         },
         name: "login"
+    },
+    {
+        path: "/forget-password",
+        component: ForgetPasswordPage,
+        meta: {
+            requiresAuth: false,
+            anonymous: true
+        },
+        name: "forgetPassword"
     },
     // user profile #dashboard
     {
         path: "/profile",
         component: UserProfile_Template,
         meta: {
-            requiresAuth: true,
-            header: false
+            requiresAuth: true
         },
         children: [
             {
@@ -149,25 +319,104 @@ const routes = [
                     header: false
                 },
                 name: 'myAccount'
-            }
-        ]
+            },
+            {
+                path: "my-courses",
+                component: UserProfile_MyCourses,
+                meta: {
+                    header: false
+                },
+                name: 'myCourses'
+            },
+            {
+                path: "my-favourites",
+                component: UserProfile_MyFavourites,
+                meta: {
+                    header: false
+                },
+                name: 'myFavourites'
+            },
+    ]
     },
     // *****************
-    // courses 
+    // courses
     {
         path: "/courses/:course",
         component: CoursePage,
         meta: {
-            header: false,
             requiresAuth: false
         },
         props: true
     },
+    {
+        path: "/courses/:course/exam",
+        component: ExamPage,
+        meta: {
+            requiresAuth: true
+        },
+        props: true
+    },
+    {
+        path: "/courses/:course/:lesson",
+        component: ClassRoomPage,
+        meta: {
+            requiresAuth: true
+        },
+        props: true
+    },
+
+    {
+        path: "/payment-success",
+        component: PaymentStatus,
+        meta: {
+            requiresAuth: true
+        },
+
+    },
+    {
+        path: "/course/:course/certificate",
+        component: Cirtificate,
+        meta: {
+            requiresAuth: true
+        },
+        props: true
+    },
+    // *****************
+    // content pages
+    {
+        path: "/library",
+        component: LibraryPage
+    },
+    {
+        path: "/content/:article",
+        component: ArticlePage
+    },
+    // *****************
+    // specialist page
+    {
+        path: "/ask-specialists",
+        component: SpecialistsPage
+    },
+    {
+        path: "/specialist/:specialist",
+        component: SpecialistPage
+    },
+    { path: "*", component: ErrorPage }
 ];
 
 const router = new Router({
     mode: "history",
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return {
+                x: 0,
+                y: 0
+            }
+        }
+    }
 });
 
 router.beforeEach((to, from, next) => {

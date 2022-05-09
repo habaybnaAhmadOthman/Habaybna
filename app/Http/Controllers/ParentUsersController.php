@@ -10,9 +10,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
-
-
+use phpDocumentor\Reflection\Types\Parent_;
 
 class ParentUsersController extends Controller
 {
@@ -39,9 +37,48 @@ class ParentUsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+       $request->validate([
+        'phone' => ['required', 'unique:users'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'firstName' => ['required', 'string'],
+        'lastName' => ['required', 'string'],
+        'gender' => ['required', 'string'],
+        'relative' => ['required', 'string'],
+        'password' => ['required', 'string','min:8'],
+       ]);
+
+       $user = new User();
+        $user->phone = $request->phone ;
+        $user->email = $request->email ;
+        $user->password = Hash::make($request->password);
+        $user->otp = '123432' ;
+        $user->role = 'parent' ;
+        $user->is_verify = 1 ;
+
+        $user->save();
+
+        if($user){
+            $parent = new ParentUsers();
+
+            $parent->firstName = $request->firstName;
+            $parent->lastName = $request->lastName;
+            $parent->gender = $request->gender;
+            $parent->user_id = $user->id;
+            $parent->relative = $request->relative;
+
+            $parent->save();
+
+            // send password by email to the parent
+
+            return response()->json(
+                $user->user_data,
+                200
+            );
+
+
+        }
     }
 
     /**
@@ -236,6 +273,25 @@ class ParentUsersController extends Controller
     {
         try{
             $parent = Auth::user()->user_data ;
+            if(count($request->interests) > 0 ){
+                $oldInterest = UserInterest::where('user_id',Auth::id() )->get() ;
+
+                if(count($oldInterest) > 0 ){
+                    foreach ($oldInterest as $old) {
+                    $old->delete();
+                    }
+                }
+
+                foreach ($request->interests as $interest) {
+                    $userInterest = new UserInterest();
+                    $userInterest->user_id = Auth::id();
+                    $userInterest->interest_id = $interest;
+
+                    $userInterest->save();
+                 }
+
+
+            }
 
             if(count($request->interests) > 0 ){
                 $oldInterest = UserInterest::where('user_id', Auth::user()->id )->get() ;
@@ -321,15 +377,22 @@ class ParentUsersController extends Controller
         try{
             $parents = ParentUsers::all();
             $data = [];
-            foreach ($parents as  $parent) {
-                $parent->user->toArray();
-                $parent->toArray();
-                array_push($data,$parent);
-            }
+            if(count($parents) > 0 ){
+                foreach ($parents as  $parent) {
+                    $parent->user->toArray();
+                    $parent->toArray();
+                    array_push($data,$parent);
+                }
 
+                return response()->json([
+                    'parnets'=>$data
+                ],200);
+            }
             return response()->json([
-                'parnets'=>$data
-            ],200);
+                'msg'=>'faild',
+                'status'=>false,
+                404
+           ]);
     } catch (ModelNotFoundException $e){
         return response()->json([
             'msg'=>'faild',

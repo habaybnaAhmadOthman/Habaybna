@@ -5,9 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-// use Spatie\Permission\Traits\HasRoles;
-use Laravel\Passport\HasApiTokens;
-use Laravel\Passport\PersonalAccessTokenResult;
+use Laravel\Sanctum\HasApiTokens;
 use App\ParentUsers;
 use App\Other;
 use App\Specialist;
@@ -24,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'phone', 'email','phone','otp','is_verify','role'
+        'phone', 'email','phone','otp','is_verify','role','password'
     ];
 
     /**
@@ -70,6 +68,38 @@ class User extends Authenticatable
     public function getIsVerfiedAttribute()
     {
         return $this->is_verify ? true : false ;
+    }
+
+    public function coursePurchaseOrder()
+    {
+        return $this->hasMany(Coursespurchaseorders::class,'user_id');
+    }
+
+    public function getUserCoursesAttribute()
+    {
+        $courses = [];
+        if($this->coursePurchaseOrder && $this->coursePurchaseOrder->count() > 0){
+            foreach ($this->coursePurchaseOrder as $one) {
+
+                if($one->status){
+                        array_push($courses, $one->course_id);
+                }
+            }
+            return $courses;
+        }
+    }
+
+
+
+    public function userVideoProgress()
+    {
+        return $this->hasMany(UserCourseProgress::class,'user_id');
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany('App\Courses','users_favourite_courses','user_id','course_id');
+
     }
 
 
