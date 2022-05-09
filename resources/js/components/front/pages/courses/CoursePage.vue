@@ -6,7 +6,7 @@
         :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"
         ></Banner>
         <div class="container page-info">
-            <div class="mo p-side-12-p mt-20-p">
+            <div class="mo p-side-12-p mt-40">
                 <TabsToggle :tabs="mobileTabs"></TabsToggle>
             </div>
             <div tab-name="about" mo class="active">

@@ -3,7 +3,7 @@
     <section class="learn-section bg-gray mt-20-p">
       <div class="container">
         <h2 class="title-line mb-40 mb-20-p p-side-12-p">الدورات التدريبية</h2>
-        <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection>
+        <CategoryFilterSection v-if="!showMoreCardFn" @change-filter="setFilters" :api="api"></CategoryFilterSection>
         <template >
           <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses>
         </template>

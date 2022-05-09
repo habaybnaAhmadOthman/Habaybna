@@ -2,10 +2,10 @@
     <div class="banner mt-15 mt-0-p">
         <img class="w-100 main-img object-fit radius-10" src="/images/courses-bg.JPG" width="100%">
         <div class="d-flex space-between mt-15 align-center p-side-12-p">
-            <p class="font-18 bold gray font-16-p">تم النشر : <span class="yellow">2020/9/15</span></p>
+            <p class="font-18 bold gray font-16-p">تم النشر : <span class="">2020/9/15</span></p>
             <div class="d-flex">
                 <div class="fav-box relative pointer shadow-2 ml-25"></div>
-                <p class="yellow font-24 bold d-flex align-center pointer font-14-p"><img class="ml-10 share-img" src="/images/share-color.svg" width="34" height="36" alt="" > مشاركة</p>
+                <p class="align-center bold d-flex font-14-p font-20 pointer yellow"><img class="ml-10 share-img" src="/images/share-color.svg" width="34" height="36" alt="" > مشاركة</p>
             </div>
         </div>
     </div>
@@ -43,6 +43,10 @@
     .main-img {
         height: calc(100vw * .625);
         border-radius: 0;
+    }
+    .fav-box {
+        width: 33px;
+        height: 33px;
     }
 }
 </style>
