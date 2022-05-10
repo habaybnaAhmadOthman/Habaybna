@@ -1,10 +1,8 @@
 <template>
     <div class="banner mt-15 mt-0-p">
-        <!-- <img v-if="type == 'Article'" class="w-100 main-img object-fit radius-10" :src="image" width="100%"> -->
-        <img class="w-100 main-img object-fit radius-10" :src="image" width="100%">
-        <!-- <iframe v-else-if="type == 'Video'" width="100%" class="w-100" controls>
-            <source :src="video" type="video/mp4">
-        </iframe> -->
+        <img v-if="type == 'Article'" class="w-100 main-img object-fit radius-10" :src="image" width="100%">
+        <!-- <img class="w-100 main-img object-fit radius-10" :src="image" width="100%"> -->
+        <iframe border="0" v-else-if="type == 'Video'" width="100%" class="w-100" controls :src="youtubeVideo"></iframe>
         <div class="d-flex space-between mt-15 align-center p-side-12-p">
             <p class="font-18 bold gray font-16-p">تم النشر : <span class="">2020/9/15</span></p>
             <div class="d-flex">
@@ -23,6 +21,13 @@
             openShareModal(){
                 this.$emit('open-share-modal')
             },
+        },
+        computed: {
+            youtubeVideo(){
+                if (this.video) {
+                    return 'https://www.youtube.com/embed/' + this.video.slice(this.video.lastIndexOf('/')+1)
+                } return ''
+            }
         }
     }
 </script>
@@ -46,6 +51,9 @@
 .fav-box.active {
     background-image: url(/images/heart-icon-fill.svg);
 }
+iframe {
+    height: 500px;
+}
 @media (max-width: 767px) { 
     .share-img {
         width: 24px;
@@ -57,6 +65,9 @@
     .fav-box {
         width: 33px;
         height: 33px;
+    }
+    iframe {
+        height: 220px;
     }
 }
 </style>
