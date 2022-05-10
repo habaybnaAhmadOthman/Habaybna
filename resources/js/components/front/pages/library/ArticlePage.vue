@@ -2,7 +2,7 @@
     <div class="library-page">
         <TheHeader></TheHeader>
         <div class="container">
-            <ArticleBanner @open-share-modal="showShareDialog" :image="mainImage" :type="articleType" :video="video"></ArticleBanner>
+            <ArticleBanner @open-share-modal="showShareDialog" :image="mainImage" :type="articleType" :video="video" :date="date"></ArticleBanner>
             <ArticleContent :tags="tags" :title="title" :description="description" :author="authorName"></ArticleContent>
             <div class="mt-50">
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
@@ -44,6 +44,7 @@
                 articleType: null,
                 description: null,
                 tags: null,
+                date: null,
                 showShareModal: false,
                 isDataReady:false,
             }
@@ -59,6 +60,8 @@
                 this.articleType = data.article_type;
                 this.description = data.body;
                 this.tags = data.tags;
+                if (data.created_at)
+                    this.date = data.created_at;
                 this.isDataReady = true
                 console.log(data)
             },

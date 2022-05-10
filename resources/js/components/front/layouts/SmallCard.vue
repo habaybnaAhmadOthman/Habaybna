@@ -4,7 +4,7 @@
         <router-link class="radius-10 shadow d-flex p-10 bg-white box" :to="`/content/${item.title.split(' ').join('-')}`">
             <div class="body ml-15 d-flex flex-column space-between flex-1">
                 <p class="black-2 font-20 font-15-p desc three-line">{{item.title}}</p>
-                <span class="date font-14 white radius-20 gray">1996/11/4</span>
+                <span class="date font-14 white radius-20 gray" v-if="item.date">{{item.date}}</span>
             </div>
             <figure class="d-flex relative">
                 <!-- favourite -->
