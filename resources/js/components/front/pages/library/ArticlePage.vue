@@ -2,8 +2,8 @@
     <div class="library-page">
         <TheHeader></TheHeader>
         <div class="container">
-            <ArticleBanner></ArticleBanner>
-            <ArticleContent></ArticleContent>
+            <ArticleBanner @open-share-modal="showShareDialog" :image="mainImage" :type="articleType" :video="video" :date="date"></ArticleBanner>
+            <ArticleContent :tags="tags" :title="title" :description="description" :author="authorName"></ArticleContent>
             <div class="mt-50">
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
             </div>
@@ -12,6 +12,14 @@
             </div>
         </div>
         <TheFooter></TheFooter>
+        <ShareArticleModal
+            :show="showShareModal"
+            @close-share-modal="showShareDialog"
+            :courseName="title"
+            :description="description | stripHTML"
+            portal="article-share"
+        ></ShareArticleModal>
+        <portal-target name="article-share"></portal-target>
     </div>
 </template>
 
@@ -22,20 +30,44 @@
     import AboutSpecialists from "../../views/coursepage/AboutSpecialists.vue";
     import RelatedCourses from "../../views/coursepage/RelatedCourses.vue";
     import TheFooter from '../../layouts/TheFooter.vue'
+    import ShareArticleModal from '../../views/coursepage/ShareCourseModal.vue'
     export default {
-        components: { TheHeader,ArticleBanner,ArticleContent,AboutSpecialists,RelatedCourses,TheFooter},
+        props: ['article'],
+        components: { TheHeader,ArticleBanner,ArticleContent,AboutSpecialists,RelatedCourses,TheFooter,ShareArticleModal},
         data(){
             return {
                 specialists:null,
+                mainImage: null,
+                authorName: null,
+                title: null,
+                video: null,
+                articleType: null,
+                description: null,
+                tags: null,
+                date: null,
+                showShareModal: false,
                 isDataReady:false,
             }
         },
         methods: { 
             async getPageData(){
-                let data = await this.$store.dispatch('courses/getCourseDetails','فيصلي');
+                let data = await this.$store.dispatch('content/getArticle',{title: this.article.split('-').join(' ')});
                 this.specialists  = data.providers;
+                this.mainImage = data.image;
+                this.title = data.title;
+                this.authorName = data.author;
+                this.video = data.video;
+                this.articleType = data.article_type;
+                this.description = data.body;
+                this.tags = data.tags;
+                if (data.created_at)
+                    this.date = data.created_at;
                 this.isDataReady = true
-            }
+                console.log(data)
+            },
+            showShareDialog() {
+                this.showShareModal = !this.showShareModal;
+            },
         },
         mounted(){
             this.getPageData();

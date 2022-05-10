@@ -6,7 +6,7 @@
         :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"
         ></Banner>
         <div class="container page-info">
-            <div class="mo p-side-12-p mt-20-p">
+            <div class="mo p-side-12-p mt-40">
                 <TabsToggle :tabs="mobileTabs"></TabsToggle>
             </div>
             <div tab-name="about" mo class="active">
@@ -32,6 +32,7 @@
             @close-share-modal="showShareDialog"
             :courseName="courseName"
             :description="courseDescription | stripHTML"
+            portal="course-share"
         ></ShareCourseModal>
         <!-- <ShareCourseModal
             :show="showShareModal"
@@ -56,7 +57,9 @@
         </info-modal>
 
         <TheFooter></TheFooter>
-        
+        <portal-target name="cobone-modal"></portal-target>
+        <portal-target name="cobone-card"></portal-target>
+        <portal-target name="course-share"></portal-target>
     </div>
 </template>
 

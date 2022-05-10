@@ -1,5 +1,5 @@
 <template>
-    <portal to="info-modal">
+    <portal v-if="portal" :to="portal">
         <aside :class="modalClass">
             <div v-if="show" class="w-100 h-100 backdrop" @click="tryClose"></div>
             <transition name="modal">
@@ -21,6 +21,7 @@
             </transition>
         </aside>
     </portal>
+    </template>
 </template>
 
 <script>
@@ -55,6 +56,11 @@ export default {
             type: String,
             required: false,
             default: ''
+        },
+        portal: {
+            type: String,
+            required: false,
+            default: 'info-modal'
         }
     },
     emits: ["close"],

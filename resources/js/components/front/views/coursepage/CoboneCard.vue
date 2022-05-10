@@ -63,6 +63,7 @@
           :description="infoModal.description"
           :success="infoModal.status"
           :fixed="infoModal.isFixed"
+          portal="cobone-card"
         >
         <button v-if="infoModal.isFixed" @click="goToClassRoom" class="btn">مشاهدة</button>
         </info-modal>

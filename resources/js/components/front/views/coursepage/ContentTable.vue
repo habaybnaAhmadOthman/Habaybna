@@ -12,7 +12,7 @@
                                 <div class="duration">
                                     <span class="nowrap black-2">{{getTime(row.lesson_length)}}</span>
                                 </div>
-                                <div class="video-name black-2 relative">
+                                <div class="video-name bold black-2 relative">
                                     <span>{{row.lesson_title}}</span>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                                 <div class="duration">
                                     <span class="nowrap black-2">{{getTime(row.length)}}</span>
                                 </div>
-                                <div class="video-name relative">
+                                <div class="video-name bold relative">
                                     <span class="black-2">{{row.title}}</span>
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                             <div class="duration do">
                                 <span class="nowrap black-2">الإختبار</span>
                             </div>
-                            <div class="video-name">
+                            <div class="video-name bold">
                                 <span class="mo black-2">الإختبار</span>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="duration do">
                                 <span class="nowrap black-2">إصدار الشهادة</span>
                             </div>
-                            <div class="video-name">
+                            <div class="video-name bold">
                                 <span class="mo black-2">إصدار الشهادة</span>
                             </div>
                         </div>
@@ -229,6 +229,10 @@ export default {
         display: flex;
         align-items: center;
         justify-content:center;
+    }
+    .play-video img{
+        width: 40px;
+        height: 40px;
     }
 }
 </style>

@@ -3,21 +3,20 @@
         <TheHeader></TheHeader>
         <div class="container">
             <div class="pt-50 pt-20-p">
-                <h1 class="title-line mb-40 mb-20-p p-side-12-p">مقدمي المحتوى</h1>
+                <h2 class="black-2 center font-23 font-27 mb-20-p mb-40 p-side-12-p yellow">الملف الشخصي</h2>
                 <div class="bg-white m-side-12-p box shadow radius-10 p-side-30 p-side-12-p">
                     <div class="d-flex flex-wrap-p justify-center-p">
                         <figure class="rounded overflow-hidden shadow d-flex ml-30 avatar-box m-0-p">
                             <img class="object-fit" src="/images/test.jpg" width="240" height="240" alt="" >
                         </figure>
                         <div class="pt-30 w-100-p center-p">
-                            <h1 class="main-color center-p font-30 bold mb-10">سعاد الدميري</h1>
-                            <h2 class="yellow bold font-24 mb-10">اختصاصية علاج طبيعي</h2>
-                            <h3 class="font-22">عمان - الأردن</h3>
+                            <h1 class="black-2 bold center-p font-20 font-30 mb-10">سعاد الدميري</h1>
+                            <h2 class="black-2 bold font-20 font-24 mb-10">اختصاصية علاج طبيعي</h2>
                         </div>
                     </div>
 
                     <div class="mt-50">
-                        <TabsToggle :class="'swipe-box-p gap-10'"  :tabs="tabs"></TabsToggle>
+                        <TabsToggle :class="'gap-10 font-14-mo btn-bg-mo'"  :tabs="tabs"></TabsToggle>
                     </div>
                     <div class="mt-40 pb-40">
                         <div tab-name="about" all class="active">
@@ -50,15 +49,15 @@
             return {
                 tabs: [
                     {
-                        title: 'نبذة تعريفية' ,
+                        title: 'نبذة<br class="mo"> تعريفية' ,
                         name: 'about'
                     },
                     {
-                        title: 'الدورات التدريبية' ,
+                        title: 'الدورات <br class="mo">التدريبية' ,
                         name: 'courses'
                     },
                     {
-                        title: 'الفيديوهات والمقالات' ,
+                        title: 'الفيديوهات <br class="mo">والمقالات' ,
                         name: 'articles'
                     },
                 ],

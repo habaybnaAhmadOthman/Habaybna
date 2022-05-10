@@ -20,6 +20,7 @@
             :success="infoModal.status"
             :fixed="infoModal.isFixed"
             :optionsClass="!infoModal.isFixed ?  'space-between-i' : '' "
+            portal="cobone-modal"
         >
             <div class="d-flex" v-if="discountVal && coursePrice && !infoModal.isFixed">
                 <span class="gray font-35 before-discount bold ml-30">

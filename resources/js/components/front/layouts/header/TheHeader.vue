@@ -6,7 +6,7 @@
                     <router-link to="/" class="logo d-flex">
                         <img src="/images/siteImgs/header/logo.png" width="120" />
                     </router-link>
-                    <a @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/home-icon.svg" /></a>
+                    <!-- <a @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/home-icon.svg" /></a> -->
                 </div>
             </div>
             <div class="d-flex align-center w-100 header-right">
@@ -36,16 +36,6 @@
                             class="black-2 nowrap p-side-10 h-100 flex-all bold"
                             to="/library"
                             >مكتبة المعلومات</router-link
-                        >
-                        <router-link
-                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
-                            to="/a"
-                            >تواصلوا معنا</router-link
-                        >
-                        <router-link
-                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
-                            to="/s"
-                            >مكالمات</router-link
                         >
                         <!-- <div class="dropdown relative h-100 flex-all">
                             <router-link
@@ -79,11 +69,16 @@
                         
                     </menu>
                 </div>
+
                 <!-- mobile buttons -->
                 <template>
                     <router-link to="/" class="home-mo mo center mobile-link">
                         <img src="/images/home-icon.svg" >
                         <p class="font-10 mobile-icon-color">الرئيسية</p>
+                    </router-link>
+                    <router-link to="/online-courses" class="profile-mo mo center mobile-link">
+                        <img src="/images/profile-avatar-mo.svg" >
+                        <p class="font-10 mobile-icon-color">الدورات</p>
                     </router-link>
                     <router-link to="/profile" class="profile-mo mo center mobile-link">
                         <img src="/images/profile-avatar-mo.svg" >

@@ -146,7 +146,7 @@ export default {
                     if (e.message == "تم إيقاف حسابك") {
                         this.isBanned = true;
                     }
-                    // this.showPopupMessage(e.message);
+                    this.$store.commit("alertDialogMsg", e.message);
                 }
             } else {
                 this.sendOtpCode()

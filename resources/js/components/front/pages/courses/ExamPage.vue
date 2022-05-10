@@ -23,9 +23,11 @@
           :description="infoModal.description"
           :success="infoModal.status"
           :fixed="infoModal.isFixed"
+          portal="exam-modal"
         >
         <button v-if="isExamFinished" @click="getCertificate" class="btn-main bold font-18">إصدار الشهادة</button>
         </info-modal>
+        <portal-target name="exam-modal"></portal-target>
     </div>
 </template>
 

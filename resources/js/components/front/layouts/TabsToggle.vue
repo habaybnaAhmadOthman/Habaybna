@@ -1,6 +1,6 @@
 <template>
     <div class="tabs-toggle relative">
-        <button v-for="(tab,index) in tabs" :key="index" @click="toggletab" :tab-toggle="tab.name" :class="isFirstTab(index)">{{tab.title}}</button>
+        <button v-for="(tab,index) in tabs" :key="index" @click="toggletab" :tab-toggle="tab.name" :class="isFirstTab(index)" v-html="tab.title"></button>
     </div>
 </template>
 
@@ -64,6 +64,17 @@ button.active:after {
     }
     .swipe-box-p button.active:after{
         bottom: 0;
+    }
+    
+}
+@media (max-width: 767px) {
+    .font-14-mo * {
+        font-size: 14px!important;
+    }
+    .btn-bg-mo button.active{
+        background: #FF9E00;
+        border-radius: 8px 8px 0 0;
+        color: #fff;
     }
 }
 </style>

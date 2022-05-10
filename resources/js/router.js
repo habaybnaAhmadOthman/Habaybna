@@ -401,7 +401,8 @@ const routes = [{
     },
     {
         path: "/content/:article",
-        component: ArticlePage
+        component: ArticlePage,
+        props: true
     },
     // *****************
     // specialist page
