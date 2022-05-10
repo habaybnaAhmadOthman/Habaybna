@@ -116,7 +116,17 @@
                 if (!this.formIsValid) {
                     return;
                 }
-                this.sendMail()
+                try {
+                    this.$store.dispatch('content/contactUS', {
+                        email: this.email.val,
+                        message: this.message.val,
+                        name: this.name.val,
+                    });
+                    this.$store.commit("alertDialogMsg", 'تم ارسال طلبك بنجاح');
+                } catch (e) {
+                    this.$store.commit("alertDialogMsg", e.message);
+                }
+                // this.sendMail()
             },
             sendMail(){
                 //update this with your $form selector
@@ -179,6 +189,9 @@ textarea {
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 25px;
     height: 60px;
+}
+.btn:hover {
+    color: #823175!important;
 }
 .icons figure {
     width: 28px;

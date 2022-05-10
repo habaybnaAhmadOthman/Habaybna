@@ -32,6 +32,7 @@
             @close-share-modal="showShareDialog"
             :courseName="courseName"
             :description="courseDescription | stripHTML"
+            portal="course-share"
         ></ShareCourseModal>
         <!-- <ShareCourseModal
             :show="showShareModal"
@@ -58,6 +59,7 @@
         <TheFooter></TheFooter>
         <portal-target name="cobone-modal"></portal-target>
         <portal-target name="cobone-card"></portal-target>
+        <portal-target name="course-share"></portal-target>
     </div>
 </template>
 

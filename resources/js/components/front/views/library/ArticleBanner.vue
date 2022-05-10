@@ -1,11 +1,15 @@
 <template>
     <div class="banner mt-15 mt-0-p">
-        <img class="w-100 main-img object-fit radius-10" src="/images/courses-bg.JPG" width="100%">
+        <!-- <img v-if="type == 'Article'" class="w-100 main-img object-fit radius-10" :src="image" width="100%"> -->
+        <img class="w-100 main-img object-fit radius-10" :src="image" width="100%">
+        <!-- <iframe v-else-if="type == 'Video'" width="100%" class="w-100" controls>
+            <source :src="video" type="video/mp4">
+        </iframe> -->
         <div class="d-flex space-between mt-15 align-center p-side-12-p">
             <p class="font-18 bold gray font-16-p">تم النشر : <span class="">2020/9/15</span></p>
             <div class="d-flex">
                 <div class="fav-box relative pointer shadow-2 ml-25"></div>
-                <p class="align-center bold d-flex font-14-p font-20 pointer yellow"><img class="ml-10 share-img" src="/images/share-color.svg" width="34" height="36" alt="" > مشاركة</p>
+                <p class="align-center bold d-flex font-14-p font-20 pointer yellow" @click="openShareModal"><img class="ml-10 share-img" src="/images/share-color.svg" width="34" height="36" alt="" > مشاركة</p>
             </div>
         </div>
     </div>
@@ -13,7 +17,13 @@
 
 <script>
     export default {
-        
+        emits: ['open-share-modal'],
+        props: ['image','video','type'],
+        methods: {
+            openShareModal(){
+                this.$emit('open-share-modal')
+            },
+        }
     }
 </script>
 
