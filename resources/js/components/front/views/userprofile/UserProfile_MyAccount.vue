@@ -12,6 +12,7 @@
             @alert-password-modal="alertPasswordDialog"
             @close-password-modal="showPasswordDialog"
             :from="'change'"
+            portal="dashboard-password-modal"
         ></ChangePassword>
         <UserImage
             :show="showUserImageModalGlobal"
@@ -25,12 +26,17 @@
             :show="!!error"
             :title="error"
             @close="closeModal"
+            portal="dashboard-alert-error"
         ></alert-dialog>
         <alert-dialog
             :show="!!alertDialog"
             :title="alertDialog"
-            @close="closeAlertDialog">
+            @close="closeAlertDialog"
+            portal="alert-opt-modal">
         </alert-dialog>
+        <portal-target name="dashboard-password-modal"></portal-target>
+        <portal-target name="dashboard-alert-error"></portal-target>
+        <portal-target name="alert-opt-modal"></portal-target>
     </div>
 </template>
 <script>

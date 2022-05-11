@@ -21,17 +21,17 @@
                     </div>
                     <div class="hab-dectionary footer-col">
                         <ul>
-                            <li>
+                            <!-- <li>
                                 <router-link to="/">دليل حبايبنا</router-link>
+                            </li> -->
+                            <li>
+                                <router-link to="/terms-and-conditions">السياسات والأحكام</router-link>
                             </li>
                             <li>
-                                <router-link to="/">السياسات والأحكام</router-link>
+                                <router-link to="/media-coverage">حبايبنا في الاعلام</router-link>
                             </li>
                             <li>
-                                <router-link to="/">حبايبنا في الاعلام</router-link>
-                            </li>
-                            <li>
-                                <router-link to="/">عن حبايبنا.نت</router-link>
+                                <router-link to="/about-habaybna">عن حبايبنا.نت</router-link>
                             </li>
                             <li class="d-flex-p space-between">
                                 <router-link to="/">تواصلوا معنا</router-link>
@@ -47,13 +47,13 @@
                     <div class="hab-last footer-col">
                         <ul>
                             <li>
-                                <router-link to="/">About Habaybna.net</router-link>
+                                <router-link to="/about-habaybna-en">About Habaybna.net</router-link>
                             </li>
                             <li>
                                 <router-link to="/">habaybna.net in the media</router-link>
                             </li>
                             <li>
-                                <router-link to="/">TERMS & CONDITIONS</router-link>
+                                <router-link to="/terms-and-conditions-en">TERMS & CONDITIONS</router-link>
                             </li>
                         </ul>
                     </div>
@@ -81,16 +81,16 @@
                 </div> -->
                 <p class="flex-all w-100-p all-rights mt-10-p">كافة الحقوق محفوظة {{new Date().getFullYear()}} حبايبنا.نت</p>
                 <div class="socail-links d-flex align-center">
-                   <router-link to="/" class="mr-20">
+                   <router-link to="https://www.youtube.com/channel/UCldw52FzyIcYgOXASVlFxPA" class="mr-20">
                         <img class="youtube" src="/images/youtube-icon-color.svg" width="43" height="30" alt="">
                    </router-link>
-                   <router-link to="/" class="mr-20">
+                   <router-link to="https://twitter.com/habaybnadotnet" class="mr-20">
                         <img class="twitter" src="/images/twitter-icon-color.svg" width="37" height="37" alt="">
                    </router-link>
-                   <router-link to="/" class="mr-20">
+                   <router-link to="https://www.instagram.com/habaybnadotnet/" class="mr-20">
                         <img class="instagram" src="/images/instagram-icon-color.svg" width="37" height="37" alt="">
                    </router-link>
-                   <router-link to="/" class="mr-20">
+                   <router-link to="https://www.facebook.com/habaybnadotnet" class="mr-20">
                         <img class="facebook" src="/images/facebook-icon-color.svg" width="18" height="36" alt="">
                    </router-link>
                 </div>

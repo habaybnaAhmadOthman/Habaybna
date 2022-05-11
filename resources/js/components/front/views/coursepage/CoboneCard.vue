@@ -51,7 +51,7 @@
                 </div>
             </template>
             <template v-else-if="isCourse && courseData && courseData.isPurchased">
-                <button @click="continueWatching" class="btn-register-now white-i font-18 font-16-p mb-20 bold flex-all w-100 pointer mb-10-p">متابعة</button>
+                <button @click="continueWatching" class="btn-register-now white-i font-18 font-16-p mb-20 bold flex-all w-100 pointer mb-10-p">متابعة الدورة</button>
             </template>
             <!-- for lesson page -->
             <LectureOptions v-else-if="!isCourse"></LectureOptions>

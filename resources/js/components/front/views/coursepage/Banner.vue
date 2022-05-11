@@ -92,8 +92,8 @@ export default {
         font-size: 15px;
     }
     .details .icon img{
-        width: 25px;
-        height: 25px;
+        width: 19px;
+        height: auto;
     }
     .banner-mo {
         background-image: url(/images/course-details-mo.svg);
@@ -103,12 +103,12 @@ export default {
         background-color: #823175;
     }
     .video {
-        width: 33px!important;
-        height: 28px!important;
+        width: 22px!important;
+        height: auto!important;
     }
     .share {
-        width: 28px!important;
-        height: 30px!important;
+        width: 20px!important;
+        height: auto!important;
     }
     .course-card {
         top:auto;

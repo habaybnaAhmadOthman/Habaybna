@@ -1,7 +1,7 @@
 <template>
   <section class="icons-section relative">
     <div class="container h-100 z-1">
-      <div class="icons-box d-flex gap-20 justify-center-p p-side-12-p pb-10-p flex-wrap">
+      <div class="icons-box d-flex row-3-gap gap-20 justify-center-p p-side-12-p pb-10-p flex-wrap">
         <div class="icon-box">
           <figure class="mb-20 video">
             <img src="/images/online-video-icon.svg" alt="" width="101" height="81">

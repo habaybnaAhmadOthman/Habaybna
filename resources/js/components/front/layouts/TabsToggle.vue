@@ -71,7 +71,13 @@ button.active:after {
     .font-14-mo * {
         font-size: 14px!important;
     }
-    .btn-bg-mo button.active{
+    button {
+        font-size: 14px;
+    }
+    button:after{
+        content: none !important;
+    }
+    button.active{
         background: #FF9E00;
         border-radius: 8px 8px 0 0;
         color: #fff;

@@ -115,7 +115,7 @@
                     <div class="col-md-4">
                         <label class="form-control-label">عدد الأبناء</label>
                         <input
-                            type="number"
+                            type="text"
                             class="form-control"
                             placeholder="عدد الأبناء"
                             v-model.trim="noChilds.val"
@@ -126,7 +126,7 @@
                             >عدد الأبناء المتأخرين في التطور</label
                         >
                         <input
-                            type="number"
+                            type="text"
                             class="form-control"
                             placeholder="عدد الأبناء المتأخرين في التطور"
                             v-model.trim="noChildsSpecialNeeds.val"

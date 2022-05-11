@@ -39,7 +39,7 @@
                 >
             </li>
             <li class="mo">
-                <button @click="logout" class="d-block p-side-15 pt-10 pb-10 trans bg-none w-100 border-0"
+                <button @click="logout" class="d-block p-side-15 pt-10 pb-10 trans bg-none w-100 border-0 logout-btn"
                     >تسجيل خروج</button
                 >
             </li>
@@ -112,6 +112,11 @@ export default {
         position: absolute;
         top: 20px;
         right: 20px;
+    }
+    .logout-btn {
+        text-align: right;
+        color: #3FC4E0!important;
+        background: transparent!important;
     }
 }
 </style>
