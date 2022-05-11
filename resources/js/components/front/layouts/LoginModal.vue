@@ -83,12 +83,12 @@
                             </p>
                         </div>
                         <div class="d-flex space-between mb-40 flex-wrap-p mb-10-p">
-                            <router-link class="main-color font-20 bold mb-10-p font-16-p" to="/"
+                            <router-link @click.native="closeLoginModal" class="main-color font-20 bold mb-10-p font-16-p" to="/forget-password"
                                 >هل نسيت كلمة السر؟</router-link
                             >
                             <p class="black-2 bold font-20 font-16-p">
                                 هل أنت مستخدم جديد؟
-                                <router-link class="main-color pr-10 p-0-p" to="/register"
+                                <router-link class="main-color pr-10 p-0-p" @click.native="closeLoginModal" to="/register"
                                     >سجل من هنا</router-link
                                 >
                             </p>

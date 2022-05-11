@@ -2,7 +2,7 @@
     <div>
         <RegisterTemplate>
             <LoginForm @save-form="login"> </LoginForm>
-            <h3 class="mt-50 center light font-15 flex-all p-side-50 flex-wrap">
+            <h3 class="mt-50 center light font-15 flex-all p-side-50 flex-wrap p-side-12-p w-100-p">
                 <span class="main-color font-15-p">لست من عائلة حبايبنا؟</span>
                 <router-link class="blue d-flex align-center font-15-p" to="/signup"
                     >إنضم الآن</router-link

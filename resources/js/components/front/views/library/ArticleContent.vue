@@ -7,7 +7,7 @@
                     <img src="/images/test.jpg" class="object-fit rounded" width="40" height="40">
                     <div class="mr-10">
                         <p class="font-14 main-color">{{author}}</p>
-                        <p class="font-14 yellow">اختصاصية علاج طبيعي</p>
+                        <p class="font-14 main-color">اختصاصية علاج طبيعي</p>
                     </div>
                 </div>
                 <div class="font-20 black-2 font-18-p pre-line li-auto" v-html="description"></div>

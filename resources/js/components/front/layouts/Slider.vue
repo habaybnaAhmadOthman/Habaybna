@@ -4,38 +4,12 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper p-0">
                 <!-- Slides -->
-                <div class="swiper-slide">
+                <router-link :to="item.url" v-for="item,index in data" :key="index" class="swiper-slide">
                     <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
+                        <img :src="item.image" :alt="item.title" class="w-100-i">
                     </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
-                    </div>
-                </div>
+                </router-link>
             </div>
-
             <div class="swiper-pagination" :class="`swiper-pagination-${this.selector}`"></div>
         </div>
         <div class="swiper-button-next do" :class="`${arrowSelector}-next`"></div>
@@ -45,7 +19,7 @@
 
 <script>
     export default {
-        props: ['selector','arrow-selector','slides-per-view','spaceBetween','auto-play','autoplay-delay'
+        props: ['data','selector','arrow-selector','slides-per-view','spaceBetween','auto-play','autoplay-delay'
         ,'mobile-per-view','spaceBetweenMobile','pagination-mo','pagination-do'],
         methods:{
             initSwiper(){

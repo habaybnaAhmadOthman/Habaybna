@@ -78,7 +78,7 @@ import ForgetPasswordPage from "./components/front/pages/auth/ForgetPasswordPage
 import UserProfile_Template from "./components/front/views/userprofile/UserProfile_Template";
 import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfile.vue";
 import UserProfile_MyCourses from "./components/front/pages/dashboard/MyCourses.vue";
-import UserProfile_MyFavourites from "./components/front/pages/dashboard/MyFavourites.vue";
+import UserProfile_MyFavouriteContent from "./components/front/pages/dashboard/MyFavouriteContents.vue";
 
 import store from "./store/index";
 
@@ -279,14 +279,15 @@ const routes = [{
         path: "/signup",
         component: RegisterPage,
         meta: {
-            anonymous: true
+            anonymous: true,
+            back:true
         }
     },
     {
         path: "/parent-complete-registration",
         component: RegisterParentComplete,
         meta: {
-            requiresAuth: true
+            // requiresAuth: true
         }
     },
     {
@@ -308,7 +309,8 @@ const routes = [{
         component: LoginPage,
         meta: {
             requiresAuth: false,
-            anonymous: true
+            anonymous: true,
+            back:true
         },
         name: "login"
     },
@@ -317,7 +319,8 @@ const routes = [{
         component: ForgetPasswordPage,
         meta: {
             requiresAuth: false,
-            anonymous: true
+            anonymous: true,
+            back:true
         },
         name: "forgetPassword"
     },
@@ -346,12 +349,12 @@ const routes = [{
                 name: 'myCourses'
             },
             {
-                path: "my-favourites",
-                component: UserProfile_MyFavourites,
+                path: "my-favourite/contents",
+                component: UserProfile_MyFavouriteContent,
                 meta: {
                     header: false
                 },
-                name: 'myFavourites'
+                name: 'myFavouriteContents'
             },
     ]
     },
@@ -361,7 +364,8 @@ const routes = [{
         path: "/courses/:course",
         component: CoursePage,
         meta: {
-            requiresAuth: false
+            requiresAuth: false,
+            back:true
         },
         props: true
     },
@@ -377,7 +381,8 @@ const routes = [{
         path: "/courses/:course/:lesson",
         component: ClassRoomPage,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            back:true
         },
         props: true
     },

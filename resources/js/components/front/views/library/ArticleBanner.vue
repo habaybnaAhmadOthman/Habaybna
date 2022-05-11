@@ -8,7 +8,7 @@
                 <p v-if="date" class="font-18 bold gray font-16-p">تم النشر : <span class="">{{date}}</span></p>
             </div>
             <div class="d-flex">
-                <div class="fav-box relative pointer shadow-2 ml-25"></div>
+                <div class="fav-box relative pointer shadow-2 ml-25" :class="{'active':is_favourite}" @click="addToFavourite($event,nid)"></div>
                 <p class="align-center bold d-flex font-14-p font-20 pointer yellow" @click="openShareModal"><img class="ml-10 share-img" src="/images/share-color.svg" width="34" height="36" alt="" > مشاركة</p>
             </div>
         </div>
@@ -18,10 +18,18 @@
 <script>
     export default {
         emits: ['open-share-modal'],
-        props: ['image','video','type','date'],
+        props: ['image','video','type','date','is_favourite','nid'],
         methods: {
             openShareModal(){
                 this.$emit('open-share-modal')
+            },
+            async addToFavourite(event,id) {
+                if (this.isLoggedIn) {
+                    event.target.classList.toggle("active");
+                    await this.$store.dispatch("content/addToFavourite", {id});
+                } else {
+                    this.$store.commit("loginModal", true);
+                }
             },
         },
         computed: {
@@ -29,8 +37,11 @@
                 if (this.video) {
                     return 'https://www.youtube.com/embed/' + this.video.slice(this.video.lastIndexOf('/')+1)
                 } return ''
-            }
-        }
+            },
+            isLoggedIn() {
+                return this.$store.getters["user/isLoggedIn"];
+            },
+        },
     }
 </script>
 

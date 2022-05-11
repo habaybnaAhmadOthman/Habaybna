@@ -2,7 +2,7 @@
     <div class="library-page">
         <TheHeader></TheHeader>
         <div class="container">
-            <ArticleBanner @open-share-modal="showShareDialog" :image="mainImage" :type="articleType" :video="video" :date="date"></ArticleBanner>
+            <ArticleBanner :nid="id" :is_favourite="is_favourite" @open-share-modal="showShareDialog" :image="mainImage" :type="articleType" :video="video" :date="date"></ArticleBanner>
             <ArticleContent :tags="tags" :title="title" :description="description" :author="authorName"></ArticleContent>
             <div class="mt-50">
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
@@ -37,6 +37,7 @@
         data(){
             return {
                 specialists:null,
+                id:null,
                 mainImage: null,
                 authorName: null,
                 title: null,
@@ -45,6 +46,7 @@
                 description: null,
                 tags: null,
                 date: null,
+                is_favourite: false,
                 showShareModal: false,
                 isDataReady:false,
             }
@@ -52,6 +54,7 @@
         methods: { 
             async getPageData(){
                 let data = await this.$store.dispatch('content/getArticle',{title: this.article.split('-').join(' ')});
+                this.id  = data.nid;
                 this.specialists  = data.providers;
                 this.mainImage = data.image;
                 this.title = data.title;
@@ -60,10 +63,11 @@
                 this.articleType = data.article_type;
                 this.description = data.body;
                 this.tags = data.tags;
+                this.is_favourite = data.is_favourite;
                 if (data.created_at)
                     this.date = data.created_at;
                 this.isDataReady = true
-                console.log(data)
+                // console.log(data)
             },
             showShareDialog() {
                 this.showShareModal = !this.showShareModal;

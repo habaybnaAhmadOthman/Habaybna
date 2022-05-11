@@ -20,20 +20,20 @@
                         <span
                             class="bold font-22 main-color ml-15"
                             v-if="!course.is_free && course.discount.discount_price"
-                            >{{ course.discount.discount_price }} JD</span
+                            >{{ course.discount.discount_price }} $</span
                         >
                         <span
                             class="gray font-19 before-discount bold"
                             v-if="!course.is_free && course.price"
                             
-                            >{{ course.price }} JD</span
+                            >{{ course.price }} $</span
                         >
                         </template>
                         <template v-else-if="!course.is_free && course.price">
                             <span
                             class="bold font-22 main-color ml-15"
                             v-if="!course.is_free && course.price"
-                            >{{ course.price }} JD</span
+                            >{{ course.price }} $</span
                         >
                         </template>
                     </div>
