@@ -78,7 +78,7 @@ export default {
                 this.firstName = obj.firstName;
                 const date = new Date().toLocaleDateString("nl",{month:"long", day:"2-digit",year: "numeric"});
                 this.day = date.split(' ')[0]
-                this.month = date.split(' ')[1]
+                this.month = new Date().toLocaleDateString("en",{month:"long"})
                 this.year = date.split(' ')[2]
             } catch (e) {
                 console.log(e)

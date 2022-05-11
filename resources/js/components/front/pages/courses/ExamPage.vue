@@ -27,7 +27,9 @@
         >
         <button v-if="isExamFinished" @click="getCertificate" class="btn-main bold font-18">إصدار الشهادة</button>
         </info-modal>
+        <div class="z-10000 relative">
         <portal-target name="exam-modal"></portal-target>
+        </div>
     </div>
 </template>
 
@@ -125,9 +127,13 @@ export default {
 .questions-box {
     padding: 0 90px 0 80px;
 }
+.z-10000 {
+    z-index: 9999999;
+}
 @media (max-width: 767px) {
     .questions-box {
         padding: 0 12px;
     }
+    
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="banner mt-15 mt-0-p">
-        <img v-if="type == 'Article'" class="w-100 main-img object-fit radius-10" :src="image" width="100%">
+        <img v-if="type == 'Text'" class="w-100 main-img object-fit radius-10" :src="image" width="100%">
         <!-- <img class="w-100 main-img object-fit radius-10" :src="image" width="100%"> -->
         <iframe border="0" v-else-if="type == 'Video'" width="100%" class="w-100" controls :src="youtubeVideo"></iframe>
         <div class="d-flex space-between mt-15 align-center p-side-12-p">

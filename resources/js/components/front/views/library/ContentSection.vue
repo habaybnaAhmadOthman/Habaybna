@@ -141,4 +141,9 @@ export default {
 .portal-pagination .page-item .sr-only{
   display: none;
 }
+@media (max-width: 767px) {
+  .portal-pagination .pagination {
+    flex-wrap: wrap;
+  }
+}
 </style>

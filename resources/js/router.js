@@ -56,6 +56,11 @@ import ArticlePage from "./components/front/pages/library/ArticlePage.vue";
 // specialist
 import SpecialistPage from "./components/front/pages/SpecialistPage.vue";
 import SpecialistsPage from "./components/front/pages/SpecialistsPage.vue";
+import TermsPage from "./components/front/pages/TermsPage.vue";
+import TermsEnPage from "./components/front/pages/TermsEnPage.vue";
+import AboutPage from "./components/front/pages/AboutHabaybna.vue";
+import AboutEnPage from "./components/front/pages/AboutHabaybnaEn.vue";
+import MediaCoveragePage from "./components/front/pages/MediaCoveragePage.vue";
 
 
 
@@ -413,6 +418,27 @@ const routes = [{
     {
         path: "/specialist/:specialist",
         component: SpecialistPage
+    },
+    // *****************
+    {
+        path: "/terms-and-conditions",
+        component: TermsPage
+    },
+    {
+        path: "/terms-and-conditions-en",
+        component: TermsEnPage
+    },
+    {
+        path: "/about-habaybna",
+        component: AboutPage
+    },
+    {
+        path: "/about-habaybna-en",
+        component: AboutEnPage
+    },
+    {
+        path: "/media-coverage",
+        component: MediaCoveragePage
     },
     { path: "*", component: ErrorPage }
 ];

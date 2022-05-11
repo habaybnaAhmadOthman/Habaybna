@@ -80,7 +80,7 @@
                         <img src="/images/profile-avatar-mo.svg" >
                         <p class="font-10 mobile-icon-color">الدورات</p>
                     </router-link>
-                    <router-link to="/profile" class="profile-mo mo center mobile-link">
+                    <router-link to="/profile/my-account" class="profile-mo mo center mobile-link">
                         <img src="/images/profile-avatar-mo.svg" >
                         <p class="font-10 mobile-icon-color">حسابي</p>
                     </router-link>

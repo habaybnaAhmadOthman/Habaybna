@@ -2,9 +2,9 @@
     <div>
         <RegisterTemplate>
             <LoginForm @save-form="login"> </LoginForm>
-            <h3 class="mt-50 center light font-15 flex-all p-side-50">
-                <span class="main-color">لست من عائلة حبايبنا؟</span>
-                <router-link class="blue d-flex align-center" to="/signup"
+            <h3 class="mt-50 center light font-15 flex-all p-side-50 flex-wrap">
+                <span class="main-color font-15-p">لست من عائلة حبايبنا؟</span>
+                <router-link class="blue d-flex align-center font-15-p" to="/signup"
                     >إنضم الآن</router-link
                 >
             </h3>
