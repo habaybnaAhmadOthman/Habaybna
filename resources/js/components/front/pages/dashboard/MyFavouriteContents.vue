@@ -1,7 +1,7 @@
 <template>
     <UserProfileContent>
         <template #page-header>
-            <h1>مقالاتي</h1>
+            <h1>المقالات المفضلة</h1>
         </template>
         <template>
             <section class="profile-section pt-50 pb-50">

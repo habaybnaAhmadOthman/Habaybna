@@ -78,6 +78,7 @@ import ForgetPasswordPage from "./components/front/pages/auth/ForgetPasswordPage
 import UserProfile_Template from "./components/front/views/userprofile/UserProfile_Template";
 import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfile.vue";
 import UserProfile_MyCourses from "./components/front/pages/dashboard/MyCourses.vue";
+import UserProfile_MyFavouriteCourses from "./components/front/pages/dashboard/MyFavouriteCourses.vue";
 import UserProfile_MyFavouriteContent from "./components/front/pages/dashboard/MyFavouriteContents.vue";
 
 import store from "./store/index";
@@ -349,7 +350,15 @@ const routes = [{
                 name: 'myCourses'
             },
             {
-                path: "my-favourite/contents",
+                path: "my-favourite-courses",
+                component: UserProfile_MyFavouriteCourses,
+                meta: {
+                    header: false
+                },
+                name: 'myFavouriteCourses'
+            },
+            {
+                path: "my-favourite-contents",
                 component: UserProfile_MyFavouriteContent,
                 meta: {
                     header: false

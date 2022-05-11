@@ -30,11 +30,16 @@
             </li>
             <li>
                 <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-courses" @click.native="closeNavMenu"
+                    >دوراتي</router-link
+                >
+            </li>
+            <li>
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-favourite-courses" @click.native="closeNavMenu"
                     >الكورسات المفضلة</router-link
                 >
             </li>
             <li>
-                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-favourite/contents" @click.native="closeNavMenu"
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-favourite-contents" @click.native="closeNavMenu"
                     >المقالات المفضلة</router-link
                 >
             </li>
