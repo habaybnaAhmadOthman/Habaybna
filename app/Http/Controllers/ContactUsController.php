@@ -21,10 +21,15 @@ class ContactUsController extends Controller
        return response($message,200);
    }
 
-   public function xxx()
+   public function contactUs(Request $request)
    {
-    dd('xxx');
-    //    $count = ContactUs::all();
-    //    dd($count);
+       $message = new ContactUs() ;
+
+       $message->name = $request->name ;
+       $message->email = $request->email ;
+       $message->message = $request->message ;
+
+       $message->save();
+       return response('success',200);
    }
 }

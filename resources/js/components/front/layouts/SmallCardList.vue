@@ -12,9 +12,6 @@ import SmallCard from './SmallCard.vue'
 export default {
     props: ['filtered-articles','showMoreCard','class-list'],
     components: {SmallCard},
-    mounted(){
-        console.log(this.showMoreCard)
-    }
 };
 </script>
 

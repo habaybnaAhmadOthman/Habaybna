@@ -1,11 +1,14 @@
 <template>
-  <section class="landing-section relative">
+  <section class="landing-section pt-50 relative">
     <div class="container h-100 z-1">
-      <div class="flex-all h-100">
-        <div class="landing-call-links p-side-30">
-          <p class="white bold font-40 pr-20 font-20-p">أهلاً بكم!</p>
-          <h1 class="font-30 white f-normal font-18-p">تطوير مهارات الأطفال وتلبية احتياجاتهم التطورية ليست أمراً سهلاً! بحاجة لإرشاد وتوجيه من المختصين. لذلك نضع عالم من الخبرات والمعرفة بين يديكم لمساعدتكم في تمكين الأطفال بمختلف قدراتهم</h1>
+      <div class="d-flex align-center space-between box">
+        <div class="flex-all h-100">
+          <div class="landing-call-links p-side-30">
+            <h1 class="font-25 main-color bold font-18-p mb-25">لأن كل طفل لديه خطواته الخاصة في التطور يحتاج الـوالدين ومقدمي الرعاية إلى مرشــد يرافقهم ويساندهم في رحلتهم لتمكين طفلهم ويدلهم على الطريق المناسب له</h1>
+            <h2 class="font-20 font-16-p f-normal black">أفضل الأخصائيين يقدمون التوجيه والتدريب لكل أم وأب أو مقدم رعاية يسعون لتطوير مهارات طفلهم المتأخر في التطور وتقديم الأفضل له ليجد طريقه في الحياة ومكانه في المجتمع</h2>
+          </div>
         </div>
+        <img class="landing-bg w-80-p mb-30-p" src="images/landing-1.png" alt="">
       </div>
     </div>
   </section>
@@ -17,31 +20,14 @@ export default {
 </script>
 
 <style scoped>
-.landing-section:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: url(/images/banner-gradinet.svg);
-  mix-blend-mode: multiply;
-  background-size: 100%;
-}
-.landing-section {
-  background: linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.263) 0%,
-      rgba(0, 0, 0, 0.26) 100%
-    ),
-    url(http://cms.habaybna.net/sites/default/files/2020-02/caleb-woods-ecRuhwPIW7c-unsplash_0.jpg)
-      center top / cover no-repeat;
-  height: 90.7vh;
+
+.landing-bg {
+    width: 45%;
 }
 
 @media (max-width: 767px) {
-    .landing-section {
-      height: 400px;
+    .box {
+      flex-direction: column-reverse;
     }
 }
 </style>

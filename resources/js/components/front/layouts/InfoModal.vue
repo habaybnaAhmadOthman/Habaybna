@@ -1,5 +1,5 @@
 <template>
-    <portal v-if="portal" :to="portal">
+    <portal :to="portal">
         <aside :class="modalClass">
             <div v-if="show" class="w-100 h-100 backdrop" @click="tryClose"></div>
             <transition name="modal">

@@ -6,7 +6,7 @@
                     <router-link to="/" class="logo d-flex">
                         <img src="/images/siteImgs/header/logo.png" width="120" />
                     </router-link>
-                    <!-- <a @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/home-icon.svg" /></a> -->
+                    <a v-if="$route.meta.back == true" @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/back-btn.svg" width="30" /></a>
                 </div>
             </div>
             <div class="d-flex align-center w-100 header-right">
@@ -77,14 +77,14 @@
                         <p class="font-10 mobile-icon-color">الرئيسية</p>
                     </router-link>
                     <router-link to="/online-courses" class="profile-mo mo center mobile-link">
-                        <img src="/images/profile-avatar-mo.svg" >
+                        <img src="/images/mo-video-bottom.svg" width="24" height="21" >
                         <p class="font-10 mobile-icon-color">الدورات</p>
                     </router-link>
-                    <router-link to="/profile" class="profile-mo mo center mobile-link">
+                    <router-link to="/profile/my-account" class="profile-mo mo center mobile-link">
                         <img src="/images/profile-avatar-mo.svg" >
                         <p class="font-10 mobile-icon-color">حسابي</p>
                     </router-link>
-                    <div to="/profile" class="profile-mo mo center mobile-link">
+                    <div  class="profile-mo mo center mobile-link">
                         <img src="/images/menu-icon-mobile.svg" @click="toggleMobileMenu">
                         <p class="font-10 mobile-icon-color">المزيد</p>
                     </div>
