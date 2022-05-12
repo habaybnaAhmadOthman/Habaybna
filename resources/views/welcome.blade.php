@@ -33,5 +33,5 @@
     </div>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
    </body>
-   <script src="{{mix('/js/app.js')}}"></script>
+   <script src="{{mix('/js/app.js?v=1')}}"></script>
 </html>
