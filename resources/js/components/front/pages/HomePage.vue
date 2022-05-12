@@ -16,7 +16,7 @@
             <ContactUS></ContactUS>
         </div>
         <div class="mt-50">
-            <Partners></Partners>
+            <!-- <Partners></Partners> -->
         </div>
         <TheFooter></TheFooter>
     </div>

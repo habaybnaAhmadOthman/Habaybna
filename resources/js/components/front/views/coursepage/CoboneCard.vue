@@ -34,18 +34,18 @@
                     <template v-if="courseData.discount.has_discount">
                         <span
                             class="gray font-35 before-discount bold"
-                            ><template v-if="!courseData.is_free && courseData.price ">{{ courseData.price }} JD</template></span
+                            ><template v-if="!courseData.is_free && courseData.price ">{{ courseData.price }} $</template></span
                         >
                         <span
                             class="bold font-35 main-color"
                             v-if="!courseData.is_free && courseData.discount.discount_price"
-                            >{{ courseData.discount.discount_price }} JD</span
+                            >{{ courseData.discount.discount_price }} $</span
                         >
                     </template>
                     <template v-else-if="!courseData.is_free && courseData.price">
                         <span
                             class="main-color font-35 bold d-block w-100 left"
-                            ><template>{{ courseData.price }} JD</template></span
+                            ><template>{{ courseData.price }} $</template></span
                         >
                     </template>
                 </div>

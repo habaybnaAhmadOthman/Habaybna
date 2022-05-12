@@ -1,6 +1,6 @@
 <template>
     <div class="mobile-form p-side-50 p-side-12-p">
-        <h2 class="main-color font-40 bold center mb-10 font-28-p">
+        <h2 class="main-color font-40 bold center mb-10 font-28-p d-flex-p space-between">
             تسجيل دخول
         </h2>
         <form @submit.prevent="submitForm">

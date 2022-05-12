@@ -28,7 +28,7 @@ import ContentList from '../../layouts/SmallCardList.vue'
 import CategoryFilterSection from '../../layouts/CategoryFilterSection.vue'
 import LaravelVuePagination from "laravel-vue-pagination";
 export default {
-  props: ['cardsCount','showMoreCard','list-only','title','class-list'],
+  props: ['cardsCount','showMoreCard','list-only','title','class-list','list-api','can-remove'],
   computed: {
     cardsCountFn(){
       if (this.cardsCount)
@@ -96,11 +96,15 @@ export default {
       this.filteredContents();
     },
     async getPageDate(page){
+        let getDataFrom = 'getContent'
         if (typeof page === "undefined") {
             page = 1;
         }
         this.isLoading(true)
-        const resp = await this.$store.dispatch('content/getContent',{page})
+        console.log(this.listApi)
+        if (this.listApi)
+          getDataFrom = this.listApi
+        const resp = await this.$store.dispatch(`content/${getDataFrom}`,{page})
         this.isLoading(false)
         this.contentTemp = resp
         this.articles = resp.data
@@ -116,6 +120,10 @@ export default {
 <style scoped>
 .all-courses-page .title-line {
   margin-bottom: 20px;
+}
+.two-card .small-card-list{
+    gap: 2%;
+    row-gap: 15px;
 }
 </style>
 <style>
