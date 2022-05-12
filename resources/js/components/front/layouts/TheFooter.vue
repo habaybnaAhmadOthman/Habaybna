@@ -81,18 +81,18 @@
                 </div> -->
                 <p class="flex-all w-100-p all-rights mt-10-p">كافة الحقوق محفوظة {{new Date().getFullYear()}} حبايبنا.نت</p>
                 <div class="socail-links d-flex align-center">
-                   <router-link to="https://www.youtube.com/channel/UCldw52FzyIcYgOXASVlFxPA" class="mr-20">
+                   <a @click="goToLink(`https://www.youtube.com/channel/UCldw52FzyIcYgOXASVlFxPA`)" class="mr-20">
                         <img class="youtube" src="/images/youtube-icon-color.svg" width="43" height="30" alt="">
-                   </router-link>
-                   <router-link to="https://twitter.com/habaybnadotnet" class="mr-20">
+                   </a>
+                   <a @click="goToLink(`https://twitter.com/habaybnadotnet`)" class="mr-20">
                         <img class="twitter" src="/images/twitter-icon-color.svg" width="37" height="37" alt="">
-                   </router-link>
-                   <router-link to="https://www.instagram.com/habaybnadotnet/" class="mr-20">
+                   </a>
+                   <a @click="goToLink(`https://www.instagram.com/habaybnadotnet/`)" class="mr-20">
                         <img class="instagram" src="/images/instagram-icon-color.svg" width="37" height="37" alt="">
-                   </router-link>
-                   <router-link to="https://www.facebook.com/habaybnadotnet" class="mr-20">
+                   </a>
+                   <a @click="goToLink(`https://www.facebook.com/habaybnadotnet`)" class="mr-20">
                         <img class="facebook" src="/images/facebook-icon-color.svg" width="18" height="36" alt="">
-                   </router-link>
+                   </a>
                 </div>
             </div>
         </div>
@@ -101,7 +101,11 @@
 
 <script>
     export default {
-        
+        methods: {
+            goToLink(url) {
+                window.open(url,'_blank')
+            }
+        }
     }
 </script>
 
