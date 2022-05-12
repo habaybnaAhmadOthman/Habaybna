@@ -4,11 +4,11 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper p-0">
                 <!-- Slides -->
-                <router-link :to="item.url" v-for="item,index in data" :key="index" class="swiper-slide">
+                <a @click="goToLink(item.url)" v-for="item,index in data" :key="index" class="swiper-slide">
                     <div class="w-100-i fig d-flex">
                         <img :src="item.image" :alt="item.title" class="w-100-i">
                     </div>
-                </router-link>
+                </a>
             </div>
             <div class="swiper-pagination" :class="`swiper-pagination-${this.selector}`"></div>
         </div>
@@ -65,6 +65,9 @@
                 } else {
                     return false
                 }
+            },
+            goToLink(url){
+                window.open(url, '_blank')
             }
         },
         computed:{

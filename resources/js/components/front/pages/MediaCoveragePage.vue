@@ -8,7 +8,7 @@
                 الإعلامية:
             </h6>
             <div class="media-wrapper">
-                <router-link :to="item.url" class="media-content d-flex flex-wrap" v-for="item,index in media" :key="index">
+                <a @click="goToLink(item.url)" :to="item.url" class="media-content d-flex flex-wrap" v-for="item,index in media" :key="index">
                     <div class="media-img w-100-p justify-center-p">
                         <img
                             :src="item.image"
@@ -18,7 +18,7 @@
                     <div  class="body1 w-100-p font-20 center-p pt-10">
                         <p>{{item.title}}</p>
                     </div>
-                </router-link>
+                </a>
             </div>
         </div>
         <TheFooter />
@@ -34,6 +34,11 @@ export default {
     data(){
         return {
             media:[]
+        }
+    },
+    methods: {
+        goToLink(url) {
+            window.open(url,'_blank')
         }
     },
     async created(){
