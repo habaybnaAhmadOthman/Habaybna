@@ -1,5 +1,5 @@
 /node_modules
-/public/hot
+/public
 /public/storage
 /storage/*.key
 /vendor
@@ -11,5 +11,7 @@ Homestead.yam
 npm-debug.log
 yarn-error.log
 /public/js/app.js
-/storage/app/public
+/storage
 /mainckeditor/node_modules
+.DS_Store
+
