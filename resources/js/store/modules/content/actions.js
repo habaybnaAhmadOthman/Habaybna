@@ -20,7 +20,7 @@ export default {
     },
     // ******** Contact US ::: POST
     async contactUS(context,payload) {
-        const resp = await callApi("POST", `/api/media`,payload);
+        const resp = await callApi("POST", `/api/contact-us`,payload);
         if (!resp || resp.status != 200) {
             const error = new Error("fail to contact us");
             throw error;

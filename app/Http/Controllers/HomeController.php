@@ -141,17 +141,7 @@ class HomeController extends Controller
 
     }
 
-    public function contactUs(Request $request)
-    {
-        $message = new ContactUs() ;
 
-        $message->name = $request->name ;
-        $message->email = $request->email ;
-        $message->message = $request->text ;
-
-        $message->save();
-        return response('success',200);
-    }
 
 
 }

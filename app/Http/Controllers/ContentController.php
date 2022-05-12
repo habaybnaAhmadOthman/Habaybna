@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\CustomClass\CreateContent;
 use Illuminate\Http\Request;
 use App\Content;
-
+use Illuminate\Support\Facades\Auth;
 
 class ContentController extends Controller
 {
@@ -41,6 +41,14 @@ class ContentController extends Controller
     //         $content->image = $newUrl ;
     //         $content->save();
     //     }
+    // }
+    // if(Auth::user() && Auth::user()->role != 'admin'){
+    //     if(Auth::user()->articles->count() > 0){
+    //     $contents = Content::with('userFavArticles')->paginate(15);
+    //     // dd($contents);
+
+    //     }
+
     // }
       $contents = Content::paginate(15);
         return response()->json($contents);

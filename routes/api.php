@@ -21,9 +21,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('get-payment-status','PaymentController@checkPaymentStatus');
     Route::post('/course-payment','PaymentController@coursePayment');
     Route::post('course/add-to-fav','CourseController@addToFavourite');
+    Route::post('article/add-to-fav','CourseController@addToFavourite');
     Route::post('courses/free-course','PaymentController@joinFreeCourse');
     Route::post('course/get-course-quize','QuizController@getUserCourseQuiz');
-
+    
     Route::post('course/user-complete-quize','QuizController@completeQuiz');
 
 
@@ -168,7 +169,7 @@ Route::post('/user/forget-password','HomeController@forgetPassword');
 Route::post('/user/forget-password/check-otp','HomeController@checkForgetPassword');
 Route::post('/user/forget-password/change-password','HomeController@changePassword');
 Route::get('/contents','ContentController@index');
-Route::post('/contact-us','HomeController@contactUs');
+Route::post('/contact-us','ContactUsController@contactUs');
 Route::post('/show-article','ContentController@showArticle');
 Route::get('/media','MediaController@index');
 
