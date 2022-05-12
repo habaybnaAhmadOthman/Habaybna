@@ -3,7 +3,7 @@
     <section class="learn-section mt-20">
       <div class="container p-side-12-p" :class="classList">
         <template v-if="title || !listOnly">
-          <h2 class="title-line mb-40 mb-20-p">ءءءءءءءء</h2>
+          <h2 class="title-line mb-40 mb-20-p">مكتبة المعلومات</h2>
         </template>
         <template v-if="!listOnly">
           <!-- <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection> -->
