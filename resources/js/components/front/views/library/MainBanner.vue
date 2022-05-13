@@ -8,7 +8,10 @@
             <h2 class="font-26 font-18-p f-normal black">يشارك بتقديمها مئات الأخصائيين والوالدين ومقدمي الرعاية لمساعدتك في رحلتك لتمكين طفلك <br><span class="blue">مقالات . فيديوهات . ندوات رقمية . قصص وتجارب</span></h2>
           </div>
         </div>
-        <img class="landing-bg mb-30-p" src="images/library-bg-1.png" alt="">
+        <div class="landing-bg relative">
+          <img class="w-100 relative mb-30-p" src="images/library-bg-1.png" alt="">
+          <img class="w-100 patt-1 mb-30-p" src="images/library-bg-1.png" alt="">
+        </div>
       </div>
     </div>
   </section>
@@ -24,7 +27,12 @@ export default {
 .landing-bg {
     width: 28%;
 }
-
+.patt-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(45deg);
+}
 @media (max-width: 767px) {
     .box {
       flex-direction: column-reverse;

@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </router-link>
-                        <span class="prevent-click"></span>
+                        <span class="prevent-click" @click="showUnCompleteAlert"></span>
                     </div>
                 </template>
             </div>
@@ -159,6 +159,9 @@ export default {
         forceRefresh(){
             this.$store.commit("forceRefresh");
         },
+        showUnCompleteAlert(){
+            this.$store.commit("alertDialogMsg", 'يجب عليك اتمام الدروس السابقة لتستطيع مشاهدة هذا الدرس ');
+        }
     },
     mounted(){
         // to get available lectures
