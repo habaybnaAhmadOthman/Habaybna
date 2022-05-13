@@ -8,9 +8,7 @@
             <h2 class="font-26 font-18-p f-normal black">يشارك بتقديمها مئات الأخصائيين والوالدين ومقدمي الرعاية لمساعدتك في رحلتك لتمكين طفلك <br><span class="blue">مقالات . فيديوهات . ندوات رقمية . قصص وتجارب</span></h2>
           </div>
         </div>
-        <div class="landing-bg relative">
-          <img class="w-100 relative mb-30-p" src="images/library-bg-1.png" alt="">
-          <img class="w-100 patt-1 mb-30-p" src="images/library-bg-1.png" alt="">
+        <img class="landing-bg relative mb-30-p" src="images/library-bg-1.png" alt="">
         </div>
       </div>
     </div>
