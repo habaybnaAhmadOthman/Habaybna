@@ -313,7 +313,7 @@ class ParentUsersController extends Controller
 
             }
             $parent->dob = $request->dob ;
-            $parent->lastName = $request->gender ;
+            $parent->lastName = $request->lastName ;
             $parent->relative = $request->relative ;
             $parent->speci_childs_count = $request->noChildsSpecialNeeds ;
             $parent->why_to_join = $request->whyToJoin ;

@@ -54,9 +54,9 @@
           :config="form.editorConfig"
         ></ckeditor> -->
         <textarea name="" id="courseDescription" cols="30" rows="10"></textarea>
-        <span class="error" v-if="!this.formValidation.courseDescription">
+        <!-- <span class="error" v-if="!this.formValidation.courseDescription">
           * يجب تعبئة هذا الحقل
-        </span>
+        </span> -->
       </div>
 
 
@@ -150,27 +150,27 @@ export default {
   components: { Multiselect },
   mixins: [initEditor],
   async created() {
-    const resp = await this.callApi("get", "/api/admin/course-init-data");
-    if (resp.status == 200) {
-      this.categories = resp.data.categories;
-      this.form.specialistsList = resp.data.specialists;
-    }
+    // const resp = await this.callApi("get", "/api/admin/course-init-data");
+    // if (resp.status == 200) {
+    //   this.categories = resp.data.categories;
+    //   this.form.specialistsList = resp.data.specialists;
+    // }
         this.callApi("get", "/api/admin/content/" + this.$route.params.data).then(
       (res) => {
-          console.log(res);
         if (res.status == 200) {
-          this.form.content_id = res.data.id;
-          this.form.contentTitle = res.data.title;
-          this.form.courseDescription = res.data.body;
-          this.form.coverImage = res.data.image;
-          this.form.contTags = res.data.tags;
-          this.form.is_publish = res.data.discount_percentage;
+          this.form.content_id = res.data.nid;
+        //   this.form.contentTitle = res.data.title;
+        //   this.form.courseDescription = res.data.body;
+        //   this.form.coverImage = res.data.image;
+        //   this.form.contTags = res.data.tags;
+        //   this.form.is_publish = res.data.discount_percentage;
         //   this.form.coupone_durations.start_date = res.data.start_date;
         //   this.form.coupone_durations.end_date = res.data.end_date;
         //   this.form.status = res.data.status;
         }
       }
     );
+    console.log('form',this.form);
   },
   data() {
     return {
@@ -211,37 +211,48 @@ export default {
     },
 
     async formSubmit(e) {
-      this.validatForm();
-      if (this.isValidToSubmit) {
+    //   this.validatForm();
+    //   if (this.isValidToSubmit) {
+        console.log('1');
         this.loading = true;
         let self = this.$router;
 
         let tagIDs = [];
-        this.form.tags.forEach((item) => tagIDs.push(item.user_id));
+        // this.form.tags.forEach((item) => tagIDs.push(item.user_id));
 
         // let CategorytagIDs = [];
         // this.form.courseCategory.forEach((item) =>
         //   CategorytagIDs.push(item.id)
         // );
         e.preventDefault();
-        let formData = new FormData();
-        formData.append("title", this.form.contentTitle);
+        // let formData = new FormData();
+        // formData.append("title", this.form.contentTitle);
         // formData.append("category", CategorytagIDs);
 
-        formData.append("description", this.form.courseDescription.getData().replaceAll('srcset','src').replaceAll(" 0w\"","\""));
-        formData.append("coverImage", this.form.coverImage);
-        formData.append("contTags", this.form.contTags);
-        formData.append("is_publish", this.form.is_publish);
-        formData.append("specialists", tagIDs);
+        // formData.append("description", this.form.courseDescription.getData().replaceAll('srcset','src').replaceAll(" 0w\"","\""));
+        // formData.append("id", this.form.content_id);
+        console.log('2');
+
+        let Obj = {
+            'id':this.form.content_id,
+            'desc':this.form.courseDescription
+        }
+        // formData.append("coverImage", this.form.coverImage);
+        // formData.append("contTags", this.form.contTags);
+        // formData.append("is_publish", this.form.is_publish);
+        // formData.append("specialists", tagIDs);
+        console.log('3',Obj);
+
 
         let resp = await this.$store.dispatch(
-          "admin/storeCourseInfo",
-          formData
+          "admin/editContent",
+          Obj
         );
+        console.log(resp,'zzzzzzzzzzzzzzzzzzzzzzz');
         this.$Message.success("تم انشاء المحتوى");
 
         this.loading = false;
-      }
+    //   }
     },
     validatForm() {
     //   if (this.form.coursePrice == "" && !this.form.is_free) {

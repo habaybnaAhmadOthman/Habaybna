@@ -180,6 +180,7 @@ export default {
 
     },
     async storeCourseInfo(context, payload) {
+
         console.log('context', context);
         const resp = await callApi('POST', '/api/admin/storeCourseInfo', payload)
         if (resp.status != 200) {
@@ -191,6 +192,16 @@ export default {
     },
     async createMedia(context, payload) {
         const resp = await callApi('POST', '/api/admin/create-media', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to update profile data");
+            throw error;
+        }
+        return resp
+
+    },
+    async editContent(context, payload) {
+        console.log('in');
+        const resp = await callApi('POST', '/api/admin/content/edit', payload)
         if (resp.status != 200) {
             const error = new Error("fail to update profile data");
             throw error;
