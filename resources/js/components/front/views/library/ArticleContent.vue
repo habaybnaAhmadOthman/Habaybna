@@ -4,7 +4,7 @@
             <div class=" content w-100-p">
                 <h1 class="font-40 bold black font-28-p">{{title}}</h1>
                 <div class="author-box bold mb-20 mt-10 d-flex align-center">
-                    <img src="/images/test.jpg" class="object-fit rounded" width="40" height="40">
+                    <!-- <img src="/images/test.jpg" class="object-fit rounded" width="40" height="40"> -->
                     <div class="mr-10">
                         <p class="font-14 main-color">{{author}}</p>
                         <p class="font-14 main-color">اختصاصية علاج طبيعي</p>

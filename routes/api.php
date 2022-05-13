@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('article/add-to-fav','CourseController@addToFavourite');
     Route::post('courses/free-course','PaymentController@joinFreeCourse');
     Route::post('course/get-course-quize','QuizController@getUserCourseQuiz');
-    
+
     Route::post('course/user-complete-quize','QuizController@completeQuiz');
 
 
@@ -124,6 +124,8 @@ Route::middleware('auth:sanctum')->group(function () {
         // contents
         Route::get('/contents','ContentController@index');
         Route::get('/content/{id}','ContentController@update');
+        Route::post('/content/edit','ContentController@edit');
+
 
 
     });

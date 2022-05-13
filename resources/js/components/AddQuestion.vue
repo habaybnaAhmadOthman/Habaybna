@@ -151,7 +151,7 @@
             {{ question.title }}
           </h2>
           <FormItem>
-            <Select v-model="correctAnswer">
+            <Select v-model="correctAnswer" required>
               <Option
                 :style="{ textAlign: 'right' }"
                 v-for="(one, index) in question.answers"
@@ -170,7 +170,7 @@
 export default {
   created() {
     this.course_id = this.$router.currentRoute.params.data;
-    this.formValidate.course_id = this.$router.currentRoute.params.data;
+    this.formValidate.course_id = this.course_id ;
   },
   data() {
     return {
@@ -217,9 +217,9 @@ export default {
           });
       }
     },
-    handleReset(name) {
-      this.$refs[name].resetFields();
-    },
+    // handleReset(name) {
+    //   this.$refs[name].resetFields();
+    // },
     ok(id) {
       axios.post("/api/admin/set-correct-answer/" + id).then((resp) => {
         if (resp.status == 200) {
@@ -235,6 +235,7 @@ export default {
             status: "",
           };
           this.$Message.success(" تم اضافة السؤال ");
+          this.$router.push("/admin/course-quiz/"+this.course_id);
         }
       });
     },

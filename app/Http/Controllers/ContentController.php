@@ -50,11 +50,18 @@ class ContentController extends Controller
     //     }
 
     // }
-      $contents = Content::paginate(15);
+      $contents = Content::where('article_type','Video')->paginate(15);
         return response()->json($contents);
    }
 
    public function update(Request $request, $id)
+   {
+    $content = Content::findorfail($id);
+    return response()->json($content);
+
+
+   }
+   public function edit(Request $request, $id)
    {
     $content = Content::findorfail($id);
     return response()->json($content);
