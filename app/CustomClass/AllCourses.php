@@ -41,7 +41,9 @@ class AllCourses {
                             ],
                             'categories'=>$one->category_name,
                             'course_progress' => Auth::check() ? $this->getCourseProgress($one) : [],
-                            'is_favourite'=> Auth::check() && $one->favouriteUsers->count() > 0  ? true : false ,
+                            'is_favourite'=> Auth::check() ? $one->is_user_like_course : false ,
+                            // 'is_favourite'=> Auth::check() && $one->favouriteCourse-> == Auth::id()  ? true : false ,
+
                             'completed_course'=> Auth::check() && $this->checkExamIsPassed($one) ? true : false ,
                         ];
                     }
