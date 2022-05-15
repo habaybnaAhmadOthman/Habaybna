@@ -31,7 +31,7 @@ class PaymentCoures {
                 // fill required parameters
                 $parameters["Amount"] =$initOrder->amount * 1000 ;
                 $parameters["Channel"] = "0";
-                $parameters["CurrencyISOCode"] = "400";
+                $parameters["CurrencyISOCode"] = "840";
                 $parameters["Language"] = "en";
                 $parameters["MerchantID"] = "2000000103";
                 $parameters["MessageID"] = "1";

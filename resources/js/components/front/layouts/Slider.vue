@@ -5,7 +5,7 @@
             <div class="swiper-wrapper p-0">
                 <!-- Slides -->
                 <a @click="goToLink(item.url)" v-for="item,index in data" :key="index" class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
+                    <div class="w-100-i fig d-flex align-center">
                         <img :src="item.image" :alt="item.title" class="w-100-i">
                     </div>
                 </a>
@@ -94,6 +94,12 @@
     position: initial;
     margin-top: 10px;
 }
+.fig {
+    height: 100px;
+}
+.fig img{
+    max-height: 100%;
+}
 </style>
 <style>
 .inner-arrows .swiper-button-next {
@@ -107,7 +113,5 @@
 .swiper-pagination-bullet-active {
     background: #823175;
 }
-.fig {
-    max-height: 100px;
-}
+
 </style>

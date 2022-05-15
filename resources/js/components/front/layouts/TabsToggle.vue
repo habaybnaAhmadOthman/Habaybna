@@ -1,6 +1,6 @@
 <template>
     <div class="tabs-toggle relative">
-        <button v-for="(tab,index) in tabs" :key="index" @click="toggletab" :tab-toggle="tab.name" :class="isFirstTab(index)" v-html="tab.title"></button>
+        <button v-for="(tab,index) in tabs" :key="index" @click="toggletab" :tab-toggle="tab.name" :class="isActive(tab.active)" v-html="tab.title"></button>
     </div>
 </template>
 
@@ -16,8 +16,8 @@
                 document.querySelector("[tab-name].active").classList.remove("active");
                 document.querySelector("[tab-name='"+ activeTab +"']").classList.add('active')
             },
-            isFirstTab(index){
-                return index === 0 ? 'active' : '' ;
+            isActive(isActive){
+                return isActive ? 'active' : '' ;
             }
         }
     }

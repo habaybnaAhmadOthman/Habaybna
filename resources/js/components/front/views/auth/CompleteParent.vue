@@ -17,7 +17,7 @@
                     @blur="checkValidity"
                     v-model.trim="firstName.val"
                 />
-                <p class="main-color mt-5 font-12">
+                <p class="red mt-5 font-12">
                     هذا الحقل مطلوب
                 </p>
             </div>
@@ -33,7 +33,7 @@
                     @blur="checkValidity"
                     v-model.trim="lastName.val"
                 />
-                <p class="main-color mt-5 font-12">
+                <p class="red mt-5 font-12">
                     هذا الحقل مطلوب
                 </p>
             </div>
@@ -66,7 +66,7 @@
                     >يجب أن لا تقل كلمة السر عن ٦ خانات</small
                 >
             </div>
-            <p class="main-color mt-5 font-12">
+            <p class="red mt-5 font-12">
                 هذا الحقل مطلوب
             </p>
         </div>
@@ -81,7 +81,7 @@
                 @blur="checkValidity"
                 v-model.trim="email.val"
             />
-            <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+            <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
         </div>
 
         <div class="d-flex space-between">
@@ -102,7 +102,7 @@
                         <option value="f">أنثى</option>
                     </select>
                 </div>
-                <p class="main-color mt-5 font-12">
+                <p class="red mt-5 font-12">
                     هذا الحقل مطلوب
                 </p>
             </div>
@@ -124,7 +124,7 @@
                         <option value="relative">أقرباء</option>
                     </select>
                 </div>
-                <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+                <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
         </div>
 

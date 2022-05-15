@@ -24,11 +24,11 @@
         >
             <div class="d-flex" v-if="discountVal && coursePrice && !infoModal.isFixed">
                 <span class="gray font-35 before-discount bold ml-30">
-                    <template >{{ coursePrice }} $</template>
+                    <template >{{ Math.round(coursePrice) }} $</template>
                 </span>
                 <span class="bold font-35 main-color"
                     v-if="coursePrice"
-                    >{{ discountVal }} $</span
+                    >{{ Math.round(discountVal) }} $</span
                 >
             </div>
             <button v-if="infoModal.isFixed" @click="goToClassRoom" class="btn">مشاهدة</button>

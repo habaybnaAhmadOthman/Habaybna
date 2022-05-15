@@ -22,7 +22,7 @@
                         id="phoneNumber"
                         :default-country-code="countryCode"
                     />
-                    <p class="main-color mt-5 font-12">رقم الهاتف غير صحيح</p>
+                    <p class="red rtl mt-5 font-12">رقم الهاتف غير صحيح</p>
                 </div>
                 <!-- <div v-else>
                     <div
@@ -58,7 +58,7 @@
                         @blur="checkValidity"
                         v-model.trim="code.val"
                     />
-                    <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+                    <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
                 </div>
                 <button
                     class="btn mt-30 border-0 pointer flex-all white m-side-auto font-17"

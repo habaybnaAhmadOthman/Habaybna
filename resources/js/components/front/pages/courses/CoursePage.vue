@@ -9,10 +9,10 @@
             <div class="mo p-side-12-p mt-40">
                 <TabsToggle :tabs="mobileTabs"></TabsToggle>
             </div>
-            <div tab-name="about" mo class="active">
+            <div tab-name="about" mo >
                 <CourseInfo  :course-name="courseName" :description="courseDescription" :whatShouldLearn="whatShouldLearn"></CourseInfo>
             </div>
-            <div tab-name="table" mo>
+            <div tab-name="table" mo class="active">
                 <ContentTable  :rows="videosList" type="course" :title="'محتوى الدورة التدريبية'" class="pt-20"></ContentTable>
             </div>
             <div tab-name="coaches" mo class="mt-50 pt-10 mt-20-p pt-0-p">
@@ -104,15 +104,18 @@ export default {
             mobileTabs: [
                 {
                     title: 'عن الدورة' ,
-                    name: 'about'
+                    name: 'about',
+                    active: false
                 },
                 {
                     title: 'الدروس' ,
-                    name: 'table'
+                    name: 'table',
+                    active: true
                 },
                 {
                     title: 'المدربين' ,
-                    name: 'coaches'
+                    name: 'coaches',
+                    active: false
                 },
             ]
         }

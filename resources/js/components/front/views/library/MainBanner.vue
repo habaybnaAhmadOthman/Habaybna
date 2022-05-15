@@ -9,7 +9,6 @@
           </div>
         </div>
         <img class="landing-bg relative mb-30-p" src="images/library-bg-1.png" alt="">
-        </div>
       </div>
     </div>
   </section>

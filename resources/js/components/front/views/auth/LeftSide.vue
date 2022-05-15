@@ -1,6 +1,6 @@
 <template>
     <div class="left-side h-100 pt-100 h-auto-p mt-10-p center p-side-50 p-side-12-p relative mt-0-p-i pt-20-p">
-        <a v-if="$route.meta.back == true" @click.prevent="$router.back()" class="back-btn mo" ><img src="/images/back-btn.svg" width="30" height="30" /></a>
+        <a v-if="$route.meta.back == true" @click.prevent="$router.back()" class="back-btn" ><img src="/images/back-btn.svg" width="30" height="30" /><span class="do white bold">عودة</span></a>
         <img src="/images/siteImgs/header/logo.png" class="mt-20 mt-0-p z-1" alt="" />
         <img src="/images/slogan.jpg" class="mt-20 mt-0-p slogan" alt="" />
     </div>

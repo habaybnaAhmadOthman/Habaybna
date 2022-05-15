@@ -27,7 +27,7 @@
                         <option value="other">آخر</option>
                     </select>
                 </div>
-                <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+                <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
             <div
                 class="form-group ltr"
@@ -45,7 +45,7 @@
                     id="phoneNumber"
                     :default-country-code="countryCode"
                 />
-                <p class="main-color mt-5 font-12">رقم الهاتف غير صحيح</p>
+                <p class="red mt-5 font-12 rtl">رقم الهاتف غير صحيح</p>
             </div>
         </form>
     </div>
