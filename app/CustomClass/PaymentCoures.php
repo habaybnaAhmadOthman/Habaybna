@@ -29,7 +29,7 @@ class PaymentCoures {
               $initOrder = $this->createInitOrder($data, $transactionId);
                 $parameters = [];
                 // fill required parameters
-                $parameters["Amount"] =$initOrder->amount * 1000 ;
+                $parameters["Amount"] =$initOrder->amount * 100 ;
                 $parameters["Channel"] = "0";
                 $parameters["CurrencyISOCode"] = "840";
                 $parameters["Language"] = "en";
