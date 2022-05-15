@@ -88,7 +88,7 @@
                             >
                             <p class="black-2 bold font-20 font-16-p">
                                 هل أنت مستخدم جديد؟
-                                <router-link class="main-color pr-10 p-0-p" @click.native="closeLoginModal" to="/register"
+                                <router-link class="main-color pr-10 p-0-p" @click.native="closeLoginModal" to="/signup"
                                     >سجل من هنا</router-link
                                 >
                             </p>
