@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\CustomClass\CreateContent;
 use Illuminate\Http\Request;
 use App\Content;
-
+use Illuminate\Support\Facades\Auth;
 
 class ContentController extends Controller
 {
@@ -42,11 +42,26 @@ class ContentController extends Controller
     //         $content->save();
     //     }
     // }
-      $contents = Content::paginate(15);
+    // if(Auth::user() && Auth::user()->role != 'admin'){
+    //     if(Auth::user()->articles->count() > 0){
+    //     $contents = Content::with('userFavArticles')->paginate(15);
+    //     // dd($contents);
+
+    //     }
+
+    // }
+      $contents = Content::where('article_type','Video')->paginate(15);
         return response()->json($contents);
    }
 
    public function update(Request $request, $id)
+   {
+    $content = Content::findorfail($id);
+    return response()->json($content);
+
+
+   }
+   public function edit(Request $request, $id)
    {
     $content = Content::findorfail($id);
     return response()->json($content);

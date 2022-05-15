@@ -102,5 +102,10 @@ class User extends Authenticatable
 
     }
 
+    public function articles()
+    {
+        return $this->hasMany(UsersFavouriteArticles::class,'user_id');
+    }
+
 
 }
