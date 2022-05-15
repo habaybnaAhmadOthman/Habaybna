@@ -17,7 +17,7 @@ class PaymentCoures {
         try {
             $back_url = url('/api/payment/course');
                 //Step 1: Generate Secure Hash
-            $SECRET_KEY = "NGIyNTQzOTc2ZTkxZGFhZDFlMjhjMTNk"; // Use Yours, Please Store
+            $SECRET_KEY = "MTcxYzlmNDY2ODFkZTZlOWE3ZGI4YzU2"; // Use Yours, Please Store
                         // Your Secret Key in safe Place(e.g. database)
                 // put the parameters in a array to have the parameters to have them sorted
                         //alphabetically via ksort.
@@ -33,7 +33,7 @@ class PaymentCoures {
                 $parameters["Channel"] = "0";
                 $parameters["CurrencyISOCode"] = "840";
                 $parameters["Language"] = "en";
-                $parameters["MerchantID"] = "2000000103";
+                $parameters["MerchantID"] = "8584098098";
                 $parameters["MessageID"] = "1";
                 $parameters['PaymentDescription']='coursepayment';
                 $parameters["Quantity"] = "1";
@@ -50,7 +50,7 @@ class PaymentCoures {
                 $orderedString .= $param;
                 }
                 $secureHash = hash('sha256', $orderedString, false);
-                $parameters["RedirectURL"] = "https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler";
+                $parameters["RedirectURL"] = "https://smartroute.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler";
                 $parameters["secureHash"] = $secureHash;
                  session(['SmartRouteParams' => $parameters]);
                  $data = [session()->all()];
