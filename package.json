@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-vue2": "^1.0.5",
+        "@gtm-support/vue2-gtm": "^1.2.1",
         "@vimeo/player": "^2.16.4",
         "ckeditor5-custom-build": "file:mainckeditor",
         "firebase": "^9.4.1",

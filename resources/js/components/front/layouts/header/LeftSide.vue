@@ -16,7 +16,7 @@
             <router-link
                 to="/signup"
                 class="signin-box-btn pr-30 relative bold black do nowrap"
-                >تسجيل</router-link
+                >مستخدم جديد</router-link
             >
             <router-link
                 to="/signin"

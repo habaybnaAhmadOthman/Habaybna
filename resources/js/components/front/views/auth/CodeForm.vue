@@ -24,7 +24,7 @@
           @blur="checkValidity"
           v-model.trim="code.val"
         />
-        <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+        <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
       </div>
       <div class="">
         <p
