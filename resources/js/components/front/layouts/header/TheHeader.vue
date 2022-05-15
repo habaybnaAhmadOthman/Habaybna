@@ -178,7 +178,7 @@ a {
         position: relative;
     }
     .header-right {
-        justify-content: space-between;
+        display: none;
     }
     .mobile-link p {
         margin-top: -7px;

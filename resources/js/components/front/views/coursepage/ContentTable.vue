@@ -231,6 +231,9 @@ export default {
         margin: 0;
         font-size: 14px!important;
     }
+    .duration span {
+        font-size: 14px!important;
+    }
     .video-name {
         font-size: 16px;
         margin-right: 16px;
