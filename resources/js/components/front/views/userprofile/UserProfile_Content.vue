@@ -1,5 +1,6 @@
 <template>
     <div class="content-inner w-100-p">
+        <FixedHeadWithLeftSide />
         <div class="page-header bg-white relative pt-10-p pb-10-p">
             <div class="container-fluid pt-15 pb-15">
                 <slot name="page-header"></slot>
@@ -12,7 +13,12 @@
 </template>
 
 <script>
-
+import FixedHeadWithLeftSide from '../../layouts/header/FixedHead.vue'
+export default {
+    components : {
+        FixedHeadWithLeftSide
+    }
+}
 </script>
 <style scoped>
 .container-fluid {

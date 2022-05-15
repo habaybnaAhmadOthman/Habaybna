@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex align-center ">
+    <div class="d-flex align-center">
         <div class="bar do"></div>
         <div class="do" v-if="isLoggedIn">
             <router-link to="/profile/my-account" class="d-flex align-center user-box">

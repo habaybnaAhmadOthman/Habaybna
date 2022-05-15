@@ -117,6 +117,7 @@ export default {
         max-height: 100%;
         overflow-y: auto;
         display:block;
+        z-index: 11;
     }
     .close-nav-menu {
         position: absolute;
