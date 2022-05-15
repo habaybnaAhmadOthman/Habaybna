@@ -79,10 +79,20 @@ class PaymentCoures {
             $initData->transactionID = $tranID ;
             $initData->save();
                 // check hasPromoCode
+
+            if($course->discount !== ""){
+                $disscountAmount = $course->price * $course->discount/100 ;
+                $initData->discount_amount = $disscountAmount;
+                $initData->amount = $course->price - $disscountAmount ;
+
+                $initData->save();
+
+            }
             if(array_key_exists('id',$data['hasPromoCode']) && isset($data['hasPromoCode']['id']) ){
                 $promoCode = PromoCode::findorfail($data['hasPromoCode']['id']);
-                $disscountAmount = $course->price * $promoCode->discount_percentage/100 ;
-                $newPrice = $course->price - $disscountAmount ;
+                // $disscountAmount = $course->price * $promoCode->discount_percentage/100 ;
+                $disscountAmount = $initData->amount * $promoCode->discount_percentage/100 ;
+                $newPrice = $initData->amount - $disscountAmount ;
                 $initData->coupon_id = $promoCode->id;
                 $initData->discount_amount = $disscountAmount;
                 $initData->new_price = $newPrice;
@@ -90,17 +100,11 @@ class PaymentCoures {
 
                 $initData->save();
             }
-            elseif($course->discount !== ""){
-                $disscountAmount = $course->price * $course->discount/100 ;
-                $initData->discount_amount = $disscountAmount;
+            // else {
+            //     $initData->amount = $course->price;
 
-                $initData->amount = $course->price - $disscountAmount ;
-            }
-            else {
-                $initData->amount = $course->price;
-
-                $initData->save();
-            }
+            //     $initData->save();
+            // }
             return $initData;
     }
 
@@ -110,7 +114,6 @@ class PaymentCoures {
             $order = Coursespurchaseorders::where('transactionID',$data['Response_TransactionID'] )->first();
             $user = User::findorfail($order->user_id);
             Auth::login($user);
-
         } catch (\Throwable $th) {
                 throw $th;
             }
