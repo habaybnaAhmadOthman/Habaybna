@@ -11,7 +11,7 @@ Homestead.yam
 npm-debug.log
 yarn-error.log
 /public/js/app.js
-/storage
+# /storage
 /mainckeditor/node_modules
 .DS_Store
 
