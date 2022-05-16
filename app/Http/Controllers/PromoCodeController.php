@@ -9,7 +9,6 @@ use App\CustomClass\CheckPromoCode;
 use App\CustomClass\editCoupon;
 use App\CustomClass\AssignToUsers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Content;
 
 
 
@@ -47,18 +46,6 @@ class PromoCodeController extends Controller
     }
     public function show($id)
     {
-    $contents = Content::all();
-
-                foreach($contents as $content){
-        if($content->image){
-            $rest = substr($content->image, 39);  // returns "abcde"
-
-            $newUrl = "https://habaybna.net/storage/media/".$rest;
-
-            $content->image = $newUrl ;
-            $content->save();
-        }
-    }
         try{
             $coupons = PromoCode::findorfail($id);
             $data = [];
