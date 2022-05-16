@@ -421,7 +421,7 @@ const routes = [{
         component: LibraryPage
     },
     {
-        path: "/content/:article",
+        path: "/:article",
         component: ArticlePage,
         props: true
     },

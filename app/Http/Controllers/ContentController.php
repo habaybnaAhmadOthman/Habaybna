@@ -35,8 +35,7 @@ class ContentController extends Controller
     //     if($content->image){
     //         $rest = substr($content->image, 39);  // returns "abcde"
 
-
-    //         $newUrl = "http://localhost:8000/storage/media/".$rest;
+    //         $newUrl = "https://habaybna.net/storage/media/".$rest;
 
     //         $content->image = $newUrl ;
     //         $content->save();
