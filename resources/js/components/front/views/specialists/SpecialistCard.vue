@@ -4,7 +4,7 @@
             <img :src="specialist.avatar | defaultAvatar" class="m-side-auto object-fit overflow-hidden rounded avatar" width="170" height="170" alt="">
         </figure>
         <div class="details">
-            <p class="black-2 mt-20 mt-10-p mb-10-p font-22 font-20-p bold mb-15 center">{{specialist.firstName}}</p>
+            <p class="black-2 mt-20 mt-10-p mb-10-p font-22 font-20-p bold mb-15 center">{{specialist.firstName + ' ' + (specialist.lastName || '')}}</p>
             <p class="regular font-22 font-18-p mb-5-p black-2 mb-15 desc" v-if="specialist.bio">{{specialist.bio}}</p>
         </div>
         <div class="d-flex p-side-30" v-if="specialist.bio">
