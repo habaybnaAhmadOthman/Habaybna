@@ -1,6 +1,6 @@
 <template>
 <div>
-    <form ref="form" method="post" :action="'https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler'" @submit.prevent="submitForm" class="payment-hidden-form">
+    <form ref="form" method="post" :action="'https://smartroute.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler'" @submit.prevent="submitForm" class="payment-hidden-form">
         <input type="hidden" name="Amount" :value="paymentData.Amount">
         <input type="hidden" name="Channel" :value="paymentData.Channel">
         <input type="hidden" name="CurrencyISOCode" :value="paymentData.CurrencyISOCode">

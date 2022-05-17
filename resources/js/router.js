@@ -254,13 +254,32 @@ const routes = [{
     // ************
     // front
     // ************
-    // {
-    //     path: "/api/course-payment-callback",
-    //     component: Cirtificate,
-    //     // meta: {
-    //     //     requiresAuth: true
-    //     // }
-    // },
+    // *****************
+    // about habaybna pages
+    // *****************
+    {
+        path: "/terms-and-conditions",
+        component: TermsPage
+    },
+    {
+        path: "/terms-and-conditions-en",
+        component: TermsEnPage
+    },
+    {
+        path: "/about-habaybna",
+        component: AboutPage
+    },
+    {
+        path: "/about-habaybna-en",
+        component: AboutEnPage
+    },
+    {
+        path: "/media-coverage",
+        component: MediaCoveragePage
+    },
+    // *****************
+    // end habaybna pages
+    // *****************
     {
         path: "/",
         component: HomePage,
@@ -421,7 +440,7 @@ const routes = [{
         component: LibraryPage
     },
     {
-        path: "/content/:article",
+        path: "/:article",
         component: ArticlePage,
         props: true
     },
@@ -435,27 +454,7 @@ const routes = [{
         path: "/specialist/:specialist",
         component: SpecialistPage
     },
-    // *****************
-    {
-        path: "/terms-and-conditions",
-        component: TermsPage
-    },
-    {
-        path: "/terms-and-conditions-en",
-        component: TermsEnPage
-    },
-    {
-        path: "/about-habaybna",
-        component: AboutPage
-    },
-    {
-        path: "/about-habaybna-en",
-        component: AboutEnPage
-    },
-    {
-        path: "/media-coverage",
-        component: MediaCoveragePage
-    },
+    
     { path: "*", component: ErrorPage }
 ];
 

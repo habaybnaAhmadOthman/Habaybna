@@ -50,15 +50,18 @@
                 tabs: [
                     {
                         title: 'نبذة<br class="mo"> تعريفية' ,
-                        name: 'about'
+                        name: 'about',
+                        active: true
                     },
                     {
                         title: 'الدورات <br class="mo">التدريبية' ,
-                        name: 'courses'
+                        name: 'courses',
+                        active: false
                     },
                     {
                         title: 'الفيديوهات <br class="mo">والمقالات' ,
-                        name: 'articles'
+                        name: 'articles',
+                        active: false
                     },
                 ],
                 courses: [],
