@@ -15,9 +15,9 @@
             <loading-spinner></loading-spinner>
         </div>
         
-        <portal-target name="destination"></portal-target>
         <portal-target name="info-modal"></portal-target>
         <portal-target name="login-modal"></portal-target>
+        <portal-target name="destination"></portal-target>
     </main>
 </template>
 
