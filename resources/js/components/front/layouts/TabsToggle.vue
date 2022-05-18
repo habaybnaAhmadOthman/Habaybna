@@ -9,7 +9,8 @@
         props: ['tabs'],
         methods: {
             toggletab(e) {
-                document.querySelector(".tabs-toggle .active").classList.remove("active");
+                if (document.querySelector(".tabs-toggle .active"))
+                    document.querySelector(".tabs-toggle .active").classList.remove("active");
                 e.target.classList.add("active");
                 const activeTab = e.target.getAttribute("tab-toggle");
                 

@@ -1,6 +1,6 @@
 <template>
     <portal v-if="portal" :to="portalFn">
-        <aside :class="modalClass">
+        <aside :class="modalClass" class="z-1000">
             <div v-if="show" class="w-100 h-100 backdrop" @click="tryClose"></div>
             <transition name="modal">
                 <dialog
@@ -95,14 +95,14 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10000;
+    z-index: 99999999;
     background-color: rgba(0, 0, 0, 0.75);
 }
 dialog {
     position: fixed;
     top: 20vh;
     left: 10%;
-    z-index: 100000;
+    z-index: 999999990;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     right: 0;
     left: 0;
