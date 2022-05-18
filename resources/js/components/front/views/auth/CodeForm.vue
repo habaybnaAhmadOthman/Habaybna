@@ -25,7 +25,7 @@
           @input="checkValidity"
           v-model.trim="code.val"
         />
-        <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
+        <!-- <p class="red mt-5 font-12">هذا الحقل مطلوب</p> -->
       </div>
       <div class="">
         <p
@@ -46,7 +46,7 @@
       <button
         class="btn-2 mt-30 flex-all m-side-auto font-20"
         id="sign-in-button"
-        :disabled="code.val == '' || !code.isValid"
+        :disabled="code.val.length != 6 || !code.isValid"
       >
         أكمل عملية التسجيل
         <!-- <img src="/images/siteImgs/header/logo.png" class="mr-10"> -->
@@ -109,14 +109,14 @@ export default {
       this.$emit("send-otp", {});
     },
     checkValidity(e) {
-      if (e.target.value != "") {
-        this[e.target.id].isValid = true;
-      } else {
+      if (e.target.value.length != 6) {
         this[e.target.id].isValid = false;
+      } else {
+        this[e.target.id].isValid = true;
       }
     },
     async submitCode() {
-      if (this.code.val == "") {
+      if (this.code.val.length != 6) {
         this.code.isValid = false;
         return;
       }
