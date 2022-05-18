@@ -22,7 +22,7 @@
         أرسل رمز التحقق
         <!-- <img src="/images/siteImgs/header/logo.png" class="mr-10" /> -->
       </button>
-      <h3 class="mt-50 center light font-15 flex-all p-side-50 flex-wrap">
+      <h3 v-if="!showCodeForm" class="mt-50 center light font-15 flex-all p-side-50 flex-wrap">
         <span class="main-color font-15-p">هل أنت عضو في عائلة حبايبنا؟</span>
         <router-link class="blue d-flex align-center font-15-p" to="/signin"
           >تسجيل دخول</router-link

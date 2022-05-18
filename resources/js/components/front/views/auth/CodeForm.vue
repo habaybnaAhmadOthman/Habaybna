@@ -22,6 +22,7 @@
           placeholder="أدخل رمز التحقق"
           id="code"
           @blur="checkValidity"
+          @input="checkValidity"
           v-model.trim="code.val"
         />
         <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
@@ -45,8 +46,9 @@
       <button
         class="btn-2 mt-30 flex-all m-side-auto font-20"
         id="sign-in-button"
+        :disabled="code.val == '' || !code.isValid"
       >
-        التالي
+        أكمل عملية التسجيل
         <!-- <img src="/images/siteImgs/header/logo.png" class="mr-10"> -->
       </button>
       <div v-if="isLoading">
@@ -147,5 +149,9 @@ export default {
 <style scoped>
 .spinner {
   z-index: 10 !important;
+}
+[disabled] {
+    opacity: 0.3;
+    cursor: not-allowed;
 }
 </style>
