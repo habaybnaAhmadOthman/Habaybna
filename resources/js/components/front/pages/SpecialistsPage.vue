@@ -18,7 +18,7 @@
                 </ul>
                 <p class="mb-30"><span class="bold">مدة المكالمة:</span> 20 دقيقة</p>
                 <p>سيتم إطلاق هذه الخدمة بشكل رسمي قريباً على موقع حبايبنا.نت، إذا كنتم مهتمين بهذه الخدمة برجاء تبعئة النموذج التالي لنقوم بإرسال تنبيه لكم فور إطلاق الخدمة على الموقع</p>
-                <a @click="goToLink(`https://www.facebook.com/habaybnadotnet`)">
+                <a @click="goToLink(`https://forms.gle/bDJivouh3AWmXkUH8`)">
                     النموذج: https://forms.gle/bDJivouh3AWmXkUH8
                 </a>
                 <p class="mt-20 mb-10"><span class="bold">ملاحظة:</span> “جميع المعلومات في هذا النموذج والمعلومات التي ستشاركوها عبر المكالمة ستعامل بسرية تامة.</p>
