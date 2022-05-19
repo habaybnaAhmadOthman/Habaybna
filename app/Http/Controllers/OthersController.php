@@ -32,6 +32,27 @@ class OthersController extends Controller
      */
     public function create(Request $request)
     {
+        $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'fristName' => ['required', 'string'],
+            'lastName' => ['required', 'string'],
+            'gender' => ['required', 'string'],
+            'employment' => ['required', 'string'],
+            'whyToJoin' => ['required', 'string'],
+            'password' => ['required', 'string','min:8'],
+           ]);
+
+           $user = new User();
+           $user->phone = $request->session()->get('user.phone');
+           $user->email = $request->email ;
+           $user->password = Hash::make($request->password);
+           $user->otp = '123432' ;
+           $user->role = 'other' ;
+           $user->is_verify = 1 ;
+
+           $user->save();
+
+          Auth::login($user);
         $otherUser = new Other();
 
         $otherUser->user_id = Auth::user()->id;
@@ -45,9 +66,7 @@ class OthersController extends Controller
 
         $otherUser->save();
 
-        Auth::user()->email = $request->email;
-        Auth::user()->password = Hash::make($request->password) ;
-        Auth::user()->save();
+
 
         $interest = Interest::all();
 

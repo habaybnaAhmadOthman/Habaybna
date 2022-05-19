@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     //payment test config
-    Route::post('check-otp', \CheckOtp::class);
     Route::get('get-payment-status','PaymentController@checkPaymentStatus');
     Route::post('/course-payment','PaymentController@coursePayment');
     Route::post('course/add-to-fav','CourseController@addToFavourite');
@@ -141,16 +140,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/courses/get-user-courses','UserController@userCourses');
 
     // parent routes
-    Route::post('/parent-complete-register','ParentUsersController@completeRegister');
     Route::post('/edit-parent-profile-data','ParentUsersController@editProfileData');
     Route::post('/set-private-mode','ParentUsersController@setPrivateMode');
 
     // speciaist route
-    Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
     Route::post('/edit-specialist-profile-data','SpecialistController@editProfileData');
 
     // others route
-    Route::post('/other-complete-register','OthersController@create');
     Route::post('/edit-other-profile-data','OthersController@editProfileData');
     Route::post('/course-payment','PaymentController@coursePayment');
 
@@ -174,6 +170,12 @@ Route::get('/contents','ContentController@index');
 Route::post('/contact-us','ContactUsController@contactUs');
 Route::post('/show-article','ContentController@showArticle');
 Route::get('/media','MediaController@index');
+Route::post('/parent-complete-register','ParentUsersController@completeRegister');
+Route::post('/other-complete-register','OthersController@create');
+Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
+
+Route::post('check-otp', \CheckOtp::class);
+
 
 
 
