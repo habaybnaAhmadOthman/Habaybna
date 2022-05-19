@@ -18,11 +18,33 @@ class SpecialistController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     public function create(Request $request)
     {
+        $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'fristName' => ['required', 'string'],
+            'lastName' => ['required', 'string'],
+            'gender' => ['required', 'string'],
+            'specialization' => ['required', 'string'],
+            'workPlace' => ['required', 'string'],
+            'password' => ['required', 'string','min:8'],
+           ]);
+
+           $user = new User();
+           $user->phone = $request->session()->get('user.phone');
+           $user->email = $request->email ;
+           $user->password = Hash::make($request->password);
+           $user->otp = '123432' ;
+           $user->role = 'specialist' ;
+           $user->is_verify = 1 ;
+
+           $user->save();
+
+          Auth::login($user);
+
         $specialist = new Specialist();
 
         $specialist->user_id = Auth::user()->id;
@@ -34,9 +56,6 @@ class SpecialistController extends Controller
 
         $specialist->save();
 
-        Auth::user()->email = $request->email;
-        Auth::user()->password = Hash::make($request->password) ;
-        Auth::user()->save();
 
         $interest = Interest::all();
 
