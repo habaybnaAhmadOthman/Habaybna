@@ -75,33 +75,6 @@ export default {
       this.isLoading = true;
       this.$router.replace(`/${this.type}-complete-registration`);
 
-      // if (!obj.phoneNumber) {
-      //     obj.phoneNumber = this.phoneNumber;
-      //     await window.recaptchaVerifier
-      //         .render()
-      //         .then(function(widgetId) {
-      //             grecaptcha.reset(widgetId);
-      // });
-      //             // } else {
-      //                 this.phoneNumber = obj.phoneNumber;
-      //                 this.type = obj.type;
-      //             // }
-      //  )            await signInWithPhoneNumber(
-      //                 auth,
-      //                 obj.phoneNumber,
-      //                 window.recaptchaVerifier
-
-      //                 .then(confirmationResult => {
-      //                     // SMS sent.
-      //                     window.confirmationResult = confirmationResult;
-      //                     this.showCodeForm = true;
-      //                 })
-      //                 .catch(error => {
-      //                     console.log(error);
-      //                     // Error; SMS not sent
-      //                     this.showPopupMessage("حدث خطأ ما");
-      //                 });
-
       this.isLoading = false;
     },
     // store phone number and type and otp(optional)
@@ -111,11 +84,7 @@ export default {
         // call api
         await this.$store.dispatch("user/registerFirstStep", {
           type: obj.type,
-          // code: otpCode,
           phone: obj.phoneNumber,
-          // token: document
-          //     .querySelector('meta[name="csrf-token"]')
-          //     .getAttribute("content")
         });
         this.phoneNumber = obj.phoneNumber;
         this.type = obj.type;
