@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 use App\CustomClass\PaymentCoures;
+use App\CustomClass\GetUsersCourseProgress;
 use App\CustomClass\JoinFreeCourse;
 use App\CustomClass\GetCoursesOrders;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use App\Coursespurchaseorders;
+
 use App\User;
 use Illuminate\Http\Request;
 
@@ -47,6 +49,12 @@ class PaymentController extends Controller
         $order,
         200
        );
+    }
+
+    public function usersCourseProgress(GetUsersCourseProgress $getUsersCourseProgress)
+    {
+        $orders = $getUsersCourseProgress->execute();
+        return response($orders, 200);
     }
 
 }

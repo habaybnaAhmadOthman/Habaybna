@@ -16,9 +16,6 @@ export default {
             const error = new Error("رقم الهاتف مستخدم، يرجى تجربة رقم آخر");
             throw error;
         }
-        context.commit("setUser",{
-            type: payload.type
-        });
     },
     async completeRegistration({_,getters,dispatch}, payload) {
         let type = getters.type
