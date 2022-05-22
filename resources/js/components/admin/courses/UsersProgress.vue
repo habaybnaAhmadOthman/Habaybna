@@ -28,14 +28,15 @@ th {
 <template>
   <div>
     <div class="title">
-      <h2>طلبات شراء الدورات التدريبية</h2>
-      <Button type="success" size="large" ghost v-on:click="exportToExcel()">
-        export to excel</Button
-      >
-      <Button type="error" size="large" ghost v-on:click="exportToPdf()">
-        export to pdf</Button
-      >
+      <h2>الدورات التدريبة - حالة المستخدمين</h2>
     </div>
+
+    <Button type="success" size="large" ghost v-on:click="exportToExcel()">
+      export to excel</Button
+    >
+    <Button type="error" size="large" ghost v-on:click="exportToPdf()">
+      export to pdf</Button
+    >
     <!-- <Table border :columns="columns7" :data="data6"></Table> -->
     <div class="search-wrapper">
       <Input type="text" v-model="keyword" placeholder="ابحث عن رمز الكوبون" />
@@ -45,55 +46,28 @@ th {
         <thead class="thead-dark">
           <tr>
             <th>#</th>
-            <th class="sortted" v-on:click="sortTable('name')">عنوان الدورة</th>
-            <th>مدة الدورة</th>
             <th>اسم المستخدم</th>
-            <th>سعر الدورة</th>
-            <th>نوع الخصم</th>
+            <th class="sortted" v-on:click="sortTable('name')">عنوان الدورة</th>
+            <th>تاريخ الاشتراك</th>
+            <th>عدد الدروس</th>
+            <th>الدروس المنجزة</th>
+            <th>نسبة الانجاز</th>
             <th>حالة الدورة</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(order, index) in filteredList" :key="index">
             <th scope="row">{{ index + 1 }} -</th>
-            <td>{{ order.course_title }}</td>
-            <td>{{ order.course_length }}</td>
-
             <td>{{ order.user_name }}</td>
+            <td>{{ order.course_title }}</td>
+            <td>{{ order.date }}</td>
+            <td>{{ order.course_videos_count }}</td>
 
-            <td>{{ order.course_price }}</td>
-            <td>
-              <span v-if="order.coupon !== null">
-                {{ order.coupon }}
-              </span>
-              <span v-else>
-                لا يوجد خصم
-              </span>
-            </td>
-            <td>
-              <span
-                v-if="order.course_progress.is_complete"
-                :style="{
-                  width: '100%',
-                  padding: '2px 2px',
-                  backgroundColor: 'blue',
-                  color: '#FFFF',
-                }"
-              >
-                تم انهاء الدورة
-              </span>
-              <span
-                v-else
-                :style="{
-                  width: '100%',
-                  padding: '2px 2px',
-                  backgroundColor: 'green',
-                  color: '#FFFF',
-                }"
-              >
-                لم يتم انهاء الدورة
-              </span>
-            </td>
+            <td>{{ order.completed_videos_count }}</td>
+            <td>{{ order.complete_lessons_perc }}</td>
+            <td>{{ order.course_status }}</td>
+
+
           </tr>
         </tbody>
       </table>
@@ -117,7 +91,7 @@ export default {
     };
   },
   async created() {
-    const resp = await this.callApi("get", "/api/admin/orders/courses");
+    const resp = await this.callApi("get", "/api/admin/courses/user-progress");
     if (resp.status == 200) {
       this.orders = resp.data;
     }
