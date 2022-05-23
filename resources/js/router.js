@@ -316,14 +316,14 @@ const routes = [{
         path: "/specialist-complete-registration",
         component: RegisterSpecialistComplete,
         meta: {
-            requiresAuth: true
+            // requiresAuth: true
         }
     },
     {
         path: "/other-complete-registration",
         component: RegisterOtherComplete,
         meta: {
-            requiresAuth: true
+            // requiresAuth: true
         }
     },
     {
