@@ -45,7 +45,7 @@ export default {
                     password: data.password,
                     phone: data.phone
                 });
-                debugger;
+                
                 const userType = this.$store.getters["user/type"]
 
                 if (userType == 'admin') {
@@ -57,7 +57,7 @@ export default {
                 if (e.message == 'تم إيقاف حسابك') { 
                     this.isBanned = true
                 }
-                debugger;
+                
                 this.showPopupMessage(e.message);
             }
             this.isLoading = false;

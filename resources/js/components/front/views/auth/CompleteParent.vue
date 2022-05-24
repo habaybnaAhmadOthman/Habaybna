@@ -72,6 +72,7 @@
         </div>
         <!-- email -->
         <div class="form-group mb-15" :class="{ invalid: !email.isValid }">
+            <small>البريد الالكتروني</small>
             <input
                 type="email"
                 class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
@@ -81,7 +82,7 @@
                 @blur="checkValidity"
                 v-model.trim="email.val"
             />
-            <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
+            <p class="red mt-5 font-12">يرجى إدخال بريد إلكتروني صحيح</p>
         </div>
 
         <div class="d-flex space-between">
