@@ -143,10 +143,13 @@ export default {
                     });
                     this.hasPhoneNumber = true;
                 } catch (e) {
+                    let msg = 'الرقم المدخل غير صحيح';
+                    
                     if (e.message == "تم إيقاف حسابك") {
+                        msg = 'تم إيقاف حسابك، يرجى التواصل مع الإدارة';
                         this.isBanned = true;
                     }
-                    this.$store.commit("alertDialogMsg", e.message);
+                    this.$store.commit("alertDialogMsg", msg);
                 }
             } else {
                 this.sendOtpCode()
