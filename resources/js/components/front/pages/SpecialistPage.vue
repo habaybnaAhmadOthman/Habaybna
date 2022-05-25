@@ -6,12 +6,12 @@
                 <h2 class="black-2 center font-23 font-27 mb-20-p mb-40 p-side-12-p yellow">الملف الشخصي</h2>
                 <div class="bg-white m-side-12-p box shadow radius-10 p-side-30 p-side-12-p">
                     <div class="d-flex flex-wrap-p justify-center-p">
-                        <figure class="rounded overflow-hidden shadow d-flex ml-30 avatar-box m-0-p">
-                            <img class="object-fit" src="/images/test.jpg" width="240" height="240" alt="" >
+                        <figure class="rounded overflow-hidden shadow d-flex ml-30 avatar-box m-0-p bg-white">
+                            <img class="object-fit" src="/images/big-logo.png" width="240" height="240" alt="" >
                         </figure>
                         <div class="pt-30 w-100-p center-p">
-                            <h1 class="black-2 bold center-p font-20 font-30 mb-10">سعاد الدميري</h1>
-                            <h2 class="black-2 bold font-20 font-24 mb-10">اختصاصية علاج طبيعي</h2>
+                            <h1 class="black-2 bold center-p font-20 font-30 mb-10">فريق التحرير</h1>
+                            <h2 class="black-2 bold font-20 font-24 mb-10">فريق تحرير منصة حبايبنا</h2>
                         </div>
                     </div>
 
