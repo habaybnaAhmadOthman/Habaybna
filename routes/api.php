@@ -116,6 +116,7 @@ Route::middleware('auth:sanctum')->group(function () {
         //orders
         Route::get('/orders/courses','PaymentController@index')->name('index.orders'); // will moved to CoursespurchaseordersController
         Route::post('/orders-courses/export-to-excel','CoursespurchaseordersController@exportToExcel')->name('create.others');
+        Route::get('/courses/user-progress','PaymentController@usersCourseProgress'); // will moved to CoursespurchaseordersController
 
         // courses
         Route::match(['get','post'],'/course/course-lectures','CourseController@getClassRoomLectures');
