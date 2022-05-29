@@ -11,7 +11,7 @@
                         </figure>
                         <div class="pt-30 w-100-p center-p">
                             <h1 class="black-2 bold center-p font-20 font-30 mb-10">فريق التحرير</h1>
-                            <h2 class="black-2 bold font-20 font-24 mb-10">فريق تحرير منصة حبايبنا</h2>
+                            <h2 class="black-2 bold font-20 font-24 mb-10">منصة حبايبنا.نت</h2>
                         </div>
                     </div>
 
@@ -20,7 +20,7 @@
                     </div>
                     <div class="mt-40 pb-40">
                         <div tab-name="about" all class="active">
-                            <div class="font-24 black-2 font-18-p">اختصاصية العلاج الطبيعي في مجال الأطفال. التحقت بمعهد المهن الطبية المساعدة بعمان عام ١٩٨٦ وحصلت على الدبلوم ثم التحقت بالجامعة الأردنية كلية علوم التأهيل ودرست بكالوريس علاج طبيعي. وكان تقديرها إمتياز وأخذت خبرات عديدة من ألمانيا وأميركا والسعودية بالإضافة للأردن. تبقي نفسها مستجدة بالبحث عن المعلومة الجديدة</div>
+                            <div class="font-24 black-2 font-18-p">منصة عربية تهدف لتقديم محتوى متخصص يهدف إلى تسهيل دمج الأشخاص ذوي التحديات الذهنية في المجتمع العربي.</div>
                         </div>
                         <div tab-name="courses" all>
                             <SpecialistCourses :list-class="'p-0-p'" v-if="isDataReady" :filtered-courses="courses"></SpecialistCourses>
