@@ -20,7 +20,7 @@
                     </div>
                     <div class="mt-40 pb-40">
                         <div tab-name="about" all class="active">
-                            <div class="font-24 black-2 font-18-p">منصة عربية تهدف لتقديم محتوى متخصص يهدف إلى تسهيل دمج الأشخاص ذوي التحديات الذهنية في المجتمع العربي.</div>
+                            <div class="font-24 black-2 font-18-p">منصة حبايبنا.نت هي منصة رقمية عربية تهدف إلى تمكين الوالدين ومقدمي الرعاية العرب ليستطيعوا تحسين حياة الأطفال المتأخرين في التطور بمختلف مجالات الحياة. يتكون فريق التحرير من مجموعة من الأخصائيين في التربية الخاصة أو التأهيل بالإضافة إلى محرري المحتوى.</div>
                         </div>
                         <div tab-name="courses" all>
                             <SpecialistCourses :list-class="'p-0-p'" v-if="isDataReady" :filtered-courses="courses"></SpecialistCourses>

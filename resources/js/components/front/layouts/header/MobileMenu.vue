@@ -44,7 +44,7 @@
                 <router-link
                     class="d-block p-side-15 pt-10 pb-10 trans"
                     to="/signup"
-                    >تسجيل</router-link
+                    >مستخدم جديد</router-link
                 >
             </li>
             <li>
