@@ -106,7 +106,7 @@
                 window.open(url,'_blank')
             },
             goToContactForm() {
-                window.scrollTo(0, document.querySelector('.contact-us-section').offsetTop - 50)
+                document.querySelector('.contact-us-section').scrollIntoView({ behavior: 'smooth', block: "start", })
             }
         }
     }
