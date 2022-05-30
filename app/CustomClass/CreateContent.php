@@ -11,10 +11,11 @@ class CreateContent {
 
     public function execute(array $data)
     {
-        dd($data);
         try {
 
             $content = new Content();
+
+            
 
 
 
