@@ -34,7 +34,7 @@
                                 <router-link to="/about-habaybna">عن حبايبنا.نت</router-link>
                             </li>
                             <li class="d-flex-p space-between">
-                                <router-link to="/">تواصلوا معنا</router-link>
+                                <router-link to="/" @click.native="goToContactForm">تواصلوا معنا</router-link>
                                 <div class="mo">
                                     <div class="d-flex align-center">
                                         <img src="/images/mastercard.svg">
@@ -104,6 +104,9 @@
         methods: {
             goToLink(url) {
                 window.open(url,'_blank')
+            },
+            goToContactForm() {
+                window.scrollTo(0, document.querySelector('.contact-us-section').offsetTop - 50)
             }
         }
     }
