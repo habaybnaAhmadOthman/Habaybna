@@ -11,6 +11,7 @@ use App\UsersFavouriteCourses;
 use App\CourseVideos;
 use App\CourseSpecialist;
 use App\CategoryCourse;
+use App\CertificateLogos;
 use App\Question;
 use App\CustomClass\CourseData;
 use App\CustomClass\AllCourses;
@@ -198,6 +199,15 @@ class CourseController extends Controller
         ],204);
    }
 
+   public function certificate($id)
+   {
+    $course = Courses::findorfail($id);
+
+    $data['course_title'] = $course->courseTitle;
+    $data['length'] = $course->course_length;
+    $data['logos'] = $course->certificateLogos;
+   return response($data);
+   }
    public function getAllcourses(AllCourses $allCourses)
    {
        $courses = $allCourses->execute();
@@ -481,10 +491,7 @@ class CourseController extends Controller
 
     }
 
-    public function certificate($id)
-    {
-        dd('hi');
-    }
+
 
     // check if the user purchase the course if yes return lectures of course
     public function getClassRoomLectures(Request $request, GetClassRoomLectures $getClassRoomLectures)
@@ -543,6 +550,33 @@ class CourseController extends Controller
                 404
         ]);
         }
+
+    }
+
+    public function storeCertificate(Request $request)
+    {
+    //    return response($request->file('logos'));
+
+        $course = Courses::findorfail($request->course_id);
+
+        // $course->certificateLogos()->create([
+        //     'course_id'=>$request->course_id,
+        // ]);
+            $certificate = new CertificateLogos() ;
+            $certificate->course_id = $request->course_id ;
+        if($request->file('logos')){
+                $path = $request->file('logos')->store('courseLogos');
+                $certificate->url = url($path);
+                $certificate->save();
+
+        }
+
+        // $data = [];
+        // foreach ($course->certificatelogos as $key => $value) {
+            // dd($key,asset('/public/storage/'.$value->url));
+        // }
+
+        return response($course->certificatelogos->makeHidden(['created_at','updated_at','course_id']));
 
     }
 

@@ -209,6 +209,30 @@ export default {
         return resp
 
     },
+    // create new article
+    async createNewArticle(context, payload) {
+        console.log('in');
+        const resp = await callApi('POST', '/api/admin/content/create', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to create new content");
+            throw error;
+        }
+        return resp
+
+    },
+
+    // create update certificate
+    async createUpdateCertificate(context, payload) {
+        console.log('in');
+        const resp = await callApi('POST', '/api/admin/certificate', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to create new content");
+            throw error;
+        }
+        return resp
+
+    },
+    ////
     async deleteCourse(context, payload) {
         console.log('context', context);
         const resp = await callApi('POST', '/api/admin/delete-course', payload)

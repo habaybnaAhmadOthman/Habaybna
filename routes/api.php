@@ -82,6 +82,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/course-preview/{course_id}','CourseController@preview');
         Route::get('/course-certificate/{id}','CourseController@certificate');
         Route::post('/course/update-video/{id}','CourseController@updateVideo');
+        Route::post('certificate','CourseController@storeCertificate');
+
 
         // media
 
@@ -125,6 +127,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/contents','ContentController@index');
         Route::get('/content/{id}','ContentController@update');
         Route::post('/content/edit','ContentController@edit');
+        Route::post('/content/create','ContentController@create');
 
 
 

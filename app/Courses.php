@@ -133,4 +133,9 @@ class Courses extends Model
                 return $isLiked ;
             }
     }
+
+    public function certificateLogos()
+    {
+        return $this->hasMany(CertificateLogos::class,'course_id');
+    }
 }
