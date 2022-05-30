@@ -15,6 +15,7 @@
                 <div class="date black-2 font-26"><span class=" p-side-15"><span>{{day}}</span><span class="p-side-30 month">{{month}}</span><span>{{year}}</span></span></div>
                 <div class="logos">
                     <img src="/images/cer-logo.png" alt="" width="85" height="75">
+                    <img v-for="logo in logos" :key="logo" :src="logo" width="85" height="75">
                 </div>
             </div>
         </div>
@@ -28,6 +29,7 @@
                 <div class="date black-2 font-26"><span class=" p-side-15"><span>{{day}}</span><span class="p-side-30 month">{{month}}</span><span>{{year}}</span></span></div>
                 <div class="logos">
                     <img src="/images/cer-logo.png" alt="" width="85" height="75">
+                    <img v-for="logo in logos" :key="logo" :src="logo" width="85" height="75">
                 </div>
             </div>
         </div>
@@ -45,6 +47,7 @@ export default {
             month: null,
             year: null,
             courseData: null,
+            logos: []
         }
     },
     methods: {
@@ -77,7 +80,7 @@ export default {
                 this.isLoading(true);
                 const obj = await this.$store.getters['user/userData'];
                 this.courseData = await this.$store.dispatch('courses/getMyCourseData',this.course);
-                await this.$store.dispatch('courses/getCertificateData',this.course);
+                this.logos = this.courseData.certificate_logos.map(logo => logo.url)
                 this.firstName = obj.firstName;
                 this.lastName = obj.lastName;
                 const date = new Date().toLocaleDateString("nl",{month:"long", day:"2-digit",year: "numeric"});
