@@ -14,6 +14,7 @@ import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
 import Calls from "./components/admin/calls/Calls.vue";
 import Media from "./components/admin/media/Index.vue";
+import ShowMedia from "./components/admin/media/Show.vue";
 import CreateMedia from "./components/admin/media/Create.vue";
 import ContactUs from "./components/admin/contactUs/ContactUs.vue";
 import Parents from "./components/admin/parent/Parents.vue";
@@ -207,6 +208,11 @@ const routes = [{
         name: "CourseCertificate"
     },
     {
+        path: "/admin/media-update/:data",
+        component: ShowMedia,
+        name: "ShowMedia"
+    },
+    {
         path: "/admin/course-edit/:data",
         component: EditCourseInfo,
         name: "EditCourseInfo"
@@ -302,7 +308,7 @@ const routes = [{
         component: RegisterPage,
         meta: {
             anonymous: true,
-            back:true
+            back: true
         }
     },
     {
@@ -332,7 +338,7 @@ const routes = [{
         meta: {
             requiresAuth: false,
             anonymous: true,
-            back:true
+            back: true
         },
         name: "login"
     },
@@ -342,7 +348,7 @@ const routes = [{
         meta: {
             requiresAuth: false,
             anonymous: true,
-            back:true
+            back: true
         },
         name: "forgetPassword"
     },
@@ -353,8 +359,7 @@ const routes = [{
         meta: {
             requiresAuth: true
         },
-        children: [
-            {
+        children: [{
                 path: "my-account",
                 component: UserProfile_MyAccount,
                 meta: {
@@ -386,7 +391,7 @@ const routes = [{
                 },
                 name: 'myFavouriteContents'
             },
-    ]
+        ]
     },
     // *****************
     // courses
@@ -395,7 +400,7 @@ const routes = [{
         component: CoursePage,
         meta: {
             requiresAuth: false,
-            back:true
+            back: true
         },
         props: true
     },
@@ -412,7 +417,7 @@ const routes = [{
         component: ClassRoomPage,
         meta: {
             requiresAuth: true,
-            back:true
+            back: true
         },
         props: true
     },
@@ -454,8 +459,11 @@ const routes = [{
         component: ArticlePage,
         props: true
     },
-    
-    { path: "*", component: ErrorPage }
+
+    {
+        path: "*",
+        component: ErrorPage
+    }
 ];
 
 const router = new Router({
@@ -512,7 +520,7 @@ Vue.use(VueGtm, {
     vueRouter: router, // Pass the router instance to automatically sync with router (optional)
     // ignoredViews: ['homepage'], // Don't trigger events for specified router names (optional)
     trackOnNextTick: false // Whether or not call trackView in Vue.nextTick
-  });
+});
 
 
 export default router;

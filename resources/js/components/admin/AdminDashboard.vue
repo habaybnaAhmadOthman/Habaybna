@@ -134,6 +134,10 @@ footer {
               <Icon type="ios-call" size="16" />
               <router-link to="/admin/contact-us"> تواصل معنا </router-link>
             </MenuItem>
+            <MenuItem name="7">
+              <Icon type="ios-call" size="16" />
+              <router-link to="/admin/media">التغطية الاعلامية   </router-link>
+            </MenuItem>
           </Menu>
         </Sider>
         <Layout :style="{ padding: '0 5px' }">
@@ -150,14 +154,13 @@ footer {
 </template>
 <script>
 export default {
-    created() {
+  created() {
     //         this.callApi(
     //   "get",
     //   "/api/admin/contact-us/all-messages"
     // ).then(res=>{
-
     // })
-    },
+  },
   data() {
     return {};
   },

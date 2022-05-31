@@ -47,13 +47,12 @@ th {
             <td style="maxWidth:200px"><a :href="call_package.url" target="_blank">{{ call_package.url }}</a> </td>
             <td>
               <Button
-              disabled
-                :to="'/admin/calls/package/' + call_package.id"
+                :to="'/admin/media/' + call_package.id"
                 type="dashed"
                 size="small"
-                >عرض</Button
+                >تعديل</Button
               >
-              <Button @click="deleteDaialog(call_package.id, index)" disabled>
+              <Button @click="deleteDaialog(call_package.id, index)" >
                 <Icon size="20" color="red" type="md-trash" />
               </Button>
             </td>
@@ -112,11 +111,11 @@ export default {
     del(index) {
       console.log(this.idDeleteUser);
       this.modal_loading = true;
-      const resp = this.$store.dispatch("admin/deleteCallPackge", this.idDeleteUser);
+      const resp = this.$store.dispatch("admin/deleteMediaCover", this.idDeleteUser);
       setTimeout(() => {
         this.modal_loading = false;
         this.dialogDelete = false;
-        this.$Message.success("تم حذف الحزمة  ");
+        this.$Message.success("تم حذف التغطية  ");
       }, 1500);
       this.packages.splice(index, 1);
     },

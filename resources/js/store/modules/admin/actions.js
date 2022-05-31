@@ -199,6 +199,15 @@ export default {
         return resp
 
     },
+    async updateMediaCover(context, payload) {
+        const resp = await callApi('POST', '/api/admin/edit-media', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to update cover data");
+            throw error;
+        }
+        return resp
+
+    },
     async editContent(context, payload) {
         console.log('in');
         const resp = await callApi('POST', '/api/admin/content/edit', payload)
@@ -323,6 +332,16 @@ export default {
     },
     async deleteCallPackge(context, payload) {
         const resp = await callApi('POST', '/api/admin/delete-call-package/' + payload)
+
+        if (resp.status != 200) {
+            const error = new Error("fail to create profile data");
+            throw error;
+        }
+        return resp.data
+
+    },
+    async deleteMediaCover(context, payload) {
+        const resp = await callApi('POST', '/api/admin/media-delete/' + payload)
 
         if (resp.status != 200) {
             const error = new Error("fail to create profile data");

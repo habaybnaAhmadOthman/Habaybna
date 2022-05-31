@@ -21,7 +21,7 @@ export default {
                         },
                     },
                 })
-                .then((editor) => {
+                .then((editor) => {admin/content/create
                     console.log("Editor was initialized", editor);
                     if (key.indexOf('.') > -1) {
                         let keys = key.split('.')

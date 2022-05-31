@@ -88,6 +88,12 @@ Route::middleware('auth:sanctum')->group(function () {
         // media
 
         Route::post('/create-media','MediaController@create');
+        Route::get('/update-media/{id}','MediaController@update');
+        Route::post('/edit-media','MediaController@edit');
+        Route::post('/media-delete/{id}','MediaController@delete');
+
+
+
         Route::get('/media','MediaController@index');
 
         // quize
