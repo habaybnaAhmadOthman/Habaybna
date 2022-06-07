@@ -184,13 +184,13 @@ export default {
         return {
             title: `${this.courseName}`,
             meta: [
-                // { name: 'description', content: 'Connect and follow ' + this.userData.name + ' on Epiloge - ' + this.userData.tagline},
-                // { property: 'og:title', content: this.userData.name + ' - Epiloge'},
-                // { property: 'og:site_name', content: 'Epiloge'},
-                // { property: 'og:description', content: 'Connect and follow ' + this.userData.name + ' on Epiloge - ' + this.userData.tagline},
-                // {property: 'og:type', content: 'profile'},
-                // {property: 'og:url', content: 'https://epiloge.com/@' + this.userData.username},
-                {property: 'og:image', content: this.coverPhoto }
+                { property: 'og:title', content: this.courseName},
+                { name: 'description', content:  this.courseDescription},
+                { property: 'og:description', content: this.courseDescription},
+                // {property: 'twitter:image:src', content: this.coverPhoto},
+                {property: 'twitter:card', content: 'summary'},
+                {property: 'og:url', content: 'https://habaybna.net/'},
+                // {property: 'og:image', content: this.coverPhoto }
             ]
         }
     },
