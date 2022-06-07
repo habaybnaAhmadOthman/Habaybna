@@ -3,7 +3,9 @@
 ::before {
     box-sizing: border-box;
 }
-
+html {
+    scroll-behavior: smooth;
+}
 @font-face {
     font-family: "Baloo";
     src: url("/fonts/BalooBhaijaan2-Medium.woff2") format("woff2"),
