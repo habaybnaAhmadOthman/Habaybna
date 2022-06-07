@@ -47,7 +47,7 @@ th {
             <td style="maxWidth:200px"><a :href="call_package.url" target="_blank">{{ call_package.url }}</a> </td>
             <td>
               <Button
-                :to="'/admin/media/' + call_package.id"
+                :to="'/admin/media-update/' + call_package.id"
                 type="dashed"
                 size="small"
                 >تعديل</Button

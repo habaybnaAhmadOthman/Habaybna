@@ -24,6 +24,11 @@ import CoursesOrders from "./components/admin/orders/courses/Index.vue";
 import Contents from "./components/admin/contents/Contents.vue";
 import CreateContent from "./components/admin/contents/Create.vue";
 import UpdateContent from "./components/admin/contents/Show.vue";
+
+import ContentsNew from "./components/admin/contentsNew/Contents.vue";
+import CreateContentNew from "./components/admin/contentsNew/Create.vue";
+import UpdateContentNew from "./components/admin/contentsNew/Show.vue";
+
 import CreateCall from "./components/admin/calls/Create.vue";
 import CreateSpecialist from "./components/admin/specialist/Create.vue";
 import CreateOther from "./components/admin/other/Create.vue";
@@ -131,6 +136,21 @@ const routes = [{
         path: "/admin/content/create",
         component: CreateContent,
         name: "CreateContent"
+    },
+    {
+        path: "/admin/content-new",
+        component: ContentsNew,
+        name: "ContentsNew"
+    },
+    {
+        path: "/admin/content-new/create",
+        component: CreateContentNew,
+        name: "CreateContentNew"
+    },
+    {
+        path: "/admin/content-new/:data",
+        component: UpdateContentNew,
+        name: "UpdateContentNew"
     },
     {
         path: "/admin/specialist/create",

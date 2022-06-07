@@ -133,7 +133,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/contents','ContentController@index');
         Route::get('/content/{id}','ContentController@update');
         Route::post('/content/edit','ContentController@edit');
+
+        Route::get('/content-new/{id}','ContentController@updateNew');
+        Route::post('/content-new/edit','ContentController@editNew');
         Route::post('/content/create','ContentController@create');
+        Route::get('/contents-new','ContentController@indexNew');
+        Route::post('/content-delete/{id}','ContentController@deleteNew');
+
+
 
 
 
@@ -177,6 +184,7 @@ Route::post('/user/forget-password','HomeController@forgetPassword');
 Route::post('/user/forget-password/check-otp','HomeController@checkForgetPassword');
 Route::post('/user/forget-password/change-password','HomeController@changePassword');
 Route::get('/contents','ContentController@index');
+Route::get('/contents-new','ContentController@indexNew');
 Route::post('/contact-us','ContactUsController@contactUs');
 Route::post('/show-article','ContentController@showArticle');
 Route::get('/media','MediaController@index');
@@ -185,10 +193,3 @@ Route::post('/other-complete-register','OthersController@create');
 Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
 
 Route::post('check-otp', \CheckOtp::class);
-
-
-
-
-
-
-

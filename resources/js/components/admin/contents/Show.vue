@@ -1,141 +1,118 @@
 <style>
-.radio label {
-  display: inline-block !important;
-  margin: 2px;
+.content-container {
+  /* display: flex; */
+  padding: 2em;
 }
-.error {
-  font-size: 16px !important;
-  color: red;
+.cont-wrapper {
+  background-color: whitesmoke;
+  list-style-type: none;
+  padding: 0 14px;
+  border-radius: 3px;
+  margin: auto;
+  max-width: 75%;
+}
+.wrapper-row {
+  display: flex;
+  padding: 0.5em;
+}
+.wrapper-row-cke {
+  display: block;
+}
+.wrapper-row-cke textarea {
+  min-height: 50vh;
+}
+.wrapper-row > label {
+  padding: 0.5em 1em 0.5em 0;
+}
+.wrapper-row > input {
+  flex: 2;
+
+  padding: 0.5em 1em 0.5em 0;
+}
+.content-cover-image {
+  align-items: flex-start;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 </style>
 <template>
-  <div class="flexxx profile">
-    <div class="question-form-title">
-      <div class="right-side">
-        <h3> المحتوى - انشاء محتوى</h3>
-      </div>
-      <div class="left-side">
-        <Button type="info" to="/admin/courses">رجوع</Button>
-      </div>
-    </div>
-    <form @submit="formSubmit" enctype="multipart/form-data" class="flexxx">
-      <div class="question-form">
-        <label for="contentTitle">عنوان المقال :</label>
-        <input
-          type="text"
-          class="form-control"
-          v-model="form.contentTitle"
-          name="title"
-          required
-          id="contentTitle"
-        />
-        <span class="error" v-if="!this.formValidation.contentTitle">
-          * يجب تعبئة هذا الحقل
-        </span>
-      </div>
-      <div class="question-form">
-        <label>صورة الغلاف </label>
-        <input
-          name="coverImage"
-          type="file"
-          class="form-control"
-          @change="uploadCoverImage"
-        />
-        <span class="error" v-if="!this.formValidation.coverImage">
-          * يجب تعبئة هذا الحقل
-        </span>
-      </div>
-
-      <div class="text-area">
-        <label> وصف المقال</label>
-        <!-- <ckeditor
-          :editor="form.editor"
-          v-model="form.courseDescription"
-          :config="form.editorConfig"
-        ></ckeditor> -->
-        <textarea name="" id="courseDescription" cols="30" rows="10"></textarea>
-        <!-- <span class="error" v-if="!this.formValidation.courseDescription">
-          * يجب تعبئة هذا الحقل
-        </span> -->
-      </div>
-
-
-      <div class="question-form">
-        <label>   السمات</label>
-        <input
-          name="contTags"
-          type="text"
-          class="form-control"
-          v-model="form.contTags"
-        />
-        <span class="error" v-if="!this.formValidation.contTags">
-          * يجب تعبئة هذا الحقل
-        </span>
-      </div>
-      <!-- <div class="question-form">
-        <label> حالة المقال : </label>
-        <input
-          type="radio"
-          id="is_publish_1"
-          value="1"
-          v-model="form.is_publish"
-        />
-        <label for="is_publish_1"> انشر المقال </label>
-
-        <input
-          type="radio"
-          id="is_publish_2"
-          value="0"
-          v-model="form.is_publish"
-        />
-        <label for="is_publish_2"> لا تنشر المقال </label>
-        <span class="error" v-if="!this.formValidation.is_publish">
-          * يجب اختيار الحالة
-        </span>
-      </div> -->
-      <div class="question-form">
-        <label>   تاريخ النشر</label>
-        <input
-          name="publishDate"
-          type="date"
-          class="form-control"
-          v-model="form.publishDate"
-        />
-        <span class="error" v-if="!this.formValidation.publishDate">
-          * يجب تعبئة هذا الحقل
-        </span>
-      </div>
-
-
-      <div class="question-form">
-        <label>مقدمي المحتوى</label>
-        <multiselect
-          v-model="form.tags"
-          :options="form.specialistsList"
-          :searchable="true"
-          :close-on-select="false"
-          :multiple="true"
-          :taggable="true"
-          label="firstName"
-          track-by="user_id"
-          placeholder="يرجى إختيار مقدمي الدورة"
-        ></multiselect>
-        <span class="error" v-if="!this.formValidation.tags">
-          * يجب اختيار واحد على الاقل
-        </span>
-      </div>
-      <div class="parent-submit">
-        <Button
-          :style="{ float: 'left' }"
-          type="info"
-          ghost
-          :loading="loading"
-          @click="formSubmit"
-        >
-          <span v-if="!loading">التالي</span>
-          <span v-else>Creating...</span>
-        </Button>
-      </div>
+  <div class="content-container">
+    <form @submit="formSubmit" enctype="multipart/form-data">
+      <ul class="cont-wrapper">
+        <li class="wrapper-row">
+          <input
+            name=""
+            placeholder="عنوان المقال"
+            v-model="form.title"
+            required
+          />
+        </li>
+        <li class="wrapper-row">
+          <multiselect
+            v-model="form.categories"
+            :options="categories"
+            :searchable="true"
+            :close-on-select="false"
+            :multiple="true"
+            :taggable="true"
+            label="title"
+            track-by="title"
+            placeholder="  يرجى إختيار فئة المقال"
+            required
+          ></multiselect>
+        </li>
+        <li class="wrapper-row">
+          <div class="content-cover-image">
+            <label for=""> صورة الغلاف :</label>
+            <img :src="form.coverImage" alt="" />
+            <input
+              name="coverImage"
+              type="file"
+              @change="uploadCoverImage"
+              :required="form.coverImage == '' ? true : false"
+            />
+          </div>
+        </li>
+        <li class="wrapper-row">
+          <multiselect
+            v-model="form.author"
+            :options="authorsList"
+            :searchable="true"
+            :close-on-select="true"
+            :taggable="true"
+            label="firstName"
+            track-by="firstName"
+            placeholder="اختر كاتب للمقال"
+            :multiple="false"
+            required
+          ></multiselect>
+        </li>
+        <li class="wrapper-row-cke">
+          <textarea
+            name=""
+            id="courseDescription"
+            cols="30"
+            rows="10"
+          ></textarea>
+        </li>
+        <li class="wrapper-row">
+          <label for=""> هل تريد نشر المقال : </label>
+          <label for="">
+            <input type="radio" v-model="form.status" value="1" required />نعم
+          </label>
+          <label for="">
+            <input type="radio" v-model="form.status" value="0" required />لا
+          </label>
+        </li>
+        <li class="wrapper-row">
+          <label for=""> تاريخ نشر المقال :</label>
+          <input type="date" v-model="form.publishDay" required />
+        </li>
+        <li class="wrapper-row">
+          <input class="ivu-btn ivu-btn-info" type="submit" value="حفظ" />
+        </li>
+      </ul>
     </form>
   </div>
 </template>
@@ -145,63 +122,44 @@
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
-import initEditor from '../../../components/front/mixins/initEditor'
+import initEditor from "../../../components/front/mixins/initEditor";
 export default {
   components: { Multiselect },
   mixins: [initEditor],
   async created() {
-    // const resp = await this.callApi("get", "/api/admin/course-init-data");
-    // if (resp.status == 200) {
-    //   this.categories = resp.data.categories;
-    //   this.form.specialistsList = resp.data.specialists;
-    // }
-        this.callApi("get", "/api/admin/content/" + this.$route.params.data).then(
-      (res) => {
-        if (res.status == 200) {
-          this.form.content_id = res.data.nid;
-        //   this.form.contentTitle = res.data.title;
-        //   this.form.courseDescription = res.data.body;
-        //   this.form.coverImage = res.data.image;
-        //   this.form.contTags = res.data.tags;
-        //   this.form.is_publish = res.data.discount_percentage;
-        //   this.form.coupone_durations.start_date = res.data.start_date;
-        //   this.form.coupone_durations.end_date = res.data.end_date;
-        //   this.form.status = res.data.status;
-        }
-      }
-    );
-    console.log('form',this.form);
+    const resp = await this.callApi("get", "/api/admin/course-init-data");
+    if (resp.status == 200) {
+      this.categories = resp.data.categories;
+      this.authorsList = resp.data.specialists;
+
+      //   await this.callApi("get", "/api/admin/content/" + nID).then((res) => {
+      //     console.log("res", res);
+      //     if (res.status == 200) {
+      //       this.form.title = res.data.title;
+      //       this.form.coverImage = res.data.image;
+      //       this.form.video = res.data.video;
+      //       console.log(res.data.video, "k;lk;lk");
+      //       this.form.courseDescription.setData(res.data.body);
+      //     }
+      //   });
+    }
   },
+  updated() {},
   data() {
     return {
-      form: {
-          content_id:null,
-        tags: "",
-        tagsValid: true,
-        specialistsList: [],
-        contentTitle: "",
-        courseDescription: null,
-        publishDate:null,
-        editor: ClassicEditor,
-        editorConfig: {
-          enterMode: "br",
-        },
-        coverImage: "",
-        contTags: "",
-        is_publish: "",
-      },
       categories: [],
-      loading: false,
-      formValidation: {
-        contTags: true,
-        contentTitle: true,
-        courseDescription: true,
-        coverImage: true,
-        tags: true,
-        is_publish: true,
+      authorsList: [],
 
+      form: {
+        coverImage: "",
+        categories: [],
+        author: null,
+        title: null,
+        publishDay: null,
+        courseDescription: null,
+        status: 0,
+        video: null,
       },
-      isValidToSubmit: true,
     };
   },
 
@@ -211,86 +169,63 @@ export default {
     },
 
     async formSubmit(e) {
-    //   this.validatForm();
-    //   if (this.isValidToSubmit) {
-        console.log('1');
-        this.loading = true;
-        let self = this.$router;
+      e.preventDefault();
+      let tagIDs = [];
+      this.form.categories.forEach((item) => tagIDs.push(item.id));
 
-        let tagIDs = [];
-        // this.form.tags.forEach((item) => tagIDs.push(item.user_id));
+      let Obj = new FormData();
+      Obj.append("title", this.form.title);
+      Obj.append("image", this.form.coverImage);
+      Obj.append("categories", tagIDs);
+      Obj.append("author", this.form.author.id);
+      Obj.append(
+        "content",
+        this.form.courseDescription
+          .getData()
+          .replaceAll("srcset", "src")
+          .replaceAll(' 0w"', '"')
+      );
+      Obj.append("publishDate", this.form.publishDay);
+      Obj.append("status", this.form.status);
 
-        // let CategorytagIDs = [];
-        // this.form.courseCategory.forEach((item) =>
-        //   CategorytagIDs.push(item.id)
-        // );
-        e.preventDefault();
-        // let formData = new FormData();
-        // formData.append("title", this.form.contentTitle);
-        // formData.append("category", CategorytagIDs);
-
-        // formData.append("description", this.form.courseDescription.getData().replaceAll('srcset','src').replaceAll(" 0w\"","\""));
-        // formData.append("id", this.form.content_id);
-        console.log('2');
-
-        let Obj = {
-            'id':this.form.content_id,
-            'desc':this.form.courseDescription
-        }
-        // formData.append("coverImage", this.form.coverImage);
-        // formData.append("contTags", this.form.contTags);
-        // formData.append("is_publish", this.form.is_publish);
-        // formData.append("specialists", tagIDs);
-        console.log('3',Obj);
-
-
-        let resp = await this.$store.dispatch(
-          "admin/editContent",
-          Obj
-        );
-        console.log(resp,'zzzzzzzzzzzzzzzzzzzzzzz');
-        this.$Message.success("تم انشاء المحتوى");
-
-        this.loading = false;
-    //   }
-    },
-    validatForm() {
-    //   if (this.form.coursePrice == "" && !this.form.is_free) {
-    //     this.formValidation.coursePrice = false;
-    //   } else {
-    //     this.formValidation.coursePrice = true;
-    //   }
-
-    //   for (const prob in this.formValidation) {
-    //     if (Object.hasOwnProperty.call(this.formValidation, prob)) {
-    //       const element = this.formValidation[prob];
-    //       if (!element) {
-    //         this.isValidToSubmit = false;
-    //         this.$Message.error("يرجى التحقق من الحقول");
-
-    //         break;
-    //       }
-    //     }
-    //   }
+      let resp = await this.$store
+        .dispatch("admin/createNewArticle", Obj)
+        .then((res) => {
+          if (res.status == 200) {
+            this.$Message.success("تم انشاء المحتوى");
+            this.form.title = null;
+            this.form.coverImage = "";
+            this.form.video = "";
+            this.form.publishDay = null;
+            this.form.courseDescription.setData("");
+            // this.form.courseDescription.execute("mediaEmbed", this.form.video);
+            this.form.categories = [];
+            this.form.author = null;
+          }
+        });
     },
   },
   mounted() {
     const self = this;
-    this.initEditor('#courseDescription','form.courseDescription',function(){
-    });
+    var nID = this.$router.currentRoute.params.data;
 
+    this.callApi("get", "/api/admin/content/" + nID).then((res) => {
+      if (res.status == 200) {
+        this.form.title = res.data.title;
+        this.form.coverImage = res.data.image;
+        this.form.video = res.data.video;
+        this.initEditor(
+          "#courseDescription",
+          "form.courseDescription",
+          res.data.video,
+          function () {
+            self.form.courseDescription.setData(res.data.body);
+            self.form.courseDescription.execute("mediaEmbed", self.form.video);
+          }
+        );
+      }
+    });
   },
 };
 </script>
-<style>
-.flexxx .text-area {
-  width: 77%;
-  margin: 10px 0;
-}
-.text-area p {
-  /* min-height: 90px !important; */
-}
-.question-form span {
-  display: block !important ;
-}
-</style>
+

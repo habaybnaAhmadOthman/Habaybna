@@ -58,11 +58,16 @@
         </li>
         <li class="wrapper-row">
           <label for=""> صورة الغلاف :</label>
-          <input name="coverImage" type="file" @change="uploadCoverImage" required />
+          <input
+            name="coverImage"
+            type="file"
+            @change="uploadCoverImage"
+            required
+          />
         </li>
         <li class="wrapper-row">
           <multiselect
-            v-model="form.auther"
+            v-model="form.author"
             :options="authorsList"
             :searchable="true"
             :close-on-select="true"
@@ -70,11 +75,17 @@
             label="firstName"
             track-by="firstName"
             placeholder="اختر كاتب للمقال"
+            :multiple="false"
             required
           ></multiselect>
         </li>
         <li class="wrapper-row-cke">
-          <textarea id="courseDescription" cols="30" rows="10"></textarea>
+          <textarea
+            name=""
+            id="courseDescription"
+            cols="30"
+            rows="10"
+          ></textarea>
         </li>
         <li class="wrapper-row">
           <label for=""> هل تريد نشر المقال : </label>
@@ -113,6 +124,9 @@ export default {
       this.authorsList = resp.data.specialists;
     }
   },
+  updated() {
+    console.log("update");
+  },
   data() {
     return {
       categories: [],
@@ -124,7 +138,7 @@ export default {
         author: null,
         title: null,
         publishDay: null,
-        contents: null,
+        courseDescription: null,
         status: 0,
       },
     };
@@ -133,30 +147,47 @@ export default {
   methods: {
     uploadCoverImage(event) {
       this.form.coverImage = event.target.files[0];
-      console.log(this.form.coverImage, 'xxxxx',  event.target.files[0]);
+      console.log(this.form.coverImage, "xxxxx", event.target.files[0]);
     },
 
     async formSubmit(e) {
       e.preventDefault();
-      this.form.contents = this.form.contents
-        .getData()
-        .replaceAll("srcset", "src")
-        .replaceAll(' 0w"', '"');
+      let tagIDs = [];
+      this.form.categories.forEach((item) => tagIDs.push(item.id));
 
       let Obj = new FormData();
-      Obj.append('title',this.form.title)
-      Obj.append('image',this.form.coverImage)
-      Obj.append('categories',this.form.categories)
-      Obj.append('author',this.form.author)
-      Obj.append('content',this.form.contents)
-      Obj.append('publishDate',this.form.publishDay)
-      Obj.append('status',this.form.status)
+      Obj.append("title", this.form.title);
+      Obj.append("image", this.form.coverImage);
+      Obj.append("categories", tagIDs);
+      Obj.append("author", this.form.author.id);
+      Obj.append(
+        "content",
+        this.form.courseDescription
+          .getData()
+          .replaceAll("srcset", "src")
+          .replaceAll(' 0w"', '"')
+      );
+      Obj.append("publishDate", this.form.publishDay);
+      Obj.append("status", this.form.status);
 
-      let resp = await this.$store.dispatch("admin/createNewArticle", Obj);
+      let resp = await this.$store
+        .dispatch("admin/createNewArticle", Obj)
+        .then((res) => {
+          if (res.status == 200) {
+            setTimeout(() => {
+              this.$Message.success("تم انشاء المحتوى");
+              this.$router.push('/admin/content-new')
+            }, 1500);
+          }
+        });
     },
   },
   mounted() {
-    this.initEditor("#courseDescription", "form.contents", function () {});
+    this.initEditor(
+      "#courseDescription",
+      "form.courseDescription",
+      function () {}
+    );
   },
 };
 </script>
