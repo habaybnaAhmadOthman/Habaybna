@@ -19,7 +19,7 @@
             </figure>
 
             <div class="p-side-20 pb-10 pt-10">
-                <p class="yellow font-18 bold mb-10">الدورة التدريبية</p>
+                <p class="yellow font-16 bold mb-10">الدورة التدريبية</p>
                 <p class="font-20 font-18-p black-2 mb-15 bold two-line course-title">{{ course.title }}</p>
                 <div class="d-flex space-between">
                     <div class="d-flex align-center">
@@ -27,24 +27,24 @@
                         <span
                             class="bold font-22 main-color ml-15"
                             v-if="!course.is_free && course.discount.discount_price"
-                            >{{ course.discount.discount_price }} JD</span
+                            >{{ course.discount.discount_price }} $</span
                         >
                         <span
                             class="gray font-19 before-discount bold"
                             v-if="!course.is_free && course.price"
                             
-                            >{{ course.price }} JD</span
+                            >{{ course.price }} $</span
                         >
                         </template>
                         <template v-else-if="!course.is_free && course.price">
                             <span
                             class="bold font-22 main-color ml-15"
                             v-if="!course.is_free && course.price"
-                            >{{ course.price }} JD</span
+                            >{{ course.price }} $</span
                         >
                         </template>
                     </div>
-                    <span class="bold font-22 main-color"
+                    <span class="gray font-18"
                         >{{ getTime(course.course_length) }}</span
                     >
                 </div>

@@ -2,7 +2,7 @@
     <div class="course-content-table p-side-12-p" >
         <h3 class="title-line font-27 mb-40 do">{{title}}</h3>
         <div class="list radius-10 overflow-hidden">
-            <div v-for="(row,index) in rows" :key="row.lesson_id" class="relative lecture-box d-flex align-center black-2 font-27 regular">
+            <div v-for="(row,index) in rows" :key="row.lesson_id" class="relative lecture-box d-flex align-center black-2 font-20 regular">
                 <!-- :active -->
                 <template v-if="type == 'course'">
                     <div class="relative w-100">
@@ -10,9 +10,9 @@
                             <div class="play-video d-flex">
                                 <img class="play-icon" :src="getCourseVideoIcon(index)" width="50" height="50" alt="" />
                                 <div class="duration">
-                                    <span class="nowrap black-2">{{getTime(row.lesson_length)}}</span>
+                                    <span class="nowrap black-2 font-18">{{getTime(row.lesson_length)}}</span>
                                 </div>
-                                <div class="video-name black-2 relative">
+                                <div class="video-name bold black-2 relative">
                                     <span>{{row.lesson_title}}</span>
                                 </div>
                             </div>
@@ -21,19 +21,19 @@
                     </div>
                 </template>
                 <template v-else-if="type == 'lecture'">
-                    <div class="relative w-100">
+                    <div class="relative w-100 lecture">
                         <router-link @click.native="forceRefresh" :class="{'active':isCurrentVideo(row.title)}" class="d-flex tag" :to="getVideoURLIfAvailable(index,row.title)">
                             <div class="play-video d-flex">
                                 <img class="play-icon" :src="getCourseVideoIcon(index)" width="50" height="50" alt="" />
                                 <div class="duration">
-                                    <span class="nowrap black-2">{{getTime(row.length)}}</span>
+                                    <span class="nowrap black-2 font-18">{{getTime(row.length)}}</span>
                                 </div>
-                                <div class="video-name relative">
+                                <div class="video-name bold relative">
                                     <span class="black-2">{{row.title}}</span>
                                 </div>
                             </div>
                         </router-link>
-                        <span class="prevent-click"></span>
+                        <span class="prevent-click" @click="showUnCompleteAlert"></span>
                     </div>
                 </template>
             </div>
@@ -45,7 +45,7 @@
                             <div class="duration do">
                                 <span class="nowrap black-2">الإختبار</span>
                             </div>
-                            <div class="video-name">
+                            <div class="video-name bold">
                                 <span class="mo black-2">الإختبار</span>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="duration do">
                                 <span class="nowrap black-2">إصدار الشهادة</span>
                             </div>
-                            <div class="video-name">
+                            <div class="video-name bold">
                                 <span class="mo black-2">إصدار الشهادة</span>
                             </div>
                         </div>
@@ -136,7 +136,7 @@ export default {
                 if (this.type == 'course')
                     return `/images/lock-icon.svg`
                 else
-                    return `/images/unavailable-play-icon.svg`
+                    return `/images/play-icon.svg`
             }
         },
         // for course page use
@@ -159,6 +159,9 @@ export default {
         forceRefresh(){
             this.$store.commit("forceRefresh");
         },
+        showUnCompleteAlert(){
+            this.$store.commit("alertDialogMsg", 'يجب عليك اتمام الدروس السابقة لتستطيع مشاهدة هذا الدرس ');
+        }
     },
     mounted(){
         // to get available lectures
@@ -211,6 +214,12 @@ export default {
 .video-name {
     font-weight: 200;
 }
+.lecture [href="/"] .play-icon {
+    filter: grayscale(1);
+}
+.play-video {
+    align-items: center;
+}
 @media (max-width: 767px) {
     .lecture-box .tag {
         padding: 25px 16px 25px 16px;
@@ -220,7 +229,10 @@ export default {
         left: 8px;
         bottom: 8px;
         margin: 0;
-        font-size: 14px;
+        font-size: 14px!important;
+    }
+    .duration span {
+        font-size: 14px!important;
     }
     .video-name {
         font-size: 16px;
@@ -229,6 +241,10 @@ export default {
         display: flex;
         align-items: center;
         justify-content:center;
+    }
+    .play-video img{
+        width: 40px;
+        height: 40px;
     }
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
-    <div class="d-flex align-center ">
-        <div class="bar do"></div>
-        <div class="do" v-if="isLoggedIn">
-            <router-link to="/profile" class="d-flex align-center user-box">
+    <div class="d-flex align-center hide-do-profile">
+        <div class="bar do hh-all"></div>
+        <div class="do hh-all" v-if="isLoggedIn">
+            <router-link to="/profile/my-account" class="d-flex align-center user-box">
                 <img
                     :src="userAvatar"
                     alt="gift"
@@ -15,12 +15,12 @@
         <template v-if="!isLoggedIn">
             <router-link
                 to="/signup"
-                class="signin-box-btn pr-30 relative bold black do nowrap"
-                >تسجيل</router-link
+                class="signin-box-btn pr-30 relative bold black do nowrap hh-all"
+                >مستخدم جديد</router-link
             >
             <router-link
                 to="/signin"
-                class="signin-box-btn pr-30 relative bold black do nowrap"
+                class="signin-box-btn pr-30 relative bold black do nowrap hh-all"
                 >تسجيل الدخول</router-link
             >
         </template>
@@ -28,7 +28,7 @@
             <button
                 @click="logout"
                 
-                class="sign-out-box bg-none border-0 pointer pr-30 relative bold black do nowrap"
+                class="sign-out-box bg-none border-0 pointer pr-30 relative bold black do nowrap hh-all"
             >
                 تسجيل الخروج
             </button>
@@ -107,6 +107,9 @@ export default {
 }
 .user-box {
     width: 150px;
+}
+.profile .hide-do-profile .hh-all {
+    display: none!important;
 }
 @keyframes swing {
     from {

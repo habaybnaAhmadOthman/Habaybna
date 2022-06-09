@@ -6,13 +6,13 @@
         :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"
         ></Banner>
         <div class="container page-info">
-            <div class="mo p-side-12-p mt-20-p">
+            <div class="mo p-side-12-p mt-40">
                 <TabsToggle :tabs="mobileTabs"></TabsToggle>
             </div>
-            <div tab-name="about" mo class="active">
+            <div tab-name="about" mo >
                 <CourseInfo  :course-name="courseName" :description="courseDescription" :whatShouldLearn="whatShouldLearn"></CourseInfo>
             </div>
-            <div tab-name="table" mo>
+            <div tab-name="table" mo class="active">
                 <ContentTable  :rows="videosList" type="course" :title="'محتوى الدورة التدريبية'" class="pt-20"></ContentTable>
             </div>
             <div tab-name="coaches" mo class="mt-50 pt-10 mt-20-p pt-0-p">
@@ -32,6 +32,7 @@
             @close-share-modal="showShareDialog"
             :courseName="courseName"
             :description="courseDescription | stripHTML"
+            portal="course-share"
         ></ShareCourseModal>
         <!-- <ShareCourseModal
             :show="showShareModal"
@@ -56,7 +57,9 @@
         </info-modal>
 
         <TheFooter></TheFooter>
-        
+        <portal-target name="cobone-modal"></portal-target>
+        <portal-target name="cobone-card"></portal-target>
+        <portal-target name="course-share"></portal-target>
     </div>
 </template>
 
@@ -101,15 +104,18 @@ export default {
             mobileTabs: [
                 {
                     title: 'عن الدورة' ,
-                    name: 'about'
+                    name: 'about',
+                    active: false
                 },
                 {
                     title: 'الدروس' ,
-                    name: 'table'
+                    name: 'table',
+                    active: true
                 },
                 {
                     title: 'المدربين' ,
-                    name: 'coaches'
+                    name: 'coaches',
+                    active: false
                 },
             ]
         }
@@ -178,13 +184,13 @@ export default {
         return {
             title: `${this.courseName}`,
             meta: [
-                // { name: 'description', content: 'Connect and follow ' + this.userData.name + ' on Epiloge - ' + this.userData.tagline},
-                // { property: 'og:title', content: this.userData.name + ' - Epiloge'},
-                // { property: 'og:site_name', content: 'Epiloge'},
-                // { property: 'og:description', content: 'Connect and follow ' + this.userData.name + ' on Epiloge - ' + this.userData.tagline},
-                // {property: 'og:type', content: 'profile'},
-                // {property: 'og:url', content: 'https://epiloge.com/@' + this.userData.username},
-                {property: 'og:image', content: this.coverPhoto }
+                { property: 'og:title', content: this.courseName},
+                { name: 'description', content:  this.courseDescription},
+                { property: 'og:description', content: this.courseDescription},
+                // {property: 'twitter:image:src', content: this.coverPhoto},
+                {property: 'twitter:card', content: 'summary'},
+                {property: 'og:url', content: 'https://habaybna.net/'},
+                // {property: 'og:image', content: this.coverPhoto }
             ]
         }
     },

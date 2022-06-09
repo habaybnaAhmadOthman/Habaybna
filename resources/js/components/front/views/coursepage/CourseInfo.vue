@@ -3,7 +3,7 @@
         <CourseInfoText :header="'نظرة عامة على الدورة'" :description="description"></CourseInfoText>
         <div class="mb-40 what-should-learn mb-20-p pt-20-p">
             <h3 class="title-line font-27 pt-30 mb-40 mb-20-p">ماذا سيتعلم المشاركون</h3>
-            <div class="font-20 black-2 font-20-p li-auto" v-html="whatShouldLearn"></div>
+            <div class="font-16 black-2 li-auto" v-html="whatShouldLearn"></div>
         </div>
     </div>
 </template>

@@ -1,40 +1,41 @@
 <template>
-    <div class="library-banner">
-        <div class="container h-100">
-            <div class="box flex-all flex-wrap h-100 p-side-12-p">
-                <div>
-                    <h1 class="w-100 font-50 bold white relative font-28-p">نضع بين يديك مكتبة رقمية تضم أكثر من 1000 معلومة</h1>
-                    <h2 class="w-100 white font-30 bold mt-20 font-18-p">يقدمها المختصين لمساعدتك في تمكين طفلك</h2>
-                    <h3 class="w-100 white font-30 bold font-18-p">مقالات - فيديوهات - ندوات رقمية - صور توضيحية</h3>
-                </div>
-            </div>
+  <section class="landing-section pt-50 pt-20-p relative">
+    <div class="container h-100 z-1">
+      <div class="d-flex align-center space-between box">
+        <div class="w-60 w-100-p h-100">
+          <div class="landing-call-links p-side-30 p-side-12-p">
+            <h1 class="font-35 main-color bold font-20-p mb-25 mb-0-p">نضع بين يديك مكتبة رقمية تضم أكثر من 1000 معلومة</h1>
+            <h2 class="font-26 font-18-p f-normal black">يشارك بتقديمها مئات الأخصائيين والوالدين ومقدمي الرعاية لمساعدتك في رحلتك لتمكين طفلك <br><span class="blue">مقالات . فيديوهات . ندوات رقمية . قصص وتجارب</span></h2>
+          </div>
         </div>
+        <img class="landing-bg relative mb-30-p" src="images/library-bg-1.png" alt="">
+      </div>
     </div>
+  </section>
 </template>
-
 <script>
-    export default {
-        
-    }
+export default {
+  components:{ }
+}
 </script>
 
 <style scoped>
-    .library-banner {
-        height: 621px;
-        background: url(/images/register-bg.jpg) no-repeat center;
+
+.landing-bg {
+    width: 28%;
+}
+.patt-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(45deg);
+}
+@media (max-width: 767px) {
+    .box {
+      flex-direction: column-reverse;
     }
-    .main-title:after {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 5px;
-        background: #FF9E00;
-        border-radius: 20px;
-        margin-top: 5px;
+    .landing-bg {
+        width: 60%;
     }
-    @media (max-width: 767px) {
-        .library-banner {
-            height: 320px;
-        }
-    }
+}
 </style>

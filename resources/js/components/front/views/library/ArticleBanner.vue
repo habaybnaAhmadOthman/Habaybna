@@ -1,11 +1,15 @@
 <template>
     <div class="banner mt-15 mt-0-p">
-        <img class="w-100 main-img object-fit radius-10" src="/images/courses-bg.JPG" width="100%">
+        <img v-if="type == 'Text'" class="w-100 main-img object-fit radius-10" :src="image" width="100%">
+        <!-- <img class="w-100 main-img object-fit radius-10" :src="image" width="100%"> -->
+        <iframe border="0" v-else-if="type == 'Video'" width="100%" class="w-100" controls :src="youtubeVideo"></iframe>
         <div class="d-flex space-between mt-15 align-center p-side-12-p">
-            <p class="font-18 bold gray font-16-p">تم النشر : <span class="yellow">2020/9/15</span></p>
+            <div>
+                <p v-if="date" class="font-18 bold gray font-16-p">تم النشر : <span class="">{{date}}</span></p>
+            </div>
             <div class="d-flex">
-                <div class="fav-box relative pointer shadow-2 ml-25"></div>
-                <p class="yellow font-24 bold d-flex align-center pointer font-14-p"><img class="ml-10 share-img" src="/images/share-color.svg" width="34" height="36" alt="" > مشاركة</p>
+                <!-- <div class="fav-box relative pointer shadow-2 ml-25" :class="{'active':is_favourite}" @click="addToFavourite($event,nid)"></div> -->
+                <p class="align-center bold d-flex font-14-p font-20 pointer yellow" @click="openShareModal"><img class="ml-10 share-img" src="/images/share-color.svg" width="34" height="36" alt="" > مشاركة</p>
             </div>
         </div>
     </div>
@@ -13,7 +17,31 @@
 
 <script>
     export default {
-        
+        emits: ['open-share-modal'],
+        props: ['image','video','type','date','is_favourite','nid'],
+        methods: {
+            openShareModal(){
+                this.$emit('open-share-modal')
+            },
+            async addToFavourite(event,id) {
+                if (this.isLoggedIn) {
+                    event.target.classList.toggle("active");
+                    await this.$store.dispatch("content/addToFavourite", {id});
+                } else {
+                    this.$store.commit("loginModal", true);
+                }
+            },
+        },
+        computed: {
+            youtubeVideo(){
+                if (this.video) {
+                    return 'https://www.youtube.com/embed/' + this.video.slice(this.video.lastIndexOf('/')+1)
+                } return ''
+            },
+            isLoggedIn() {
+                return this.$store.getters["user/isLoggedIn"];
+            },
+        },
     }
 </script>
 
@@ -36,13 +64,23 @@
 .fav-box.active {
     background-image: url(/images/heart-icon-fill.svg);
 }
-@media (max-width: 767px) { 
+iframe {
+    height: 500px;
+}
+@media (max-width: 767px) {
     .share-img {
         width: 24px;
     }
     .main-img {
         height: calc(100vw * .625);
         border-radius: 0;
+    }
+    .fav-box {
+        width: 33px;
+        height: 33px;
+    }
+    iframe {
+        height: 220px;
     }
 }
 </style>

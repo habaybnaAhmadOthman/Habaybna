@@ -1,6 +1,6 @@
 <template>
-    <portal to="destination">
-        <aside :class="modalClass">
+    <portal v-if="portal" :to="portalFn">
+        <aside :class="modalClass" class="z-1000">
             <div v-if="show" class="w-100 h-100 backdrop" @click="tryClose"></div>
             <transition name="modal">
                 <dialog
@@ -27,6 +27,33 @@
             </transition>
         </aside>
     </portal>
+    <aside :class="modalClass" v-else>
+        <div v-if="show" class="w-100 h-100 backdrop" @click="tryClose"></div>
+        <transition name="modal">
+            <dialog
+                class="overflow-hidden bg-white w-50 w-90-p radius-12 border-0 m-0 p-0 alert-modal"
+                v-if="show"
+                open
+            >
+                <div class="header white w-100 p-side-15 pt-15 pb-15 pt-10-p pb-10-p">
+                    <slot name="header">
+                        <p class="bold font-20 font-16-p">{{ title }}</p>
+                    </slot>
+                </div>
+                <section class="p-side-15 pt-15 pb-15 body">
+                    <slot></slot>
+                </section>
+                <menu class="d-flex flex-end ml-10 mb-10 modal-footer">
+                    <slot name="actions">
+                        <button class="btn mb-10 ml-10" @click="tryClose">
+                            حسنا
+                        </button>
+                    </slot>
+                </menu>
+            </dialog>
+        </transition>
+    </aside>
+
 </template>
 
 <script>
@@ -43,12 +70,21 @@ export default {
         modalClass: {
             type: String,
             required: false
-        }
+        },
+        portal: {
+            type: String,
+            required: false
+        },
     },
     emits: ["close"],
     methods: {
         tryClose() {
             this.$emit("close");
+        }
+    },
+    computed: {
+        portalFn(){
+            return this.portal || "destination";
         }
     }
 };
@@ -59,14 +95,14 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10000;
+    z-index: 99999999;
     background-color: rgba(0, 0, 0, 0.75);
 }
 dialog {
     position: fixed;
     top: 20vh;
     left: 10%;
-    z-index: 100000;
+    z-index: 999999990;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     right: 0;
     left: 0;
@@ -86,6 +122,9 @@ dialog {
 .body {
     max-height: 450px;
     overflow-y: auto;
+}
+aside {
+    z-index: 99999999999999;
 }
 @keyframes modal {
     from {

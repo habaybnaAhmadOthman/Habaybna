@@ -4,38 +4,13 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper p-0">
                 <!-- Slides -->
-                <div class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
+                <a @click="goToLink(item.url)" v-for="item,index in data" :key="index" class="swiper-slide">
+                    <div class="w-100-i fig d-flex align-center relative">
+                        <img :src="item.image" :alt="item.title" class="w-100-i">
+                        <span class="tip two-line">{{item.title}}</span>
                     </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="w-100-i fig d-flex">
-                        <img src="/images/test.jpg" alt="" class="w-100-i">
-                    </div>
-                </div>
+                </a>
             </div>
-
             <div class="swiper-pagination" :class="`swiper-pagination-${this.selector}`"></div>
         </div>
         <div class="swiper-button-next do" :class="`${arrowSelector}-next`"></div>
@@ -45,7 +20,7 @@
 
 <script>
     export default {
-        props: ['selector','arrow-selector','slides-per-view','spaceBetween','auto-play','autoplay-delay'
+        props: ['data','selector','arrow-selector','slides-per-view','spaceBetween','auto-play','autoplay-delay'
         ,'mobile-per-view','spaceBetweenMobile','pagination-mo','pagination-do'],
         methods:{
             initSwiper(){
@@ -91,6 +66,9 @@
                 } else {
                     return false
                 }
+            },
+            goToLink(url){
+                window.open(url, '_blank')
             }
         },
         computed:{
@@ -117,6 +95,30 @@
     position: initial;
     margin-top: 10px;
 }
+.fig {
+    height: 100px;
+}
+.fig img{
+    max-height: 100%;
+}
+.tip {
+    position: absolute;
+    right: 0;
+    top: 20%;
+    left: 0;
+    margin: auto;
+    max-width: 100%;
+    background: rgb(120 13 147 / 50%);
+    border-radius: 8px;
+    color: #fff;
+    text-align: center;
+    opacity: 0;
+    transition: .3s;
+}
+.fig:hover .tip {
+    opacity: 1;
+    top: 0;
+}
 </style>
 <style>
 .inner-arrows .swiper-button-next {
@@ -130,7 +132,5 @@
 .swiper-pagination-bullet-active {
     background: #823175;
 }
-.fig {
-    max-height: 100px;
-}
+
 </style>

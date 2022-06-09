@@ -17,10 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     //payment test config
-    Route::post('check-otp', \CheckOtp::class);
     Route::get('get-payment-status','PaymentController@checkPaymentStatus');
     Route::post('/course-payment','PaymentController@coursePayment');
     Route::post('course/add-to-fav','CourseController@addToFavourite');
+    Route::post('article/add-to-fav','CourseController@addToFavourite');
     Route::post('courses/free-course','PaymentController@joinFreeCourse');
     Route::post('course/get-course-quize','QuizController@getUserCourseQuiz');
 
@@ -78,10 +78,23 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/onlineCourse','CourseController@index');
         Route::get('/edit-course/{course_id}','CourseController@getCoruseInfo')->name('getCoruseInfo');
         Route::post('/edit-course/{course_id}','CourseController@updateCoruseInfo');
-        Route::post('/delete-course/{course_id}','CourseController@deleteCourse');
+        Route::post('/delete-course','CourseController@deleteCourse');
         Route::post('/course-preview/{course_id}','CourseController@preview');
         Route::get('/course-certificate/{id}','CourseController@certificate');
         Route::post('/course/update-video/{id}','CourseController@updateVideo');
+        Route::post('certificate','CourseController@storeCertificate');
+
+
+        // media
+
+        Route::post('/create-media','MediaController@create');
+        Route::get('/update-media/{id}','MediaController@update');
+        Route::post('/edit-media','MediaController@edit');
+        Route::post('/media-delete/{id}','MediaController@delete');
+
+
+
+        Route::get('/media','MediaController@index');
 
         // quize
         Route::get('/get-quiz/{id}','QuizController@getCourseQuiz');
@@ -111,6 +124,7 @@ Route::middleware('auth:sanctum')->group(function () {
         //orders
         Route::get('/orders/courses','PaymentController@index')->name('index.orders'); // will moved to CoursespurchaseordersController
         Route::post('/orders-courses/export-to-excel','CoursespurchaseordersController@exportToExcel')->name('create.others');
+        Route::get('/courses/user-progress','PaymentController@usersCourseProgress'); // will moved to CoursespurchaseordersController
 
         // courses
         Route::match(['get','post'],'/course/course-lectures','CourseController@getClassRoomLectures');
@@ -118,6 +132,16 @@ Route::middleware('auth:sanctum')->group(function () {
         // contents
         Route::get('/contents','ContentController@index');
         Route::get('/content/{id}','ContentController@update');
+        Route::post('/content/edit','ContentController@edit');
+
+        Route::get('/content-new/{id}','ContentController@updateNew');
+        Route::post('/content-new/edit','ContentController@editNew');
+        Route::post('/content/create','ContentController@create');
+        Route::get('/contents-new','ContentController@indexNew');
+        Route::post('/content-delete/{id}','ContentController@deleteNew');
+
+
+
 
 
     });
@@ -133,16 +157,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/courses/get-user-courses','UserController@userCourses');
 
     // parent routes
-    Route::post('/parent-complete-register','ParentUsersController@completeRegister');
     Route::post('/edit-parent-profile-data','ParentUsersController@editProfileData');
     Route::post('/set-private-mode','ParentUsersController@setPrivateMode');
 
     // speciaist route
-    Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
     Route::post('/edit-specialist-profile-data','SpecialistController@editProfileData');
 
     // others route
-    Route::post('/other-complete-register','OthersController@create');
     Route::post('/edit-other-profile-data','OthersController@editProfileData');
     Route::post('/course-payment','PaymentController@coursePayment');
 
@@ -163,8 +184,12 @@ Route::post('/user/forget-password','HomeController@forgetPassword');
 Route::post('/user/forget-password/check-otp','HomeController@checkForgetPassword');
 Route::post('/user/forget-password/change-password','HomeController@changePassword');
 Route::get('/contents','ContentController@index');
-Route::post('/contact-us','HomeController@contactUs');
+Route::get('/contents-new','ContentController@indexNew');
+Route::post('/contact-us','ContactUsController@contactUs');
+Route::post('/show-article','ContentController@showArticle');
+Route::get('/media','MediaController@index');
+Route::post('/parent-complete-register','ParentUsersController@completeRegister');
+Route::post('/other-complete-register','OthersController@create');
+Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
 
-
-
-
+Route::post('check-otp', \CheckOtp::class);

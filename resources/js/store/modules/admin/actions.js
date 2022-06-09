@@ -180,8 +180,71 @@ export default {
 
     },
     async storeCourseInfo(context, payload) {
+
         console.log('context', context);
         const resp = await callApi('POST', '/api/admin/storeCourseInfo', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to update profile data");
+            throw error;
+        }
+        return resp
+
+    },
+    async createMedia(context, payload) {
+        const resp = await callApi('POST', '/api/admin/create-media', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to update profile data");
+            throw error;
+        }
+        return resp
+
+    },
+    async updateMediaCover(context, payload) {
+        const resp = await callApi('POST', '/api/admin/edit-media', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to update cover data");
+            throw error;
+        }
+        return resp
+
+    },
+    async editContent(context, payload) {
+        console.log('in');
+        const resp = await callApi('POST', '/api/admin/content/edit', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to update profile data");
+            throw error;
+        }
+        return resp
+
+    },
+    // create new article
+    async createNewArticle(context, payload) {
+        console.log('in');
+        const resp = await callApi('POST', '/api/admin/content/create', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to create new content");
+            throw error;
+        }
+        return resp
+
+    },
+
+    // create update certificate
+    async createUpdateCertificate(context, payload) {
+        console.log('in');
+        const resp = await callApi('POST', '/api/admin/certificate', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to create new content");
+            throw error;
+        }
+        return resp
+
+    },
+    ////
+    async deleteCourse(context, payload) {
+        console.log('context', context);
+        const resp = await callApi('POST', '/api/admin/delete-course', payload)
         if (resp.status != 200) {
             const error = new Error("fail to update profile data");
             throw error;
@@ -269,6 +332,16 @@ export default {
     },
     async deleteCallPackge(context, payload) {
         const resp = await callApi('POST', '/api/admin/delete-call-package/' + payload)
+
+        if (resp.status != 200) {
+            const error = new Error("fail to create profile data");
+            throw error;
+        }
+        return resp.data
+
+    },
+    async deleteMediaCover(context, payload) {
+        const resp = await callApi('POST', '/api/admin/media-delete/' + payload)
 
         if (resp.status != 200) {
             const error = new Error("fail to create profile data");

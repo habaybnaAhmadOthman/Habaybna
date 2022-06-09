@@ -14,10 +14,11 @@ class PaymentCoures {
 
     public function execute(array $data)
     {
+
         try {
             $back_url = url('/api/payment/course');
                 //Step 1: Generate Secure Hash
-            $SECRET_KEY = "NGIyNTQzOTc2ZTkxZGFhZDFlMjhjMTNk"; // Use Yours, Please Store
+            $SECRET_KEY = config('appconfig.stssecret'); // Use Yours, Please Store
                         // Your Secret Key in safe Place(e.g. database)
                 // put the parameters in a array to have the parameters to have them sorted
                         //alphabetically via ksort.
@@ -29,11 +30,11 @@ class PaymentCoures {
               $initOrder = $this->createInitOrder($data, $transactionId);
                 $parameters = [];
                 // fill required parameters
-                $parameters["Amount"] =$initOrder->amount * 1000 ;
+                $parameters["Amount"] =$initOrder->amount * 100 ;
                 $parameters["Channel"] = "0";
-                $parameters["CurrencyISOCode"] = "400";
+                $parameters["CurrencyISOCode"] = "840";
                 $parameters["Language"] = "en";
-                $parameters["MerchantID"] = "2000000103";
+                $parameters["MerchantID"] = config('appconfig.stsmerchantid');
                 $parameters["MessageID"] = "1";
                 $parameters['PaymentDescription']='coursepayment';
                 $parameters["Quantity"] = "1";
@@ -50,7 +51,7 @@ class PaymentCoures {
                 $orderedString .= $param;
                 }
                 $secureHash = hash('sha256', $orderedString, false);
-                $parameters["RedirectURL"] = "https://srstaging.stspayone.com/SmartRoutePaymentWeb/SRPayMsgHandler";
+                $parameters["RedirectURL"] = config('appconfig.stsredirecturl');
                 $parameters["secureHash"] = $secureHash;
                  session(['SmartRouteParams' => $parameters]);
                  $data = [session()->all()];
@@ -79,10 +80,20 @@ class PaymentCoures {
             $initData->transactionID = $tranID ;
             $initData->save();
                 // check hasPromoCode
+
+            if($course->discount !== ""){
+                $disscountAmount = $course->price * $course->discount/100 ;
+                $initData->discount_amount = $disscountAmount;
+                $initData->amount = $course->price - $disscountAmount ;
+
+                $initData->save();
+
+            }
             if(array_key_exists('id',$data['hasPromoCode']) && isset($data['hasPromoCode']['id']) ){
                 $promoCode = PromoCode::findorfail($data['hasPromoCode']['id']);
-                $disscountAmount = $course->price * $promoCode->discount_percentage/100 ;
-                $newPrice = $course->price - $disscountAmount ;
+                // $disscountAmount = $course->price * $promoCode->discount_percentage/100 ;
+                $disscountAmount = $initData->amount * $promoCode->discount_percentage/100 ;
+                $newPrice = $initData->amount - $disscountAmount ;
                 $initData->coupon_id = $promoCode->id;
                 $initData->discount_amount = $disscountAmount;
                 $initData->new_price = $newPrice;
@@ -90,17 +101,11 @@ class PaymentCoures {
 
                 $initData->save();
             }
-            elseif($course->discount !== ""){
-                $disscountAmount = $course->price * $course->discount/100 ;
-                $initData->discount_amount = $disscountAmount;
+            // else {
+            //     $initData->amount = $course->price;
 
-                $initData->amount = $course->price - $disscountAmount ;
-            }
-            else {
-                $initData->amount = $course->price;
-
-                $initData->save();
-            }
+            //     $initData->save();
+            // }
             return $initData;
     }
 
@@ -110,7 +115,6 @@ class PaymentCoures {
             $order = Coursespurchaseorders::where('transactionID',$data['Response_TransactionID'] )->first();
             $user = User::findorfail($order->user_id);
             Auth::login($user);
-
         } catch (\Throwable $th) {
                 throw $th;
             }

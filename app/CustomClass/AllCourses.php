@@ -16,8 +16,8 @@ class AllCourses {
         try {
             $allCourses = Courses::where('is_publish',1)->get();
 
+            $data = [] ;
             if(count($allCourses) > 0 ){
-                $data = [] ;
                 foreach ($allCourses as $one) {
                     if($one->videos && count($one->videos) > 0 ){
                         $data [] =
@@ -33,6 +33,7 @@ class AllCourses {
                             'cover_photo'=>$one->cover_photo,
                             'is_free'=>$one->is_free,
                             'price'=>$one->price,
+                            'certificate_logos'=>$one->certificateLogos,
                             'promo_video'=>$one->promo_video,
                             'discount'=>[
                             'has_discount'=>$one->discount > 0 ? true : false,
@@ -41,13 +42,17 @@ class AllCourses {
                             ],
                             'categories'=>$one->category_name,
                             'course_progress' => Auth::check() ? $this->getCourseProgress($one) : [],
-                            'is_favourite'=> Auth::check() && $one->favouriteUsers->count() > 0  ? true : false ,
+                            'is_favourite'=> Auth::check() ? $one->is_user_like_course : false ,
+                            // 'is_favourite'=> Auth::check() && $one->favouriteCourse-> == Auth::id()  ? true : false ,
+
                             'completed_course'=> Auth::check() && $this->checkExamIsPassed($one) ? true : false ,
                         ];
                     }
                 }
+                return $data;
             }
             return $data;
+
 
         } catch (\Throwable $th) {
             throw $th;

@@ -102,5 +102,15 @@ class User extends Authenticatable
 
     }
 
+    public function articles()
+    {
+        return $this->hasMany(UsersFavouriteArticles::class,'user_id');
+    }
+
+    public function specialArticles()
+    {
+        return $this->hasMany(NewContent::class,'id');
+    }
+
 
 }

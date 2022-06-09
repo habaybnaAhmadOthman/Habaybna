@@ -81,8 +81,8 @@ class JoinFreeCourse {
         // $order->save();
 
 
-        if(isset($order->coupon_id) && $order->coupon_id !==""){
-            $coupon = PromoCode::findorfail($order->coupon_id);
+        if(isset($data->coupon_id) && $data->coupon_id !==""){
+            $coupon = PromoCode::findorfail($data->coupon_id);
             $coupon->increment('usage_count');
             $coupon->save();
         }

@@ -16,7 +16,7 @@
             <ContactUS></ContactUS>
         </div>
         <div class="mt-50">
-            <Partners></Partners>
+            <!-- <Partners></Partners> -->
         </div>
         <TheFooter></TheFooter>
     </div>
@@ -33,6 +33,9 @@ import HabaybnaMedia from '../views/custom/HabaybnaMedia.vue'
 import ContactUS from '../views/custom/ContactUS.vue'
 import Partners from '../views/custom/Partners.vue'
 export default {
-    components: { LandingSection,IconsSection, Articles,CoursesSection,TheHeader,Partners ,HabaybnaMedia,ContactUS,TheFooter}
+    components: { LandingSection,IconsSection, Articles,CoursesSection,TheHeader,Partners ,HabaybnaMedia,ContactUS,TheFooter},
+    mounted(){
+        
+    }
 };
 </script>

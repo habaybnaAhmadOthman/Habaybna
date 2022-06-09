@@ -6,7 +6,7 @@
                     <router-link to="/" class="logo d-flex">
                         <img src="/images/siteImgs/header/logo.png" width="120" />
                     </router-link>
-                    <a @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/home-icon.svg" /></a>
+                    <a v-if="$route.meta.back == true" @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/back-btn.svg" width="30" /></a>
                 </div>
             </div>
             <div class="d-flex align-center w-100 header-right">
@@ -36,16 +36,6 @@
                             class="black-2 nowrap p-side-10 h-100 flex-all bold"
                             to="/library"
                             >مكتبة المعلومات</router-link
-                        >
-                        <router-link
-                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
-                            to="/a"
-                            >تواصلوا معنا</router-link
-                        >
-                        <router-link
-                            class="black-2 nowrap p-side-10 h-100 flex-all bold"
-                            to="/s"
-                            >مكالمات</router-link
                         >
                         <!-- <div class="dropdown relative h-100 flex-all">
                             <router-link
@@ -79,44 +69,20 @@
                         
                     </menu>
                 </div>
-                <!-- mobile buttons -->
-                <template>
-                    <router-link to="/" class="home-mo mo center mobile-link">
-                        <img src="/images/home-icon.svg" >
-                        <p class="font-10 mobile-icon-color">الرئيسية</p>
-                    </router-link>
-                    <router-link to="/profile" class="profile-mo mo center mobile-link">
-                        <img src="/images/profile-avatar-mo.svg" >
-                        <p class="font-10 mobile-icon-color">حسابي</p>
-                    </router-link>
-                    <div to="/profile" class="profile-mo mo center mobile-link">
-                        <img src="/images/menu-icon-mobile.svg" @click="toggleMobileMenu">
-                        <p class="font-10 mobile-icon-color">المزيد</p>
-                    </div>
 
-                </template>
             </div>
-            <LeftSide :isMobileMenuOpened="isMobileMenuOpened" :toggleMobileMenu="toggleMobileMenu" @toggleMobileMenu="toggleMobileMenu" :isLoggedIn="isLoggedIn"></LeftSide>
+            <FixedHeadWithLeftSide />
         </div>
     </header>
 </template>
 
 <script>
-import LeftSide from "./LeftSide.vue";
+import FixedHeadWithLeftSide from "./FixedHead.vue";
 export default {
     components: {
-        LeftSide
+        FixedHeadWithLeftSide
     },
-    data(){
-        return {
-            isMobileMenuOpened: false,
-        }
-    },
-    computed: {
-        isLoggedIn() {
-            return this.$store.getters["user/isLoggedIn"];
-        }
-    },
+    
     // created() {
     //     window.addEventListener("scroll", this.handleScroll);
     // },
@@ -131,10 +97,6 @@ export default {
         // goBack(){
         //     this.$router.back()
         // },
-        toggleMobileMenu(){
-            this.isMobileMenuOpened = !this.isMobileMenuOpened
-        },
-        
     }
 };
 </script>
@@ -199,12 +161,11 @@ a {
 .main-menu .router-link-exact-active {
     color: #fff!important;
 }
-.header-right {
-    height: 100%;
-}
+
 .mobile-icon-color{
     color: #6E6D6D;
 }
+
 @media (max-width: 767px) {
     .logo img {
         width:50px;
@@ -217,21 +178,10 @@ a {
         position: relative;
     }
     .header-right {
-        justify-content: space-between;
+        display: none;
     }
     .mobile-link p {
         margin-top: -7px;
-    }
-    .header-right {
-        position: fixed;
-        bottom: 0;
-        top: auto;
-        padding-left: 12px;
-        padding-right: 12px;
-        background: #F4F4F4;
-        box-shadow: 2px -1px 8px 0px rgb(0 0 0 / 30%);
-        right: 0;
-        height: 48px;
     }
 }
 </style>

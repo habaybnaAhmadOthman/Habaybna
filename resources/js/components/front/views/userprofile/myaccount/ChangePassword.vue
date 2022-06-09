@@ -14,7 +14,7 @@
                     v-model="oldPassword.val"
                     @blur="checkValidity"
                 />
-                <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+                <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
             <div
                 class="form-group relative pass-group mb-15"
@@ -42,7 +42,7 @@
                         >يجب أن لا تقل كلمة السر عن ٦ خانات</small
                     >
                 </div>
-                <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+                <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
             </div>
             <div
                 v-if="from == 'forget'"
@@ -57,7 +57,7 @@
                     v-model="rePassword.val"
                     @blur="checkValidity"
                 />
-                <p class="main-color mt-5 font-12">كلمة السر غير متطابقة</p>
+                <p class="red mt-5 font-12">كلمة السر غير متطابقة</p>
             </div>
         </template>
         <template #actions>

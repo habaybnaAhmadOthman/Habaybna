@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-vue2": "^1.0.5",
+        "@gtm-support/vue2-gtm": "^1.2.1",
         "@vimeo/player": "^2.16.4",
         "ckeditor5-custom-build": "file:mainckeditor",
         "firebase": "^9.4.1",
@@ -44,6 +45,7 @@
         "vue-phone-number-input": "^1.1.12",
         "vue-router": "^3.5.2",
         "vue-social-sharing": "^3.0.9",
+        "vue-vimeo-player": "^0.2.2",
         "vuex": "^3.6.2",
         "vuex-persistedstate": "^4.1.0",
         "webpack": "^4.43.0",

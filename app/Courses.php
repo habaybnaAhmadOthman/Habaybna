@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+
 
 class Courses extends Model
 {
@@ -52,6 +54,7 @@ class Courses extends Model
                 $courseProviders[] = [
                     'user_id'=>$one->specialist->user_id,
                     'firstName'=>$one->specialist->firstName,
+                    'lastName'=>$one->specialist->lastName,
                     'avatar'=>$one->specialist->avatar,
                     'specialization'=>$one->specialist->specialization,
                     'bio'=>$one->specialist->disorders_work_with,
@@ -110,5 +113,30 @@ class Courses extends Model
         return $this->belongsToMany('App\User','users_favourite_courses','course_id')->withPivot('course_id','user_id');
 
 
+    }
+    public function favouriteCourse()
+    {
+        return $this->hasMany(UsersFavouriteCourses::class,'course_id');
+
+    }
+
+    public function getIsUserLikeCourseAttribute()
+    {
+        if($this->favouriteCourse->count() > 0)
+            {
+                $isLiked = false ;
+                foreach ($this->favouriteCourse as $key ) {
+                    if($key->user_id == Auth::id()){
+
+                        $isLiked = true ;
+                    }
+                }
+                return $isLiked ;
+            }
+    }
+
+    public function certificateLogos()
+    {
+        return $this->hasMany(CertificateLogos::class,'course_id');
     }
 }

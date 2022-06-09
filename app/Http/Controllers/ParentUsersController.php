@@ -40,7 +40,6 @@ class ParentUsersController extends Controller
     public function create(Request $request)
     {
        $request->validate([
-        'phone' => ['required', 'unique:users'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         'firstName' => ['required', 'string'],
         'lastName' => ['required', 'string'],
@@ -48,9 +47,11 @@ class ParentUsersController extends Controller
         'relative' => ['required', 'string'],
         'password' => ['required', 'string','min:8'],
        ]);
-
+       $request->session()->get('user')->validate([
+        'phone' => ['required', 'unique:users'],
+       ]);
        $user = new User();
-        $user->phone = $request->phone ;
+        $user->phone = $request->session()->get('user.phone');
         $user->email = $request->email ;
         $user->password = Hash::make($request->password);
         $user->otp = '123432' ;
@@ -59,6 +60,7 @@ class ParentUsersController extends Controller
 
         $user->save();
 
+       Auth::login($user);
         if($user){
             $parent = new ParentUsers();
 
@@ -76,8 +78,6 @@ class ParentUsersController extends Controller
                 $user->user_data,
                 200
             );
-
-
         }
     }
 
@@ -241,6 +241,27 @@ class ParentUsersController extends Controller
 
     public function completeRegister(Request $request)
     {
+        $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'firstName' => ['required', 'string'],
+            'lastName' => ['required', 'string'],
+            'gender' => ['required', 'string'],
+            'relative' => ['required', 'string'],
+            'password' => ['required', 'string','min:8'],
+           ]);
+
+           $user = new User();
+            $user->phone = $request->session()->get('user.phone');
+            $user->email = $request->email ;
+            $user->password = Hash::make($request->password);
+            $user->otp = '123432' ;
+            $user->role = 'parent' ;
+            $user->is_verify = 1 ;
+
+            $user->save();
+
+           Auth::login($user);
+
         $parent = new ParentUsers() ;
         if ($request->hasFile('image')) {
             $img = $request->file('image');
@@ -256,9 +277,7 @@ class ParentUsersController extends Controller
         // $parent->avatar = $path ? $path  : '';
 
         $parent->save();
-        Auth::user()->email = $request->email;
-        Auth::user()->password = Hash::make($request->password) ;
-        Auth::user()->save();
+
         $interest = Interest::all();
         return response()->json([
             'msg'=>'success',
@@ -313,7 +332,7 @@ class ParentUsersController extends Controller
 
             }
             $parent->dob = $request->dob ;
-            $parent->lastName = $request->gender ;
+            $parent->lastName = $request->lastName ;
             $parent->relative = $request->relative ;
             $parent->speci_childs_count = $request->noChildsSpecialNeeds ;
             $parent->why_to_join = $request->whyToJoin ;

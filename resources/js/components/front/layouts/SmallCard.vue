@@ -1,22 +1,56 @@
 <template>
     <div class="small-card w-100-p relative">
-        <div class="fav-box relative pointer shadow-2"></div>
-        <router-link class="radius-10 shadow d-flex p-10 bg-white box" :to="`/content/${item.title.split(' ').join('-')}`">
+        <!-- <div class="fav-box relative pointer shadow-2" :class="{'active':item.is_favourite}" @click="addToFavourite($event,item.nid)"></div> -->
+        <router-link
+            class="radius-10 shadow d-flex p-10 bg-white box"
+            :to="`/library/${item.title.split(' ').join('-')}`"
+        >
             <div class="body ml-15 d-flex flex-column space-between flex-1">
-                <p class="black-2 font-20 font-15-p desc three-line">{{item.title}}</p>
-                <span class="date font-14 white radius-20 gray">1996/11/4</span>
+                <p class="black-2 font-20 font-15-p desc three-line">
+                    {{ item.title }}
+                </p>
+                <span
+                    class="date font-14 white radius-20 gray"
+                    v-if="item.date"
+                    >{{ item.date }}</span
+                >
             </div>
             <figure class="d-flex relative">
                 <!-- favourite -->
-                <img class="radius-10 object-fit main-img" :src="item.image" width="100" height="100">
+                <img
+                    class="radius-10 object-fit main-img"
+                    :src="item.image"
+                    width="100"
+                    height="100"
+                />
             </figure>
-       </router-link>
+        </router-link>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['item']
+    props: ["item","can-remove"],
+    computed: {
+        isLoggedIn() {
+            return this.$store.getters["user/isLoggedIn"];
+        },
+    },
+    methods: {
+        async addToFavourite(event,id) {
+            if (this.isLoggedIn) {
+                event.target.classList.toggle("active");
+                await this.$store.dispatch("content/addToFavourite", {id});
+                if (this.$route.name == 'myFavouriteContents') {
+                    if (!event.target.classList.contains('active'))
+                        event.target.parentNode.remove();
+                }
+
+            } else {
+                this.$store.commit("loginModal", true);
+            }
+        },
+    },
 };
 </script>
 
@@ -35,7 +69,7 @@ export default {
     height: 27px;
 } */
 .fav-box {
-        position: absolute;
+    position: absolute;
     background-color: rgb(255 255 255);
     border-radius: 50%;
     left: 124px;
@@ -46,7 +80,7 @@ export default {
     background-repeat: no-repeat;
     background-size: 22px 21px;
     background-position: center;
-    transition: .3s;
+    transition: 0.3s;
     z-index: 1;
 }
 .fav-box.active {

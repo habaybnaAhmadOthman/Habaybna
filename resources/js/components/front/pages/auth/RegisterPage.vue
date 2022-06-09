@@ -22,9 +22,9 @@
         أرسل رمز التحقق
         <!-- <img src="/images/siteImgs/header/logo.png" class="mr-10" /> -->
       </button>
-      <h3 class="mt-50 center light font-15 flex-all p-side-50">
-        <span class="main-color">هل أنت عضو في عائلة حبايبنا؟</span>
-        <router-link class="blue d-flex align-center" to="/signin"
+      <h3 v-if="!showCodeForm" class="mt-50 center light font-15 flex-all p-side-50 flex-wrap">
+        <span class="main-color font-15-p">هل أنت عضو في عائلة حبايبنا؟</span>
+        <router-link class="blue d-flex align-center font-15-p" to="/signin"
           >تسجيل دخول</router-link
         >
       </h3>
@@ -75,33 +75,6 @@ export default {
       this.isLoading = true;
       this.$router.replace(`/${this.type}-complete-registration`);
 
-      // if (!obj.phoneNumber) {
-      //     obj.phoneNumber = this.phoneNumber;
-      //     await window.recaptchaVerifier
-      //         .render()
-      //         .then(function(widgetId) {
-      //             grecaptcha.reset(widgetId);
-      // });
-      //             // } else {
-      //                 this.phoneNumber = obj.phoneNumber;
-      //                 this.type = obj.type;
-      //             // }
-      //  )            await signInWithPhoneNumber(
-      //                 auth,
-      //                 obj.phoneNumber,
-      //                 window.recaptchaVerifier
-
-      //                 .then(confirmationResult => {
-      //                     // SMS sent.
-      //                     window.confirmationResult = confirmationResult;
-      //                     this.showCodeForm = true;
-      //                 })
-      //                 .catch(error => {
-      //                     console.log(error);
-      //                     // Error; SMS not sent
-      //                     this.showPopupMessage("حدث خطأ ما");
-      //                 });
-
       this.isLoading = false;
     },
     // store phone number and type and otp(optional)
@@ -111,11 +84,7 @@ export default {
         // call api
         await this.$store.dispatch("user/registerFirstStep", {
           type: obj.type,
-          // code: otpCode,
           phone: obj.phoneNumber,
-          // token: document
-          //     .querySelector('meta[name="csrf-token"]')
-          //     .getAttribute("content")
         });
         this.phoneNumber = obj.phoneNumber;
         this.type = obj.type;

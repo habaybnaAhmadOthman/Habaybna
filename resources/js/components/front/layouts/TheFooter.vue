@@ -21,38 +21,44 @@
                     </div>
                     <div class="hab-dectionary footer-col">
                         <ul>
-                            <li>
+                            <!-- <li>
                                 <router-link to="/">دليل حبايبنا</router-link>
+                            </li> -->
+                            <li>
+                                <router-link to="/terms-and-conditions">السياسات والأحكام</router-link>
                             </li>
                             <li>
-                                <router-link to="/">السياسات والأحكام</router-link>
+                                <router-link to="/media-coverage">حبايبنا في الاعلام</router-link>
                             </li>
                             <li>
-                                <router-link to="/">حبايبنا في الاعلام</router-link>
+                                <router-link to="/about-habaybna">عن حبايبنا.نت</router-link>
                             </li>
-                            <li>
-                                <router-link to="/">عن حبايبنا.نت</router-link>
-                            </li>
-                            <li>
-                                <router-link to="/">تواصلوا معنا</router-link>
+                            <li class="d-flex-p space-between">
+                                <router-link to="/" @click.native="goToContactForm">تواصلوا معنا</router-link>
+                                <div class="mo">
+                                    <div class="d-flex align-center">
+                                        <img src="/images/mastercard.svg">
+                                        <img src="/images/visa-logo.svg" class="mr-10">
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
                     <div class="hab-last footer-col">
                         <ul>
                             <li>
-                                <router-link to="/">About Habaybna.net</router-link>
+                                <router-link to="/about-habaybna-en">About Habaybna.net</router-link>
                             </li>
                             <li>
                                 <router-link to="/">habaybna.net in the media</router-link>
                             </li>
                             <li>
-                                <router-link to="/">TERMS & CONDITIONS</router-link>
+                                <router-link to="/terms-and-conditions-en">TERMS & CONDITIONS</router-link>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="left-side-info w-30 pr-30 w-100-p">
+                <div class="left-side-info w-30 pr-30 w-100-p do">
                     <!-- <h6 class="black bold font-20 mb-20">المشاركة معنا</h6>
                     <p class="black font-16 mb-10">هل ترغب بالمشاركة في منصة حبايبنا؟</p>
                     <p class="font-15"> هل ترغب بأن تساهم بتجربتك أو خبرتك في مجال الإعاقات الذهنية والتطورية؟ هل تود أن تترك أثر مستدام قد يغير حياة طفل ذو إعاقة ذهنية  وحياة عائلة بأكملها وأن تكون جزء جميل من حبايبنا.نت؟</p>
@@ -65,28 +71,28 @@
                     </div>
                 </div>
             </div>
-            <div class="second-row d-flex space-between pt-15 flex-wrap-p p-side-12-p">
-                <div class="langs d-flex align-center">
+            <div class="second-row d-flex space-between pt-15 flex-wrap-p justify-center-p p-side-12-p">
+                <!-- <div class="langs d-flex align-center">
                     <img src="/images/language-icon.svg">
                     <select class="pointer">
                         <option value="ar" selected>Arabic</option>
                         <option value="en">English</option>
                     </select>
-                </div>
+                </div> -->
                 <p class="flex-all w-100-p all-rights mt-10-p">كافة الحقوق محفوظة {{new Date().getFullYear()}} حبايبنا.نت</p>
                 <div class="socail-links d-flex align-center">
-                   <router-link to="/" class="mr-20">
+                   <a @click="goToLink(`https://www.youtube.com/channel/UCldw52FzyIcYgOXASVlFxPA`)" class="mr-20">
                         <img class="youtube" src="/images/youtube-icon-color.svg" width="43" height="30" alt="">
-                   </router-link>
-                   <router-link to="/" class="mr-20">
+                   </a>
+                   <a @click="goToLink(`https://twitter.com/habaybnadotnet`)" class="mr-20">
                         <img class="twitter" src="/images/twitter-icon-color.svg" width="37" height="37" alt="">
-                   </router-link>
-                   <router-link to="/" class="mr-20">
+                   </a>
+                   <a @click="goToLink(`https://www.instagram.com/habaybnadotnet/`)" class="mr-20">
                         <img class="instagram" src="/images/instagram-icon-color.svg" width="37" height="37" alt="">
-                   </router-link>
-                   <router-link to="/" class="mr-20">
+                   </a>
+                   <a @click="goToLink(`https://www.facebook.com/habaybnadotnet`)" class="mr-20">
                         <img class="facebook" src="/images/facebook-icon-color.svg" width="18" height="36" alt="">
-                   </router-link>
+                   </a>
                 </div>
             </div>
         </div>
@@ -95,7 +101,14 @@
 
 <script>
     export default {
-        
+        methods: {
+            goToLink(url) {
+                window.open(url,'_blank')
+            },
+            goToContactForm() {
+                window.scrollTo(0, document.querySelector('.contact-us-section').offsetTop - 50)
+            }
+        }
     }
 </script>
 

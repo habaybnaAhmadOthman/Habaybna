@@ -17,7 +17,7 @@
                     @blur="checkValidity"
                     v-model.trim="fristName.val"
                 />
-                <p class="main-color mt-5 font-12">
+                <p class="red mt-5 font-12">
                     هذا الحقل مطلوب
                 </p>
             </div>
@@ -33,7 +33,7 @@
                     @blur="checkValidity"
                     v-model.trim="lastName.val"
                 />
-                <p class="main-color mt-5 font-12">
+                <p class="red mt-5 font-12">
                     هذا الحقل مطلوب
                 </p>
             </div>
@@ -66,12 +66,13 @@
                     >يجب أن لا تقل كلمة السر عن ٦ خانات</small
                 >
             </div>
-            <p class="main-color mt-5 font-12">
+            <p class="red mt-5 font-12">
                 هذا الحقل مطلوب
             </p>
         </div>
         <!-- email -->
         <div class="form-group mb-15" :class="{ invalid: !email.isValid }">
+            <small>البريد الالكتروني</small>
             <input
                 type="email"
                 autocomplete="off"
@@ -81,7 +82,7 @@
                 @blur="checkValidity"
                 v-model.trim="email.val"
             />
-            <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+            <p class="red mt-5 font-12">يرجى إدخال بريد إلكتروني صحيح</p>
         </div>
 
         <div class="d-flex space-between">
@@ -102,7 +103,7 @@
                         <option value="f">أنثى</option>
                     </select>
                 </div>
-                <p class="main-color mt-5 font-12">
+                <p class="red mt-5 font-12">
                     هذا الحقل مطلوب
                 </p>
             </div>
@@ -126,7 +127,7 @@
                         <option value="تحليل السلوك">تحليل السلوك</option>
                     </select>
                 </div>
-                <p class="main-color mt-5 font-12">
+                <p class="red mt-5 font-12">
                     هذا الحقل مطلوب
                 </p>
             </div>
@@ -143,7 +144,7 @@
                 @blur="checkValidity"
                 v-model.trim="workPlace.val"
             />
-            <p class="main-color mt-5 font-12">هذا الحقل مطلوب</p>
+            <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
         </div>
 
         <button class="btn-2 mt-30 flex-all m-side-auto font-20">

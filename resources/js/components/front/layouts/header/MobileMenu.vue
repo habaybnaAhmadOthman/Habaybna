@@ -44,7 +44,7 @@
                 <router-link
                     class="d-block p-side-15 pt-10 pb-10 trans"
                     to="/signup"
-                    >تسجيل</router-link
+                    >مستخدم جديد</router-link
                 >
             </li>
             <li>
@@ -58,7 +58,7 @@
             <li v-else>
                 <button
                     @click="logout"
-                    class="d-block p-side-15 pt-10 pb-10 trans bg-none w-100 border-0"
+                    class="d-block p-side-15 pt-10 pb-10 trans bg-none w-100 border-0 logout-btn"
                 >
                     تسجيل خروج
                 </button>
@@ -117,6 +117,7 @@ export default {
         max-height: 100%;
         overflow-y: auto;
         display:block;
+        z-index: 11;
     }
     .close-nav-menu {
         position: absolute;
@@ -125,6 +126,11 @@ export default {
     }
     .user-avatar {
         border: 2px solid #660066;
+    }
+    .logout-btn {
+        text-align: right;
+        color: #3FC4E0!important;
+        background: transparent!important;
     }
 }
 </style>

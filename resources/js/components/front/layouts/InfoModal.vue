@@ -1,5 +1,5 @@
 <template>
-    <portal to="info-modal">
+    <portal :to="portal">
         <aside :class="modalClass">
             <div v-if="show" class="w-100 h-100 backdrop" @click="tryClose"></div>
             <transition name="modal">
@@ -10,7 +10,7 @@
                 >
                     <div class="modal-body">
                         <img v-if="!fixed" @click="tryClose" class="close-icon-modal pointer" src="/images/close-icon-color.png" width="34" height="34" />
-                        <img class="mb-40 mb-20-p d-block m-side-auto-p status-img" :src="`/images/${statusIcon}`" width="100" height="100" />
+                        <img class="mb-40 mb-20-p d-block m-side-auto-p status-img" :class="`status-${success}`" :src="`/images/${statusIcon}`" width="100" height="100" />
                         <p class="title-line font-27 mb-20">{{title}}</p>
                         <p class="black-2 font-20-p font-27 mb-40">{{description}}</p>
                         <div class="d-flex modal-options flex-end" :class="optionsClass">
@@ -21,6 +21,7 @@
             </transition>
         </aside>
     </portal>
+    </template>
 </template>
 
 <script>
@@ -55,6 +56,11 @@ export default {
             type: String,
             required: false,
             default: ''
+        },
+        portal: {
+            type: String,
+            required: false,
+            default: 'info-modal'
         }
     },
     emits: ["close"],
@@ -151,6 +157,9 @@ dialog {
     }
     .modal-options {
         flex-direction: column;
+    }
+    .exam-page .status-img.status-false{
+        display: none;
     }
 }
 </style>

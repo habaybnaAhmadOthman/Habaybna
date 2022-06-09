@@ -14,15 +14,10 @@
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
         </div>
-        <portal-target name="destination">
-        <!--
-        This component can be located anwhere in your App
-        (i.e. right before the </body> tag, good for overlays).
-        The slot content of the above portal component will be rendered here.
-        -->
-      </portal-target>
+        
         <portal-target name="info-modal"></portal-target>
         <portal-target name="login-modal"></portal-target>
+        <portal-target name="destination"></portal-target>
     </main>
 </template>
 

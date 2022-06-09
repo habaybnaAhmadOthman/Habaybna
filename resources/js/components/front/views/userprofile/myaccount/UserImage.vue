@@ -175,12 +175,11 @@ input[type="file"] {
     top: 0;
     width: 100%;
     height: 100%;
-    background: #660066;
     border: 1px solid #660066;
     border-radius:12px;
 }
 .radio-img > input:checked ~ span {
-  background: transparent;
+  background: #dadada;
 }
 .user-img {
     border: 2px solid #660066;

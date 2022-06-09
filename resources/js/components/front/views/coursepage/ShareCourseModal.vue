@@ -1,5 +1,5 @@
 <template>
-    <alert-dialog :show="show" title="مشاركة الكورس" @close="closeModal">
+    <alert-dialog :show="show" title="مشاركة الكورس" @close="closeModal" :portal="portal">
         <template>
             <div class="share-course-modal">
                 <div class="social-list d-flex flex-wrap justify-center">
@@ -74,7 +74,7 @@
 <script>
 export default {
     emits: ["close-share-modal"],
-    props: ['show','courseName','hashTags','description','quote','twitterUser'],
+    props: ['show','courseName','hashTags','description','quote','twitterUser','portal'],
     computed: {
         courseUrl(){
             return `${window.location.href}`

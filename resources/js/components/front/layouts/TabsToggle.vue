@@ -1,6 +1,6 @@
 <template>
     <div class="tabs-toggle relative">
-        <button v-for="(tab,index) in tabs" :key="index" @click="toggletab" :tab-toggle="tab.name" :class="isFirstTab(index)">{{tab.title}}</button>
+        <button v-for="(tab,index) in tabs" :key="index" @click="toggletab" :tab-toggle="tab.name" :class="isActive(tab.active)" v-html="tab.title"></button>
     </div>
 </template>
 
@@ -9,15 +9,16 @@
         props: ['tabs'],
         methods: {
             toggletab(e) {
-                document.querySelector(".tabs-toggle .active").classList.remove("active");
+                if (document.querySelector(".tabs-toggle .active"))
+                    document.querySelector(".tabs-toggle .active").classList.remove("active");
                 e.target.classList.add("active");
                 const activeTab = e.target.getAttribute("tab-toggle");
                 
                 document.querySelector("[tab-name].active").classList.remove("active");
                 document.querySelector("[tab-name='"+ activeTab +"']").classList.add('active')
             },
-            isFirstTab(index){
-                return index === 0 ? 'active' : '' ;
+            isActive(isActive){
+                return isActive ? 'active' : '' ;
             }
         }
     }
@@ -64,6 +65,23 @@ button.active:after {
     }
     .swipe-box-p button.active:after{
         bottom: 0;
+    }
+    
+}
+@media (max-width: 767px) {
+    .font-14-mo * {
+        font-size: 14px!important;
+    }
+    button {
+        font-size: 14px;
+    }
+    button:after{
+        content: none !important;
+    }
+    button.active{
+        background: #FF9E00;
+        border-radius: 8px 8px 0 0;
+        color: #fff;
     }
 }
 </style>

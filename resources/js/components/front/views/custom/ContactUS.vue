@@ -62,12 +62,13 @@
                             </figure>
                             عمان - الأردن
                         </div>
-                        <div class="white d-flex align-center">
+                            <!-- <a class="whatsapp-float whatapp from-bottom" href="https://api.whatsapp.com/send?phone=+962779383333&amp;text=Hello ,I want a ride." data-action="share/whatsapp/share" target="_blank"> </a> -->
+                        <a class="white d-flex align-center" href="https://api.whatsapp.com/send?phone=00962799760238" data-action="share/whatsapp/share" target="_blank">
                             <figure class="mr-20">
-                                <img class="phone-icon" src="/images/phone-icon.svg" alt="" width="28" height="28">
+                                <img class="phone-icon" src="/images/whatsapp.png" alt="" width="28" height="28">
                             </figure>
                             00962 799760238
-                        </div>
+                        </a>
 
                     </div>
                 </div>
@@ -116,7 +117,17 @@
                 if (!this.formIsValid) {
                     return;
                 }
-                this.sendMail()
+                try {
+                    this.$store.dispatch('content/contactUS', {
+                        email: this.email.val,
+                        message: this.message.val,
+                        name: this.name.val,
+                    });
+                    this.$store.commit("alertDialogMsg", 'تم ارسال طلبك بنجاح');
+                } catch (e) {
+                    this.$store.commit("alertDialogMsg", e.message);
+                }
+                // this.sendMail()
             },
             sendMail(){
                 //update this with your $form selector
@@ -179,6 +190,9 @@ textarea {
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 25px;
     height: 60px;
+}
+.btn:hover {
+    color: #823175!important;
 }
 .icons figure {
     width: 28px;

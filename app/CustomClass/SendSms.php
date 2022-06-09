@@ -29,7 +29,7 @@ class SendSms {
                 CURLOPT_CUSTOMREQUEST => "POST",
                 CURLOPT_POSTFIELDS => "sender=Habaybna&mobile=".$phone."&content=".$msg,
                 CURLOPT_HTTPHEADER => array(
-                    "Authorization: Bearer c126c5074d58c51b19a60bbba779b066"
+                    "Authorization: Bearer ". config('appconfig.releanssecret')
                 ),
             ));
 

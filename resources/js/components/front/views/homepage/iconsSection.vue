@@ -1,28 +1,28 @@
 <template>
   <section class="icons-section relative">
     <div class="container h-100 z-1">
-      <div class="icons-box d-flex gap-20 swipe-box-p p-side-12-p pb-10-p no-scrollbar-p">
+      <div class="icons-box d-flex row-3-gap gap-20 justify-center-p p-side-12-p pb-10-p flex-wrap">
         <div class="icon-box">
           <figure class="mb-20 video">
             <img src="/images/online-video-icon.svg" alt="" width="101" height="81">
           </figure>
-          <p class="black font-30 mb-10 bold font-18-p">دورات تدريب رقمية</p>
-          <p class="black-2 font-24 pre-line font-15-p">تقدم تدريبات عملية يقدمها
+          <p class="black font-30 mb-10 bold font-16-p">دورات تدريب رقمية</p>
+          <p class="black-2 font-24 pre-line font-14-p">تقدم تدريبات عملية يقدمها
              أخصائيون متميزون</p>
         </div>
         <div class="icon-box">
           <figure class="mb-20 consultation">
             <img src="/images/consultation-icon.svg" alt="" width="93" height="97">
           </figure>
-          <p class="black font-30 mb-10 bold font-18-p">استشارات مع المختصين</p>
-          <p class="black-2 font-24 pre-line font-15-p">للحصول على التوجيه والإرشاد بشكل فردي عن بعد</p>
+          <p class="black font-30 mb-10 bold font-16-p">استشارات مع المختصين</p>
+          <p class="black-2 font-24 pre-line font-14-p">للحصول على التوجيه والإرشاد بشكل فردي عن بعد</p>
         </div>
         <div class="icon-box">
           <figure class="mb-20 library">
             <img src="/images/product-icon.svg" alt="" width="98" height="90">
           </figure>
-          <p class="black font-30 mb-10 bold font-18-p">مكتبة معلومات مجانية</p>
-          <p class="black-2 font-24 pre-line font-15-p">تضم تجارب وخبرات لتمكين الأطفال بمختلف قدراتهم</p>
+          <p class="black font-30 mb-10 bold font-16-p">مكتبة معلومات مجانية</p>
+          <p class="black-2 font-24 pre-line font-14-p">تضم تجارب وخبرات لتمكين الأطفال بمختلف قدراتهم</p>
         </div>
       </div>
     </div>
@@ -42,10 +42,7 @@ figure {
 }
 @media (max-width: 767px) {
     .icon-box {
-      background: #fff;
-      box-shadow: 0px 3px 6px #00000029;
-      border-radius: 10px;
-      padding: 15px 20px;
+      padding: 5px 20px;
       min-width: 210px;
       text-align: center;
     }

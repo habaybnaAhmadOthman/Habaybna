@@ -26,20 +26,23 @@ class GetCoursesOrders {
         if($data->count() > 0){
             $sortedData = [] ;
             foreach ($data as $one) {
+                if($one->user && $one->user->user_data && $one->course){
+                    $sortedData[]=[
+                        'order_id'=>$one->id,
+                        'course_title'=>$one->course->courseTitle,
+                        'course_categories'=>$one->course->category_name,
+                        'order_status'=>$one->status,
+                        'course_length'=>" دقيقة ".round($one->course->course_length/60,2),
+                        'course_price'=>$one->amount,
+                        'user_name'=>$one->user->user_data->firstName,
+                        'user_phone'=>$one->user->phone,
+                        'date'=>$one->created_at->format('Y-m-d'),
+                        'course_progress'=> $this->getCourseProgress($one),
+                        'coupon'=> $one->coupon ? $one->coupon->usage . '-' .$one->coupon->type : null,
+                      ];
+                }
                 // if($one->status){
-                $sortedData[]=[
-                  'order_id'=>$one->id,
-                  'course_title'=>$one->course->courseTitle,
-                  'course_categories'=>$one->course->category_name,
-                  'order_status'=>$one->status,
-                  'course_length'=>$one->course->course_length,
-                  'course_price'=>$one->amount,
-                  'user_name'=>$one->user->user_data->firstName,
-                  'user_phone'=>$one->user->phone,
-                  'date'=>$one->created_at->format('Y-m-d'),
-                  'course_progress'=> $this->getCourseProgress($one),
-                  'coupon'=> $one->coupon ? $one->coupon->usage . '-' .$one->coupon->type : null,
-                ];
+
             // }
             }
             return $sortedData;

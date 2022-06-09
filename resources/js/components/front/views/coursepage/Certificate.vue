@@ -6,27 +6,31 @@
             
         </div>
         <div class="certificate do m-side-auto center  mt-10 relative" id="photo">
-            <img src="/images/frame.png" alt="" width="908" height="651">
-            <div class="main-color font-30 bold name"><span>مبروك </span> <span>{{firstName}}</span></div>
-            <div class="cource-title black-2 font-26"><span class="cr p-side-15">لقد أتممت بنجاح <span>دورة التدريب الرقمية </span></span></div>
-            <div class="course-descc black-2 font-23">{{course.split('-').join(' ')}}</div>
-            <div class="date black-2 font-26"><span class="dr p-side-15"><span>{{day}}</span><span class="p-side-30 month">{{month}}</span><span>{{year}}</span></span></div>
-            <div class="hours black-2 font-23">{{ getTime(courseData.course_length) }}</div>
-            <div class="slogan black-2 font-20">بشغفكم و تعلمكم المستمر أصبحتم تملكون أحد <br>مفاتيح المستقبل لأبنائنا بمختلف قدراتهم</div>
-            <div class="logos">
-                <img src="/images/cer-logo.png" alt="" width="85" height="75">
+            <img class="frame" src="/images/frame.jpg" alt="" width="908" height="651">
+            <div class="z-1">
+                <div class="main-color font-30 bold name"><span>مبروك </span> <span>{{firstName + ' ' + lastName}}</span></div>
+                <div class="cource-title black-2 font-23"><span class="cr p-side-15">لقد أتممت بنجاح <span>دورة التدريب الرقمية </span></span></div>
+                <div class="course-descc black-2 font-26 bold">{{course.split('-').join(' ')}}</div>
+                <div class="hours black-2 font-23">{{ getTime(courseData.course_length) }}</div>
+                <div class="date black-2 font-26"><span class=" p-side-15"><span>{{day}}</span><span class="p-side-30 month">{{month}}</span><span>{{year}}</span></span></div>
+                <div class="logos">
+                    <img src="/images/cer-logo.png" alt="" width="85" height="75">
+                    <img v-for="logo in logos" :key="logo" :src="logo" width="85" height="75">
+                </div>
             </div>
         </div>
         <div class="certificate-mo mo m-side-auto center  mt-10 relative">
-            <img class="frame-mo" src="/images/frame.png" alt="" width="908" height="651">
-            <div class="main-color font-30 bold name-"><span>مبروك </span> <span>{{firstName}}</span></div>
-            <div class="cource-title- black-2 font-26"><span class="cr p-side-15">لقد أتممت بنجاح <span>دورة التدريب الرقمية </span></span></div>
-            <div class="course-descc- black-2 font-23">{{course.split('-').join(' ')}}</div>
-            <div class="date- black-2 font-26"><span class="dr p-side-15"><span>{{day}}</span><span class="p-side-30 month">{{month}}</span><span>{{year}}</span></span></div>
-            <div class="hours- black-2 font-23">{{ getTime(courseData.course_length) }}</div>
-            <div class="slogan- black-2 font-20">بشغفكم و تعلمكم المستمر أصبحتم تملكون أحد <br>مفاتيح المستقبل لأبنائنا بمختلف قدراتهم</div>
-            <div class="logos-">
-                <img src="/images/cer-logo.png" alt="" width="85" height="75">
+            <img class="frame-mo" src="/images/frame.jpg" alt="" width="908" height="651">
+            <div class="z-1">
+                <div class="main-color font-30 bold name"><span>مبروك </span> <span>{{firstName + ' ' + lastName}}</span></div>
+                <div class="cource-title black-2 font-23"><span class="cr p-side-15">لقد أتممت بنجاح <span>دورة التدريب الرقمية </span></span></div>
+                <div class="course-descc black-2 font-26 bold">{{course.split('-').join(' ')}}</div>
+                <div class="hours black-2 font-23">{{ getTime(courseData.course_length) }}</div>
+                <div class="date black-2 font-26"><span class=" p-side-15"><span>{{day}}</span><span class="p-side-30 month">{{month}}</span><span>{{year}}</span></span></div>
+                <div class="logos">
+                    <img src="/images/cer-logo.png" alt="" width="85" height="75">
+                    <img v-for="logo in logos" :key="logo" :src="logo" width="85" height="75">
+                </div>
             </div>
         </div>
     </div>
@@ -38,10 +42,12 @@ export default {
     data(){
         return {
             firstName: null,
+            lastName: null,
             day: null,
             month: null,
             year: null,
             courseData: null,
+            logos: []
         }
     },
     methods: {
@@ -74,11 +80,12 @@ export default {
                 this.isLoading(true);
                 const obj = await this.$store.getters['user/userData'];
                 this.courseData = await this.$store.dispatch('courses/getMyCourseData',this.course);
-                await this.$store.dispatch('courses/getCertificateData',this.course);
+                this.logos = this.courseData.certificate_logos.map(logo => logo.url)
                 this.firstName = obj.firstName;
+                this.lastName = obj.lastName;
                 const date = new Date().toLocaleDateString("nl",{month:"long", day:"2-digit",year: "numeric"});
                 this.day = date.split(' ')[0]
-                this.month = date.split(' ')[1]
+                this.month = new Date().toLocaleDateString("en",{month:"long"})
                 this.year = date.split(' ')[2]
             } catch (e) {
                 console.log(e)
@@ -107,78 +114,66 @@ export default {
     width: 908px;
     height: 651px;
 }
+.frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 .c-el {
     position: absolute;
     top: 0;
     left: 0;
 }
 .name {
-    position: absolute;
-    top: 140px;
-    width: 100%;
-    padding: 0 220px;
-}
-.cource-title {
-    position: absolute;
-    top: 204px;
-    right: 0;
-    text-align: center;
-    width: 100%;
-    padding: 0 110px;
-}
-.cource-title .cr, .dr{
-    border-bottom: 1px solid #363636;
-    padding-bottom: 10px;
-}
-.course-descc {
-    position: absolute;
-    top: 263px;
     width: 100%;
     padding: 0 90px;
-    max-height: 63px;
-    overflow: hidden;
+    padding-top: 140px;
 }
-.month {
-    text-transform: capitalize;
+.cource-title {
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
 }
-.month:before,.month:after {
-    content: '';
-    background: url(/images/line.png);
-    width: 13px;
-    height: 21px;
-    display: inline-block;
-    background-size: 100% 100%;
-    transform: translate(-10px, 3px);
-}
-.month:after {
-    transform: translate(10px, 3px)!important;
+
+.course-descc {
+    width: 100%;
+    padding: 30px 90px 0 90px;
 }
 .hours {
-    position: absolute;
-    top: 377px;
     width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
-.slogan {
-    position: absolute;
-    top: 420px;
-    width: 100%;
+.hours:before {
+    content: '';
+    background: #363636;
+    width: 200px;
+    height: 1px;
+    display: block;
+    background-size: 100% 100%;
+    margin-top: 5px;
 }
 .date {
-    position: absolute;
-    top: 333px;
+    margin-top: 20px;
     direction: ltr;
     text-align: center;
     width: 100%;
 }
-.dr {
-    padding-bottom: 0;
-}
+
 .logos {
     position: absolute;
     width: 100%;
     top: 499px;
-    padding: 0 240px;
-    text-align: right;
+    padding: 0 150px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 @media (max-width: 767px) {
     .frame-mo {
@@ -189,55 +184,33 @@ export default {
         left: 0;
         pointer-events: none;
     }
-    .name- {
-        padding-top: 63px;
-        font-size: 18px;
+    .certificate-mo .name {
+        padding: 0px 20px;
+        padding-top: 140px;
+        font-size: 23px;
     }
-    .cource-title- .cr{
-        padding-top: 7px;
+    .certificate-mo .cource-title {
+        font-size: 19px;
+    }
+    .certificate-mo .course-descc {
+        width: 100%;
+        padding: 0px 5px 0 5px;
+        font-size: 22px;
+    }
+    .certificate-mo .date {
+        margin-top: 0;
+    }
+    .certificate-mo .hours {
         font-size: 16px;
-            border-bottom: 1px solid #363636;
     }
-    .course-descc- {
-        font-size: 15px;
-        padding: 0 60px;
-        max-height: 40px;
-        line-height: 19px;
-        overflow: hidden;
+    .certificate-mo .logos {
+        position: initial;
+        padding: 0 10px;
     }
-    .date- {
-        padding-top: 5px;
-        font-size: 16px;
-    }
-    .date- .month {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    .date- .month:before {
-        transform: translate(10px, 3px);
-    }
-    .date- .month:after {
-        transform: translate(-10px, 3px)!important;
-    }
-    .date- .dr {
-        display: inline-flex;
-        align-items: center;
-        flex-direction: row-reverse;
-    }
-    .hours- {
-        font-size: 15px;
-    }
-    .slogan- {
-        font-size: 13px;
-        display: none;
-    }
-    .logos-  {
-        padding-right: 110px;
-        text-align: right;
-    }
-    .logos- img {
-        width: 40px;
-        height: 40px;
+    
+    .certificate-mo .logos img{
+        width: 45px;
+        height: 45px;
     }
     .big-container {
         min-height: 100vh;

@@ -1,13 +1,14 @@
 <template>
     <UserProfileContent>
         <template #page-header>
-            <h1>دوراتي</h1>
+            <h1>المقالات المفضلة</h1>
         </template>
         <template>
             <section class="profile-section pt-50 pb-50">
                 <div class="">
                     <div class="">
-                        <CoursesList @updateFavouriteCoursesList="getCourses" :with-favourite="true" :filtered-courses="courseTemp" :showMoreCard="false" ></CoursesList>
+                        <Articles :class-list="'two-card p-side-10'" :list-only="true" />
+                        <!-- <Articles :list-api="'abc'" :class-list="'two-card p-side-10'" :list-only="true" /> -->
                     </div>
                 </div>
             </section>
@@ -17,21 +18,19 @@
 
 <script>
 import UserProfileContent from "../../views/userprofile/UserProfile_Content.vue";
-import CoursesList from '../../views/userprofile/mycourses/CoursesList.vue'
+import Articles from '../../views/library/ContentSection.vue'
 export default {    
-    components: {UserProfileContent,CoursesList},
+    components: {UserProfileContent,Articles},
     data(){
         return {
-            courseTemp: []
+            
         }
     },
     created(){
-        this.getCourses();
+        
     },
     methods:{
-        async getCourses() {
-            this.courseTemp = await this.$store.dispatch('courses/getMyFavourites');
-        }
+
     }
 };
 </script>

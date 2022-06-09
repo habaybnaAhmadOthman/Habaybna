@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
+import VueGtm from '@gtm-support/vue2-gtm';
 
 Vue.use(Router);
+
 import VideoInfoComponent from "./components/VideoInfoComponent.vue";
 import EditCourseInfo from "./components/EditCourseInfo.vue";
 import AddQuestion from "./components/AddQuestion.vue";
@@ -11,6 +13,9 @@ import UploadVideos from "./components/UploadVideos.vue";
 import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
 import Calls from "./components/admin/calls/Calls.vue";
+import Media from "./components/admin/media/Index.vue";
+import ShowMedia from "./components/admin/media/Show.vue";
+import CreateMedia from "./components/admin/media/Create.vue";
 import ContactUs from "./components/admin/contactUs/ContactUs.vue";
 import Parents from "./components/admin/parent/Parents.vue";
 import CreateParent from "./components/admin/parent/Create.vue";
@@ -19,6 +24,11 @@ import CoursesOrders from "./components/admin/orders/courses/Index.vue";
 import Contents from "./components/admin/contents/Contents.vue";
 import CreateContent from "./components/admin/contents/Create.vue";
 import UpdateContent from "./components/admin/contents/Show.vue";
+
+import ContentsNew from "./components/admin/contentsNew/Contents.vue";
+import CreateContentNew from "./components/admin/contentsNew/Create.vue";
+import UpdateContentNew from "./components/admin/contentsNew/Show.vue";
+
 import CreateCall from "./components/admin/calls/Create.vue";
 import CreateSpecialist from "./components/admin/specialist/Create.vue";
 import CreateOther from "./components/admin/other/Create.vue";
@@ -54,6 +64,11 @@ import ArticlePage from "./components/front/pages/library/ArticlePage.vue";
 // specialist
 import SpecialistPage from "./components/front/pages/SpecialistPage.vue";
 import SpecialistsPage from "./components/front/pages/SpecialistsPage.vue";
+import TermsPage from "./components/front/pages/TermsPage.vue";
+import TermsEnPage from "./components/front/pages/TermsEnPage.vue";
+import AboutPage from "./components/front/pages/AboutHabaybna.vue";
+import AboutEnPage from "./components/front/pages/AboutHabaybnaEn.vue";
+import MediaCoveragePage from "./components/front/pages/MediaCoveragePage.vue";
 
 
 
@@ -71,7 +86,8 @@ import ForgetPasswordPage from "./components/front/pages/auth/ForgetPasswordPage
 import UserProfile_Template from "./components/front/views/userprofile/UserProfile_Template";
 import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfile.vue";
 import UserProfile_MyCourses from "./components/front/pages/dashboard/MyCourses.vue";
-import UserProfile_MyFavourites from "./components/front/pages/dashboard/MyFavourites.vue";
+import UserProfile_MyFavouriteCourses from "./components/front/pages/dashboard/MyFavouriteCourses.vue";
+import UserProfile_MyFavouriteContent from "./components/front/pages/dashboard/MyFavouriteContents.vue";
 
 import store from "./store/index";
 
@@ -85,6 +101,16 @@ const routes = [{
         path: "/admin/courses",
         component: Courses,
         name: "Courses"
+    },
+    {
+        path: "/admin/media",
+        component: Media,
+        name: "Media"
+    },
+    {
+        path: "/admin/media-create",
+        component: CreateMedia,
+        name: "CreateMedia"
     },
     {
         path: "/admin/parents",
@@ -110,6 +136,21 @@ const routes = [{
         path: "/admin/content/create",
         component: CreateContent,
         name: "CreateContent"
+    },
+    {
+        path: "/admin/content-new",
+        component: ContentsNew,
+        name: "ContentsNew"
+    },
+    {
+        path: "/admin/content-new/create",
+        component: CreateContentNew,
+        name: "CreateContentNew"
+    },
+    {
+        path: "/admin/content-new/:data",
+        component: UpdateContentNew,
+        name: "UpdateContentNew"
     },
     {
         path: "/admin/specialist/create",
@@ -187,6 +228,11 @@ const routes = [{
         name: "CourseCertificate"
     },
     {
+        path: "/admin/media-update/:data",
+        component: ShowMedia,
+        name: "ShowMedia"
+    },
+    {
         path: "/admin/course-edit/:data",
         component: EditCourseInfo,
         name: "EditCourseInfo"
@@ -234,13 +280,32 @@ const routes = [{
     // ************
     // front
     // ************
-    // {
-    //     path: "/api/course-payment-callback",
-    //     component: Cirtificate,
-    //     // meta: {
-    //     //     requiresAuth: true
-    //     // }
-    // },
+    // *****************
+    // about habaybna pages
+    // *****************
+    {
+        path: "/terms-and-conditions",
+        component: TermsPage
+    },
+    {
+        path: "/terms-and-conditions-en",
+        component: TermsEnPage
+    },
+    {
+        path: "/about-habaybna",
+        component: AboutPage
+    },
+    {
+        path: "/about-habaybna-en",
+        component: AboutEnPage
+    },
+    {
+        path: "/media-coverage",
+        component: MediaCoveragePage
+    },
+    // *****************
+    // end habaybna pages
+    // *****************
     {
         path: "/",
         component: HomePage,
@@ -262,28 +327,29 @@ const routes = [{
         path: "/signup",
         component: RegisterPage,
         meta: {
-            anonymous: true
+            anonymous: true,
+            back: true
         }
     },
     {
         path: "/parent-complete-registration",
         component: RegisterParentComplete,
         meta: {
-            requiresAuth: true
+            // requiresAuth: true
         }
     },
     {
         path: "/specialist-complete-registration",
         component: RegisterSpecialistComplete,
         meta: {
-            requiresAuth: true
+            // requiresAuth: true
         }
     },
     {
         path: "/other-complete-registration",
         component: RegisterOtherComplete,
         meta: {
-            requiresAuth: true
+            // requiresAuth: true
         }
     },
     {
@@ -291,7 +357,8 @@ const routes = [{
         component: LoginPage,
         meta: {
             requiresAuth: false,
-            anonymous: true
+            anonymous: true,
+            back: true
         },
         name: "login"
     },
@@ -300,7 +367,8 @@ const routes = [{
         component: ForgetPasswordPage,
         meta: {
             requiresAuth: false,
-            anonymous: true
+            anonymous: true,
+            back: true
         },
         name: "forgetPassword"
     },
@@ -311,8 +379,7 @@ const routes = [{
         meta: {
             requiresAuth: true
         },
-        children: [
-            {
+        children: [{
                 path: "my-account",
                 component: UserProfile_MyAccount,
                 meta: {
@@ -329,14 +396,22 @@ const routes = [{
                 name: 'myCourses'
             },
             {
-                path: "my-favourites",
-                component: UserProfile_MyFavourites,
+                path: "my-favourite-courses",
+                component: UserProfile_MyFavouriteCourses,
                 meta: {
                     header: false
                 },
-                name: 'myFavourites'
+                name: 'myFavouriteCourses'
             },
-    ]
+            {
+                path: "my-favourite-contents",
+                component: UserProfile_MyFavouriteContent,
+                meta: {
+                    header: false
+                },
+                name: 'myFavouriteContents'
+            },
+        ]
     },
     // *****************
     // courses
@@ -344,7 +419,8 @@ const routes = [{
         path: "/courses/:course",
         component: CoursePage,
         meta: {
-            requiresAuth: false
+            requiresAuth: false,
+            back: true
         },
         props: true
     },
@@ -360,7 +436,8 @@ const routes = [{
         path: "/courses/:course/:lesson",
         component: ClassRoomPage,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            back: true
         },
         props: true
     },
@@ -382,16 +459,6 @@ const routes = [{
         props: true
     },
     // *****************
-    // content pages
-    {
-        path: "/library",
-        component: LibraryPage
-    },
-    {
-        path: "/content/:article",
-        component: ArticlePage
-    },
-    // *****************
     // specialist page
     {
         path: "/ask-specialists",
@@ -401,7 +468,22 @@ const routes = [{
         path: "/specialist/:specialist",
         component: SpecialistPage
     },
-    { path: "*", component: ErrorPage }
+    // *****************
+    // content pages
+    {
+        path: "/library",
+        component: LibraryPage
+    },
+    {
+        path: "/library/:article",
+        component: ArticlePage,
+        props: true
+    },
+
+    {
+        path: "*",
+        component: ErrorPage
+    }
 ];
 
 const router = new Router({
@@ -440,5 +522,25 @@ router.beforeEach((to, from, next) => {
         }
     }
 });
+
+Vue.use(VueGtm, {
+    id: 'GTM-NZQPBCZ', // Your GTM single container ID, array of container ids ['GTM-xxxxxx', 'GTM-yyyyyy'] or array of objects [{id: 'GTM-xxxxxx', queryParams: { gtm_auth: 'abc123', gtm_preview: 'env-4', gtm_cookies_win: 'x'}}, {id: 'GTM-yyyyyy', queryParams: {gtm_auth: 'abc234', gtm_preview: 'env-5', gtm_cookies_win: 'x'}}], // Your GTM single container ID or array of container ids ['GTM-xxxxxx', 'GTM-yyyyyy']
+    // queryParams: {
+    //   // Add URL query string when loading gtm.js with GTM ID (required when using custom environments)
+    //   gtm_auth: 'AB7cDEf3GHIjkl-MnOP8qr',
+    //   gtm_preview: 'env-4',
+    //   gtm_cookies_win: 'x'
+    // },
+    defer: false, // Script can be set to `defer` to speed up page load at the cost of less accurate results (in case visitor leaves before script is loaded, which is unlikely but possible). Defaults to false, so the script is loaded `async` by default
+    compatibility: false, // Will add `async` and `defer` to the script tag to not block requests for old browsers that do not support `async`
+    nonce: '2726c7f26c', // Will add `nonce` to the script tag
+    enabled: true, // defaults to true. Plugin can be disabled by setting this to false for Ex: enabled: !!GDPR_Cookie (optional)
+    debug: true, // Whether or not display console logs debugs (optional)
+    loadScript: true, // Whether or not to load the GTM Script (Helpful if you are including GTM manually, but need the dataLayer functionality in your components) (optional)
+    vueRouter: router, // Pass the router instance to automatically sync with router (optional)
+    // ignoredViews: ['homepage'], // Don't trigger events for specified router names (optional)
+    trackOnNextTick: false // Whether or not call trackView in Vue.nextTick
+});
+
 
 export default router;
