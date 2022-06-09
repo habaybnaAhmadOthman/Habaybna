@@ -27,7 +27,7 @@
         },
         filters: {
             defaultAvatar: function (avatar) {
-                if (avatar == 'default.jpg') return '/images/avatars/default.svg'
+                if (avatar == 'default.jpg') return '/images/avatars/default.jpg'
                 return avatar
             }
         }

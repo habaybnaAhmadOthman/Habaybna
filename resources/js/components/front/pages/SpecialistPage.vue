@@ -6,12 +6,12 @@
                 <h2 class="black-2 center font-23 font-27 mb-20-p mb-40 p-side-12-p yellow">الملف الشخصي</h2>
                 <div class="bg-white m-side-12-p box shadow radius-10 p-side-30 p-side-12-p">
                     <div class="d-flex flex-wrap-p justify-center-p">
-                        <figure class="rounded overflow-hidden shadow d-flex ml-30 avatar-box m-0-p">
-                            <img class="object-fit" src="/images/test.jpg" width="240" height="240" alt="" >
+                        <figure class="rounded overflow-hidden shadow d-flex ml-30 avatar-box m-0-p bg-white">
+                            <img class="object-fit" src="/images/big-logo.png" width="240" height="240" alt="" >
                         </figure>
                         <div class="pt-30 w-100-p center-p">
-                            <h1 class="black-2 bold center-p font-20 font-30 mb-10">سعاد الدميري</h1>
-                            <h2 class="black-2 bold font-20 font-24 mb-10">اختصاصية علاج طبيعي</h2>
+                            <h1 class="black-2 bold center-p font-20 font-30 mb-10">فريق التحرير</h1>
+                            <h2 class="black-2 bold font-20 font-24 mb-10">منصة حبايبنا.نت</h2>
                         </div>
                     </div>
 
@@ -20,7 +20,7 @@
                     </div>
                     <div class="mt-40 pb-40">
                         <div tab-name="about" all class="active">
-                            <div class="font-24 black-2 font-18-p">اختصاصية العلاج الطبيعي في مجال الأطفال. التحقت بمعهد المهن الطبية المساعدة بعمان عام ١٩٨٦ وحصلت على الدبلوم ثم التحقت بالجامعة الأردنية كلية علوم التأهيل ودرست بكالوريس علاج طبيعي. وكان تقديرها إمتياز وأخذت خبرات عديدة من ألمانيا وأميركا والسعودية بالإضافة للأردن. تبقي نفسها مستجدة بالبحث عن المعلومة الجديدة</div>
+                            <div class="font-24 black-2 font-18-p">منصة حبايبنا.نت هي منصة رقمية عربية تهدف إلى تمكين الوالدين ومقدمي الرعاية العرب ليستطيعوا تحسين حياة الأطفال المتأخرين في التطور بمختلف مجالات الحياة. يتكون فريق التحرير من مجموعة من الأخصائيين في التربية الخاصة أو التأهيل بالإضافة إلى محرري المحتوى.</div>
                         </div>
                         <div tab-name="courses" all>
                             <SpecialistCourses :list-class="'p-0-p'" v-if="isDataReady" :filtered-courses="courses"></SpecialistCourses>

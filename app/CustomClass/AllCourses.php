@@ -33,6 +33,7 @@ class AllCourses {
                             'cover_photo'=>$one->cover_photo,
                             'is_free'=>$one->is_free,
                             'price'=>$one->price,
+                            'certificate_logos'=>$one->certificateLogos,
                             'promo_video'=>$one->promo_video,
                             'discount'=>[
                             'has_discount'=>$one->discount > 0 ? true : false,

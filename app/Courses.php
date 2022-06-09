@@ -54,6 +54,7 @@ class Courses extends Model
                 $courseProviders[] = [
                     'user_id'=>$one->specialist->user_id,
                     'firstName'=>$one->specialist->firstName,
+                    'lastName'=>$one->specialist->lastName,
                     'avatar'=>$one->specialist->avatar,
                     'specialization'=>$one->specialist->specialization,
                     'bio'=>$one->specialist->disorders_work_with,
@@ -132,5 +133,10 @@ class Courses extends Model
                 }
                 return $isLiked ;
             }
+    }
+
+    public function certificateLogos()
+    {
+        return $this->hasMany(CertificateLogos::class,'course_id');
     }
 }

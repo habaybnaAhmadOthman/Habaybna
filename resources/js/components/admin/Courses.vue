@@ -70,8 +70,8 @@
               :to="'/admin/course/preview/' + course.course_id"
               type="dashed"
               size="small"
-              ><Icon type="md-eye" /></Button
-            >
+              ><Icon type="md-eye"
+            /></Button>
             <Button
               :to="'/admin/course-edit/' + course.course_id"
               type="dashed"
@@ -89,6 +89,12 @@
               type="dashed"
               size="small"
               >الاختبار</Button
+            >
+            <Button
+              :to="'/admin/course-certificate/' + course.course_id"
+              type="dashed"
+              size="small"
+              >الشهادة</Button
             ><Icon
               size="20"
               color="red"
@@ -155,14 +161,10 @@ export default {
     del(index) {
       console.log(this.idDeleteUser);
       this.modal_loading = true;
-           let obj = {
-           id : this.idDeleteUser
-
-            }
-      const resp = this.$store.dispatch(
-        "admin/deleteCourse",
-            obj
-      );
+      let obj = {
+        id: this.idDeleteUser,
+      };
+      const resp = this.$store.dispatch("admin/deleteCourse", obj);
       setTimeout(() => {
         this.modal_loading = false;
         this.dialogDelete = false;

@@ -21,4 +21,14 @@ class Content extends Model
     //    dd($this->FavArticles->where('user_id',Auth::id())->first())
     //    return $this->FavArticles->where('user_id',Auth::id())->first() ? ['is_fav'=>true] :['is_fav'=>false];
    }
+
+   public function author()
+   {
+       return $this->hasOne(User::class,'author_id');
+   }
+
+   public function intrests()
+   {
+       return $this->belongsToMany(CourseCategory::class,'articles_tags');
+   }
 }
