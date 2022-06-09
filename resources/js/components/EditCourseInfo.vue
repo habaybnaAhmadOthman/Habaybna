@@ -86,16 +86,16 @@
               </div>
               <div class="form-group">
                 <strong>الفيديو الترويجي للدورة</strong>
-                <video ref="videoPlayer" controls  seeking="true">
+                <!-- <video ref="videoPlayer" controls  seeking="true">
                   <source :src="form.promoVideo ? form.promoVideo : ''" type="video/mp4" />
                   <source src="movie.ogg" type="video/ogg" />
                   Your browser does not support the video tag.
-                </video>
+                </video> -->
                 <input
                   name="promoVideo"
-                  type="file"
+                  type="text"
                   class="form-control"
-                  @change="uploadPromoVideo"
+                  v-model="form.promoVideo"
                 />
               </div>
               <div class="form-group custom">
@@ -247,9 +247,9 @@ export default {
     uploadCoverImage(event) {
       this.form.coverImage = event.target.files[0];
     },
-    uploadPromoVideo(event) {
-      this.form.promoVideo = event.target.files[0];
-    },
+    // uploadPromoVideo(event) {
+    //   this.form.promoVideo = event.target.files[0];
+    // },
     formSubmit(e) {
       this.loading = true;
       let self = this.$router;
@@ -317,7 +317,7 @@ export default {
             this.form.promoVideo = resp.data.course.promo_video;
             this.form.discount = resp.data.course.discount;
 
-            this.$refs.videoPlayer.load()
+            // this.$refs.videoPlayer.load()
           }
         });
       }

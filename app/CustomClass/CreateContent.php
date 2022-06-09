@@ -13,6 +13,7 @@ class CreateContent {
 
     public function execute(array $data)
     {
+
         try {
 
             $content = new NewContent();
@@ -33,7 +34,6 @@ class CreateContent {
                         'article_id'=>$content->id,
                     ]);
                 }
-
                 if (gettype($data['image']) == 'object') {
                     // Storage::delete($media->url);
                     $coverImage = $data['image'];
@@ -47,6 +47,8 @@ class CreateContent {
 
                 }else{
                     $content->cover_photo = $data['image'];
+                    $content->save();
+
                 }
 
                 return $content;

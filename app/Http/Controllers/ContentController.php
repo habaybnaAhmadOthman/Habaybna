@@ -67,7 +67,6 @@ class ContentController extends Controller
    public function editNew(Request $request, UpdateContent $updateContent )
    {
        $content = $updateContent->execute($request->all());
-        dd($content);
        return response()->json($content, 200);
    }
 

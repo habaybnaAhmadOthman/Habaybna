@@ -378,6 +378,7 @@ class CourseController extends Controller
                 $courseSpecialist = new CourseSpecialist();
                 $courseSpecialist->course_id = $course->id;
                 $courseSpecialist->specialist_id = $one;
+
                 $courseSpecialist->save();
             }
         }
@@ -393,16 +394,17 @@ class CourseController extends Controller
 
             $coverUrl = url('/storage/images/courseCoverImg/'.$imageName);
             }
-            if ($request->hasFile('promoVideo')) {
-                Storage::delete('public/videos/promoVideo/'.$course->cover_image);
-                $promoVideo = $request->file('promoVideo');
-                $videoName = 'coursePromoVideo' . '-' . $promoVideo->getClientOriginalName();
-                $pathVid = $promoVideo->storeAs('public/videos/promoVideo', $videoName);
-                $promoUrl = url('/storage/videos/promoVideo/'.$videoName);
-    }
+    //         if ($request->hasFile('promoVideo')) {
+    //             Storage::delete('public/videos/promoVideo/'.$course->cover_image);
+    //             $promoVideo = $request->file('promoVideo');
+    //             $videoName = 'coursePromoVideo' . '-' . $promoVideo->getClientOriginalName();
+    //             $pathVid = $promoVideo->storeAs('public/videos/promoVideo', $videoName);
+    //             $promoUrl = url('/storage/videos/promoVideo/'.$videoName);
+    // }
 
            $course->courseTitle = $request->title;
            $course->discount = $request->discount > 0 ? $request->discount : 0 ;
+           $course->promo_video= $request->promoVideo;
 
            $course->courseDescription= $request->description;
         //    $course->category_id= $request->category;
@@ -410,7 +412,7 @@ class CourseController extends Controller
            $course->is_publish= $request->is_publish;
            $course->is_free= $request->is_free;
            $course->price= $request->price;
-           $course->promo_video= $request->hasFile('promoVideo') ? $promoUrl :$course->promo_video  ;
+        //    $course->promo_video= $request->hasFile('promoVideo') ? $promoUrl :$course->promo_video  ;
            $course->cover_photo = $request->hasFile('coverImage') ? $coverUrl:$course->cover_photo;
 
            $course->save();

@@ -209,7 +209,7 @@ export default {
     const self = this;
     var nID = this.$router.currentRoute.params.data;
 
-    this.callApi("get", "/api/admin/content/" + nID).then((res) => {
+        this.callApi("get", "/api/admin/content/" + nID).then((res) => {
       if (res.status == 200) {
         this.form.title = res.data.title;
         this.form.coverImage = res.data.image;
@@ -217,11 +217,13 @@ export default {
         this.initEditor(
           "#courseDescription",
           "form.courseDescription",
+           function () {
+               self.form.courseDescription.setData(res.data.body);
+               if(self.form.video != null)
+               self.form.courseDescription.execute("mediaEmbed", self.form.video)
+          },
           res.data.video,
-          function () {
-            self.form.courseDescription.setData(res.data.body);
-            self.form.courseDescription.execute("mediaEmbed", self.form.video);
-          }
+
         );
       }
     });
