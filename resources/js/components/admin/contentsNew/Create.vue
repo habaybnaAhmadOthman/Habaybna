@@ -155,7 +155,7 @@ let Obj = new FormData();
      Obj.append("title", this.form.title);
       Obj.append("image", this.form.coverImage);
       Obj.append("categories", tagIDs);
-      Obj.append("author", this.form.author.id);
+      Obj.append("author", this.form.author.user_id);
       Obj.append("content", this.form.courseDescription.getData().replaceAll('srcset','src').replaceAll(" 0w\"","\""));
       Obj.append("publishDate", this.form.publishDay);
       Obj.append("status", this.form.status);

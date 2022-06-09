@@ -177,7 +177,7 @@ export default {
       Obj.append("title", this.form.title);
       Obj.append("image", this.form.coverImage);
       Obj.append("categories", tagIDs);
-      Obj.append("author", this.form.author.id);
+      Obj.append("author", this.form.author.user_id);
       Obj.append(
         "content",
         this.form.courseDescription
