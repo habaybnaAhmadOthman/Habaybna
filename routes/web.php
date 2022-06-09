@@ -24,10 +24,7 @@ use App\Http\Middleware\IsParent;
 // Route::post('login', 'AuthController@login')->name('loginn');
 Route::post('logoutt', 'AuthController@logout')->name('logoutt');
 // Route::post('signup', 'AuthController@signup');
-Route::get('people/{name}/{surname?}', function ($name, $surname) {
-        dd( 'Hello ' . $name . ' ' . $surname);
-    // return 'Hello ' . $name . ' ' . $surname;
-});
+
 Auth::routes();
     Route::view('/','welcome');
 
