@@ -5,7 +5,7 @@
         <iframe border="0" v-else-if="type == 'Video'" width="100%" class="w-100" controls :src="youtubeVideo"></iframe>
         <div class="d-flex space-between mt-15 align-center p-side-12-p">
             <div>
-                <p v-if="date" class="font-18 bold gray font-16-p">تم النشر : <span class="">{{date}}</span></p>
+                <p v-if="date" class="font-18 bold gray font-16-p">تم النشر : <span class="">{{date.slice(0,10)}}</span></p>
             </div>
             <div class="d-flex">
                 <!-- <div class="fav-box relative pointer shadow-2 ml-25" :class="{'active':is_favourite}" @click="addToFavourite($event,nid)"></div> -->
