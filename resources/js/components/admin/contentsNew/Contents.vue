@@ -91,7 +91,7 @@ th {
                 <span>نشط</span>
               </Button>
             </td>
-            <td>{{ coupon.created_at }}</td>
+            <td>{{ coupon.created_at.slice(0,10) }}</td>
 
             <td>
               <Button

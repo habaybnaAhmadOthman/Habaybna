@@ -124,6 +124,9 @@
                         name: this.name.val,
                     });
                     this.$store.commit("alertDialogMsg", 'تم ارسال طلبك بنجاح');
+                    this.email.val = '';
+                    this.message.val = '';
+                    this.name.val = '';
                 } catch (e) {
                     this.$store.commit("alertDialogMsg", e.message);
                 }
