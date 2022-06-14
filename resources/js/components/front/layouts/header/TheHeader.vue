@@ -72,15 +72,20 @@
 
             </div>
             <FixedHeadWithLeftSide />
+            <div class="mo">
+                <UserProfileNav></UserProfileNav>
+            </div>
         </div>
     </header>
 </template>
 
 <script>
 import FixedHeadWithLeftSide from "./FixedHead.vue";
+import UserProfileNav from "../../views/userprofile/UserProfile_Nav.vue";
 export default {
     components: {
-        FixedHeadWithLeftSide
+        FixedHeadWithLeftSide,
+        UserProfileNav
     },
     
     // created() {
