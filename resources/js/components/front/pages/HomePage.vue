@@ -35,7 +35,14 @@ import Partners from '../views/custom/Partners.vue'
 export default {
     components: { LandingSection,IconsSection, Articles,CoursesSection,TheHeader,Partners ,HabaybnaMedia,ContactUS,TheFooter},
     mounted(){
-        
+        this.$gtm.trackEvent({
+            event: 'Cars-Rent',
+            category: 'Cars',
+            action: 'Rent',
+            label: undefined,
+            value: undefined,
+            noninteraction: false,
+        });
     }
 };
 </script>
