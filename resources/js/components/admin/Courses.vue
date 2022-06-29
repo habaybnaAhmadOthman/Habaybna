@@ -40,7 +40,7 @@
           <th class="sortted" scope="col" v-on:click="sortTable('price')">
             السعر
           </th>
-          <th scope="col">حالة الدورة</th>
+          <th class="sortted" scope="col" v-on:click="sortTable('status')" >حالة الدورة</th>
           <th scope="col">نوع الدورة</th>
           <th scope="col">عدد الدروس</th>
           <th scope="col">مدة الدورة</th>
@@ -61,7 +61,11 @@
             </span>
           </td>
           <td>{{ course.coursePrice }}</td>
-          <td>{{ course.publish }}</td>
+          <td>
+
+              <span v-if="course.publish == 'منشورة' "  style="color:green">{{ course.publish }}</span>
+              <span v-else style="color:red" >{{ course.publish }}</span>
+            </td>
           <td>{{ course.free }}</td>
           <td>{{ course.videos_count }}</td>
           <td>{{ course.course_length }}</td>
@@ -206,6 +210,24 @@ export default {
             : a.coursePrice < b.coursePrice
             ? 1
             : b.coursePrice < a.coursePrice
+            ? -1
+            : 0
+        );
+      }
+            if (type == "status") {
+        //   console.log(this.ascending);
+        let isAscending = this.ascending;
+        this.ascending = !this.ascending;
+        return this.courses.sort((a, b) =>
+          isAscending
+            ? a.publish > b.publish
+              ? 1
+              : b.publish > a.publish
+              ? -1
+              : 0
+            : a.publish < b.publish
+            ? 1
+            : b.publish < a.publish
             ? -1
             : 0
         );

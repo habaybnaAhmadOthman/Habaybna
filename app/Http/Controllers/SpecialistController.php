@@ -172,7 +172,7 @@ class SpecialistController extends Controller
     {
 
         try{
-            $specialists = Specialist::all();
+            $specialists = Specialist::orderBy('id', 'desc')->get();
             $data = [];
             foreach ($specialists as  $specialist) {
                 $specialist->user->toArray();

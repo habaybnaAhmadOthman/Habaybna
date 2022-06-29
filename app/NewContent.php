@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class NewContent extends Model
 {
     protected $table = 'contents';
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d',
+    ];
 
-    public function setDateAttribute( $value ) {
-        $this->attributes['date'] = (new Carbon($value))->format('d/m/y');
-      }
-
+    
     public function author()
     {
         return $this->belongsTo(Specialist::class,'author_id','user_id');

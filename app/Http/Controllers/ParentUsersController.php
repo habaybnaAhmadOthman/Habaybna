@@ -394,7 +394,7 @@ class ParentUsersController extends Controller
     public function getParentsData()
     {
         try{
-            $parents = ParentUsers::all();
+            $parents = ParentUsers::orderBy('id', 'desc')->get();
             $data = [];
             if(count($parents) > 0 ){
                 foreach ($parents as  $parent) {
