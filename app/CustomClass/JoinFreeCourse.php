@@ -15,6 +15,7 @@ class JoinFreeCourse {
 
     public function execute ($data)
     {
+
         try {
 
             $course = Courses::findorfail($data['courseID']);
@@ -33,6 +34,11 @@ class JoinFreeCourse {
 
             $initData->save();
             // }
+            if(isset($data['hasPromoCode']) && $data['hasPromoCode']['id'] !==""){
+                $coupon = PromoCode::findorfail($data['hasPromoCode']['id']);
+                $coupon->increment('usage_count');
+                $coupon->save();
+            }
 
             return $initData;
     }

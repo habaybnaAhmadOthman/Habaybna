@@ -49,10 +49,10 @@ th {
             <th>اسم المستخدم</th>
             <th class="sortted" v-on:click="sortTable('name')">عنوان الدورة</th>
             <th>تاريخ الاشتراك</th>
-            <th>عدد الدروس</th>
-            <th>الدروس المنجزة</th>
+            <!-- <th>عدد الدروس</th> -->
+            <!-- <th>الدروس المنجزة</th> -->
             <th>نسبة الانجاز</th>
-            <th>حالة الدورة</th>
+            <th class="sortted" v-on:click="sortTable('status')">حالة الدورة</th>
           </tr>
         </thead>
         <tbody>
@@ -61,9 +61,9 @@ th {
             <td>{{ order.user_name }}</td>
             <td>{{ order.course_title }}</td>
             <td>{{ order.date }}</td>
-            <td>{{ order.course_videos_count }}</td>
+            <!-- <td>{{ order.course_videos_count }}</td> -->
 
-            <td>{{ order.completed_videos_count }}</td>
+            <!-- <td>{{ order.completed_videos_count }}</td> -->
             <td>{{ order.complete_lessons_perc }}</td>
             <td>{{ order.course_status }}</td>
 
@@ -117,19 +117,20 @@ export default {
         );
       }
       if (type == "status") {
+          console.log('xxxxxxxxxxxx');
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
         return this.orders.sort((a, b) =>
           isAscending
-            ? a.order_status > b.order_status
+            ? a.course_status > b.course_status
               ? 1
-              : b.order_status > a.order_status
+              : b.course_status > a.course_status
               ? -1
               : 0
-            : a.order_status < b.order_status
+            : a.course_status < b.course_status
             ? 1
-            : b.order_status < a.order_status
+            : b.course_status < a.course_status
             ? -1
             : 0
         );

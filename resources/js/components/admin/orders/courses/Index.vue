@@ -46,9 +46,9 @@ th {
           <tr>
             <th>#</th>
             <th class="sortted" v-on:click="sortTable('name')">عنوان الدورة</th>
-            <th>فئة الدورة</th>
+            <!-- <th>فئة الدورة</th> -->
             <th class="sortted" v-on:click="sortTable('status')">حالة الطلب</th>
-            <th>مدة الدورة</th>
+            <!-- <th>مدة الدورة</th> -->
             <th>سعر الدورة</th>
             <th>اسم المستخدم</th>
             <th>رقم الهاتف</th>
@@ -59,7 +59,7 @@ th {
           <tr v-for="(order, index) in filteredList" :key="index">
             <th scope="row">{{ index + 1 }} -</th>
             <td>{{ order.course_title }}</td>
-            <td>
+            <!-- <td>
               <ul v-if="order.course_categories.length > 0">
                 <li
                   v-for="(cat, i) in order.course_categories"
@@ -69,7 +69,7 @@ th {
                   {{ cat.title }}
                 </li>
               </ul>
-            </td>
+            </td> -->
             <td class="status">
               <Button type="success" ghost v-if="order.order_status">
                 <span>دفع بنجاح</span>
@@ -78,7 +78,7 @@ th {
                 <span> دفع مرفوض</span>
               </Button>
             </td>
-            <td>{{ order.course_length }}</td>
+            <!-- <td>{{ order.course_length }}</td> -->
             <td>{{ order.course_price }}</td>
             <td>{{ order.user_name }}</td>
             <td class="phone-td">{{ order.user_phone }}</td>
