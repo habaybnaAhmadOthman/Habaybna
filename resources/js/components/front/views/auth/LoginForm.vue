@@ -43,7 +43,7 @@
             </template>
             <!-- password -->
             <div
-                class="form-group relative pass-group mb-15"
+                class="form-group relative pass-group mb-5"
                 :class="{ invalid: !password.isValid }"
             >
                 <input
@@ -63,6 +63,9 @@
                     هذا الحقل مطلوب
                 </p>
             </div>
+            <div class="pointer d-flex flex-end font-13">
+                <router-link to="/forget-password">نسيت كلمة السر</router-link>
+            </div>
             <!-- <div class="form-group">
                 <label class="checkbox main-color font-16">
                     <input type="checkbox" name="checkbox-checked" checked />
@@ -74,7 +77,8 @@
             >
                 تسجيل الدخول
             </button>
-            <div class="d-flex flex-wrap space-between">
+            
+            <div class="d-flex justify-center">
                 <template>
                     <div
                         class="main-color mt-15 pointer center-p font-13 bold"
@@ -91,9 +95,7 @@
                         تسجيل الدخول عن طريق رقم الهاتف
                     </div>
                 </template>
-                <div class="blue mt-15 pointer center-p font-13">
-                    <router-link to="/forget-password">نسيت كلمة المرور</router-link>
-                </div>
+                
             </div>
         </form>
     </div>

@@ -123,12 +123,38 @@ export default {
     created() {
         this.getCourseDetails()
     },
+    mounted(){
+        this.getActiveTabOnMobile()
+    },
     computed: {
         isLoggedIn(){
             return this.$store.getters["user/isLoggedIn"];
         }
     },
     methods: {
+        getActiveTabOnMobile(){
+            if (!this.isLoggedIn) {
+                let activeTab = 'about'
+                this.mobileTabs.map((tab)=>{
+                    if (tab.name == activeTab) {
+                        tab.active = true
+                    } else
+                        tab.active = false
+                })
+                this.toggletab(activeTab)
+            } 
+        
+        },
+        toggletab(tabName) {
+            document.querySelector(".tabs-toggle .active").classList.remove("active");
+            document.querySelector(".tabs-toggle [tab-toggle='"+tabName+"']").classList.add("active");
+            document.querySelectorAll("[tab-name]").forEach((tab)=>{
+                tab.classList.remove('active')
+            });
+            document.querySelectorAll("[tab-name='"+ tabName +"']").forEach((tab)=>{
+                tab.classList.add('active')
+            });
+        },
         async getCourseDetails(){
             try {
                 this.isFromPaymentPage()
@@ -193,7 +219,7 @@ export default {
                 // {property: 'og:image', content: this.coverPhoto }
             ]
         }
-    },
+    }
 };
 </script>
 <style scoped>

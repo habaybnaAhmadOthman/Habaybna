@@ -24,7 +24,7 @@
       </button>
       <h3 v-if="!showCodeForm" class="mt-50 center light font-15 flex-all p-side-50 flex-wrap">
         <span class="main-color font-15-p">هل أنت عضو في عائلة حبايبنا؟</span>
-        <router-link class="blue d-flex align-center font-15-p" to="/signin"
+        <router-link class="d-flex align-center font-15-p" to="/signin"
           >تسجيل دخول</router-link
         >
       </h3>

@@ -99,13 +99,13 @@ export default {
 @media (max-width: 767px) {
     .user-side-nav {
         position: fixed;
-        min-width: 100%;
+        min-width: 85%;
         max-width: none;
         top: 0;
-        right: 0;
+        left: 0;
         transition: 0.3s;
         opacity: 0;
-        right: -90%;
+        left: -90%;
         visibility: hidden;
         min-height: 100%;
         max-height: 100%;
@@ -114,7 +114,7 @@ export default {
     }
     .user-side-nav.active {
         opacity: 1;
-        right: 0%;
+        left: 0%;
         visibility: visible;
     }
     .close-nav-menu {
@@ -126,6 +126,17 @@ export default {
         text-align: right;
         color: #3FC4E0!important;
         background: transparent!important;
+    }
+    .user-side-nav:before {
+        content: '';
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 15%;
+        height: 100%;
+        z-index: 0;
+        backdrop-filter: brightness(.9) blur(2px);
+        -webkit-backdrop-filter: brightness(.9) blur(2px);
     }
 }
 </style>

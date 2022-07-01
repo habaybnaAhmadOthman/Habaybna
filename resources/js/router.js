@@ -62,8 +62,9 @@ import ExamPage from "./components/front/pages/courses/ExamPage.vue";
 import LibraryPage from "./components/front/pages/library/LibraryPage.vue";
 import ArticlePage from "./components/front/pages/library/ArticlePage.vue";
 // specialist
-import SpecialistPage from "./components/front/pages/SpecialistPage.vue";
-import SpecialistsPage from "./components/front/pages/SpecialistsPage.vue";
+import SpecialistPage from "./components/front/pages/specialist/SpecialistPage";
+import SpecialistsPage from "./components/front/pages/specialist/SpecialistsPage.vue";
+import allSpecialistsPage from "./components/front/pages/specialist/allSpecialistsPage.vue";
 import TermsPage from "./components/front/pages/TermsPage.vue";
 import TermsEnPage from "./components/front/pages/TermsEnPage.vue";
 import AboutPage from "./components/front/pages/AboutHabaybna.vue";
@@ -460,6 +461,10 @@ const routes = [{
     },
     // *****************
     // specialist page
+    {
+        path: "/all-specialists",
+        component: allSpecialistsPage
+    },
     {
         path: "/ask-specialists",
         component: SpecialistsPage
