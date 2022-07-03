@@ -1,6 +1,6 @@
 <template>
   <div class="mobile-form p-side-50 p-side-12-p">
-    <h2 class="main-color text-shadow font-40 bold center font-28-p">
+    <h2 class="main-color font-40 bold center font-28-p">
       رمز التحقق
     </h2>
     <form @submit.prevent="submitCode" class="mt-30">
