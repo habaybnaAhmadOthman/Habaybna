@@ -6,7 +6,13 @@
                     <router-link to="/" class="logo d-flex">
                         <img src="/images/siteImgs/header/logo.png" width="120" />
                     </router-link>
-                    <a v-if="$route.meta.back == true" @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/back-btn.svg" width="30" /></a>
+                    <div class="left-side-btns d-flex">
+                        <template v-if="!isLoggedIn">
+                            <router-link class="login-btn ml-5" to="/signin">تسجيل الدخول</router-link>
+                            <router-link class="reg-btn ml-5" to="/signup">مستخدم جديد</router-link>
+                        </template>
+                        <a v-if="$route.meta.back == true" @click.prevent="$router.back()" class="back-btn d-flex" ><img src="/images/back-btn.svg" width="30" /></a>
+                    </div>
                 </div>
             </div>
             <div class="d-flex align-center w-100 header-right">
@@ -87,7 +93,11 @@ export default {
         FixedHeadWithLeftSide,
         UserProfileNav
     },
-    
+    computed: {
+        isLoggedIn() {
+            return this.$store.getters["user/isLoggedIn"];
+        },
+    },
     // created() {
     //     window.addEventListener("scroll", this.handleScroll);
     // },
@@ -110,7 +120,7 @@ header {
     padding-left: 1.2vw;
     padding-right: 1.2vw;
     transition: 0.5s ease-in-out;
-    box-shadow: 10px 10px 10px -16px #000;
+    box-shadow: 0 0 9px #00000038;
     position: sticky;
     top: 0;
     width: 100%;
@@ -187,6 +197,18 @@ a {
     }
     .mobile-link p {
         margin-top: -7px;
+    }
+    .left-side-btns .login-btn, .left-side-btns .reg-btn{
+        border: 1px solid #780d93;
+        border-radius: 6px;
+        font-size: 12px;
+        padding: 6px 6px;
+        color: #780d93;
+        text-align: center;
+    }
+    .left-side-btns .reg-btn {
+        background: #780d93;
+        color: #fff;
     }
 }
 </style>
