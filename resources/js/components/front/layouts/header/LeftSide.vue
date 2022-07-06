@@ -2,7 +2,7 @@
     <div class="d-flex align-center hide-do-profile">
         <div class="bar do hh-all"></div>
         <div class="do hh-all" v-if="isLoggedIn">
-            <router-link to="/profile/my-account" class="d-flex align-center user-box">
+            <router-link to="/profile/my-courses" class="d-flex align-center user-box">
                 <img
                     :src="userAvatar"
                     alt="gift"
@@ -106,7 +106,7 @@ export default {
     animation: swing 0.3s ease-in reverse;
 }
 .user-box {
-    width: 150px;
+    width: 200px;
 }
 .profile .hide-do-profile .hh-all {
     display: none!important;

@@ -26,13 +26,8 @@
                             <button class="p-10 radius-5 bg-none white pointer btn-logout" @click="logout">تسجيل خروج</button>
                         </div>
                     </div>
-                    <img
-                        src="/images/bars-icon.svg"
-                        width="20"
-                        height="20"
-                        @click="openNavMenu"
-                        class="open-nav-menu mo"
-                    />
+                    <!-- <span class="open-nav-menu mo white font-30" @click="openNavMenu">☰</span> -->
+                    
                 </div>
             </div>
         </nav>

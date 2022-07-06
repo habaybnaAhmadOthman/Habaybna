@@ -42,9 +42,9 @@ th {
         <tbody>
           <tr v-for="(call_package, index) in filteredList" :key="index">
             <th scope="row">{{ index + 1 }}</th>
-            <td style="maxWidth:200px">{{ call_package.title }}</td>
+            <td style="maxWidth:200px" class="one-line">{{ call_package.title }}</td>
 
-            <td style="maxWidth:200px"><a :href="call_package.url" target="_blank">{{ call_package.url }}</a> </td>
+            <td style="maxWidth:200px" class="one-line"><a :href="call_package.url" target="_blank">{{ decodeURIComponent(call_package.url) }}</a> </td>
             <td>
               <Button
                 :to="'/admin/media-update/' + call_package.id"
