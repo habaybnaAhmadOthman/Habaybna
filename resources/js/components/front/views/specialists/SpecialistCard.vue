@@ -1,5 +1,6 @@
 <template>
-    <router-link :to="`/specialist/${specialist.firstName.split(' ').join('-')}`" class="specialist-card bg-white shadow pt-20 pb-30 radius-10" :class="{'active':!showMore}">
+    <!-- <router-link :to="`/specialist/${specialist.firstName.split(' ').join('-')}`" class="specialist-card bg-white shadow pt-20 pb-30 radius-10" :class="{'active':!showMore}"> -->
+    <router-link :to="`/specialist/${specialist.user_id}`" class="specialist-card bg-white shadow pt-20 pb-30 radius-10" :class="{'active':!showMore}">
         <figure class="d-flex center">
             <img :src="specialist.avatar | defaultAvatar" class="m-side-auto object-fit overflow-hidden rounded avatar" width="170" height="170" alt="">
         </figure>
@@ -20,6 +21,9 @@
         data:()=> ({
             showMore: true
         }),
+        created(){
+            console.log(this.specialist,'sss')
+        },
         methods: {
             showMoreFn(){
                 this.showMore = !this.showMore
