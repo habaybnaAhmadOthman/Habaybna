@@ -8,7 +8,7 @@
   >
     <div class="">
       <p class="font-24 yellow bold mb-20">تحديد أوقاتي المتاحة</p>
-      <form @submit.prevent="submitForm">
+      <form>
         <div class="form-group w-100 mb-20" :class="{ invalid: !day.isValid }">
           <select class="w-100" v-model="day.val" id="day">
             <option value="">إختر اليوم</option>
@@ -44,7 +44,6 @@
             <label>الوقت إلى</label>
             <input
               class="w-100"
-              @blur="test"
               type="time"
               id="to"
               v-model="to.val"
@@ -54,8 +53,8 @@
         </div>
       </form>
       <div class="d-flex gap-20">
-        <button class="radius-60 gray dismiss-btn pointer">إلغاء</button>
-        <button class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15">حفظ</button>
+        <button @click="closeModal" class="radius-60 gray dismiss-btn pointer">إلغاء</button>
+        <button @click="submitForm" class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15">حفظ</button>
         <button class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15">حفظ وإستمرار</button>
       </div>
     </div>
@@ -65,48 +64,86 @@
 <script>
 import NormalModal from "../../../layouts/NormalModal.vue";
 export default {
-  emits: ["close"],
-  props: ["showModal"],
+  emits: ["close","add-new-session"],
+  props: ["showModal","tableIntervals"],
   components: { NormalModal },
   created() {
     this.appendAvailableDays_DropDown();
   },
   methods: {
-    test() {
+    submitForm(){
+      var intervals = this.prepareIntervals();
+      if (intervals.length > 0) {
+        this.$emit('add-new-session',intervals);
+        this.closeModal();
+      }
+    },
+    // this function check validity,
+    // show popup message if the date is invalid
+    // return array of intervals devided to 30 minutes
+    prepareIntervals() {
       let fromHour,
       fromMinutes,
       toHour,
       toMinutes,
       fromDate ,
       toDate,
+      isValid,
       intervals = [];
-
-      prepareFromTo(this);
-      // check if from date < to date
-      if (!isFromSmallerThanTo()){
-        this.$store.commit('alertDialogMsg','يرجى تعبئة الوقت بشكل صحيح')
-        return false;
-      }
-      fillIntervals();
-
+      isValid = validateFields(this);
+      if (isValid) {
+        prepareFromTo(this);
+        // check if from date < to date
+        if (!isFromSmallerThanTo()){
+          this.$store.commit('alertDialogMsg','يرجى تعبئة الوقت بشكل صحيح')
+          return [];
+        }
+        fillIntervals(this);
+        return intervals;
+      } else
+        return []
       
-
-      function fillIntervals(){
+      
+      function fillIntervals(self){
         while (isFromSmallerThanTo()) {
-          intervals.push(fromDate.toISOString())
+          var newInterval = fromDate.toISOString();
+          if (!self.tableIntervals.includes(newInterval))
+            intervals.push(newInterval)
           fromDate.setMinutes(fromDate.getMinutes() + 30)
         }
+        if (intervals.length == 0)
+          self.$store.commit('alertDialogMsg','هذه الفترة موجودة بالفعل')
       }
       function isFromSmallerThanTo(){
         return Math.abs(fromDate < toDate)
       }
-      function prepareFromTo(self){
+
+      function validateFields(self){
+        self.day.isValid = true;
+        self.from.isValid = true;
+        self.to.isValid = true;
+        if (self.day.val == '') {
+          self.day.isValid = false;
+        }
+        if (self.from.val == '') {
+          self.from.isValid = false;
+        }
+        if (self.to.val == '') {
+          self.to.isValid = false;
+        }
+        if (!self.day.isValid || !self.from.isValid || !self.to.isValid)
+          return false;
+
+        return true;
+      }
+
+      function prepareFromTo(self) {
         fromHour = self.from.val.split(':')[0];
         fromMinutes = +self.from.val.split(':')[1];
         toHour = self.to.val.split(':')[0];
         toMinutes = +self.to.val.split(':')[1];
-        fromDate = new Date();
-        toDate = new Date();
+        fromDate = new Date(self.day.val);
+        toDate = new Date(self.day.val);
         
 
         if (fromMinutes > 30) 
@@ -119,7 +156,6 @@ export default {
           toMinutes = 0
         fromDate.setHours(fromHour,fromMinutes,0);
         toDate.setHours(toHour,toMinutes,0);
-
       }
     },
     closeModal() {

@@ -19,15 +19,17 @@
       </div>
       <!-- end day,time labels -->
 
-      <Col></Col>
+      <Col v-for="(interval,index) in intervals" :key="index" :data="interval"></Col>
     </div>
     <div class="mt-40 d-flex flex-end">
       <button class="btn-main">حفظ</button>
     </div>
 
     
-    <AddSession 
+    <AddSession
+    :tableIntervals="intervals"
     :showModal="isAddNewSessionModal"
+    @add-new-session="addNewSessionFn"
     @close="toggleAddSessionModal(false)"></AddSession>
     <portal-target name="add-session-modal"></portal-target>
   </div>
@@ -42,11 +44,15 @@ export default {
   data(){
     return {
       isAddNewSessionModal: true,
+      intervals: [],
     }
   },
   methods: {
     toggleAddSessionModal(status){
       this.isAddNewSessionModal = status
+    },
+    addNewSessionFn(intervals){
+      this.intervals.push(...intervals)
     }
   }
 };

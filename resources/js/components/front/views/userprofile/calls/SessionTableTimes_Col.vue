@@ -1,10 +1,10 @@
 <template>
-  <div class="d-flex">
-    <div class="w-60 pt-20 pb-10 table-border-l p-side-10">
-        <p>اليوم</p>
+  <div class="d-flex table-border-b day-name" :class="dayNameEn">
+    <div class="w-60 pt-20 pb-10 table-border-l p-side-10 day-label relative d-flex align-center">
+        <p>{{dayName}}</p>
     </div>
     <div class="flex-1 pt-20 pb-10 table-border-l p-side-10">
-      <p>الوقت</p>
+      <p>{{timeInterval}}</p>
     </div>
     <div class="remove-col flex-all p-side-10">
         <img class="remove-icon pointer" src="/images/trash-bin.png" width="40" height="40">
@@ -14,7 +14,22 @@
 
 <script>
   export default {
-    
+    props: ['data'],
+    computed: {
+      timeInterval(){
+        return new Date(this.data).toLocaleTimeString('en-US',{
+          hour:  "2-digit",
+          minute: "2-digit",
+        })
+      },
+      dayName(){
+        return new Date(this.data).toLocaleDateString('ar-EG',{weekday:'long'})
+      },
+      dayNameEn(){
+        return new Date(this.data).toLocaleDateString('en-US',{weekday:'long'})
+      },
+
+    }
   }
 </script>
 
@@ -33,5 +48,34 @@
 }
 .table-border-l {
   border-left: 1px solid #F2F2F2;
+}
+.day-name .day-label:before{
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 12px;
+}
+.day-name.Saturday .day-label:before {
+    background: #607d8b;
+}
+.day-name.Sunday .day-label:before {
+    background: #9c27b0;
+}
+.day-name.Monday .day-label:before {
+    background: #6ad500;
+}
+.day-name.Tuesday .day-label:before {
+    background: #ffa284;
+}
+.day-name.Wednesday .day-label:before {
+    background: #009688;
+}
+.day-name.Thursday .day-label:before {
+    background: #03a9f4;
+}
+.day-name.Friday .day-label:before {
+    background: #ff9f02;
 }
 </style>
