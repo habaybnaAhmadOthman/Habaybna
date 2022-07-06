@@ -88,4 +88,12 @@ class ContentController extends Controller
                 // return $user->user_data->firstName . " " .$user->user_data['lastName'];
    }
 
+   public function getIndexNew()
+   {
+
+      $contents = NewContent::with('intrests','author')->orderBy('id', 'DESC')->paginate(15);
+
+        return response()->json($contents);
+   }
+
 }

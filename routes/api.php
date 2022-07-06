@@ -140,6 +140,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/contents-new','ContentController@indexNew');
         Route::post('/content-delete/{id}','ContentController@deleteNew');
 
+        //testimonials
+
+        Route::post('/testimonials/create','TestimonialsController@create');
+        Route::get('/testimonials','TestimonialsController@index');
+        Route::get('/update-testimonials/{id}','TestimonialsController@update');
+        Route::post('/edit-testimonials','TestimonialsController@edit');
+
 
 
 
@@ -191,5 +198,8 @@ Route::get('/media','MediaController@index');
 Route::post('/parent-complete-register','ParentUsersController@completeRegister');
 Route::post('/other-complete-register','OthersController@create');
 Route::post('/specialist-complete-register','SpecialistController@create')->name('create.specialist');
-
+Route::get('/get-testimonials/{type}','TestimonialsController@getTestimonials');
 Route::post('check-otp', \CheckOtp::class);
+Route::get('/get-contents-new','ContentController@getIndexNew');
+Route::get('/get-specialist-data/{id}','ContentController@getSpecialistData');
+
