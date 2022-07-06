@@ -27,7 +27,7 @@
                         <router-link to="/all-specialists" class="white-i flex-all relative next-arrow font-27 font-20-p h-100 d-block w-100">إستعراض الأخصائيين</router-link>
                     </div>
                 </ul>
-                <div v-if="!showMoreCard && canLoadMore" class="load-more container shadow center bg-white radius-12 mt-30 d-flex align-center justify-center pt-30 pb-30">
+                <div v-if="!showMoreCard && canLoadMore" class="load-more container shadow center bg-white radius-12 mt-30 d-flex align-center justify-center pt-30 pb-30 m-side-12-p">
                     <img src="/images/loader.gif" width="50" height="50" alt="loading" >
                 </div>
             </div>

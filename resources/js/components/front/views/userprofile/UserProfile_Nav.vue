@@ -38,6 +38,28 @@
                     >الدورات المفضلة</router-link
                 >
             </li>
+            <li>
+                <span class="d-block p-side-15 pt-10 pb-10 trans pointer submenu-target" @click="collapseMenu('calls')">المكالمات</span>
+                  <transition name="slide">
+                <aside class="submenu trans" v-if="isCallSubMenuOpened">
+                    <li>
+                        <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-sessions-times" @click.native="closeNavMenu"
+                            >تحديد أوقات الجلسات</router-link
+                        >
+                    </li>
+                    <li>
+                        <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-fsavourite-coursesw" @click.native="closeNavMenu"
+                            >مشاهدة مواعيد الحجز</router-link
+                        >
+                    </li>
+                    <li>
+                        <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-favaourite-coursesq" @click.native="closeNavMenu"
+                            >سجل المكالمات</router-link
+                        >
+                    </li>
+                </aside>
+                </transition>
+            </li>
             <!-- <li>
                 <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-favourite-contents" @click.native="closeNavMenu"
                     >المقالات المفضلة</router-link
@@ -56,7 +78,8 @@
 export default {
     data() {
         return {
-            isMenuOpened: false
+            isMenuOpened: false,
+            isCallSubMenuOpened: false
         };
     },
     methods: {
@@ -69,6 +92,11 @@ export default {
                 this.$store.commit("forceRefresh");
             } else {
                 this.$router.push("/")
+            }
+        },
+        collapseMenu(menuName){
+            if (menuName == 'calls') {
+                this.isCallSubMenuOpened = !this.isCallSubMenuOpened
             }
         }
     }
@@ -91,10 +119,37 @@ export default {
     color: #212529;
 }
 .user-side-nav li a.router-link-exact-active,
-.user-side-nav li:hover > * {
+.user-side-nav li:hover > a,.user-side-nav li:hover > span {
     background: #660066;
     color: #fff;
     border-color: #b915b9;
+}
+.submenu li:hover a{
+    background: transparent;
+    color: #212529;
+    border-color: transparent;
+}
+.submenu {
+    transform-origin: top;
+    border: 0!important;
+}
+.submenu li a:before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: #000;
+    margin-left: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.slide-enter, .slide-leave-to{
+  transform: scaleY(0);
+}
+.user-side-nav .submenu a.router-link-exact-active:before {
+    background: #fff;
+}
+.user-side-nav .submenu li:hover a.router-link-exact-active:before {
+    background: #000;
 }
 @media (max-width: 767px) {
     .user-side-nav {

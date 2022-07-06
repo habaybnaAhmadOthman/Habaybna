@@ -90,6 +90,11 @@ import UserProfile_MyCourses from "./components/front/pages/dashboard/MyCourses.
 import UserProfile_MyFavouriteCourses from "./components/front/pages/dashboard/MyFavouriteCourses.vue";
 import UserProfile_MyFavouriteContent from "./components/front/pages/dashboard/MyFavouriteContents.vue";
 
+// user profile ==> Calls
+import UserProfile_SessionTimes from "./components/front/pages/dashboard/calls/SessionTimes.vue";
+
+
+
 import store from "./store/index";
 
 const routes = [{
@@ -412,6 +417,13 @@ const routes = [{
                 },
                 name: 'myFavouriteContents'
             },
+            // calls
+            {
+                path: "my-sessions-times",
+                component: UserProfile_SessionTimes,
+                name: 'mySessionsTimes'
+            },
+
         ]
     },
     // *****************

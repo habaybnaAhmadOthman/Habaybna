@@ -127,6 +127,9 @@ body {
 .w-25 {
     width: 25%;
 }
+.w-10 {
+    width: 10%;
+}
 .h-full {
     height: 100vh;
 }
