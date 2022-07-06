@@ -27,19 +27,28 @@ th {
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
-          <th class="sortted" scope="col" v-on:click="sortTable('name')">الاسم الاول</th>
+          <th class="sortted" scope="col" v-on:click="sortTable('name')">
+            الاسم الكامل
+          </th>
           <th scope="col">الهاتف</th>
           <th scope="col">الايميل</th>
-          <th scope="col" class="sortted" v-on:click="sortTable('status')">الحالة</th>
-          <th class="sortted" scope="col" v-on:click="sortTable('gender')">الجنس</th>
+          <th scope="col" class="sortted" v-on:click="sortTable('status')">
+            الحالة
+          </th>
+          <th class="sortted" scope="col" v-on:click="sortTable('gender')">
+            الجنس
+          </th>
           <th scope="col">التخصص</th>
+          <th class="sortted" scope="col" v-on:click="sortTable('date')">
+            تاريخ التسجيل
+          </th>
           <th scope="col">الاجراءات</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(other, index) in filteredList" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ other.firstName }}</td>
+          <td>{{ other.firstName + " " + other.lastName }}</td>
           <td class="phone-td">{{ other.user.phone }}</td>
           <td>{{ other.user.email }}</td>
           <td class="status">
@@ -62,6 +71,8 @@ th {
           </td>
           <td>{{ other.gender == "m" ? "ذكر" : "انثى" }}</td>
           <td>{{ other.specialization }}</td>
+          <td>{{ other.created_at.slice(0, 10) }}</td>
+
           <td>
             <Button
               :to="'/admin/other/' + other.user_id"
@@ -74,7 +85,8 @@ th {
 
             <Button @click="deleteDaialog(other.user_id, index)">
               <Icon size="20" color="red" type="md-trash" />
-            </Button>          </td>
+            </Button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -110,7 +122,6 @@ export default {
       indexDeleteUser: "",
       keyword: "",
       ascending: false,
-
     };
   },
   async created() {
@@ -185,7 +196,7 @@ export default {
             : 0
         );
       }
-            if (type == "gender") {
+      if (type == "gender") {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
@@ -199,6 +210,24 @@ export default {
             : a.gender < b.gender
             ? 1
             : b.gender < a.gender
+            ? -1
+            : 0
+        );
+      }
+      if (type == "date") {
+        //   console.log(this.ascending);
+        let isAscending = this.ascending;
+        this.ascending = !this.ascending;
+        return this.others.sort((a, b) =>
+          isAscending
+            ? a.created_at > b.created_at
+              ? 1
+              : b.created_at > a.created_at
+              ? -1
+              : 0
+            : a.created_at < b.created_at
+            ? 1
+            : b.created_at < a.created_at
             ? -1
             : 0
         );

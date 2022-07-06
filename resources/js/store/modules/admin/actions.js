@@ -230,6 +230,18 @@ export default {
 
     },
 
+        // create new testimonials
+        async createNewtestimonials(context, payload) {
+            console.log('in');
+            const resp = await callApi('POST', '/api/admin/testimonials/create', payload)
+            if (resp.status != 200) {
+                const error = new Error("fail to create new content");
+                throw error;
+            }
+            return resp
+
+        },
+
     // create update certificate
     async createUpdateCertificate(context, payload) {
         console.log('in');
