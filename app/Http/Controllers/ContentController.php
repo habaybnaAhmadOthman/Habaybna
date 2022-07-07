@@ -6,7 +6,7 @@ use App\CustomClass\UpdateContent;
 use Illuminate\Http\Request;
 use App\Content;
 use App\NewContent;
-
+use App\Specialist;
 use Illuminate\Support\Facades\Auth;
 
 class ContentController extends Controller
@@ -94,6 +94,14 @@ class ContentController extends Controller
       $contents = NewContent::with('intrests','author')->orderBy('id', 'DESC')->paginate(15);
 
         return response()->json($contents);
+   }
+
+   public function getSpecialistData($id)
+   {
+        $data = Specialist::with('courses','articles')->where('user_id',$id)->first();
+        if ($data) {
+            return response($data,200);
+        }
    }
 
 }
