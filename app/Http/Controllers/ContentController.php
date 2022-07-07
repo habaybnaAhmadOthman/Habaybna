@@ -55,7 +55,7 @@ class ContentController extends Controller
 
    public function showArticle(Request $request)
    {
-       $article = NewContent::where('title',$request->title)->first();
+       $article = NewContent::with('intrests','author')->where('title',$request->title)->first();
        if($article){
            return response($article,200);
        }
