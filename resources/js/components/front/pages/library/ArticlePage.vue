@@ -3,7 +3,7 @@
         <TheHeader></TheHeader>
         <div class="container">
             <ArticleBanner @open-share-modal="showShareDialog" :image="mainImage" :date="date"></ArticleBanner>
-            <ArticleContent :tags="tags" :title="title" :description="description" :author="author"></ArticleContent>
+            <ArticleContent v-if="isDataReady" :tags="tags" :title="title" :description="description" :author="author"></ArticleContent>
             <!-- <div class="mt-50">
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
             </div> -->
