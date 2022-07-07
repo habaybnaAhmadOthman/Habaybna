@@ -2,11 +2,11 @@
     <div class="library-page">
         <TheHeader></TheHeader>
         <div class="container">
-            <ArticleBanner :nid="id" :is_favourite="is_favourite" @open-share-modal="showShareDialog" :image="mainImage" :type="articleType" :video="video" :date="date"></ArticleBanner>
-            <ArticleContent :tags="tags" :title="title" :description="description" :author="authorName"></ArticleContent>
-            <div class="mt-50">
+            <ArticleBanner @open-share-modal="showShareDialog" :image="mainImage" :date="date"></ArticleBanner>
+            <ArticleContent :tags="tags" :title="title" :description="description" :author="author"></ArticleContent>
+            <!-- <div class="mt-50">
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
-            </div>
+            </div> -->
             <!-- <div class="mt-60">
                 <RelatedCourses :title="`دورات تدريب ذات صلة`" v-if="isDataReady"></RelatedCourses>
             </div> -->
@@ -36,17 +36,12 @@
         components: { TheHeader,ArticleBanner,ArticleContent,AboutSpecialists,RelatedCourses,TheFooter,ShareArticleModal},
         data(){
             return {
-                specialists:null,
-                id:null,
-                mainImage: null,
-                authorName: null,
-                title: null,
-                video: null,
-                articleType: null,
+                author: {},
                 description: null,
-                tags: null,
+                mainImage: null,
                 date: null,
-                is_favourite: false,
+                title: null,
+                tags: null,
                 showShareModal: false,
                 isDataReady:false,
             }
@@ -54,20 +49,14 @@
         methods: { 
             async getPageData(){
                 let data = await this.$store.dispatch('content/getArticle',{title: this.article.split('-').join(' ')});
-                this.id  = data.nid;
-                this.specialists  = data.providers;
-                this.mainImage = data.image;
+                this.author  = data.author;
+                this.description = data.content;
+                this.mainImage = data.cover_photo;
+                this.date = data.created_at;
+                this.tags = data.intrests;
                 this.title = data.title;
-                this.authorName = data.author;
-                this.video = data.video;
-                this.articleType = data.article_type;
-                this.description = data.body;
-                this.tags = data.tags;
-                this.is_favourite = data.is_favourite;
-                if (data.created_at)
-                    this.date = data.created_at;
                 this.isDataReady = true
-                // console.log(data)
+                console.log(data)
             },
             showShareDialog() {
                 this.showShareModal = !this.showShareModal;

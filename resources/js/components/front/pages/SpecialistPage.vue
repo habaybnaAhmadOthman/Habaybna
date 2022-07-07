@@ -44,6 +44,7 @@
     import Articles from '../views/library/ContentSection.vue'
     import TheFooter from '../layouts/TheFooter.vue'
     export default {
+        props: ['specialist'],
         components: { TheHeader,TabsToggle,SpecialistCourses,Articles,TheFooter},
         data(){
             return {
@@ -76,10 +77,15 @@
                 } else {
                     this.courses = await this.$store.dispatch('courses/getAllCourses');
                 }
+            },
+            async getSpecialistData() {
+                const data = await this.$store.dispatch(`specialist/getSpecialistDetails`,this.specialist);
+                console.log(data)
                 this.isDataReady = true
             }
         },
-        mounted(){
+        mounted() {
+            this.getSpecialistData();
             this.getCourses()
         }
     }

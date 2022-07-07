@@ -1,8 +1,7 @@
 <template>
     <div class="banner mt-15 mt-0-p">
-        <img v-if="type == 'Text'" class="w-100 main-img object-fit radius-10" :src="image" width="100%">
-        <!-- <img class="w-100 main-img object-fit radius-10" :src="image" width="100%"> -->
-        <iframe border="0" v-else-if="type == 'Video'" width="100%" class="w-100" controls :src="youtubeVideo"></iframe>
+        <img class="w-100 main-img object-fit radius-10" :src="image" width="100%">
+        <!-- <iframe border="0" v-else-if="type == 'Video'" width="100%" class="w-100" controls :src="youtubeVideo"></iframe> -->
         <div class="d-flex space-between mt-15 align-center p-side-12-p">
             <div>
                 <p v-if="date" class="font-18 bold gray font-16-p">تم النشر : <span class="">{{date.slice(0,10)}}</span></p>
@@ -18,7 +17,7 @@
 <script>
     export default {
         emits: ['open-share-modal'],
-        props: ['image','video','type','date','is_favourite','nid'],
+        props: ['image','date'],
         methods: {
             openShareModal(){
                 this.$emit('open-share-modal')
@@ -33,11 +32,11 @@
             },
         },
         computed: {
-            youtubeVideo(){
-                if (this.video) {
-                    return 'https://www.youtube.com/embed/' + this.video.slice(this.video.lastIndexOf('/')+1)
-                } return ''
-            },
+            // youtubeVideo(){
+            //     if (this.video) {
+            //         return 'https://www.youtube.com/embed/' + this.video.slice(this.video.lastIndexOf('/')+1)
+            //     } return ''
+            // },
             isLoggedIn() {
                 return this.$store.getters["user/isLoggedIn"];
             },

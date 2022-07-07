@@ -487,7 +487,8 @@ const routes = [{
     },
     {
         path: "/specialist/:specialist",
-        component: SpecialistPage
+        component: SpecialistPage,
+        props: true
     },
     // *****************
     // content pages
