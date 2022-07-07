@@ -6,7 +6,7 @@
         <div class="author-box bold mb-20 mt-10 d-flex align-center">
           <!-- <img src="/images/HABA LOGO WITH STROK.png" class="object-fit rounded" width="40" height="40"> -->
           <div class="mr-10">
-            <p class="font-14 main-color"> بواسطة : فريق التحرير </p>
+            <!-- <router-link :to="" class="font-14 main-color"> بواسطة : {{}} </router-link> -->
             <!-- <p class="font-14 main-color">{{author}}</p> -->
             <!-- <p class="font-14 main-color">اختصاصية علاج طبيعي</p> -->
           </div>

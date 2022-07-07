@@ -36,16 +36,19 @@
         components: { TheHeader,ArticleBanner,ArticleContent,AboutSpecialists,RelatedCourses,TheFooter,ShareArticleModal},
         data(){
             return {
+                specialistID: null,
+                description: null,
+                mainImage: null,
+                date: null,
+                title: null,
+                
+
                 specialists:null,
                 id:null,
-                mainImage: null,
                 authorName: null,
-                title: null,
                 video: null,
                 articleType: null,
-                description: null,
                 tags: null,
-                date: null,
                 is_favourite: false,
                 showShareModal: false,
                 isDataReady:false,
@@ -54,18 +57,20 @@
         methods: { 
             async getPageData(){
                 let data = await this.$store.dispatch('content/getArticle',{title: this.article.split('-').join(' ')});
-                this.id  = data.nid;
-                this.specialists  = data.providers;
-                this.mainImage = data.image;
+                this.specialistID  = data.author_id;
+                this.description = data.content;
+                this.mainImage = data.cover_photo;
+                this.date = data.created_at;
                 this.title = data.title;
-                this.authorName = data.author;
-                this.video = data.video;
-                this.articleType = data.article_type;
-                this.description = data.body;
-                this.tags = data.tags;
-                this.is_favourite = data.is_favourite;
-                if (data.created_at)
-                    this.date = data.created_at;
+
+                // this.id  = data.nid;
+                // this.specialists  = data.providers;
+                // this.authorName = data.author;
+                // this.video = data.video;
+                // this.articleType = data.article_type;
+                // this.tags = data.tags;
+                // this.is_favourite = data.is_favourite;
+                    
                 this.isDataReady = true
                 // console.log(data)
             },
