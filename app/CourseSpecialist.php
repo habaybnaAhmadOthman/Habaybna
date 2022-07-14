@@ -10,4 +10,9 @@ class CourseSpecialist extends Model
    {
        return $this->hasOne(Specialist::class,'user_id','specialist_id');
    }
+
+   public function course()
+   {
+       return $this->hasOne(Courses::class,'id','course_id');
+   }
 }

@@ -5,8 +5,10 @@ use App\CustomClass\CreateContent;
 use App\CustomClass\UpdateContent;
 use Illuminate\Http\Request;
 use App\Content;
+use App\CourseSpecialist;
 use App\NewContent;
 use App\Specialist;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class ContentController extends Controller
@@ -98,10 +100,18 @@ class ContentController extends Controller
 
    public function getSpecialistData($id)
    {
-        $data = Specialist::with('courses','articles')->where('user_id',$id)->first();
-        if ($data) {
-            return response($data,200);
+        $courses = CourseSpecialist::where('specialist_id',$id)->with('course')->get();
+
+        if($courses->count() > 0) {
+            $data['specialist']['courses'] = $courses;
         }
+        $article = NewContent::where('author_id',$id)->with('author')->first();
+
+        if($article) {
+            $data['specialist']['articles'] = $article ;
+        }
+        return response($data,200);
+
    }
 
 }
