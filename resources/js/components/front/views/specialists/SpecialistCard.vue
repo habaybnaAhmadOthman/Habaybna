@@ -24,6 +24,16 @@
         created(){
             console.log(this.specialist,'sss')
         },
+        computed: {
+            authorURL(){
+                var url = this.author.firstName.split(' ').join('-')
+                if (this.author.lastName)
+                    url += `-${this.author.lastName.split(' ').join('-')}`
+
+                url += `--${this.author.user_id}`
+                return `/specialist/${url}`
+            },
+        },
         methods: {
             showMoreFn(){
                 this.showMore = !this.showMore
