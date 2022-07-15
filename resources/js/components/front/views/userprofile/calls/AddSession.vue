@@ -23,39 +23,47 @@
           <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
         </div>
 
-        <div class="d-flex gap-20">
+        <div class="d-flex gap-20 first-row flex-wrap-p">
           <div
-            class="form-group w-100 mb-20"
+            class="form-group w-100 mb-20 w-100-p mb-0-p"
             :class="{ invalid: !from.isValid }"
           >
             <label>الوقت من</label>
-            <input
-              class="w-100"
-              type="time"
-              id="from"
-              v-model="from.val"
-            />
+            <div class="relative d-flex gap-10">
+              <select class="w-100" v-model="from.time">
+                <option v-for="item in time" :key="item" :value="item">{{ item | formatTime }}</option>
+              </select>
+              <select class="am-pm" v-model="from.amPm">
+                <option value="am">AM</option>
+                <option value="pm">PM</option>
+              </select>
+              
+            </div>
             <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
           </div>
           <div
-            class="form-group w-100 mb-20"
+            class="form-group w-100 mb-20 w-100-p"
             :class="{ invalid: !to.isValid }"
           >
             <label>الوقت إلى</label>
-            <input
-              class="w-100"
-              type="time"
-              id="to"
-              v-model="to.val"
-            />
+            <div class="relative d-flex gap-10">
+              <select class="w-100" v-model="to.time">
+                <option v-for="item in time" :key="item" :value="item">{{ item | formatTime }}</option>
+              </select>
+              <select class="am-pm" v-model="to.amPm">
+                <option value="am">AM</option>
+                <option value="pm">PM</option>
+              </select>
+              
+            </div>
             <p class="red mt-5 font-12">هذا الحقل مطلوب</p>
           </div>
         </div>
       </form>
-      <div class="d-flex gap-20">
-        <button @click="closeModal" class="radius-60 gray dismiss-btn pointer">إلغاء</button>
-        <button @click="submitForm" class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15">حفظ</button>
-        <button class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15">حفظ وإستمرار</button>
+      <div class="d-flex gap-20 mt-10-p btns-box">
+        <button @click="clear" class="radius-60 gray dismiss-btn pointer">إلغاء</button>
+        <button @click="submitForm(true)" class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15">حفظ</button>
+        <button @click="submitForm(false)" class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15">حفظ وإستمرار</button>
       </div>
     </div>
   </normal-modal>
@@ -71,12 +79,24 @@ export default {
     this.appendAvailableDays_DropDown();
   },
   methods: {
-    submitForm(){
+    submitForm(shouldCloseModal){
       var intervals = this.prepareIntervals();
       if (intervals.length > 0) {
         this.$emit('add-new-session',intervals);
-        this.closeModal();
+        if (shouldCloseModal)
+          this.closeModal();
       }
+    },
+    clear(){
+      this.day.val=  "";
+      this.day.isValid = true;
+      this.from.time = ""
+      this.from.amPm = "pm";
+      this.from.isValid = true
+      this.to.time = ""
+      this.to.amPm = "pm";
+      this.to.isValid = true
+      this.closeModal()
     },
     // this function check validity,
     // show popup message if the date is invalid
@@ -125,10 +145,10 @@ export default {
         if (self.day.val == '') {
           self.day.isValid = false;
         }
-        if (self.from.val == '') {
+        if (self.from.time == '' || self.from.amPm == '') {
           self.from.isValid = false;
         }
-        if (self.to.val == '') {
+        if (self.to.time == '' || self.to.amPm == '') {
           self.to.isValid = false;
         }
         if (!self.day.isValid || !self.from.isValid || !self.to.isValid)
@@ -138,22 +158,21 @@ export default {
       }
 
       function prepareFromTo(self) {
-        fromHour = self.from.val.split(':')[0];
-        fromMinutes = +self.from.val.split(':')[1];
-        toHour = self.to.val.split(':')[0];
-        toMinutes = +self.to.val.split(':')[1];
+        
+        if (self.from.amPm == 'pm') {
+          fromHour = +self.from.time.split(':')[0] + 12;
+        } else
+          fromHour = +self.from.time.split(':')[0];
+        if (self.to.amPm == 'pm') {
+          toHour = +self.to.time.split(':')[0] + 12;
+        } else
+          toHour = +self.to.time.split(':')[0];
+
+        fromMinutes = +self.from.time.split(':')[1];
+        toMinutes = +self.to.time.split(':')[1];
         fromDate = new Date(self.day.val);
         toDate = new Date(self.day.val);
         
-
-        if (fromMinutes > 30) 
-          fromMinutes = 30
-        else
-          fromMinutes = 0
-        if (toMinutes > 30) 
-          toMinutes = 30
-        else
-          toMinutes = 0
         fromDate.setHours(fromHour,fromMinutes,0);
         toDate.setHours(toHour,toMinutes,0);
       }
@@ -164,11 +183,11 @@ export default {
     appendAvailableDays_DropDown() {
       let today = new Date();
       const appendedDays = [];
-      for (let i = 0; i < 7; i++) {
+      for (let i = 1; i <= 7; i++) {
         let day = new Date(today.getTime() + i * 24 * 60 * 60 * 1000);
         let date = `${day.getFullYear()}-${ day.getMonth() + 1 }-${day.getDate()}`;
 
-        let formatedDay = `${date}-${day.getDate()} | ${day.toLocaleDateString("ar", {
+        let formatedDay = `${date} | ${day.toLocaleDateString("ar", {
           weekday: "long",
         })}`;
 
@@ -186,15 +205,54 @@ export default {
       },
       availableDays: [],
       from: {
-        val: "",
+        time: "",
+        amPm: "pm",
         isValid: true,
       },
       to: {
-        val: "",
+        time: "",
+        amPm: "pm",
         isValid: true,
       },
+      time: [
+        '00:00',
+        '00:30',
+        '01:00',
+        '01:30',
+        '02:00',
+        '02:30',
+        '03:00',
+        '03:30',
+        '04:00',
+        '04:30',
+        '05:00',
+        '05:30',
+        '06:00',
+        '06:30',
+        '07:00',
+        '07:30',
+        '08:00',
+        '08:30',
+        '09:00',
+        '09:30',
+        '10:00',
+        '10:30',
+        '11:00',
+        '11:30'
+      ]
     };
   },
+  filters: {
+      formatTime: function (time) {
+        let buffer
+          if (time.startsWith('00')) {
+            buffer = time.split(':')[0]
+            buffer = '12' + ':' + time.split(':')[1];
+            return buffer
+          }
+          return time
+      }
+  }
 };
 </script>
 
@@ -225,5 +283,26 @@ input {
 .dismiss-btn {
   border: 1px solid #ccc;
   background: transparent;
+}
+@media (max-width: 767px) {
+  .first-row {
+    gap: 15px;
+  }
+  .form-group {
+    margin-bottom: 15px!important;
+}
+.mb-0-p {
+    margin-bottom: 0 !important;
+}
+select,input {
+  height: 50px;
+}
+.btns-box {
+  gap: 10px;
+}
+.btns-box > button {
+  font-size: 13px;
+  padding: 8px 3px;
+}
 }
 </style>

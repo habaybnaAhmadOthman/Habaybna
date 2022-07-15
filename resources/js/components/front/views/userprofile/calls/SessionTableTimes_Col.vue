@@ -7,7 +7,7 @@
       <p>{{timeInterval}}</p>
     </div>
     <div class="remove-col flex-all p-side-10">
-        <img class="remove-icon pointer" src="/images/trash-bin.png" width="40" height="40">
+        <img @click="removeCol" class="remove-icon pointer" src="/images/trash-bin.png" width="40" height="40">
     </div>
   </div>
 </template>
@@ -15,6 +15,7 @@
 <script>
   export default {
     props: ['data'],
+    emits: ['remove'],
     computed: {
       timeInterval(){
         return new Date(this.data).toLocaleTimeString('en-US',{
@@ -29,6 +30,11 @@
         return new Date(this.data).toLocaleDateString('en-US',{weekday:'long'})
       },
 
+    },
+    methods: {
+      removeCol(){
+        this.$emit('remove',this.data)
+      }
     }
   }
 </script>
@@ -67,7 +73,7 @@
     background: #6ad500;
 }
 .day-name.Tuesday .day-label:before {
-    background: #ffa284;
+    background: #a384ff;
 }
 .day-name.Wednesday .day-label:before {
     background: #009688;
@@ -77,5 +83,11 @@
 }
 .day-name.Friday .day-label:before {
     background: #ff9f02;
+}
+.day-name {
+  transition: .3s;
+}
+.day-name:hover {
+  background: #e6e6e6;
 }
 </style>

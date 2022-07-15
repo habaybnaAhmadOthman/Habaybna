@@ -92,6 +92,7 @@ import UserProfile_MyFavouriteContent from "./components/front/pages/dashboard/M
 
 // user profile ==> Calls
 import UserProfile_SessionTimes from "./components/front/pages/dashboard/calls/SessionTimes.vue";
+import UserProfile_CallLogs from "./components/front/pages/dashboard/calls/CallLog.vue";
 
 
 
@@ -422,6 +423,11 @@ const routes = [{
                 path: "my-sessions-times",
                 component: UserProfile_SessionTimes,
                 name: 'mySessionsTimes'
+            },
+            {
+                path: "my-call-log",
+                component: UserProfile_CallLogs,
+                name: 'myCallLog'
             },
 
         ]
