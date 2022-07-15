@@ -34,10 +34,12 @@ class GetUsersCourseProgress {
                         'course_title'=>$one->course->courseTitle,
                         'course_videos_count'=>$one->course->videos->count(),
                         'completed_videos_count'=>$this->getCompletedLessones($one),
-                        'complete_lessons_perc'=>($this->getCompletedLessones($one)/$one->course->videos->count()) * 100 . " %",
+                        'complete_lessons_perc'=>round(($this->getCompletedLessones($one)/$one->course->videos->count()) * 100) . " %",
                         // 'completed_videos_count'=>$this->getCompletedLessonesPerc(),
-                        'user_name'=>$one->user->user_data->firstName,
+                        // 'user_name'=>$one->user->user_data->firstName,
+                        'user_name'=>$one->user->user_data->firstName .' '. $one->user->user_data->lastName,
                         'user_phone'=>$one->user->phone,
+                        'user_email'=>$one->user->email,
                         'date'=>$one->created_at->format('Y-m-d'),
                         'course_status'=>$this->getCourseStatus($one)
                       ];

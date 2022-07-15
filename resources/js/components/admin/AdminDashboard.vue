@@ -142,6 +142,11 @@ footer {
               <Icon type="ios-call" size="16" />
               <router-link to="/admin/media">التغطية الاعلامية </router-link>
             </MenuItem>
+            <MenuItem name="10">
+              <Icon type="ios-at-outline" size="24" />
+              <router-link to="/admin/testimonials"> التوصيات </router-link>
+            </MenuItem>
+
           </Menu>
         </Sider>
         <Layout :style="{ padding: '0 5px' }">

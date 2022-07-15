@@ -5,8 +5,10 @@ use App\CustomClass\CreateContent;
 use App\CustomClass\UpdateContent;
 use Illuminate\Http\Request;
 use App\Content;
+use App\CourseSpecialist;
 use App\NewContent;
-
+use App\Specialist;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class ContentController extends Controller
@@ -55,7 +57,7 @@ class ContentController extends Controller
 
    public function showArticle(Request $request)
    {
-       $article = Content::where('title',$request->title)->first();
+       $article = NewContent::with('intrests','author')->where('title',$request->title)->first();
        if($article){
            return response($article,200);
        }
@@ -86,6 +88,31 @@ class ContentController extends Controller
             if($user->user_data  !== null)
             return $user->user_data->firstName . " " . $user->user_data->lastName;
                 // return $user->user_data->firstName . " " .$user->user_data['lastName'];
+   }
+
+   public function getIndexNew()
+   {
+
+      $contents = NewContent::with('intrests','author')->orderBy('id', 'DESC')->paginate(15);
+
+        return response()->json($contents);
+   }
+
+   public function getSpecialistData($slug)
+   {
+
+       $id = explode ("--", $slug);
+        $courses = CourseSpecialist::where('specialist_id',$id[1])->with('course')->get();
+        if($courses->count() > 0) {
+            $data['specialist']['courses'] = $courses;
+        }
+        $article = NewContent::where('author_id',$id[1])->with('author')->first();
+
+        if($article) {
+            $data['specialist']['articles'] = $article ;
+        }
+        return response($data,200);
+
    }
 
 }

@@ -76,6 +76,7 @@
     import TheFooter from '../../layouts/TheFooter.vue'
     import infoModalMixin from '../../mixins/infoModal'
     export default {
+        props: ['specialist'],
         mixins: [infoModalMixin],
         components: { TheHeader,TabsToggle,SpecialistCourses,Articles,Book,AboutSection,QuestionaireModal,TheFooter},
         data(){
@@ -164,10 +165,16 @@
             },
             isQuestionaireModal(status){
                 this.querstionaireModal.show = status
+            },
+            async getSpecialistData() {
+                const data = await this.$store.dispatch(`specialist/getSpecialistDetails`,this.specialist);
+                console.log(data)
+                this.isDataReady = true
             }
         },
         async mounted(){
             this.getActiveTab();
+            await this.getSpecialistData();
             await this.getCourses();
             this.isFromPaymentPage()
         },
