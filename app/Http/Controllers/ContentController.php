@@ -98,14 +98,15 @@ class ContentController extends Controller
         return response()->json($contents);
    }
 
-   public function getSpecialistData($id)
+   public function getSpecialistData($slug)
    {
-        $courses = CourseSpecialist::where('specialist_id',$id)->with('course')->get();
 
+       $id = explode ("--", $slug);
+        $courses = CourseSpecialist::where('specialist_id',$id[1])->with('course')->get();
         if($courses->count() > 0) {
             $data['specialist']['courses'] = $courses;
         }
-        $article = NewContent::where('author_id',$id)->with('author')->first();
+        $article = NewContent::where('author_id',$id[1])->with('author')->first();
 
         if($article) {
             $data['specialist']['articles'] = $article ;
