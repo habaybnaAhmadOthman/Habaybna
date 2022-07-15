@@ -56,7 +56,6 @@
                 this.tags = data.intrests;
                 this.title = data.title;
                 this.isDataReady = true
-                console.log(data)
             },
             showShareDialog() {
                 this.showShareModal = !this.showShareModal;
