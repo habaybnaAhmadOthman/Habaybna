@@ -106,7 +106,7 @@ class ContentController extends Controller
         if($courses->count() > 0) {
             $data['specialist']['courses'] = $courses;
         }
-        $article = NewContent::where('author_id',$id[1])->with('author')->first();
+        $article = NewContent::where('author_id',$id[1])->with('author')->get();
 
         if($article) {
             $data['specialist']['articles'] = $article ;
