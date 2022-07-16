@@ -115,4 +115,13 @@ class ContentController extends Controller
 
    }
 
+   public function addToFavourite(Request $request)
+   {
+       if(Auth::user()){
+            if(NewContent::findorfail($request->id)){
+                    dd(NewContent::findorfail($request->id));
+            }
+       }
+   }
+
 }
