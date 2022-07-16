@@ -1,6 +1,6 @@
 <template>
     <div class="small-card w-100-p relative">
-        <!-- <div class="fav-box relative pointer shadow-2" :class="{'active':item.is_favourite}" @click="addToFavourite($event,item.nid)"></div> -->
+        <div class="fav-box relative pointer shadow-2" :class="{'active':item.is_favourite}" @click="addToFavourite($event,item.id)"></div>
         <router-link
             class="radius-10 shadow d-flex p-10 bg-white box"
             :to="`/library/${item.title.split(' ').join('-')}`"

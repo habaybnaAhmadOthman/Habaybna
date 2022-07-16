@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Content;
+use App\NewContent;
 use App\UsersFavouriteArticles;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -16,16 +16,16 @@ class UsersFavouriteArticlesController extends Controller
     public function addToFavourite(Request $request)
     {
         try {
-            $article = Content::findorfail($request->id) ;
 
-            if($article)
+            if(NewContent::findorfail($request->id))
             {
+
                 if(UsersFavouriteArticles::where('user_id',Auth::id())
                                         ->where('article_id',$request->id)
                                         ->first())
                 {
                     UsersFavouriteArticles::where('user_id',Auth::id())
-                                        ->where('article_id',$request->articleID)->delete();
+                                        ->where('article_id',$request->id)->delete();
 
                     return response(
                                         UsersFavouriteArticles::where('user_id',Auth::id())->get()
@@ -34,10 +34,11 @@ class UsersFavouriteArticlesController extends Controller
                                     );
                 }
 
-                $articleFav = UsersFavouriteArticles::create([
-                   'user_id'=> Auth::id(),
-                   'article_id'=> $request->id
-                ]);
+                $articleFav =  new UsersFavouriteArticles ();
+                $articleFav->user_id = Auth::id();
+                $articleFav->article_id = $request->id;
+
+                $articleFav->save() ;
 
             }
             return response($articleFav,200);

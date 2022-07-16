@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('get-payment-status','PaymentController@checkPaymentStatus');
     Route::post('/course-payment','PaymentController@coursePayment');
     Route::post('course/add-to-fav','CourseController@addToFavourite');
-    Route::post('article/add-to-fav','CourseController@addToFavourite');
+    Route::post('article/add-to-fav','UsersFavouriteArticlesController@addToFavourite');
     Route::post('courses/free-course','PaymentController@joinFreeCourse');
     Route::post('course/get-course-quize','QuizController@getUserCourseQuiz');
 
