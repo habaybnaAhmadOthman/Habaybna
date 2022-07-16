@@ -7,11 +7,11 @@
                 <div class="bg-white m-side-12-p box shadow radius-10 p-side-30 p-side-12-p">
                     <div class="d-flex flex-wrap-p justify-center-p">
                         <figure class="rounded overflow-hidden shadow d-flex ml-30 avatar-box m-0-p bg-white">
-                            <img class="object-fit" src="/images/big-logo.png" width="240" height="240" alt="" >
+                            <img class="object-fit" :src="specialist.avatar | defaultAvatar" width="240" height="240" alt="" >
                         </figure>
                         <div class="pt-30 w-100-p center-p">
-                            <h1 class="black-2 bold center-p font-20 font-30 mb-10">فريق التحرير</h1>
-                            <h2 class="black-2 bold font-20 font-24 mb-10">منصة حبايبنا.نت</h2>
+                            <h1 class="black-2 bold center-p font-20 font-30 mb-10">{{specialistName}}</h1>
+                            <h2 class="black-2 bold font-20 font-24 mb-10">{{specialistInfo.specialization}}</h2>
                         </div>
                     </div>
 
@@ -23,10 +23,12 @@
                             <div class="font-24 black-2 font-18-p">منصة حبايبنا.نت هي منصة رقمية عربية تهدف إلى تمكين الوالدين ومقدمي الرعاية العرب ليستطيعوا تحسين حياة الأطفال المتأخرين في التطور بمختلف مجالات الحياة. يتكون فريق التحرير من مجموعة من الأخصائيين في التربية الخاصة أو التأهيل بالإضافة إلى محرري المحتوى.</div>
                         </div>
                         <div tab-name="courses" all>
-                            <SpecialistCourses :list-class="'p-0-p'" v-if="isDataReady" :filtered-courses="courses"></SpecialistCourses>
+                            <!-- <SpecialistCourses :list-class="'p-0-p'" v-if="isDataReady" :filtered-courses="courses"></SpecialistCourses> -->
                         </div>
                         <div tab-name="articles" all>
-                            <Articles :class-list="'p-0-p'" :list-only="true"></Articles>
+                            <div v-if="isDataReady" class="grid-2 gap2 grid-1-p">
+                                <SmallCard v-for="(item) in articles" :key="item.id" :item="item"></SmallCard>
+                            </div>
                         </div>
                     </div>
 
@@ -39,13 +41,14 @@
 
 <script>
     import TheHeader from '../layouts/header/TheHeader.vue'
+    import SmallCard from '../layouts/SmallCard.vue'
     import TabsToggle from '../layouts/TabsToggle.vue'
     import SpecialistCourses from '../views/onlinecourses/CoursesSection_Cards.vue'
     import Articles from '../views/library/ContentSection.vue'
     import TheFooter from '../layouts/TheFooter.vue'
     export default {
         props: ['specialist'],
-        components: { TheHeader,TabsToggle,SpecialistCourses,Articles,TheFooter},
+        components: { TheHeader,TabsToggle,SpecialistCourses,Articles,TheFooter,SmallCard},
         data(){
             return {
                 tabs: [
@@ -66,27 +69,45 @@
                     },
                 ],
                 courses: [],
+                articles: [],
                 isDataReady: false,
+                specialistInfo: {
+                    firstName: null,
+                    lastName: null,
+                    specialization: null,
+                    avatar: null
+                }
+
+            }
+        },
+        computed: {
+            specialistName(){
+                return this.specialistInfo.firstName + ' ' + this.specialistInfo.lastName
             }
         },
         methods: {
-            async getCourses() {
-                const allCourses = await this.$store.getters['courses/courses']
-                if ( allCourses.length > 0 ) {
-                    this.courses = allCourses
-                } else {
-                    this.courses = await this.$store.dispatch('courses/getAllCourses');
-                }
-            },
             async getSpecialistData() {
                 const data = await this.$store.dispatch(`specialist/getSpecialistDetails`,this.specialist);
-                console.log(data)
+                this.courses = data.specialist.courses.map((item)=>item.course)
+                this.articles = data.specialist.articles;
+                if (this.articles.length > 0) {
+                    const specialistData = this.articles[0].author
+                    this.specialistInfo.firstName = specialistData.firstName
+                    this.specialistInfo.lastName = specialistData.lastName
+                    this.specialistInfo.specialization = specialistData.specialization
+                    this.specialistInfo.avatar = specialistData.avatar
+                }
                 this.isDataReady = true
             }
         },
-        mounted() {
-            this.getSpecialistData();
-            this.getCourses()
+        filters: {
+            defaultAvatar: function (avatar) {
+                if (avatar == 'default.jpg') return '/images/avatars/default.jpg'
+                return avatar
+            }
+        },
+        async mounted() {
+            await this.getSpecialistData();
         }
     }
 </script>

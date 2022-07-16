@@ -11,8 +11,8 @@
                 </p>
                 <span
                     class="date font-14 white radius-20 gray"
-                    v-if="item.date"
-                    >{{ item.date }}</span
+                    v-if="item.created_at"
+                    >{{ item.created_at }}</span
                 >
             </div>
             <figure class="d-flex relative">
@@ -34,7 +34,7 @@ export default {
     computed: {
         isLoggedIn() {
             return this.$store.getters["user/isLoggedIn"];
-        },
+        }
     },
     methods: {
         async addToFavourite(event,id) {

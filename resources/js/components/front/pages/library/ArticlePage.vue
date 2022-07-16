@@ -2,7 +2,7 @@
     <div class="library-page">
         <TheHeader></TheHeader>
         <div class="container">
-            <ArticleBanner @open-share-modal="showShareDialog" :image="mainImage" :date="date"></ArticleBanner>
+            <ArticleBanner @open-share-modal="showShareDialog" :image="mainImage" :created_at="created_at"></ArticleBanner>
             <ArticleContent v-if="isDataReady" :tags="tags" :title="title" :description="description" :author="author"></ArticleContent>
             <!-- <div class="mt-50">
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
@@ -39,7 +39,7 @@
                 author: {},
                 description: null,
                 mainImage: null,
-                date: null,
+                created_at: null,
                 title: null,
                 tags: null,
                 showShareModal: false,
@@ -52,7 +52,7 @@
                 this.author  = data.author;
                 this.description = data.content;
                 this.mainImage = data.cover_photo;
-                this.date = data.created_at;
+                this.created_at = data.created_at;
                 this.tags = data.intrests;
                 this.title = data.title;
                 this.isDataReady = true

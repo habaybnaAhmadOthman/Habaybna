@@ -45,7 +45,7 @@
                         </template>
                     </div>
                     <span class="gray font-18"
-                        >{{ getTime(course.course_length) }}</span
+                        >{{ getTime }}</span
                     >
                 </div>
             </div>
@@ -60,11 +60,24 @@ export default {
     components: {DiscountLabel},
     computed:{
         courseSlog(){
-            return this.course.title.split(' ').join('-')
+            if (this.course.title)
+                return this.course.title.split(' ').join('-')
+            else
+                return this.course.courseTitle.split(' ').join('-')
         },
         isLoggedIn() {
             return this.$store.getters["user/isLoggedIn"];
         },
+        getTime(){
+            var hms = new Date(this.course.course_length * 1000).toISOString().substr(11, 8);
+            if (+hms.split(':')[0] > 0) {
+                return `${+hms.split(':')[0]} ساعة`
+            } else if (+hms.split(':')[1] > 0) {
+                return `${+hms.split(':')[1]} دقيقة`
+            } else {
+                return `${+hms.split(':')[2]} ثواني`
+            }
+        }
     },
     methods: {
         forceRefresh(){
@@ -80,16 +93,7 @@ export default {
                 this.$store.commit('loginModal',true);
             }
         },
-        getTime(seconds){
-            var hms = new Date(seconds * 1000).toISOString().substr(11, 8);
-            if (+hms.split(':')[0] > 0) {
-                return `${+hms.split(':')[0]} ساعة`
-            } else if (+hms.split(':')[1] > 0) {
-                return `${+hms.split(':')[1]} دقيقة`
-            } else {
-                return `${+hms.split(':')[2]} ثواني`
-            }
-        }
+        
     },
     mounted(){
         

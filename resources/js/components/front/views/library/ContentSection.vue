@@ -101,7 +101,6 @@ export default {
             page = 1;
         }
         this.isLoading(true)
-        console.log(this.listApi)
         if (this.listApi)
           getDataFrom = this.listApi
         const resp = await this.$store.dispatch(`content/${getDataFrom}`,{page})
