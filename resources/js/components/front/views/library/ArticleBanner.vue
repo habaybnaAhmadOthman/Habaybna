@@ -17,7 +17,7 @@
 <script>
     export default {
         emits: ['open-share-modal'],
-        props: ['image','created_at'],
+        props: ['image','created_at','is_favourite'],
         methods: {
             openShareModal(){
                 this.$emit('open-share-modal')

@@ -92,16 +92,16 @@ export default {
         forceRefresh(){
             this.$store.commit("forceRefresh");
         },
-        async addToFavourite(event) {
-            if (this.isLoggedIn) {
-                event.target.classList.toggle('active')
-                await this.$store.dispatch("courses/addToFavourite",{
-                    courseID:this.course.id
-                });
-            } else {
-                this.$store.commit('loginModal',true);
-            }
-        },
+        // async addToFavourite(event) {
+        //     if (this.isLoggedIn) {
+        //         event.target.classList.toggle('active')
+        //         await this.$store.dispatch("courses/addToFavourite",{
+        //             courseID:this.course.id
+        //         });
+        //     } else {
+        //         this.$store.commit('loginModal',true);
+        //     }
+        // },
         
     },
     mounted(){

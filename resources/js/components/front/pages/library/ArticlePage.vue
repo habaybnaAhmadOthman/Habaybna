@@ -2,7 +2,7 @@
     <div class="library-page">
         <TheHeader></TheHeader>
         <div class="container">
-            <ArticleBanner @open-share-modal="showShareDialog" :image="mainImage" :created_at="created_at"></ArticleBanner>
+            <ArticleBanner :is_favourite="is_favourite" @open-share-modal="showShareDialog" :image="mainImage" :created_at="created_at"></ArticleBanner>
             <ArticleContent v-if="isDataReady" :tags="tags" :title="title" :description="description" :author="author"></ArticleContent>
             <!-- <div class="mt-50">
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
@@ -44,6 +44,7 @@
                 tags: null,
                 showShareModal: false,
                 isDataReady:false,
+                is_favourite: false
             }
         },
         methods: { 
