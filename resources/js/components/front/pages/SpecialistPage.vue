@@ -20,10 +20,12 @@
                     </div>
                     <div class="mt-40 pb-40">
                         <div tab-name="about" all class="active">
-                            <div class="font-24 black-2 font-18-p">منصة حبايبنا.نت هي منصة رقمية عربية تهدف إلى تمكين الوالدين ومقدمي الرعاية العرب ليستطيعوا تحسين حياة الأطفال المتأخرين في التطور بمختلف مجالات الحياة. يتكون فريق التحرير من مجموعة من الأخصائيين في التربية الخاصة أو التأهيل بالإضافة إلى محرري المحتوى.</div>
+                            <div class="font-24 black-2 font-18-p">{{specialistInfo.bio}}</div>
                         </div>
-                        <div tab-name="courses" all>
-                            <!-- <SpecialistCourses :list-class="'p-0-p'" v-if="isDataReady" :filtered-courses="courses"></SpecialistCourses> -->
+                        <div tab-name="courses" all >
+                            <div class="grid-3 gap2 grid-1-p" v-if="isDataReady">
+                                <CourseCard :class="'w-100-i'" v-for="(course, index) in courses" :course="course" :key="index"></CourseCard>
+                            </div>
                         </div>
                         <div tab-name="articles" all>
                             <div v-if="isDataReady" class="grid-2 gap2 grid-1-p">
@@ -43,12 +45,12 @@
     import TheHeader from '../layouts/header/TheHeader.vue'
     import SmallCard from '../layouts/SmallCard.vue'
     import TabsToggle from '../layouts/TabsToggle.vue'
-    import SpecialistCourses from '../views/onlinecourses/CoursesSection_Cards.vue'
+    import CourseCard from '../views/onlinecourses/Course_Card.vue'
     import Articles from '../views/library/ContentSection.vue'
     import TheFooter from '../layouts/TheFooter.vue'
     export default {
         props: ['specialist'],
-        components: { TheHeader,TabsToggle,SpecialistCourses,Articles,TheFooter,SmallCard},
+        components: { TheHeader,TabsToggle,Articles,TheFooter,SmallCard,CourseCard},
         data(){
             return {
                 tabs: [
@@ -75,6 +77,7 @@
                     firstName: null,
                     lastName: null,
                     specialization: null,
+                    bio: null,
                     avatar: null
                 }
 
@@ -88,7 +91,32 @@
         methods: {
             async getSpecialistData() {
                 const data = await this.$store.dispatch(`specialist/getSpecialistDetails`,this.specialist);
-                this.courses = data.specialist.courses.map((item)=>item.course)
+                this.courses = data.specialist.courses.map((item)=>{
+                    const obj = item.course
+                    const course = {
+                        is_favourite:obj.is_favourite,
+                        title: obj.courseTitle,
+                        course_length: obj.course_length,
+                        id: obj.id,
+                        is_free: obj.is_free,
+                        cover_photo: obj.cover_photo,
+                        price: obj.price
+                    }
+                    if (+obj.discount && +obj.discount > 0) {
+                        course.discount = {
+                            has_discount: true,
+                            discount_value: obj.discount+ '%',
+                            discount_price: obj.price - (obj.price * (obj.discount/100))
+                        }
+                    } else {
+                        course.discount = {
+                            has_discount: false,
+                            discount_value: 0,
+                            discount_price: null
+                        }
+                    }
+                    return course
+                })
                 this.articles = data.specialist.articles;
                 if (this.articles.length > 0) {
                     const specialistData = this.articles[0].author
@@ -96,6 +124,7 @@
                     this.specialistInfo.lastName = specialistData.lastName
                     this.specialistInfo.specialization = specialistData.specialization
                     this.specialistInfo.avatar = specialistData.avatar
+                    this.specialistInfo.bio = specialistData.disorders_work_with
                 }
                 this.isDataReady = true
             }

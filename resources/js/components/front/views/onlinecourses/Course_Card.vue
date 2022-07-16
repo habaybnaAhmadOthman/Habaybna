@@ -1,6 +1,6 @@
 <template>
     <div class="course-box bg-white shadow w-31 radius-10 relative w-100-p">
-        <div @click="addToFavourite" :class="{'active':course.is_favourite}" class="fav-box relative pointer"></div>
+        <!-- <div @click="addToFavourite" :class="{'active':course.is_favourite}" class="fav-box relative pointer"></div> -->
         <router-link @click.native="forceRefresh" :to="`/courses/${courseSlog}`">
             <figure class="d-flex relative radius-10 overflow-hidden figure-box">
                 <img
@@ -20,7 +20,7 @@
 
             <div class="p-side-20 pb-10 pt-10">
                 <p class="yellow font-16 bold mb-10">الدورة التدريبية</p>
-                <p class="font-20 font-18-p black-2 mb-15 bold two-line course-title">{{ course.title }}</p>
+                <p class="font-20 font-18-p black-2 mb-15 bold two-line course-title">{{ courseTitle }}</p>
                 <div class="d-flex space-between">
                     <div class="d-flex align-center">
                         <template v-if="course.discount.has_discount">
@@ -68,15 +68,24 @@ export default {
         isLoggedIn() {
             return this.$store.getters["user/isLoggedIn"];
         },
+        courseTitle(){
+            if (this.course.title)
+                return this.course.title.split(' ').join('-')
+            else
+                return this.course.courseTitle
+        },
         getTime(){
-            var hms = new Date(this.course.course_length * 1000).toISOString().substr(11, 8);
-            if (+hms.split(':')[0] > 0) {
-                return `${+hms.split(':')[0]} ساعة`
-            } else if (+hms.split(':')[1] > 0) {
-                return `${+hms.split(':')[1]} دقيقة`
-            } else {
-                return `${+hms.split(':')[2]} ثواني`
+            if (this.course.course_length) {
+                var hms = new Date(this.course.course_length * 1000).toISOString().substr(11, 8);
+                if (+hms.split(':')[0] > 0) {
+                    return `${+hms.split(':')[0]} ساعة`
+                } else if (+hms.split(':')[1] > 0) {
+                    return `${+hms.split(':')[1]} دقيقة`
+                } else {
+                    return `${+hms.split(':')[2]} ثواني`
+                }
             }
+            return ''
         }
     },
     methods: {
