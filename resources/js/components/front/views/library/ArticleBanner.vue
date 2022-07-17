@@ -7,7 +7,7 @@
                 <p v-if="created_at" class="font-18 bold gray font-16-p">تم النشر : <span class="">{{created_at.slice(0,10)}}</span></p>
             </div>
             <div class="d-flex">
-                <div class="fav-box relative pointer shadow-2 ml-25" :class="{'active':is_favourite}" @click="addToFavourite($event,nid)"></div>
+                <div class="fav-box relative pointer shadow-2 ml-25" :class="{'active':is_liked}" @click="addToFavourite($event,id)"></div>
                 <p class="align-center bold d-flex font-14-p font-20 pointer yellow" @click="openShareModal"><img class="ml-10 share-img" src="/images/share-color.svg" width="34" height="36" alt="" > مشاركة</p>
             </div>
         </div>
@@ -17,7 +17,7 @@
 <script>
     export default {
         emits: ['open-share-modal'],
-        props: ['image','created_at','is_favourite'],
+        props: ['image','created_at','is_liked','id'],
         methods: {
             openShareModal(){
                 this.$emit('open-share-modal')

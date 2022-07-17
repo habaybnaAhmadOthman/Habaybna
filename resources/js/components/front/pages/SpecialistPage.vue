@@ -118,7 +118,12 @@
                     }
                     return course
                 })
-                this.articles = data.specialist.articles;
+                this.articles = data.specialist.articles.map((article)=>{
+                    return {
+                        ...article,
+                        without_like:true
+                    }
+                });
                 if (this.articles.length > 0) {
                     const specialistData = this.articles[0].author
                     this.specialistInfo.firstName = specialistData.firstName
@@ -127,7 +132,6 @@
                     this.specialistInfo.avatar = specialistData.avatar
                     this.specialistInfo.bio = specialistData.disorders_work_with
                 }
-                console.log(data.specialist)
                 this.isDataReady = true
             }
         },

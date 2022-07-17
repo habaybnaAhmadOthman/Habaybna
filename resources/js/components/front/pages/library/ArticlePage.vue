@@ -2,7 +2,7 @@
     <div class="library-page">
         <TheHeader></TheHeader>
         <div class="container">
-            <ArticleBanner :is_favourite="is_favourite" @open-share-modal="showShareDialog" :image="mainImage" :created_at="created_at"></ArticleBanner>
+            <ArticleBanner :is_liked="is_liked" :id="ID" @open-share-modal="showShareDialog" :image="mainImage" :created_at="created_at"></ArticleBanner>
             <ArticleContent v-if="isDataReady" :tags="tags" :title="title" :description="description" :author="author"></ArticleContent>
             <!-- <div class="mt-50">
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
@@ -46,7 +46,8 @@
                 tags: null,
                 showShareModal: false,
                 isDataReady:false,
-                is_favourite: false,
+                is_liked: false,
+                ID: null,
                 relatedArticles: []
             }
         },
@@ -58,8 +59,10 @@
                 this.description = article.content;
                 this.mainImage = article.cover_photo;
                 this.created_at = article.created_at;
+                this.is_liked = article.is_liked;
                 this.tags = article.intrests;
                 this.title = article.title;
+                this.ID = article.id;
                 if (data.relatedArticle && Object.keys(data.relatedArticle).length > 0) {
                     this.relatedArticles = data.relatedArticle[Object.keys(data.relatedArticle)[0]].slice(0,4).map(related=>{
                         return {

@@ -20,8 +20,7 @@ export default {
     },
     // ******** get liked Articles ::: GET
     async getLikedArticles(context,payload) {
-        debugger;
-        const resp = await callApi("GET", `/api/user/likes-articles`);
+        const resp = await callApi("GET", `/api/user/likes-articles?page=${payload.page}`);
         if (resp.status != 200) {
             const error = new Error("fail to get liked articles");
             throw error;
