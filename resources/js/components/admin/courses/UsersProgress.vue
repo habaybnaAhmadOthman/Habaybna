@@ -39,7 +39,7 @@ th {
     >
     <!-- <Table border :columns="columns7" :data="data6"></Table> -->
     <div class="search-wrapper">
-      <Input type="text" v-model="keyword" placeholder="ابحث عن رمز الكوبون" />
+      <Input type="text" v-model="keyword" placeholder="ابحث عن عنوان الدورة" />
     </div>
     <div class="coupon-table" ref="toPdf">
       <table class="table" id="table">
@@ -48,7 +48,7 @@ th {
             <th>#</th>
             <th>اسم المستخدم</th>
             <th class="sortted" v-on:click="sortTable('name')">عنوان الدورة</th>
-            <th>تاريخ الاشتراك</th>
+            <th class="sortted" v-on:click="sortTable('date')"> تاريخ الاشتراك</th>
             <!-- <th>عدد الدروس</th> -->
             <!-- <th>الدروس المنجزة</th> -->
             <th>نسبة الانجاز</th>
@@ -131,6 +131,25 @@ export default {
             : a.course_status < b.course_status
             ? 1
             : b.course_status < a.course_status
+            ? -1
+            : 0
+        );
+      }
+            if (type == "date") {
+          console.log('xxxxxxxxxxxx');
+        //   console.log(this.ascending);
+        let isAscending = this.ascending;
+        this.ascending = !this.ascending;
+        return this.orders.sort((a, b) =>
+          isAscending
+            ? a.date > b.date
+              ? 1
+              : b.date > a.date
+              ? -1
+              : 0
+            : a.date < b.date
+            ? 1
+            : b.date < a.date
             ? -1
             : 0
         );
