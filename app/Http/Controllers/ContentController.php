@@ -59,7 +59,7 @@ class ContentController extends Controller
 
    public function showArticle(Request $request)
    {
-       $data['article'] = NewContent::with('intrests','author')->where('title',$request->title)->first();
+       $data['article'] = NewContent::with('intrests','author','isLiked')->where('title',$request->title)->first();
 
         // related contents
        foreach ($data['article']->intrests as $one) {
