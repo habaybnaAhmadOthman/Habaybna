@@ -124,4 +124,12 @@ class ContentController extends Controller
 //        }
 //    }
 
-}
+    public function getUserLikedArticles()
+    {
+        return response(
+            Auth::user()->articles()->paginate(6),
+            200
+        );
+    }
+
+    }

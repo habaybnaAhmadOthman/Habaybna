@@ -133,10 +133,11 @@ h1 {
           type="number"
           v-model="form.max_usage"
           placeholder="الحد الاقصى لاستخدام الكوبون"
+          min="1"
         />
         <span class="error" v-if="!this.formValidation.max_usage">
-          * يجب تعبئة هذا الحقل
-        </span>
+ الحد الادنى للاستخدام (1)
+ </span>
       </div>
       <div class="question-form">
         <label for=""> نسبة الخصم ( % ) : </label>
@@ -324,7 +325,7 @@ export default {
       } else {
         this.formValidation.type = true;
       }
-      if (!this.form.max_usage) {
+      if (!this.form.max_usage || this.form.max_usage <= 0) {
         this.formValidation.max_usage = false;
       } else {
         this.formValidation.max_usage = true;
