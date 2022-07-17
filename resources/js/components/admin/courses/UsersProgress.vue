@@ -39,7 +39,7 @@ th {
     >
     <!-- <Table border :columns="columns7" :data="data6"></Table> -->
     <div class="search-wrapper">
-      <Input type="text" v-model="keyword" placeholder="ابحث عن عنوان الدورة" />
+      <Input type="text" v-model="keyword" placeholder="ابحث عن عنوان الدورة " />
     </div>
     <div class="coupon-table" ref="toPdf">
       <table class="table" id="table">
