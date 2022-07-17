@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Content;
 use App\CourseSpecialist;
 use App\NewContent;
+use App\ArticlesTags;
+
 use App\Specialist;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -57,9 +59,18 @@ class ContentController extends Controller
 
    public function showArticle(Request $request)
    {
-       $article = NewContent::with('intrests','author')->where('title',$request->title)->first();
-       if($article){
-           return response($article,200);
+       $data['article'] = NewContent::with('intrests','author')->where('title',$request->title)->first();
+
+        // related contents
+       foreach ($data['article']->intrests as $one) {
+           $data['relatedArticle'][$one->id] =
+            ArticlesTags::with('article')
+            ->where('tag_id',$one->id)
+            ->inRandomOrder()->limit(2)->get()
+           ;
+    }
+       if($data['article']){
+           return response($data,200);
        }
        return response('notFound',404);
 
