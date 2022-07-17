@@ -1,6 +1,6 @@
 <template>
     <div class="small-card w-100-p relative">
-        <div class="fav-box relative pointer shadow-2" :class="{'active':item.is_liked}" @click="addToFavourite($event,item.id)"></div>
+        <div v-if="hasLikeBtn" class="fav-box relative pointer shadow-2" :class="{'active':item.is_liked}" @click="addToFavourite($event,item.id)"></div>
         <router-link
             class="radius-10 shadow d-flex p-10 bg-white box"
             :to="`/library/${item.title.split(' ').join('-')}`"
@@ -34,7 +34,13 @@ export default {
     computed: {
         isLoggedIn() {
             return this.$store.getters["user/isLoggedIn"];
-        }
+        },
+        hasLikeBtn(){
+            if (this.item.without_like)
+                return false;
+
+            return true
+        }   
     },
     methods: {
         async addToFavourite(event,id) {

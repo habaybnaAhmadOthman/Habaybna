@@ -7,9 +7,11 @@
             <!-- <div class="mt-50">
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
             </div> -->
-            <!-- <div class="mt-60">
-                <RelatedCourses :title="`دورات تدريب ذات صلة`" v-if="isDataReady"></RelatedCourses>
-            </div> -->
+            <div class="mt-60" v-if="relatedArticles.length > 0">
+                <div class="grid-2 gap2 grid-1-p">
+                    <SmallCard v-for="(item) in relatedArticles" :key="item.id" :item="item"></SmallCard>
+                </div>
+            </div>
         </div>
         <TheFooter></TheFooter>
         <ShareArticleModal
@@ -25,15 +27,15 @@
 
 <script>
     import TheHeader from '../../layouts/header/TheHeader.vue'
+    import SmallCard from '../../layouts/SmallCard.vue'
     import ArticleBanner from '../../views/library/ArticleBanner.vue'
     import ArticleContent from '../../views/library/ArticleContent.vue'
     import AboutSpecialists from "../../views/coursepage/AboutSpecialists.vue";
-    import RelatedCourses from "../../views/coursepage/RelatedCourses.vue";
     import TheFooter from '../../layouts/TheFooter.vue'
     import ShareArticleModal from '../../views/coursepage/ShareCourseModal.vue'
     export default {
         props: ['article'],
-        components: { TheHeader,ArticleBanner,ArticleContent,AboutSpecialists,RelatedCourses,TheFooter,ShareArticleModal},
+        components: { TheHeader,ArticleBanner,ArticleContent,AboutSpecialists,SmallCard,TheFooter,ShareArticleModal},
         data(){
             return {
                 author: {},
@@ -44,20 +46,31 @@
                 tags: null,
                 showShareModal: false,
                 isDataReady:false,
-                is_favourite: false
+                is_favourite: false,
+                relatedArticles: []
             }
         },
         methods: { 
             async getPageData(){
                 let data = await this.$store.dispatch('content/getArticle',{title: this.article.split('-').join(' ')});
-                let liked = await this.$store.dispatch('content/getLikedArticles');
-                console.log(liked)
-                this.author  = data.author;
-                this.description = data.content;
-                this.mainImage = data.cover_photo;
-                this.created_at = data.created_at;
-                this.tags = data.intrests;
-                this.title = data.title;
+                const {article} = data
+                this.author  = article.author;
+                this.description = article.content;
+                this.mainImage = article.cover_photo;
+                this.created_at = article.created_at;
+                this.tags = article.intrests;
+                this.title = article.title;
+                if (data.relatedArticle && Object.keys(data.relatedArticle).length > 0) {
+                    this.relatedArticles = data.relatedArticle[Object.keys(data.relatedArticle)[0]].slice(0,4).map(related=>{
+                        return {
+                            id: related.article_id,
+                            title: related.article.title,
+                            created_at: related.article.created_at,
+                            image: related.article.cover_photo,
+                            without_like:true
+                        }
+                    })
+                }
                 this.isDataReady = true
                 console.log(data)
             },
