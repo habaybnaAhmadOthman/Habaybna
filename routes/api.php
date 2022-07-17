@@ -175,6 +175,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/edit-other-profile-data','OthersController@editProfileData');
     Route::post('/course-payment','PaymentController@coursePayment');
 
+    // get liked articles
+    Route::get('/user/likes-articles','ContentController@getUserLikedArticles');
+
+
 
 
 

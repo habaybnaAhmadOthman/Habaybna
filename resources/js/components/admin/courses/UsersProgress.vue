@@ -92,6 +92,7 @@ export default {
   },
   async created() {
     const resp = await this.callApi("get", "/api/admin/courses/user-progress");
+    // const resp = await this.callApi("get", "/api/user/likes-articles");
     if (resp.status == 200) {
       this.orders = resp.data;
     }

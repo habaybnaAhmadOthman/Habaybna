@@ -133,7 +133,7 @@
         </div>
       </div>
       <div class="form-group mb-0-p">
-        <div class="row"form.id>
+        <div class="row">
           <div class="col-md-4">
             <label class="form-control-label">التحصيل العلمي</label>
             <select class="form-control" id="education" v-model="education.val">
