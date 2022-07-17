@@ -15,6 +15,9 @@ th {
         >انشاء حساب أخصائي</Button
       >
     </div>
+    <Button type="success" size="large" ghost v-on:click="exportToExcel()">
+      export bio to excel</Button
+    >
     <div class="search-wrapper">
       <Input
         type="text"
@@ -40,7 +43,7 @@ th {
           </th>
           <th scope="col">التخصص</th>
           <th class="sortted" scope="col" v-on:click="sortTable('date')">
-              تاريخ التسجيل
+            تاريخ التسجيل
           </th>
           <th scope="col">الاجراءات</th>
         </tr>
@@ -48,12 +51,12 @@ th {
       <tbody>
         <tr v-for="(specialist, index) in filteredList" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ specialist.firstName +' '+  specialist.lastName}}</td>
+          <td>{{ specialist.firstName + " " + specialist.lastName }}</td>
           <td class="phone-td">{{ specialist.user.phone }}</td>
           <td>
-              <!-- {{getCountry(specialist.user.phone) }} -->
-              jordan
-              </td>
+            <!-- {{getCountry(specialist.user.phone) }} -->
+            jordan
+          </td>
           <td>{{ specialist.user.email }}</td>
           <td class="status">
             <Button
@@ -75,7 +78,7 @@ th {
           </td>
           <td>{{ specialist.gender == "m" ? "ذكر" : "انثى" }}</td>
           <td>{{ specialist.specialization }}</td>
-          <td>{{ specialist.created_at.slice(0,10) }}</td>
+          <td>{{ specialist.created_at.slice(0, 10) }}</td>
           <td>
             <Button
               :to="'/admin/specialist/' + specialist.user_id"
@@ -89,6 +92,26 @@ th {
               <Icon size="20" color="red" type="md-trash" />
             </Button>
           </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table" id="table" style="display: none">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">الاسم الكامل</th>
+          <th scope="col">الهاتف</th>
+          <th scope="col">الايميل</th>
+          <th scope="col">السيرة الذاتية</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(specialist, index) in filteredList" :key="index">
+          <th scope="row">{{ index + 1 }}</th>
+          <td>{{ specialist.firstName + " " + specialist.lastName }}</td>
+          <td class="phone-td">{{ specialist.user.phone }}</td>
+          <td>{{ specialist.user.email }}</td>
+          <td>{{ specialist.disorders_work_with }}</td>
         </tr>
       </tbody>
     </table>
@@ -114,6 +137,7 @@ th {
   </div>
 </template>
 <script>
+import * as XLSX from "xlsx";
 
 export default {
   data() {
@@ -146,6 +170,12 @@ export default {
     //       });
 
     //   },
+    exportToExcel() {
+      /* generate workbook object from table */
+      var wb = XLSX.utils.table_to_book(document.getElementById("table"));
+      /* generate file and force a download*/
+      XLSX.writeFile(wb, "specilist bio.xlsx");
+    },
     deleteDaialog(id, index) {
       this.dialogDelete = true;
       this.idDeleteUser = id;
@@ -208,7 +238,7 @@ export default {
             : 0
         );
       }
-            if (type == "date") {
+      if (type == "date") {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
