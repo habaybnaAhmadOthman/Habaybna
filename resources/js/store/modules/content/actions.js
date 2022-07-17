@@ -69,4 +69,13 @@ export default {
         }
         return resp.data
     },
+    // ******** Testimonial ::: GET
+    async getTestimonials(context,payload) {
+        const resp = await callApi("GET", `/api/get-testimonials/${payload.type}`);
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to get Testimonials");
+            throw error;
+        }
+        return resp.data
+    },
 };

@@ -100,6 +100,7 @@
                         id: obj.id,
                         is_free: obj.is_free,
                         cover_photo: obj.cover_photo,
+                        is_liked: obj.is_liked,
                         price: obj.price
                     }
                     if (+obj.discount && +obj.discount > 0) {

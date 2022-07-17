@@ -7,8 +7,8 @@
             <section class="profile-section pt-50 pb-50">
                 <div class="">
                     <div class="">
-                        <Articles :class-list="'two-card p-side-10'" :list-only="true" />
-                        <!-- <Articles :list-api="'abc'" :class-list="'two-card p-side-10'" :list-only="true" /> -->
+                        <!-- <Articles :class-list="'two-card p-side-10'" :list-only="true" /> -->
+                        <Articles :list-api="'getLikedArticles'" :class-list="'two-card p-side-10'" :list-only="true" />
                     </div>
                 </div>
             </section>
