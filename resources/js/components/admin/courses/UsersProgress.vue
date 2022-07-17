@@ -48,8 +48,8 @@ th {
             <th>#</th>
             <th>اسم المستخدم</th>
             <th class="sortted" v-on:click="sortTable('name')">عنوان الدورة</th>
+            <th> الايميل</th>
             <th class="sortted" v-on:click="sortTable('date')"> تاريخ الاشتراك</th>
-            <!-- <th>عدد الدروس</th> -->
             <!-- <th>الدروس المنجزة</th> -->
             <th>نسبة الانجاز</th>
             <th class="sortted" v-on:click="sortTable('status')">حالة الدورة</th>
@@ -60,8 +60,8 @@ th {
             <th scope="row">{{ index + 1 }} -</th>
             <td>{{ order.user_name }}</td>
             <td>{{ order.course_title }}</td>
+            <td>{{ order.user_email }}</td>
             <td>{{ order.date }}</td>
-            <!-- <td>{{ order.course_videos_count }}</td> -->
 
             <!-- <td>{{ order.completed_videos_count }}</td> -->
             <td>{{ order.complete_lessons_perc }}</td>
