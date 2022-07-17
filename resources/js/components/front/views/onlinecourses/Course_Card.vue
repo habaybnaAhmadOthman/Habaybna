@@ -20,7 +20,7 @@
 
             <div class="p-side-20 pb-10 pt-10">
                 <p class="yellow font-16 bold mb-10">الدورة التدريبية</p>
-                <p class="font-20 font-18-p black-2 mb-15 bold two-line course-title">{{ courseTitle }}</p>
+                <p class="font-20 font-18-p black-2 mb-15 bold two-line course-title">{{ course.title }}</p>
                 <div class="d-flex space-between">
                     <div class="d-flex align-center">
                         <template v-if="course.discount.has_discount">
@@ -67,12 +67,6 @@ export default {
         },
         isLoggedIn() {
             return this.$store.getters["user/isLoggedIn"];
-        },
-        courseTitle(){
-            if (this.course.title)
-                return this.course.title.split(' ').join('-')
-            else
-                return this.course.courseTitle
         },
         getTime(){
             if (this.course.course_length) {

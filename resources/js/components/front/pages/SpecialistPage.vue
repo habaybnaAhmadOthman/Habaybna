@@ -126,6 +126,7 @@
                     this.specialistInfo.avatar = specialistData.avatar
                     this.specialistInfo.bio = specialistData.disorders_work_with
                 }
+                console.log(data.specialist)
                 this.isDataReady = true
             }
         },
