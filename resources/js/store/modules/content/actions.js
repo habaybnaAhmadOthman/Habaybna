@@ -18,6 +18,16 @@ export default {
         }
         return resp.data;
     },
+    // ******** get liked Articles ::: GET
+    async getLikedArticles(context,payload) {
+        debugger;
+        const resp = await callApi("GET", `/api/user/likes-articles`);
+        if (resp.status != 200) {
+            const error = new Error("fail to get liked articles");
+            throw error;
+        }
+        return resp.data;
+    },
     // ******** Favourite actions  ::: post
     async addToFavourite({commit,getters},payload) {
         const resp = await callApi("POST", "/api/article/add-to-fav",payload);

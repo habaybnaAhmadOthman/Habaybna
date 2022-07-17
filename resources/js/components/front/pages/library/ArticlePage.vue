@@ -50,6 +50,8 @@
         methods: { 
             async getPageData(){
                 let data = await this.$store.dispatch('content/getArticle',{title: this.article.split('-').join(' ')});
+                let liked = await this.$store.dispatch('content/getLikedArticles');
+                console.log(liked)
                 this.author  = data.author;
                 this.description = data.content;
                 this.mainImage = data.cover_photo;
