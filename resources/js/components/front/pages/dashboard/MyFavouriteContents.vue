@@ -4,7 +4,7 @@
             <h1>المقالات المفضلة</h1>
         </template>
         <template>
-            <section class="profile-section pt-50 pb-50">
+            <section class="profile-section pt-50 pb-50 pt-25-p">
                 <div class="grid-2 gap2 grid-1-p" v-if="articles.length > 0">
                     <SmallCard v-for="(item) in articles" :key="item.id" :item="item"></SmallCard>
                 </div>

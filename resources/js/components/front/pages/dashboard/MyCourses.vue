@@ -4,7 +4,7 @@
             <h1>دوراتي</h1>
         </template>
         <template>
-            <section class="profile-section pt-50 pb-50">
+            <section class="profile-section pt-50 pb-50 pt-25-p">
                 <div class="">
                     <div class="">
                         <CoursesList :filtered-courses="courseTemp" :showMoreCard="false" ></CoursesList>
