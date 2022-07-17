@@ -11,7 +11,7 @@ class NewContent extends Model
         'created_at' => 'datetime:Y-m-d',
     ];
 
-    
+
     public function author()
     {
         return $this->belongsTo(Specialist::class,'author_id','user_id');
@@ -21,5 +21,10 @@ class NewContent extends Model
     {
         return $this->belongsToMany(CourseCategory::class,'articles_tags','article_id','tag_id');
     }
+
+    // public function isLiked()
+    // {
+    //     return $this->belongsTo();
+    // }
 }
 
