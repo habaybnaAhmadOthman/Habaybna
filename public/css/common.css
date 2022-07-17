@@ -895,6 +895,20 @@ a:hover {
 .row-3-gap > *{
     width: 32%;
 }
+.grid-2,.grid-3,.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+.gap2 {
+    column-gap: 2%;
+    row-gap: 15px;
+}
 .two-side {
     display: flex;
     column-gap: 23px;
@@ -1162,5 +1176,8 @@ img {
     }
     button {
         max-width: 100%!important;
+    }
+    .grid-1-p {
+        grid-template-columns: auto;
     }
 }
