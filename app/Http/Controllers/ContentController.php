@@ -127,7 +127,7 @@ class ContentController extends Controller
     public function getUserLikedArticles()
     {
         return response(
-            Auth::user()->articles()->paginate(6),
+            Auth::user()->articles()->with('articles')->paginate(6),
             200
         );
     }
