@@ -102,9 +102,10 @@ export default {
   components: { Multiselect },
   mixins: [initEditor],
   async created() {
+      console.log('this.$route',this.$route.params.data);
     this.callApi(
       "get",
-      "/api/get-testimonials/" + 'course'
+      "/api/admin/update-testimonials/" + this.$route.params.data
     ).then((res) => {
         console.log(res);
       if (res.status == 200) {

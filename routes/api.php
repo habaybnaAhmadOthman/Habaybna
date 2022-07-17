@@ -146,6 +146,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/testimonials','TestimonialsController@index');
         Route::get('/update-testimonials/{id}','TestimonialsController@update');
         Route::post('/edit-testimonials','TestimonialsController@edit');
+        Route::post('/testimonials-delete/{id}','TestimonialsController@delete');
 
 
 

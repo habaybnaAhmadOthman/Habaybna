@@ -67,16 +67,16 @@ th {
                 type="success"
                 ghost
                 v-if="coupon.status"
-                v-on:click="changeStatus(index, coupon.id)"
               >
+                <!-- v-on:click="changeStatus(index, coupon.id)" -->
                 <span>نشط</span>
               </Button>
               <Button
                 type="error"
                 ghost
                 v-if="!coupon.status"
-                v-on:click="changeStatus(index, coupon.id)"
               >
+                <!-- v-on:click="changeStatus(index, coupon.id)" -->
                 <span>غير نشط</span>
               </Button>
 
@@ -112,7 +112,7 @@ th {
         <span>حذف</span>
       </p>
       <div style="text-align: center">
-        <p>هل انت متأكد من حذف المحتوى ؟</p>
+        <p>هل انت متأكد من حذف التوصية ؟</p>
       </div>
       <div slot="footer">
         <Button
@@ -167,7 +167,7 @@ export default {
       this.modal_loading = true;
       this.callApi(
         "post",
-        "/api/admin/content-delete/" + this.idDeleteUser
+        "/api/admin/testimonials-delete/" + this.idDeleteUser
       ).then((res) => {
         if (res.status == 200) {
         //   console.log(res);
@@ -176,7 +176,7 @@ export default {
       setTimeout(() => {
         this.modal_loading = false;
         this.dialogDelete = false;
-        this.$Message.success("تم حذف المحتوى");
+        this.$Message.success("تم حذف التوصية");
         this.coupons.data.splice(index, 1);
       }, 1500);
     },
