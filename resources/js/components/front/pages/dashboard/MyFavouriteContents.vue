@@ -46,14 +46,13 @@ export default {
             const resp = await this.$store.dispatch(`content/getLikedArticles`,{page})
             this.isLoading(false)
             this.contentTemp = resp
-            console.log(resp.data)
             this.articles = resp.data.map((article)=>{
                 const data = article.articles
                 return {
                     id: article.article_id,
                     title: data.title,
                     created_at: data.created_at,
-                    image: data.cover_photo,
+                    cover_photo: data.cover_photo,
                     is_liked: true
                 }
             });
