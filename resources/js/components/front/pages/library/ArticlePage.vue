@@ -72,7 +72,7 @@
                             id: related.article_id,
                             title: related.article.title,
                             created_at: related.article.created_at,
-                            image: related.article.cover_photo,
+                            cover_photo: related.article.cover_photo,
                             without_like:true
                         }
                     })
