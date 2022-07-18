@@ -9,7 +9,7 @@
             </div> -->
             <div class="mt-60" v-if="relatedArticles.length > 0">
                 <div class="grid-2 gap2 grid-1-p">
-                    <SmallCard v-for="(item) in relatedArticles" :key="item.id" :item="item"></SmallCard>
+                    <SmallCard @click.native="forceRefresh" v-for="(item) in relatedArticles" :key="item.id" :item="item"></SmallCard>
                 </div>
             </div>
         </div>
@@ -52,6 +52,9 @@
             }
         },
         methods: { 
+            forceRefresh(){
+                this.$store.commit("forceRefresh");
+            },
             async getPageData(){
                 let data = await this.$store.dispatch('content/getArticle',{title: this.article.split('-').join(' ')});
                 const {article} = data
@@ -75,7 +78,6 @@
                     })
                 }
                 this.isDataReady = true
-                console.log(data)
             },
             showShareDialog() {
                 this.showShareModal = !this.showShareModal;

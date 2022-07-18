@@ -19,7 +19,7 @@
                 <!-- favourite -->
                 <img
                     class="radius-10 object-fit main-img"
-                    :src="item.image"
+                    :src="item.cover_photo"
                     width="100"
                     height="100"
                 />
