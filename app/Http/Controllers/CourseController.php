@@ -582,4 +582,16 @@ class CourseController extends Controller
 
     }
 
+    public function deleteCertificate(Request $request)
+    {
+        $certificate = CertificateLogos::findorfail($request->id);
+
+        if ( $certificate ) {
+            Storage::delete($certificate->url);
+
+            $certificate->delete()  ;
+        }
+        return response($request->all(),200);
+    }
+
 }
