@@ -58,3 +58,8 @@ input {
 .profile .country-selector__country-flag {
     top: 20px !important;
 }
+@media (max-width: 767px) {
+    .profile .content-container {
+        padding: 15px;
+    }
+}

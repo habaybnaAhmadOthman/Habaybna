@@ -9,7 +9,7 @@
           <!-- <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection> -->
           <!-- <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses> -->
         </template>
-          <ContentList  :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
+          <ContentList :current-page="currentPage" :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
           <div class="portal-pagination mt-40 mt-40 justify-center d-flex" v-if="!showMoreCardFn">
             <Pagination
               :data="contentTemp"
@@ -28,7 +28,7 @@ import ContentList from '../../layouts/SmallCardList.vue'
 import CategoryFilterSection from '../../layouts/CategoryFilterSection.vue'
 import LaravelVuePagination from "laravel-vue-pagination";
 export default {
-  props: ['cardsCount','showMoreCard','list-only','title','class-list','list-api','can-remove'],
+  props: ['cardsCount','showMoreCard','list-only','title','class-list','list-api','can-remove','save-current-page'],
   computed: {
     cardsCountFn(){
       if (this.cardsCount)
@@ -51,6 +51,7 @@ export default {
       articles: [],
       contentTemp: {},
       api: 'courses/getCategories',
+      currentPage: null
     }
   },
   created(){
@@ -99,7 +100,12 @@ export default {
         let getDataFrom = 'getContent'
         if (typeof page === "undefined") {
             page = 1;
+            if (localStorage.getItem('prev_page')) {
+              page = localStorage.getItem('prev_page');
+              localStorage.removeItem('prev_page')
+            }
         }
+        this.currentPage = page
         this.isLoading(true)
         if (this.listApi)
           getDataFrom = this.listApi
@@ -112,7 +118,7 @@ export default {
     isLoading(status) {
       this.$store.commit('isLoading',status)
     },
-  }
+  },
 }
 </script>
 

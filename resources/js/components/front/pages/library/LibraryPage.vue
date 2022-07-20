@@ -2,7 +2,7 @@
     <div class="library-page">
         <TheHeader></TheHeader>
         <Banner></Banner>
-        <ContentSection></ContentSection>
+        <ContentSection :save-current-page="true"></ContentSection>
         <TheFooter></TheFooter>
     </div>
 </template>
@@ -14,6 +14,13 @@
     import TheFooter from '../../layouts/TheFooter.vue'
     export default {
         components: { TheHeader,Banner,ContentSection,TheFooter},
+        beforeRouteEnter(to, from, next) {
+            if (from.query.page)
+                localStorage.setItem('prev_page',from.query.page)
+            next((vm) => {
+                vm.prevRoute = from;
+            });
+        }
     }
 </script>
 

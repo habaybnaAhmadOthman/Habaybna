@@ -1,12 +1,12 @@
 <template>
     <div>
-        <label class="center gray radius-60 font-18 font-16-p">{{ value  }}</label>
+        <label :class="classes" class="center gray radius-60 font-18 font-16-p">{{ value  }}</label>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['value'],
+        props: ['value','classes'],
     }
 </script>
 
@@ -29,7 +29,10 @@ div label {
     color: #fff !important;
     transition: all 0.2s;
 }
-
+div label.yellow {
+    background:#FF9E00;
+    border-color: #FF9E00;
+}
 @media (max-width: 767px) {
     div label {
         padding: 9px 23px;

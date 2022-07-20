@@ -67,8 +67,9 @@ import ExamPage from "./components/front/pages/courses/ExamPage.vue";
 import LibraryPage from "./components/front/pages/library/LibraryPage.vue";
 import ArticlePage from "./components/front/pages/library/ArticlePage.vue";
 // specialist
-import SpecialistPage from "./components/front/pages/SpecialistPage.vue";
-import SpecialistsPage from "./components/front/pages/SpecialistsPage.vue";
+import SpecialistPage from "./components/front/pages/specialist/SpecialistPage";
+import SpecialistsPage from "./components/front/pages/specialist/SpecialistsPage.vue";
+import allSpecialistsPage from "./components/front/pages/specialist/allSpecialistsPage.vue";
 import TermsPage from "./components/front/pages/TermsPage.vue";
 import TermsEnPage from "./components/front/pages/TermsEnPage.vue";
 import AboutPage from "./components/front/pages/AboutHabaybna.vue";
@@ -93,6 +94,12 @@ import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfil
 import UserProfile_MyCourses from "./components/front/pages/dashboard/MyCourses.vue";
 import UserProfile_MyFavouriteCourses from "./components/front/pages/dashboard/MyFavouriteCourses.vue";
 import UserProfile_MyFavouriteContent from "./components/front/pages/dashboard/MyFavouriteContents.vue";
+
+// user profile ==> Calls
+import UserProfile_SessionTimes from "./components/front/pages/dashboard/calls/SessionTimes.vue";
+import UserProfile_CallLogs from "./components/front/pages/dashboard/calls/CallLog.vue";
+
+
 
 import store from "./store/index";
 
@@ -432,6 +439,18 @@ const routes = [{
                 },
                 name: 'myFavouriteContents'
             },
+            // calls
+            {
+                path: "my-sessions-times",
+                component: UserProfile_SessionTimes,
+                name: 'mySessionsTimes'
+            },
+            {
+                path: "my-call-log",
+                component: UserProfile_CallLogs,
+                name: 'myCallLog'
+            },
+
         ]
     },
     // *****************
@@ -481,6 +500,10 @@ const routes = [{
     },
     // *****************
     // specialist page
+    {
+        path: "/all-specialists",
+        component: allSpecialistsPage
+    },
     {
         path: "/ask-specialists",
         component: SpecialistsPage

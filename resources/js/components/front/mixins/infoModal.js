@@ -1,4 +1,5 @@
 export default {
+    emits: ["after"],
     data() {
         return {
             infoModal: {
@@ -12,7 +13,8 @@ export default {
     },
     methods: {
         closeInfoModal(){
-            this.infoModal.show = false
+            this.infoModal.show = false;
+            this.$emit("after")
         },
         setInfoModal(title,desc,status,isFixed,show){
             this.infoModal.title = title

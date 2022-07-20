@@ -16,7 +16,7 @@
                     <section class="p-side-15 pt-15 pb-15 body">
                         <slot></slot>
                     </section>
-                    <menu class="d-flex flex-end ml-10 mb-10 modal-footer">
+                    <menu class="d-flex flex-end ml-10 mb-10 mr-10 modal-footer">
                         <slot name="actions">
                             <button class="btn mb-10 ml-10" @click="tryClose">
                                 حسنا
@@ -43,7 +43,7 @@
                 <section class="p-side-15 pt-15 pb-15 body">
                     <slot></slot>
                 </section>
-                <menu class="d-flex flex-end ml-10 mb-10 modal-footer">
+                <menu class="d-flex flex-end ml-10 mb-10 mr-10 modal-footer">
                     <slot name="actions">
                         <button class="btn mb-10 ml-10" @click="tryClose">
                             حسنا
@@ -100,7 +100,7 @@ export default {
 }
 dialog {
     position: fixed;
-    top: 20vh;
+    top: 7vh;
     left: 10%;
     z-index: 999999990;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
@@ -149,7 +149,7 @@ aside {
         top: 5%;
     }
     .body {
-        max-height: 320px;
+        max-height: 75vh;
     }
     .modal-body, .user-image-modal .modal-footer,.user-image-modal .modal-footer {
         width: 100%!important;

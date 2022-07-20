@@ -113,12 +113,12 @@ export default {
 }
 @keyframes swing {
     from {
-        right:-100%;
+        left:-100%;
         opacity:0;
     }
 
     to {
-        right:0;
+        left:0;
         opacity:1;
     }
 }
