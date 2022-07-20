@@ -144,7 +144,7 @@ footer {
             </MenuItem>
             <MenuItem name="10">
               <Icon type="ios-at-outline" size="24" />
-              <router-link to="/admin/testimonials"> التوصيات </router-link>
+              <router-link to="/admin/testimonials"> اراء المستخدمين </router-link>
             </MenuItem>
 
           </Menu>
