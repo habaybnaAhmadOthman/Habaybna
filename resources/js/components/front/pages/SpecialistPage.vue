@@ -12,6 +12,7 @@
                         <div class="pt-30 w-100-p center-p">
                             <h1 class="black-2 bold center-p font-20 font-30 mb-10">{{specialistName}}</h1>
                             <h2 class="black-2 bold font-20 font-24 mb-10">{{specialistInfo.specialization}}</h2>
+                            <p class="align-center bold d-flex font-14-p font-20 pointer yellow mt-15" @click="showShareDialog"><img class="ml-10 share-img" src="/images/share-color.svg" width="34" height="36" alt="" > مشاركة</p>
                         </div>
                     </div>
 
@@ -38,6 +39,14 @@
             </div>
         </div>
         <TheFooter></TheFooter>
+        <ShareModal
+            :show="showShareModal"
+            @close-share-modal="showShareDialog"
+            :courseName="specialistName"
+            :description="specialistName | stripHTML"
+            portal="specialist-share"
+        ></ShareModal>
+        <portal-target name="specialist-share"></portal-target>
     </div>
 </template>
 
@@ -48,11 +57,13 @@
     import CourseCard from '../views/onlinecourses/Course_Card.vue'
     import Articles from '../views/library/ContentSection.vue'
     import TheFooter from '../layouts/TheFooter.vue'
+    import ShareModal from '../views/coursepage/ShareCourseModal.vue'
     export default {
         props: ['specialist'],
-        components: { TheHeader,TabsToggle,Articles,TheFooter,SmallCard,CourseCard},
+        components: { TheHeader,TabsToggle,Articles,TheFooter,SmallCard,CourseCard,ShareModal},
         data(){
             return {
+                showShareModal: false,
                 tabs: [
                     {
                         title: 'نبذة<br class="mo"> تعريفية' ,
@@ -86,9 +97,12 @@
         computed: {
             specialistName(){
                 return this.specialistInfo.firstName + ' ' + this.specialistInfo.lastName
-            }
+            },
         },
         methods: {
+            showShareDialog() {
+                this.showShareModal = !this.showShareModal;
+            },
             async getSpecialistData() {
                 const data = await this.$store.dispatch(`specialist/getSpecialistDetails`,this.specialist);
                 this.courses = data.specialist.courses.map((item)=>{

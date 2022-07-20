@@ -1,5 +1,5 @@
 <template>
-    <alert-dialog :show="show" title="مشاركة الكورس" @close="closeModal" :portal="portal">
+    <alert-dialog :show="show" title="مشاركة" @close="closeModal" :portal="portal">
         <template>
             <div class="share-course-modal">
                 <div class="social-list d-flex flex-wrap justify-center">
