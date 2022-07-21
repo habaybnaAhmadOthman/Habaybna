@@ -29,6 +29,11 @@ import ContentsNew from "./components/admin/contentsNew/Contents.vue";
 import CreateContentNew from "./components/admin/contentsNew/Create.vue";
 import UpdateContentNew from "./components/admin/contentsNew/Show.vue";
 
+// Testimonials admin
+import Testimonials from "./components/admin/testimonials/Testimonials.vue";
+import TestimonialsCreate from "./components/admin/testimonials/Create.vue";
+import TestimonialsShow from "./components/admin/testimonials/Show.vue";
+
 import CreateCall from "./components/admin/calls/Create.vue";
 import CreateSpecialist from "./components/admin/specialist/Create.vue";
 import CreateOther from "./components/admin/other/Create.vue";
@@ -102,6 +107,22 @@ const routes = [{
         component: Courses,
         name: "Courses"
     },
+    {
+        path: "/admin/testimonials",
+        component: Testimonials,
+        name: "Testimonials"
+    },
+    {
+        path: "/admin/testimonials/create",
+        component: TestimonialsCreate,
+        name: "TestimonialsCreate"
+    },
+    {
+        path: "/admin/testimonials/:data",
+        component: TestimonialsShow,
+        name: "TestimonialsShow"
+    },
+
     {
         path: "/admin/media",
         component: Media,
@@ -466,7 +487,8 @@ const routes = [{
     },
     {
         path: "/specialist/:specialist",
-        component: SpecialistPage
+        component: SpecialistPage,
+        props: true
     },
     // *****************
     // content pages

@@ -10,6 +10,9 @@
         </div>
         <Articles :cardsCount="5" :showMoreCard="true" :title="true" :list-only="true"></Articles>
         <div class="mt-50">
+            <Testimonials type="course" title="ماهو رأي مستخدمي حبايبنا.نت؟"></Testimonials>
+        </div>
+        <div class="mt-50">
             <HabaybnaMedia></HabaybnaMedia>
         </div>
         <div class="mt-50">
@@ -32,8 +35,9 @@ import Articles from '../views/library/ContentSection.vue'
 import HabaybnaMedia from '../views/custom/HabaybnaMedia.vue'
 import ContactUS from '../views/custom/ContactUS.vue'
 import Partners from '../views/custom/Partners.vue'
+import Testimonials from '../views/custom/Testimonials.vue'
 export default {
-    components: { LandingSection,IconsSection, Articles,CoursesSection,TheHeader,Partners ,HabaybnaMedia,ContactUS,TheFooter},
+    components: { LandingSection,IconsSection, Articles,CoursesSection,TheHeader,Partners ,HabaybnaMedia,ContactUS,Testimonials,TheFooter},
     mounted(){
         
     }

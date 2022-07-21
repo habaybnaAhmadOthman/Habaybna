@@ -34,7 +34,7 @@ class GetCoursesOrders {
                         'order_status'=>$one->status,
                         'course_length'=>" دقيقة ".round($one->course->course_length/60,2),
                         'course_price'=>$one->amount,
-                        'user_name'=>$one->user->user_data->firstName,
+                        'user_name'=>$one->user->user_data->firstName .' '. $one->user->user_data->lastName,
                         'user_phone'=>$one->user->phone,
                         'date'=>$one->created_at->format('Y-m-d'),
                         'course_progress'=> $this->getCourseProgress($one),

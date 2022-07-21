@@ -80,7 +80,7 @@
                             id="birthdate"
                         >
                             <option value="no" disabled hidden
-                                >سنة الميلاد</option
+                                >اختر سنة الميلاد</option
                             >
                             <option v-for="year in years" :value="year" :key="year">{{year}}</option>
                         </select>
@@ -341,7 +341,10 @@ export default {
             this.lastName = data.lastName;
             this.phoneNumber = data.phone;
             this.email = data.email;
-            this.birthdate.val = new Date(data.dob).getFullYear() || 'no';
+            if (data.dob)
+                this.birthdate.val = new Date(data.dob).getFullYear();
+            else
+                this.birthdate.val = 'no';
             this.gender.val = data.gender;
             this.gender.parsed = data.gender == 'f' ? 'أنثى' : ('ذكر') ;
             this.relative.val = data.relative;
@@ -388,6 +391,10 @@ export default {
             if (educationValue == "no") {
                 educationValue = "";
             }
+            let birthdateValue = this.birthdate.val;
+            if (birthdateValue == "no") {
+                birthdateValue = "";
+            }
 
             let tagIDs = [];
             this.tags.forEach(item => tagIDs.push(item.id));
@@ -396,7 +403,7 @@ export default {
                 lastName: this.lastName,
                 phone: this.phoneNumber,
                 email: this.email,
-                dob: this.birthdate.val,
+                dob: birthdateValue,
                 gender: this.gender.val,
                 relative: this.relative.val,
                 noChildsSpecialNeeds: this.noChildsSpecialNeeds.val,

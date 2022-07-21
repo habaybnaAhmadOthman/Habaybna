@@ -15,10 +15,10 @@
             </li>
             <li>
                 <router-link class="d-block p-side-15 pt-10 pb-10 trans"  to="/profile/my-account" @click.native="closeNavMenu"
-                    >حسابي</router-link
+                    >إعدادات الحساب</router-link
                 >
             </li>
-            <li>
+            <!-- <li>
                 <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/" @click.native="closeNavMenu"
                     >حساب الطفل</router-link
                 >
@@ -27,15 +27,20 @@
                 <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/" @click.native="closeNavMenu"
                     >الإستشارات</router-link
                 >
-            </li>
+            </li> -->
             <li>
                 <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-courses" @click.native="closeNavMenu"
-                    >دوراتي</router-link
+                    >دوراتي المشترك بها</router-link
                 >
             </li>
             <li>
                 <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-favourite-courses" @click.native="closeNavMenu"
-                    >الكورسات المفضلة</router-link
+                    >الدورات المفضلة</router-link
+                >
+            </li>
+            <li>
+                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-favourite-contents" @click.native="closeNavMenu"
+                    >المقالات المفضلة</router-link
                 >
             </li>
             <!-- <li>
@@ -65,7 +70,11 @@ export default {
         },
         logout(){
             this.$store.dispatch('user/logout');
-            this.$router.replace('/')
+            if (this.$router.currentRoute.path == "/") {
+                this.$store.commit("forceRefresh");
+            } else {
+                this.$router.push("/")
+            }
         }
     }
 };

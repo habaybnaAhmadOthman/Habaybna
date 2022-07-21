@@ -71,27 +71,27 @@ th {
               </p>
             </td>
             <td class="status">
-              <!-- <Button
+              <Button
                 type="success"
                 ghost
                 v-if="coupon.status"
-                v-on:click="changeStatus(index, coupon.id)"
               >
+                <!-- v-on:click="changeStatus(index, coupon.id)" -->
                 <span>نشط</span>
               </Button>
               <Button
                 type="error"
                 ghost
                 v-if="!coupon.status"
-                v-on:click="changeStatus(index, coupon.id)"
               >
+                <!-- v-on:click="changeStatus(index, coupon.id)" -->
                 <span>غير نشط</span>
-              </Button> -->
-              <Button type="success" ghost>
-                <span>نشط</span>
               </Button>
+              <!-- <Button type="success" ghost>
+                <span>نشط</span>
+              </Button> -->
             </td>
-            <td>{{ coupon.created_at }}</td>
+            <td>{{ coupon.created_at.slice(0,10) }}</td>
 
             <td>
               <Button

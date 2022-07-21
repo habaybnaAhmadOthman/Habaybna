@@ -15,4 +15,4 @@ yarn-error.log
 /storage
 /mainckeditor/node_modules
 .DS_Store
-
+/portal

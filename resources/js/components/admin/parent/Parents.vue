@@ -36,6 +36,9 @@ h3 {
         >انشاء حساب اهالي</Button
       >
     </div>
+    <Button type="success" size="large" ghost v-on:click="exportToExcel()">
+      export bio to excel</Button
+    >
     <div class="search-wrapper">
       <Input
         type="text"
@@ -48,7 +51,7 @@ h3 {
         <tr>
           <th scope="col">#</th>
           <th class="sortted" scope="col" v-on:click="sortTable('name')">
-            الاسم الاول
+            الاسم الكامل
           </th>
           <th scope="col">الهاتف</th>
           <th scope="col">الايميل</th>
@@ -57,14 +60,19 @@ h3 {
           </th>
           <th class="sortted" scope="col" v-on:click="sortTable('gender')">
             الجنس
-          </th>          <th scope="col">وضع الخصوصية</th>
+          </th>
+          <th scope="col">وضع الخصوصية</th>
+          <th class="sortted" scope="col" v-on:click="sortTable('date')">
+            تاريخ التسجيل
+          </th>
+
           <th scope="col">الاجراءات</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(parent, index) in filteredList" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ parent.firstName }}</td>
+          <td>{{ parent.firstName + " " + parent.lastName }}</td>
           <td class="phone-td">{{ parent.user.phone }}</td>
           <td>{{ parent.user.email }}</td>
           <td class="status">
@@ -87,6 +95,8 @@ h3 {
           </td>
           <td>{{ parent.gender == "m" ? "ذكر" : "انثى" }}</td>
           <td>{{ parent.private_mode ? "نشط" : "غير نشط" }}</td>
+          <td>{{ parent.created_at.slice(0, 10) }}</td>
+
           <td>
             <Button
               :to="'/admin/parent/' + parent.user_id"
@@ -100,6 +110,26 @@ h3 {
               <Icon size="20" color="red" type="md-trash" />
             </Button>
           </td>
+        </tr>
+      </tbody>
+    </table>
+        <table class="table" id="table" style="display: none">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">الاسم الكامل</th>
+          <th scope="col">الهاتف</th>
+          <th scope="col">الايميل</th>
+          <th scope="col">السيرة الذاتية</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(specialist, index) in filteredList" :key="index">
+          <th scope="row">{{ index + 1 }}</th>
+          <td>{{ specialist.firstName + " " + specialist.lastName }}</td>
+          <td class="phone-td">{{ specialist.user.phone }}</td>
+          <td>{{ specialist.user.email }}</td>
+          <td>{{ specialist.why_to_join }}</td>
         </tr>
       </tbody>
     </table>
@@ -125,6 +155,8 @@ h3 {
   </div>
 </template>
 <script>
+import * as XLSX from "xlsx";
+
 export default {
   data() {
     return {
@@ -144,6 +176,12 @@ export default {
     }
   },
   methods: {
+    exportToExcel() {
+      /* generate workbook object from table */
+      var wb = XLSX.utils.table_to_book(document.getElementById("table"));
+      /* generate file and force a download*/
+      XLSX.writeFile(wb, "parents bio.xlsx");
+    },
     deleteDaialog(id, index) {
       this.dialogDelete = true;
       this.idDeleteUser = id;
@@ -220,6 +258,24 @@ export default {
             : a.gender < b.gender
             ? 1
             : b.gender < a.gender
+            ? -1
+            : 0
+        );
+      }
+      if (type == "date") {
+        //   console.log(this.ascending);
+        let isAscending = this.ascending;
+        this.ascending = !this.ascending;
+        return this.parents.sort((a, b) =>
+          isAscending
+            ? a.created_at > b.created_at
+              ? 1
+              : b.created_at > a.created_at
+              ? -1
+              : 0
+            : a.created_at < b.created_at
+            ? 1
+            : b.created_at < a.created_at
             ? -1
             : 0
         );

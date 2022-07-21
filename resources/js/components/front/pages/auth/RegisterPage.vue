@@ -13,15 +13,7 @@
         @error-happen="showPopupMessage"
         v-else
       ></CodeForm>
-      <button
-        :class="{ 'asb-btn': showCodeForm }"
-        @click="submitPhone"
-        class="btn-2 mt-30 flex-all m-side-auto font-20"
-        id="sign-in-button"
-      >
-        أرسل رمز التحقق
-        <!-- <img src="/images/siteImgs/header/logo.png" class="mr-10" /> -->
-      </button>
+
       <h3 v-if="!showCodeForm" class="mt-50 center light font-15 flex-all p-side-50 flex-wrap">
         <span class="main-color font-15-p">هل أنت عضو في عائلة حبايبنا؟</span>
         <router-link class="blue d-flex align-center font-15-p" to="/signin"
@@ -42,8 +34,6 @@
 </template>
 
 <script>
-import auth from "./../../../../modules/firebase";
-import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 // // forms
 import RegisterTemplate from "./../../views/auth/RegisterTemplate.vue";
 import OtpForm from "./../../views/auth/OtpForm.vue";
@@ -96,17 +86,7 @@ export default {
       }
       this.isLoading = false;
     },
-  },
-  mounted() {
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      "sign-in-button",
-      {
-        size: "invisible",
-        callback: (response) => {},
-      },
-      auth
-    );
-  },
+  }
 };
 </script>
 <style scoped>

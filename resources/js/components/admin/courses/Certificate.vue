@@ -1,17 +1,20 @@
 <style>
 .logos-remove {
-    border: 1px solid gray;
-    opacity: 0.7;
-    position: absolute;
-    right: 14px;
-    top: 16px;
-    padding: 0 2px;
-    background: #ff002fbf;
-    color: #FFF;
-    cursor: not-allowed;
-    z-index: 99;
+  /* opacity: 0.7; */
+  padding: 0 2px;
+  background: #ff002fbf;
+  color: #fff;
+  cursor: pointer;
+  z-index: 99;
+  width: 45%;
+  margin: auto;
+  text-align: center;
+  border-radius: 5px;
 }
-
+.img-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+}
 .logo-card {
   display: flex;
   flex-wrap: wrap;
@@ -22,9 +25,9 @@
 .logo-card img {
   position: relative;
   margin: 10px;
-  border: 3px solid #000;
   box-shadow: 3px 3px 8px 0px rgba(0, 0, 0, 0.3);
-  max-width: 13vw;
+  height: 120px;
+  width: 120px;
 }
 input[type="file"] {
   padding: 10px;
@@ -35,7 +38,7 @@ input[type="file"] {
   padding: 2em;
 }
 .cont-wrapper {
-  background-color: whitesmoke;
+  background-color: #fff;
   list-style-type: none;
   padding: 0 14px;
   border-radius: 3px;
@@ -83,8 +86,10 @@ input[type="file"] {
           />
         </li>
         <div class="logo-card">
-          <div style="position:relative" v-for="(logo, index) in logos" :key="index">
-            <span class= "logos-remove">حذف</span>
+          <div class="img-wrapper" v-for="(logo, index) in logos" :key="index">
+            <span class="logos-remove" @click="removeLogo(logo, index)"
+              >حذف</span
+            >
             <img :src="logo.url" alt="" />
           </div>
         </div>
@@ -133,18 +138,23 @@ export default {
         this.logos = res.data.logos;
       });
     },
-    // readURL(event) {
-    //     console.log(event.target.files);
-    //   if (event.target.files && event.target.files) {
-    //     var reader = new FileReader();
+    async removeLogo($logo, index) {
+      const resp = await this.callApi(
+        "post",
+        "/api/admin/delete-certificate",
+        $logo
+      ).then((res) => {
+        if (res.status == 200) {
+          setTimeout(() => {
 
-    //     reader.onload = function (e) {
-    //       $("#blah").attr("src", e.target.result);
-    //     };
+            this.$Message.success("تم الحذف ");
+            this.logos.splice(index, 11)
+          }, 1500);
+        }
+      });
+      console.log(index);
+    },
 
-    //     reader.readAsDataURL(event.target.files[0]);
-    //   }
-    // },
     uploadCoverImage(event) {
       console.log(event.target.files);
 

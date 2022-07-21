@@ -63,7 +63,7 @@
                             عمان - الأردن
                         </div>
                             <!-- <a class="whatsapp-float whatapp from-bottom" href="https://api.whatsapp.com/send?phone=+962779383333&amp;text=Hello ,I want a ride." data-action="share/whatsapp/share" target="_blank"> </a> -->
-                        <a class="white d-flex align-center" href="https://api.whatsapp.com/send?phone=00962799760238" data-action="share/whatsapp/share" target="_blank">
+                        <a class="white d-flex align-center" href="https://wa.me/962799760238" data-action="share/whatsapp/share" target="_blank">
                             <figure class="mr-20">
                                 <img class="phone-icon" src="/images/whatsapp.png" alt="" width="28" height="28">
                             </figure>
@@ -124,6 +124,9 @@
                         name: this.name.val,
                     });
                     this.$store.commit("alertDialogMsg", 'تم ارسال طلبك بنجاح');
+                    this.email.val = '';
+                    this.message.val = '';
+                    this.name.val = '';
                 } catch (e) {
                     this.$store.commit("alertDialogMsg", e.message);
                 }

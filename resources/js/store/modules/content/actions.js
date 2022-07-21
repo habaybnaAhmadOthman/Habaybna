@@ -2,7 +2,7 @@ import { callApi } from "../../common";
 export default {
     // ******** get Contents ::: get
     async getContent(context,payload) {
-        const resp = await callApi("GET", `/api/contents?page=${payload.page}`);
+        const resp = await callApi("GET", `/api/get-contents-new?page=${payload.page}`);
         if (resp.status != 200) {
             const error = new Error("fail to get contents");
             throw error;
@@ -14,6 +14,15 @@ export default {
         const resp = await callApi("POST", `/api/show-article`,payload);
         if (resp.status != 200) {
             const error = new Error("fail to get article");
+            throw error;
+        }
+        return resp.data;
+    },
+    // ******** get liked Articles ::: GET
+    async getLikedArticles(context,payload) {
+        const resp = await callApi("GET", `/api/user/likes-articles?page=${payload.page}`);
+        if (resp.status != 200) {
+            const error = new Error("fail to get liked articles");
             throw error;
         }
         return resp.data;
@@ -55,6 +64,15 @@ export default {
         const resp = await callApi("GET", `/api/parteners`);
         if (!resp || resp.status != 200) {
             const error = new Error("fail to get media");
+            throw error;
+        }
+        return resp.data
+    },
+    // ******** Testimonial ::: GET
+    async getTestimonials(context,payload) {
+        const resp = await callApi("GET", `/api/get-testimonials/${payload.type}`);
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to get Testimonials");
             throw error;
         }
         return resp.data

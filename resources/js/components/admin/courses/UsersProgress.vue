@@ -39,7 +39,11 @@ th {
     >
     <!-- <Table border :columns="columns7" :data="data6"></Table> -->
     <div class="search-wrapper">
-      <Input type="text" v-model="keyword" placeholder="ابحث عن رمز الكوبون" />
+      <Input
+        type="text"
+        v-model="keyword"
+        placeholder="ابحث عن عنوان الدورة "
+      />
     </div>
     <div class="coupon-table" ref="toPdf">
       <table class="table" id="table">
@@ -48,11 +52,15 @@ th {
             <th>#</th>
             <th>اسم المستخدم</th>
             <th class="sortted" v-on:click="sortTable('name')">عنوان الدورة</th>
-            <th>تاريخ الاشتراك</th>
-            <th>عدد الدروس</th>
-            <th>الدروس المنجزة</th>
+            <th>الايميل</th>
+            <th class="sortted" v-on:click="sortTable('date')">
+              تاريخ الاشتراك
+            </th>
+            <!-- <th>الدروس المنجزة</th> -->
             <th>نسبة الانجاز</th>
-            <th>حالة الدورة</th>
+            <th class="sortted" v-on:click="sortTable('status')">
+              حالة الدورة
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -60,25 +68,32 @@ th {
             <th scope="row">{{ index + 1 }} -</th>
             <td>{{ order.user_name }}</td>
             <td>{{ order.course_title }}</td>
+            <td>{{ order.user_email }}</td>
             <td>{{ order.date }}</td>
-            <td>{{ order.course_videos_count }}</td>
 
-            <td>{{ order.completed_videos_count }}</td>
+            <!-- <td>{{ order.completed_videos_count }}</td> -->
             <td>{{ order.complete_lessons_perc }}</td>
             <td>{{ order.course_status }}</td>
-
-
           </tr>
         </tbody>
       </table>
+      <!-- <Pagination
+        :data="orders"
+        @pagination-change-page="getResults"
+      ></Pagination> -->
     </div>
   </div>
 </template>
 <script>
+import LaravelVuePagination from "laravel-vue-pagination";
+
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 
 export default {
+  components: {
+    Pagination: LaravelVuePagination,
+  },
   data() {
     return {
       orders: [],
@@ -91,15 +106,15 @@ export default {
     };
   },
   async created() {
-    const resp = await this.callApi("get", "/api/admin/courses/user-progress");
-    if (resp.status == 200) {
-      this.orders = resp.data;
-    }
+    // const resp = await this.callApi("get", "/api/admin/courses/user-progress");
+    // // const resp = await this.callApi("get", "/api/user/likes-articles");
+    // if (resp.status == 200) {
+    //   this.orders = resp.data;
+    // }
   },
   methods: {
     sortTable(type) {
       if (type == "name") {
-        //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
         return this.orders.sort((a, b) =>
@@ -117,19 +132,35 @@ export default {
         );
       }
       if (type == "status") {
-        //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
         return this.orders.sort((a, b) =>
           isAscending
-            ? a.order_status > b.order_status
+            ? a.course_status > b.course_status
               ? 1
-              : b.order_status > a.order_status
+              : b.course_status > a.course_status
               ? -1
               : 0
-            : a.order_status < b.order_status
+            : a.course_status < b.course_status
             ? 1
-            : b.order_status < a.order_status
+            : b.course_status < a.course_status
+            ? -1
+            : 0
+        );
+      }
+      if (type == "date") {
+        let isAscending = this.ascending;
+        this.ascending = !this.ascending;
+        return this.orders.sort((a, b) =>
+          isAscending
+            ? a.date > b.date
+              ? 1
+              : b.date > a.date
+              ? -1
+              : 0
+            : a.date < b.date
+            ? 1
+            : b.date < a.date
             ? -1
             : 0
         );
@@ -153,6 +184,19 @@ export default {
       );
       doc.save("a4.pdf");
     },
+    async getResults(page) {
+      if (typeof page === "undefined") {
+        page = 1;
+      }
+      const x = await this.callApi(
+        "get",
+        "/api/admin/courses/user-progress?page=" + page
+      ).then((resp) => {
+        if (resp.status == 200) {
+          this.orders = resp.data;
+        }
+      });
+    },
   },
   computed: {
     filteredList() {
@@ -162,6 +206,10 @@ export default {
           .includes(this.keyword.toLowerCase());
       });
     },
+  },
+  mounted() {
+    // Fetch initial results
+    this.getResults();
   },
 };
 </script>

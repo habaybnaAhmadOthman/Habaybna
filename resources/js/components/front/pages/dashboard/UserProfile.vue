@@ -4,7 +4,7 @@
             <h1>البيانات الشخصية</h1>
         </template>
         <template>
-            <section class="profile-section pt-50 pb-50">
+            <section class="profile-section pt-50 pb-50 pt-25-p">
                 <div class="container-fluid">
                     <div class="card">
                         <MyAccount :interestsList="[]"></MyAccount>

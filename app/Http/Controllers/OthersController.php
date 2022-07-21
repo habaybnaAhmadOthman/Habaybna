@@ -340,7 +340,7 @@ class OthersController extends Controller
     public function getOthersData()
     {
         try{
-            $others = Other::all();
+            $others = Other::orderBy('id', 'desc')->get();
             // dd($others);
             $data = [];
             foreach ($others as  $other) {

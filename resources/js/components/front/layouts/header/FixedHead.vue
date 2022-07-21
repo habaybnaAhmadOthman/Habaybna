@@ -13,13 +13,13 @@
                 <img src="/images/mo-video-bottom.svg" width="24" height="21" />
                 <p class="font-10 mobile-icon-color">الدورات</p>
             </router-link>
-            <router-link
-                to="/profile/my-account"
+            <div
                 class="profile-mo mo center mobile-link"
+                @click="openProfileMenu"
             >
                 <img src="/images/profile-avatar-mo.svg" />
                 <p class="font-10 mobile-icon-color">حسابي</p>
-            </router-link>
+            </div>
             <div class="profile-mo mo center mobile-link">
                 <img
                     src="/images/menu-icon-mobile.svg"
@@ -56,6 +56,13 @@ export default {
     methods: {
         toggleMobileMenu() {
             this.isMobileMenuOpened = !this.isMobileMenuOpened;
+        },
+        openProfileMenu() {
+            if (this.isLoggedIn) {
+                document.querySelector(".user-side-nav").classList.add("active");
+            } else {
+                this.$router.push("/signin");
+            }
         },
     },
 };

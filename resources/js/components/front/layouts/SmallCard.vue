@@ -1,6 +1,6 @@
 <template>
     <div class="small-card w-100-p relative">
-        <!-- <div class="fav-box relative pointer shadow-2" :class="{'active':item.is_favourite}" @click="addToFavourite($event,item.nid)"></div> -->
+        <div v-if="hasLikeBtn" class="fav-box relative pointer shadow-2" :class="{'active':item.is_liked}" @click="addToFavourite($event,item.id)"></div>
         <router-link
             class="radius-10 shadow d-flex p-10 bg-white box"
             :to="`/library/${item.title.split(' ').join('-')}`"
@@ -11,15 +11,15 @@
                 </p>
                 <span
                     class="date font-14 white radius-20 gray"
-                    v-if="item.date"
-                    >{{ item.date }}</span
+                    v-if="item.created_at"
+                    >{{ item.created_at }}</span
                 >
             </div>
             <figure class="d-flex relative">
                 <!-- favourite -->
                 <img
                     class="radius-10 object-fit main-img"
-                    :src="item.image"
+                    :src="item.cover_photo"
                     width="100"
                     height="100"
                 />
@@ -35,6 +35,12 @@ export default {
         isLoggedIn() {
             return this.$store.getters["user/isLoggedIn"];
         },
+        hasLikeBtn(){
+            if (this.item.without_like)
+                return false;
+
+            return true
+        }   
     },
     methods: {
         async addToFavourite(event,id) {

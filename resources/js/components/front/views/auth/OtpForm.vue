@@ -1,6 +1,6 @@
 <template>
     <div class="mobile-form p-side-50 p-side-12-p">
-        <h2 class="main-color text-shadow font-40 bold center font-28-p">
+        <h2 class="main-color font-40 bold center font-28-p">
             مستخدم جديد
         </h2>
         <form @submit.prevent="submitForm" class="mt-30">
@@ -47,6 +47,13 @@
                 />
                 <p class="red mt-5 font-12 rtl">رقم الهاتف غير صحيح</p>
             </div>
+            <p class="font-13 mt-30 black center-p"> بتسجيلك فأنت توافق على الشروط والأحكام وسياسة الخصوصية</p>
+            <button
+                class="btn-2 flex-all mt-20 m-side-auto font-20"
+                id="sign-in-button"
+            >
+                أرسل رمز التحقق
+            </button>
         </form>
     </div>
 </template>
