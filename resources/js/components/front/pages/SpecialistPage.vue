@@ -7,7 +7,7 @@
                 <div class="bg-white m-side-12-p box shadow radius-10 p-side-30 p-side-12-p">
                     <div class="d-flex flex-wrap-p justify-center-p">
                         <figure class="rounded overflow-hidden shadow d-flex ml-30 avatar-box m-0-p bg-white">
-                            <img class="object-fit" :src="specialist.avatar | defaultAvatar" width="240" height="240" alt="" >
+                            <img class="object-fit" :src="specialistInfo.avatar | defaultAvatar" width="240" height="240" alt="" >
                         </figure>
                         <div class="pt-30 w-100-p center-p">
                             <h1 class="black-2 bold center-p font-20 font-30 mb-10">{{specialistName}}</h1>
@@ -138,6 +138,7 @@
                         without_like:true
                     }
                 });
+                
                 if (this.articles.length > 0) {
                     const specialistData = this.articles[0].author
                     this.specialistInfo.firstName = specialistData.firstName
