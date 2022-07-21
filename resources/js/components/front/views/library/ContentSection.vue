@@ -14,7 +14,7 @@
             <Pagination
               :data="contentTemp"
               @pagination-change-page="getPageDate"
-              :limit="10"
+              :limit="1"
             ></Pagination>
           </div>
       </div>
