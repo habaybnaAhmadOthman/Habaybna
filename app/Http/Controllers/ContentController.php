@@ -104,7 +104,10 @@ class ContentController extends Controller
    public function getIndexNew()
    {
 
-      $contents = NewContent::with('intrests','author','isLiked')->orderBy('id', 'DESC')->paginate(15);
+      $contents = NewContent::with('intrests','author','isLiked')
+      ->where('status',1)
+      ->orderBy('id', 'DESC')
+      ->paginate(15);
 
         return response()->json($contents);
    }

@@ -39,7 +39,11 @@ th {
     >
     <!-- <Table border :columns="columns7" :data="data6"></Table> -->
     <div class="search-wrapper">
-      <Input type="text" v-model="keyword" placeholder="ابحث عن عنوان الدورة " />
+      <Input
+        type="text"
+        v-model="keyword"
+        placeholder="ابحث عن عنوان الدورة "
+      />
     </div>
     <div class="coupon-table" ref="toPdf">
       <table class="table" id="table">
@@ -48,11 +52,15 @@ th {
             <th>#</th>
             <th>اسم المستخدم</th>
             <th class="sortted" v-on:click="sortTable('name')">عنوان الدورة</th>
-            <th> الايميل</th>
-            <th class="sortted" v-on:click="sortTable('date')"> تاريخ الاشتراك</th>
+            <th>الايميل</th>
+            <th class="sortted" v-on:click="sortTable('date')">
+              تاريخ الاشتراك
+            </th>
             <!-- <th>الدروس المنجزة</th> -->
             <th>نسبة الانجاز</th>
-            <th class="sortted" v-on:click="sortTable('status')">حالة الدورة</th>
+            <th class="sortted" v-on:click="sortTable('status')">
+              حالة الدورة
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -66,19 +74,26 @@ th {
             <!-- <td>{{ order.completed_videos_count }}</td> -->
             <td>{{ order.complete_lessons_perc }}</td>
             <td>{{ order.course_status }}</td>
-
-
           </tr>
         </tbody>
       </table>
+      <!-- <Pagination
+        :data="orders"
+        @pagination-change-page="getResults"
+      ></Pagination> -->
     </div>
   </div>
 </template>
 <script>
+import LaravelVuePagination from "laravel-vue-pagination";
+
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 
 export default {
+  components: {
+    Pagination: LaravelVuePagination,
+  },
   data() {
     return {
       orders: [],
@@ -91,16 +106,15 @@ export default {
     };
   },
   async created() {
-    const resp = await this.callApi("get", "/api/admin/courses/user-progress");
-    // const resp = await this.callApi("get", "/api/user/likes-articles");
-    if (resp.status == 200) {
-      this.orders = resp.data;
-    }
+    // const resp = await this.callApi("get", "/api/admin/courses/user-progress");
+    // // const resp = await this.callApi("get", "/api/user/likes-articles");
+    // if (resp.status == 200) {
+    //   this.orders = resp.data;
+    // }
   },
   methods: {
     sortTable(type) {
       if (type == "name") {
-        //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
         return this.orders.sort((a, b) =>
@@ -118,8 +132,6 @@ export default {
         );
       }
       if (type == "status") {
-          console.log('xxxxxxxxxxxx');
-        //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
         return this.orders.sort((a, b) =>
@@ -136,9 +148,7 @@ export default {
             : 0
         );
       }
-            if (type == "date") {
-          console.log('xxxxxxxxxxxx');
-        //   console.log(this.ascending);
+      if (type == "date") {
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
         return this.orders.sort((a, b) =>
@@ -174,6 +184,19 @@ export default {
       );
       doc.save("a4.pdf");
     },
+    async getResults(page) {
+      if (typeof page === "undefined") {
+        page = 1;
+      }
+      const x = await this.callApi(
+        "get",
+        "/api/admin/courses/user-progress?page=" + page
+      ).then((resp) => {
+        if (resp.status == 200) {
+          this.orders = resp.data;
+        }
+      });
+    },
   },
   computed: {
     filteredList() {
@@ -183,6 +206,10 @@ export default {
           .includes(this.keyword.toLowerCase());
       });
     },
+  },
+  mounted() {
+    // Fetch initial results
+    this.getResults();
   },
 };
 </script>

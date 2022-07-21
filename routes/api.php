@@ -83,6 +83,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/course-certificate/{id}','CourseController@certificate');
         Route::post('/course/update-video/{id}','CourseController@updateVideo');
         Route::post('certificate','CourseController@storeCertificate');
+        Route::post('/delete-certificate','CourseController@deleteCertificate');
 
 
         // media
