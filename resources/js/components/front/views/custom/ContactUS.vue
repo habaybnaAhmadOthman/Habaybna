@@ -7,7 +7,7 @@
                 <form @submit.prevent="submitForm" class="w-70 w-100-p">
                     <div class="d-flex gap-20 mb-20">
                         <div
-                            class="form-group relative w-50"
+                            class="form-group relative w-49"
                         >
                             <input
                                 v-model.trim="name.val"
@@ -18,7 +18,7 @@
                             />
                         </div>
                         <div
-                            class="form-group relative w-50"
+                            class="form-group relative w-49"
                             :class="{ invalid: !email.isValid }"
                         >
                             <input

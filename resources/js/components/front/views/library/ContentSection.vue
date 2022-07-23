@@ -9,12 +9,12 @@
           <!-- <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection> -->
           <!-- <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses> -->
         </template>
-          <ContentList  :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
+          <ContentList class-list="grid-2 grid-1-p" :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
           <div class="portal-pagination mt-40 mt-40 justify-center d-flex" v-if="!showMoreCardFn">
             <Pagination
               :data="contentTemp"
               @pagination-change-page="getPageDate"
-              :limit="10"
+              :limit="1"
             ></Pagination>
           </div>
       </div>
