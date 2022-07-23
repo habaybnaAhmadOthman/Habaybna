@@ -7,7 +7,6 @@
             <!-- <div class="mt-50">
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
             </div> -->
-            
             <div class="mt-60" v-if="relatedArticles.length > 0">
                 <div class="grid-2 gap2 grid-1-p">
                     <SmallCard @click.native="forceRefresh" v-for="(item) in relatedArticles" :key="item.id" :item="item"></SmallCard>
