@@ -1181,4 +1181,7 @@ img {
     .grid-1-p {
         grid-template-columns: auto;
     }
+    iframe {
+        max-width: 100%;
+    }
 }
