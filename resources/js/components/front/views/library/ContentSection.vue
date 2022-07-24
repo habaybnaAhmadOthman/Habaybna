@@ -6,7 +6,7 @@
           <h2 class="title-line mb-40 mb-20-p">مكتبة المعلومات</h2>
         </template>
         <template v-if="!listOnly">
-          <!-- <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection> -->
+          <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection>
           <!-- <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses> -->
         </template>
           <ContentList class-list="grid-2 grid-1-p" :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
@@ -92,8 +92,20 @@ export default {
       // }
     },
     setFilters(updatedFilters) {
-      this.activeFilters = updatedFilters;
-      this.filteredContents();
+      this.activeFilters = []
+      updatedFilters.filter((filter)=> {
+        if (filter.isChecked)
+          this.activeFilters.push(filter.id)
+      })
+      this.getPageDate();
+      // for (let index = 0; index < this.updatedFilters; index++) {
+      //   let isChecked =  this.activeFilters[index].isChecked;
+      //   if (isChecked) {
+      //     self.atLeastOneSelected = true;
+      //   }
+      // }
+      // this.activeFilters = updatedFilters;
+      // this.filteredContents();
     },
     async getPageDate(page){
         let getDataFrom = 'getContent'
@@ -103,7 +115,7 @@ export default {
         this.isLoading(true)
         if (this.listApi)
           getDataFrom = this.listApi
-        const resp = await this.$store.dispatch(`content/${getDataFrom}`,{page})
+        const resp = await this.$store.dispatch(`content/${getDataFrom}`,{page,filters: this.activeFilters})
         this.isLoading(false)
         this.contentTemp = resp
         this.articles = resp.data
