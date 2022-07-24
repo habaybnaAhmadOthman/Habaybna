@@ -72,6 +72,9 @@ export default {
 .author-box:hover * {
   color: #FF9E00;
 }
+iframe {
+  width: 100%;
+}
 @media (max-width: 767px) {
 }
 </style>

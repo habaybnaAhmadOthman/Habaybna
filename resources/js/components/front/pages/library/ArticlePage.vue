@@ -8,10 +8,8 @@
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
             </div> -->
             
-            <div class="mt-60" v-if="relatedArticles.length > 0">
-                <div class="grid-2 gap2 grid-1-p">
-                    <SmallCard @click.native="forceRefresh" v-for="(item) in relatedArticles" :key="item.id" :item="item"></SmallCard>
-                </div>
+            <div class="mt-60" v-if="isDataReady && relatedArticles.length > 0">
+                <RelatedContent :data="relatedArticles"></RelatedContent>    
             </div>
         </div>
         <TheFooter></TheFooter>
@@ -28,15 +26,15 @@
 
 <script>
     import TheHeader from '../../layouts/header/TheHeader.vue'
-    import SmallCard from '../../layouts/SmallCard.vue'
     import ArticleBanner from '../../views/library/ArticleBanner.vue'
     import ArticleContent from '../../views/library/ArticleContent.vue'
+    import RelatedContent from '../../views/library/RelatedContent.vue'
     import AboutSpecialists from "../../views/coursepage/AboutSpecialists.vue";
     import TheFooter from '../../layouts/TheFooter.vue'
     import ShareArticleModal from '../../views/coursepage/ShareCourseModal.vue'
     export default {
         props: ['article'],
-        components: { TheHeader,ArticleBanner,ArticleContent,AboutSpecialists,SmallCard,TheFooter,ShareArticleModal},
+        components: { TheHeader,ArticleBanner,ArticleContent,AboutSpecialists,RelatedContent,TheFooter,ShareArticleModal},
         data(){
             return {
                 author: {},
@@ -53,9 +51,6 @@
             }
         },
         methods: { 
-            forceRefresh(){
-                this.$store.commit("forceRefresh");
-            },
             fixEmbedLinks(str){
                 const startFrom =  str.indexOf('<figure');
                 const endFrom =  str.indexOf('</oembed></figure>') + 18;
@@ -81,15 +76,21 @@
                 this.title = article.title;
                 this.ID = article.id;
                 if (data.relatedArticle && Object.keys(data.relatedArticle).length > 0) {
-                    this.relatedArticles = data.relatedArticle[Object.keys(data.relatedArticle)[0]].slice(0,4).map(related=>{
-                        return {
-                            id: related.article_id,
-                            title: related.article.title,
-                            created_at: related.article.created_at,
-                            cover_photo: related.article.cover_photo,
-                            without_like:true
-                        }
-                    })
+                    const relatedArr = []
+                    for (const key in data.relatedArticle) {
+                        data.relatedArticle[key].map(related=>{
+                            if (related.article) {
+                                relatedArr.push ({
+                                    id: related.article_id,
+                                    title: related.article.title,
+                                    created_at: related.article.created_at,
+                                    cover_photo: related.article.cover_photo,
+                                    without_like:true
+                                })
+                            }
+                        })
+                    }
+                    this.relatedArticles = relatedArr
                 }
                 this.isDataReady = true
             },

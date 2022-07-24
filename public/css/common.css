@@ -947,6 +947,14 @@ img {
     margin: auto;
     transform: rotate(180deg);
 }
+.swipe-box {
+    width: 100%;
+    overflow-x: scroll!important;
+    overflow-y: hidden;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+}
 @media (max-width: 767px) {
     .mo {
         display: block !important;
@@ -1180,5 +1188,8 @@ img {
     }
     .grid-1-p {
         grid-template-columns: auto;
+    }
+    iframe {
+        max-width: 100%;
     }
 }
