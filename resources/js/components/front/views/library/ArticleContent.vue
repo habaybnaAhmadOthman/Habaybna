@@ -73,8 +73,14 @@ export default {
   color: #FF9E00;
 }
 iframe {
-  width: 100%;
+    height: auto;
+    width: 100%;
+    height: 500px;
 }
 @media (max-width: 767px) {
+    iframe {
+        height: auto;
+        min-height: auto;
+    }
 }
 </style>
