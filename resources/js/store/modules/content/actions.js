@@ -15,7 +15,7 @@ export default {
     // ******** get Article By Name ::: POST
     async getArticle(context,payload) {
         const resp = await callApi("POST", `/api/show-article`,payload);
-        if (resp.status != 200) {
+        if (!resp || resp.status != 200) {
             const error = new Error("fail to get article");
             throw error;
         }
