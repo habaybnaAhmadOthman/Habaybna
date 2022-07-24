@@ -11,6 +11,7 @@ use App\ArticlesTags;
 
 use App\Specialist;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class ContentController extends Controller
@@ -101,15 +102,24 @@ class ContentController extends Controller
                 // return $user->user_data->firstName . " " .$user->user_data['lastName'];
    }
 
-   public function getIndexNew()
+   public function getIndexNew(Request $request)
    {
+
+
 
       $contents = NewContent::with('intrests','author','isLiked')
       ->where('status',1)
       ->orderBy('id', 'DESC')
-      ->paginate(15);
+      ;
 
-        return response()->json($contents);
+        if(isset($request->filters) && $request->filters != null){
+            $intersts = explode(',',$request->filters) ;
+            $contents = NewContent::whereHas('intrests', function($q) use ($intersts) {
+                $q->whereIn('tag_id',$intersts);
+            });
+        }
+
+        return response()->json($contents->paginate(15));
    }
 
    public function getSpecialistData($slug)
