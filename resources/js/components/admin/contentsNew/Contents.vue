@@ -54,7 +54,7 @@ th {
           </tr>
         </thead>
         <tbody v-if="coupons && coupons.data">
-          <tr v-for="(coupon, index) in coupons.data" :key="index">
+          <tr v-for="(coupon, index) in filteredList" :key="index">
             <th scope="row">{{ index + 1 }}</th>
             <td style="width: 300px">{{ coupon.title }}</td>
             <td>
@@ -268,9 +268,10 @@ export default {
   computed: {
     filteredList() {
       console.log(this.coupons);
-      //   return this.coupons.filter((coupon) => {
-      //     return coupon.title.toLowerCase().includes(this.keyword.toLowerCase());
-      //   });
+        return this.coupons.data.filter((coupon) => {
+            console.log(coupon.title.toLowerCase().includes(this.keyword.toLowerCase()));
+          return coupon.title.toLowerCase().includes(this.keyword.toLowerCase());
+        });
     },
   },
 };
