@@ -61,15 +61,17 @@ class ContentController extends Controller
    public function showArticle(Request $request)
    {
        $data['article'] = NewContent::with('intrests','author','isLiked')->where('title',$request->title)->first();
-
+        if( $data['article'] && $data['article']->intrests->count() > 0 ){
+            foreach ($data['article']->intrests as $one) {
+                $data['relatedArticle'][$one->id] =
+                 ArticlesTags::with('article')
+                 ->where('tag_id',$one->id)
+                 ->inRandomOrder()->limit(2)->get()
+                ;
+         }
+        }
         // related contents
-       foreach ($data['article']->intrests as $one) {
-           $data['relatedArticle'][$one->id] =
-            ArticlesTags::with('article')
-            ->where('tag_id',$one->id)
-            ->inRandomOrder()->limit(2)->get()
-           ;
-    }
+
        if($data['article']){
            return response($data,200);
        }
