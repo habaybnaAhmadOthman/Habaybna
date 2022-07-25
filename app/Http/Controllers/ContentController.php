@@ -61,15 +61,17 @@ class ContentController extends Controller
    public function showArticle(Request $request)
    {
        $data['article'] = NewContent::with('intrests','author','isLiked')->where('title',$request->title)->first();
-
+        if( $data['article'] && $data['article']->intrests->count() > 0 ){
+            foreach ($data['article']->intrests as $one) {
+                $data['relatedArticle'][$one->id] =
+                 ArticlesTags::with('article')
+                 ->where('tag_id',$one->id)
+                 ->inRandomOrder()->limit(2)->get()
+                ;
+         }
+        }
         // related contents
-       foreach ($data['article']->intrests as $one) {
-           $data['relatedArticle'][$one->id] =
-            ArticlesTags::with('article')
-            ->where('tag_id',$one->id)
-            ->inRandomOrder()->limit(2)->get()
-           ;
-    }
+
        if($data['article']){
            return response($data,200);
        }
@@ -109,7 +111,7 @@ class ContentController extends Controller
 
       $contents = NewContent::with('intrests','author','isLiked')
       ->where('status',1)
-      ->orderBy('id', 'DESC')
+      ->inRandomOrder()
       ;
 
         if(isset($request->filters) && $request->filters != null){
@@ -126,7 +128,11 @@ class ContentController extends Controller
    {
 
        $id = explode ("--", $slug);
-        $courses = CourseSpecialist::where('specialist_id',$id[1])->with('course')->get();
+        // $courses = CourseSpecialist::where('specialist_id',$id[1])->with('course')->get();
+
+        $courses = CourseSpecialist::whereHas('course',function($q ){
+            $q->where('is_publish',1);
+        })->where('specialist_id',$id[1])->with('course')->get();
         if($courses->count() > 0) {
             $data['specialist']['courses'] = $courses;
         }
