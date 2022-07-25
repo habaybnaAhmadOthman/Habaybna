@@ -126,7 +126,11 @@ class ContentController extends Controller
    {
 
        $id = explode ("--", $slug);
-        $courses = CourseSpecialist::where('specialist_id',$id[1])->with('course')->get();
+        // $courses = CourseSpecialist::where('specialist_id',$id[1])->with('course')->get();
+
+        $courses = CourseSpecialist::whereHas('course',function($q ){
+            $q->where('is_publish',1);
+        })->where('specialist_id',$id[1])->with('course')->get();
         if($courses->count() > 0) {
             $data['specialist']['courses'] = $courses;
         }
