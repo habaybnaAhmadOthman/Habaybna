@@ -100,6 +100,7 @@
 }
 .fig img{
     max-height: 100%;
+    object-fit: contain;
 }
 .tip {
     position: absolute;

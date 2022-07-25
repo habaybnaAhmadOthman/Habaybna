@@ -65,34 +65,38 @@
                 return str
             },
             async getPageData(){
-                let data = await this.$store.dispatch('content/getArticle',{title: this.article.split('-').join(' ')});
-                const {article} = data
-                this.author  = article.author;
-                this.description = this.fixEmbedLinks(article.content);
-                this.mainImage = article.cover_photo;
-                this.created_at = article.created_at;
-                this.is_liked = article.is_liked;
-                this.tags = article.intrests;
-                this.title = article.title;
-                this.ID = article.id;
-                if (data.relatedArticle && Object.keys(data.relatedArticle).length > 0) {
-                    const relatedArr = []
-                    for (const key in data.relatedArticle) {
-                        data.relatedArticle[key].map(related=>{
-                            if (related.article) {
-                                relatedArr.push ({
-                                    id: related.article_id,
-                                    title: related.article.title,
-                                    created_at: related.article.created_at,
-                                    cover_photo: related.article.cover_photo,
-                                    without_like:true
-                                })
-                            }
-                        })
+                try {
+                    let data = await this.$store.dispatch('content/getArticle',{title: this.article.split('-').join(' ')});
+                    const {article} = data
+                    this.author  = article.author;
+                    this.description = this.fixEmbedLinks(article.content);
+                    this.mainImage = article.cover_photo;
+                    this.created_at = article.created_at;
+                    this.is_liked = article.is_liked;
+                    this.tags = article.intrests;
+                    this.title = article.title;
+                    this.ID = article.id;
+                    if (data.relatedArticle && Object.keys(data.relatedArticle).length > 0) {
+                        const relatedArr = []
+                        for (const key in data.relatedArticle) {
+                            data.relatedArticle[key].map(related=>{
+                                if (related.article) {
+                                    relatedArr.push ({
+                                        id: related.article_id,
+                                        title: related.article.title,
+                                        created_at: related.article.created_at,
+                                        cover_photo: related.article.cover_photo,
+                                        without_like:true
+                                    })
+                                }
+                            })
+                        }
+                        this.relatedArticles = relatedArr
                     }
-                    this.relatedArticles = relatedArr
+                    this.isDataReady = true
+                } catch(err) {
+                    this.$router.push({name: 'errorPage'})
                 }
-                this.isDataReady = true
             },
             showShareDialog() {
                 this.showShareModal = !this.showShareModal;

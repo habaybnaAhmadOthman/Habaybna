@@ -64,6 +64,8 @@
     background-image: url(/images/heart-icon-fill.svg);
 }
 iframe {
+    height: auto;
+    width: 100%;
     height: 500px;
 }
 @media (max-width: 767px) {
@@ -79,7 +81,8 @@ iframe {
         height: 33px;
     }
     iframe {
-        height: 220px;
+        height: auto;
+        min-height: auto;
     }
 }
 </style>

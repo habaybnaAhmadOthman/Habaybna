@@ -85,11 +85,11 @@
                 articles: [],
                 isDataReady: false,
                 specialistInfo: {
-                    firstName: null,
-                    lastName: null,
-                    specialization: null,
-                    bio: null,
-                    avatar: null
+                    firstName: '',
+                    lastName: '',
+                    specialization: '',
+                    bio: '',
+                    avatar: ''
                 }
 
             }
@@ -100,10 +100,14 @@
             },
         },
         methods: {
+            isLoading(status) {
+                this.$store.commit('isLoading',status)
+            },
             showShareDialog() {
                 this.showShareModal = !this.showShareModal;
             },
             async getSpecialistData() {
+                this.isLoading(true)
                 const data = await this.$store.dispatch(`specialist/getSpecialistDetails`,this.specialist);
                 this.courses = data.specialist.courses.map((item)=>{
                     const obj = item.course
@@ -132,6 +136,7 @@
                     }
                     return course
                 })
+                this.isLoading(false)
                 this.articles = data.specialist.articles.map((article)=>{
                     return {
                         ...article,
