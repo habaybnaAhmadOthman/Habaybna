@@ -527,7 +527,8 @@ const routes = [{
 
     {
         path: "*",
-        component: ErrorPage
+        component: ErrorPage,
+        name: 'errorPage'
     }
 ];
 

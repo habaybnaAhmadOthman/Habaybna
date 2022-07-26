@@ -17,7 +17,7 @@
         <div class="tags mt-30 d-flex flex-wrap align-center" v-if="tags">
           <p class="bold ml-20">السمات:</p>
           <div class="gap-10 d-flex flex-wrap">
-            <Tag v-for="tag in tags" :key="tag.id" :value="tag.title"></Tag>
+            <Tag v-for="tag in tags" :key="tag.id" :value="tag.title" :link="`/library?filters=${tag.id}`"></Tag>
           </div>
         </div>
       </div>
@@ -72,6 +72,15 @@ export default {
 .author-box:hover * {
   color: #FF9E00;
 }
+iframe {
+    height: auto;
+    width: 100%;
+    height: 500px;
+}
 @media (max-width: 767px) {
+    iframe {
+        height: auto;
+        min-height: auto;
+    }
 }
 </style>

@@ -26,7 +26,7 @@ th {
 <template>
   <div>
     <div class="title">
-      <h2>التوصيات </h2>
+      <h2>اراء المستخدمين </h2>
       <Button :to="'/admin/testimonials/create'" type="primary" size="large" ghost
         >انشاء توصية</Button
       >
@@ -36,7 +36,7 @@ th {
       <Input
         type="text"
         v-model="keyword"
-        placeholder="ابحث عن عنوان المحتوى"
+        placeholder="ابحث عن  طريق قسم النشر"
       />
     </div>
     <div class="coupon-table">
@@ -46,16 +46,16 @@ th {
             <th>#</th>
             <!-- <th class="sortted" v-on:click="sortTable('name')">اسم المستخدم</th> -->
             <!-- <th>عدد الاعجابات</th> -->
-            <th>نوع التوصية</th>
+            <th> قسم النشر</th>
             <th>الحالة</th>
-            <th>التوصية</th>
+            <th>النص</th>
             <th>تاريخ النشر</th>
             <th>الترتيب</th>
             <th>الاجراءات</th>
           </tr>
         </thead>
         <tbody v-if="coupons && coupons.data">
-          <tr v-for="(coupon, index) in coupons.data" :key="index">
+          <tr v-for="(coupon, index) in filteredList" :key="index">
             <th scope="row">{{ index + 1 }}</th>
             <!-- <td style="width: 300px">{{ coupon.title }}</td> -->
             <td>
@@ -256,10 +256,10 @@ export default {
   },
   computed: {
     filteredList() {
-    //   console.log(this.coupons);
-      //   return this.coupons.filter((coupon) => {
-      //     return coupon.title.toLowerCase().includes(this.keyword.toLowerCase());
-      //   });
+      console.log(this.coupons);
+        return this.coupons.data.filter((coupon) => {
+          return coupon.type.toLowerCase().includes(this.keyword.toLowerCase());
+        });
     },
   },
 };

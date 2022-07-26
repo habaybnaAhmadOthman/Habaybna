@@ -21,6 +21,9 @@
             <div class="mt-60">
                 <RelatedCourses :title="`دورة ذات صلة`" v-if="isDataReady"></RelatedCourses>
             </div>
+            <div class="mt-60" v-if="isDataReady && relatedArticles.length > 0">
+                <RelatedContent :data="relatedArticles"></RelatedContent>    
+            </div>
         </div>
         <div class="mt-30">
             <CombaniesBanner></CombaniesBanner>
@@ -71,7 +74,7 @@ import ContentTable from "../../views/coursepage/ContentTable.vue";
 import RelatedCourses from "../../views/coursepage/RelatedCourses.vue";
 import CoursesFeatures from '../../views/onlinecourses/CoursesFeatures.vue'
 import ShareCourseModal from '../../views/coursepage/ShareCourseModal.vue'
-
+import RelatedContent from '../../views/library/RelatedContent.vue'
 import CombaniesBanner from '../../layouts/CompaniesBanner.vue'
 import TheFooter from '../../layouts/TheFooter.vue'
 import TheHeader from '../../layouts/header/TheHeader.vue'
@@ -82,13 +85,14 @@ export default {
     props: ['course'],
     mixins: [infoModalMixin],
     components: { 
-        CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter,TheHeader,
+        CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedContent,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter,TheHeader,
         ShareCourseModal,TabsToggle,
         vueVimeoPlayer
     },
     data() {
         return {
             trailerSrc: null,
+            categories: [],
             courseName: '',
             specialists: '',
             courseDescription: '',
@@ -100,6 +104,7 @@ export default {
             lectures: [],
             showShareModal: false,
             isDataReady: false,
+            relatedArticles: [],
             isPurchased: false,
             mobileTabs: [
                 {
@@ -162,6 +167,7 @@ export default {
                 if (!data && this.isLoggedIn) {
                     data = await this.$store.dispatch('courses/getCourseDetails',this.course);
                 }
+                data.categories.map((c)=>this.categories.push(c.id));
                 this.courseID = data.id;
                 this.trailerSrc = data.promo_video;
                 this.coverPhoto = data.cover_photo;
@@ -173,8 +179,19 @@ export default {
                 this.videosList  = data.videos_title_length;
                 this.videosCount  = data.videos_count;
                 
-                // show related courses section
                 this.isDataReady = true;
+                // show related courses section
+                const resp = (await this.$store.dispatch(`content/getContent`,{page:1,filters: this.categories})).data
+                resp.map(related=>{
+                    this.relatedArticles.push ({
+                        id: related.id,
+                        title: related.title,
+                        created_at: related.created_at,
+                        cover_photo: related.cover_photo,
+                        without_like:true
+                    })
+                })
+                console.log(this.relatedArticles)
                     
             } catch (e){
                 console.log(e);

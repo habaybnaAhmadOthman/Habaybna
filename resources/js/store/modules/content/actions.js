@@ -2,7 +2,10 @@ import { callApi } from "../../common";
 export default {
     // ******** get Contents ::: get
     async getContent(context,payload) {
-        const resp = await callApi("GET", `/api/get-contents-new?page=${payload.page}`);
+        let queryFilters = `?page=${payload.page}`
+        if (payload.filters && payload.filters.length > 0)
+            queryFilters += `&filters=${payload.filters}`
+        const resp = await callApi("GET", `/api/get-contents-new${queryFilters}`);
         if (resp.status != 200) {
             const error = new Error("fail to get contents");
             throw error;
@@ -12,7 +15,7 @@ export default {
     // ******** get Article By Name ::: POST
     async getArticle(context,payload) {
         const resp = await callApi("POST", `/api/show-article`,payload);
-        if (resp.status != 200) {
+        if (!resp || resp.status != 200) {
             const error = new Error("fail to get article");
             throw error;
         }
