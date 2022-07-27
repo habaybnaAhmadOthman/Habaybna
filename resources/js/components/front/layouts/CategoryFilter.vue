@@ -5,6 +5,7 @@
             type="checkbox"
             :id="id"
             :value="value"
+            :checked="checked"
         />
         <label class="center gray radius-60 font-18 font-16-p" :for="id">{{ value  }}</label>
     </li>
@@ -13,7 +14,7 @@
 <script>
 export default {
     emits: ['change-filter'],
-    props: ['id','value'],
+    props: ['id','value','checked'],
     data(){
         return {
             filter: {}
@@ -36,7 +37,7 @@ export default {
     mounted(){
         this.filter = {
             id: this.id,
-            isChecked: false,
+            isChecked: this.checked || false,
             value: this.value
         }
     }

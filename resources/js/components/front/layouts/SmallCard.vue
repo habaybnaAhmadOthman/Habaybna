@@ -3,7 +3,7 @@
         <div v-if="hasLikeBtn" class="fav-box relative pointer shadow-2" :class="{'active':item.is_liked}" @click="addToFavourite($event,item.id)"></div>
         <router-link
             class="radius-10 shadow d-flex p-10 bg-white box"
-            :to="`/library/${item.title.split(' ').join('-')}`"
+            :to="`/library/${item.title.split(' ').join('-')}${shouldSavePagination}`"
         >
             <div class="body ml-15 d-flex flex-column space-between flex-1">
                 <p class="black-2 font-20 font-15-p desc three-line">
@@ -40,7 +40,18 @@ export default {
                 return false;
 
             return true
-        }   
+        },
+        shouldSavePagination() {
+            let params = this.$route.query
+            let query = '?'
+            if (params.page) 
+                query+= `page=${params.page}`
+            // if (this.currentPage) 
+            //     return '?page='+this.currentPage
+            if (params.filters)
+                query += `&filters=${params.filters}`
+            return query
+        }
     },
     methods: {
         async addToFavourite(event,id) {

@@ -40,10 +40,10 @@
                         </div>
                         <ShareNetwork
                             network="twitter"
-                            :url="courseUrl"
+                            :url="encodedUrl"
                             :title="courseName"
                             :quote="description"
-                            :hashtags="hashTags"
+                            :hashtags="courseName"
                             :twitterUser="twitterUser"
                             >
                             <img src="/images/twitter-icon.svg" width="50" height="50">
@@ -74,6 +74,9 @@ export default {
     computed: {
         courseUrl(){
             return `${decodeURI(window.location.href)}`
+        },
+        encodedUrl(){
+            return `${encodeURI(window.location.href)}`
         }
     },
     methods: {

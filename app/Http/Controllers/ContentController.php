@@ -62,13 +62,28 @@ class ContentController extends Controller
    {
        $data['article'] = NewContent::with('intrests','author','isLiked')->where('title',$request->title)->first();
         if( $data['article'] && $data['article']->intrests->count() > 0 ){
+            $ids = $data['article']->intrests->pluck('id')->toArray();
             foreach ($data['article']->intrests as $one) {
+                // $data['relatedArticle'][$one->id] =
+                //  ArticlesTags::with('article')
+                //  ->where('tag_id',$one->id)
+                //  ->inRandomOrder()->limit(5)->get()
+                // ;
                 $data['relatedArticle'][$one->id] =
-                 ArticlesTags::with('article')
-                 ->where('tag_id',$one->id)
-                 ->inRandomOrder()->limit(2)->get()
-                ;
+                ArticlesTags::whereHas('article',function($q){
+                    $q->where('status',1);
+                })
+                ->with('article')
+                ->where('tag_id',$one->id)
+                ->inRandomOrder()->limit(5)->get()
+               ;
          }
+        // $data['relatedArticle'] = ArticlesTags::whereHas('article',function ($q) use($ids) {
+        //         $q->where('status',1);
+        //         })->whereIn('tag_id',$ids)
+        //         ->with('article')
+        //         ->inRandomOrder()->limit(6)
+        //         ->get();
         }
         // related contents
 
@@ -118,7 +133,7 @@ class ContentController extends Controller
             $intersts = explode(',',$request->filters) ;
             $contents = NewContent::whereHas('intrests', function($q) use ($intersts) {
                 $q->whereIn('tag_id',$intersts);
-            });
+            })->where('status',1);
         }
 
         return response()->json($contents->paginate(15));
@@ -136,7 +151,9 @@ class ContentController extends Controller
         if($courses->count() > 0) {
             $data['specialist']['courses'] = $courses;
         }
-        $article = NewContent::where('author_id',$id[1])->with('author')->get();
+        $article = NewContent::where('author_id',$id[1])
+        ->where('status',1)
+        ->with('author')->get();
 
         if($article) {
             $data['specialist']['articles'] = $article ;

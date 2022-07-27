@@ -494,7 +494,8 @@ const routes = [{
     // content pages
     {
         path: "/library",
-        component: LibraryPage
+        component: LibraryPage,
+        name: 'library'
     },
     {
         path: "/library/:article",
