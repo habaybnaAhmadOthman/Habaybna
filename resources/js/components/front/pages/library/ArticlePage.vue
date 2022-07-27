@@ -103,8 +103,20 @@
             },
         },
         mounted(){
+            console.log(this.$router.currentRoute)
             this.getPageData();
-        }
+        },
+        beforeRouteLeave (to, from,next) {
+            const params = to.query;
+            if (to.name == 'library' && params.newFilters && params.hasOwnProperty('filters')) {
+                localStorage.setItem('new_filters','1');
+                if (params.filters)
+                    localStorage.setItem('prev_filters',params.filters)
+                else
+                    localStorage.removeItem('prev_filters')
+            }
+            next()
+        },
     }
 </script>
 

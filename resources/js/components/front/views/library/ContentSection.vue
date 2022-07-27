@@ -142,25 +142,34 @@ export default {
     },
     updateURL(){
       if(!this.listOnly) {
-        const queryObj = {page: this.currentPage}
+        const query = Object.assign({}, this.$route.query);
+        query.page = this.currentPage.toString()
         let isSameURL = true;
         if (this.activeFilters.length > 0) {
-          queryObj.filters = this.activeFilters
-          if (queryObj.filters != this.$router.currentRoute.query.filters) {
+          query.filters = this.activeFilters.toString()
+          if (query.filters != this.$router.currentRoute.query.filters) {
             isSameURL = false
+          }
+        } else {
+          if (query.hasOwnProperty('filters')) {
+            isSameURL = false
+            delete query.filters;
           }
         }
           
 
         if (this.$router.currentRoute.query.page !== undefined) {
-          if (this.$router.currentRoute.query.page != queryObj.page)
+          if (this.$router.currentRoute.query.page != query.page)
             isSameURL = false
         } else {
           isSameURL = false
         }
 
-        if (!isSameURL)
-          this.$router.replace({ name: "library", query: queryObj })
+
+        if (!isSameURL) {
+          this.$router.replace({ query });
+
+        }        
       }
     },
     isLoading(status) {
