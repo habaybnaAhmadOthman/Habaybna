@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('get-payment-status','PaymentController@checkPaymentStatus');
     Route::post('/course-payment','PaymentController@coursePayment');
     Route::post('course/add-to-fav','CourseController@addToFavourite');
-    Route::post('article/add-to-fav','CourseController@addToFavourite');
+    Route::post('article/add-to-fav','UsersFavouriteArticlesController@addToFavourite');
     Route::post('courses/free-course','PaymentController@joinFreeCourse');
     Route::post('course/get-course-quize','QuizController@getUserCourseQuiz');
 
@@ -83,6 +83,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/course-certificate/{id}','CourseController@certificate');
         Route::post('/course/update-video/{id}','CourseController@updateVideo');
         Route::post('certificate','CourseController@storeCertificate');
+        Route::post('/delete-certificate','CourseController@deleteCertificate');
 
 
         // media
@@ -146,6 +147,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/testimonials','TestimonialsController@index');
         Route::get('/update-testimonials/{id}','TestimonialsController@update');
         Route::post('/edit-testimonials','TestimonialsController@edit');
+        Route::post('/testimonials-delete/{id}','TestimonialsController@delete');
 
 
 
@@ -173,6 +175,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // others route
     Route::post('/edit-other-profile-data','OthersController@editProfileData');
     Route::post('/course-payment','PaymentController@coursePayment');
+
+    // get liked articles
+    Route::get('/user/likes-articles','ContentController@getUserLikedArticles');
+
 
 
 

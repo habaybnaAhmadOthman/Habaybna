@@ -60,11 +60,11 @@
                 </aside>
                 </transition>
             </li>
-            <!-- <li>
+            <li>
                 <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-favourite-contents" @click.native="closeNavMenu"
                     >المقالات المفضلة</router-link
                 >
-            </li> -->
+            </li>
             <li class="mo">
                 <button @click="logout" class="d-block p-side-15 pt-10 pb-10 trans bg-none w-100 border-0 logout-btn"
                     >تسجيل خروج</button

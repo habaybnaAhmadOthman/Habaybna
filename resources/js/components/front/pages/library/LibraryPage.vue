@@ -15,8 +15,15 @@
     export default {
         components: { TheHeader,Banner,ContentSection,TheFooter},
         beforeRouteEnter(to, from, next) {
-            if (from.query.page)
-                localStorage.setItem('prev_page',from.query.page)
+            const shouldGetFiltersFromPrevPage = localStorage.getItem('new_filters');
+            if (!shouldGetFiltersFromPrevPage) {
+                if (from.query.page)
+                    localStorage.setItem('prev_page',from.query.page)
+                if (from.query.filters)
+                    localStorage.setItem('prev_filters',from.query.filters)
+            } else {
+                localStorage.removeItem('new_filters')
+            }
             next((vm) => {
                 vm.prevRoute = from;
             });

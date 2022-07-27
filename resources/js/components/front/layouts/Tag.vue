@@ -1,12 +1,24 @@
 <template>
-    <div>
+    <router-link :to="updatedLink" v-if="link">
+        <label :class="classes" class="center gray radius-60 font-18 font-16-p">{{ value  }}</label>
+    </router-link>
+    <div v-else>
         <label :class="classes" class="center gray radius-60 font-18 font-16-p">{{ value  }}</label>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['value','classes'],
+        props: ['value',"link","classes"],
+        computed: {
+            updatedLink(){
+                if (this.link.includes('?'))
+                    return `${this.link}&newFilters=1` 
+                else
+                    return `${this.link}?newFilters=1` 
+            }
+        },
+        
     }
 </script>
 

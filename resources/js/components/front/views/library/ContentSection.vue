@@ -6,15 +6,15 @@
           <h2 class="title-line mb-40 mb-20-p">مكتبة المعلومات</h2>
         </template>
         <template v-if="!listOnly">
-          <!-- <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection> -->
+          <CategoryFilterSection :watch-url="true" @change-filter="setFilters" :api="api"></CategoryFilterSection>
           <!-- <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses> -->
         </template>
-          <ContentList :current-page="currentPage" :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
+          <ContentList :current-page="currentPage" class-list="grid-2 grid-1-p" :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
           <div class="portal-pagination mt-40 mt-40 justify-center d-flex" v-if="!showMoreCardFn">
             <Pagination
               :data="contentTemp"
               @pagination-change-page="getPageDate"
-              :limit="10"
+              :limit="paginationLimit"
             ></Pagination>
           </div>
       </div>
@@ -41,6 +41,9 @@ export default {
         return true
       else
         return false
+    },
+    isMobile(){
+      return window.matchMedia("(max-width: 677px)").matches
     }
   },
   components: {CategoryFilterSection,ContentList,Pagination: LaravelVuePagination,},
@@ -51,13 +54,25 @@ export default {
       articles: [],
       contentTemp: {},
       api: 'courses/getCategories',
+      paginationLimit: 2,
       currentPage: null
     }
   },
-  created(){
+  created() {
+    this.getPaginationLimit()
+    this.loadFiltersFromURL()
     this.getPageDate()
   },
   methods:{
+    getPaginationLimit(){
+      if (this.isMobile)
+        paginationLimit = 1
+    },
+    loadFiltersFromURL(){
+      const queryFilters = this.$router.currentRoute.query.filters
+      if (queryFilters)
+        this.activeFilters = queryFilters.split(',')
+    },
     filteredContents() {
       self = this;
       self.atLeastOneSelected = false;
@@ -93,8 +108,12 @@ export default {
       // }
     },
     setFilters(updatedFilters) {
-      this.activeFilters = updatedFilters;
-      this.filteredContents();
+      this.activeFilters = []
+      updatedFilters.filter((filter)=> {
+        if (filter.isChecked)
+          this.activeFilters.push(filter.id)
+      })
+      this.getPageDate();
     },
     async getPageDate(page){
         let getDataFrom = 'getContent'
@@ -105,15 +124,53 @@ export default {
               localStorage.removeItem('prev_page')
             }
         }
+        
+        if (localStorage.getItem('prev_filters')) {
+          this.activeFilters = localStorage.getItem('prev_filters');
+          localStorage.removeItem('prev_filters')
+        }
         this.currentPage = page
         this.isLoading(true)
         if (this.listApi)
           getDataFrom = this.listApi
-        const resp = await this.$store.dispatch(`content/${getDataFrom}`,{page})
+        const resp = await this.$store.dispatch(`content/${getDataFrom}`,{page,filters: this.activeFilters})
         this.isLoading(false)
         this.contentTemp = resp
         this.articles = resp.data
-        this.filteredContents()
+        this.filteredContents();
+        this.updateURL();
+    },
+    updateURL(){
+      if(!this.listOnly) {
+        const query = Object.assign({}, this.$route.query);
+        query.page = this.currentPage.toString()
+        let isSameURL = true;
+        if (this.activeFilters.length > 0) {
+          query.filters = this.activeFilters.toString()
+          if (query.filters != this.$router.currentRoute.query.filters) {
+            isSameURL = false
+          }
+        } else {
+          if (query.hasOwnProperty('filters')) {
+            isSameURL = false
+            delete query.filters;
+          }
+        }
+          
+
+        if (this.$router.currentRoute.query.page !== undefined) {
+          if (this.$router.currentRoute.query.page != query.page)
+            isSameURL = false
+        } else {
+          isSameURL = false
+        }
+
+
+        if (!isSameURL) {
+          this.$router.replace({ query });
+
+        }        
+      }
     },
     isLoading(status) {
       this.$store.commit('isLoading',status)

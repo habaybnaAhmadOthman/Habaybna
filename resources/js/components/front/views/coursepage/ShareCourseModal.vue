@@ -1,14 +1,14 @@
 <template>
-    <alert-dialog :show="show" title="مشاركة الكورس" @close="closeModal" :portal="portal">
+    <alert-dialog :show="show" title="مشاركة" @close="closeModal" :portal="portal">
         <template>
             <div class="share-course-modal">
                 <div class="social-list d-flex flex-wrap justify-center">
                     <div class="mo">
+                        <!-- :description=description -->
                         <ShareNetwork
                             network="whatsapp"
                             :url="courseUrl"
                             :title="courseName"
-                            :description="description"
                             :quote="description"
                             :hashtags="hashTags"
                             :twitterUser="twitterUser"
@@ -20,7 +20,6 @@
                             network="facebook"
                             :url="courseUrl"
                             :title="courseName"
-                            :description="description"
                             :quote="description"
                             :hashtags="hashTags"
                             :twitterUser="twitterUser"
@@ -32,7 +31,6 @@
                                 network="messenger"
                                 :url="courseUrl"
                                 :title="courseName"
-                                :description="description"
                                 :quote="description"
                                 :hashtags="hashTags"
                                 :twitterUser="twitterUser"
@@ -42,11 +40,10 @@
                         </div>
                         <ShareNetwork
                             network="twitter"
-                            :url="courseUrl"
+                            :url="encodedUrl"
                             :title="courseName"
-                            :description="description"
                             :quote="description"
-                            :hashtags="hashTags"
+                            :hashtags="courseName"
                             :twitterUser="twitterUser"
                             >
                             <img src="/images/twitter-icon.svg" width="50" height="50">
@@ -55,7 +52,6 @@
                             network="linkedin"
                             :url="courseUrl"
                             :title="courseName"
-                            :description="description"
                             :quote="description"
                             :hashtags="hashTags"
                             :twitterUser="twitterUser"
@@ -77,7 +73,10 @@ export default {
     props: ['show','courseName','hashTags','description','quote','twitterUser','portal'],
     computed: {
         courseUrl(){
-            return `${window.location.href}`
+            return `${decodeURI(window.location.href)}`
+        },
+        encodedUrl(){
+            return `${encodeURI(window.location.href)}`
         }
     },
     methods: {

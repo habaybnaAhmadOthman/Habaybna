@@ -16,6 +16,9 @@ th {
       >
     </div>
     <!-- <Table border :columns="columns7" :data="data6"></Table> -->
+        <Button type="success" size="large" ghost v-on:click="exportToExcel()">
+      export bio to excel</Button
+    >
     <div class="search-wrapper">
       <Input
         type="text"
@@ -90,6 +93,26 @@ th {
         </tr>
       </tbody>
     </table>
+            <table class="table" id="table" style="display: none">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">الاسم الكامل</th>
+          <th scope="col">الهاتف</th>
+          <th scope="col">الايميل</th>
+          <th scope="col">السيرة الذاتية</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(specialist, index) in filteredList" :key="index">
+          <th scope="row">{{ index + 1 }}</th>
+          <td>{{ specialist.firstName + " " + specialist.lastName }}</td>
+          <td class="phone-td">{{ specialist.user.phone }}</td>
+          <td>{{ specialist.user.email }}</td>
+          <td>{{ specialist.why_to_join }}</td>
+        </tr>
+      </tbody>
+    </table>
     <Modal v-model="dialogDelete" width="360">
       <p slot="header" style="color: #f60; text-align: center">
         <Icon type="ios-information-circle"></Icon>
@@ -112,6 +135,8 @@ th {
   </div>
 </template>
 <script>
+import * as XLSX from "xlsx";
+
 export default {
   data() {
     return {
@@ -133,6 +158,12 @@ export default {
     }
   },
   methods: {
+    exportToExcel() {
+      /* generate workbook object from table */
+      var wb = XLSX.utils.table_to_book(document.getElementById("table"));
+      /* generate file and force a download*/
+      XLSX.writeFile(wb, "others bio.xlsx");
+    },
     deleteDaialog(id, index) {
       this.dialogDelete = true;
       this.idDeleteUser = id;

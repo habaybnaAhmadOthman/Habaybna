@@ -53,4 +53,13 @@ class TestimonialsController extends Controller
 
        return response($data,200);
     }
+
+    public function delete($id)
+    {
+        $testimonial = Testimonials::findorfail($id);
+        $testimonial->delete();
+
+        return response('success',200);
+
+    }
 }

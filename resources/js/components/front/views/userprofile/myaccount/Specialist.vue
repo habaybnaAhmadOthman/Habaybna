@@ -209,12 +209,12 @@
             </div>
 
             <div class="w-100 form-group">
-                <label class="form-control-label">ما هي الاضطرابات التي تعمل معها ؟ ( 150 كلمة )</label>
+                <label class="form-control-label">النبذة التعريفية (500) كلمة</label>
                 <textarea
                     rows="5"
                     type="text"
                     class="form-control trans"
-                    placeholder="ما هي الاضطرابات التي تعمل معها ؟ "
+                    placeholder="حدثنا أكثر عن خبرتك كأخصائي أو أخصائية، كم عدد السنوات التي تعمل بها في مجالك؟ ماهي طبيعة الإعاقات والاضطرابات التي عملت بها؟ هل عملت في أكثر من دولة؟ ماهي طبيعة عملك وماهو شغفك في العمل مع الأطفال ذوي الاضطرابات النمائية والوالدين؟"
                     id="whyToJoin"
                     @blur="checkValidity"
                     v-model.trim="whyToJoin.val"

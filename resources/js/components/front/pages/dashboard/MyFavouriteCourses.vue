@@ -4,7 +4,7 @@
             <h1>الكورسات المفضلة</h1>
         </template>
         <template>
-            <section class="profile-section pt-50 pb-50">
+            <section class="profile-section pt-50 pb-50 pt-25-p">
                 <div class="">
                     <div class="">
                         <CoursesList @updateFavouriteCoursesList="getCourses" :with-favourite="true" :filtered-courses="courseTemp" :showMoreCard="false" ></CoursesList>

@@ -54,7 +54,7 @@ th {
           </tr>
         </thead>
         <tbody v-if="coupons && coupons.data">
-          <tr v-for="(coupon, index) in coupons.data" :key="index">
+          <tr v-for="(coupon, index) in filteredList" :key="index">
             <th scope="row">{{ index + 1 }}</th>
             <td style="width: 300px">{{ coupon.title }}</td>
             <td>
@@ -71,25 +71,25 @@ th {
               </p>
             </td>
             <td class="status">
-              <!-- <Button
+              <Button
                 type="success"
                 ghost
                 v-if="coupon.status"
-                v-on:click="changeStatus(index, coupon.id)"
               >
+                <!-- v-on:click="changeStatus(index, coupon.id)" -->
                 <span>نشط</span>
               </Button>
               <Button
                 type="error"
                 ghost
                 v-if="!coupon.status"
-                v-on:click="changeStatus(index, coupon.id)"
               >
+                <!-- v-on:click="changeStatus(index, coupon.id)" -->
                 <span>غير نشط</span>
-              </Button> -->
-              <Button type="success" ghost>
-                <span>نشط</span>
               </Button>
+              <!-- <Button type="success" ghost>
+                <span>نشط</span>
+              </Button> -->
             </td>
             <td>{{ coupon.created_at.slice(0,10) }}</td>
 
@@ -268,9 +268,10 @@ export default {
   computed: {
     filteredList() {
       console.log(this.coupons);
-      //   return this.coupons.filter((coupon) => {
-      //     return coupon.title.toLowerCase().includes(this.keyword.toLowerCase());
-      //   });
+        return this.coupons.data.filter((coupon) => {
+            console.log(coupon.title.toLowerCase().includes(this.keyword.toLowerCase()));
+          return coupon.title.toLowerCase().includes(this.keyword.toLowerCase());
+        });
     },
   },
 };

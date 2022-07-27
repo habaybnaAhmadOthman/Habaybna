@@ -6,7 +6,7 @@
                 <slot name="page-header"></slot>
             </div>
         </div>
-        <div class="content-container">
+        <div class="content-container p-side-12-p pt-0-p">
             <slot></slot>
         </div>
     </div>
