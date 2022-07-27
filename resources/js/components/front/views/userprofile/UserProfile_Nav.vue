@@ -38,7 +38,7 @@
                     >الدورات المفضلة</router-link
                 >
             </li>
-            <li>
+            <li v-if="isSpecialist">
                 <span class="d-block p-side-15 pt-10 pb-10 trans pointer submenu-target" @click="collapseMenu('calls')">المكالمات</span>
                   <transition name="slide">
                 <aside class="submenu trans" v-if="isCallSubMenuOpened">
@@ -81,6 +81,14 @@ export default {
             isMenuOpened: false,
             isCallSubMenuOpened: false
         };
+    },
+    computed: {
+        userType() {
+            return this.$store.getters['user/type']
+        },
+        isSpecialist(){
+            return this.userType == 'specialist'
+        }
     },
     methods: {
         closeNavMenu() {

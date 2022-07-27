@@ -61,9 +61,9 @@
         </div>
       </form>
       <div class="d-flex gap-20 mt-10-p btns-box">
-        <button @click="clear" class="radius-60 gray dismiss-btn pointer">إلغاء</button>
-        <button @click="submitForm(true)" class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15">حفظ</button>
-        <button @click="submitForm(false)" class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15">حفظ وإستمرار</button>
+        <button @click="clear" class="radius-60 gray dismiss-btn pointer flex-1">إلغاء</button>
+        <button @click="submitForm(true)" class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15 flex-1">حفظ</button>
+        <button @click="submitForm(false)" class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15 flex-1">حفظ وإستمرار</button>
       </div>
     </div>
   </normal-modal>

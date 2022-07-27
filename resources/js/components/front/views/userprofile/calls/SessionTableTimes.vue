@@ -37,7 +37,7 @@
       
     </div>
     <div class="mt-40 d-flex flex-end">
-      <button class="btn-main">حفظ</button>
+      <button class="btn-main" @click="saveAppointments">حفظ</button>
     </div>
 
     
@@ -65,6 +65,9 @@ export default {
     }
   },
   methods: {
+    async saveAppointments(){
+      await this.$store.dispatch('specialist/setAppointments',this.intervals)
+    },
     toggleAddSessionModal(status){
       this.isAddNewSessionModal = status
     },
