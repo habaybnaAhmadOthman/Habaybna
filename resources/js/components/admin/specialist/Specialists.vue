@@ -162,7 +162,7 @@ export default {
     };
   },
   async created() {
-    const resp = await this.callApi("get", "/api/set-calls-providers-appointments");
+    const resp = await this.callApi("get", "/api/admin/get-specialists-data");
     console.log(resp, "xx");
     if (resp.status == 200) {
       this.specialists = resp.data.specialists;
