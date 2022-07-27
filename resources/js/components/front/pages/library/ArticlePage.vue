@@ -7,9 +7,9 @@
             <!-- <div class="mt-50">
                 <AboutSpecialists :title="'بواسطة'" v-if="specialists" :specialists="specialists" :mo-title="true"></AboutSpecialists>
             </div> -->
-            
+
             <div class="mt-60" v-if="isDataReady && relatedArticles.length > 0">
-                <RelatedContent :data="relatedArticles"></RelatedContent>    
+                <RelatedContent :data="relatedArticles"></RelatedContent>
             </div>
         </div>
         <TheFooter></TheFooter>
@@ -50,7 +50,7 @@
                 relatedArticles: []
             }
         },
-        methods: { 
+        methods: {
             fixEmbedLinks(str){
                 const startFrom =  str.indexOf('<figure');
                 const endFrom =  str.indexOf('</oembed></figure>') + 18;
@@ -58,7 +58,7 @@
                     const embedLinkTag = str.slice(startFrom,endFrom);
                     let urlOnly = embedLinkTag.slice(embedLinkTag.indexOf(`url="`) + 5)
                     const videoUrl = urlOnly.slice(0,urlOnly.indexOf(`"`)).replace('https://youtu.be/','https://www.youtube.com/embed/');
-                    
+
                     str = str.replace(embedLinkTag,`<iframe width="560" height="315" src="${videoUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
                     return this.fixEmbedLinks(str)
                 }
