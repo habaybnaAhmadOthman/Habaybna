@@ -14,6 +14,15 @@
     import TheFooter from '../../layouts/TheFooter.vue'
     export default {
         components: { TheHeader,Banner,ContentSection,TheFooter},
+        beforeRouteEnter(to, from, next) {
+            if (from.query.page)
+                localStorage.setItem('prev_page',from.query.page)
+            if (from.query.filters)
+                localStorage.setItem('prev_filters',from.query.filters)
+            next((vm) => {
+                vm.prevRoute = from;
+            });
+        }
     }
 </script>
 

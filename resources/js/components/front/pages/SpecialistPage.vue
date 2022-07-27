@@ -108,50 +108,59 @@
             },
             async getSpecialistData() {
                 this.isLoading(true)
-                const data = await this.$store.dispatch(`specialist/getSpecialistDetails`,this.specialist);
-                this.courses = data.specialist.courses.map((item)=>{
-                    const obj = item.course
-                    const course = {
-                        is_favourite:obj.is_favourite,
-                        title: obj.courseTitle,
-                        course_length: obj.course_length,
-                        id: obj.id,
-                        is_free: obj.is_free,
-                        cover_photo: obj.cover_photo,
-                        is_liked: obj.is_liked,
-                        price: obj.price
+                try {
+                    const data = await this.$store.dispatch(`specialist/getSpecialistDetails`,this.specialist);
+                    if (data.specialist.courses.length > 0) {
+                        this.courses = data.specialist.courses.map((item)=>{
+                            const obj = item.course
+                            const course = {
+                                is_favourite:obj.is_favourite,
+                                title: obj.courseTitle,
+                                course_length: obj.course_length,
+                                id: obj.id,
+                                is_free: obj.is_free,
+                                cover_photo: obj.cover_photo,
+                                is_liked: obj.is_liked,
+                                price: obj.price
+                            }
+                            if (+obj.discount && +obj.discount > 0) {
+                                course.discount = {
+                                    has_discount: true,
+                                    discount_value: obj.discount+ '%',
+                                    discount_price: obj.price - (obj.price * (obj.discount/100))
+                                }
+                            } else {
+                                course.discount = {
+                                    has_discount: false,
+                                    discount_value: 0,
+                                    discount_price: null
+                                }
+                            }
+                            return course
+                        })
+    
                     }
-                    if (+obj.discount && +obj.discount > 0) {
-                        course.discount = {
-                            has_discount: true,
-                            discount_value: obj.discount+ '%',
-                            discount_price: obj.price - (obj.price * (obj.discount/100))
-                        }
-                    } else {
-                        course.discount = {
-                            has_discount: false,
-                            discount_value: 0,
-                            discount_price: null
-                        }
+                    if (data.specialist.articles.length > 0) {
+                        this.articles = data.specialist.articles.map((article)=>{
+                            return {
+                                ...article,
+                                without_like:true
+                            }
+                        });
                     }
-                    return course
-                })
-                this.isLoading(false)
-                this.articles = data.specialist.articles.map((article)=>{
-                    return {
-                        ...article,
-                        without_like:true
+                    if (this.articles.length > 0) {
+                        const specialistData = this.articles[0].author
+                        this.specialistInfo.firstName = specialistData.firstName
+                        this.specialistInfo.lastName = specialistData.lastName
+                        this.specialistInfo.specialization = specialistData.specialization
+                        this.specialistInfo.avatar = specialistData.avatar
+                        this.specialistInfo.bio = specialistData.disorders_work_with
                     }
-                });
-                
-                if (this.articles.length > 0) {
-                    const specialistData = this.articles[0].author
-                    this.specialistInfo.firstName = specialistData.firstName
-                    this.specialistInfo.lastName = specialistData.lastName
-                    this.specialistInfo.specialization = specialistData.specialization
-                    this.specialistInfo.avatar = specialistData.avatar
-                    this.specialistInfo.bio = specialistData.disorders_work_with
+                } catch (err) {
+                    console.log(err)
                 }
+                
+                this.isLoading(false)
                 this.isDataReady = true
             }
         },
