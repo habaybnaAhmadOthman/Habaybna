@@ -6,15 +6,15 @@
           <h2 class="title-line mb-40 mb-20-p">مكتبة المعلومات</h2>
         </template>
         <template v-if="!listOnly">
-          <CategoryFilterSection @change-filter="setFilters" :api="api"></CategoryFilterSection>
+          <CategoryFilterSection :watch-url="true" @change-filter="setFilters" :api="api"></CategoryFilterSection>
           <!-- <Courses :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></Courses> -->
         </template>
-          <ContentList class-list="grid-2 grid-1-p" :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
+          <ContentList :current-page="currentPage" class-list="grid-2 grid-1-p" :filtered-articles="cardsCountFn" :showMoreCard="showMoreCardFn"></ContentList>
           <div class="portal-pagination mt-40 mt-40 justify-center d-flex" v-if="!showMoreCardFn">
             <Pagination
               :data="contentTemp"
               @pagination-change-page="getPageDate"
-              :limit="1"
+              :limit="paginationLimit"
             ></Pagination>
           </div>
       </div>
@@ -41,6 +41,9 @@ export default {
         return true
       else
         return false
+    },
+    isMobile(){
+      return window.matchMedia("(max-width: 677px)").matches
     }
   },
   components: {CategoryFilterSection,ContentList,Pagination: LaravelVuePagination,},
@@ -51,12 +54,25 @@ export default {
       articles: [],
       contentTemp: {},
       api: 'courses/getCategories',
+      paginationLimit: 2,
+      currentPage: null
     }
   },
-  created(){
+  created() {
+    this.getPaginationLimit()
+    this.loadFiltersFromURL()
     this.getPageDate()
   },
   methods:{
+    getPaginationLimit(){
+      if (this.isMobile)
+        paginationLimit = 1
+    },
+    loadFiltersFromURL(){
+      const queryFilters = this.$router.currentRoute.query.filters
+      if (queryFilters)
+        this.activeFilters = queryFilters.split(',')
+    },
     filteredContents() {
       self = this;
       self.atLeastOneSelected = false;
@@ -98,20 +114,22 @@ export default {
           this.activeFilters.push(filter.id)
       })
       this.getPageDate();
-      // for (let index = 0; index < this.updatedFilters; index++) {
-      //   let isChecked =  this.activeFilters[index].isChecked;
-      //   if (isChecked) {
-      //     self.atLeastOneSelected = true;
-      //   }
-      // }
-      // this.activeFilters = updatedFilters;
-      // this.filteredContents();
     },
     async getPageDate(page){
         let getDataFrom = 'getContent'
         if (typeof page === "undefined") {
             page = 1;
+            if (localStorage.getItem('prev_page')) {
+              page = localStorage.getItem('prev_page');
+              localStorage.removeItem('prev_page')
+            }
         }
+        
+        if (localStorage.getItem('prev_filters')) {
+          this.activeFilters = localStorage.getItem('prev_filters');
+          localStorage.removeItem('prev_filters')
+        }
+        this.currentPage = page
         this.isLoading(true)
         if (this.listApi)
           getDataFrom = this.listApi
@@ -119,7 +137,31 @@ export default {
         this.isLoading(false)
         this.contentTemp = resp
         this.articles = resp.data
-        this.filteredContents()
+        this.filteredContents();
+        this.updateURL();
+    },
+    updateURL(){
+      if(!this.listOnly) {
+        const queryObj = {page: this.currentPage}
+        let isSameURL = true;
+        if (this.activeFilters.length > 0) {
+          queryObj.filters = this.activeFilters
+          if (queryObj.filters != this.$router.currentRoute.query.filters) {
+            isSameURL = false
+          }
+        }
+          
+
+        if (this.$router.currentRoute.query.page !== undefined) {
+          if (this.$router.currentRoute.query.page != queryObj.page)
+            isSameURL = false
+        } else {
+          isSameURL = false
+        }
+
+        if (!isSameURL)
+          this.$router.replace({ name: "library", query: queryObj })
+      }
     },
     isLoading(status) {
       this.$store.commit('isLoading',status)

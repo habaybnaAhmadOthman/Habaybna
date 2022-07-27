@@ -7,7 +7,7 @@
                 <div class="swiper-wrapper swipe-box-p p-0-p column-gap-10-p no-scrollbar-p">
                     <!-- Slides -->
                     <div v-for="(category, index) of filters" :key="index" :index="index" class="swiper-slide">
-                        <CategoryFilter @change-filter="setFilter" :id="category.id" :value="category.val"></CategoryFilter>
+                        <CategoryFilter @change-filter="setFilter" :id="category.id" :value="category.val" :checked="category.isChecked"></CategoryFilter>
                     </div>
                 </div>
                 <div class="swiper-button-next categories-filter-next do"></div>
@@ -21,24 +21,32 @@ import 'swiper/swiper-bundle.css'
 import CategoryFilter from './CategoryFilter.vue'
 export default {
   emits: ['change-filter'],
-  props: ['api'],
+  props: ['api','watch-url'],
   components: {CategoryFilter},
   data(){
     return {
-      filters: []
+      filters: [],
+      preFiltersFromURL: []
     }
   },
   created(){
-      this.getCategories();
+    this.shouldListentToURL()
+    this.getCategories();
   },
   methods:{
+    shouldListentToURL(){
+        if (this.watchUrl && this.watchUrl === true) {
+            if(this.$router.currentRoute.query.filters !== undefined) {
+                this.preFiltersFromURL = this.$router.currentRoute.query.filters.split(',')
+            }
+        }
+    },
     async getCategories(){
         const categories = await this.$store.dispatch(this.api);
         let temp = []
         if (categories) {
             categories.forEach((category)=>{
-                // this.filters[category.id] = {id:category.id,val: category.title}
-                temp.push({id:category.id,val: category.title,isChecked: false})
+                temp.push({id:category.id,val: category.title,isChecked: this.preFiltersFromURL.includes(category.id.toString())})
             });
             this.filters = temp;
             // desktop only
