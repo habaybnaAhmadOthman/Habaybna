@@ -8,6 +8,7 @@
   min-height: auto !important;
   margin: auto;
   border-radius: 5px;
+  overflow: scroll;
 }
 #phoneNumber-57_country_selector,
 #phoneNumber-57_phone_number {
