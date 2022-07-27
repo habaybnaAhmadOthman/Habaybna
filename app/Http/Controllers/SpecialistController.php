@@ -10,6 +10,7 @@ use App\User;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use \Carbon\Carbon;
 
 
 
@@ -300,5 +301,53 @@ class SpecialistController extends Controller
 
            ]);
            }
+    }
+
+    public function makeCallStatus($id)
+    {
+        $spec = Specialist::where('user_id',$id)->first();
+
+        if(isset($spec) && $spec != null) {
+
+            $spec->make_calls = !$spec->make_calls ;
+            $spec->save();
+            return response('success', 200);
+        }
+
+        return response('faild', 404);
+
+
+    }
+
+    public function callsProvidersList()
+    {
+        $specialists = User::whereHas('specialist',function($q) {
+
+            $q->canMakeCalls();
+        })->with('specialist')->paginate(12);
+        return response(
+            $specialists,200
+        );
+    }
+
+    public function setCallsProvidersappointments()
+    {
+        // $specialists = User::whereHas('specialist',function($q) {
+
+        //     $q->canMakeCalls();
+        // })->with('specialist')->paginate(12);
+        // return response(
+        //     $specialists,200
+        // );
+
+        $data['apointments'] = ["2022-07-26T11:51:41.821Z", "2022-07-26T11:51:41.821Z","2022-07-26T11:51:41.821Z"];
+        $data['specialist_id']=7 ;
+
+        foreach ($data['apointments'] as $one) {
+            $date = Carbon::parse($data['apointments'][0])->format('d-m-Y H:i');
+            dd($date);
+
+        }
+
     }
 }

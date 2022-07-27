@@ -112,5 +112,10 @@ class User extends Authenticatable
         return $this->hasMany(NewContent::class,'id');
     }
 
+    public function specialist()
+    {
+        return $this->hasOne(Specialist::class,'user_id');
+    }
+
 
 }

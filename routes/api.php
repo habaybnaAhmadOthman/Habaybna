@@ -26,6 +26,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('course/user-complete-quize','QuizController@completeQuiz');
 
+    // calls
+    Route::post('/set-calls-providers-appointments','SpecialistController@setCallsProvidersappointments');
+
 
 
 
@@ -62,6 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('specialist/{id}','SpecialistController@show');
         Route::post('specialist/update/{id}','SpecialistController@update');
         Route::post('/specialist/create','SpecialistController@createSpecAdmin');
+        Route::get('/specialist-make-call-status/{id}','SpecialistController@makeCallStatus');
 
         //other route
         Route::get('get-others-data','OthersController@getOthersData');
@@ -208,4 +212,5 @@ Route::get('/get-testimonials/{type}','TestimonialsController@getTestimonials');
 Route::post('check-otp', \CheckOtp::class);
 Route::get('/get-contents-new','ContentController@getIndexNew');
 Route::get('/get-specialist-data/{id}','ContentController@getSpecialistData');
+Route::get('/get-calls-providers','SpecialistController@callsProvidersList');
 

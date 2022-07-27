@@ -46,7 +46,7 @@ export default {
     margin: auto;
     transform: rotate(180deg);
 }
-.show-more-articles {
+.show-more-articles { 
     height: 120px;
 }
 @media (max-width: 767px) {

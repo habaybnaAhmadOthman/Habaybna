@@ -20,4 +20,9 @@ class Specialist extends Model
     {
         $this->hasMany(NewContent::class,'user_id','author_id');
     }
+
+    public function scopeCanMakeCalls($query)
+    {
+        return $query->where('make_calls',true);
+    }
 }
