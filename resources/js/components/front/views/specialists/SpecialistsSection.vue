@@ -8,7 +8,7 @@
         </template>
         <CategoryFilterSection v-if="!showMoreCardFn" @change-filter="setFilters" :api="api"></CategoryFilterSection>
         <template>
-          <SpecialistsCards :filtered-courses="cardsCountFn" :showMoreCard="showMoreCardFn"></SpecialistsCards>
+          <SpecialistsCards @load-more-data="getData" :page="currentPage" :can-load-data="canLoadData" v-if="isDataReady" :data="cardsCountFn" :showMoreCard="showMoreCardFn"></SpecialistsCards>
         </template>
       </div>
     </section>
@@ -24,9 +24,9 @@ export default {
   computed: {
     cardsCountFn(){
       if (this.cardsCount) {
-        return this.shuffle(this.appendedCourses).slice(0,this.cardsCount)
+        return this.shuffle(this.appendedSpecialists).slice(0,this.cardsCount)
       } else
-        return this.appendedCourses
+        return this.appendedSpecialists
     },
     showMoreCardFn(){
       if (this.showMoreCard === true)
@@ -40,13 +40,16 @@ export default {
     return {
       activeFilters: [],
       atLeastOneSelected: false,
-      appendedCourses: [],
-      courseTemp: [],
-      api: 'courses/getCategories'
+      appendedSpecialists: [],
+      specialistTemp: [],
+      isDataReady: false,
+      canLoadData: true,
+      api: 'courses/getCategories',
+      currentPage: 1
     }
   },
   created(){
-    this.getCourses();
+    this.getData();
   },
   methods:{
     shuffle(a) {
@@ -56,12 +59,12 @@ export default {
         }
         return a;
     },
-    filteredCourses() {
+    filteredSpecialists() {
       self = this;
       self.atLeastOneSelected = false;
-      const courses = this.courseTemp;
-      // if (courses) {
-        const updatedList =  courses.filter(course=>{
+      const specialists = this.specialistTemp;
+      // if (specialists) {
+        const updatedList =  specialists.filter(user=>{
           for (let index = 0; index < this.activeFilters.length; index++) {
             let isChecked =  this.activeFilters[index].isChecked;
 
@@ -70,7 +73,7 @@ export default {
               self.atLeastOneSelected = true;
             }
             if ( isChecked ) {
-              let selected = course.categories.filter(cat=>{
+              let selected = user.categories.filter(cat=>{
                 return cat.id == this.activeFilters[index].id
               })
               if (selected.length > 0) {
@@ -81,27 +84,50 @@ export default {
         });
         if (updatedList.length < 1) {
           if (!self.atLeastOneSelected) {
-            this.appendedCourses = courses;
+            this.appendedSpecialists = specialists;
           } else {
-            this.appendedCourses = [];
+            this.appendedSpecialists = [];
           }
         } else {
-          this.appendedCourses = updatedList;
+          this.appendedSpecialists = updatedList;
         }
       // }
     },
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
-      this.filteredCourses();
+      this.filteredSpecialists();
     },
-    async getCourses() {
-      const allCourses = await this.$store.getters['courses/courses']
-      if ( allCourses.length > 0) {
-        this.courseTemp = allCourses
-      } else {
-        this.courseTemp = await this.$store.dispatch('courses/getAllCourses');
+    getOne() {
+      return { 
+          avatar: "default.jpg",
+          firstName: 'n' + Math.floor(Math.random()* 11),
+          id: Math.random(),
+          lastName: "الرمحي",
+          specialization: "التربية الخاصة"
+        }
+    },
+    async getData(page) {
+      this.canLoadData = false
+      if (typeof page === "undefined") {
+        page = 1;
       }
-      this.filteredCourses()
+      this.currentPage = page
+      const loadedSpecialists =  (await this.$store.dispatch('specialist/getSpecialistsList',{page: this.currentPage})).data.map((sp)=>{
+        return {
+          avatar: sp.specialist.avatar,
+          firstName: sp.specialist.firstName ,
+          lastName: sp.specialist.lastName,
+          specialization: sp.specialist.specialization,
+          id: sp.specialist.user_id
+        }
+      });
+      if (loadedSpecialists.length > 0) {
+        this.specialistTemp.push(...loadedSpecialists)
+        // this.specialistTemp.push(this.getOne())
+        this.filteredSpecialists()
+        this.canLoadData = true
+      }
+      this.isDataReady = true
     }
   }
 }
