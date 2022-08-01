@@ -2,34 +2,18 @@
     <div class="specialists-list-section pb-30 pb-20-p">
         <div class="container">
             <div class="specialists-container">
-                <!-- <template v-if="filteredCourses.length">
-                    <div class="courses-list d-flex flex-wrap p-side-12-p" :class="listClass">
-                        <SpecialistCard v-for="(course, index) in filteredCourses" :course="course" :key="index"></SpecialistCard>
-                        <div class="course-box shadow w-31 radius-10 more main-bg w-100-p do" v-if="showMoreCard">
-                            <router-link to="/all-courses" class="white-i font-23 h-100 d-block w-100">اكتشف المزيد</router-link>
-                        </div>
+                <template  v-if="data.length">
+                    <ul class="specialists-list p-side-12-p grid-3 grid-1-p gap-20" :class="listClass">
+                        <Card v-for="item in data" :key="item.id" :data="item"></Card>
+                    </ul>
+                    <div class="  w-50 d-flex justify-center m-side-auto  more w-100-p mt-20" v-if="showMoreCard">
+                        <router-link to="/all-specialists" class="white-i relative radius-10 shadow flex-all relative next-arrow font-27 font-20-p h-100 d-block show-more-articles bg-blue w-100">إستعراض الأخصائيين</router-link>
+                    </div>
+                    <div v-if="!showMoreCard && canLoadData" class="load-more container shadow center bg-white radius-12 mt-30 d-flex align-center justify-center pt-30 pb-30 m-side-12-p">
+                        <img src="/images/loader.gif" width="50" height="50" alt="loading" >
                     </div>
                 </template>
-                <div v-else class="w-100 center">
-                    <h2 class="font-32 main-color bold">لا يوجد أخصائيين</h2>
-                </div> -->
-                <ul class="specialists-list flex-wrap-p d-flex flex-wrap p-side-12-p wrap space-between list-gap" :class="listClass">
-                    <Card class="w-32 w-100-p"></Card>
-                    <Card class="w-32 w-100-p"></Card>
-                    <Card class="w-32 w-100-p"></Card>
-                    <Card class="w-32 w-100-p"></Card>
-                    <Card class="w-32 w-100-p"></Card>
-                    <Card class="w-32 w-100-p"></Card>
-                    <Card class="w-32 w-100-p"></Card>
-                    <Card class="w-32 w-100-p"></Card>
-                    <Card class="w-32 w-100-p"></Card>
-                    <div class="show-more-articles bg-blue relative shadow w-50 d-flex justify-center m-side-auto radius-10 more w-100-p" v-if="showMoreCard">
-                        <router-link to="/all-specialists" class="white-i flex-all relative next-arrow font-27 font-20-p h-100 d-block w-100">إستعراض الأخصائيين</router-link>
-                    </div>
-                </ul>
-                <div v-if="!showMoreCard && canLoadMore" class="load-more container shadow center bg-white radius-12 mt-30 d-flex align-center justify-center pt-30 pb-30 m-side-12-p">
-                    <img src="/images/loader.gif" width="50" height="50" alt="loading" >
-                </div>
+                <h1 v-else class="center yellow ">لا يوجد أخصائيين</h1>
             </div>
         </div>
     </div>
@@ -37,21 +21,20 @@
 <script>
 import Card from "./HorizontalCard.vue"
 export default {
-    props: ["filteredCourses","showMoreCard","list-class"],
+    emits: ["load-more-data"],
+    props: ["data","showMoreCard","list-class", "can-load-data","page"],
     components: {Card},
     data(){
         return {
-            canLoadMore:true,
+            
         }
     },
     methods:{
         handleScroll(){
             var loadMoreEl = document.querySelector('.load-more');
-            if (loadMoreEl && loadMoreEl.getBoundingClientRect().bottom < window.innerHeight && this.canLoadMore) {
-                this.canLoadMore = false;
-                setTimeout(() =>{
-                    this.canLoadMore = true
-                },2000)
+            if (loadMoreEl && loadMoreEl.getBoundingClientRect().bottom < window.innerHeight && this.canLoadData) {
+                const nextPage = this.page + 1
+                this.$emit('load-more-data',nextPage)
             }
         },
     },
@@ -65,9 +48,6 @@ export default {
 </script>
 
 <style scoped>
-.list-gap {
-    row-gap: 20px;
-}
 
 .course-box.more {
     position: relative;
@@ -76,7 +56,7 @@ export default {
 .show-more-articles {
     height: 120px;
 }
-.show-more-articles:before {
+.show-more-articles:before{
         content: "";
     top: 0;
     left: 0;
@@ -105,6 +85,9 @@ export default {
 @media (max-width: 767px) {
     .show-more-articles {
         height: 40px;
+    }
+    .show-more-articles {
+        width: calc(100% - 24px);
     }
 }
 </style>
