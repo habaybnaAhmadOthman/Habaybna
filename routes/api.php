@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('course/user-complete-quize','QuizController@completeQuiz');
 
     // calls
-    Route::post('/set-calls-providers-appointments','SpecialistController@setCallsProvidersappointments');
+    Route::post('/set-calls-providers-appointments','CallsAppointmentsController@setCallsProvidersappointments');
 
 
 
