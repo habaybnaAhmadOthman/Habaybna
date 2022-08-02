@@ -57,16 +57,37 @@ import ColMobile from './SessionTableTimes_ColMobile.vue'
 import AddSession from './AddSession.vue'
 export default {
   components:{Col,AddSession,ColMobile},
+  mounted(){
+    this.getAppointments()
+  },
   data(){
     return {
       isAddNewSessionModal: false,
       mobileDaysInterval: {}, // just for draw data
       intervals: [],
+      specialistData:null
+    }
+  },
+  computed:{
+    slug(){
+      var url = this.specialistData.firstName.split(' ').join('-')
+      if (this.specialistData.lastName)
+          url += `-${this.specialistData.lastName.split(' ').join('-')}`
+      url += `--${this.specialistData.id}`
+      return `${url}`
+    },
+    specialistInfo(){
+      return this.$store.getters['user/userData'];
     }
   },
   methods: {
     async saveAppointments(){
       await this.$store.dispatch('specialist/setAppointments',this.intervals)
+    },
+    async getAppointments(){
+      this.specialistData = this.specialistInfo
+      const x = await this.$store.dispatch('specialist/getAppointments',this.slug)
+      console.log(x)
     },
     toggleAddSessionModal(status){
       this.isAddNewSessionModal = status

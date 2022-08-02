@@ -28,4 +28,12 @@ export default {
             throw error;
         }
     },
+    // ******** get appointments for specialist ::: GET
+    async getAppointments(context,payload) {
+        const resp = await callApi("GET", `/api/get-specialist-appintments/${payload}`);
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to getAppointments");
+            throw error;
+        }
+    },
 };

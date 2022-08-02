@@ -10,6 +10,8 @@ export default {
             state.avatar = payload.avatar;
         if (payload.token)
             state.token = payload.token;
+        if (payload.id)
+            state.id = payload.id;
         if (!state.avatar || state.avatar == 'default.jpg')
             state.avatar = '/images/avatars/default.jpg';
         state.loggedIn = true;
