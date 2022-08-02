@@ -31,17 +31,11 @@ class CallsAppointmentsController extends Controller
         //     }
         // }
         // return response('cantmakecall', 404);
-        $provider = User::findorfail(7) ;
 
-        if($provider && $provider->specialist)
-
-        return response($provider->specialist->callsAppointments->where('is_booked',0), 200);
-
-        return response('notcallprovider',404);
 
     }
 
-    public function getCallsProvidersappointments()
+    public function getBookedCallsProvidersappointments()
     {
         $provider = User::findorfail(7) ;
 
@@ -52,13 +46,17 @@ class CallsAppointmentsController extends Controller
         return response('notcallprovider',404);
     }
 
-    public function getBookedCallsProvidersappointments()
+    public function getCallsProvidersappointments($slug)
     {
-        $provider = User::findorfail(7) ;
+       $id = explode ("--", $slug);
 
-        if($provider && $provider->specialist)
+        $provider = User::findorfail($id[1]) ;
+        if($provider &&
+        $provider->specialist &&
+        !empty($provider->specialist->callsAppointments)
+        )
 
-        return response($provider->specialist->callsAppointments->where('is_booked'), 200);
+        return response($provider->specialist->callsAppointments, 200);
 
         return response('notcallprovider',404);
     }
