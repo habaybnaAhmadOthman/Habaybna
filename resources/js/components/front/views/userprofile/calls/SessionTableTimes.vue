@@ -24,14 +24,14 @@
       <!-- desktop records -->
       <div class="do">
         <transition-group name="list" tag="ul" class="table-added-cols">
-            <Col @remove="removeCol" v-for="(interval) in intervals" :key="interval" :data="interval"></Col>
+            <Col @remove="removeCol" v-for="(interval) in intervals" :key="interval.id" :data="interval"></Col>
         </transition-group>
       </div>
 
       <!-- mobile records -->
       <div class="mo">
         <transition-group name="list" tag="ul" class="table-added-cols-mo d-flex flex-column gap-15">
-          <ColMobile @remove-interval="removeCol" @remove-day="removeDayWithIntervals" v-for="day in mobileDaysInterval" :key="day[0]" :day="day"></ColMobile>
+          <ColMobile @remove-interval="removeCol" @remove-day="removeDayWithIntervals" v-for="day in mobileDaysInterval" :key="day[0].id" :day="day"></ColMobile>
         </transition-group>
       </div>
       
@@ -44,6 +44,7 @@
     <AddSession
     :tableIntervals="intervals"
     :showModal="isAddNewSessionModal"
+    :unavailableIntervals="unavailableIntervalsArr"
     @add-new-session="addNewSessionFn"
     @close="toggleAddSessionModal(false)"></AddSession>
     <portal-target name="add-session-modal"></portal-target>
@@ -65,6 +66,8 @@ export default {
       isAddNewSessionModal: false,
       mobileDaysInterval: {}, // just for draw data
       intervals: [],
+      alreadySavedIntervals: [],
+      unavailableIntervalsArr:[],
       specialistData:null
     }
   },
@@ -82,18 +85,51 @@ export default {
   },
   methods: {
     async saveAppointments(){
-      await this.$store.dispatch('specialist/setAppointments',this.intervals)
+      const saveThoseIntervalsOnly = this.intervals.filter(int=>{
+        if (!this.alreadySavedIntervals.includes(int.val))
+          return int
+      }).map(interval=>interval.val)
+      
+      if (saveThoseIntervalsOnly.length > 0) {
+        this.isLoading(true)
+        await this.$store.dispatch('specialist/setAppointments',saveThoseIntervalsOnly)
+        this.isLoading(false)
+        this.forceRefresh()
+      } else {
+        this.$store.commit('alertDialogMsg','لا يوجد ما يمكن إضافته');
+      }
+      
+      
     },
     async getAppointments(){
-      this.specialistData = this.specialistInfo
-      const x = await this.$store.dispatch('specialist/getAppointments',this.slug)
-      console.log(x)
+      const today = new Date(new Date().toISOString()).getTime();
+      this.specialistData = this.specialistInfo;
+      this.unavailableIntervalsArr = []
+      const data = await this.$store.dispatch('specialist/getAppointments',this.slug);
+      this.intervals = data.filter((apt)=>{
+        let appointment = new Date(apt.appointment).getTime();
+        if (appointment > today) {
+          if (apt.is_booked) {
+            this.unavailableIntervalsArr.push(apt.appointment)
+          } else
+            return apt
+        }
+      }).map(int=>{
+        return {
+            val: int.appointment,
+            id: int.id 
+        }}
+      )
+      
+      // when you want to save new intervals , execlude this obj
+      this.alreadySavedIntervals = [...this.intervals].map(int=>int.val)
+      this.sortIntervals()
     },
     toggleAddSessionModal(status){
       this.isAddNewSessionModal = status
     },
     sortIntervals(){
-      this.intervals = this.intervals.sort();
+      this.intervals = this.intervals.sort((a,b) => new Date(a.val).getTime() - new Date(b.val).getTime());
       this.fillMobileTable()
     },
     addNewSessionFn(intervals){
@@ -104,7 +140,7 @@ export default {
       var day = ''
       const daysObj = {}
       this.intervals.map(interval=> {
-        day = interval.slice(0,10)
+        day = interval.val.slice(0,10)
         // if the day not exist in mobile object => then add it
         if (!daysObj.hasOwnProperty(day)) {
           daysObj[day] = []
@@ -114,14 +150,24 @@ export default {
       })
       this.mobileDaysInterval = daysObj
     },
-    removeCol(colDate){
-      this.intervals = this.intervals.filter((time)=> time != colDate);
+    removeCol(colID,shouldOpenModal){
+      this.intervals = this.intervals.filter((int)=> int.id != colID);
+      this.$store.dispatch('specialist/removeInterval',{
+        id: colID,
+        specialistID: this.specialistData.id
+      })
       this.sortIntervals();
     },
     removeDayWithIntervals(dayDate){
-      this.intervals = this.intervals.filter((time)=> !time.startsWith(dayDate));
-      this.sortIntervals()
-    }
+      // this.intervals = this.intervals.filter((time)=> !time.startsWith(dayDate));
+      // this.sortIntervals()
+    },
+    isLoading(status) {
+        this.$store.commit('isLoading',status)
+    },
+    forceRefresh(){
+      this.$store.commit("forceRefresh");
+    },
   }
 };
 </script>

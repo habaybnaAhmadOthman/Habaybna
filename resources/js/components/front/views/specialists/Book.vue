@@ -47,6 +47,7 @@
 import RadioTag from "./Book_RadioTag.vue";
 import CoboneForm from "./CoboneForm.vue";
 export default {
+  props: ['specialistData'],
   components: { RadioTag,CoboneForm },
   methods: {
     onDaySelect(id) {
@@ -79,11 +80,49 @@ export default {
         this.items[this.selectedDay].availableTimes[this.selectedTime]
       );
     },
+    getAvailableTimes(){
+      const data = await this.$store.dispatch('specialist/getAppointments',this.slug);
+      const today = new Date(new Date().toISOString()).getTime();
+      this.intervals = data.filter((apt)=>{
+        let appointment = new Date(apt.appointment).getTime();
+        if (appointment > today) {
+          if (!apt.is_booked)
+            return apt
+        }
+      }).map(int=>{
+        return {
+            date: int.appointment,
+            id: int.id,
+            selected: false
+        }}
+      )
+    },
+    fillDaysData() {
+      var day = ''
+      const daysObj = {}
+      this.intervals.map(interval=> {
+        day = interval.val.slice(0,10)
+        // if the day not exist in mobile object => then add it
+        if (!daysObj.hasOwnProperty(day)) {
+          daysObj[day] = []
+        }
+        // add interval to the targeted day in mobile object (mobileDaysInterval)
+        daysObj[day].push(interval)
+      })
+      this.mobileDaysInterval = daysObj
+    },
   },
   computed: {
     canSubmit() {
       console.log(this.selectedDay == null || this.selectedTime == null)
       return this.selectedDay == null || this.selectedTime == null;
+    },
+    slug(){
+      var url = this.specialistData.firstName.split(' ').join('-')
+      if (this.specialistData.lastName)
+          url += `-${this.specialistData.lastName.split(' ').join('-')}`
+      url += `--${this.specialistData.id}`
+      return `${url}`
     },
   },
   data() {
