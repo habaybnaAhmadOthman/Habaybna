@@ -57,7 +57,7 @@
                 if (startFrom > -1) {
                     const embedLinkTag = str.slice(startFrom,endFrom);
                     let urlOnly = embedLinkTag.slice(embedLinkTag.indexOf(`url="`) + 5)
-                    const videoUrl = urlOnly.slice(0,urlOnly.indexOf(`"`)).replace('https://youtu.be/','https://www.youtube.com/embed/');
+                    const videoUrl = urlOnly.slice(0,urlOnly.indexOf(`"`)).replace('https://youtu.be/','https://www.youtube.com/embed/').replace('https://www.youtube.com/watch?v=','https://www.youtube.com/embed/');
 
                     str = str.replace(embedLinkTag,`<iframe width="560" height="315" src="${videoUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
                     return this.fixEmbedLinks(str)

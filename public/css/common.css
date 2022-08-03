@@ -1196,4 +1196,9 @@ img {
     iframe {
         max-width: 100%;
     }
+    .library-page iframe {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+    }
 }
