@@ -66,7 +66,7 @@ export default {
   methods:{
     getPaginationLimit(){
       if (this.isMobile)
-        paginationLimit = 1
+        this.paginationLimit = 1
     },
     loadFiltersFromURL(){
       const queryFilters = this.$router.currentRoute.query.filters
