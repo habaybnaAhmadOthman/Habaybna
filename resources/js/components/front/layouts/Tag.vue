@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="link" v-if="link">
+    <router-link :to="updatedLink" v-if="link">
         <label class="center gray radius-60 font-18 font-16-p">{{ value  }}</label>
     </router-link>
     <div v-else>
@@ -10,6 +10,15 @@
 <script>
     export default {
         props: ['value',"link"],
+        computed: {
+            updatedLink(){
+                if (this.link.includes('?'))
+                    return `${this.link}&newFilters=1` 
+                else
+                    return `${this.link}?newFilters=1` 
+            }
+        },
+        
     }
 </script>
 
