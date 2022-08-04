@@ -33,7 +33,7 @@
     },
     methods: {
       removeInterval(intervalID) {
-        shouldUserConfirm = true
+        let shouldUserConfirm = true
         if (isNaN(intervalID) && intervalID.startsWith('no-'))
           shouldUserConfirm = false
         this.$emit('remove-interval',intervalID,shouldUserConfirm)

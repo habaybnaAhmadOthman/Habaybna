@@ -46,4 +46,21 @@ export default {
             throw error;
         }
     },
+    // ******** remove appointments ::: POST
+    async bookAppointment(context,payload) {
+        const resp = await callApi("POST", `your-api-here`,payload);
+        if (!resp) {
+            const error = new Error("something went wrong, please try again");
+            throw error;
+        }
+        return resp.data[0]
+    },
+    // ******** Child info for call ::: POST
+    async childInfoForAppointment(context,payload) {
+        const resp = await callApi("POST", `your-api-here`,payload);
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to contact us");
+            throw error;
+        }
+    },
 };

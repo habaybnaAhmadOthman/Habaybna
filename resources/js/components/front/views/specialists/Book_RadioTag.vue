@@ -12,13 +12,13 @@
         computed: {
             labelName(){
                 if (this.isDay)
-                    return new Date(this.item.date).toLocaleDateString('ar-EG',{weekday:'long'})
+                    return new Date(this.item.intervals[0].date).toLocaleDateString('ar-EG',{weekday:'long'})
                 else
                     return new Date(this.item.date).toLocaleDateString('en-US',{hour:'2-digit',minute:'2-digit'}).split(' ')[1]
             },
             labelValue(){
                 if (this.isDay)
-                    return new Date(this.item.date).toLocaleDateString('en-GB',{month:'numeric',day:'2-digit'})
+                    return new Date(this.item.intervals[0].date).toLocaleDateString('en-GB',{month:'numeric',day:'2-digit'})
                 else {
                     var AM_PM = new Date(this.item.date).toLocaleDateString('en-US',{hour:'2-digit',minute:'2-digit'}).split(' ')[2];
                     return AM_PM.toLowerCase() == 'pm' ? 'مساءً' : 'صباحاً'

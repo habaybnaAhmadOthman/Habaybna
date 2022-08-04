@@ -33,7 +33,7 @@
     },
     methods: {
       removeCol(){
-        shouldUserConfirm = true
+        let shouldUserConfirm = true
         if (isNaN(this.data.id) && this.data.id.startsWith('no-'))
           shouldUserConfirm = false
         this.$emit('remove',this.data.id,shouldUserConfirm)

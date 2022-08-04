@@ -21,7 +21,7 @@
                     </div>
                     <div class="mt-40 pb-40">
                         <div tab-name="book" all class="active">
-                            <Book :specialistData="specialistInfo"></Book>
+                            <Book v-if="isDataReady" :specialistData="specialistInfo" :data="appointments"></Book>
                         </div>
                         <div tab-name="about" all class="active">
                             <div class="font-24 black-2 font-18-p">{{specialistInfo.bio}}</div>
@@ -97,6 +97,8 @@
         components: { TheHeader,SmallCard,CourseCard,ShareModal,TabsToggle,Book,QuestionaireModal,TheFooter},
         data(){
             return {
+
+                appointments:[],
                 tabs: [
                     {
                         title: 'المواعيد<br class="mo"> المتاحة' ,
@@ -200,7 +202,17 @@
                         this.specialistInfo.specialization = specialistData.specialization
                         this.specialistInfo.avatar = specialistData.avatar
                         this.specialistInfo.bio = specialistData.disorders_work_with
+                        this.specialistInfo.id = specialistData.user_id                        
                     }
+
+                    // appointments
+                    if (data.specialist.appintment && Object.keys(data.specialist.appintment).length > 0) {
+                        const appt = []
+                        for (const i in data.specialist.appintment ) {
+                            appt.push(data.specialist.appintment[i])
+                        }
+                        this.appointments = appt
+                    } 
                 } catch (err) {
                     console.log(err)
                 }
@@ -249,6 +261,7 @@
             isQuestionaireModal(status){
                 this.querstionaireModal.show = status
             },
+            
         },
         async mounted(){
             this.getActiveTab();
