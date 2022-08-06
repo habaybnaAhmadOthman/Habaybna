@@ -4,23 +4,22 @@
             <h1>سجل المكالمات</h1>
         </template>
         <template>
-            <section class="session-times-section pt-50 pb-50">
+            <section class="session-times-section pb-50">
                 <div class="">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex align-center space-between mb-25">
-                                <h1>جدول المواعيد</h1>
-                            </div>
+                        <div class="card-body p-0-p">
                             <Filters 
                             :filters="filters"
                             @filter-changed="updateFilters"
                             ></Filters>
-                            <LogsTable></LogsTable>
+                            <LogsTable :filters="activeFilters"></LogsTable>
                         </div>
                     </div>
                 </div>
             </section>
         </template>
+        <portal-target name="show-user-recommendation"></portal-target>
+        <portal-target name="recommendation-modal"></portal-target>
     </UserProfileContent>
 </template>
 
@@ -45,17 +44,24 @@ export default {
                 missed: {
                     checked:false
                 }
-            }
+            },
+            activeFilters: 'all'
         }
     },
     methods: {
-        updateFilters(updatedFilters){
-            this.filters = {...updatedFilters}
+        updateFilters(updatedFilters,activeFilter){
+            this.filters = {...updatedFilters};
+            this.activeFilters = activeFilter
         }
     }
 };
 </script>
 
 <style scoped>
-
+@media (max-width: 767px) {
+    .card {
+        background: transparent;
+        box-shadow: none;
+    }
+}
 </style>

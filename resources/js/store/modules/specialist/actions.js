@@ -46,7 +46,7 @@ export default {
             throw error;
         }
     },
-    // ******** remove appointments ::: POST
+    // ******** book appointments ::: POST
     async bookAppointment(context,payload) {
         const resp = await callApi("POST", `your-api-here`,payload);
         if (!resp) {
@@ -63,4 +63,24 @@ export default {
             throw error;
         }
     },
+
+    // ******** get specialist calls log ::: POST
+    async getSpecialistCallsLog(context,payload) {
+        const resp = await callApi("POST", `your-api-here`,payload);
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to getSpecialistCallsLog");
+            throw error;
+        }
+        return resp.data
+    },
+    
+    // ******** add Recommendation ::: POST
+    async addRecommendation(context,payload) {
+        const resp = await callApi("POST", `your-api-here`,payload);
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to addRecommendation");
+            throw error;
+        }
+    },
+
 };
