@@ -1,6 +1,9 @@
 <template>
     <div class="d-flex registration-template h-full h-auto-p overflow-hidden">
         <div class="right-side bg-white w-40 w-100-p pt-0-p pt-20-p" :class="padding">
+            <a title="whatsapp" class="whatsapp-float mo" href="https://api.whatsapp.com/send?phone=+962799760238" data-action="share/whatsapp/share" target="_blank" style="display: inline;"> 
+                <img src="/images/whats-app-icon.png" width="40">
+            </a>
             <slot></slot>
         </div>
         <LeftSide class="w-60 w-100-p pt-0-p"></LeftSide>
@@ -28,6 +31,12 @@ export default {
 @media (max-width: 767px) {
     .registration-template {
         flex-direction: column-reverse;
+    }
+    .whatsapp-float {
+        position: absolute;
+        bottom: 0;
+        right: 10px;
+        color: #000;
     }
 }
 </style>
