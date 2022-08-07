@@ -1,5 +1,5 @@
 <template>
-  <div class="book-box" v-if="data.length > 0">
+  <div class="book-box" v-if="daysWithIntervals.length > 0">
     <p class="font-20 bold main-color mb-20">إختر اليوم</p>
     <div class="d-flex box flex-wrap">
       <RadioTag
@@ -44,7 +44,7 @@
 
   </div>
   <div v-else>
-    لا يوجد مواعيد متاحة
+    لا يوجد مواعيد متاحة في الوقت الحالي
   </div>
 </template>
 

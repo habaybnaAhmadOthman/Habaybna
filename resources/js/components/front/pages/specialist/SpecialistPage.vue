@@ -204,7 +204,6 @@
                         this.specialistInfo.bio = specialistData.disorders_work_with
                         this.specialistInfo.id = specialistData.user_id                        
                     }
-
                     // appointments
                     if (data.specialist.appintment && Object.keys(data.specialist.appintment).length > 0) {
                         const appt = []
