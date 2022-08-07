@@ -100,11 +100,11 @@ export default {
         return;
       }
       try {
-        // this.$store.dispatch("content/contactUS", {
-        //   email: this.email.val,
-        //   message: this.message.val,
-        //   name: this.name.val,
-        // });
+        this.$store.dispatch("specialist/childInfoForAppointment", {
+          message: this.message.val,
+          age: this.age.val,
+          childStatus: this.childStatus.val,
+        });
         this.close()
         this.$store.commit("alertDialogMsg", "شكراً لتعاونكم");
         this.age.val = "";

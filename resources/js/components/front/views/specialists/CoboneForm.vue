@@ -27,6 +27,9 @@
         </span>
         <span class="bold font-35 main-color">{{ Math.round(1) }} $</span>
       </div>
+      <!-- <button @click="buyCourse" class="btn">
+          إشترك الآن
+      </button> -->
     </info-modal>
   </div>
 </template>
@@ -35,18 +38,14 @@
 import infoModalMixin from "../../mixins/infoModal";
 export default {
   mixins: [infoModalMixin],
-  emits: ["buyCourse"],
-  props: ["courseID", "coursePrice", "courseName"],
+  emits: ["buyAppointment","getPromoCode"],
+  props: ["specialistID","isLoggedIn"],
   data() {
     return {
       promoCode: "",
       discountVal: null,
+      callPrice: 45
     };
-  },
-  computed: {
-      isLoggedIn(){
-          return this.$store.getters["user/isLoggedIn"];
-      }
   },
   methods: {
     isLoading(status) {
@@ -67,9 +66,9 @@ export default {
       this.isLoading(true);
       try {
         checkPromoCode = await this.$store.dispatch("courses/promoCode", {
-          courseID: this.courseID(),
+          specialistID: this.specialistID,
           promoCode: this.promoCode,
-          usage: "Course",
+          usage: "Call",
         });
         if (checkPromoCode.isValid) {
           this.$emit("getPromoCode", checkPromoCode.id);
@@ -85,7 +84,7 @@ export default {
       if (checkPromoCode.discount_perc == 100) {
         // free
         this.setInfoModal(
-          "يمكنك الآن مشاهدة الدورة",
+          "سوف يتم إرسال الرابط لبريدك الإلكتروني",
           "لقد قمت بإدخال رقم الكوبون بنجاح",
           true,
           true,
@@ -95,8 +94,8 @@ export default {
         // discount success
 
         this.discountVal =
-          this.coursePrice -
-          this.coursePrice * (checkPromoCode.discount_perc / 100);
+          this.callPrice -
+          this.callPrice * (checkPromoCode.discount_perc / 100);
         this.setInfoModal(
           "يمكنك إتمام عملية الشراء",
           "لقد قمت بإدخال رقم الكوبون بنجاح",

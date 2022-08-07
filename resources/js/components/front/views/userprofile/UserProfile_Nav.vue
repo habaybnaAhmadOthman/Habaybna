@@ -48,12 +48,7 @@
                         >
                     </li>
                     <li>
-                        <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-fsavourite-coursesw" @click.native="closeNavMenu"
-                            >مشاهدة مواعيد الحجز</router-link
-                        >
-                    </li>
-                    <li>
-                        <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-favaourite-coursesq" @click.native="closeNavMenu"
+                        <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/profile/my-call-log" @click.native="closeNavMenu"
                             >سجل المكالمات</router-link
                         >
                     </li>

@@ -98,6 +98,10 @@ dialog {
     height: 60px;
     border-radius: 25px;
 }
+.sticky-header .close-icon-modal{
+    position: sticky;
+    top: 0;
+}
 @keyframes modal {
     from {
         opacity: 0;

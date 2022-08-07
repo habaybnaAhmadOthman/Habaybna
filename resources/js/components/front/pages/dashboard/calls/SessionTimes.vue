@@ -4,7 +4,7 @@
             <h1>أوقاتي المتاحة</h1>
         </template>
         <template>
-            <section class="session-times-section pt-50 pb-50 pt-0-p">
+            <section class="session-times-section pb-50 ">
                 <div class="card">
                     <div class="card-body p-0-p">
                         <div class="d-flex align-center space-between mb-25">

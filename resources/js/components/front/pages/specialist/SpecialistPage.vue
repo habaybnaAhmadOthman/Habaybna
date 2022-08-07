@@ -7,11 +7,12 @@
                 <div class="bg-white m-side-12-p box shadow radius-10 p-side-30 p-side-12-p">
                     <div class="d-flex flex-wrap-p justify-center-p">
                         <figure class="rounded overflow-hidden shadow d-flex ml-30 avatar-box m-0-p bg-white">
-                            <img class="object-fit" src="/images/big-logo.png" width="240" height="240" alt="" >
+                            <img class="object-fit" :src="specialistInfo.avatar | defaultAvatar" width="240" height="240" alt="" >
                         </figure>
                         <div class="pt-30 w-100-p center-p">
-                            <h1 class="black-2 bold center-p font-20 font-30 mb-10">فريق التحرير</h1>
-                            <h2 class="black-2 bold font-20 font-24 mb-10">منصة حبايبنا.نت</h2>
+                            <h1 class="black-2 bold center-p font-20 font-30 mb-10">{{specialistName}}</h1>
+                            <h2 class="black-2 bold font-20 font-24 mb-10">{{specialistInfo.specialization}}</h2>
+                            <p class="align-center bold d-flex font-14-p font-20 pointer yellow mt-15" @click="showShareDialog"><img class="ml-10 share-img" src="/images/share-color.svg" width="34" height="36" alt="" > مشاركة</p>
                         </div>
                     </div>
 
@@ -20,16 +21,20 @@
                     </div>
                     <div class="mt-40 pb-40">
                         <div tab-name="book" all class="active">
-                            <Book></Book>
+                            <Book v-if="isDataReady" :specialistData="specialistInfo" :data="appointments"></Book>
                         </div>
-                        <div tab-name="about" all>
-                            <AboutSection></AboutSection>
+                        <div tab-name="about" all class="active">
+                            <div class="font-24 black-2 font-18-p">{{specialistInfo.bio}}</div>
                         </div>
-                        <div tab-name="courses" all>
-                            <SpecialistCourses :list-class="'p-0-p'" v-if="isDataReady" :filtered-courses="courses"></SpecialistCourses>
+                        <div tab-name="courses" all >
+                            <div class="grid-3 gap2 grid-1-p" v-if="isDataReady">
+                                <CourseCard :class="'w-100-i'" v-for="(course, index) in courses" :course="course" :key="index"></CourseCard>
+                            </div>
                         </div>
                         <div tab-name="articles" all>
-                            <Articles :class-list="'p-0-p'" :list-only="true"></Articles>
+                            <div v-if="isDataReady" class="grid-2 gap2 grid-1-p">
+                                <SmallCard v-for="(item) in articles" :key="item.id" :item="item"></SmallCard>
+                            </div>
                         </div>
                     </div>
 
@@ -60,6 +65,14 @@
             @close="isQuestionaireModal(false)"
         >
         </QuestionaireModal>
+        <ShareModal
+            :show="showShareModal"
+            @close-share-modal="showShareDialog"
+            :courseName="specialistName"
+            :description="specialistName | stripHTML"
+            portal="specialist-share"
+        ></ShareModal>
+        <portal-target name="specialist-share"></portal-target>
         <portal-target name="cobone-modal"></portal-target>
         <portal-target name="questionaire-modal"></portal-target>
     </div>
@@ -68,19 +81,24 @@
 <script>
     import TheHeader from '../../layouts/header/TheHeader.vue'
     import TabsToggle from '../../layouts/TabsToggle.vue'
-    import SpecialistCourses from '../../views/onlinecourses/CoursesSection_Cards.vue'
-    import Articles from '../../views/library/ContentSection.vue'
     import Book from '../../views/specialists/Book.vue'
     import QuestionaireModal from '../../views/specialists/QuestionaireModal.vue'
-    import AboutSection from '../../views/specialists/AboutSection.vue'
+    // import AboutSection from '../../views/specialists/AboutSection.vue'
     import TheFooter from '../../layouts/TheFooter.vue'
     import infoModalMixin from '../../mixins/infoModal'
+
+    import SmallCard from '../../layouts/SmallCard.vue'
+    import CourseCard from '../../views/onlinecourses/Course_Card.vue'
+    import ShareModal from '../../views/coursepage/ShareCourseModal.vue'
+
     export default {
         props: ['specialist'],
         mixins: [infoModalMixin],
-        components: { TheHeader,TabsToggle,SpecialistCourses,Articles,Book,AboutSection,QuestionaireModal,TheFooter},
+        components: { TheHeader,SmallCard,CourseCard,ShareModal,TabsToggle,Book,QuestionaireModal,TheFooter},
         data(){
             return {
+
+                appointments:[],
                 tabs: [
                     {
                         title: 'المواعيد<br class="mo"> المتاحة' ,
@@ -104,25 +122,102 @@
                     },
                 ],
                 courses: [],
+                articles: [],
+                isDataReady: false,
+                specialistInfo: {
+                    firstName: '',
+                    lastName: '',
+                    specialization: '',
+                    bio: '',
+                    avatar: ''
+                },
                 isDataReady: false,
                 querstionaireModal: {
                     show:false
-                }
+                },
+                showShareModal: false,
             }
         },
         computed: {
             isLoggedIn() {
                 return this.$store.getters["user/isLoggedIn"];
-            }
+            },
+            specialistName(){
+                return this.specialistInfo.firstName + ' ' + this.specialistInfo.lastName
+            },
         },
         methods: {
-            async getCourses() {
-                const allCourses = await this.$store.getters['courses/courses']
-                if ( allCourses.length > 0 ) {
-                    this.courses = allCourses
-                } else {
-                    this.courses = await this.$store.dispatch('courses/getAllCourses');
+            isLoading(status) {
+                this.$store.commit('isLoading',status)
+            },
+            showShareDialog() {
+                this.showShareModal = !this.showShareModal;
+            },
+            async getSpecialistData() {
+                this.isLoading(true)
+                try {
+                    const data = await this.$store.dispatch(`specialist/getSpecialistDetails`,this.specialist);
+                    if (data.specialist.courses.length > 0) {
+                        this.courses = data.specialist.courses.map((item)=>{
+                            const obj = item.course
+                            const course = {
+                                is_favourite:obj.is_favourite,
+                                title: obj.courseTitle,
+                                course_length: obj.course_length,
+                                id: obj.id,
+                                is_free: obj.is_free,
+                                cover_photo: obj.cover_photo,
+                                is_liked: obj.is_liked,
+                                price: obj.price
+                            }
+                            if (+obj.discount && +obj.discount > 0) {
+                                course.discount = {
+                                    has_discount: true,
+                                    discount_value: obj.discount+ '%',
+                                    discount_price: obj.price - (obj.price * (obj.discount/100))
+                                }
+                            } else {
+                                course.discount = {
+                                    has_discount: false,
+                                    discount_value: 0,
+                                    discount_price: null
+                                }
+                            }
+                            return course
+                        })
+    
+                    }
+                    if (data.specialist.articles.length > 0) {
+                        this.articles = data.specialist.articles.map((article)=>{
+                            return {
+                                ...article,
+                                without_like:true
+                            }
+                        });
+                    }
+                    if (this.articles.length > 0) {
+                        const specialistData = this.articles[0].author
+                        this.specialistInfo.firstName = specialistData.firstName
+                        this.specialistInfo.lastName = specialistData.lastName
+                        this.specialistInfo.specialization = specialistData.specialization
+                        this.specialistInfo.avatar = specialistData.avatar
+                        this.specialistInfo.bio = specialistData.disorders_work_with
+                        this.specialistInfo.id = specialistData.user_id                        
+                    }
+
+                    // appointments
+                    if (data.specialist.appintment && Object.keys(data.specialist.appintment).length > 0) {
+                        const appt = []
+                        for (const i in data.specialist.appintment ) {
+                            appt.push(data.specialist.appintment[i])
+                        }
+                        this.appointments = appt
+                    } 
+                } catch (err) {
+                    console.log(err)
                 }
+                
+                this.isLoading(false)
                 this.isDataReady = true
             },
             getActiveTab(){
@@ -166,16 +261,11 @@
             isQuestionaireModal(status){
                 this.querstionaireModal.show = status
             },
-            async getSpecialistData() {
-                const data = await this.$store.dispatch(`specialist/getSpecialistDetails`,this.specialist);
-                console.log(data)
-                this.isDataReady = true
-            }
+            
         },
         async mounted(){
             this.getActiveTab();
             await this.getSpecialistData();
-            await this.getCourses();
             this.isFromPaymentPage()
         },
         beforeRouteEnter(to, from, next) {
@@ -184,6 +274,12 @@
             next((vm) => {
                 vm.prevRoute = from;
             });
+        },
+        filters: {
+            defaultAvatar: function (avatar) {
+                if (avatar == 'default.jpg') return '/images/avatars/default.jpg'
+                return avatar
+            }
         },
     }
 </script>

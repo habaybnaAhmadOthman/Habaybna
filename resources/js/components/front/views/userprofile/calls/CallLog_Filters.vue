@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex align-center mb-25">
+  <div class="d-flex align-center mb-25 flex-wrap-p">
       <p class="font-20 gray ml-20 nowrap">تصنيف المكالمات حسب الحالة</p>
-      <div class="d-flex align-center space-between gap-10 filter-btns w-100 mr-30">
+      <div class="d-flex align-center space-between gap-10 filter-btns w-100 mr-30 mt-10-p">
           <button @click="changeFilter" :class="{'active': filters.all.checked}" class="all-btn radius-5 pointer" id="all">الكل</button>
           <button @click="changeFilter" :class="{'active': filters.scheduled.checked}" class="yellow-btn radius-5 pointer" id="scheduled">مجدولة</button>
           <button @click="changeFilter" :class="{'active': filters.succeeded.checked}" class="green-btn radius-5 pointer" id="succeeded">ناجحة</button>
@@ -24,7 +24,7 @@
           else
             updatedFilters[key].checked = false
         }
-        this.$emit('filter-changed',updatedFilters)
+        this.$emit('filter-changed',updatedFilters,id)
       }
     }
   }
@@ -65,5 +65,13 @@
 }
 .red-btn:hover,.red-btn.active {
   background: #E74C3C7A;
+}
+@media (max-width: 767px) { 
+  .filter-btns {
+    margin-right: 0;
+  }
+  .filter-btns button{
+    min-width: 70px;
+  }
 }
 </style>

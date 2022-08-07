@@ -18,22 +18,25 @@
     emits: ['remove'],
     computed: {
       timeInterval(){
-        return new Date(this.data).toLocaleTimeString('en-US',{
+        return new Date(this.data.val).toLocaleTimeString('en-US',{
           hour:  "2-digit",
           minute: "2-digit",
         })
       },
       dayName(){
-        return new Date(this.data).toLocaleDateString('ar-EG',{weekday:'long'})
+        return new Date(this.data.val).toLocaleDateString('ar-EG',{weekday:'long'})
       },
       dayNameEn(){
-        return new Date(this.data).toLocaleDateString('en-US',{weekday:'long'})
+        return new Date(this.data.val).toLocaleDateString('en-US',{weekday:'long'})
       },
 
     },
     methods: {
       removeCol(){
-        this.$emit('remove',this.data)
+        let shouldUserConfirm = true
+        if (isNaN(this.data.id) && this.data.id.startsWith('no-'))
+          shouldUserConfirm = false
+        this.$emit('remove',this.data.id,shouldUserConfirm)
       }
     }
   }

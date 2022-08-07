@@ -73,7 +73,7 @@
 import NormalModal from "../../../layouts/NormalModal.vue";
 export default {
   emits: ["close","add-new-session"],
-  props: ["showModal","tableIntervals"],
+  props: ["showModal","tableIntervals", "unavailableIntervals"],
   components: { NormalModal },
   created() {
     this.appendAvailableDays_DropDown();
@@ -86,6 +86,9 @@ export default {
         if (shouldCloseModal)
           this.closeModal();
       }
+    },
+    generateID(){
+      return Math.random().toString(36).substr(2)
     },
     clear(){
       this.day.val=  "";
@@ -111,6 +114,7 @@ export default {
       isValid,
       intervals = [];
       isValid = validateFields(this);
+      var intervalsVals = [...this.tableIntervals].map(int=> int.val).concat(this.unavailableIntervals);
       if (isValid) {
         prepareFromTo(this);
         // check if from date < to date
@@ -127,8 +131,11 @@ export default {
       function fillIntervals(self){
         while (isFromSmallerThanTo()) {
           var newInterval = fromDate.toISOString();
-          if (!self.tableIntervals.includes(newInterval))
-            intervals.push(newInterval)
+          // if (!self.tableIntervals.includes(newInterval))
+          //   intervals.push(newInterval)
+          if (!intervalsVals.includes(newInterval))
+            intervals.push({val: newInterval,id: `no-${self.generateID()}`})
+
           fromDate.setMinutes(fromDate.getMinutes() + 30)
         }
         if (intervals.length == 0)
@@ -185,7 +192,7 @@ export default {
       const appendedDays = [];
       for (let i = 1; i <= 7; i++) {
         let day = new Date(today.getTime() + i * 24 * 60 * 60 * 1000);
-        let date = `${day.getFullYear()}-${ day.getMonth() + 1 }-${day.getDate()}`;
+        let date = `${day.getFullYear()}-${("0" + (day.getMonth() + 1)).slice(-2)}-${("0" + day.getDate()).slice(-2)}`;
 
         let formatedDay = `${date} | ${day.toLocaleDateString("ar", {
           weekday: "long",
@@ -239,7 +246,7 @@ export default {
         '10:30',
         '11:00',
         '11:30'
-      ]
+      ],
     };
   },
   filters: {
@@ -260,8 +267,9 @@ export default {
 select,
 input {
   height: 60px;
-  border-radius: 4px;
-  border: 1px solid ;
+  border-radius: 8px;
+  border: 1px solid #b2b2b2;
+  font-size: 18px;
 }
 [type="time"] {
   position: relative;

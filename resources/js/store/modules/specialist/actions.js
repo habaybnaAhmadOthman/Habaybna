@@ -28,6 +28,7 @@ export default {
             throw error;
         }
     },
+    
     // ******** get appointments for specialist ::: GET
     async getAppointments(context,payload) {
         const resp = await callApi("GET", `/api/get-specialist-appintments/${payload}`);
@@ -35,5 +36,51 @@ export default {
             const error = new Error("fail to getAppointments");
             throw error;
         }
+        return resp.data
     },
+    // ******** remove appointments ::: POST
+    async removeAppointment(context,payload) {
+        const resp = await callApi("POST", `your-api-here`,payload);
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to removeAppointment");
+            throw error;
+        }
+    },
+    // ******** book appointments ::: POST
+    async bookAppointment(context,payload) {
+        const resp = await callApi("POST", `your-api-here`,payload);
+        if (!resp) {
+            const error = new Error("something went wrong, please try again");
+            throw error;
+        }
+        return resp.data[0]
+    },
+    // ******** Child info for call ::: POST
+    async childInfoForAppointment(context,payload) {
+        const resp = await callApi("POST", `your-api-here`,payload);
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to contact us");
+            throw error;
+        }
+    },
+
+    // ******** get specialist calls log ::: POST
+    async getSpecialistCallsLog(context,payload) {
+        const resp = await callApi("POST", `your-api-here`,payload);
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to getSpecialistCallsLog");
+            throw error;
+        }
+        return resp.data
+    },
+    
+    // ******** add Recommendation ::: POST
+    async addRecommendation(context,payload) {
+        const resp = await callApi("POST", `your-api-here`,payload);
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to addRecommendation");
+            throw error;
+        }
+    },
+
 };
