@@ -61,6 +61,7 @@ import CoursePage from "./components/front/pages/courses/CoursePage.vue";
 import ClassRoomPage from "./components/front/pages/courses/ClassRoom.vue";
 import Cirtificate from "./components/front/views/coursepage/Certificate.vue";
 import PaymentStatus from "./components/front/pages/courses/PaymentStatus.vue";
+import CallPaymentStatus from "./components/front/pages/courses/CallPaymentStatus.vue";
 import ExamPage from "./components/front/pages/courses/ExamPage.vue";
 
 // library
@@ -485,6 +486,14 @@ const routes = [{
     {
         path: "/payment-success",
         component: PaymentStatus,
+        meta: {
+            requiresAuth: true
+        },
+
+    },
+    {
+        path: "/call-payment-success",
+        component: CallPaymentStatus,
         meta: {
             requiresAuth: true
         },
