@@ -7,7 +7,7 @@ export default {
             const error = new Error("fail getSpecialistsList ::");
             throw error;
         }
-        
+
         return resp.data;
     },
     // ******** get Specialist Data ::: get
@@ -17,7 +17,7 @@ export default {
             const error = new Error("fail getSpecialistDetails ::");
             throw error;
         }
-        
+
         return resp.data;
     },
     // ******** add appointments ::: POST
@@ -28,7 +28,7 @@ export default {
             throw error;
         }
     },
-    
+
     // ******** get appointments for specialist ::: GET
     async getAppointments(context,payload) {
         const resp = await callApi("GET", `/api/get-specialist-appintments/${payload}`);
@@ -40,7 +40,7 @@ export default {
     },
     // ******** remove appointments ::: POST
     async removeAppointment(context,payload) {
-        const resp = await callApi("POST", `your-api-here`,payload);
+        const resp = await callApi("POST", `/api/remove-appointment`,payload);
         if (!resp || resp.status != 200) {
             const error = new Error("fail to removeAppointment");
             throw error;
@@ -48,7 +48,7 @@ export default {
     },
     // ******** book appointments ::: POST
     async bookAppointment(context,payload) {
-        const resp = await callApi("POST", `your-api-here`,payload);
+        const resp = await callApi("POST", `/api/call-payment`,payload);
         if (!resp) {
             const error = new Error("something went wrong, please try again");
             throw error;
@@ -66,14 +66,14 @@ export default {
 
     // ******** get specialist calls log ::: POST
     async getSpecialistCallsLog(context,payload) {
-        const resp = await callApi("POST", `your-api-here`,payload);
+        const resp = await callApi("POST", `/api/get-specialist-call-log`,payload);
         if (!resp || resp.status != 200) {
             const error = new Error("fail to getSpecialistCallsLog");
             throw error;
         }
         return resp.data
     },
-    
+
     // ******** add Recommendation ::: POST
     async addRecommendation(context,payload) {
         const resp = await callApi("POST", `your-api-here`,payload);

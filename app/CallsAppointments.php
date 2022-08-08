@@ -13,4 +13,9 @@ class CallsAppointments extends Model
     {
         return $this->belongsTo(Specialist::class,'user_id');
     }
+
+    public function callsStatus()
+    {
+        return $this->hasOne(CallsStatus::class,'appointment_id', 'id');
+    }
 }

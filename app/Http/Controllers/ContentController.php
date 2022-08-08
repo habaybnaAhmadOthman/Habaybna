@@ -166,8 +166,7 @@ class ContentController extends Controller
         )
         {
             $data['specialist']['appintment'] = $provider->specialist
-                                                ->callsAppointments
-                                                ->where('is_booked',0) ;
+                                                ->availiableAppointments();
         }
 
         return response($data,200);
