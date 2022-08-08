@@ -3,7 +3,7 @@
     <!-- date -->
     <div>
       <p class="bold">{{dayName}}</p>
-      <p class="font-13">{{dayDate}}<br>{{timeInterval}}</p>
+      <p class="font-13">{{dayDate}}<br><span class="mo">{{timeInterval}}</span></p>
     </div>
 
     <!-- time -->
