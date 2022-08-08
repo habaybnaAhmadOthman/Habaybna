@@ -56,9 +56,28 @@ class CallsAppointmentsController extends Controller
         !empty($provider->specialist->callsAppointments)
         )
 
-        return response($provider->specialist->callsAppointments, 200);
+        return response($provider->specialist->availiableAppointments(), 200);
 
         return response('notcallprovider',404);
     }
 
+    public function getSpecialistCallLog(Request $request)
+    {
+        // $log = CallsAppointments::whereHas('callsStatus', function ( $q ) use ($request) {
+        //     dd($q->first());
+        // });
+        $log = CallsAppointments::whereHas('callsStatus', function (    $q  ) {
+
+        })->with('callsStatus')
+          ->where('specialist_id', $request->specialistID)
+          ->orderBy('id', 'desc')
+          ->paginate(10);
+
+          return response($log, 200);
+    }
+
+    public function removeAppointment(Request $request)
+    {
+        dd($request);
+    }
 }

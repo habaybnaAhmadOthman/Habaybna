@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // calls
     Route::post('/set-calls-providers-appointments','CallsAppointmentsController@setCallsProvidersappointments');
+    Route::post('/get-specialist-call-log','CallsAppointmentsController@getSpecialistCallLog');
+    Route::post('/remove-appointment','CallsAppointmentsController@removeAppointment');
 
 
 
@@ -179,6 +181,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // others route
     Route::post('/edit-other-profile-data','OthersController@editProfileData');
     Route::post('/course-payment','PaymentController@coursePayment');
+    Route::post('/call-payment','PaymentController@callPayment');
 
     // get liked articles
     Route::get('/user/likes-articles','ContentController@getUserLikedArticles');
@@ -197,6 +200,7 @@ Route::get('all-courses','CourseController@getAllcourses')->name('getAllcourses'
 Route::get('get-categories','CategoriesController@index');
 Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::post('/payment/course','PaymentController@coursePaymentCallback');
+Route::post('/payment/call','PaymentController@callPaymentCallback');
 Route::post('/user/forget-password','HomeController@forgetPassword');
 Route::post('/user/forget-password/check-otp','HomeController@checkForgetPassword');
 Route::post('/user/forget-password/change-password','HomeController@changePassword');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\CustomClass\PaymentCoures;
+use App\CustomClass\PaymentCall;
 use App\CustomClass\GetUsersCourseProgress;
 use App\CustomClass\JoinFreeCourse;
 use App\CustomClass\GetCoursesOrders;
@@ -56,5 +57,18 @@ class PaymentController extends Controller
         $orders = $getUsersCourseProgress->execute();
         return response($orders, 200);
     }
+
+    public function callPayment(Request $request,PaymentCall $paymentCall )
+    {
+        $data = $paymentCall->execute($request->all());
+        return response()->json($data);
+    }
+
+    public function callPaymentCallback(Request $request, PaymentCall $paymentCall )
+    {
+        $data = $paymentCall->completeOrder($request->all());
+
+    }
+
 
 }
