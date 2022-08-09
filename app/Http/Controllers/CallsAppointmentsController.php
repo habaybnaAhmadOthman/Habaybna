@@ -78,6 +78,8 @@ class CallsAppointmentsController extends Controller
 
     public function removeAppointment(Request $request)
     {
-        dd($request);
+        $appointment = CallsAppointments::where('id',$request->id)->delete();
+
+        return response('success', 200);
     }
 }

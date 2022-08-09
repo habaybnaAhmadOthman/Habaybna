@@ -18,7 +18,7 @@ class PaymentCall {
 
         try {
             $back_url = url('/api/payment/call');
-            
+
                 //Step 1: Generate Secure Hash
             $SECRET_KEY = config('appconfig.stssecret'); // Use Yours, Please Store
                         // Your Secret Key in safe Place(e.g. database)
@@ -66,7 +66,7 @@ class PaymentCall {
 
     private function createInitOrder($data,$tranID)
     {
-        
+
         try {
 
             $appointment = CallsAppointments::where('id',$data['appointmentID'])->first();
@@ -162,7 +162,7 @@ class PaymentCall {
         $call_status->status = '0';
         $call_status->save();
 
-        return redirect()->to('payment-success')->send();
+        return redirect()->to('call-payment-success')->send();
 
 
 

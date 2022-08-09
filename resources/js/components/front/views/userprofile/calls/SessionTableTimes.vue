@@ -34,13 +34,13 @@
           <ColMobile @remove-interval="removeCol" @remove-day="removeDayWithIntervals" v-for="day in mobileDaysInterval" :key="day[0].id" :day="day"></ColMobile>
         </transition-group>
       </div>
-      
+
     </div>
     <div class="mt-40 d-flex flex-end">
       <button class="btn-main" @click="saveAppointments">حفظ</button>
     </div>
 
-    
+
     <AddSession
     :tableIntervals="intervals"
     :showModal="isAddNewSessionModal"
@@ -89,7 +89,7 @@ export default {
         if (!this.alreadySavedIntervals.includes(int.val))
           return int
       }).map(interval=>interval.val)
-      
+
       if (saveThoseIntervalsOnly.length > 0) {
         this.isLoading(true)
         await this.$store.dispatch('specialist/setAppointments',saveThoseIntervalsOnly)
@@ -98,8 +98,8 @@ export default {
       } else {
         this.$store.commit('alertDialogMsg','لا يوجد ما يمكن إضافته');
       }
-      
-      
+
+
     },
     async getAppointments(){
       const today = new Date(new Date().toISOString()).getTime();
@@ -117,10 +117,10 @@ export default {
       }).map(int=>{
         return {
             val: int.appointment,
-            id: int.id 
+            id: int.id
         }}
       )
-      
+
       // when you want to save new intervals , execlude this obj
       this.alreadySavedIntervals = [...this.intervals].map(int=>int.val)
       this.sortIntervals()
@@ -152,7 +152,7 @@ export default {
     },
     removeCol(colID,shouldOpenModal){
       this.intervals = this.intervals.filter((int)=> int.id != colID);
-      this.$store.dispatch('specialist/removeInterval',{
+      this.$store.dispatch('specialist/removeAppointment',{
         id: colID,
         specialistID: this.specialistData.id
       })
