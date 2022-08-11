@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     //payment test config
     Route::get('get-payment-status','PaymentController@checkPaymentStatus');
+    Route::get('get-call-payment-status','PaymentController@checkCallPaymentStatus');
     Route::post('/course-payment','PaymentController@coursePayment');
     Route::post('course/add-to-fav','CourseController@addToFavourite');
     Route::post('article/add-to-fav','UsersFavouriteArticlesController@addToFavourite');

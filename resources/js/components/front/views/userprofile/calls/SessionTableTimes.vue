@@ -150,12 +150,15 @@ export default {
       })
       this.mobileDaysInterval = daysObj
     },
-    removeCol(colID,shouldOpenModal){
+    removeCol(colID,isFromDB){
       this.intervals = this.intervals.filter((int)=> int.id != colID);
-      this.$store.dispatch('specialist/removeAppointment',{
-        id: colID,
-        specialistID: this.specialistData.id
-      })
+      if (isFromDB) {
+        this.$store.dispatch('specialist/removeInterval',{
+          id: colID,
+          specialistID: this.specialistData.id
+        })
+      }
+
       this.sortIntervals();
     },
     removeDayWithIntervals(dayDate){

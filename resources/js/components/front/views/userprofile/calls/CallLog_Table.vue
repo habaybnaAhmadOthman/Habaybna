@@ -20,6 +20,13 @@
         @add-recommendation="addRecommendation"
         @show-recommendation="toggleUserRecomendationModal"
       ></TableCol>
+      <div class="portal-pagination mt-40 mt-40 justify-center d-flex">
+        <Pagination
+          :data="contentTemp"
+          @pagination-change-page="getData"
+          :limit="paginationLimit"
+        ></Pagination>
+      </div>
     </div>
 
     <!-- add recomendation modal -->
@@ -47,17 +54,19 @@
 </template>
 
 <script>
-import dumyData from "./data";
 import TableCol from "./CallLog_TableCol.vue";
 import RecommendationModal from "./CallLog_RecommendationModal.vue";
 import NormalModal from "../../../layouts/NormalModal.vue";
+import LaravelVuePagination from "laravel-vue-pagination";
 export default {
-  components: { TableCol, RecommendationModal,NormalModal },
+  components: { TableCol, RecommendationModal,NormalModal,Pagination: LaravelVuePagination },
   props: ["filters"],
   data() {
     return {
       data: [],
       currentPage: 1,
+      contentTemp: {},
+      paginationLimit: 2,
       recommendationModal: {
         show: false,
         callID: null,
@@ -74,14 +83,35 @@ export default {
       if (typeof page === "undefined") {
         page = 1;
       }
+      const statuses = {
+        "0": 'scheduled',
+        "1": 'succeeded',
+        "2": 'missed',
+      }
       this.currentPage = page;
-      await this.$store.dispatch('specialist/getSpecialistCallsLog',{
+      // call api 
+      let temp = await this.$store.dispatch('specialist/getSpecialistCallsLog',{
         specialistID: this.specialistInfo.id,
         page: this.currentPage,
         filters: this.filters
       })
 
-      this.data = await dumyData;
+      // format data
+      this.data = temp.data.map(call=>{
+        return {
+          id: call.calls_status.appointment_id,
+          date: call.appointment,
+          children: call.calls_status.id,
+          illness: call.calls_status.id,
+          parent: call.calls_status.id,
+          country: call.calls_status.id,
+          problem: call.calls_status.id,
+          callLink: 'http://localhost:8000/profile/my-call-log',
+          callStatus: statuses[call.calls_status.status],
+          recommendation: call.calls_status.id
+        }
+      })
+       
       this.isLoading(false);
     },
     addRecommendation(callID){
@@ -103,13 +133,21 @@ export default {
     isLoading(status) {
       this.$store.commit("isLoading", status);
     },
+    getPaginationLimit(){
+      if (this.isMobile)
+        paginationLimit = 1
+    },
   },
   computed: {
     specialistInfo() {
       return this.$store.getters["user/userData"];
     },
+    isMobile(){
+      return window.matchMedia("(max-width: 677px)").matches
+    }
   },
   mounted() {
+    this.getPaginationLimit()
     this.getData();
   },
   watch: {

@@ -6,11 +6,14 @@ use App\PromoCode;
 use App\CallPurchaseOrders;
 use App\CallsAppointments;
 use App\CallsStatus;
+use App\Specialist;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Object_ as TypesObject_;
 use PhpParser\Node\Expr\Cast\Object_;
 use Session;
+use Illuminate\Http\Request;
+
 class PaymentCall {
 
     public function execute(array $data)
@@ -145,22 +148,26 @@ class PaymentCall {
 
         $order->save();
 
-        if(!$order->status){
-            return redirect()->to('payment-faild')->send();
+        if($order->status){
+            if(isset($order->coupon_id) && $order->coupon_id !==""){
+                $coupon = PromoCode::findorfail($order->coupon_id);
+                $coupon->increment('usage_count');
+                $coupon->save();
+            }
+
+            $call_status = new CallsStatus() ;
+
+            $call_status->appointment_id = $order->appointment_id ;
+            $call_status->status = '0';
+            $call_status->save();
+
         }
 
 
-        if(isset($order->coupon_id) && $order->coupon_id !==""){
-            $coupon = PromoCode::findorfail($order->coupon_id);
-            $coupon->increment('usage_count');
-            $coupon->save();
-        }
 
-        $call_status = new CallsStatus() ;
 
-        $call_status->appointment_id = $order->appointment_id ;
-        $call_status->status = '0';
-        $call_status->save();
+        // dd($slug);
+        // dd($order);
 
         return redirect()->to('call-payment-success')->send();
 

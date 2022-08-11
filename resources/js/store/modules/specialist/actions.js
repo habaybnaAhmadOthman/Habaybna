@@ -66,7 +66,22 @@ export default {
 
     // ******** get specialist calls log ::: POST
     async getSpecialistCallsLog(context,payload) {
-        const resp = await callApi("POST", `/api/get-specialist-call-log`,payload);
+
+        let queryFilters = `?page=${payload.page}`
+        if (payload.filters && payload.filters.length > 0 && payload.filters != 'all') {
+            // scheduled ==> 0
+            // succeeded ==> 1
+            // missed ==> 2
+            const statuses = {
+                "scheduled": '0',
+                "succeeded": '1',
+                "missed": '2',
+            }
+            
+            queryFilters += `&filters=${statuses[payload.filters]}`
+        }
+
+        const resp = await callApi("GET", `/api/get-specialist-call-log${queryFilters}`);
         if (!resp || resp.status != 200) {
             const error = new Error("fail to getSpecialistCallsLog");
             throw error;
