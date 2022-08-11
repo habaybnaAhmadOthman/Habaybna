@@ -24,14 +24,16 @@
                             <div class="font-24 black-2 font-18-p">{{specialistInfo.bio}}</div>
                         </div>
                         <div tab-name="courses" all >
-                            <div class="grid-3 gap2 grid-1-p" v-if="isDataReady">
+                            <div class="grid-3 gap2 grid-1-p" v-if="isDataReady && courses.length > 0">
                                 <CourseCard :class="'w-100-i'" v-for="(course, index) in courses" :course="course" :key="index"></CourseCard>
                             </div>
+                            <p class="font-24 black-2 font-18-p" v-else>لا يوجد دورات</p>
                         </div>
                         <div tab-name="articles" all>
-                            <div v-if="isDataReady" class="grid-2 gap2 grid-1-p">
+                            <div v-if="isDataReady && articles.length > 0" class="grid-2 gap2 grid-1-p">
                                 <SmallCard v-for="(item) in articles" :key="item.id" :item="item"></SmallCard>
                             </div>
+                            <p class="font-24 black-2 font-18-p" v-else>لا يوجد مقالات</p>
                         </div>
                     </div>
 
@@ -110,7 +112,8 @@
                 this.isLoading(true)
                 try {
                     const data = await this.$store.dispatch(`specialist/getSpecialistDetails`,this.specialist);
-                    if (data.specialist.courses.length > 0) {
+                   
+                    if (data.specialist.courses && data.specialist.courses.length > 0) {
                         this.courses = data.specialist.courses.map((item)=>{
                             const obj = item.course
                             const course = {
@@ -140,7 +143,7 @@
                         })
     
                     }
-                    if (data.specialist.articles.length > 0) {
+                    if (data.specialist.articles && data.specialist.articles.length > 0) {
                         this.articles = data.specialist.articles.map((article)=>{
                             return {
                                 ...article,
