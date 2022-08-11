@@ -108,10 +108,9 @@ export default {
           problem: call.calls_status.id,
           callLink: 'http://localhost:8000/profile/my-call-log',
           callStatus: statuses[call.calls_status.status],
-          recommendation: call.calls_status.id
+          recommendation: ''
         }
       })
-       
       this.isLoading(false);
     },
     addRecommendation(callID){
