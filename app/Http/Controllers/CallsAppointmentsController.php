@@ -66,14 +66,26 @@ class CallsAppointmentsController extends Controller
         // $log = CallsAppointments::whereHas('callsStatus', function ( $q ) use ($request) {
         //     dd($q->first());
         // });
-        $log = CallsAppointments::whereHas('callsStatus', function (    $q  ) {
+        $log = CallsAppointments::whereHas('callsStatus', function ($q) use ($request){
 
+            // if($request->filters && $request->filters )
+            // $q->where('status',$request->filters);
         })->with('callsStatus')
-          ->where('specialist_id', $request->specialistID)
-          ->orderBy('id', 'desc')
-          ->paginate(10);
+          ->where('specialist_id', Auth::id());
 
-          return response($log, 200);
+          if(isset($request->filters)) {
+            $log->whereHas('callsStatus', function ($q) use ($request){
+
+                // if($request->filters && $request->filters )
+                $q->where('status',$request->filters);
+            });
+          }
+
+
+          return response(
+              $log->orderBy('id', 'desc')->paginate(12),
+              200
+            );
     }
 
     public function removeAppointment(Request $request)

@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // calls
     Route::post('/set-calls-providers-appointments','CallsAppointmentsController@setCallsProvidersappointments');
-    Route::post('/get-specialist-call-log','CallsAppointmentsController@getSpecialistCallLog');
+    Route::get('/get-specialist-call-log','CallsAppointmentsController@getSpecialistCallLog');
     Route::post('/remove-appointment','CallsAppointmentsController@removeAppointment');
 
 
