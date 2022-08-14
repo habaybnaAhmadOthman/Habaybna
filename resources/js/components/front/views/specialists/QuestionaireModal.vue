@@ -103,8 +103,7 @@
       </form>
     </div>
     <template #actions>
-      <button @click="submitForm($event)" class="btn font-20 w-70 ml-10">أرسل</button>
-      <button @click="close" class="btn-3 radius-12 font-20 w-30 p-0-p">إلغاء</button>
+      <button @click="submitForm($event)" class="btn font-20 w-100 ml-10">حفظ</button>
     </template>
   </alert-dialog>
 </template>
@@ -180,16 +179,19 @@ export default {
     submitForm(evt) {
       evt.preventDefault();
       this.validateForm();
+      
       if (!this.formIsValid) {
         return;
       }
       try {
+        
         this.$store.dispatch("specialist/childInfoForAppointment", {
           childSituation: this.childSituation.val,
           age: this.age.val,
           message: this.message.val,
           childStatus: this.childStatus.val,
           birthdate: new Date().getFullYear() - (+this.birthdate.val),
+          callID: this.$route.query['apt-id']
         });
         this.close()
         this.$store.commit("alertDialogMsg", "شكراً لتعاونكم");
@@ -198,6 +200,7 @@ export default {
         this.childSituation.val = "";
         this.birthdate.val = "";
         this.message.val = "";
+        this.$router.replace(`/specialist/${this.$route.params.specialist}`)
       } catch (e) {
         this.$store.commit("alertDialogMsg", e.message);
       }
