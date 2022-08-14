@@ -57,7 +57,7 @@ export default {
     },
     // ******** Child info for call ::: POST
     async childInfoForAppointment(context,payload) {
-        const resp = await callApi("POST", `your-api-here`,payload);
+        const resp = await callApi("POST", `/api/set-appointment-child-info`,payload);
         if (!resp || resp.status != 200) {
             const error = new Error("fail to contact us");
             throw error;
@@ -77,7 +77,7 @@ export default {
                 "succeeded": '1',
                 "missed": '2',
             }
-            
+
             queryFilters += `&filters=${statuses[payload.filters]}`
         }
 
@@ -91,7 +91,7 @@ export default {
 
     // ******** add Recommendation ::: POST
     async addRecommendation(context,payload) {
-        const resp = await callApi("POST", `your-api-here`,payload);
+        const resp = await callApi("POST", `/api/set-call-recommendation`,payload);
         if (!resp || resp.status != 200) {
             const error = new Error("fail to addRecommendation");
             throw error;

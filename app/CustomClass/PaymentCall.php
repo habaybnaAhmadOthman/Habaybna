@@ -1,6 +1,8 @@
 <?php
 
 namespace app\CustomClass;
+
+use App\AppointmentChildInfo;
 use Illuminate\Support\Facades\Http;
 use App\PromoCode;
 use App\CallPurchaseOrders;
@@ -160,6 +162,11 @@ class PaymentCall {
             $call_status->appointment_id = $order->appointment_id ;
             $call_status->status = '0';
             $call_status->save();
+
+            $appChildInfo = new AppointmentChildInfo() ;
+
+            $appChildInfo->appointment_id = $order->appointment_id ;
+            $appChildInfo->save() ;
 
         }
 

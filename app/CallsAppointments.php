@@ -18,4 +18,9 @@ class CallsAppointments extends Model
     {
         return $this->hasOne(CallsStatus::class,'appointment_id', 'id');
     }
+
+    public function appointmentChildInfo()
+    {
+        return $this->hasOne(AppointmentChildInfo::class,'appointment_id','id');
+    }
 }

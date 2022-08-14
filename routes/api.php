@@ -31,6 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/set-calls-providers-appointments','CallsAppointmentsController@setCallsProvidersappointments');
     Route::get('/get-specialist-call-log','CallsAppointmentsController@getSpecialistCallLog');
     Route::post('/remove-appointment','CallsAppointmentsController@removeAppointment');
+    Route::post('/set-call-recommendation','AppointmentChildInfoController@setCallRecommendation');
+    Route::post('/set-appointment-child-info','AppointmentChildInfoController@setAppintmentChildInfo');
 
 
 
