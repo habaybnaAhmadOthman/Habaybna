@@ -2,7 +2,7 @@
     <div class="library-page">
         <TheHeader></TheHeader>
         <Banner></Banner>
-        <ContentSection></ContentSection>
+        <ContentSection :save-current-page="true"></ContentSection>
         <TheFooter></TheFooter>
     </div>
 </template>

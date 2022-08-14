@@ -17,9 +17,12 @@
                     </div>
 
                     <div class="mt-50">
-                        <TabsToggle :class="'gap-10 font-14-mo btn-bg-mo'"  :tabs="tabs"></TabsToggle>
+                        <TabsToggle :class="'gap-10 font-14-mo btn-bg-mo'" :tabs="tabs"></TabsToggle>
                     </div>
                     <div class="mt-40 pb-40">
+                        <div tab-name="book" all class="active">
+                            <Book v-if="isDataReady" :specialistData="specialistInfo" :data="appointments"></Book>
+                        </div>
                         <div tab-name="about" all class="active">
                             <div class="font-24 black-2 font-18-p">{{specialistInfo.bio}}</div>
                         </div>
@@ -41,6 +44,29 @@
             </div>
         </div>
         <TheFooter></TheFooter>
+
+        <!-- this modal open when the payment process complete (success,error) -->
+        <info-modal
+          :show="infoModal.show"
+          :title="infoModal.title"
+          @close="closeInfoModal"
+          @afterClose="openQuestionaireModal"
+          :description="infoModal.description"
+          :success="infoModal.status"
+          :fixed="infoModal.isFixed"
+        >
+        </info-modal>
+
+        <!-- 
+            quertionaire modal
+            ** this modal show when the user came from the payment gateway 
+            ** -- when success payment modal closed
+         -->
+        <QuestionaireModal 
+            :show="querstionaireModal.show" 
+            @close="isQuestionaireModal(false)"
+        >
+        </QuestionaireModal>
         <ShareModal
             :show="showShareModal"
             @close-share-modal="showShareDialog"
@@ -49,28 +75,42 @@
             portal="specialist-share"
         ></ShareModal>
         <portal-target name="specialist-share"></portal-target>
+        <portal-target name="cobone-modal"></portal-target>
+        <portal-target name="questionaire-modal"></portal-target>
     </div>
 </template>
 
 <script>
-    import TheHeader from '../layouts/header/TheHeader.vue'
-    import SmallCard from '../layouts/SmallCard.vue'
-    import TabsToggle from '../layouts/TabsToggle.vue'
-    import CourseCard from '../views/onlinecourses/Course_Card.vue'
-    import Articles from '../views/library/ContentSection.vue'
-    import TheFooter from '../layouts/TheFooter.vue'
-    import ShareModal from '../views/coursepage/ShareCourseModal.vue'
+    import TheHeader from '../../layouts/header/TheHeader.vue'
+    import TabsToggle from '../../layouts/TabsToggle.vue'
+    import Book from '../../views/specialists/Book.vue'
+    import QuestionaireModal from '../../views/specialists/QuestionaireModal.vue'
+    // import AboutSection from '../../views/specialists/AboutSection.vue'
+    import TheFooter from '../../layouts/TheFooter.vue'
+    import infoModalMixin from '../../mixins/infoModal'
+
+    import SmallCard from '../../layouts/SmallCard.vue'
+    import CourseCard from '../../views/onlinecourses/Course_Card.vue'
+    import ShareModal from '../../views/coursepage/ShareCourseModal.vue'
+
     export default {
         props: ['specialist'],
-        components: { TheHeader,TabsToggle,Articles,TheFooter,SmallCard,CourseCard,ShareModal},
+        mixins: [infoModalMixin],
+        components: { TheHeader,SmallCard,CourseCard,ShareModal,TabsToggle,Book,QuestionaireModal,TheFooter},
         data(){
             return {
-                showShareModal: false,
+
+                appointments:[],
                 tabs: [
+                    {
+                        title: 'المواعيد<br class="mo"> المتاحة' ,
+                        name: 'book',
+                        active: true
+                    },
                     {
                         title: 'نبذة<br class="mo"> تعريفية' ,
                         name: 'about',
-                        active: true
+                        active: false
                     },
                     {
                         title: 'الدورات <br class="mo">التدريبية' ,
@@ -92,11 +132,18 @@
                     specialization: '',
                     bio: '',
                     avatar: ''
-                }
-
+                },
+                isDataReady: false,
+                querstionaireModal: {
+                    show:false
+                },
+                showShareModal: false,
             }
         },
         computed: {
+            isLoggedIn() {
+                return this.$store.getters["user/isLoggedIn"];
+            },
             specialistName(){
                 return this.specialistInfo.firstName + ' ' + this.specialistInfo.lastName
             },
@@ -158,14 +205,77 @@
                         this.specialistInfo.specialization = specialistData.specialization
                         this.specialistInfo.avatar = specialistData.avatar
                         this.specialistInfo.bio = specialistData.disorders_work_with
+                        this.specialistInfo.id = specialistData.user_id                        
                     }
+                    // appointments
+                    if (data.specialist.appintment && Object.keys(data.specialist.appintment).length > 0) {
+                        const appt = []
+                        for (const i in data.specialist.appintment ) {
+                            appt.push(data.specialist.appintment[i])
+                        }
+                        this.appointments = appt
+                    } 
                 } catch (err) {
                     console.log(err)
                 }
                 
                 this.isLoading(false)
                 this.isDataReady = true
-            }
+            },
+            getActiveTab(){
+                let activeTab = localStorage.getItem('active_tab')
+                if (activeTab) {
+                    this.tabs.map((tab)=>{
+                        if (tab.name == activeTab) {
+                            tab.active = true
+                        } else
+                            tab.active = false
+                    })
+                    this.toggletab(activeTab)
+                    localStorage.removeItem('active_tab');
+                }
+            },
+            toggletab(tabName) {
+                document.querySelector(".tabs-toggle .active").classList.remove("active");
+                document.querySelector(".tabs-toggle [tab-toggle='"+tabName+"']").classList.add("active");
+                document.querySelectorAll("[tab-name]").forEach((tab)=>{
+                    tab.classList.remove('active')
+                });
+                document.querySelectorAll("[tab-name='"+ tabName +"']").forEach((tab)=>{
+                    tab.classList.add('active')
+                });
+            },
+            isFromPaymentPage(){
+                if (this.$route.query.payment) {
+                    if (this.$route.query.payment == 'true') {
+                        this.infoModal.isFixed = true;
+                        this.setInfoModal('تم إرسال رابط المكالمة الى بريدك الإلكتروني','لقد أتممت عملية الشراء بنجاح' ,true,false,true)
+                    } else {
+                        this.setInfoModal('حصل خطأ في عملية الشراء','يرجى التأكد من المعلومات والمحاولة مرة أخرى' ,false,false,true)
+                    }
+                }
+            },
+            openQuestionaireModal(){
+                if (this.$route.query.payment == 'true') {
+                    this.isQuestionaireModal(true)
+                }
+            },
+            isQuestionaireModal(status){
+                this.querstionaireModal.show = status
+            },
+            
+        },
+        async mounted(){
+            this.getActiveTab();
+            await this.getSpecialistData();
+            this.isFromPaymentPage()
+        },
+        beforeRouteEnter(to, from, next) {
+            if (from.params.course)
+                localStorage.setItem('active_tab','courses')
+            next((vm) => {
+                vm.prevRoute = from;
+            });
         },
         filters: {
             defaultAvatar: function (avatar) {
@@ -173,9 +283,6 @@
                 return avatar
             }
         },
-        async mounted() {
-            await this.getSpecialistData();
-        }
     }
 </script>
 

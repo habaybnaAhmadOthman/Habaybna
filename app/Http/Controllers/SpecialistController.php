@@ -301,4 +301,33 @@ class SpecialistController extends Controller
            ]);
            }
     }
+
+    public function makeCallStatus($id)
+    {
+        $spec = Specialist::where('user_id',$id)->first();
+
+        if(isset($spec) && $spec != null) {
+
+            $spec->make_calls = !$spec->make_calls ;
+            $spec->save();
+            return response('success', 200);
+        }
+
+        return response('faild', 404);
+
+
+    }
+
+    public function callsProvidersList()
+    {
+        $specialists = User::whereHas('specialist',function($q) {
+
+            $q->canMakeCalls();
+        })->with('specialist')->paginate(12);
+        return response(
+            $specialists,200
+        );
+    }
+
+
 }

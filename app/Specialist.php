@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use DB;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,5 +20,22 @@ class Specialist extends Model
     public function articles()
     {
         $this->hasMany(NewContent::class,'user_id','author_id');
+    }
+
+    public function scopeCanMakeCalls($query)
+    {
+        return $query->where('make_calls',true);
+    }
+
+    public function callsAppointments()
+    {
+        return $this->hasMany(CallsAppointments::class,'specialist_id','user_id');
+    }
+
+    public function availiableAppointments()
+    {
+        $appointments = CallsAppointments::whereDoesntHave('callsStatus')->get();
+
+        return $appointments;
     }
 }

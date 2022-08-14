@@ -52,6 +52,7 @@ export default {
         context.commit('clearAdmin');
         context.commit('setUser',{
             token: resp.data.token,
+            id: resp.data.userData.id,
         })
         axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
         await context.dispatch('checkUserAuth')
@@ -74,6 +75,7 @@ export default {
         context.commit('clearAdmin');
         context.commit('setUser',{
             token: resp.data.token,
+            id: resp.data.userData.id,
         })
         axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
         await context.dispatch('checkUserAuth')

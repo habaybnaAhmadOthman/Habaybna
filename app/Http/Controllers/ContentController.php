@@ -158,6 +158,17 @@ class ContentController extends Controller
         if($article) {
             $data['specialist']['articles'] = $article ;
         }
+
+        $provider = User::findorfail($id[1]) ;
+        if($provider &&
+        $provider->specialist &&
+        !empty($provider->specialist->callsAppointments)
+        )
+        {
+            $data['specialist']['appintment'] = $provider->specialist
+                                                ->availiableAppointments();
+        }
+
         return response($data,200);
 
    }

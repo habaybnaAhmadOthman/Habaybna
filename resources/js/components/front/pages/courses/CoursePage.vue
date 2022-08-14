@@ -236,7 +236,7 @@ export default {
                 // {property: 'og:image', content: this.coverPhoto }
             ]
         }
-    },
+    }
 };
 </script>
 <style scoped>

@@ -16,7 +16,7 @@ export default {
             firstName: null,
             lastName: null,
             openAvatarModal: false,
-            
+            id: null
         }
     },
     mutations,
