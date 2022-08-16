@@ -121,6 +121,7 @@ export default {
       flex-basis: 122px;
     flex-grow: 0;
     flex-shrink: 0;
+    text-align: center;
 }
 @media (max-width: 767px) {
   .log-col {

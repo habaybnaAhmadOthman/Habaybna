@@ -99,22 +99,33 @@ export default {
         })
 
         // format data
-        this.data = temp.data.map(call=>{
-          return {
+        this.data = temp.data.map(call=> {
+          const obj = {
             id: call.calls_status.appointment_id,
             date: call.appointment,
-            childStatus: call.appointment_child_info.child_status,
-            childAge: call.appointment_child_info.age,
-            discoveredAge: call.appointment_child_info.discovered_age,
-            childSituation: call.appointment_child_info.child_situation,
-
-
-            problem: call.appointment_child_info.message,
             callLink: 'http://localhost:8000/profile/my-call-log',
             callStatus: statuses[call.calls_status.status],
-            recommendation: ''
+            recommendation: '',
+            childStatus: '---',
+            childAge: '---',
+            discoveredAge: '---',
+            childSituation: '---',
+            problem: '---'
+
           }
-        })
+          if (call.appointment_child_info && call.appointment_child_info.child_situation) {
+            obj.childStatus= call.appointment_child_info.child_status;
+            obj.childAge= call.appointment_child_info.age;
+            obj.discoveredAge= call.appointment_child_info.discovered_age;
+            obj.childSituation= call.appointment_child_info.child_situation;
+            obj.problem= call.appointment_child_info.message
+          }
+          if (call.appointment_child_info && call.appointment_child_info.recommendation) {
+            obj.recommendation= call.appointment_child_info.recommendation
+          }
+
+          return obj
+        } )
       
 
       } catch {
