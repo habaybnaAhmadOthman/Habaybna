@@ -85,24 +85,27 @@ class PaymentController extends Controller
                 if($specialist && $specialist != null) {
 
                     $data['appo_id'] = $order->appointment_id ;
+                    $data['status'] = 'success' ;
                     return response(
                         $data,
                     200
                    );
                 }
+                
                 return response(
-                   $data,
-                403
+                    $data,
+                200
                );
             }
+            $data['status']= 'faild';
             return response(
-               $data,
-            403
+                $data,
+                200
            );
         }
         return response(
-            'error',
-        403
+
+            200
        );
 
     }
