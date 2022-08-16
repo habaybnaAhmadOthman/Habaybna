@@ -36,7 +36,7 @@ export default {
                 if (res.data.approval_code == 'null' ) {
                     paymentStatus = false
                 }
-                this.$router.replace(`/specialist/${res.data.slug}?payment=${paymentStatus}`);
+                this.$router.replace(`/specialist/${res.data.slug}?payment=${paymentStatus}&apt-id=${res.data.appo_id}`);
                 this.isLoading(false)
             })
         },

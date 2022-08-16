@@ -56,7 +56,7 @@
             <input
               v-model.trim="age.val"
               id="age"
-              type="age"
+              type="number"
               class="form-control font-18 holder-center w-100"
               placeholder=" عُمر الطفل عند معرفة حالته"
             />
@@ -82,15 +82,28 @@
                   <option :value="'مندمج بالمدرسة'">مندمج بالمدرسة</option>
                   <option :value="'يذهب إلى مركز'">يذهب إلى مركز</option>
                   <option :value="'يتلقى جلسات'">يتلقى جلسات</option>
+                  <option :value="'في المنزل'">في المنزل</option>
               </select>
               <p class="main-color font-12">هذا الحقل مطلوب</p>
           </div>
         </div>
+        <div
+          class="form-group mb-20 relative"
+          :class="{ invalid: !message.isValid }"
+        >
+          <textarea
+            v-model.trim="message.val"
+            id="message"
+            class="form-control font-18 holder-center w-100"
+            placeholder="إوصف لنا المشكلة"
+            rows="5"
+          ></textarea>
+          <p class="main-color font-12">هذا الحقل مطلوب</p>
+        </div>
       </form>
     </div>
     <template #actions>
-      <button @click="submitForm($event)" class="btn font-20 w-70 ml-10">أرسل</button>
-      <button @click="close" class="btn-3 radius-12 font-20 w-30 p-0-p">إلغاء</button>
+      <button @click="submitForm($event)" class="btn font-20 w-100 ml-10">حفظ</button>
     </template>
   </alert-dialog>
 </template>
@@ -118,6 +131,10 @@ export default {
         val: "",
         isValid: true,
       },
+      message: {
+        val: "",
+        isValid: true,
+      },
       years: [],
       formIsValid: true,
     };
@@ -135,6 +152,7 @@ export default {
       this.birthdate.isValid = true;
       this.childStatus.isValid = true;
       this.age.isValid = true;
+      this.message.isValid = true;
 
 
       if (this.childSituation.val == "") {
@@ -153,19 +171,27 @@ export default {
         this.age.isValid = false;
         this.formIsValid = false;
       }
+      if (this.message.val == "") {
+        this.message.isValid = false;
+        this.formIsValid = false;
+      }
     },
     submitForm(evt) {
       evt.preventDefault();
       this.validateForm();
+      
       if (!this.formIsValid) {
         return;
       }
       try {
+        
         this.$store.dispatch("specialist/childInfoForAppointment", {
           childSituation: this.childSituation.val,
           age: this.age.val,
+          message: this.message.val,
           childStatus: this.childStatus.val,
           birthdate: new Date().getFullYear() - (+this.birthdate.val),
+          callID: this.$route.query['apt-id']
         });
         this.close()
         this.$store.commit("alertDialogMsg", "شكراً لتعاونكم");
@@ -173,6 +199,8 @@ export default {
         this.childStatus.val = "";
         this.childSituation.val = "";
         this.birthdate.val = "";
+        this.message.val = "";
+        this.$router.replace(`/specialist/${this.$route.params.specialist}`)
       } catch (e) {
         this.$store.commit("alertDialogMsg", e.message);
       }

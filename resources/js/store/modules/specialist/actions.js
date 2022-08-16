@@ -59,7 +59,7 @@ export default {
     async childInfoForAppointment(context,payload) {
         const resp = await callApi("POST", `/api/set-appointment-child-info`,payload);
         if (!resp || resp.status != 200) {
-            const error = new Error("fail to contact us");
+            const error = new Error("fail childInfoForAppointment");
             throw error;
         }
     },
