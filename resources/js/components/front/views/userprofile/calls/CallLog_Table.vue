@@ -48,7 +48,8 @@
       :modalClass="'sticky-header'"
     >
     <div class="user-rec-text">
-      <p class="font-18 black pt-30">{{userRecommendationModal.msg}}</p>
+      <textarea class="font-18 black form-control" v-model="userRecommendationModal.msg"></textarea>
+      <button @click="updateUserRecommendation" class="radius-60 main-bg border-0 w-100 mt-30 white font-18 pointer pt-15 pb-15 flex-1">تعديل</button>
     </div>
     </normal-modal>
   </div>
@@ -74,6 +75,7 @@ export default {
       },
       userRecommendationModal:{
         show:false,
+        callID: null,
         msg: ''
       }
     };
@@ -143,11 +145,26 @@ export default {
         this.getData(this.currentPage)
       }
     },
-    toggleUserRecomendationModal(msg) {
-      if (typeof msg !== "undefined" ) {
-        this.userRecommendationModal.msg = msg
+    toggleUserRecomendationModal(userRec) {
+      if (typeof userRec !== "undefined" ) {
+        this.userRecommendationModal.msg = userRec.msg
+        this.userRecommendationModal.callID = userRec.callID
       }
       this.userRecommendationModal.show = !this.userRecommendationModal.show
+    },
+    updateUserRecommendation(){
+      if (this.userRecommendationModal.msg == '') {
+        this.$store.commit('alertDialogMsg','يرجى كتابة توصية')
+        return ;
+      }
+      
+      this.$store.dispatch('specialist/addRecommendation',{
+        callID: this.userRecommendationModal.callID,
+        specialistID: this.specialistInfo.id,
+        message: this.userRecommendationModal.msg
+      })
+      this.toggleUserRecomendationModal()
+      this.getData(this.currentPage)
     },
     isLoading(status) {
       this.$store.commit("isLoading", status);
@@ -195,6 +212,9 @@ export default {
 .user-rec-text {
   max-height: 70vh;
   overflow-y: auto;
+}
+.user-rec-text textarea {
+  height: 200px!important;
 }
 @media (max-width: 767px) {
   .log-col > div {
