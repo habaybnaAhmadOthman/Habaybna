@@ -91,7 +91,7 @@
                 :data="appointments"
               ></Book>
             </div>
-            <div tab-name="about" all class="active">
+            <div tab-name="about" all>
               <div class="font-24 black-2 font-18-p">
                 {{ specialistInfo.bio }}
               </div>
@@ -292,14 +292,13 @@ export default {
             };
           });
         }
-        if (this.articles.length > 0) {
-          const specialistData = this.articles[0].author;
-          this.specialistInfo.firstName = specialistData.firstName;
-          this.specialistInfo.lastName = specialistData.lastName;
-          this.specialistInfo.specialization = specialistData.specialization;
-          this.specialistInfo.avatar = specialistData.avatar;
-          this.specialistInfo.bio = specialistData.disorders_work_with;
-          this.specialistInfo.id = specialistData.user_id;
+        if (data.specialist) {
+          this.specialistInfo.firstName = data.specialist.firstName;
+          this.specialistInfo.lastName = data.specialist.lastName;
+          this.specialistInfo.specialization = data.specialist.specialization;
+          this.specialistInfo.avatar = data.specialist.avatar;
+          this.specialistInfo.bio = data.specialist.disorders_work_with;
+          this.specialistInfo.id = data.specialist.user_id;
         }
         // appointments
         if (
