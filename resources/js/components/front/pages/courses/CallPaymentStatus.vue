@@ -27,8 +27,6 @@ export default {
       this.isLoading(true);
       axios({ method: "GET", url: "/api/get-call-payment-status" }).then(
         (res) => {
-          debugger;
-          //   var paymentStatus = true;
           if (res.data.status == "faild") {
             this.$router.replace(`/specialist/${res.data.slug}?payment=false`);
             this.isLoading(false);
