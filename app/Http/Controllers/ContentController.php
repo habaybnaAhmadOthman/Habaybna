@@ -144,11 +144,16 @@ class ContentController extends Controller
 
        $id = explode ("--", $slug);
         // $courses = CourseSpecialist::where('specialist_id',$id[1])->with('course')->get();
+        $specialist = Specialist::where('user_id',$id[1])->first();
+        if(!isset($specialist))
+        return response('error',403);
+
+        $data['specialist'] = $specialist ;
 
         $courses = CourseSpecialist::whereHas('course',function($q ){
             $q->where('is_publish',1);
         })->where('specialist_id',$id[1])->with('course')->get();
-        if($courses->count() > 0) {
+        if($courses) {
             $data['specialist']['courses'] = $courses;
         }
         $article = NewContent::where('author_id',$id[1])
