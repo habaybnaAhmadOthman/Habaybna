@@ -55,6 +55,9 @@
           :success="infoModal.status"
           :fixed="infoModal.isFixed"
         >
+            <div class="d-flex w-100-i">
+                <button @click="[closeInfoModal($event), openQuestionaireModal($event)]" class="btn font-24 w-100">متابعة</button>
+            </div>
         </info-modal>
 
         <!-- 
@@ -63,7 +66,8 @@
             ** -- when success payment modal closed
          -->
         <QuestionaireModal 
-            :show="querstionaireModal.show" 
+            :show="querstionaireModal.show"
+            :fixed="true"
             @close="isQuestionaireModal(false)"
         >
         </QuestionaireModal>
@@ -249,7 +253,7 @@
                 if (this.$route.query.payment) {
                     if (this.$route.query.payment == 'true') {
                         this.infoModal.isFixed = true;
-                        this.setInfoModal('تم إرسال رابط المكالمة الى بريدك الإلكتروني','لقد أتممت عملية الشراء بنجاح' ,true,false,true)
+                        this.setInfoModal('تم إرسال رابط المكالمة الى بريدك الإلكتروني','لقد أتممت عملية الشراء بنجاح' ,true,true,true)
                     } else {
                         this.setInfoModal('حصل خطأ في عملية الشراء','يرجى التأكد من المعلومات والمحاولة مرة أخرى' ,false,false,true)
                     }

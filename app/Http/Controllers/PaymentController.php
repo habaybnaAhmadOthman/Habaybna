@@ -82,8 +82,10 @@ class PaymentController extends Controller
                     $slug = $specialist->firstName ? $specialist->firstName.'-' : false;
                     $slug = $specialist->lastName ? $slug.$specialist->lastName.'--'.$specialist->user_id : $slug.'--'.$specialist->user_id;
 
+                    $data['slug'] = $slug;
+                    $data['appo_id'] = $order->appointment_id ;
                     return response(
-                        $slug,
+                        $data,
                     200
                    );
                 }

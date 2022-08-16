@@ -3,6 +3,7 @@
   <alert-dialog
     :show="show"
     :title="'نموذج الطفل'"
+    :fixed="fixed"
     @close="close"
     portal="questionaire-modal"
   >
@@ -12,15 +13,6 @@
       </p>
       <form class="w-100">
         <div class="d-flex gap-10 mb-20">
-          <div class="form-group relative w-50">
-            <input
-              v-model.trim="age.val"
-              id="age"
-              type="text"
-              class="form-control font-18 holder-center w-100"
-              placeholder="عمر الطفل"
-            />
-          </div>
           <div
             class="form-group relative w-50"
             :class="{ invalid: !childStatus.isValid }"
@@ -34,22 +26,65 @@
             />
             <p class="main-color font-12">هذا الحقل مطلوب</p>
           </div>
-        </div>
-        <div
-          class="form-group mb-20 relative"
-          :class="{ invalid: !message.isValid }"
-        >
-          <textarea
-            v-model.trim="message.val"
-            id="message"
-            class="form-control font-18 holder-center w-100"
-            placeholder="الرسالة"
-            rows="5"
-          ></textarea>
-          <p class="main-color font-12">هذا الحقل مطلوب</p>
-        </div>
-        <div class="">
           
+          <div :class="{ invalid: !birthdate.isValid }" class="form-group relative w-50" v-if="years.length > 0">
+            <!-- <input
+              v-model.trim="age.val"
+              id="age"
+              type="text"
+              class="form-control font-18 holder-center w-100"
+              placeholder="عمر الطفل عند معرفة حالته"
+            /> -->
+            <select class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
+                  v-model="birthdate.val"
+                  id="birthdate"
+                  required
+              >
+                  <option value="" disabled hidden
+                      >سنة ميلاد الطفل</option
+                  >
+                  <option v-for="year in years" :value="year" :key="year">{{year}}</option>
+              </select>
+              <p class="main-color font-12">هذا الحقل مطلوب</p>
+          </div>
+        </div>
+        <div class="d-flex gap-10 mb-20">
+          <div
+            class="form-group relative w-50"
+            :class="{ invalid: !age.isValid }"
+          >
+            <input
+              v-model.trim="age.val"
+              id="age"
+              type="age"
+              class="form-control font-18 holder-center w-100"
+              placeholder=" عُمر الطفل عند معرفة حالته"
+            />
+            <p class="main-color font-12">هذا الحقل مطلوب</p>
+          </div>
+          
+          <div :class="{ invalid: !childSituation.isValid }" class="form-group relative w-50">
+            <!-- <input
+              v-model.trim="age.val"
+              id="age"
+              type="text"
+              class="form-control font-18 holder-center w-100"
+              placeholder="عمر الطفل عند معرفة حالته"
+            /> -->
+            <select class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
+                  v-model="childSituation.val"
+                  id="childSituation"
+                  required
+              >
+                  <option value="" disabled hidden
+                      >وضع الطفل</option
+                  >
+                  <option :value="'مندمج بالمدرسة'">مندمج بالمدرسة</option>
+                  <option :value="'يذهب إلى مركز'">يذهب إلى مركز</option>
+                  <option :value="'يتلقى جلسات'">يتلقى جلسات</option>
+              </select>
+              <p class="main-color font-12">هذا الحقل مطلوب</p>
+          </div>
         </div>
       </form>
     </div>
@@ -61,8 +96,9 @@
 </template>
 
 <script>
+import sysYears from '../../../../modules/years';
 export default {
-  props: ["show"],
+  props: ["show","fixed"],
   emits: ["close"],
   data() {
     return {
@@ -74,12 +110,20 @@ export default {
         val: "",
         isValid: true,
       },
-      message: {
+      birthdate: {
         val: "",
         isValid: true,
       },
+      childSituation: {
+        val: "",
+        isValid: true,
+      },
+      years: [],
       formIsValid: true,
     };
+  },
+  mounted(){
+    this.years = sysYears
   },
   methods: {
     close() {
@@ -87,9 +131,26 @@ export default {
     },
     validateForm() {
       this.formIsValid = true;
-      this.message.isValid = true;
-      if (this.message.val == "") {
-        this.message.isValid = false;
+      this.childSituation.isValid = true;
+      this.birthdate.isValid = true;
+      this.childStatus.isValid = true;
+      this.age.isValid = true;
+
+
+      if (this.childSituation.val == "") {
+        this.childSituation.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.birthdate.val == "") {
+        this.birthdate.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.childStatus.val == "") {
+        this.childStatus.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.age.val == "") {
+        this.age.isValid = false;
         this.formIsValid = false;
       }
     },
@@ -101,15 +162,17 @@ export default {
       }
       try {
         this.$store.dispatch("specialist/childInfoForAppointment", {
-          message: this.message.val,
+          childSituation: this.childSituation.val,
           age: this.age.val,
           childStatus: this.childStatus.val,
+          birthdate: new Date().getFullYear() - (+this.birthdate.val),
         });
         this.close()
         this.$store.commit("alertDialogMsg", "شكراً لتعاونكم");
         this.age.val = "";
         this.childStatus.val = "";
-        this.message.val = "";
+        this.childSituation.val = "";
+        this.birthdate.val = "";
       } catch (e) {
         this.$store.commit("alertDialogMsg", e.message);
       }
@@ -120,12 +183,15 @@ export default {
 </script>
 
 <style scoped>
-input,textarea {
+input,textarea,select {
     box-shadow: 0px 3px 6px #00000029;
     border: 1px solid #B7B7B7;
     border-radius: 10px;
       padding: 10px;
     font-size: 17px;
+}
+select:invalid {
+  color:#B7B7B7;
 }
 textarea {
     height:auto;

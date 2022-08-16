@@ -18,7 +18,7 @@
                     </section>
                     <menu class="d-flex flex-end ml-10 mb-10 mr-10 modal-footer">
                         <slot name="actions">
-                            <button class="btn mb-10 ml-10" @click="tryClose">
+                            <button class="btn mb-10 ml-10" @click="forceClose">
                                 حسنا
                             </button>
                         </slot>
@@ -45,7 +45,7 @@
                 </section>
                 <menu class="d-flex flex-end ml-10 mb-10 mr-10 modal-footer">
                     <slot name="actions">
-                        <button class="btn mb-10 ml-10" @click="tryClose">
+                        <button class="btn mb-10 ml-10" @click="forceClose">
                             حسنا
                         </button>
                     </slot>
@@ -75,12 +75,22 @@ export default {
             type: String,
             required: false
         },
+        fixed: {
+            type: Boolean,
+            required: false,
+            default: false
+        }
     },
     emits: ["close"],
     methods: {
         tryClose() {
+            if (!this.fixed)
+                this.forceClose()    
+        },
+        forceClose() {
             this.$emit("close");
         }
+
     },
     computed: {
         portalFn(){
