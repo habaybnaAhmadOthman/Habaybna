@@ -961,6 +961,10 @@ img {
     display: flex;
     flex-wrap: nowrap;
 }
+.library-page iframe {
+    width: 100%;
+    height: 500px;
+}
 @media (max-width: 767px) {
     .mo {
         display: block !important;
@@ -1197,5 +1201,10 @@ img {
     }
     iframe {
         max-width: 100%;
+    }
+    .library-page iframe {
+        width: 100%;
+        height: auto;
+        min-height: auto;
     }
 }

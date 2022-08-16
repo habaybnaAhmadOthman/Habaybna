@@ -250,7 +250,7 @@ class SpecialistController extends Controller
     public function update(Request $request, $id)
     {
         try{
-
+            
             $specialist = Specialist::where('user_id',$id)->first();
 
             if(count($request->interests) > 0 ){

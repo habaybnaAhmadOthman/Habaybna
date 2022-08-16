@@ -74,7 +74,7 @@ export default {
 }
 iframe {
     height: auto;
-    width: 100%;
+    width: 100%!important;
     height: 500px;
 }
 @media (max-width: 767px) {
