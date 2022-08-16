@@ -32,8 +32,9 @@ export default {
             this.isLoading(true)
             axios({method:'GET', url:'/api/get-call-payment-status'})
             .then(res=>{
+                debugger;
                 var paymentStatus = true
-                if (res.data.approval_code == 'null' ) {
+                if (!res) {
                     paymentStatus = false
                 }
                 this.$router.replace(`/specialist/${res.data.slug}?payment=${paymentStatus}&apt-id=${res.data.appo_id}`);
