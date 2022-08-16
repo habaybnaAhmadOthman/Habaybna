@@ -94,4 +94,25 @@ class CallsAppointmentsController extends Controller
 
         return response('success', 200);
     }
+
+    public function getCallsAppointments(Request $request)
+    {
+        $log = CallsAppointments::whereHas('callsStatus', function ($q) use ($request){
+        })->with('callsStatus','appointmentChildInfo');
+        //   ->where('specialist_id', Auth::id());
+
+          if(isset($request->filters)) {
+            $log->whereHas('callsStatus', function ($q) use ($request){
+
+                // if($request->filters && $request->filters )
+                $q->where('status',$request->filters);
+            });
+          }
+
+
+          return response(
+              $log->orderBy('id', 'desc')->paginate(12),
+              200
+            );
+    }
 }

@@ -75,14 +75,15 @@ class PaymentController extends Controller
     {
         $params = session('SmartRouteParams');
         if($params && $params != "") {
-            $order = CallPurchaseOrders::where('transaction_id',$params['TransactionID'])->first();
-            if ($order && $order->status) {
-                $specialist  = Specialist::where('user_id',$order->specialist_id)->first();
-                if($specialist && $specialist != null) {
-                    $slug = $specialist->firstName ? $specialist->firstName.'-' : false;
-                    $slug = $specialist->lastName ? $slug.$specialist->lastName.'--'.$specialist->user_id : $slug.'--'.$specialist->user_id;
 
-                    $data['slug'] = $slug;
+            $order = CallPurchaseOrders::where('transaction_id',$params['TransactionID'])->first();
+            $specialist  = Specialist::where('user_id',$order->specialist_id)->first();
+            $slug = $specialist->firstName ? $specialist->firstName.'-' : false;
+            $slug = $specialist->lastName ? $slug.$specialist->lastName.'--'.$specialist->user_id : $slug.'--'.$specialist->user_id;
+            $data['slug'] = $slug;
+            if ($order && $order->status) {
+                if($specialist && $specialist != null) {
+
                     $data['appo_id'] = $order->appointment_id ;
                     return response(
                         $data,
@@ -90,17 +91,17 @@ class PaymentController extends Controller
                    );
                 }
                 return response(
-                    $slug="فريق-التحرير--59",
+                   $data,
                 403
                );
             }
             return response(
-                $slug="فريق-التحرير--59",
+               $data,
             403
            );
         }
         return response(
-            $slug="فريق-التحرير--59",
+            'error',
         403
        );
 
