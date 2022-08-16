@@ -26,8 +26,12 @@
             />
             <p class="main-color font-12">هذا الحقل مطلوب</p>
           </div>
-          
-          <div :class="{ invalid: !birthdate.isValid }" class="form-group relative w-50" v-if="years.length > 0">
+
+          <div
+            :class="{ invalid: !birthdate.isValid }"
+            class="form-group relative w-50"
+            v-if="years.length > 0"
+          >
             <!-- <input
               v-model.trim="age.val"
               id="age"
@@ -35,17 +39,27 @@
               class="form-control font-18 holder-center w-100"
               placeholder="عمر الطفل عند معرفة حالته"
             /> -->
-            <select class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                  v-model="birthdate.val"
-                  id="birthdate"
-                  required
-              >
-                  <option value="" disabled hidden
-                      >سنة ميلاد الطفل</option
-                  >
-                  <option v-for="year in years" :value="year" :key="year">{{year}}</option>
-              </select>
-              <p class="main-color font-12">هذا الحقل مطلوب</p>
+            <select
+              class="
+                bg-white
+                border-0
+                radius-5
+                w-100
+                p-10
+                pointer
+                form-control
+                trans
+              "
+              v-model="birthdate.val"
+              id="birthdate"
+              required
+            >
+              <option value="" disabled hidden>سنة ميلاد الطفل</option>
+              <option v-for="year in years" :value="year" :key="year">
+                {{ year }}
+              </option>
+            </select>
+            <p class="main-color font-12">هذا الحقل مطلوب</p>
           </div>
         </div>
         <div class="d-flex gap-10 mb-20">
@@ -56,14 +70,17 @@
             <input
               v-model.trim="age.val"
               id="age"
-              type="age"
+              type="number"
               class="form-control font-18 holder-center w-100"
               placeholder=" عُمر الطفل عند معرفة حالته"
             />
             <p class="main-color font-12">هذا الحقل مطلوب</p>
           </div>
-          
-          <div :class="{ invalid: !childSituation.isValid }" class="form-group relative w-50">
+
+          <div
+            :class="{ invalid: !childSituation.isValid }"
+            class="form-group relative w-50"
+          >
             <!-- <input
               v-model.trim="age.val"
               id="age"
@@ -71,34 +88,60 @@
               class="form-control font-18 holder-center w-100"
               placeholder="عمر الطفل عند معرفة حالته"
             /> -->
-            <select class="bg-white border-0 radius-5 w-100 p-10 pointer form-control trans"
-                  v-model="childSituation.val"
-                  id="childSituation"
-                  required
-              >
-                  <option value="" disabled hidden
-                      >وضع الطفل</option
-                  >
-                  <option :value="'مندمج بالمدرسة'">مندمج بالمدرسة</option>
-                  <option :value="'يذهب إلى مركز'">يذهب إلى مركز</option>
-                  <option :value="'يتلقى جلسات'">يتلقى جلسات</option>
-              </select>
-              <p class="main-color font-12">هذا الحقل مطلوب</p>
+            <select
+              class="
+                bg-white
+                border-0
+                radius-5
+                w-100
+                p-10
+                pointer
+                form-control
+                trans
+              "
+              v-model="childSituation.val"
+              id="childSituation"
+              required
+            >
+              <option value="" disabled hidden>وضع الطفل</option>
+              <option :value="'مندمج بالمدرسة'">مندمج بالمدرسة</option>
+              <option :value="'يذهب إلى مركز'">يذهب إلى مركز</option>
+              <option :value="'يتلقى جلسات'">يتلقى جلسات</option>
+              <option :value="'في المنزل'">في المنزل</option>
+            </select>
+            <p class="main-color font-12">هذا الحقل مطلوب</p>
           </div>
+        </div>
+        <div
+          class="form-group mb-20 relative"
+          :class="{ invalid: !message.isValid }"
+        >
+          <textarea
+            v-model.trim="message.val"
+            id="message"
+            class="form-control font-18 holder-center w-100"
+            placeholder="إوصف لنا المشكلة"
+            rows="5"
+          ></textarea>
+          <p class="main-color font-12">هذا الحقل مطلوب</p>
         </div>
       </form>
     </div>
     <template #actions>
-      <button @click="submitForm($event)" class="btn font-20 w-70 ml-10">أرسل</button>
-      <button @click="close" class="btn-3 radius-12 font-20 w-30 p-0-p">إلغاء</button>
+      <button @click="submitForm($event)" class="btn font-20 w-70 ml-10">
+        حفظ
+      </button>
+      <button @click="close" class="btn-3 radius-12 font-20 w-30 p-0-p">
+        تجاهل
+      </button>
     </template>
   </alert-dialog>
 </template>
 
 <script>
-import sysYears from '../../../../modules/years';
+import sysYears from "../../../../modules/years";
 export default {
-  props: ["show","fixed"],
+  props: ["show", "fixed"],
   emits: ["close"],
   data() {
     return {
@@ -118,15 +161,20 @@ export default {
         val: "",
         isValid: true,
       },
+      message: {
+        val: "",
+        isValid: true,
+      },
       years: [],
       formIsValid: true,
     };
   },
-  mounted(){
-    this.years = sysYears
+  mounted() {
+    this.years = sysYears;
   },
   methods: {
     close() {
+      this.$router.replace(`/specialist/${this.$route.params.specialist}`);
       this.$emit("close");
     },
     validateForm() {
@@ -135,7 +183,7 @@ export default {
       this.birthdate.isValid = true;
       this.childStatus.isValid = true;
       this.age.isValid = true;
-
+      this.message.isValid = true;
 
       if (this.childSituation.val == "") {
         this.childSituation.isValid = false;
@@ -153,10 +201,15 @@ export default {
         this.age.isValid = false;
         this.formIsValid = false;
       }
+      if (this.message.val == "") {
+        this.message.isValid = false;
+        this.formIsValid = false;
+      }
     },
     submitForm(evt) {
       evt.preventDefault();
       this.validateForm();
+
       if (!this.formIsValid) {
         return;
       }
@@ -164,15 +217,19 @@ export default {
         this.$store.dispatch("specialist/childInfoForAppointment", {
           childSituation: this.childSituation.val,
           age: this.age.val,
+          message: this.message.val,
           childStatus: this.childStatus.val,
-          birthdate: new Date().getFullYear() - (+this.birthdate.val),
+          birthdate: new Date().getFullYear() - +this.birthdate.val,
+          callID: this.$route.query["apt-id"],
         });
-        this.close()
+        this.close();
         this.$store.commit("alertDialogMsg", "شكراً لتعاونكم");
         this.age.val = "";
         this.childStatus.val = "";
         this.childSituation.val = "";
         this.birthdate.val = "";
+        this.message.val = "";
+        this.$router.replace(`/specialist/${this.$route.params.specialist}`);
       } catch (e) {
         this.$store.commit("alertDialogMsg", e.message);
       }
@@ -183,23 +240,26 @@ export default {
 </script>
 
 <style scoped>
-input,textarea,select {
-    box-shadow: 0px 3px 6px #00000029;
-    border: 1px solid #B7B7B7;
-    border-radius: 10px;
-      padding: 10px;
-    font-size: 17px;
+input,
+textarea,
+select {
+  box-shadow: 0px 3px 6px #00000029;
+  border: 1px solid #b7b7b7;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 17px;
 }
 select:invalid {
-  color:#B7B7B7;
+  color: #b7b7b7;
 }
 textarea {
-    height:auto;
+  height: auto;
 }
 
 @media (max-width: 767px) {
-    input,textarea {
-      font-size: 15px;
-    }
+  input,
+  textarea {
+    font-size: 15px;
+  }
 }
 </style>

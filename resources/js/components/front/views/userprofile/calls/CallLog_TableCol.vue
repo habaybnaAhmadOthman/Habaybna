@@ -12,16 +12,21 @@
     <!-- child -->
     <div>
       <p class="bold">
-        <span class="do">{{data.children}}</span>
-        <span class="mo">الطفل</span>
+        <span class="do">{{data.childStatus}}</span>
+        <span class="mo">حالة الطفل</span>
       </p>
-      <p class="font-13 w-50-p"><span class="mo">{{data.children}}<br></span>{{data.illness}}</p>
+      <p class="font-13 w-50-p"><span class="mo">{{data.childStatus}}<br></span>{{data.childAge}} سنة</p>
     </div>
 
-    <!-- parent -->
+    <!-- وضع الطفل -->
     <div>
-      <p class="bold"><span class="do">{{data.parent}}</span><span class="mo">ولي الأمر</span></p>
-      <p class="font-13 -p"><span class="mo">{{data.parent}}<br></span>{{data.country}}</p>
+      <p class="bold"><span class="do">{{data.childSituation}}</span><span class="mo">وضع الطفل</span></p>
+      <p class="font-13 -p"><span class="mo">{{data.childSituation}}</span></p>
+    </div>
+    <!-- عمر الطفل عند معرفة حالته -->
+    <div>
+      <p class="bold"><span class="do">{{data.discoveredAge}}</span><span class="mo">عمر الطفل عند معرفة حالته</span></p>
+      <p class="font-13 -p"><span class="mo">{{data.discoveredAge}}</span></p>
     </div>
 
     <!-- problem -->
@@ -33,7 +38,7 @@
     <!-- problem -->
     <div>
       <span class="mo bold">رابط المكالمة</span>
-      <router-link class="blue -p" :to="data.callLink">{{data.callLink}}</router-link>
+      <p class="blue pointer" @click="copyLinkToClipboard">نسخ الرابط</p>
     </div>
 
     <!-- call status -->
@@ -82,6 +87,14 @@ export default {
     }
   },
   methods: {
+    copyLinkToClipboard(){
+      const self = this
+      navigator.clipboard.writeText(this.data.callLink).then(function() {
+        self.$store.commit('alertDialogMsg','تم نسخ الرابط')
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });
+    },
     addRecommendation(){
       const {id} = this.data
       this.$emit('add-recommendation',id)
@@ -105,6 +118,9 @@ export default {
   font-size: 14px;
   padding: 0 5px;
   /* text-align: center; */
+      flex-basis: 122px;
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 @media (max-width: 767px) {
   .log-col {
@@ -120,6 +136,9 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    flex-basis: inherit;
+    flex-grow: unset;
+    flex-shrink: unset;
   }
   .w-50-p {
     text-align: left;

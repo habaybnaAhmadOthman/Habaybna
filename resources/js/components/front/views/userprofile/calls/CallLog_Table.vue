@@ -4,8 +4,9 @@
       <div class="header d-flex bg-gray">
         <div>اليوم</div>
         <div>الوقت</div>
-        <div>الطفل</div>
-        <div>ولي الأمر</div>
+        <div>حالة الطفل</div>
+        <div>وضع الطفل</div>
+        <div>عمر الطفل عند معرفة حالته</div>
         <div>المشكلة</div>
         <div>رابط المكالمات</div>
         <div>حالة المكالمة</div>
@@ -83,34 +84,43 @@ export default {
       if (typeof page === "undefined") {
         page = 1;
       }
-      const statuses = {
-        "0": 'scheduled',
-        "1": 'succeeded',
-        "2": 'missed',
-      }
-      this.currentPage = page;
-      // call api 
-      let temp = await this.$store.dispatch('specialist/getSpecialistCallsLog',{
-        specialistID: this.specialistInfo.id,
-        page: this.currentPage,
-        filters: this.filters
-      })
-
-      // format data
-      this.data = temp.data.map(call=>{
-        return {
-          id: call.calls_status.appointment_id,
-          date: call.appointment,
-          children: call.calls_status.id,
-          illness: call.calls_status.id,
-          parent: call.calls_status.id,
-          country: call.calls_status.id,
-          problem: call.calls_status.id,
-          callLink: 'http://localhost:8000/profile/my-call-log',
-          callStatus: statuses[call.calls_status.status],
-          recommendation: ''
+      try {
+        const statuses = {
+          "0": 'scheduled',
+          "1": 'succeeded',
+          "2": 'missed',
         }
-      })
+        this.currentPage = page;
+        // call api
+        let temp = await this.$store.dispatch('specialist/getSpecialistCallsLog',{
+          specialistID: this.specialistInfo.id,
+          page: this.currentPage,
+          filters: this.filters
+        })
+
+        // format data
+
+        this.data = temp.data.map(call=>{
+          return {
+            id: call.calls_status.appointment_id,
+            date: call.appointment,
+            childStatus: call.appointment_child_info ? call.appointment_child_info.child_status : null,
+            childAge: call.appointment_child_info ? call.appointment_child_info.age : null,
+            discoveredAge: call.appointment_child_info ? call.appointment_child_info.discovered_age : null,
+            childSituation: call.appointment_child_info ? call.appointment_child_info.child_situation : null,
+
+
+            problem: call.appointment_child_info ? call.appointment_child_info.message : null ,
+            callLink: 'http://localhost:8000/profile/my-call-log',
+            callStatus: statuses[call.calls_status.status],
+            recommendation: ''
+          }
+        })
+
+
+      } catch {
+        this.$store.commit('alertDialogMsg','حصل خطأ ما');
+      }
       this.isLoading(false);
     },
     addRecommendation(callID){
@@ -125,7 +135,7 @@ export default {
     },
     toggleUserRecomendationModal(msg) {
       if (typeof msg !== "undefined" ) {
-        this.userRecommendationModal.msg = msg  
+        this.userRecommendationModal.msg = msg
       }
       this.userRecommendationModal.show = !this.userRecommendationModal.show
     },
@@ -134,7 +144,7 @@ export default {
     },
     getPaginationLimit(){
       if (this.isMobile)
-        paginationLimit = 1
+        this.paginationLimit = 1
     },
   },
   computed: {
@@ -158,6 +168,9 @@ export default {
 </script>
 
 <style scoped>
+.log-table {
+  overflow-y: auto;
+}
 .header {
   padding: 23px 0;
 }
@@ -165,9 +178,19 @@ export default {
   flex: 1;
   text-align: center;
   font-weight: bold;
+  flex-basis  : 122px;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 .user-rec-text {
   max-height: 70vh;
   overflow-y: auto;
+}
+@media (max-width: 767px) {
+  .log-col > div {
+    flex-basis: inherit;
+    flex-grow: unset;
+    flex-shrink: unset;
+  }
 }
 </style>

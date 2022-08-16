@@ -13,6 +13,7 @@ import UploadVideos from "./components/UploadVideos.vue";
 import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
 import Calls from "./components/admin/calls/Calls.vue";
+import CallsRequests from "./components/admin/callsRequests/Calls.vue";
 import Media from "./components/admin/media/Index.vue";
 import ShowMedia from "./components/admin/media/Show.vue";
 import CreateMedia from "./components/admin/media/Create.vue";
@@ -306,6 +307,13 @@ const routes = [{
         component: Calls,
         name: "Calls"
     },
+
+    {
+        path: "/admin/calls-requests",
+        component: CallsRequests,
+        name: "CallsRequests"
+    },
+
     // ************
     // front
     // ************
