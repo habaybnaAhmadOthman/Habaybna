@@ -129,7 +129,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/calls/create','CallsController@create');
         Route::get('/calls/package/{id}','CallsController@show');
         Route::post('/calls/package/{id}','CallsController@update');
-        Route::post('/change-call-package-status/{id}','CallsController@changeStatus');
+        Route::post('set-calls-zoom-link','CallsAppointmentsController@setZoomLink');
         Route::post('/delete-call-package/{id}','CallsController@delete');
 
         //orders

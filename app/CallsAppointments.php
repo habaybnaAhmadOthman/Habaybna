@@ -23,4 +23,9 @@ class CallsAppointments extends Model
     {
         return $this->hasOne(AppointmentChildInfo::class,'appointment_id','id');
     }
+
+    public function callPurchaseOrders()
+    {
+        return $this->belongsTo(CallPurchaseOrders::class,'id','appointment_id')->where('status',true);
+    }
 }

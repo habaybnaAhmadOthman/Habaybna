@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\CallsStatus;
 use App\CallsAppointments;
 use App\Specialist;
 use App\User;
@@ -98,7 +99,7 @@ class CallsAppointmentsController extends Controller
     public function getCallsAppointments(Request $request)
     {
         $log = CallsAppointments::whereHas('callsStatus', function ($q) use ($request){
-        })->with('callsStatus','appointmentChildInfo');
+        })->with('callsStatus','appointmentChildInfo','specialist','callPurchaseOrders');
         //   ->where('specialist_id', Auth::id());
 
           if(isset($request->filters)) {
@@ -114,5 +115,22 @@ class CallsAppointmentsController extends Controller
               $log->orderBy('id', 'desc')->paginate(12),
               200
             );
+    }
+
+    public function setZoomLink(Request $request)
+    {
+        $appointment = CallsStatus::where('appointment_id',$request->appointmentID)->first() ;
+
+        if(isset($appointment) ) {
+            $appointment->call_zoom_link = $request->zoomLink ;
+            $appointment->save();
+
+            return response('success', 200);
+        }
+
+        return response('faild', 404);
+
+
+
     }
 }
