@@ -8,8 +8,8 @@ th {
   text-align: center !important;
   vertical-align: middle !important;
 }
-td > select{
-    width: auto;
+td > select {
+  width: auto;
 }
 .coupon-table {
   padding: 0 2px;
@@ -66,53 +66,72 @@ td > select{
         <tbody>
           <tr v-for="(appointment, index) in appointments" :key="index">
             <th scope="row">{{ index + 1 }}</th>
-            <td>{{ new Date(appointment.appointment).toLocaleDateString('ar-EG') }}</td>
-            <td>{{ new Date(appointment.appointment).toLocaleTimeString('ar-EG')}}</td>
+            <td>
+              {{
+                new Date(appointment.appointment).toLocaleDateString("ar-EG")
+              }}
+            </td>
+            <td>
+              {{
+                new Date(appointment.appointment).toLocaleTimeString("ar-EG")
+              }}
+            </td>
             <td>ريم فرنجي</td>
             <td>احمد عبيدات</td>
             <td class="status">
               <select name="" id="">
-                <option :selected = "appointment.calls_status == '0' ? true : false " value="0">مجدولة</option>
+                <option
+                  :selected="appointment.calls_status == '0' ? true : false"
+                  value="0"
+                >
+                  مجدولة
+                </option>
                 <option value="1">ناجحة</option>
                 <option value="2">فائتة</option>
               </select>
             </td>
             <td>
-              <!-- <Button
-                :to="'/admin/calls/package/' + call_package.id"
-                type="dashed"
-                size="small"
-                >عرض</Button
-              >
-              <Button @click="deleteDaialog(call_package.id, index)">
-                <Icon size="20" color="red" type="md-trash" />
-              </Button> -->
-              رابط المكالمة
+              <Button @click="linkDialog(appointment.id, index)">
+                <Icon
+                  style="display: block"
+                  size="30"
+                  :color="
+                    appointment.calls_status.call_zoom_link ? 'green' : 'blue'
+                  "
+                  type="md-link"
+                />
+              </Button>
             </td>
             <td>{{ appointment.appointment }}</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <!-- <Modal v-model="dialogDelete" width="360">
-      <p slot="header" style="color: #f60; text-align: center">
-        <Icon type="ios-information-circle"></Icon>
-        <span>حذف</span>
+    <Modal v-model="dialogLinkZoom" width="560">
+      <p slot="header" style="color: #57c5f7; text-align: center">
+        <Icon type="ios-link"></Icon>
+        <span>رابط المكالمة </span>
       </p>
       <div style="text-align: center">
-        <p>هل انت متأكد من حذف الحزمة ؟</p>
+        <Input
+          type="text"
+          ref="zoomLink"
+          v-model="zoomLink"
+          placeholder="أدخل رابط المكالمة"
+        />
+        <span style="color: red" v-if="!linkIsValid">أدخل رابط المكالمة*</span>
       </div>
       <div slot="footer">
         <Button
-          type="error"
+          type="info"
           size="large"
           long
           :loading="modal_loading"
-          @click="del(indexDeleteUser)"
-          >حذف</Button
+          @click="setZoomLink()"
+          >حفظ</Button
         >
       </div>
-    </Modal> -->
+    </Modal>
   </div>
 </template>
 <script>
@@ -121,12 +140,12 @@ export default {
     return {
       appointments: [],
       //   packages: [],
-      //   dialogDelete: false,
-      //   modal_loading: false,
-      //   idDeleteUser: "",
-      //   indexDeleteUser: "",
-      //   keyword: "",
-      //   ascending: false,
+      dialogLinkZoom: false,
+      modal_loading: false,
+      zoomLink: null,
+      appointmentID: null,
+      linkIsValid: true,
+      appointmentIndex: null,
     };
   },
   async created() {
@@ -139,40 +158,46 @@ export default {
         "/api/admin/get-calls-appointments"
       ).then((res) => {
         if (res.status == 200) {
-            this.appointments = res.data.data;
-            console.log(this.appointments);
+          this.appointments = res.data.data;
         }
       });
     },
-    deleteDaialog(id, index) {
-      console.log(id, index);
-      this.dialogDelete = true;
-      this.idDeleteUser = id;
-      this.indexDeleteUser = index;
+    linkDialog(appointmentID, index) {
+      this.zoomLink = this.appointments[index].calls_status.call_zoom_link;
+      this.dialogLinkZoom = true;
+      this.appointmentID = appointmentID;
+      this.appointmentIndex = index;
     },
-    del(index) {
-      console.log(this.idDeleteUser);
-      this.modal_loading = true;
-      const resp = this.$store.dispatch(
-        "admin/deleteCallPackge",
-        this.idDeleteUser
-      );
-      setTimeout(() => {
-        this.modal_loading = false;
-        this.dialogDelete = false;
-        this.$Message.success("تم حذف الحزمة  ");
-      }, 1500);
-      this.packages.splice(index, 1);
-    },
-    changeStatus(i, id) {
-      this.loading = true;
-      console.log(i, id);
-      const resp = this.$store.dispatch("admin/callPackageChangeStatus", id);
-      setTimeout(() => {
-        this.$Message.success("تم تغيير الحالة");
-        this.packages[i].status = !this.packages[i].status;
-        this.loading = false;
-      }, 1000);
+    setZoomLink() {
+      console.log(this.$refs.zoomLink.value);
+      if (
+        this.$refs.zoomLink.value != null &&
+        this.$refs.zoomLink.value != ""
+      ) {
+        this.modal_loading = true;
+        let Obj = {
+          zoomLink: this.$refs.zoomLink.value,
+          appointmentID: this.appointmentID,
+        };
+        const resp = this.callApi(
+          "post",
+          "/api/admin/set-calls-zoom-link",
+          Obj
+        ).then((res) => {
+          if (res.status == 200) {
+            setTimeout(() => {
+                this.appointments[this.appointmentIndex].calls_status.call_zoom_link = this.$refs.zoomLink.value
+              this.modal_loading = false;
+              this.dialogLinkZoom = false;
+              this.$Message.success("تم اضافة رابط المكالمة");
+              this.appointmentIndex = null,
+              this.appointmentID = null
+            }, 500);
+          }
+        });
+      } else {
+        this.linkIsValid = false;
+      }
     },
     sortTable(type) {
       if (type == "name") {
@@ -232,13 +257,7 @@ export default {
     },
   },
   computed: {
-    filteredList() {
-      return this.packages.filter((call_package) => {
-        return call_package.title
-          .toLowerCase()
-          .includes(this.keyword.toLowerCase());
-      });
-    },
+
   },
 };
 </script>
