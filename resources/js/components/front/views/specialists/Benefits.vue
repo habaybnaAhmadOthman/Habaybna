@@ -1,6 +1,7 @@
 <template>
   <section class="benefits-section relative">
     <div class="container">
+      <h2 class="font-24 main-color bold mb-10 d-block center-p w-100-p mb-30 font-20-p">ما هي مميزات الاستشارات مع حبايبنا.نت</h2>
       <div class="d-flex box flex-wrap">
         <div class="item pl-10 w-25 d-flex p-0-p mb-25-p align-center w-50-p flex-wrap-p justify-center-p center-p">
           <img class="mb-10-p" width="81" height="81" src="/images/interview.png" alt="حبايبنا" />

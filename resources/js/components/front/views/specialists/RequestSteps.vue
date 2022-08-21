@@ -1,7 +1,7 @@
 <template>
   <section class="request-section relative">
     <div class="container">
-      <h3 class="font-24 main-color bold mb-10 d-block center-p w-100-p">كيف يمكنك حجز الاستشارة</h3>
+      <h3 class="font-24 main-color bold mb-10 d-block center-p w-100-p font-20-p">كيف يمكنك حجز الاستشارة</h3>
       <div class="d-flex space-between flex-wrap-p">
         <div class="steps w-100-p pt-20 w-40 p-side-12-p">
           <div class="step mb-25 d-flex">

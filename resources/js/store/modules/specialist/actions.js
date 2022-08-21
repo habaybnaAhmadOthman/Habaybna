@@ -6,6 +6,7 @@ export default {
         if (payload.filters && payload.filters.length > 0) {
             filters += `&filters=${payload.filters}`
         }
+
         const resp = await callApi("GET", `/api/get-calls-providers${filters}`);
         if (resp.status != 200) {
             const error = new Error("fail getSpecialistsList ::");
