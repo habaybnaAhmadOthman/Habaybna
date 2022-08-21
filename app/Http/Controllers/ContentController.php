@@ -171,7 +171,7 @@ class ContentController extends Controller
         )
         {
             $data['specialist']['appintment'] = $provider->specialist
-                                                ->availiableAppointments();
+                                                ->availiableAppointments;
         }
 
         return response($data,200);

@@ -57,7 +57,7 @@ class CallsAppointmentsController extends Controller
         !empty($provider->specialist->callsAppointments)
         )
 
-        return response($provider->specialist->availiableAppointments(), 200);
+        return response($provider->specialist->availiableAppointments, 200);
 
         return response('notcallprovider',404);
     }
