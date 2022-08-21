@@ -2,7 +2,11 @@ import { callApi } from "../../common";
 export default {
     // ******** get Specialists Page (can make calls) ::: get
     async getSpecialistsList(context, payload) {
-        const resp = await callApi("GET", `/api/get-calls-providers?page=${payload.page}`);
+        let filters = `?page=${payload.page}`
+        if (payload.filters && payload.filters.length > 0) {
+            filters += `&filters=${payload.filters}`
+        }
+        const resp = await callApi("GET", `/api/get-calls-providers${filters}`);
         if (resp.status != 200) {
             const error = new Error("fail getSpecialistsList ::");
             throw error;

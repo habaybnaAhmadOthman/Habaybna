@@ -100,7 +100,7 @@ export default {
       this.$emit('add-recommendation',id)
     },
     showFullRecommendation(){
-      this.$emit('show-recommendation',this.data.recommendation)
+      this.$emit('show-recommendation',{msg: this.data.recommendation,callID: this.data.id})
     }
   },
   mounted() {},
