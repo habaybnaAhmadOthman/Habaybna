@@ -250,7 +250,7 @@ class SpecialistController extends Controller
     public function update(Request $request, $id)
     {
         try{
-            
+
             $specialist = Specialist::where('user_id',$id)->first();
 
             if(count($request->interests) > 0 ){
@@ -318,14 +318,35 @@ class SpecialistController extends Controller
 
     }
 
-    public function callsProvidersList()
+    public function callsProvidersList(Request $request)
     {
         $specialists = User::whereHas('specialist',function($q) {
 
             $q->canMakeCalls();
-        })->with('specialist')->paginate(12);
+
+        });
+
+        if( isset($request->filters) ) {
+            $explode_id = array_map('intval', explode(',', $request->filters));
+
+            $all = UserInterest::whereIn('interest_id', $explode_id )->pluck('user_id') ;
+
+            $specialists = User::whereHas('specialist',function($q) use ($all){
+
+                $q->canMakeCalls();
+                $q->whereIn('user_id',$all);
+
+            });
+
+
+
+        }
+
+
         return response(
-            $specialists,200
+            $specialists->with('specialist')
+                ->paginate(12)  ,
+            200
         );
     }
 

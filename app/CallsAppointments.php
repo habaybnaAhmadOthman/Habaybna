@@ -33,7 +33,8 @@ class CallsAppointments extends Model
 
     public function getParnetAttribute()
     {
-        return User::findorfail($this->callPurchaseOrders->user_id)
+        if($this->callPurchaseOrders)
+            return User::findorfail($this->callPurchaseOrders->user_id)
                 ->makeHidden([
                     'password',
                     'created_at',
@@ -43,6 +44,8 @@ class CallsAppointments extends Model
                     'remember_token',
                     'updated_at',
                 ]);
+        return null ;
+
     }
 
 }
