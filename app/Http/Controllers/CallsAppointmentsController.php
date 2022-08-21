@@ -99,7 +99,12 @@ class CallsAppointmentsController extends Controller
     public function getCallsAppointments(Request $request)
     {
         $log = CallsAppointments::whereHas('callsStatus', function ($q) use ($request){
-        })->with('callsStatus','appointmentChildInfo','specialist','callPurchaseOrders');
+
+        })
+        // ->whereHas('callPurchaseOrders',function($q){
+        //     $q->with('users')->get();
+        // })
+        ->with('callsStatus','appointmentChildInfo','specialist','callPurchaseOrders');
         //   ->where('specialist_id', Auth::id());
 
           if(isset($request->filters)) {
@@ -112,7 +117,7 @@ class CallsAppointmentsController extends Controller
 
 
           return response(
-              $log->orderBy('id', 'desc')->paginate(12),
+              $log->orderBy('id', 'desc')->paginate(15),
               200
             );
     }
@@ -123,6 +128,26 @@ class CallsAppointmentsController extends Controller
 
         if(isset($appointment) ) {
             $appointment->call_zoom_link = $request->zoomLink ;
+            $appointment->save();
+
+            // we need add sms event
+                // here
+
+            return response('success', 200);
+        }
+
+        return response('faild', 404);
+
+
+
+    }
+
+    public function ChangeAppointmnetStatus(Request $request)
+    {
+        $appointment = CallsStatus::where('appointment_id',$request->appoID)->first() ;
+
+        if(isset($appointment) ) {
+            $appointment->status = $request->status ;
             $appointment->save();
 
             return response('success', 200);

@@ -131,6 +131,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/calls/package/{id}','CallsController@update');
         Route::post('set-calls-zoom-link','CallsAppointmentsController@setZoomLink');
         Route::post('/delete-call-package/{id}','CallsController@delete');
+        Route::post('change-appointment-status','CallsAppointmentsController@ChangeAppointmnetStatus');
 
         //orders
         Route::get('/orders/courses','PaymentController@index')->name('index.orders'); // will moved to CoursespurchaseordersController

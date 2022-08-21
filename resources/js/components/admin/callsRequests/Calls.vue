@@ -11,6 +11,10 @@ th {
 td > select {
   width: auto;
 }
+
+.pagination {
+  margin: auto;
+}
 .coupon-table {
   padding: 0 2px;
   overflow-x: scroll;
@@ -64,7 +68,7 @@ td > select {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(appointment, index) in appointments" :key="index">
+          <tr v-for="(appointment, index) in appointments.data" :key="index">
             <th scope="row">{{ index + 1 }}</th>
             <td>
               {{
@@ -76,16 +80,28 @@ td > select {
                 new Date(appointment.appointment).toLocaleTimeString("ar-EG")
               }}
             </td>
-            <td>ريم فرنجي</td>
-            <td>احمد عبيدات</td>
+            <td>
+              {{
+                appointment.specialist.firstName +
+                "  " +
+                appointment.specialist.lastName
+              }}
+            </td>
+            <td>
+              {{
+                appointment.Parnet.user_data.firstName +
+                "  " +
+                appointment.Parnet.user_data.lastName
+              }}
+            </td>
             <td class="status">
-              <select name="" id="">
-                <option
-                  :selected="appointment.calls_status == '0' ? true : false"
-                  value="0"
-                >
-                  مجدولة
-                </option>
+              <select
+                name=""
+                id=""
+                v-model="appointment.calls_status.status"
+                @change="changeStatus($event, index, appointment.id)"
+              >
+                <option value="0">مجدولة</option>
                 <option value="1">ناجحة</option>
                 <option value="2">فائتة</option>
               </select>
@@ -102,10 +118,21 @@ td > select {
                 />
               </Button>
             </td>
-            <td>{{ appointment.appointment }}</td>
+            <td>
+              <Button @click="moreDetails(appointment.id, index)" disabled>
+               مزيد من التفاصيل
+              </Button>
+            </td>
           </tr>
         </tbody>
       </table>
+      <div class="pagination">
+        <Pagination
+          v-if="appointments"
+          :data="appointments"
+          @pagination-change-page="getResults"
+        ></Pagination>
+      </div>
     </div>
     <Modal v-model="dialogLinkZoom" width="560">
       <p slot="header" style="color: #57c5f7; text-align: center">
@@ -135,10 +162,14 @@ td > select {
   </div>
 </template>
 <script>
+import LaravelVuePagination from "laravel-vue-pagination";
 export default {
+  components: {
+    Pagination: LaravelVuePagination,
+  },
   data() {
     return {
-      appointments: [],
+      appointments: {},
       //   packages: [],
       dialogLinkZoom: false,
       modal_loading: false,
@@ -148,17 +179,18 @@ export default {
       appointmentIndex: null,
     };
   },
-  async created() {
-    this.getResults();
-  },
+  async created() {},
   methods: {
-    getResults() {
+    getResults(page) {
+      if (typeof page === "undefined") {
+        page = 1;
+      }
       const resp = this.callApi(
         "get",
-        "/api/admin/get-calls-appointments"
+        "/api/admin/get-calls-appointments?page=" + page
       ).then((res) => {
         if (res.status == 200) {
-          this.appointments = res.data.data;
+          this.appointments = res.data;
         }
       });
     },
@@ -186,12 +218,13 @@ export default {
         ).then((res) => {
           if (res.status == 200) {
             setTimeout(() => {
-                this.appointments[this.appointmentIndex].calls_status.call_zoom_link = this.$refs.zoomLink.value
+              this.appointments[
+                this.appointmentIndex
+              ].calls_status.call_zoom_link = this.$refs.zoomLink.value;
               this.modal_loading = false;
               this.dialogLinkZoom = false;
               this.$Message.success("تم اضافة رابط المكالمة");
-              this.appointmentIndex = null,
-              this.appointmentID = null
+              (this.appointmentIndex = null), (this.appointmentID = null);
             }, 500);
           }
         });
@@ -199,65 +232,83 @@ export default {
         this.linkIsValid = false;
       }
     },
-    sortTable(type) {
-      if (type == "name") {
-        //   console.log(this.ascending);
-        let isAscending = this.ascending;
-        this.ascending = !this.ascending;
-        return this.packages.sort((a, b) =>
-          isAscending
-            ? a.title > b.title
-              ? 1
-              : b.title > a.title
-              ? -1
-              : 0
-            : a.title < b.title
-            ? 1
-            : b.title < a.title
-            ? -1
-            : 0
-        );
-      }
-      if (type == "status") {
-        //   console.log(this.ascending);
-        let isAscending = this.ascending;
-        this.ascending = !this.ascending;
-        return this.packages.sort((a, b) =>
-          isAscending
-            ? a.status > b.status
-              ? 1
-              : b.status > a.status
-              ? -1
-              : 0
-            : a.status < b.status
-            ? 1
-            : b.status < a.status
-            ? -1
-            : 0
-        );
-      }
-      if (type == "gender") {
-        //   console.log(this.ascending);
-        let isAscending = this.ascending;
-        this.ascending = !this.ascending;
-        return this.others.sort((a, b) =>
-          isAscending
-            ? a.gender > b.gender
-              ? 1
-              : b.gender > a.gender
-              ? -1
-              : 0
-            : a.gender < b.gender
-            ? 1
-            : b.gender < a.gender
-            ? -1
-            : 0
-        );
-      }
+    changeStatus(event, index, appoID) {
+      console.log(event.target.value, index, appoID);
+      let Obj = {
+        status: event.target.value,
+        appoID: appoID,
+      };
+      const resp = this.callApi(
+        "post",
+        "/api/admin/change-appointment-status",
+        Obj
+      ).then((res) => {
+        if (res.status == 200) {
+          console.log(res);
+          //   this.appointments = res.data;
+        }
+      });
     },
+    // sortTable(type) {
+    //   if (type == "name") {
+    //     //   console.log(this.ascending);
+    //     let isAscending = this.ascending;
+    //     this.ascending = !this.ascending;
+    //     return this.packages.sort((a, b) =>
+    //       isAscending
+    //         ? a.title > b.title
+    //           ? 1
+    //           : b.title > a.title
+    //           ? -1
+    //           : 0
+    //         : a.title < b.title
+    //         ? 1
+    //         : b.title < a.title
+    //         ? -1
+    //         : 0
+    //     );
+    //   }
+    //   if (type == "status") {
+    //     //   console.log(this.ascending);
+    //     let isAscending = this.ascending;
+    //     this.ascending = !this.ascending;
+    //     return this.packages.sort((a, b) =>
+    //       isAscending
+    //         ? a.status > b.status
+    //           ? 1
+    //           : b.status > a.status
+    //           ? -1
+    //           : 0
+    //         : a.status < b.status
+    //         ? 1
+    //         : b.status < a.status
+    //         ? -1
+    //         : 0
+    //     );
+    //   }
+    //   if (type == "gender") {
+    //     //   console.log(this.ascending);
+    //     let isAscending = this.ascending;
+    //     this.ascending = !this.ascending;
+    //     return this.others.sort((a, b) =>
+    //       isAscending
+    //         ? a.gender > b.gender
+    //           ? 1
+    //           : b.gender > a.gender
+    //           ? -1
+    //           : 0
+    //         : a.gender < b.gender
+    //         ? 1
+    //         : b.gender < a.gender
+    //         ? -1
+    //         : 0
+    //     );
+    //   }
+    // },
   },
-  computed: {
-
+  computed: {},
+  async mounted() {
+    this.getResults();
   },
 };
 </script>
