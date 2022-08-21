@@ -34,8 +34,8 @@ class Specialist extends Model
 
     public function availiableAppointments()
     {
-        $appointments = CallsAppointments::whereDoesntHave('callsStatus')->get();
+        // $appointments = CallsAppointments::whereDoesntHave('callsStatus')->get();
+        return $this->hasMany(CallsAppointments::class,'specialist_id','user_id')->doesntHave('callsStatus');
 
-        return $appointments;
     }
 }
