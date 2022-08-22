@@ -47,33 +47,37 @@
           >الدورات المفضلة</router-link
         >
       </li>
-      <li v-if="isSpecialist">
-        <span
-          class="d-block p-side-15 pt-10 pb-10 trans pointer submenu-target"
-          @click="collapseMenu('calls')"
-          >المكالمات</span
-        >
-        <transition name="slide">
-          <aside class="submenu trans" v-if="isCallSubMenuOpened">
-            <li>
-              <router-link
-                class="d-block p-side-15 pt-10 pb-10 trans"
-                to="/profile/my-sessions-times"
-                @click.native="closeNavMenu"
-                >تحديد أوقات الجلسات</router-link
-              >
-            </li>
-            <li>
-              <router-link
-                class="d-block p-side-15 pt-10 pb-10 trans"
-                to="/profile/my-call-log"
-                @click.native="closeNavMenu"
-                >سجل المكالمات</router-link
-              >
-            </li>
-          </aside>
-        </transition>
-      </li>
+      <template v-if="isSpecialist">
+        <li v-if="canMakeCalls">
+
+          <span
+            class="d-block p-side-15 pt-10 pb-10 trans pointer submenu-target"
+            @click="collapseMenu('calls')"
+            >المكالمات</span
+          >
+          <transition name="slide">
+            <aside class="submenu trans" v-if="isCallSubMenuOpened">
+              <li>
+                <router-link
+                  class="d-block p-side-15 pt-10 pb-10 trans"
+                  to="/profile/my-sessions-times"
+                  @click.native="closeNavMenu"
+                  >تحديد أوقات الجلسات</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  class="d-block p-side-15 pt-10 pb-10 trans"
+                  to="/profile/my-call-log"
+                  @click.native="closeNavMenu"
+                  >سجل المكالمات</router-link
+                >
+              </li>
+            </aside>
+          </transition>
+        </li>
+
+      </template>
       <!-- if user not specialist (parents,others) -->
       <li v-else>
         <router-link
@@ -128,6 +132,9 @@ export default {
     isSpecialist() {
       return this.userType == "specialist";
     },
+    canMakeCalls(){
+      return this.$store.getters['user/userData'].canMakeCalls
+    }
   },
   methods: {
     closeNavMenu() {

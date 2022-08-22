@@ -18,6 +18,7 @@ export default {
             type: state.type,
             token: state.token,
             avatar: state.avatar,
+            canMakeCalls: state.canMakeCalls,
             id:state.id
         }
         return obj

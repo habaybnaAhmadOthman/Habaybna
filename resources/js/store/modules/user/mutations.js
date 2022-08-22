@@ -12,8 +12,8 @@ export default {
             state.token = payload.token;
         if (payload.id)
             state.id = payload.id;
-        if (payload.canMakeCall)
-            state.canMakeCall = payload.canMakeCall;
+        if (payload.canMakeCalls)
+            state.canMakeCalls = payload.canMakeCalls;
         if (!state.avatar || state.avatar == 'default.jpg')
             state.avatar = '/images/avatars/default.jpg';
         state.loggedIn = true;
