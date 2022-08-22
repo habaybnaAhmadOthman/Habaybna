@@ -3,8 +3,7 @@
     <section class="specialists-section-con mt-20-p">
       <div class="container">
         <template  v-if="showTitle">
-          <h2 class="font-26 bold main-color p-side-12-p">نقوم بإيصالك للمختص المناسب لك و لأسرتك</h2>
-          <p class="font-20 black-2 mb-40 mb-20-p p-side-12-p">يقوم فريق حبايبنا.نت بتوجيهك و مساعدتك للحصول على جلسات مع أخصائيين ئوي كفاءات و خبرات عالية</p>
+          <h2 class="font-26 bold main-color p-side-12-p center mb-30">تعرف على الأخصائيين</h2>
         </template>
         <CategoryFilterSection v-if="!showMoreCardFn" @change-filter="setFilters" :api="api"></CategoryFilterSection>
         <template>
@@ -24,9 +23,9 @@ export default {
   computed: {
     cardsCountFn(){
       if (this.cardsCount) {
-        return this.shuffle(this.appendedSpecialists).slice(0,this.cardsCount)
+        return this.shuffle(this.specialistTemp).slice(0,this.cardsCount)
       } else
-        return this.appendedSpecialists
+        return this.specialistTemp
     },
     showMoreCardFn(){
       if (this.showMoreCard === true)
@@ -40,12 +39,12 @@ export default {
     return {
       activeFilters: [],
       atLeastOneSelected: false,
-      appendedSpecialists: [],
       specialistTemp: [],
       isDataReady: false,
       canLoadData: true,
       api: 'courses/getCategories',
-      currentPage: 1
+      currentPage: 1,
+      selectedFilters: []
     }
   },
   created(){
@@ -59,60 +58,19 @@ export default {
         }
         return a;
     },
-    filteredSpecialists() {
-      self = this;
-      self.atLeastOneSelected = false;
-      const specialists = this.specialistTemp;
-      // if (specialists) {
-        const updatedList =  specialists.filter(user=>{
-          for (let index = 0; index < this.activeFilters.length; index++) {
-            let isChecked =  this.activeFilters[index].isChecked;
-
-            // check if user select one category at least
-            if (isChecked) {
-              self.atLeastOneSelected = true;
-            }
-            if ( isChecked ) {
-              let selected = user.categories.filter(cat=>{
-                return cat.id == this.activeFilters[index].id
-              })
-              if (selected.length > 0) {
-                return true;
-              }
-            }
-          }
-        });
-        if (updatedList.length < 1) {
-          if (!self.atLeastOneSelected) {
-            this.appendedSpecialists = specialists;
-          } else {
-            this.appendedSpecialists = [];
-          }
-        } else {
-          this.appendedSpecialists = updatedList;
-        }
-      // }
-    },
     setFilters(updatedFilters) {
-      this.activeFilters = updatedFilters;
-      this.filteredSpecialists();
-    },
-    getOne() {
-      return { 
-          avatar: "default.jpg",
-          firstName: 'n' + Math.floor(Math.random()* 11),
-          id: Math.random(),
-          lastName: "الرمحي",
-          specialization: "التربية الخاصة"
-        }
+      this.selectedFilters = updatedFilters.filter((fl)=>fl.isChecked).map((chkd)=>chkd.id)
+      this.getData();
     },
     async getData(page) {
       this.canLoadData = false
       if (typeof page === "undefined") {
         page = 1;
+        this.specialistTemp = []
       }
       this.currentPage = page
-      const loadedSpecialists =  (await this.$store.dispatch('specialist/getSpecialistsList',{page: this.currentPage})).data.map((sp)=>{
+      
+      const loadedSpecialists =  (await this.$store.dispatch('specialist/getSpecialistsList',{page: this.currentPage,filters: this.selectedFilters})).data.map((sp)=>{
         return {
           avatar: sp.specialist.avatar,
           firstName: sp.specialist.firstName ,
@@ -123,8 +81,6 @@ export default {
       });
       if (loadedSpecialists.length > 0) {
         this.specialistTemp.push(...loadedSpecialists)
-        // this.specialistTemp.push(this.getOne())
-        this.filteredSpecialists()
         this.canLoadData = true
       }
       this.isDataReady = true

@@ -8,10 +8,12 @@ class CallsAppointments extends Model
 {
     protected $fillable = ['specialist_id','appointment'];
     protected $primaryKey = 'specialist_id';
+    protected $appends = ['Parnet'];
+
 
     public function specialist()
     {
-        return $this->belongsTo(Specialist::class,'user_id');
+        return $this->belongsTo(Specialist::class,'specialist_id','user_id');
     }
 
     public function callsStatus()
@@ -28,4 +30,22 @@ class CallsAppointments extends Model
     {
         return $this->belongsTo(CallPurchaseOrders::class,'id','appointment_id')->where('status',true);
     }
+
+    public function getParnetAttribute()
+    {
+        if($this->callPurchaseOrders)
+            return User::findorfail($this->callPurchaseOrders->user_id)
+                ->makeHidden([
+                    'password',
+                    'created_at',
+                    'email_verified_at',
+                    'otp',
+                    'is_verify',
+                    'remember_token',
+                    'updated_at',
+                ]);
+        return null ;
+
+    }
+
 }

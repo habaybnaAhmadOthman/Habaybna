@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CallsStatus;
+use App\CallPurchaseOrders;
 use App\CallsAppointments;
 use App\Specialist;
 use App\User;
@@ -57,7 +58,7 @@ class CallsAppointmentsController extends Controller
         !empty($provider->specialist->callsAppointments)
         )
 
-        return response($provider->specialist->availiableAppointments(), 200);
+        return response($provider->specialist->availiableAppointments, 200);
 
         return response('notcallprovider',404);
     }
@@ -89,6 +90,30 @@ class CallsAppointmentsController extends Controller
             );
     }
 
+    public function getUserCallLog(Request $request)
+    {
+        $log = CallsAppointments::whereHas('callsStatus', function ($q) use ($request){
+
+        })->whereHas('callPurchaseOrders', function ($o) use ($request){
+            $o->where('user_id',Auth::id());
+        })
+        ->with('callsStatus','appointmentChildInfo');
+        //   ->where('specialist_id', Auth::id());
+
+          if(isset($request->filters)) {
+            $log->whereHas('callsStatus', function ($q) use ($request){
+
+                $q->where('status',$request->filters);
+            });
+          }
+
+
+          return response(
+              $log->orderBy('id', 'desc')->paginate(12),
+              200
+            );
+    }
+
     public function removeAppointment(Request $request)
     {
         $appointment = CallsAppointments::where('id',$request->id)->delete();
@@ -99,7 +124,12 @@ class CallsAppointmentsController extends Controller
     public function getCallsAppointments(Request $request)
     {
         $log = CallsAppointments::whereHas('callsStatus', function ($q) use ($request){
-        })->with('callsStatus','appointmentChildInfo','specialist','callPurchaseOrders');
+
+        })
+        // ->whereHas('callPurchaseOrders',function($q){
+        //     $q->with('users')->get();
+        // })
+        ->with('callsStatus','appointmentChildInfo','specialist','callPurchaseOrders');
         //   ->where('specialist_id', Auth::id());
 
           if(isset($request->filters)) {
@@ -112,7 +142,7 @@ class CallsAppointmentsController extends Controller
 
 
           return response(
-              $log->orderBy('id', 'desc')->paginate(12),
+              $log->orderBy('id', 'desc')->paginate(15),
               200
             );
     }
@@ -123,6 +153,26 @@ class CallsAppointmentsController extends Controller
 
         if(isset($appointment) ) {
             $appointment->call_zoom_link = $request->zoomLink ;
+            $appointment->save();
+
+            // we need add sms event
+                // here
+
+            return response('success', 200);
+        }
+
+        return response('faild', 404);
+
+
+
+    }
+
+    public function ChangeAppointmnetStatus(Request $request)
+    {
+        $appointment = CallsStatus::where('appointment_id',$request->appoID)->first() ;
+
+        if(isset($appointment) ) {
+            $appointment->status = $request->status ;
             $appointment->save();
 
             return response('success', 200);

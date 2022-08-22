@@ -45,14 +45,16 @@ export default {
                     checked:false
                 }
             },
-            activeFilters: 'all'
+            activeFilters: 'all',
         }
     },
+    
     methods: {
         updateFilters(updatedFilters,activeFilter){
             this.filters = {...updatedFilters};
             this.activeFilters = activeFilter
-        }
+        },
+        
     }
 };
 </script>

@@ -24,6 +24,7 @@ class User extends Authenticatable
     protected $fillable = [
         'phone', 'email','phone','otp','is_verify','role','password'
     ];
+    protected $appends = ['user_data'];
 
     /**
      * The attributes that should be hidden for arrays.
