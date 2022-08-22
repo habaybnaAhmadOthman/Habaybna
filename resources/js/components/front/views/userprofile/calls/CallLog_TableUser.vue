@@ -92,11 +92,11 @@ export default {
           "1": 'succeeded',
           "2": 'missed',
         }
-        
+        console.log(this.getUserData)
         this.currentPage = page;
         // call api
-        let temp = await this.$store.dispatch('specialist/getSpecialistCallsLog',{
-          specialistID: this.specialistInfo.id,
+        let temp = await this.$store.dispatch('user/getCallsLog',{
+          userID: this.getUserData.id,
           page: this.currentPage,
           filters: this.filters
         })
@@ -182,11 +182,11 @@ export default {
     isMobile(){
       return window.matchMedia("(max-width: 677px)").matches
     },
-    getUserType(){
-      return this.$store.getters['user/userData'].type
+    getUserData(){
+      return this.$store.getters['user/userData']
     },
     getUserTypeApi(){
-      if (this.getUserType == 'parent')
+      if ((this.getUserData).type == 'parent')
         return ''
 
       return ''
