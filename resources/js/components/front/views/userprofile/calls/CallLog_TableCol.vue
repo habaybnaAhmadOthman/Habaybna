@@ -53,10 +53,10 @@
       <template v-if="isSpecialist">
         <p class="w-50-p" v-if="data.callStatus == 'scheduled'">لايمكن الكتابة إلا بعد أن تصبح ناجحة</p>
         <p @click="addRecommendation" class="main-color bold pointer w-50-p" v-else-if="data.callStatus == 'succeeded' && data.recommendation == ''">إضافة توصية</p>
-        <p @click="showFullRecommendation" class="main-color bold pointer w-50-p" v-else-if="data.callStatus == 'succeeded' && data.recommendation != ''">{{data.recommendation}}</p>
+        <p @click="showFullRecommendation" class="main-color bold pointer w-50-p two-line" v-else-if="data.callStatus == 'succeeded' && data.recommendation != ''">{{data.recommendation}}</p>
         <p class="w-50-p" v-else>لا يمكنك إضافة توصية</p>
       </template>
-      <p class="pointer main-color" v-else-if="data.recommendation != ''" @click="showFullRecommendation">مشاهدة التوصية</p>
+      <p class="pointer main-color " v-else-if="data.recommendation != ''" @click="showFullRecommendation">مشاهدة التوصية</p>
       <p v-else>لا يوجد توصية</p>
     </div>
   </div>

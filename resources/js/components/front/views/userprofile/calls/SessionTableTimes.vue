@@ -92,7 +92,11 @@ export default {
 
       if (saveThoseIntervalsOnly.length > 0) {
         this.isLoading(true)
-        await this.$store.dispatch('specialist/setAppointments',saveThoseIntervalsOnly)
+        try {
+          await this.$store.dispatch('specialist/setAppointments',saveThoseIntervalsOnly)
+        } catch {
+          console.log('something happend!')
+        }
         this.isLoading(false)
         this.forceRefresh()
       } else {
