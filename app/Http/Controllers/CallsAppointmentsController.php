@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CallsStatus;
+use App\CallPurchaseOrders;
 use App\CallsAppointments;
 use App\Specialist;
 use App\User;
@@ -78,6 +79,30 @@ class CallsAppointmentsController extends Controller
             $log->whereHas('callsStatus', function ($q) use ($request){
 
                 // if($request->filters && $request->filters )
+                $q->where('status',$request->filters);
+            });
+          }
+
+
+          return response(
+              $log->orderBy('id', 'desc')->paginate(12),
+              200
+            );
+    }
+
+    public function getUserCallLog(Request $request)
+    {
+        $log = CallsAppointments::whereHas('callsStatus', function ($q) use ($request){
+
+        })->whereHas('callPurchaseOrders', function ($o) use ($request){
+            $o->where('user_id',Auth::id());
+        })
+        ->with('callsStatus','appointmentChildInfo');
+        //   ->where('specialist_id', Auth::id());
+
+          if(isset($request->filters)) {
+            $log->whereHas('callsStatus', function ($q) use ($request){
+
                 $q->where('status',$request->filters);
             });
           }

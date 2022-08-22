@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/remove-appointment','CallsAppointmentsController@removeAppointment');
     Route::post('/set-call-recommendation','AppointmentChildInfoController@setCallRecommendation');
     Route::post('/set-appointment-child-info','AppointmentChildInfoController@setAppintmentChildInfo');
+    Route::get('/get-user-call-log','CallsAppointmentsController@getUserCallLog');
 
 
 
