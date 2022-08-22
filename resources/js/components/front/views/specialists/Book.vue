@@ -53,6 +53,7 @@ import RadioTag from "./Book_RadioTag.vue";
 import CoboneForm from "./CoboneForm.vue";
 import PaymentForm from '../coursepage/PaymentForm.vue'
 export default {
+  emits: ['show-appointment-tab'],
   props: ['specialistData','data'],
   components: { RadioTag,CoboneForm,PaymentForm },
   methods: {
@@ -112,11 +113,11 @@ export default {
       } catch (error) {
           this.$store.commit('alertDialogMsg',error.message);
       }
-      
       this.isLoading(false)
       
     },
     getAvailableTimes(){
+      
       const today = new Date(new Date().toISOString()).getTime();
       this.intervals = this.data.filter((apt)=>{
         let appointment = new Date(apt.appointment).getTime();
@@ -131,6 +132,13 @@ export default {
             selected: false
         }}
       )
+
+      // to remove tab from the ui
+      if (this.intervals.length) 
+        this.$emit('show-appointment-tab',true)
+      else
+        this.$emit('show-appointment-tab',false)
+      
       this.fillDaysData()
     },
     fillDaysData() {
