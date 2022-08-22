@@ -92,6 +92,7 @@ export default {
           "1": 'succeeded',
           "2": 'missed',
         }
+        
         this.currentPage = page;
         // call api
         let temp = await this.$store.dispatch('specialist/getSpecialistCallsLog',{
@@ -180,6 +181,15 @@ export default {
     },
     isMobile(){
       return window.matchMedia("(max-width: 677px)").matches
+    },
+    getUserType(){
+      return this.$store.getters['user/userData'].type
+    },
+    getUserTypeApi(){
+      if (this.getUserType == 'parent')
+        return ''
+
+      return ''
     }
   },
   mounted() {

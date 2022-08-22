@@ -3,8 +3,7 @@
     <section class="specialists-section-con mt-20-p">
       <div class="container">
         <template  v-if="showTitle">
-          <h2 class="font-26 bold main-color p-side-12-p">نقوم بإيصالك للمختص المناسب لك و لأسرتك</h2>
-          <p class="font-20 black-2 mb-40 mb-20-p p-side-12-p">يقوم فريق حبايبنا.نت بتوجيهك و مساعدتك للحصول على جلسات مع أخصائيين ئوي كفاءات و خبرات عالية</p>
+          <h2 class="font-26 bold main-color p-side-12-p center mb-30">تعرف على الأخصائيين</h2>
         </template>
         <CategoryFilterSection v-if="!showMoreCardFn" @change-filter="setFilters" :api="api"></CategoryFilterSection>
         <template>
@@ -70,6 +69,7 @@ export default {
         this.specialistTemp = []
       }
       this.currentPage = page
+      
       const loadedSpecialists =  (await this.$store.dispatch('specialist/getSpecialistsList',{page: this.currentPage,filters: this.selectedFilters})).data.map((sp)=>{
         return {
           avatar: sp.specialist.avatar,

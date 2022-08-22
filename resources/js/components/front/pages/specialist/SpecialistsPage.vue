@@ -1,7 +1,7 @@
 <template>
     <div class="ask-specialists-page">
         <TheHeader></TheHeader>
-            <div class="mb-20 mb-30-p">
+            <div class="mb-50 mb-30-p">
                 <MainBanner></MainBanner>
             </div>
             <div class="mb-40">
@@ -14,7 +14,12 @@
                 <SpecialistsSection :show-title="true" :showMoreCard="true"></SpecialistsSection>
             </div>
             <div class="container center">
-                <h6 class="m-side-auto font-30 black-2 w-50 w-90-p font-20-p pt-0-p pt-15">تحتاجون لمساعدة في الاختيار من الأخصائيين؟ يمكنكم التواصل مع فریق حبایبنا</h6>
+                <h6 class="m-side-auto font-30 black-2 w-90-p font-20-p pt-0-p pt-15">هل تحتاج لمساعدة في تحديد الأخصائي المناسب؟ </h6>
+                <div class="d-flex flex-colmn justify-center">
+                    <router-link class="font-30 blue do" to="/" @click.native="goToContactForm">تواصل مع فريق حبايبنا.نت</router-link>
+                    <a class="blue mo font-30 font-20-p" href="https://api.whatsapp.com/send?phone=00962799760238" data-action="share/whatsapp/share" target="_blank">تواصل مع فريق حبايبنا.نت</a>
+                </div>
+                
             </div>
 
         <TheFooter></TheFooter>
@@ -35,6 +40,9 @@
         methods: {
             goToLink(url) {
                 window.open(url,'_blank')
+            },
+            goToContactForm() {
+                window.scrollTo(0, document.querySelector('.contact-us-section').offsetTop - 50)
             }
         }
     }
