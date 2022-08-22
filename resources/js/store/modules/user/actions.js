@@ -141,10 +141,12 @@ export default {
 
         const obj = resp.data.userData;
         if (obj.role != 'admin') {
+            
             commit('setUser',{
                 firstName: obj.firstName,
                 lastName: obj.lastName,
                 type: obj.type,
+                canMakeCall: obj.can_make_call,
                 avatar: obj.avatar,
             })
             await dispatch('courses/getAllCourses',{}, {root:true})

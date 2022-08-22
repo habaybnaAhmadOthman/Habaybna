@@ -18,9 +18,11 @@
         v-for="call in data"
         :key="call.id"
         :data="call"
+        :is-specialist="isSpecialist"
         @add-recommendation="addRecommendation"
         @show-recommendation="toggleUserRecomendationModal"
       ></TableCol>
+      <h2 class="center mt-30" v-if="data.length == 0">لا يوجد مكالمات</h2>
       <div class="portal-pagination mt-40 mt-40 justify-center d-flex">
         <Pagination
           :data="contentTemp"
@@ -48,8 +50,13 @@
       :modalClass="'sticky-header'"
     >
     <div class="user-rec-text">
-      <textarea class="font-18 black form-control" v-model="userRecommendationModal.msg"></textarea>
-      <button @click="updateUserRecommendation" class="radius-60 main-bg border-0 w-100 mt-30 white font-18 pointer pt-15 pb-15 flex-1">تعديل</button>
+      <!-- for specialist use -->
+      <template v-if="isSpecialist">
+        <textarea  class="font-18 black form-control" v-model="userRecommendationModal.msg"></textarea>
+        <button @click="updateUserRecommendation" class="radius-60 main-bg border-0 w-100 mt-30 white font-18 pointer pt-15 pb-15 flex-1">تعديل</button>
+      </template>
+      <!-- for parents -->
+      <p v-else class="font-18 black">{{userRecommendationModal.msg}}</p>
     </div>
     </normal-modal>
   </div>
@@ -92,21 +99,16 @@ export default {
           "1": 'succeeded',
           "2": 'missed',
         }
-        
         this.currentPage = page;
         // call api
-        let temp = await this.$store.dispatch('specialist/getSpecialistCallsLog',{
-          specialistID: this.specialistInfo.id,
-          page: this.currentPage,
-          filters: this.filters
-        })
+        let temp = await this.$store.dispatch(this.getUserTypeApi,this.apiParamsDependOnUserType)
 
         // format data
         this.data = temp.data.map(call=> {
           const obj = {
             id: call.calls_status.appointment_id,
             date: call.appointment,
-            callLink: 'http://localhost:8000/profile/my-call-log',
+            callLink: '',
             callStatus: statuses[call.calls_status.status],
             recommendation: '',
             childStatus: '---',
@@ -122,6 +124,9 @@ export default {
             obj.discoveredAge= call.appointment_child_info.discovered_age;
             obj.childSituation= call.appointment_child_info.child_situation;
             obj.problem= call.appointment_child_info.message
+          }
+          if (call.calls_status && call.calls_status.call_zoom_link) {
+            obj.callLink = call.calls_status.call_zoom_link
           }
           if (call.appointment_child_info && call.appointment_child_info.recommendation) {
             obj.recommendation= call.appointment_child_info.recommendation
@@ -182,14 +187,30 @@ export default {
     isMobile(){
       return window.matchMedia("(max-width: 677px)").matches
     },
-    getUserType(){
-      return this.$store.getters['user/userData'].type
+    isSpecialist(){
+      return (this.getUserData).type == 'specialist'
+    },
+    getUserData(){
+      return this.$store.getters['user/userData']
     },
     getUserTypeApi(){
-      if (this.getUserType == 'parent')
-        return ''
+      if (this.isSpecialist)
+        return 'specialist/getSpecialistCallsLog'
 
-      return ''
+      return 'user/getCallsLog'
+    },
+    apiParamsDependOnUserType(){
+      const obj = {
+        page: this.currentPage,
+        filters: this.filters
+      }
+      if (this.isSpecialist)
+        obj.specialistID = this.specialistInfo.id
+      else 
+        obj.userID = this.getUserData.id
+
+      return obj
+
     }
   },
   mounted() {
@@ -215,7 +236,7 @@ export default {
   flex: 1;
   text-align: center;
   font-weight: bold;
-  flex-basis  : 122px;
+  flex-basis  : 11.11%;
   flex-grow: 0;
   flex-shrink: 0;
 }

@@ -26,7 +26,7 @@
 <script>
 import UserProfileContent from "../../../views/userprofile/UserProfile_Content.vue";
 import Filters from "../../../views/userprofile/calls/CallLog_Filters.vue";
-import LogsTable from "../../../views/userprofile/calls/CallLog_TableUser.vue";
+import LogsTable from "../../../views/userprofile/calls/CallLog_Table.vue";
 export default {    
     components: {UserProfileContent,Filters,LogsTable},
     data(){

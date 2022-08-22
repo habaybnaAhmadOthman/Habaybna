@@ -50,10 +50,14 @@
     <!-- recommendation -->
     <div class="recommendation">
       <span class="mo bold">التوصية</span>
-      <p class="w-50-p" v-if="data.callStatus == 'scheduled'">لايمكن الكتابة إلا بعد أن تصبح ناجحة</p>
-      <p @click="addRecommendation" class="main-color bold pointer w-50-p" v-else-if="data.callStatus == 'succeeded' && data.recommendation == ''">إضافة توصية</p>
-      <p @click="showFullRecommendation" class="main-color bold pointer w-50-p" v-else-if="data.callStatus == 'succeeded' && data.recommendation != ''">{{data.recommendation}}</p>
-      <p class="w-50-p" v-else>لا يمكنك إضافة توصية</p>
+      <template v-if="isSpecialist">
+        <p class="w-50-p" v-if="data.callStatus == 'scheduled'">لايمكن الكتابة إلا بعد أن تصبح ناجحة</p>
+        <p @click="addRecommendation" class="main-color bold pointer w-50-p" v-else-if="data.callStatus == 'succeeded' && data.recommendation == ''">إضافة توصية</p>
+        <p @click="showFullRecommendation" class="main-color bold pointer w-50-p" v-else-if="data.callStatus == 'succeeded' && data.recommendation != ''">{{data.recommendation}}</p>
+        <p class="w-50-p" v-else>لا يمكنك إضافة توصية</p>
+      </template>
+      <p class="pointer main-color" v-else-if="data.recommendation != ''" @click="showFullRecommendation">مشاهدة التوصية</p>
+      <p v-else>لا يوجد توصية</p>
     </div>
   </div>
 </template>
@@ -61,7 +65,7 @@
 <script>
 export default {
   emits: ['add-recommendation','show-recommendation'],
-  props: ["data"],
+  props: ["data","is-specialist"],
   computed: {
     timeInterval() {
       return new Date(this.data.date).toLocaleTimeString("en-US", {
@@ -118,7 +122,7 @@ export default {
   font-size: 14px;
   padding: 0 5px;
   /* text-align: center; */
-      flex-basis: 122px;
+      flex-basis: 11.11%;
     flex-grow: 0;
     flex-shrink: 0;
     text-align: center;
