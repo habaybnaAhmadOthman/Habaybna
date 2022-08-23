@@ -395,8 +395,8 @@ export default {
         if (this.$route.query.payment == "true") {
           this.infoModal.isFixed = true;
           this.setInfoModal(
-            "تم إرسال رابط المكالمة الى بريدك الإلكتروني",
-            "لقد أتممت عملية الشراء بنجاح",
+            "تم الدفع بنجاح وتأكيد الموعد",
+            "سنقوم بإضافة رابط المكالمة في حسابك وسيتم تنبيهك برسالة نصية",
             true,
             true,
             true

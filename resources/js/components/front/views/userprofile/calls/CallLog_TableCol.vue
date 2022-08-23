@@ -8,6 +8,12 @@
 
     <!-- time -->
     <div class="bold do">{{timeInterval}}</div>
+    
+    <!-- specilist info (#parents only) -->
+    <div v-if="!isSpecialist" class="bold">
+      <span class="mo">الأخصائي</span>
+      <p class="font-13 w-50-p"><span>إسلام صبحي<br></span><span class="gray">ترتيل</span></p>
+    </div>
 
     <!-- child -->
     <div>
@@ -89,7 +95,7 @@ export default {
         return 'فائتة'
       
       return 'ناجحة'
-    }
+    },
   },
   methods: {
     copyLinkToClipboard(){
@@ -108,7 +114,6 @@ export default {
       this.$emit('show-recommendation',{msg: this.data.recommendation,callID: this.data.id})
     }
   },
-  mounted() {},
 };
 </script>
 

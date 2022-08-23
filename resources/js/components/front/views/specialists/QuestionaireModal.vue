@@ -11,7 +11,8 @@
       <p class="font-20 mb-20 font-18-p">
         النموذج أدناه يساعد الأخصائي على الاستعداد للمكالمة يرجى تعبئته
       </p>
-      <form class="w-100">
+      <form autocomplete="off" class="w-100">
+        <input autocomplete="false" name="hidden" type="text" style="display:none;">
         <div class="d-flex gap-10 mb-20">
           <div
             class="form-group relative w-50"
@@ -73,6 +74,7 @@
               type="number"
               class="form-control font-18 holder-center w-100"
               placeholder=" عُمر الطفل عند معرفة حالته"
+              autocomplete="off"
             />
             <p class="main-color font-12">هذا الحقل مطلوب</p>
           </div>
@@ -223,13 +225,13 @@ export default {
           callID: this.$route.query["apt-id"],
         });
         this.close();
-        this.$store.commit("alertDialogMsg", "شكراً لتعاونكم");
+        // this.$store.commit("alertDialogMsg", "شكراً لتعاونكم");
         this.age.val = "";
         this.childStatus.val = "";
         this.childSituation.val = "";
         this.birthdate.val = "";
         this.message.val = "";
-        this.$router.replace(`/specialist/${this.$route.params.specialist}`);
+        this.$router.replace(`/profile/my-call-log`);
       } catch (e) {
         this.$store.commit("alertDialogMsg", e.message);
       }

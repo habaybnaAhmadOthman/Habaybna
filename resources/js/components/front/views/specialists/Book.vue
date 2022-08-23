@@ -38,7 +38,7 @@
     <!-- end time container -->
 
     <div class="price-box w-50 mt-30 d-flex align-center space-between w-100-p">
-        <p class="font-20 main-color bold d-flex"><img class="ml-10" src="/images/test.jpg" width="22" height="22" alt="الأخصائيين" ><span> $45</span></p>
+        <p class="font-20 main-color bold d-flex"><img class="ml-10" src="/images/test.jpg" width="22" height="22" alt="الأخصائيين" ><span> 59 USD</span></p>
         <p class="font-20 main-color bold d-flex"><img class="ml-10" src="/images/test.jpg" width="22" height="22" alt="الأخصائيين" ><span> 30 دقيقة</span></p>
     </div>
 
@@ -95,12 +95,18 @@ export default {
         if (this.isLoggedIn) {
             this.bookAppointment();
         } else {
-            this.$store.commit('loginModal',true);
+          
+          const selectedDayIndex = Object.keys(this.daysWithIntervals).indexOf(this.selectedDay)
+          this.$store.commit('specialist/bookInfo',{
+            dayID: selectedDayIndex,
+            selectedTime: this.selectedTime
+          })
+          this.$store.commit('loginModal',true);
         }
     },
     async bookAppointment() {
       this.isLoading(true)
-      const selectedApt = this.daysWithIntervals[this.selectedDay].intervals[this.selectedTime]
+      const selectedApt = this.selectedAppointment
       try {
           const resp = await this.$store.dispatch('specialist/bookAppointment',{
             appointmentID: selectedApt.id,
@@ -173,10 +179,22 @@ export default {
         }
         this.isLoading(false)
     },
+    
+    getSavedAppointemnt(){
+      
+      const params = this.$route.query
+      const booked = this.getBookInfoAfterGuestLogin
+      if (Object.keys(booked).length > 0 && params['is-logged-in']) {
+        this.onDaySelect(booked.dayID)
+        const selectedTimeID = this.daysWithIntervals[this.selectedDay].intervals[booked.selectedTime].id
+        this.onTimeSelect(selectedTimeID)
+        this.bookAppointment();
+        this.$store.commit('specialist/bookInfo',{});
+      }
+    }
   },
   computed: {
     canSubmit() {
-      console.log(this.selectedDay == null || this.selectedTime == null)
       return this.selectedDay == null || this.selectedTime == null;
     },
     slug(){
@@ -186,12 +204,20 @@ export default {
       url += `--${this.specialistData.id}`
       return `${url}`
     },
+    selectedAppointment(){
+      return this.daysWithIntervals[this.selectedDay].intervals[this.selectedTime]
+    },
     isLoggedIn() {
       return this.$store.getters["user/isLoggedIn"];
     },
+    getBookInfoAfterGuestLogin(){
+      return this.$store.getters["specialist/bookInfo"]
+    }
   },
   mounted(){
     this.getAvailableTimes()
+    // when guest user logged in from the modal, navigate it to payment gateway
+    this.getSavedAppointemnt()
   },
   data() {
     return {

@@ -4,7 +4,7 @@
         <section class="specialist-section pt-50 container pt-20-p mb-30 p-side-12-p">
             <h1 class="main-color bold font-27 mb-30">الأخصائيين</h1>
             <div class="radius-12 p-side-30 w-32 w-100-p price-box bg-white d-flex align-center space-between">
-                <p class="font-20 main-color bold d-flex"><img class="ml-10" src="/images/test.jpg" width="22" height="22" alt="الأخصائيين" ><span> $45</span></p>
+                <p class="font-20 main-color bold d-flex"><img class="ml-10" src="/images/test.jpg" width="22" height="22" alt="الأخصائيين" ><span> USD 59</span></p>
                 <p class="font-20 main-color bold d-flex"><img class="ml-10" src="/images/test.jpg" width="22" height="22" alt="الأخصائيين" ><span> 30 دقيقة</span></p>
             </div>
         </section>

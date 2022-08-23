@@ -7,6 +7,13 @@
                 <p class="font-10 mobile-icon-color">الرئيسية</p>
             </router-link>
             <router-link
+                to="/ask-specialists"
+                class="courses-mo mo center mobile-link"
+            >
+                <img src="/images/consultation-icon.svg" width="24" height="21" />
+                <p class="font-10 mobile-icon-color">الأخصائيين</p>
+            </router-link>
+            <router-link
                 to="/online-courses"
                 class="courses-mo mo center mobile-link"
             >

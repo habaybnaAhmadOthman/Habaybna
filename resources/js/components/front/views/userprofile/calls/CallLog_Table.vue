@@ -4,6 +4,7 @@
       <div class="header d-flex bg-gray">
         <div>اليوم</div>
         <div>الوقت</div>
+        <div v-if="!this.isSpecialist">الأخصائي</div>
         <div>حالة الطفل</div>
         <div>وضع الطفل</div>
         <div>عمر الطفل عند معرفة حالته</div>
