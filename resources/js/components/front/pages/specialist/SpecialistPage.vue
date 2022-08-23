@@ -83,39 +83,42 @@
               :tabs="tabs"
             ></TabsToggle>
           </div>
-          <div class="mt-40 pb-40">
-            <div tab-name="book" all class="active">
-              <Book
-                v-if="isDataReady"
-                :specialistData="specialistInfo"
-                :data="appointments"
-              ></Book>
-            </div>
-            <div tab-name="about" all>
-              <div class="font-24 black-2 font-18-p">
-                {{ specialistInfo.bio }}
+          <template v-if="isDataReady">
+            <div class="mt-40 pb-40">
+              <div tab-name="book" all class="active" v-if="hasAppointments">
+                <Book
+                  :specialistData="specialistInfo"
+                  :data="appointments"
+                  @show-appointment-tab="isHasAppointments"
+                ></Book>
+              </div>
+              <div tab-name="about" all>
+                <div class="font-24 black-2 font-18-p">
+                  {{ specialistInfo.bio }}
+                </div>
+              </div>
+
+              <div tab-name="courses" all v-if="courses.length > 0">
+                <div class="grid-3 gap2 grid-1-p">
+                  <CourseCard
+                    :class="'w-100-i'"
+                    v-for="(course, index) in courses"
+                    :course="course"
+                    :key="index"
+                  ></CourseCard>
+                </div>
+              </div>
+              <div tab-name="articles" all v-if="articles.length > 0">
+                <div v-if="isDataReady" class="grid-2 gap2 grid-1-p">
+                  <SmallCard
+                    v-for="item in articles"
+                    :key="item.id"
+                    :item="item"
+                  ></SmallCard>
+                </div>
               </div>
             </div>
-            <div tab-name="courses" all>
-              <div class="grid-3 gap2 grid-1-p" v-if="isDataReady">
-                <CourseCard
-                  :class="'w-100-i'"
-                  v-for="(course, index) in courses"
-                  :course="course"
-                  :key="index"
-                ></CourseCard>
-              </div>
-            </div>
-            <div tab-name="articles" all>
-              <div v-if="isDataReady" class="grid-2 gap2 grid-1-p">
-                <SmallCard
-                  v-for="item in articles"
-                  :key="item.id"
-                  :item="item"
-                ></SmallCard>
-              </div>
-            </div>
-          </div>
+          </template>
         </div>
       </div>
     </div>
@@ -194,6 +197,7 @@ export default {
   data() {
     return {
       appointments: [],
+      hasAppointments: true,
       tabs: [
         {
           title: 'المواعيد<br class="mo"> المتاحة',
@@ -242,6 +246,9 @@ export default {
     },
   },
   methods: {
+    isHasAppointments(show) {
+      this.hasAppointments = show;
+    },
     isLoading(status) {
       this.$store.commit("isLoading", status);
     },
@@ -283,6 +290,7 @@ export default {
             }
             return course;
           });
+          
         }
         if (data.specialist.articles.length > 0) {
           this.articles = data.specialist.articles.map((article) => {
@@ -292,6 +300,7 @@ export default {
             };
           });
         }
+        
         if (data.specialist) {
           this.specialistInfo.firstName = data.specialist.firstName;
           this.specialistInfo.lastName = data.specialist.lastName;
@@ -320,14 +329,51 @@ export default {
     },
     getActiveTab() {
       let activeTab = localStorage.getItem("active_tab");
+      const self = this;
+      const removedTabs = [];
+      function removeTabFromTabs(removeTab) {
+        return self.tabs.filter((tab) => {
+          return tab.name != removeTab;
+        });
+      }
+      if (!this.courses.length) {
+        this.tabs = removeTabFromTabs("courses");
+        removedTabs.push("courses");
+      }
+      if (!this.articles.length) {
+        this.tabs = removeTabFromTabs("articles");
+        removedTabs.push("articles");
+      }
+      if (!this.hasAppointments) {
+        this.tabs = removeTabFromTabs("book");
+        removedTabs.push("book");
+      }
       if (activeTab) {
         this.tabs.map((tab) => {
           if (tab.name == activeTab) {
             tab.active = true;
           } else tab.active = false;
         });
-        this.toggletab(activeTab);
+        if (removedTabs.includes(activeTab)) {
+          activeTab = this.tabs[0].name;
+          this.tabs[0].active = true
+        } 
+        setTimeout(()=>{
+          this.toggletab(activeTab);
+        },100)
         localStorage.removeItem("active_tab");
+      }
+      let checkIfHasActiveTab = false;
+      this.tabs.forEach((tab) => {
+        if (tab.active) {
+          checkIfHasActiveTab = true
+        }
+      });
+      if (!checkIfHasActiveTab) {
+        this.tabs[0].active = true;
+        setTimeout(()=>{
+          this.toggletab(this.tabs[0].name);
+        },100)
       }
     },
     toggletab(tabName) {
@@ -377,8 +423,8 @@ export default {
     },
   },
   async mounted() {
-    this.getActiveTab();
     await this.getSpecialistData();
+    this.getActiveTab();
     this.isFromPaymentPage();
   },
   beforeRouteEnter(to, from, next) {

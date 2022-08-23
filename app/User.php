@@ -56,9 +56,9 @@ class User extends Authenticatable
             case 'other':
                 return Other::where('user_id',$this->id)->first();
                 break;
-            case 'admin':
-                return $this;
-                break;
+            // case 'admin':
+            //     return $this;
+            //     break;
 
             default:
                 # code...
