@@ -38,8 +38,8 @@
     <!-- end time container -->
 
     <div class="price-box w-50 mt-30 d-flex align-center space-between w-100-p">
-        <p class="font-20 main-color bold d-flex"><img class="ml-10" src="/images/test.jpg" width="22" height="22" alt="الأخصائيين" ><span> 59 USD</span></p>
-        <p class="font-20 main-color bold d-flex"><img class="ml-10" src="/images/test.jpg" width="22" height="22" alt="الأخصائيين" ><span> 30 دقيقة</span></p>
+        <p class="font-20 main-color bold d-flex align-center"><img class="ml-10" src="/images/coin-icon.png" width="30" height="30" alt="الأخصائيين" ><span class="top-2"> USD 59</span></p>
+        <p class="font-20 main-color bold d-flex align-center"><img class="ml-10" src="/images/time-icon.png" width="30" height="30" alt="الأخصائيين" ><span class="top-2"> 30 دقيقة</span></p>
     </div>
 
   </div>
