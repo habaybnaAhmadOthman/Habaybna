@@ -45,7 +45,7 @@
     <div>
       <span class="mo bold">رابط المكالمة</span>
       <p v-if="data.callLink" class="blue pointer" @click="copyLinkToClipboard">نسخ الرابط</p>
-      <p v-else class="gray-1 pointer">لم يتم إضافته بعد</p>
+      <p v-else class="gray-1">لم يتم إضافته بعد</p>
     </div>
 
     <!-- call status -->
