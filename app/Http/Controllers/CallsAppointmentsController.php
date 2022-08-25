@@ -155,8 +155,34 @@ class CallsAppointmentsController extends Controller
             $appointment->call_zoom_link = $request->zoomLink ;
             $appointment->save();
 
-            // we need add sms event
-                // here
+            // send sms to parent and specialist
+
+            $numbers = $appointment->callAppointment->Parnet->phone.','.$appointment->callAppointment->specialist->Phone ;
+            // $numbers = "+962795982977".','."+962792819107" ;
+            $msg ="تم إضافة رابط المكالمة إلى سجل المكالمات الخاص بك على موقع حبايبنا.نت";
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://api.releans.com/v2/batch",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => "sender=Habaybna&mobile=".$numbers."&content=".$msg,
+                CURLOPT_HTTPHEADER => array(
+                    "Authorization: Bearer ". config('appconfig.releanssecret')
+                ),
+            ));
+
+            $response = curl_exec($curl);
+
+
+            curl_close($curl);
+
 
             return response('success', 200);
         }

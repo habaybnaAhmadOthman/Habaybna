@@ -38,4 +38,9 @@ class Specialist extends Model
         return $this->hasMany(CallsAppointments::class,'specialist_id','user_id')->doesntHave('callsStatus');
 
     }
+
+    public function getPhoneAttribute()
+    {
+        return $this->user->phone ;
+    }
 }

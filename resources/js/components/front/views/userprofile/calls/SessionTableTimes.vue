@@ -157,7 +157,7 @@ export default {
     removeCol(colID,isFromDB){
       this.intervals = this.intervals.filter((int)=> int.id != colID);
       if (isFromDB) {
-        this.$store.dispatch('specialist/removeInterval',{
+        this.$store.dispatch('specialist/removeAppointment',{
           id: colID,
           specialistID: this.specialistData.id
         })

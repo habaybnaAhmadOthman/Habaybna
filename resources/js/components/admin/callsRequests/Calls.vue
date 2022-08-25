@@ -195,7 +195,7 @@ export default {
       });
     },
     linkDialog(appointmentID, index) {
-      this.zoomLink = this.appointments[index].calls_status.call_zoom_link;
+      this.zoomLink = this.appointments.data[index].calls_status.call_zoom_link;
       this.dialogLinkZoom = true;
       this.appointmentID = appointmentID;
       this.appointmentIndex = index;
@@ -218,7 +218,7 @@ export default {
         ).then((res) => {
           if (res.status == 200) {
             setTimeout(() => {
-              this.appointments[
+              this.appointments.data[
                 this.appointmentIndex
               ].calls_status.call_zoom_link = this.$refs.zoomLink.value;
               this.modal_loading = false;

@@ -39,7 +39,7 @@ class PaymentCall {
                 // fill required parameters
                 $parameters["Amount"] =$initOrder->amount * 100 ;
                 $parameters["Channel"] = "0";
-                $parameters["CurrencyISOCode"] = "400";
+                $parameters["CurrencyISOCode"] = "840";
                 $parameters["Language"] = "en";
                 $parameters["MerchantID"] = config('appconfig.stsmerchantid');
                 $parameters["MessageID"] = "1";
