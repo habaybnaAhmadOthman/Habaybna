@@ -152,7 +152,7 @@ export default {
       Obj.append("order", this.form.order);
       Obj.append("id", this.form.id);
 
-      this.callApi("post", "/api/admin/edit-testimonials/", Obj).then((res) => {
+      this.callApi("post", "/api/admin/edit-testimonials", Obj).then((res) => {
         if (res.status == 200) {
           setTimeout(() => {
             this.$Message.success("تم تعديل  التوصية   ");
