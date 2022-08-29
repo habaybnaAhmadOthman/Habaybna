@@ -9,7 +9,7 @@
                     open
                 >
                     <div class="modal-body">
-                        <img v-if="!fixed" @click="tryClose" class="close-icon-modal pointer" src="/images/close-icon-color.png" width="34" height="34" />
+                        <img v-if="!fixed" @click="tryClose" class="close-icon-modal pointer" src="/images/close-icon-color.png" width="26" height="26" />
                         <slot></slot>
                     </div>
                 </dialog>
