@@ -71,13 +71,22 @@ export default {
         getTime(){
             if (this.course.course_length) {
                 var hms = new Date(this.course.course_length * 1000).toISOString().substr(11, 8);
-                if (+hms.split(':')[0] > 0) {
-                    return `${+hms.split(':')[0]} ساعة`
-                } else if (+hms.split(':')[1] > 0) {
-                    return `${+hms.split(':')[1]} دقيقة`
+                let str = ''
+                const hours = +hms.split(':')[0];
+                const minutes = +hms.split(':')[1];
+                if (hours > 0) {
+                    str += `${hours} ساعة`
+                    if (minutes > 0) {
+                        str += `، ${minutes} دقائق`
+                    }
                 } else {
-                    return `${+hms.split(':')[2]} ثواني`
+                    if (minutes > 0) {
+                        str += `${minutes} دقيقة`
+                    } else {
+                        str += `${+hms.split(':')[2]} ثواني`
+                    }
                 }
+                return str
             }
             return ''
         }
