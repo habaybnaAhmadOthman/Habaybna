@@ -40,7 +40,20 @@
       <button class="btn-main" @click="saveAppointments">حفظ</button>
     </div>
 
-
+      <normal-modal
+        :show="removeModal.show"
+        :fixed="false"
+        portal="confirm-remove-modal"
+        @close="toggleRemoveModal"
+      >
+      <div class="">
+        <p class="font-24 yellow bold mb-20">هل أنت متأكد؟</p>
+        <div class="d-flex gap-20 mt-10-p btns-box">
+          <button @click="toggleRemoveModal" class="radius-60 gray dismiss-btn pointer flex-1">لا</button>
+          <button @click="confirmRemoveCol" class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15 flex-1">نعم</button>
+        </div>
+      </div>
+    </normal-modal>
     <AddSession
     :tableIntervals="intervals"
     :showModal="isAddNewSessionModal"
@@ -48,6 +61,7 @@
     @add-new-session="addNewSessionFn"
     @close="toggleAddSessionModal(false)"></AddSession>
     <portal-target name="add-session-modal"></portal-target>
+    <portal-target name="confirm-remove-modal"></portal-target>
   </div>
 </template>
 
@@ -56,8 +70,9 @@
 import Col from './SessionTableTimes_Col.vue'
 import ColMobile from './SessionTableTimes_ColMobile.vue'
 import AddSession from './AddSession.vue'
+import NormalModal from "../../../layouts/NormalModal.vue";
 export default {
-  components:{Col,AddSession,ColMobile},
+  components:{Col,AddSession,ColMobile,NormalModal},
   mounted(){
     this.getAppointments()
   },
@@ -68,7 +83,11 @@ export default {
       intervals: [],
       alreadySavedIntervals: [],
       unavailableIntervalsArr:[],
-      specialistData:null
+      specialistData:null,
+      removeModal: {
+        show: false,
+        colID: null
+      }
     }
   },
   computed:{
@@ -100,10 +119,13 @@ export default {
         this.isLoading(false)
         this.forceRefresh()
       } else {
-        this.$store.commit('alertDialogMsg','لا يوجد ما يمكن إضافته');
+        // this.$store.commit('alertDialogMsg','لا يوجد ما يمكن إضافته');
       }
 
 
+    },
+    toggleRemoveModal(){
+      this.removeModal.show = !this.removeModal.show
     },
     async getAppointments(){
       const today = new Date(new Date().toISOString()).getTime();
@@ -154,16 +176,24 @@ export default {
       })
       this.mobileDaysInterval = daysObj
     },
-    removeCol(colID,isFromDB){
+    confirmRemoveCol(){
+      const {colID} = this.removeModal
       this.intervals = this.intervals.filter((int)=> int.id != colID);
-      if (isFromDB) {
-        this.$store.dispatch('specialist/removeAppointment',{
-          id: colID,
-          specialistID: this.specialistData.id
-        })
+      // if (isFromDB) {
+      if (!isNaN(colID)){
+          this.$store.dispatch('specialist/removeAppointment',{
+            id: colID,
+            specialistID: this.specialistData.id
+          })
       }
-
+      // }
+      this.toggleRemoveModal();
+      this.removeModal.colID = null
       this.sortIntervals();
+    },
+    removeCol(colID,isFromDB){
+      this.removeModal.colID = colID
+      this.toggleRemoveModal();
     },
     removeDayWithIntervals(dayDate){
       // this.intervals = this.intervals.filter((time)=> !time.startsWith(dayDate));
@@ -209,10 +239,22 @@ export default {
 .list-leave-active {
   position: absolute;
 }
+.btns-box * {
+  font-size: 25px;
+}
+.btns-box .dismiss-btn {
+  background: transparent;
+  border: 1px solid ;
+}
 @media (max-width: 767px) {
   .add-new-btn {
     padding: 5px 20px;
     font-size: 15px;
+  }
+  .btns-box * {
+    font-size: 22px;
+      height: 40px;
+      padding: 0;
   }
 }
 </style>

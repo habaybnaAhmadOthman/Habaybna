@@ -54,7 +54,7 @@
       <!-- for specialist use -->
       <template v-if="isSpecialist">
         <textarea  class="font-18 black form-control" v-model="userRecommendationModal.msg"></textarea>
-        <button @click="updateUserRecommendation" class="radius-60 main-bg border-0 w-100 mt-30 white font-18 pointer pt-15 pb-15 flex-1">تعديل</button>
+        <button @click="updateUserRecommendation" class="radius-60 main-bg border-0 w-100 mt-30 white font-18 pointer pt-15 pb-15 flex-1">حفظ</button>
       </template>
       <!-- for parents -->
       <p v-else class="font-18 black">{{userRecommendationModal.msg}}</p>
