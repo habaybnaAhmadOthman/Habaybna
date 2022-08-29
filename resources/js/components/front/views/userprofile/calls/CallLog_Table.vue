@@ -51,6 +51,7 @@
       :modalClass="'sticky-header'"
     >
     <div class="user-rec-text">
+      <p class="center yellow font-30 bold mb-10">التوصية</p>
       <!-- for specialist use -->
       <template v-if="isSpecialist">
         <textarea  class="font-18 black form-control" v-model="userRecommendationModal.msg"></textarea>
@@ -247,6 +248,9 @@ export default {
 }
 .user-rec-text textarea {
   height: 200px!important;
+}
+.user-rec-text {
+  margin-top: -40px;
 }
 @media (max-width: 767px) {
   .log-col > div {
