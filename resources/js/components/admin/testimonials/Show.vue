@@ -118,7 +118,6 @@ export default {
     });
   },
   updated() {
-    console.log("update", this.form.type);
   },
   data() {
     return {
@@ -152,8 +151,8 @@ export default {
         order:this.form.order ,
         id:this.form.id
     }
-
-      this.callApi("post", "/api/admin/edit-testimonials", Obj).then((res) => {
+      const resp = this.$store.dispatch("admin/editTestimonials", Obj).then((res) => {
+          console.log(resp);
         if (res.status == 200) {
           setTimeout(() => {
             this.$Message.success("تم تعديل  التوصية   ");
@@ -161,6 +160,16 @@ export default {
           }, 1500);
         }
       });
+
+
+    //   const resp = this.callApi("post", "/api/admin/edit-testimonials", Obj).then((res) => {
+    //     if (res.status == 200) {
+    //       setTimeout(() => {
+    //         this.$Message.success("تم تعديل  التوصية   ");
+    //         this.$router.push("/admin/testimonials");
+    //       }, 1500);
+    //     }
+    //   });
     },
   },
   mounted() {
