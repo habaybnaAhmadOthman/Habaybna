@@ -90,6 +90,7 @@
                   :specialistData="specialistInfo"
                   :data="appointments"
                   @show-appointment-tab="isHasAppointments"
+                  @open-questionaire-modal="openQuestionaireModal"
                 ></Book>
               </div>
               <div tab-name="about" all>
@@ -152,6 +153,7 @@
     <QuestionaireModal
       :show="querstionaireModal.show"
       :fixed="true"
+      :callIDFromCobone="querstionaireModal.callIDFromCobone"
       @close="isQuestionaireModal(false)"
     >
     </QuestionaireModal>
@@ -233,6 +235,7 @@ export default {
       isDataReady: false,
       querstionaireModal: {
         show: false,
+        callIDFromCobone: null
       },
       showShareModal: false,
     };
@@ -413,9 +416,12 @@ export default {
         }
       }
     },
-    openQuestionaireModal() {
-      if (this.$route.query.payment == "true") {
+    openQuestionaireModal(callIDFromCobone) {
+      if (callIDFromCobone || this.$route.query.payment == "true")
         this.isQuestionaireModal(true);
+
+      if (callIDFromCobone) {
+        this.querstionaireModal.callIDFromCobone = callIDFromCobone
       }
     },
     isQuestionaireModal(status) {

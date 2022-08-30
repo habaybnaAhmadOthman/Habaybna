@@ -26,7 +26,15 @@
 
       <div class="mt-40 d-flex flex-wrap ">
         <div class="d-flex w-38 ml-20 w-100-p m-0-p mb-20-p">
-          <CoboneForm @buyAppointment="bookAppointment" @getPromoCode="setPromoCode" :isLoggedIn="isLoggedIn" :specialistID="specialistData.id"></CoboneForm>
+          <CoboneForm 
+          @buyAppointment="bookAppointment" 
+          @getPromoCode="setPromoCode" 
+          @open-questionaire-modal="openQuestionaireModal"
+          :isLoggedIn="isLoggedIn" :specialistID="specialistData.id"
+          :selectedAppointment="selectedAppointment"
+          :slug="slug"
+          :canEnterCode="canSubmit"
+          ></CoboneForm>
           <!-- hidden form -->
           <PaymentForm v-if="paymentFormData" :paymentData="paymentFormData"></PaymentForm>
         </div>
@@ -38,7 +46,7 @@
     <!-- end time container -->
 
     <div class="price-box w-50 mt-30 d-flex align-center space-between w-100-p">
-        <p class="font-20 main-color bold d-flex align-center"><img class="ml-10" src="/images/coin-icon.png" width="30" height="30" alt="الأخصائيين" ><span class="top-2"> USD 59</span></p>
+        <p class="font-20 main-color bold d-flex align-center"><img class="ml-10" src="/images/coin-icon.png" width="30" height="30" alt="الأخصائيين" ><span class="top-2"> USD {{callPrice}}</span></p>
         <p class="font-20 main-color bold d-flex align-center"><img class="ml-10" src="/images/time-icon.png" width="30" height="30" alt="الأخصائيين" ><span class="top-2"> 30 دقيقة</span></p>
     </div>
 
@@ -53,10 +61,17 @@ import RadioTag from "./Book_RadioTag.vue";
 import CoboneForm from "./CoboneForm.vue";
 import PaymentForm from '../coursepage/PaymentForm.vue'
 export default {
-  emits: ['show-appointment-tab'],
+  emits: ['show-appointment-tab','open-questionaire-modal'],
   props: ['specialistData','data'],
   components: { RadioTag,CoboneForm,PaymentForm },
   methods: {
+    openQuestionaireModal(callID){
+      this.$emit('open-questionaire-modal',callID)
+    },
+    // reset call price to default price
+    resetCallPrice(){
+      this.$store.commit('specialist/callPrice',59)
+    },
     onDaySelect(id) {
       for (const i in this.daysWithIntervals ) {
           const dayObj = this.daysWithIntervals[i];
@@ -165,20 +180,6 @@ export default {
       })
       this.daysWithIntervals = daysObj
     },
-    async buyAppointment(){
-        this.isLoading(true)
-        try {
-            const resp = await this.$store.dispatch('specialist/bookAppointment',{
-                courseID:this.getCourseID(),
-                hasPromoCode:this.hasPromoCode
-            });
-            this.paymentFormData = resp.SmartRouteParams
-
-        } catch (error) {
-            this.$store.commit('alertDialogMsg',error.message);
-        }
-        this.isLoading(false)
-    },
     
     getSavedAppointemnt(){
       
@@ -210,12 +211,17 @@ export default {
     isLoggedIn() {
       return this.$store.getters["user/isLoggedIn"];
     },
+    callPrice() {
+      return this.$store.getters["specialist/callPrice"];
+    },
     getBookInfoAfterGuestLogin(){
       return this.$store.getters["specialist/bookInfo"]
-    }
+    },
   },
   mounted(){
     this.getAvailableTimes()
+    // reset call price to default price
+    this.resetCallPrice()
     // when guest user logged in from the modal, navigate it to payment gateway
     this.getSavedAppointemnt()
   },

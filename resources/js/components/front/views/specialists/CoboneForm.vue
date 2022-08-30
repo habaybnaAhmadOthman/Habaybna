@@ -10,7 +10,7 @@
         class="w-80 cobone-input"
         placeholder="هل لديك كوبون أو قسيمة شرائية استخدمها الآن ؟"
       />
-      <input type="submit" value="" class="apply-cobone w-10 pointer" />
+      <input :disabled="canEnterCode" type="submit" value="" class="apply-cobone w-10 pointer" />
     </form>
     <info-modal
       :show="infoModal.show"
@@ -21,15 +21,18 @@
       :fixed="infoModal.isFixed"
       portal="cobone-modal"
     >
-      <div class="d-flex">
+      <div v-if="discountVal" class="d-flex w-100">
         <span class="gray font-35 before-discount bold ml-30">
-          <template>{{ Math.round(1) }} $</template>
+          <template>{{ callPrice }} USD</template>
         </span>
-        <span class="bold font-35 main-color">{{ Math.round(1) }} $</span>
+        <span class="bold font-35 main-color">{{ Math.round(discountVal) }} USD</span>
       </div>
-      <!-- <button @click="buyCourse" class="btn">
-          إشترك الآن
-      </button> -->
+      <button v-if="promoID" @click="bookAppointment" class="btn">
+          متابعة
+      </button>
+      <button v-else @click="closeInfoModal" class="btn">
+          متابعة
+      </button>
     </info-modal>
   </div>
 </template>
@@ -38,13 +41,16 @@
 import infoModalMixin from "../../mixins/infoModal";
 export default {
   mixins: [infoModalMixin],
-  emits: ["buyAppointment","getPromoCode"],
-  props: ["specialistID","isLoggedIn"],
+  emits: ["buyAppointment","getPromoCode","open-questionaire-modal"],
+  props: ["specialistID","isLoggedIn","canEnterCode", "selectedAppointment","slug"],
   data() {
     return {
       promoCode: "",
       discountVal: null,
-      callPrice: 45
+      callPrice: 59,
+      priceAfterDiscount: null,
+      promoID: null,
+      callID: null
     };
   },
   methods: {
@@ -70,6 +76,7 @@ export default {
           promoCode: this.promoCode,
           usage: "Call",
         });
+        
         if (checkPromoCode.isValid) {
           this.$emit("getPromoCode", checkPromoCode.id);
         }
@@ -83,27 +90,49 @@ export default {
       }
       if (checkPromoCode.discount_perc == 100) {
         // free
+        this.promoID = checkPromoCode.id
         this.setInfoModal(
-          "سوف يتم إرسال الرابط لبريدك الإلكتروني",
-          "لقد قمت بإدخال رقم الكوبون بنجاح",
+          "تم استخدام الكوبون بنجاح",
+          "سيتم إضافة رابط المكالمة في سجل المكالمات الخاص بك",
           true,
           true,
           true
         );
       } else {
         // discount success
-
         this.discountVal =
           this.callPrice -
           this.callPrice * (checkPromoCode.discount_perc / 100);
         this.setInfoModal(
-          "يمكنك إتمام عملية الشراء",
           "لقد قمت بإدخال رقم الكوبون بنجاح",
+          "يمكنك إتمام عملية الشراء",
           true,
           false,
           true
         );
+        this.$store.commit('specialist/callPrice',this.discountVal)
       }
+    },
+    async bookAppointment() {
+      this.isLoading(true)
+      const selectedApt = this.selectedAppointment
+      try {
+          const resp = await this.$store.dispatch('specialist/bookAppointment',{
+            appointmentID: selectedApt.id,
+            slug: this.slug,
+            specialistID: this.specialistID,
+            hasPromoCode: {
+                id: this.promoID
+            },
+          });
+          this.callID = resp.SmartRouteParams.appointment_id
+          this.closeInfoModal()
+        this.$emit('open-questionaire-modal',this.callID)
+      } catch (error) {
+          this.$store.commit('alertDialogMsg',error.message);
+      }
+      this.isLoading(false)
+      
     },
   },
 };
@@ -121,14 +150,18 @@ export default {
   padding: 20px 8px;
 }
 .apply-cobone {
-  background-color: #632f63;
+  background-color: #780d93!important;
   position: relative;
   border-radius: 25px 0 0 25px;
   border: 0;
   width: 20%;
-  background-image: url(/images/arrow-left.svg);
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url(/images/arrow-left.svg)!important;
+  background-repeat: no-repeat!important;
+  background-position: center!important;
+  transition: .3s;
+}
+.apply-cobone:disabled {
+  opacity: 0.5;
 }
 .before-discount {
   position: relative;

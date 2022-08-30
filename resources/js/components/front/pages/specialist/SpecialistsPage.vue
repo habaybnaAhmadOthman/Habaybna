@@ -1,10 +1,10 @@
 <template>
     <div class="ask-specialists-page">
         <TheHeader></TheHeader>
-            <div class="mb-50 mb-30-p">
+            <div class="mb-70 mb-30-p">
                 <MainBanner></MainBanner>
             </div>
-            <div class="mb-40">
+            <div class="mb-40 mb-70">
                 <Benefits></Benefits>
             </div>
             <div class="mb-50">

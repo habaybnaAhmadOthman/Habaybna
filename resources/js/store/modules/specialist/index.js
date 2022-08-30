@@ -5,7 +5,8 @@ export default {
     namespaced: true,
     state() {
         return {
-            bookAppintmentInfo: {}
+            bookAppintmentInfo: {},
+            callPrice: 59
         };
     },
     mutations,
