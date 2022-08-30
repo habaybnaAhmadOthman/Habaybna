@@ -41,7 +41,7 @@
 import infoModalMixin from "../../mixins/infoModal";
 export default {
   mixins: [infoModalMixin],
-  emits: ["buyAppointment","getPromoCode","open-questionaire-modal"],
+  emits: ["buyAppointment","getPromoCode","open-questionaire-modal","saveSelectedApt"],
   props: ["specialistID","isLoggedIn","canEnterCode", "selectedAppointment","slug"],
   data() {
     return {
@@ -61,6 +61,7 @@ export default {
       this.infoModal.isFixed = false;
       if (!this.isLoggedIn) {
         this.$store.commit("loginModal", true);
+        this.$emit('saveSelectedApt',true)
         return false;
       }
       if (this.promoCode == "") {

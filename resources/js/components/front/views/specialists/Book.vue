@@ -30,6 +30,7 @@
           @buyAppointment="bookAppointment" 
           @getPromoCode="setPromoCode" 
           @open-questionaire-modal="openQuestionaireModal"
+          @saveSelectedApt="saveSelectedApt"
           :isLoggedIn="isLoggedIn" :specialistID="specialistData.id"
           :selectedAppointment="selectedAppointment"
           :slug="slug"
@@ -110,14 +111,18 @@ export default {
         if (this.isLoggedIn) {
             this.bookAppointment();
         } else {
-          
-          const selectedDayIndex = Object.keys(this.daysWithIntervals).indexOf(this.selectedDay)
-          this.$store.commit('specialist/bookInfo',{
-            dayID: selectedDayIndex,
-            selectedTime: this.selectedTime
-          })
+          this.saveSelectedApt(false)
           this.$store.commit('loginModal',true);
         }
+    },
+    saveSelectedApt(isWithCobone){
+      const selectedDayIndex = Object.keys(this.daysWithIntervals).indexOf(this.selectedDay)
+      const obj = {
+        dayID: selectedDayIndex,
+        selectedTime: this.selectedTime,
+        isWithCobone: isWithCobone
+      }
+      this.$store.commit('specialist/bookInfo',obj)
     },
     async bookAppointment() {
       this.isLoading(true)
@@ -189,8 +194,9 @@ export default {
         this.onDaySelect(booked.dayID)
         const selectedTimeID = this.daysWithIntervals[this.selectedDay].intervals[booked.selectedTime].id
         this.onTimeSelect(selectedTimeID)
-        this.bookAppointment();
         this.$store.commit('specialist/bookInfo',{});
+        if (!booked.isWithCobone)
+          this.bookAppointment();
       }
     }
   },
