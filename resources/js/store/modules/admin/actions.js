@@ -113,6 +113,18 @@ export default {
         }
         return resp.data
     },
+    async editTestimonials(context, payload) {
+
+        const resp = await callApi("POST", "/api/admin/edit-testimonials", payload);
+
+        if (resp.status != 200) {
+            const error = new Error("fail to get profile data");
+            throw error;
+        }
+        return resp
+    },
+
+    // edit testamoial
     async changeQuestionStatus(context, payload) {
         console.log(payload);
 
@@ -220,7 +232,6 @@ export default {
     },
     // create new article
     async createNewArticle(context, payload) {
-        console.log('in');
         const resp = await callApi('POST', '/api/admin/content/create', payload)
         if (resp.status != 200) {
             const error = new Error("fail to create new content");
@@ -230,17 +241,17 @@ export default {
 
     },
 
-        // create new testimonials
-        async createNewtestimonials(context, payload) {
-            console.log('in');
-            const resp = await callApi('POST', '/api/admin/testimonials/create', payload)
-            if (resp.status != 200) {
-                const error = new Error("fail to create new content");
-                throw error;
-            }
-            return resp
+    // create new testimonials
+    async createNewtestimonials(context, payload) {
+        console.log('in');
+        const resp = await callApi('POST', '/api/admin/testimonials/create', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to create new content");
+            throw error;
+        }
+        return resp
 
-        },
+    },
 
     // create update certificate
     async createUpdateCertificate(context, payload) {

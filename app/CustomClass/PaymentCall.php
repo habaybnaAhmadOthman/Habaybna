@@ -85,7 +85,7 @@ class PaymentCall {
             $initData->specialist_id = $appointment->specialist_id;
             $initData->appointment_id = $appointment->id;
             $initData->transaction_id = $tranID ;
-            $initData->price = 45 ;
+            $initData->price = 59 ;
             $initData->status = false;  // not complete change to true when payment complete success
             $initData->save();
 
@@ -95,8 +95,8 @@ class PaymentCall {
             if(array_key_exists('id',$data['hasPromoCode']) && isset($data['hasPromoCode']['id']) ){
                 $promoCode = PromoCode::findorfail($data['hasPromoCode']['id']);
                 // $disscountAmount = $course->price * $promoCode->discount_percentage/100 ;
-                $disscountAmount = 45 * $promoCode->discount_percentage/100 ;
-                $newPrice = 45 - $disscountAmount ;
+                $disscountAmount = 59 * $promoCode->discount_percentage/100 ;
+                $newPrice = 59 - $disscountAmount ;
 
                 $initData->coupon_id = $promoCode->id;
                 $initData->discount_amount = $disscountAmount;
@@ -105,7 +105,7 @@ class PaymentCall {
                 $initData->save();
             }
             else {
-                $initData->amount = 45;
+                $initData->amount = 59;
 
                 $initData->save();
             }

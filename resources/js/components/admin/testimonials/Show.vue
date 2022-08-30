@@ -118,7 +118,6 @@ export default {
     });
   },
   updated() {
-    console.log("update", this.form.type);
   },
   data() {
     return {
@@ -145,14 +144,15 @@ export default {
     async formSubmit(e) {
       e.preventDefault();
 
-      let Obj = new FormData();
-      Obj.append("type", this.form.type.type);
-      Obj.append("content", this.form.content);
-      Obj.append("status", this.form.status);
-      Obj.append("order", this.form.order);
-      Obj.append("id", this.form.id);
-
-      this.callApi("post", "/api/admin/edit-testimonials/", Obj).then((res) => {
+    let Obj = {
+        type:this.form.type.type ,
+        content:this.form.content ,
+        status:this.form.status ,
+        order:this.form.order ,
+        id:this.form.id
+    }
+      const resp = this.$store.dispatch("admin/editTestimonials", Obj).then((res) => {
+          console.log(resp);
         if (res.status == 200) {
           setTimeout(() => {
             this.$Message.success("تم تعديل  التوصية   ");
@@ -160,6 +160,16 @@ export default {
           }, 1500);
         }
       });
+
+
+    //   const resp = this.callApi("post", "/api/admin/edit-testimonials", Obj).then((res) => {
+    //     if (res.status == 200) {
+    //       setTimeout(() => {
+    //         this.$Message.success("تم تعديل  التوصية   ");
+    //         this.$router.push("/admin/testimonials");
+    //       }, 1500);
+    //     }
+    //   });
     },
   },
   mounted() {
