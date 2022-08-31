@@ -117,7 +117,11 @@ export default {
             childAge: null,
             discoveredAge: '---',
             childSituation: '---',
-            problem: '---'
+            problem: '---',
+            specialist: {
+              name: call.specialist.firstName +' ' + call.specialist.lastName,
+              specialization:call.specialist.specialization
+            }
 
           }
           if (call.appointment_child_info && call.appointment_child_info.child_situation) {

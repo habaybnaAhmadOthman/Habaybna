@@ -12,10 +12,10 @@
     <!-- specilist info (#parents only) -->
     <div v-if="!isSpecialist" class="bold">
       <span class="mo">الأخصائي</span>
-      <p class="font-13 w-50-p"><span>إسلام صبحي<br></span><span class="gray">ترتيل</span></p>
+      <p class="font-13 w-50-p"><span>{{data.specialist.name}}<br></span><span class="gray">{{data.specialist.specialization}}</span></p>
     </div>
 
-    <!-- child -->
+    <!-- حالة الطفل -->
     <div>
       <p class="bold">
         <span class="do">{{data.childStatus}}</span>
@@ -58,7 +58,7 @@
     <div class="recommendation">
       <span class="mo bold">التوصية</span>
       <template v-if="isSpecialist">
-        <p class="w-50-p" v-if="data.callStatus == 'scheduled'">لايمكن الكتابة إلا بعد أن تصبح ناجحة</p>
+        <p class="w-50-p" v-if="data.callStatus == 'scheduled'">لا يمكن الكتابة إلا بعد أن تصبح ناجحة</p>
         <p @click="addRecommendation" class="main-color bold pointer w-50-p" v-else-if="data.callStatus == 'succeeded' && data.recommendation == ''">إضافة توصية</p>
         <p @click="showFullRecommendation" class="main-color bold pointer w-50-p two-line" v-else-if="data.callStatus == 'succeeded' && data.recommendation != ''">{{data.recommendation}}</p>
         <p class="w-50-p" v-else>لا يمكنك إضافة توصية</p>
