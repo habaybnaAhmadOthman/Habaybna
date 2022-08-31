@@ -417,7 +417,7 @@ export default {
       }
     },
     openQuestionaireModal(callIDFromCobone) {
-      if (callIDFromCobone || this.$route.query.payment == "true")
+      if ((typeof callIDFromCobone != 'object' && callIDFromCobone) || this.$route.query.payment == "true")
         this.isQuestionaireModal(true);
 
       if (callIDFromCobone) {
