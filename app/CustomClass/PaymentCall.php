@@ -37,9 +37,9 @@ class PaymentCall {
               $initOrder = $this->createInitOrder($data, $transactionId);
                 $parameters = [];
                 // fill required parameters
-                $parameters["Amount"] =$initOrder['Amount'] == 0 ? 0 :$initOrder->amount * 100 ;
+                $parameters["Amount"] = isset($initOrder->amount) ?  $initOrder->amount * 100 : 0 ;
                 $parameters["Channel"] = "0";
-                $parameters["CurrencyISOCode"] = "840";
+                $parameters["CurrencyISOCode"] = "400";
                 $parameters["Language"] = "en";
                 $parameters["MerchantID"] = config('appconfig.stsmerchantid');
                 $parameters["MessageID"] = "1";
@@ -66,7 +66,6 @@ class PaymentCall {
                  }
                  session(['SmartRouteParams' => $parameters]);
                  $data = [session()->all()];
-
                 return $data;
 
         } catch (\Throwable $th) {
@@ -117,6 +116,7 @@ class PaymentCall {
 
                 $initData->save();
             }
+
             return $initData;
     }
 

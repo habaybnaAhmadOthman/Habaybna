@@ -97,7 +97,7 @@ class CallsAppointmentsController extends Controller
         })->whereHas('callPurchaseOrders', function ($o) use ($request){
             $o->where('user_id',Auth::id());
         })
-        ->with('callsStatus','appointmentChildInfo');
+        ->with('callsStatus','appointmentChildInfo','specialist');
         //   ->where('specialist_id', Auth::id());
 
           if(isset($request->filters)) {
