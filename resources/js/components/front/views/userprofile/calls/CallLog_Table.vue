@@ -252,11 +252,17 @@ export default {
 .user-rec-text {
   margin-top: -40px;
 }
+.log-col:nth-of-type(even) {
+    background: hwb(300deg 0% 60% / 3%);
+}
 @media (max-width: 767px) {
   .log-col > div {
     flex-basis: inherit;
     flex-grow: unset;
     flex-shrink: unset;
+  }
+  .log-col:nth-of-type(even) {
+      background: #fff;
   }
 }
 </style>

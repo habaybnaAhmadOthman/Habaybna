@@ -1,5 +1,6 @@
 <template>
-  <div class="mobile-row" :class="dayNameEn">
+  <!-- <div class="mobile-row" :class="dayNameEn"> -->
+  <div class="mobile-row">
     <p @click="removeDay" class="row-head black bold">{{dayName}} | <span class="gray">{{dayDate}}</span></p>
     <div class="day-intervals-list flex-wrap">
       <span @click="removeInterval(interval.id)" v-for="(interval,index) in formatedDayIntervals" :key="index">{{interval.val}}</span>
@@ -68,7 +69,7 @@
   background: #fff;
   border-radius: 5px;
   box-shadow: 2px 2px 2px rgb(0 0 0 / 10%);
-  border-right: 5px solid yellowgreen;
+  /* border-right: 5px solid yellowgreen; */
 }
 .mobile-row.Saturday {
     border-color: #607d8b;

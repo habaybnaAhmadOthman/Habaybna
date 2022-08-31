@@ -1,7 +1,8 @@
 <template>
-  <div class="d-flex table-border-b day-name" :class="dayNameEn">
+  <!-- <div class="d-flex table-border-b day-name" :class="dayNameEn"> -->
+  <div class="d-flex table-border-b day-name">
     <div class="w-60 pt-20 pb-10 table-border-l p-side-10 day-label relative d-flex align-center">
-        <p>{{dayName}}</p>
+        <p>{{dayName}} | <span class="font-12 gray">{{dayDate}}</span></p>
     </div>
     <div class="flex-1 pt-20 pb-10 table-border-l p-side-10">
       <p>{{timeInterval}}</p>
@@ -25,6 +26,9 @@
       },
       dayName(){
         return new Date(this.data.val).toLocaleDateString('ar-EG',{weekday:'long'})
+      },
+      dayDate(){
+        return this.data.val.slice(0,10).replaceAll('-','.')
       },
       dayNameEn(){
         return new Date(this.data.val).toLocaleDateString('en-US',{weekday:'long'})
@@ -57,6 +61,9 @@
 }
 .table-border-l {
   border-left: 1px solid #F2F2F2;
+}
+.day-name:nth-of-type(even) {
+  background: hwb(300deg 0% 60% / 3%);
 }
 .day-name .day-label:before{
   content: '';

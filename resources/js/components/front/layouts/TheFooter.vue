@@ -15,6 +15,9 @@
                                 <router-link to="/ask-specialists">الاستشارات مع المختصين</router-link>
                             </li>
                             <li>
+                                <router-link to="/partners-program">برنامج الشركاء</router-link>
+                            </li>
+                            <li>
                                 <router-link to="/library">مكتبة المعلومات</router-link>
                             </li>
                         </ul>
