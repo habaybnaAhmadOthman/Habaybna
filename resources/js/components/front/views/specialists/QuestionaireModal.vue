@@ -143,7 +143,7 @@
 <script>
 import sysYears from "../../../../modules/years";
 export default {
-  props: ["show", "fixed"],
+  props: ["show", "fixed","callIDFromCobone"],
   emits: ["close"],
   data() {
     return {
@@ -222,7 +222,7 @@ export default {
           message: this.message.val,
           childStatus: this.childStatus.val,
           birthdate: new Date().getFullYear() - +this.birthdate.val,
-          callID: this.$route.query["apt-id"],
+          callID: this.$route.query["apt-id"] || this.callIDFromCobone,
         });
         this.close();
         // this.$store.commit("alertDialogMsg", "شكراً لتعاونكم");

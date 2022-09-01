@@ -37,9 +37,9 @@ class PaymentCall {
               $initOrder = $this->createInitOrder($data, $transactionId);
                 $parameters = [];
                 // fill required parameters
-                $parameters["Amount"] =$initOrder->amount * 100 ;
+                $parameters["Amount"] = isset($initOrder->amount) ?  $initOrder->amount * 100 : 0 ;
                 $parameters["Channel"] = "0";
-                $parameters["CurrencyISOCode"] = "840";
+                $parameters["CurrencyISOCode"] = "400";
                 $parameters["Language"] = "en";
                 $parameters["MerchantID"] = config('appconfig.stsmerchantid');
                 $parameters["MessageID"] = "1";
@@ -60,6 +60,10 @@ class PaymentCall {
                 $secureHash = hash('sha256', $orderedString, false);
                 $parameters["RedirectURL"] = config('appconfig.stsredirecturl');
                 $parameters["secureHash"] = $secureHash;
+                if($initOrder['Amount'] == 0) {
+                    $parameters['slug'] = $initOrder['slug'];
+                    $parameters["appointment_id"] = $initOrder['appointment_id'];
+                 }
                  session(['SmartRouteParams' => $parameters]);
                  $data = [session()->all()];
                 return $data;
@@ -94,6 +98,7 @@ class PaymentCall {
 
             if(array_key_exists('id',$data['hasPromoCode']) && isset($data['hasPromoCode']['id']) ){
                 $promoCode = PromoCode::findorfail($data['hasPromoCode']['id']);
+
                 // $disscountAmount = $course->price * $promoCode->discount_percentage/100 ;
                 $disscountAmount = 59 * $promoCode->discount_percentage/100 ;
                 $newPrice = 59 - $disscountAmount ;
@@ -103,12 +108,15 @@ class PaymentCall {
                 $initData->amount = $newPrice;
 
                 $initData->save();
+                if($promoCode->type =='free')
+                   return $this->completeOrderFree ($initData) ;
             }
             else {
                 $initData->amount = 59;
 
                 $initData->save();
             }
+
             return $initData;
     }
 
@@ -182,7 +190,58 @@ class PaymentCall {
 
     }
 
+    private function completeOrderFree($data)
+    {
+        try {
+            $order = CallPurchaseOrders::findorfail($data->id );
+        } catch (\Throwable $th) {
+                throw $th;
+            }
 
+        $order->status = true;
+        $order->status_description = "free code";
+        $order->save();
+
+        if($order->status){
+            if(isset($order->coupon_id) && $order->coupon_id !==""){
+                $coupon = PromoCode::findorfail($order->coupon_id);
+                $coupon->increment('usage_count');
+                $coupon->save();
+            }
+
+            $call_status = new CallsStatus() ;
+
+            $call_status->appointment_id = $order->appointment_id ;
+            $call_status->status = '0';
+            $call_status->save();
+
+            $appChildInfo = new AppointmentChildInfo() ;
+
+            $appChildInfo->appointment_id = $order->appointment_id ;
+            $appChildInfo->save() ;
+
+        }
+        $specialist  = Specialist::where('user_id',$order->specialist_id)->first();
+        $slug = $specialist->firstName ? $specialist->firstName.'-' : false;
+        $slug = $specialist->lastName ? $slug.$specialist->lastName.'--'.$specialist->user_id : $slug.'--'.$specialist->user_id;
+
+        $dataF['slug'] = $slug;
+
+        $dataF['appointment_id'] = $order->appointment_id ;
+        $dataF['status'] = 'success' ;
+        $dataF["Amount"] =$order->amount * 100 ;
+
+
+
+        if ($order && $order->status) {
+            if($specialist && $specialist != null) {
+
+                return
+                    $dataF;
+            }
+        }
+
+    }
 
 
 }

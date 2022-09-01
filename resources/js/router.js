@@ -72,6 +72,7 @@ import ArticlePage from "./components/front/pages/library/ArticlePage.vue";
 import SpecialistPage from "./components/front/pages/specialist/SpecialistPage";
 import SpecialistsPage from "./components/front/pages/specialist/SpecialistsPage.vue";
 import allSpecialistsPage from "./components/front/pages/specialist/allSpecialistsPage.vue";
+import PartnersProgramPage from "./components/front/pages/PartnersProgramPage.vue";
 import TermsPage from "./components/front/pages/TermsPage.vue";
 import TermsEnPage from "./components/front/pages/TermsEnPage.vue";
 import AboutPage from "./components/front/pages/AboutHabaybna.vue";
@@ -320,6 +321,10 @@ const routes = [{
     // *****************
     // about habaybna pages
     // *****************
+    {
+        path: "/partners-program",
+        component: PartnersProgramPage
+    },
     {
         path: "/terms-and-conditions",
         component: TermsPage
