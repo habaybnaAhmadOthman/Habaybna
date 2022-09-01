@@ -51,7 +51,7 @@
     <!-- call status -->
     <div class="call-status">
       <span class="mo bold">حالة المكالمة</span>
-      <p>{{callStatus}}</p>
+      <p class="radius-5 white p-5" :class="`call-${data.callStatus}`">{{callStatus}}</p>
     </div>
 
     <!-- recommendation -->
@@ -132,6 +132,15 @@ export default {
     flex-grow: 0;
     flex-shrink: 0;
     text-align: center;
+}
+.call-scheduled {
+  background: #E67E22;
+}
+.call-succeeded {
+  background: #27AE60;
+}
+.call-missed {
+  background: #C0392B;
 }
 @media (max-width: 767px) {
   .log-col {
