@@ -7,7 +7,7 @@
         </template>
         <CategoryFilterSection v-if="!showMoreCardFn" @change-filter="setFilters" :api="api"></CategoryFilterSection>
         <template>
-          <SpecialistsCards @load-more-data="getData" :page="currentPage" :can-load-data="canLoadData" v-if="isDataReady" :data="cardsCountFn" :showMoreCard="showMoreCardFn"></SpecialistsCards>
+          <SpecialistsCards ref="specialistCardsRef" @load-more-data="getData" :page="currentPage" :can-load-data="canLoadData" v-if="isDataReady" :data="cardsCountFn" :showMoreCard="showMoreCardFn"></SpecialistsCards>
         </template>
       </div>
     </section>
@@ -58,9 +58,10 @@ export default {
         }
         return a;
     },
-    setFilters(updatedFilters) {
+    async setFilters(updatedFilters) {
       this.selectedFilters = updatedFilters.filter((fl)=>fl.isChecked).map((chkd)=>chkd.id)
-      this.getData();
+      await this.getData();
+      this.$refs.specialistCardsRef.handleScroll()
     },
     async getData(page) {
       this.canLoadData = false
