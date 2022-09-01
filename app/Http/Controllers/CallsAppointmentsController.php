@@ -72,7 +72,7 @@ class CallsAppointmentsController extends Controller
 
             // if($request->filters && $request->filters )
             // $q->where('status',$request->filters);
-        })->with('callsStatus','appointmentChildInfo')
+        })->with('callsStatus','appointmentChildInfo','specialist')
           ->where('specialist_id', Auth::id());
 
           if(isset($request->filters)) {
