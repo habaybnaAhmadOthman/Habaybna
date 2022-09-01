@@ -124,6 +124,7 @@ export default {
             }
 
           }
+          
           if (call.appointment_child_info && call.appointment_child_info.child_situation) {
             obj.childStatus= call.appointment_child_info.child_status;
             obj.childAge= call.appointment_child_info.age;
