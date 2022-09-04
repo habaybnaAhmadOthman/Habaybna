@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex registration-template h-full h-auto-p overflow-hidden">
         <div class="right-side bg-white w-40 w-100-p pt-0-p pt-20-p" :class="padding">
-            <a title="whatsapp" class="whatsapp-float mo" href="https://api.whatsapp.com/send?phone=00962799760238" data-action="share/whatsapp/share" target="_blank"> 
+            <a title="whatsapp" class="whatsapp-float mo" href="https://api.whatsapp.com/send?phone=+962799760238" data-action="share/whatsapp/share" target="_blank"> 
                 <div class="d-flex align-center">
                     <img src="/images/whatsapp-white.svg" width="25">
                     <span class="mr-10">تواصل معنا عبر واتس اب</span>

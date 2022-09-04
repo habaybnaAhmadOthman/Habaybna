@@ -17,7 +17,7 @@
                 <h6 class="m-side-auto font-30 black-2 w-90-p font-20-p pt-0-p pt-15">هل تحتاج لمساعدة في تحديد الأخصائي المناسب؟ </h6>
                 <div class="d-flex flex-colmn justify-center">
                     <router-link class="font-30 blue do" to="/" @click.native="goToContactForm">تواصل مع فريق حبايبنا.نت</router-link>
-                    <a class="blue mo font-30 font-20-p" href="https://api.whatsapp.com/send?phone=00962799760238" data-action="share/whatsapp/share" target="_blank">تواصل مع فريق حبايبنا.نت</a>
+                    <a class="blue mo font-30 font-20-p" href="https://api.whatsapp.com/send?phone=+962799760238" data-action="share/whatsapp/share" target="_blank">تواصل مع فريق حبايبنا.نت</a>
                 </div>
                 
             </div>
