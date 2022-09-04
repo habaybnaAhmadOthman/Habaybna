@@ -104,6 +104,10 @@ footer {
               <Icon type="ios-call-outline" size="24" />
               <router-link to="/admin/calls"> المكالمات </router-link>
             </MenuItem>
+             <MenuItem name="4">
+              <Icon type="ios-call-outline" size="24" />
+              <router-link to="/admin/calls-requests"> طلبات المكالمات </router-link>
+            </MenuItem>
             <Submenu name="5">
               <template slot="title">
                 <Icon

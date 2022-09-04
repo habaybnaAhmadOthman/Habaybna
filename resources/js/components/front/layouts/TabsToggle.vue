@@ -13,9 +13,15 @@
                     document.querySelector(".tabs-toggle .active").classList.remove("active");
                 e.target.classList.add("active");
                 const activeTab = e.target.getAttribute("tab-toggle");
-                
-                document.querySelector("[tab-name].active").classList.remove("active");
+                if (document.querySelector("[tab-name].active"))
+                    document.querySelector("[tab-name].active").classList.remove("active");
                 document.querySelector("[tab-name='"+ activeTab +"']").classList.add('active')
+                document.querySelectorAll("[tab-name].active").forEach((tab)=>{
+                    tab.classList.remove('active')
+                });
+                document.querySelectorAll("[tab-name='"+ activeTab +"']").forEach((tab)=>{
+                    tab.classList.add('active')
+                });
             },
             isActive(isActive){
                 return isActive ? 'active' : '' ;

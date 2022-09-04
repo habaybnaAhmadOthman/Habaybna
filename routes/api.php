@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     //payment test config
     Route::get('get-payment-status','PaymentController@checkPaymentStatus');
+    Route::get('get-call-payment-status','PaymentController@checkCallPaymentStatus');
     Route::post('/course-payment','PaymentController@coursePayment');
     Route::post('course/add-to-fav','CourseController@addToFavourite');
     Route::post('article/add-to-fav','UsersFavouriteArticlesController@addToFavourite');
@@ -25,6 +26,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('course/get-course-quize','QuizController@getUserCourseQuiz');
 
     Route::post('course/user-complete-quize','QuizController@completeQuiz');
+
+    // calls
+    Route::post('/set-calls-providers-appointments','CallsAppointmentsController@setCallsProvidersappointments');
+    Route::get('/get-specialist-call-log','CallsAppointmentsController@getSpecialistCallLog');
+    Route::post('/remove-appointment','CallsAppointmentsController@removeAppointment');
+    Route::post('/set-call-recommendation','AppointmentChildInfoController@setCallRecommendation');
+    Route::post('/set-appointment-child-info','AppointmentChildInfoController@setAppintmentChildInfo');
+    Route::get('/get-user-call-log','CallsAppointmentsController@getUserCallLog');
 
 
 
@@ -62,6 +71,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('specialist/{id}','SpecialistController@show');
         Route::post('specialist/update/{id}','SpecialistController@update');
         Route::post('/specialist/create','SpecialistController@createSpecAdmin');
+        Route::get('/specialist-make-call-status/{id}','SpecialistController@makeCallStatus');
 
         //other route
         Route::get('get-others-data','OthersController@getOthersData');
@@ -116,11 +126,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // calls
         Route::get('/calls/packages','CallsController@index');
+        Route::get('get-calls-appointments','CallsAppointmentsController@getCallsAppointments');
         Route::post('/calls/create','CallsController@create');
         Route::get('/calls/package/{id}','CallsController@show');
         Route::post('/calls/package/{id}','CallsController@update');
-        Route::post('/change-call-package-status/{id}','CallsController@changeStatus');
+        Route::post('set-calls-zoom-link','CallsAppointmentsController@setZoomLink');
         Route::post('/delete-call-package/{id}','CallsController@delete');
+        Route::post('change-appointment-status','CallsAppointmentsController@ChangeAppointmnetStatus');
 
         //orders
         Route::get('/orders/courses','PaymentController@index')->name('index.orders'); // will moved to CoursespurchaseordersController
@@ -175,6 +187,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // others route
     Route::post('/edit-other-profile-data','OthersController@editProfileData');
     Route::post('/course-payment','PaymentController@coursePayment');
+    Route::post('/call-payment','PaymentController@callPayment');
 
     // get liked articles
     Route::get('/user/likes-articles','ContentController@getUserLikedArticles');
@@ -193,6 +206,7 @@ Route::get('all-courses','CourseController@getAllcourses')->name('getAllcourses'
 Route::get('get-categories','CategoriesController@index');
 Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::post('/payment/course','PaymentController@coursePaymentCallback');
+Route::post('/payment/call','PaymentController@callPaymentCallback');
 Route::post('/user/forget-password','HomeController@forgetPassword');
 Route::post('/user/forget-password/check-otp','HomeController@checkForgetPassword');
 Route::post('/user/forget-password/change-password','HomeController@changePassword');
@@ -208,4 +222,7 @@ Route::get('/get-testimonials/{type}','TestimonialsController@getTestimonials');
 Route::post('check-otp', \CheckOtp::class);
 Route::get('/get-contents-new','ContentController@getIndexNew');
 Route::get('/get-specialist-data/{id}','ContentController@getSpecialistData');
+Route::get('/get-calls-providers','SpecialistController@callsProvidersList');
+Route::get('/get-specialist-appintments/{slug}','CallsAppointmentsController@getCallsProvidersappointments');
+
 

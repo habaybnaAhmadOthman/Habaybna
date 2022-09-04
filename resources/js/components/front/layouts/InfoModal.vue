@@ -63,7 +63,7 @@ export default {
             default: 'info-modal'
         }
     },
-    emits: ["close"],
+    emits: ["close","afterClose"],
     methods: {
         tryClose() {
             if (!this.fixed)
@@ -71,6 +71,7 @@ export default {
         },
         forceClose() {
             this.$emit("close");
+            this.$emit("afterClose");
         }
     },
     computed: {

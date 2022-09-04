@@ -28,7 +28,7 @@ import ContentList from '../../layouts/SmallCardList.vue'
 import CategoryFilterSection from '../../layouts/CategoryFilterSection.vue'
 import LaravelVuePagination from "laravel-vue-pagination";
 export default {
-  props: ['cardsCount','showMoreCard','list-only','title','class-list','list-api','can-remove'],
+  props: ['cardsCount','showMoreCard','list-only','title','class-list','list-api','can-remove','save-current-page'],
   computed: {
     cardsCountFn(){
       if (this.cardsCount)
@@ -175,7 +175,7 @@ export default {
     isLoading(status) {
       this.$store.commit('isLoading',status)
     },
-  }
+  },
 }
 </script>
 

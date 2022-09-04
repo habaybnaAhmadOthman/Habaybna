@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 30 30" style="enable-background:new 0 0 30 30;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#777E90;}
+	.st1{fill:#777E90;}
+	.st2{fill-rule:evenodd;clip-rule:evenodd;fill:#B1B5C3;}
+	.st3{fill:#B1B5C3;}
+	.st4{fill:#F2994A;}
+	.st5{fill:#FFFFFF;fill-opacity:0;}
+	.st6{opacity:0.013;fill:#FEFEFE;enable-background:new    ;}
+	.st7{opacity:0.025;fill:#FDFDFE;enable-background:new    ;}
+	.st8{opacity:0.038;fill:#FCFCFD;enable-background:new    ;}
+	.st9{opacity:0.05;fill:#FBFCFC;enable-background:new    ;}
+	.st10{opacity:0.063;fill:#FAFBFB;enable-background:new    ;}
+	.st11{opacity:0.075;fill:#F9FAFB;enable-background:new    ;}
+	.st12{opacity:0.088;fill:#F8F9FA;enable-background:new    ;}
+	.st13{opacity:0.1;fill:#F7F8F9;enable-background:new    ;}
+	.st14{opacity:0.113;fill:#F6F7F9;enable-background:new    ;}
+	.st15{opacity:0.125;fill:#F5F6F8;enable-background:new    ;}
+	.st16{opacity:0.138;fill:#F4F6F7;enable-background:new    ;}
+	.st17{opacity:0.15;fill:#F3F5F6;enable-background:new    ;}
+	.st18{opacity:0.163;fill:#F2F4F6;enable-background:new    ;}
+	.st19{opacity:0.175;fill:#F1F3F5;enable-background:new    ;}
+	.st20{opacity:0.188;fill:#F0F2F4;enable-background:new    ;}
+	.st21{opacity:0.2;fill:#EFF1F4;enable-background:new    ;}
+	.st22{opacity:0.213;fill:#EEF0F3;enable-background:new    ;}
+	.st23{opacity:0.225;fill:#EDEFF2;enable-background:new    ;}
+	.st24{opacity:0.238;fill:#ECEFF1;enable-background:new    ;}
+	.st25{opacity:0.25;fill:#EBEEF1;enable-background:new    ;}
+	.st26{opacity:0.263;fill:#EAEDF0;enable-background:new    ;}
+	.st27{opacity:0.275;fill:#E9ECEF;enable-background:new    ;}
+	.st28{opacity:0.288;fill:#E8EBEF;enable-background:new    ;}
+	.st29{opacity:0.3;fill:#E7EAEE;enable-background:new    ;}
+	.st30{opacity:0.313;fill:#E6E9ED;enable-background:new    ;}
+	.st31{opacity:0.325;fill:#E5E9EC;enable-background:new    ;}
+	.st32{opacity:0.338;fill:#E4E8EC;enable-background:new    ;}
+	.st33{opacity:0.35;fill:#E3E7EB;enable-background:new    ;}
+	.st34{opacity:0.363;fill:#E2E6EA;enable-background:new    ;}
+	.st35{opacity:0.375;fill:#E1E5EA;enable-background:new    ;}
+	.st36{opacity:0.388;fill:#E0E4E9;enable-background:new    ;}
+	.st37{opacity:0.4;fill:#DFE3E8;enable-background:new    ;}
+	.st38{opacity:0.413;fill:#DEE3E7;enable-background:new    ;}
+	.st39{opacity:0.425;fill:#DDE2E7;enable-background:new    ;}
+	.st40{opacity:0.438;fill:#DCE1E6;enable-background:new    ;}
+	.st41{opacity:0.45;fill:#DBE0E5;enable-background:new    ;}
+	.st42{opacity:0.463;fill:#DADFE5;enable-background:new    ;}
+	.st43{opacity:0.475;fill:#D9DEE4;enable-background:new    ;}
+	.st44{opacity:0.488;fill:#D8DDE3;enable-background:new    ;}
+	.st45{opacity:0.5;fill:#D7DCE2;enable-background:new    ;}
+	.st46{opacity:0.512;fill:#D7DCE2;enable-background:new    ;}
+	.st47{opacity:0.525;fill:#D6DBE1;enable-background:new    ;}
+	.st48{opacity:0.538;fill:#D5DAE0;enable-background:new    ;}
+	.st49{opacity:0.55;fill:#D4D9E0;enable-background:new    ;}
+	.st50{opacity:0.563;fill:#D3D8DF;enable-background:new    ;}
+	.st51{opacity:0.575;fill:#D2D7DE;enable-background:new    ;}
+	.st52{opacity:0.587;fill:#D1D6DE;enable-background:new    ;}
+	.st53{opacity:0.6;fill:#D0D6DD;enable-background:new    ;}
+	.st54{opacity:0.613;fill:#CFD5DC;enable-background:new    ;}
+	.st55{opacity:0.625;fill:#CED4DB;enable-background:new    ;}
+	.st56{opacity:0.637;fill:#CDD3DB;enable-background:new    ;}
+	.st57{opacity:0.65;fill:#CCD2DA;enable-background:new    ;}
+	.st58{opacity:0.663;fill:#CBD1D9;enable-background:new    ;}
+	.st59{opacity:0.675;fill:#CAD0D9;enable-background:new    ;}
+	.st60{opacity:0.688;fill:#C9D0D8;enable-background:new    ;}
+	.st61{opacity:0.7;fill:#C8CFD7;enable-background:new    ;}
+	.st62{opacity:0.712;fill:#C7CED6;enable-background:new    ;}
+	.st63{opacity:0.725;fill:#C6CDD6;enable-background:new    ;}
+	.st64{opacity:0.738;fill:#C5CCD5;enable-background:new    ;}
+	.st65{opacity:0.75;fill:#C4CBD4;enable-background:new    ;}
+	.st66{opacity:0.762;fill:#C3CAD4;enable-background:new    ;}
+	.st67{opacity:0.775;fill:#C2CAD3;enable-background:new    ;}
+	.st68{opacity:0.788;fill:#C1C9D2;enable-background:new    ;}
+	.st69{opacity:0.8;fill:#C0C8D1;enable-background:new    ;}
+	.st70{opacity:0.813;fill:#BFC7D1;enable-background:new    ;}
+	.st71{opacity:0.825;fill:#BEC6D0;enable-background:new    ;}
+	.st72{opacity:0.837;fill:#BDC5CF;enable-background:new    ;}
+	.st73{opacity:0.85;fill:#BCC4CF;enable-background:new    ;}
+	.st74{opacity:0.863;fill:#BBC3CE;enable-background:new    ;}
+	.st75{opacity:0.875;fill:#BAC3CD;enable-background:new    ;}
+	.st76{opacity:0.887;fill:#B9C2CC;enable-background:new    ;}
+	.st77{opacity:0.9;fill:#B8C1CC;enable-background:new    ;}
+	.st78{opacity:0.913;fill:#B7C0CB;enable-background:new    ;}
+	.st79{opacity:0.925;fill:#B6BFCA;enable-background:new    ;}
+	.st80{opacity:0.938;fill:#B5BECA;enable-background:new    ;}
+	.st81{opacity:0.95;fill:#B4BDC9;enable-background:new    ;}
+	.st82{opacity:0.962;fill:#B3BDC8;enable-background:new    ;}
+	.st83{opacity:0.975;fill:#B2BCC7;enable-background:new    ;}
+	.st84{opacity:0.988;fill:#B1BBC7;enable-background:new    ;}
+	.st85{fill:#B0BAC6;}
+	.st86{fill:#E6E6E6;}
+	.st87{fill:#FFFFFF;}
+	.st88{fill:url(#Path_90_00000092438147727061902280000003059781171803548816_);}
+	.st89{fill:#273029;}
+	.st90{fill:none;stroke:#F2994A;stroke-miterlimit:10;}
+	.st91{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st92{fill:none;}
+	.st93{fill:#FFD166;}
+	.st94{fill-rule:evenodd;clip-rule:evenodd;fill:#FCFCFD;}
+	.st95{fill:#F8E3CF;}
+	.st96{fill:#AAAAAA;}
+	.st97{fill-rule:evenodd;clip-rule:evenodd;fill:#23262F;}
+	.st98{fill:#23262F;}
+	.st99{fill:#333333;}
+	.st100{fill:#FCFCFD;}
+	.st101{fill:none;stroke:#F2994A;stroke-width:2;stroke-linecap:round;}
+	.st102{fill:#777E90;stroke:#777E90;}
+	.st103{fill:#353945;stroke:#353945;stroke-width:2;}
+	.st104{fill:#FFFFFF;stroke:#F2994A;}
+	.st105{fill:#2255FB;}
+</style>
+<g id="Group_231" transform="translate(-2 -2)">
+	<g id="Group_227" transform="translate(2 2)">
+		<path id="Path_141" d="M15,29.94C6.75,29.94,0.06,23.25,0.06,15C0.06,6.75,6.75,0.06,15,0.06c8.25,0,14.94,6.69,14.94,14.94
+			C29.93,23.25,23.25,29.93,15,29.94z M15,1.48C7.53,1.48,1.48,7.53,1.48,15S7.53,28.52,15,28.52S28.52,22.47,28.52,15c0,0,0,0,0,0
+			C28.51,7.54,22.46,1.49,15,1.48z"/>
+	</g>
+	<g id="Group_228" transform="translate(16.229 9.323)">
+		<path id="Path_142" d="M1.48,15.5H0.06V7.68l0.21-0.5l7.11-7.11l1.01,1.01L1.48,7.97L1.48,15.5z"/>
+	</g>
+	<g id="Group_229" transform="translate(2.208 2.208)">
+		
+			<rect id="Rectangle_19" x="-0.32" y="1.99" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -1.1168 2.6973)" width="6.04" height="1.42"/>
+	</g>
+	<g id="Group_230" transform="translate(26.398 2.208)">
+		
+			<rect id="Rectangle_20" x="1.99" y="-0.32" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -1.1165 2.6972)" width="1.42" height="6.04"/>
+	</g>
+</g>
+</svg>

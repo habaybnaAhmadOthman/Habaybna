@@ -52,6 +52,7 @@ export default {
         context.commit('clearAdmin');
         context.commit('setUser',{
             token: resp.data.token,
+            id: resp.data.userData.id,
         })
         axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
         await context.dispatch('checkUserAuth')
@@ -74,6 +75,7 @@ export default {
         context.commit('clearAdmin');
         context.commit('setUser',{
             token: resp.data.token,
+            id: resp.data.userData.id,
         })
         axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
         await context.dispatch('checkUserAuth')
@@ -143,6 +145,7 @@ export default {
                 firstName: obj.firstName,
                 lastName: obj.lastName,
                 type: obj.type,
+                canMakeCalls: obj.can_make_call,
                 avatar: obj.avatar,
             })
             await dispatch('courses/getAllCourses',{}, {root:true})
@@ -217,5 +220,30 @@ export default {
         }
         if (!payload.hasOwnProperty('type'))
             return resp.data.url
-    }
+    },
+
+    // ******** get calls log ::: POST
+    async getCallsLog(context,payload) {
+
+        let queryFilters = `?page=${payload.page}`
+        if (payload.filters && payload.filters.length > 0 && payload.filters != 'all') {
+            // scheduled ==> 0
+            // succeeded ==> 1
+            // missed ==> 2
+            const statuses = {
+                "scheduled": '0',
+                "succeeded": '1',
+                "missed": '2',
+            }
+
+            queryFilters += `&filters=${statuses[payload.filters]}`
+        }
+
+        const resp = await callApi("GET", `/api/get-user-call-log${queryFilters}`);
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to getCallsLog");
+            throw error;
+        }
+        return resp.data
+    },
 };

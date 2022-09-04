@@ -37,6 +37,7 @@ class CheckUserAuth extends Controller
                     $userData['firstName']= $user->user_data->firstName;
                     $userData['lastName']= $user->user_data->lastName;
                     $userData['type']= $user->role;
+                    $userData['can_make_call']= $user->role == 'specialist' && $user->user_data->make_calls ? true : false ;
                     return response()->json([
                         'status'=>true,
                         'msg'=>'success',

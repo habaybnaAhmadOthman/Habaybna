@@ -81,6 +81,7 @@ class UserController extends Controller
                     $userData['disorders_work_with'] = $user->user_data->disorders_work_with ;
                     $userData['interests'] = $userIntrests ? $userIntrests : '';
                     $userData['interestsList'] = $interestsList ? $interestsList : [];
+                    $userData['can_make_call'] = $user->user_data->make_calls;
 
 
 

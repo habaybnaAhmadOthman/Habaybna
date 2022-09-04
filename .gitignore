@@ -16,3 +16,4 @@ yarn-error.log
 /mainckeditor/node_modules
 .DS_Store
 /portal
+/public/mix-manifest.json

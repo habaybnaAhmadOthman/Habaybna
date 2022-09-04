@@ -5,6 +5,10 @@ th {
   direction: rtl;
   text-align: right;
 }
+.make-calls {
+    height: 16px;
+    width: 15px;
+}
 </style>
 <template>
   <div>
@@ -37,6 +41,9 @@ th {
           <th scope="col">الايميل</th>
           <th scope="col" class="sortted" v-on:click="sortTable('status')">
             الحالة
+          </th>
+          <th scope="col" class="sortted" v-on:click="sortTable('status')">
+            تقديم استشارات
           </th>
           <th class="sortted" scope="col" v-on:click="sortTable('gender')">
             الجنس
@@ -75,6 +82,9 @@ th {
             >
               <span>غير نشط</span>
             </Button>
+          </td>
+          <td>
+              <input class="make-calls" @change="makeCalls(specialist.user_id)" type="checkbox" name="makeCalls" v-model="specialist.make_calls">
           </td>
           <td>{{ specialist.gender == "m" ? "ذكر" : "انثى" }}</td>
           <td>{{ specialist.specialization }}</td>
@@ -200,6 +210,9 @@ export default {
         this.specialists[i].status = !this.specialists[i].status;
         this.loading = false;
       }, 1000);
+    },
+    makeCalls(id) {
+        const resp = this.callApi('get','/api/admin/specialist-make-call-status/' + id)
     },
     sortTable(type) {
       if (type == "name") {

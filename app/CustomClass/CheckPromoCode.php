@@ -30,7 +30,7 @@ class CheckPromoCode {
                                                     'id'=>$code->id,
                                                     'code'=>$code->code,
                                                     'isValid'=>true,
-                                                    'usage'=>'course',
+                                                    'usage'=>$code->usage,
                                                     'discount_perc'=>100,
                                                     'msg'=>'success'
                                                 ];
@@ -41,7 +41,7 @@ class CheckPromoCode {
                                                     'id'=>$code->id,
                                                     'code'=>$code->code,
                                                     'isValid'=>true,
-                                                    'usage'=>'course',
+                                                    'usage'=>$code->usage,
                                                     'discount_perc'=>$code->discount_percentage,
                                                     'msg'=>'success'
                                                 ];
@@ -53,7 +53,7 @@ class CheckPromoCode {
                                     'id'=>$code->id,
                                     'code'=>$code->code,
                                     'isValid'=>false,
-                                    'usage'=>'course',
+                                    'usage'=>$code->usage,
                                     'discount_perc'=> 0,
                                     'msg'=>'expire'
 
@@ -65,7 +65,7 @@ class CheckPromoCode {
                                 'id'=>$code->id,
                                 'code'=>$code->code,
                                 'isValid'=>false,
-                                'usage'=>'course',
+                                'usage'=>$code->usage,
                                 'discount_perc'=>0,
                                 'msg'=>'inactive'
 
@@ -77,7 +77,7 @@ class CheckPromoCode {
                             'id'=>$code->id,
                             'code'=>$code->code,
                             'isValid'=>false,
-                            'usage'=>'course',
+                            'usage'=>$code->usage,
                             'discount_perc'=>0,
                             'msg'=>'maxUsageReached'
                         ];
@@ -88,7 +88,7 @@ class CheckPromoCode {
                         'id'=>$code->id,
                         'code'=>$code->code,
                         'isValid'=>false,
-                        'usage'=>'course',
+                        'usage'=>$code->usage,
                         'discount_perc'=>0,
                         'msg'=>'coursePromoCode'
                     ];

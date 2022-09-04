@@ -30,7 +30,7 @@
 
 <script>
 export default {
-    props: ["item","can-remove"],
+    props: ["item","can-remove",'currentPage'],
     computed: {
         isLoggedIn() {
             return this.$store.getters["user/isLoggedIn"];
@@ -67,7 +67,7 @@ export default {
                 this.$store.commit("loginModal", true);
             }
         },
-    },
+    }
 };
 </script>
 

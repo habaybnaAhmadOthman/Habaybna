@@ -24,6 +24,7 @@ class User extends Authenticatable
     protected $fillable = [
         'phone', 'email','phone','otp','is_verify','role','password'
     ];
+    protected $appends = ['user_data'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -55,9 +56,9 @@ class User extends Authenticatable
             case 'other':
                 return Other::where('user_id',$this->id)->first();
                 break;
-            case 'admin':
-                return $this;
-                break;
+            // case 'admin':
+            //     return $this;
+            //     break;
 
             default:
                 # code...
@@ -111,6 +112,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(NewContent::class,'id');
     }
+
+    public function specialist()
+    {
+        return $this->hasOne(Specialist::class,'user_id');
+    }
+
+
 
 
 }

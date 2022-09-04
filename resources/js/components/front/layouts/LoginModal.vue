@@ -213,6 +213,12 @@ export default {
                     window.location.href = "/admin";
                 } else {
                     this.$store.commit("forceRefresh");
+                    const query = Object.keys(this.$route.query)
+                    if (!query.length) {
+                        this.$router.replace(this.$route.fullPath + '?is-logged-in=1')
+                    } else {
+                        this.$router.replace(this.$route.fullPath + '&is-logged-in=1')
+                    }
                 }
             } catch (e) {
                 if (e.message == 'تم إيقاف حسابك') { 
@@ -222,6 +228,9 @@ export default {
             }
             this.isLoading = false;
         }
+    },
+    mounted(){
+        
     }
 };
 </script>

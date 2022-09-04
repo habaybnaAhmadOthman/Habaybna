@@ -1,9 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="21.537" height="19.083" viewBox="0 0 21.537 19.083">
-  <g id="home-svgrepo-com" transform="translate(0 -1.504)">
-    <g id="c14_house" transform="translate(0 1.504)">
-      <path id="Path_3" data-name="Path 3" d="M3.588,20.916a.447.447,0,0,0,.451.482l5.429-.007.008-4.449s-.077-.733.634-.733h2.253a.7.7,0,0,1,.79.733l-.01,4.435h5.314a.557.557,0,0,0,.57-.6v-8.2l-7.49-6.662-7.95,6.663S3.588,20.916,3.588,20.916Z" transform="translate(-0.66 -2.315)" fill="#6e6d6d"/>
-      <path id="Path_4" data-name="Path 4" d="M0,11.145s.674,1.244,2.147,0l8.8-7.444,8.248,7.4c1.7,1.229,2.343,0,2.343,0L10.946,1.5Z" transform="translate(0 -1.504)" fill="#6e6d6d"/>
-      <path id="Path_5" data-name="Path 5" d="M22.8,4.175H20.674l.009,2.573L22.8,8.541Z" transform="translate(-3.802 -1.995)" fill="#6e6d6d"/>
-    </g>
-  </g>
+<svg id="c14_house" xmlns="http://www.w3.org/2000/svg" width="31.601" height="28" viewBox="0 0 31.601 28">
+  <path id="Path_8902" data-name="Path 8902" d="M9.82,38.2a.656.656,0,0,0,.662.706c.86,0,7.965-.01,7.965-.01l.012-6.527s-.113-1.075.93-1.075H22.7a1.025,1.025,0,0,1,1.159,1.075l-.014,6.507h7.8A.817.817,0,0,0,32.476,38V25.959l-10.99-9.775L9.82,25.96Z" transform="translate(-5.524 -10.904)" fill="#6d6d6d"/>
+  <path id="Path_8903" data-name="Path 8903" d="M0,18.262s.989,1.825,3.15,0L16.06,7.34l12.1,10.854c2.5,1.8,3.438,0,3.438,0L16.06,4.116Z" transform="translate(0 -4.116)" fill="#6d6d6d"/>
+  <path id="Path_8904" data-name="Path 8904" d="M59.7,11.427H56.585L56.6,15.2l3.1,2.631Z" transform="translate(-31.829 -8.229)" fill="#6d6d6d"/>
 </svg>

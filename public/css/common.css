@@ -130,6 +130,9 @@ body {
 .w-25 {
     width: 25%;
 }
+.w-10 {
+    width: 10%;
+}
 .h-full {
     height: 100vh;
 }
@@ -378,6 +381,9 @@ body {
 }
 .mb-50 {
     margin-bottom: 50px;
+}
+.mb-70 {
+    margin-bottom: 70px;
 }
 .mb-100 {
     margin-bottom: 100px;
@@ -888,6 +894,9 @@ a:hover {
 }
 .gap-10 {
     gap: 10px;
+}
+.gap-15 {
+    gap: 15px;
 }
 .gap-20 {
     gap: 20px;

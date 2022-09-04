@@ -13,8 +13,8 @@
 <script>
 import SmallCard from './SmallCard.vue'
 export default {
-    props: ['filtered-articles','showMoreCard','class-list'],
-    components: {SmallCard},
+    props: ['filtered-articles','showMoreCard','class-list','current-page'],
+    components: {SmallCard}
 };
 </script>
 
@@ -46,7 +46,7 @@ export default {
     margin: auto;
     transform: rotate(180deg);
 }
-.show-more-articles {
+.show-more-articles { 
     height: 120px;
 }
 @media (max-width: 767px) {
