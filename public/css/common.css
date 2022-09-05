@@ -831,6 +831,9 @@ a:hover {
 .blue-2 {
     color: #0043ff;
 }
+.blue-3 {
+    color: #027eb5;
+}
 .red {
     color:#f44336;
 }
@@ -1178,6 +1181,9 @@ img {
     }
     .d-flex-p {
         display: flex;
+    }
+    .justify-end-p {
+        justify-content: end;
     }
     .btn-main {
         height: 50px;

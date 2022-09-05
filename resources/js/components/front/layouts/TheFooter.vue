@@ -34,7 +34,7 @@
                                 <router-link to="/media-coverage">حبايبنا في الاعلام</router-link>
                             </li>
                             <li>
-                                <router-link to="/about-habaybna">عن حبايبنا.نت</router-link>
+                                <router-link to="/about-habaybna">قصة حبايبنا.نت</router-link>
                             </li>
                             <li class="d-flex-p space-between">
                                 <router-link to="/" @click.native="goToContactForm">تواصلوا معنا</router-link>
@@ -50,13 +50,13 @@
                     <div class="hab-last footer-col">
                         <ul>
                             <li>
-                                <router-link to="/about-habaybna-en">About Habaybna.net</router-link>
+                                <router-link class="d-flex-p w-100-p justify-end-p" to="/about-habaybna-en">About Habaybna.net</router-link>
                             </li>
                             <li>
-                                <router-link to="/">habaybna.net in the media</router-link>
+                                <router-link class="d-flex-p w-100-p justify-end-p" to="/">Media Coverage</router-link>
                             </li>
                             <li>
-                                <router-link to="/terms-and-conditions-en">TERMS & CONDITIONS</router-link>
+                                <router-link class="d-flex-p w-100-p justify-end-p" to="/terms-and-conditions-en">TERMS & CONDITIONS</router-link>
                             </li>
                         </ul>
                     </div>
@@ -184,6 +184,9 @@ select {
     }
     .hab-dectionary {
         order: 3;
+    }
+    a {
+        font-size: 14px;
     }
 }
 </style>

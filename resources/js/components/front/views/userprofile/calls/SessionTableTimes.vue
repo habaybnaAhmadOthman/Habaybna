@@ -47,7 +47,7 @@
         @close="toggleRemoveModal"
       >
       <div class="">
-        <p class="font-24 yellow bold mb-20">هل أنت متأكد؟</p>
+        <p class="font-20 yellow bold mb-20">هل أنت متأكد من الحذف؟</p>
         <div class="d-flex gap-20 mt-10-p btns-box">
           <button @click="toggleRemoveModal" class="radius-60 gray dismiss-btn pointer flex-1">لا</button>
           <button @click="confirmRemoveCol" class="radius-60 main-bg border-0 white font-18 pointer pt-15 pb-15 flex-1">نعم</button>

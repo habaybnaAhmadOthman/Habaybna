@@ -47,7 +47,7 @@ export default {
     return {
       promoCode: "",
       discountVal: null,
-      callPrice: 59,
+      callPrice: 54,
       priceAfterDiscount: null,
       promoID: null,
       callID: null

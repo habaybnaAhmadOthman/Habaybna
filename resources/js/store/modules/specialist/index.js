@@ -6,7 +6,7 @@ export default {
     state() {
         return {
             bookAppintmentInfo: {},
-            callPrice: 59
+            callPrice: 54
         };
     },
     mutations,

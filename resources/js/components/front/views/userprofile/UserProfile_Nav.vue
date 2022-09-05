@@ -47,8 +47,8 @@
           >الدورات المفضلة</router-link
         >
       </li>
-      <template v-if="isSpecialist">
-        <li v-if="canMakeCalls">
+      <template v-if="isSpecialist && canMakeCalls">
+        <li>
 
           <span
             class="d-block p-side-15 pt-10 pb-10 trans pointer submenu-target"

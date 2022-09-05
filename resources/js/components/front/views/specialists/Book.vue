@@ -71,7 +71,7 @@ export default {
     },
     // reset call price to default price
     resetCallPrice(){
-      this.$store.commit('specialist/callPrice',59)
+      this.$store.commit('specialist/callPrice',54)
     },
     onDaySelect(id) {
       for (const i in this.daysWithIntervals ) {
