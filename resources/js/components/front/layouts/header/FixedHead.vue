@@ -12,11 +12,11 @@
         <figure>
           <img src="/images/consult-mob-icon.svg" width="24" height="21" />
         </figure>
-        <p class="font-10 mobile-icon-color">الأخصائيين</p>
+        <p class="font-10 mobile-icon-color">الإستشارات</p>
       </router-link>
       <router-link to="/online-courses" class="mo center mobile-link">
         <figure>
-          <img src="/images/mo-video-bottom.svg" width="24" height="21" />
+          <img class="dark-icon" src="/images/mo-video-bottom.svg" width="24" height="21" />
         </figure>
         <p class="font-10 mobile-icon-color">الدورات</p>
       </router-link>
@@ -80,7 +80,7 @@ a {
 .mobile-icon-color {
   color: #6e6d6d;
 }
-.courses-mo {
+.courses-mo,.dark-icon {
   filter: brightness(0.4);
 }
 @media (max-width: 767px) {
