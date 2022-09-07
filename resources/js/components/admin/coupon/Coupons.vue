@@ -12,6 +12,27 @@ th {
   padding: 0 2px;
   overflow-x: scroll;
 }
+.show-users {
+  color: #00a1ff;
+  cursor: pointer;
+  font-weight: bold;
+}
+.user-card {
+  display: flex;
+}
+.user-card > span {
+  border: 1px solid rgb(206, 202, 202);
+  border-radius: 3px;
+  padding: 0px 8px;
+  font-size: 23px;
+  margin: 6px 3px;
+  opacity: 0.7;
+  transition: all 0.1s ease;
+}
+.user-card > span:hover {
+  opacity: 1;
+  cursor: pointer;
+}
 </style>
 <template>
   <div>
@@ -38,9 +59,7 @@ th {
             <th>الاستخدام</th>
             <th>نوع الكوبون</th>
             <th class="sortted" v-on:click="sortTable('status')">الحالة</th>
-            <th>
-              الحد الاعلى للاستخدام
-            </th>
+            <th>الحد الاعلى للاستخدام</th>
             <th>عدد الاستخدامات الحالي</th>
             <th>نسبة الخصم</th>
             <th>تاريخ التفعيل</th>
@@ -73,7 +92,16 @@ th {
               </Button>
             </td>
             <td>{{ coupon.max_usage }}</td>
-            <td>{{ coupon.usage_count }}</td>
+            <td>
+              {{ coupon.usage_count }}
+              <p
+                v-if="coupon.users_promo_codes.length > 0"
+                class="show-users"
+                @click="dialogShowPromoUsers(coupon.id, index)"
+              >
+                عرض المستخدمين
+              </p>
+            </td>
             <td>{{ coupon.discount_percentage }} %</td>
             <td>{{ coupon.start_date }}</td>
             <td>{{ coupon.end_date }}</td>
@@ -91,6 +119,13 @@ th {
           </tr>
         </tbody>
       </table>
+      <div class="pagination">
+        <Pagination
+          v-if="coupons"
+          :data="coupons"
+          @pagination-change-page="getResults"
+        ></Pagination>
+      </div>
     </div>
     <Modal v-model="dialogDelete" width="360">
       <p slot="header" style="color: #f60; text-align: center">
@@ -111,38 +146,114 @@ th {
         >
       </div>
     </Modal>
+    <Modal v-model="showPromoUsers" width="450">
+      <p slot="header" style="color: #00a1ff; text-align: center">
+        <Icon type="ios-user-circle"></Icon>
+        <span style="fontsize: 27px">المستخدمون</span>
+      </p>
+      <div class="coupon-user-list">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>اسم المستخدم</th>
+              <th>الاستخادم</th>
+              <th>الدورة التدريبية\الاخصائي</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="(user, index) in userList" :key="index">
+              <td>
+                {{
+                  user.user.user_data.firstName +
+                  " " +
+                  user.user.user_data.lastName
+                }}
+              </td>
+              <td>
+                {{ user.usage }}
+              </td>
+              <td v-if="user.usage == 'Course'">
+                {{ user.course.courseTitle }}
+              </td>
+              <td v-else>
+                {{
+                  " الاخصائي" +
+                  " " +
+                  user.specialist.firstName +
+                  " " +
+                  user.specialist.lastName
+                }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div slot="footer"></div>
+    </Modal>
   </div>
 </template>
 <script>
+import LaravelVuePagination from "laravel-vue-pagination";
+
 export default {
+  components: {
+    Pagination: LaravelVuePagination,
+  },
   data() {
     return {
-      coupons: [],
+      coupons: {},
       dialogDelete: false,
+      showPromoUsers: false,
       modal_loading: false,
       idDeleteUser: "",
       indexDeleteUser: "",
       keyword: "",
       ascending: false,
+      userList: null,
     };
   },
-  async created() {
-    const resp = await this.callApi("get", "/api/admin/coupons");
-    if (resp.status == 200) {
-      this.coupons = resp.data;
-    }
-  },
+    // async created() {
+    // this.getResults();
+
+        // console.log('xxxxxxx');
+    //   const resp = await this.callApi("get", "/api/admin/coupons");
+    //   if (resp.status == 200) {
+    //     this.coupons = resp.data;
+    //   }
+    // },
   methods: {
+
+    getResults(page) {
+      if (typeof page === "undefined") {
+        page = 1;
+      }
+      const resp = this.callApi("get", "/api/admin/coupons?page=" + page).then(
+        (res) => {
+          if (res.status == 200) {
+            this.coupons = res.data;
+      console.log('1', this.coupons);
+          }
+        }
+      );
+    },
     deleteDaialog(id, index) {
-        console.log(id, index);
       this.dialogDelete = true;
       this.idDeleteUser = id;
       this.indexDeleteUser = index;
     },
+    dialogShowPromoUsers(id, index) {
+      this.userList = this.coupons.data[index].users_promo_codes;
+      this.showPromoUsers = true;
+      this.idDeleteUser = id;
+      this.indexDeleteUser = index;
+    },
     del(index) {
-      console.log(this.idDeleteUser);
       this.modal_loading = true;
-      const resp = this.$store.dispatch("admin/deleteCoupon", this.idDeleteUser);
+      const resp = this.$store.dispatch(
+        "admin/deleteCoupon",
+        this.idDeleteUser
+      );
       setTimeout(() => {
         this.modal_loading = false;
         this.dialogDelete = false;
@@ -152,7 +263,6 @@ export default {
     },
     changeStatus(i, id) {
       this.loading = true;
-        console.log(i, id);
       const resp = this.$store.dispatch("admin/CouponChangeStatus", id);
       setTimeout(() => {
         this.$Message.success("تم تغيير الحالة");
@@ -162,10 +272,9 @@ export default {
     },
     sortTable(type) {
       if (type == "name") {
-        //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.coupons.sort((a, b) =>
+        return this.coupons.data.sort((a, b) =>
           isAscending
             ? a.code > b.code
               ? 1
@@ -180,10 +289,9 @@ export default {
         );
       }
       if (type == "status") {
-        //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.coupons.sort((a, b) =>
+        return this.coupons.data.sort((a, b) =>
           isAscending
             ? a.status > b.status
               ? 1
@@ -198,7 +306,6 @@ export default {
         );
       }
       if (type == "gender") {
-        //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
         return this.others.sort((a, b) =>
@@ -217,11 +324,16 @@ export default {
       }
     },
   },
+  async mounted() {
+      console.log('mounted');
+    this.getResults();
+  },
   computed: {
     filteredList() {
-      return this.coupons.filter((coupon) => {
+      return this.coupons.data ? this.coupons.data.filter((coupon) => {
+
         return coupon.code.toLowerCase().includes(this.keyword.toLowerCase());
-      });
+      }) : '';
     },
   },
 };

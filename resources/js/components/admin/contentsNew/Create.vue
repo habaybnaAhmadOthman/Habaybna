@@ -76,12 +76,16 @@
             track-by="firstName"
             placeholder="اختر كاتب للمقال"
             :multiple="false"
-
             required
           ></multiselect>
         </li>
         <li class="wrapper-row-cke">
-          <textarea name="" id="courseDescription" cols="30" rows="10"></textarea>
+          <textarea
+            name=""
+            id="courseDescription"
+            cols="30"
+            rows="10"
+          ></textarea>
         </li>
         <li class="wrapper-row">
           <label for=""> هل تريد نشر المقال : </label>
@@ -120,9 +124,7 @@ export default {
       this.authorsList = resp.data.specialists;
     }
   },
-  updated(){
-      console.log('update');
-  },
+  updated() {},
   data() {
     return {
       categories: [],
@@ -143,20 +145,26 @@ export default {
   methods: {
     uploadCoverImage(event) {
       this.form.coverImage = event.target.files[0];
-      console.log(this.form.coverImage, "xxxxx", event.target.files[0]);
+      console.log("size", this.form.coverImage.size);
     },
 
     async formSubmit(e) {
       e.preventDefault();
-            let tagIDs = [];
-        this.form.categories.forEach((item) => tagIDs.push(item.id));
+      let tagIDs = [];
+      this.form.categories.forEach((item) => tagIDs.push(item.id));
 
-let Obj = new FormData();
-     Obj.append("title", this.form.title);
+      let Obj = new FormData();
+      Obj.append("title", this.form.title);
       Obj.append("image", this.form.coverImage);
       Obj.append("categories", tagIDs);
       Obj.append("author", this.form.author.user_id);
-      Obj.append("content", this.form.courseDescription.getData().replaceAll('srcset','src').replaceAll(" 0w\"","\""));
+      Obj.append(
+        "content",
+        this.form.courseDescription
+          .getData()
+          .replaceAll("srcset", "src")
+          .replaceAll(' 0w"', '"')
+      );
       Obj.append("publishDate", this.form.publishDay);
       Obj.append("status", this.form.status);
 
@@ -164,7 +172,11 @@ let Obj = new FormData();
     },
   },
   mounted() {
-        this.initEditor("#courseDescription", "form.courseDescription", function () {})
+    this.initEditor(
+      "#courseDescription",
+      "form.courseDescription",
+      function () {}
+    );
   },
 };
 </script>

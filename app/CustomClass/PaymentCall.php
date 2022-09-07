@@ -6,6 +6,7 @@ use App\AppointmentChildInfo;
 use Illuminate\Support\Facades\Http;
 use App\PromoCode;
 use App\CallPurchaseOrders;
+use App\UsersPromoCode;
 use App\CallsAppointments;
 use App\CallsStatus;
 use App\Specialist;
@@ -89,7 +90,7 @@ class PaymentCall {
             $initData->specialist_id = $appointment->specialist_id;
             $initData->appointment_id = $appointment->id;
             $initData->transaction_id = $tranID ;
-            $initData->price = 59 ;
+            $initData->price = 54 ;
             $initData->status = false;  // not complete change to true when payment complete success
             $initData->save();
 
@@ -100,8 +101,8 @@ class PaymentCall {
                 $promoCode = PromoCode::findorfail($data['hasPromoCode']['id']);
 
                 // $disscountAmount = $course->price * $promoCode->discount_percentage/100 ;
-                $disscountAmount = 59 * $promoCode->discount_percentage/100 ;
-                $newPrice = 59 - $disscountAmount ;
+                $disscountAmount = 54 * $promoCode->discount_percentage/100 ;
+                $newPrice = 54 - $disscountAmount ;
 
                 $initData->coupon_id = $promoCode->id;
                 $initData->discount_amount = $disscountAmount;
@@ -112,7 +113,7 @@ class PaymentCall {
                    return $this->completeOrderFree ($initData) ;
             }
             else {
-                $initData->amount = 59;
+                $initData->amount = 54;
 
                 $initData->save();
             }
@@ -163,6 +164,15 @@ class PaymentCall {
                 $coupon = PromoCode::findorfail($order->coupon_id);
                 $coupon->increment('usage_count');
                 $coupon->save();
+
+                $userPromoCode = new UsersPromoCode() ;
+            $userPromoCode->order_id = $order->id ;
+            $userPromoCode->user_id = $order->user_id ;
+            $userPromoCode->coupon_id = $order->coupon_id ;
+            $userPromoCode->usage = 'Call' ;
+            $userPromoCode->call_package_id = $order->specialist_id ;
+
+            $userPromoCode->save();
             }
 
             $call_status = new CallsStatus() ;
@@ -207,6 +217,15 @@ class PaymentCall {
                 $coupon = PromoCode::findorfail($order->coupon_id);
                 $coupon->increment('usage_count');
                 $coupon->save();
+
+                $userPromoCode = new UsersPromoCode() ;
+                $userPromoCode->order_id = $order->id ;
+                $userPromoCode->user_id = $order->user_id ;
+                $userPromoCode->coupon_id = $order->coupon_id ;
+                $userPromoCode->usage = 'Call' ;
+                $userPromoCode->call_package_id = $order->specialist_id ;
+                $userPromoCode->save();
+
             }
 
             $call_status = new CallsStatus() ;

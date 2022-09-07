@@ -59,11 +59,15 @@
         <li class="wrapper-row">
           <label for=""> صورة الغلاف :</label>
           <input
+            id="coverImage"
             name="coverImage"
             type="file"
             @change="uploadCoverImage"
             required
           />
+          <p style="color: red; display: block" v-if="imageError">
+            {{ imageError }}
+          </p>
         </li>
         <li class="wrapper-row">
           <multiselect
@@ -98,7 +102,7 @@
         </li>
         <li class="wrapper-row">
           <label for=""> تاريخ نشر المقال :</label>
-          <input type="date" v-model="form.publishDay" required />
+          <input type="date" v-model="form.publishDay" required :max="date"/>
         </li>
         <li class="wrapper-row">
           <input class="ivu-btn ivu-btn-info" type="submit" value="حفظ" />
@@ -124,11 +128,10 @@ export default {
       this.authorsList = resp.data.specialists;
     }
   },
-  updated() {
-    console.log("update");
-  },
+  updated() {},
   data() {
     return {
+      date: new Date().toISOString().split("T")[0],
       categories: [],
       authorsList: [],
 
@@ -141,13 +144,27 @@ export default {
         courseDescription: null,
         status: 0,
       },
+      imageError: null,
     };
   },
 
   methods: {
     uploadCoverImage(event) {
       this.form.coverImage = event.target.files[0];
-      console.log(this.form.coverImage, "xxxxx", event.target.files[0]);
+      if (
+        !this.form.coverImage ||
+        this.form.coverImage.type.indexOf("image/") !== 0
+      ) {
+        this.imageError = "file type error image file allowd only";
+        document.getElementById("coverImage").value = "";
+        return;
+      }
+
+      if (this.form.coverImage.size > 3359048) {
+        this.imageError = `The image size (${this.form.coverImage.size}) is too much (max is 3.5MB).`;
+        document.getElementById("coverImage").value = "";
+        return;
+      }
     },
 
     async formSubmit(e) {
@@ -174,9 +191,10 @@ export default {
         .dispatch("admin/createNewArticle", Obj)
         .then((res) => {
           if (res.status == 200) {
+            document.getElementById("coverImage").value = "";
             setTimeout(() => {
               this.$Message.success("تم انشاء المحتوى");
-              this.$router.push('/admin/content-new')
+              this.$router.push("/admin/content-new");
             }, 1500);
           }
         });

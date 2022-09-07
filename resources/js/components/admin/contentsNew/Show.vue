@@ -30,10 +30,14 @@
   padding: 0.5em 1em 0.5em 0;
 }
 .content-cover-image {
-  align-items: flex-start;
+  align-items: center;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  border: 1px solid grey;
+  padding: 7px;
+  margin: 8px;
+  box-shadow: 5px 10px grey;
 }
 </style>
 <template>
@@ -42,11 +46,7 @@
       <ul class="cont-wrapper">
         <li class="wrapper-row title">
           <h2>تعديل المحتوى</h2>
-          <Button
-            :to="'/admin/content-new'"
-            type="primary"
-            size="large"
-            ghost
+          <Button :to="'/admin/content-new'" type="primary" size="large" ghost
             >رجوع</Button
           >
         </li>
@@ -77,12 +77,16 @@
             <label for=""> صورة الغلاف :</label>
             <img :src="form.coverImage" alt="" />
             <input
+              id="coverImage"
               name="coverImage"
               type="file"
               @change="uploadCoverImage"
               :required="form.coverImage == '' ? true : false"
             />
           </div>
+          <p style="color: red; display: block" v-if="imageError">
+            {{ imageError }}
+          </p>
         </li>
         <li class="wrapper-row">
           <multiselect
@@ -120,7 +124,7 @@
           <span v-if="form.publishDate !== 'null'">
             {{ form.publishDate }}</span
           >
-          <input type="date" v-model="form.publishDay" required />
+          <input type="date" v-model="form.publishDay" required :max="date" />
         </li>
         <li class="wrapper-row">
           <input class="ivu-btn ivu-btn-info" type="submit" value="حفظ" />
@@ -151,6 +155,7 @@ export default {
     return {
       categories: [],
       authorsList: [],
+      date: new Date().toISOString().split("T")[0],
 
       form: {
         id: null,
@@ -163,12 +168,27 @@ export default {
         status: 0,
         video: null,
       },
+      imageError: null,
     };
   },
 
   methods: {
     uploadCoverImage(event) {
       this.form.coverImage = event.target.files[0];
+      if (
+        !this.form.coverImage ||
+        this.form.coverImage.type.indexOf("image/") !== 0
+      ) {
+        this.imageError = "file type error image file allowd only";
+        document.getElementById("coverImage").value = "";
+        return;
+      }
+
+      if (this.form.coverImage.size > 3359048) {
+        this.imageError = `The image size (${this.form.coverImage.size}) is too much (max is 3.5MB).`;
+        document.getElementById("coverImage").value = "";
+        return;
+      }
     },
     setDate(date) {
       var today = new Date(date);
@@ -209,7 +229,8 @@ export default {
       // });
       this.callApi("post", "/api/admin/content-new/edit", Obj).then((res) => {
         if (res.status == 200) {
-          console.log(res);
+          document.getElementById("coverImage").value = "";
+          this.$router.push("/admin/content-new");
           this.$Message.success("تم تعديل المحتوى");
         }
       });
