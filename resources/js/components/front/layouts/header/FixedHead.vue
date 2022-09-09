@@ -22,7 +22,7 @@
       </router-link>
       <div class="profile-mo mo center mobile-link" @click="openProfileMenu">
         <figure>
-          <img src="/images/profile-avatar-mo.svg" />
+          <img :src="userAvatar" />
         </figure>
         <p class="font-10 mobile-icon-color">حسابي</p>
       </div>
@@ -57,6 +57,11 @@ export default {
     isLoggedIn() {
       return this.$store.getters["user/isLoggedIn"];
     },
+    userAvatar() {
+      let avatar = this.$store.getters["user/userData"].avatar;
+      if (avatar == "default.jpg" || !this.isLoggedIn) avatar = "/images/profile-avatar-mo.svg";
+      return avatar;
+    }
   },
   methods: {
     toggleMobileMenu() {
@@ -111,6 +116,7 @@ a {
   }
   .profile-mo img {
     width: 21px;
+    mix-blend-mode: multiply;
   }
 }
 </style>

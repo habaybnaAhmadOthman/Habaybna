@@ -44,7 +44,7 @@
     <!-- problem -->
     <div>
       <span class="mo bold">رابط المكالمة</span>
-      <p v-if="data.callLink" class="blue pointer" @click="copyLinkToClipboard">نسخ الرابط</p>
+      <a @click="goToLink()" v-if="data.callLink" class="blue pointer">الذهاب إلى الرابط</a>
       <p v-else class="gray-1">لم يتم إضافته بعد</p>
     </div>
 
@@ -98,6 +98,9 @@ export default {
     },
   },
   methods: {
+    goToLink() {
+        window.open(this.data.callLink,'_blank')
+    },
     copyLinkToClipboard(){
       const self = this
       navigator.clipboard.writeText(this.data.callLink).then(function() {

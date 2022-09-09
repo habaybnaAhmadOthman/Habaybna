@@ -4,6 +4,7 @@ namespace app\CustomClass;
 use Illuminate\Support\Facades\Http;
 use App\Courses;
 use App\Coursespurchaseorders;
+use App\UsersPromoCode;
 use App\PromoCode;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,18 @@ class JoinFreeCourse {
                 $coupon = PromoCode::findorfail($data['hasPromoCode']['id']);
                 $coupon->increment('usage_count');
                 $coupon->save();
+                
+                $initData->coupon_id = $coupon->id;
+                $initData->save();
+
+                $userPromoCode = new UsersPromoCode() ;
+                $userPromoCode->order_id = $initData->id ;
+                $userPromoCode->user_id = $initData->user_id ;
+                $userPromoCode->coupon_id = $initData->coupon_id ;
+                $userPromoCode->usage = 'Course' ;
+                $userPromoCode->course_id = $initData->course_id ;
+
+                $userPromoCode->save();
             }
 
             return $initData;
@@ -91,6 +104,8 @@ class JoinFreeCourse {
             $coupon = PromoCode::findorfail($data->coupon_id);
             $coupon->increment('usage_count');
             $coupon->save();
+
+
         }
 
         // return redirect()->to('payment-success')->send();

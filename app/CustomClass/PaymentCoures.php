@@ -3,6 +3,7 @@
 namespace app\CustomClass;
 use Illuminate\Support\Facades\Http;
 use App\Courses;
+use App\UsersPromoCode;
 use App\Coursespurchaseorders;
 use App\PromoCode;
 use App\User;
@@ -100,6 +101,8 @@ class PaymentCoures {
                 $initData->amount = $newPrice ;
 
                 $initData->save();
+
+
             }
             // else {
             //     $initData->amount = $course->price;
@@ -158,6 +161,17 @@ class PaymentCoures {
             $coupon = PromoCode::findorfail($order->coupon_id);
             $coupon->increment('usage_count');
             $coupon->save();
+
+            $userPromoCode = new UsersPromoCode() ;
+            $userPromoCode->order_id = $order->id ;
+            $userPromoCode->user_id = $order->user_id ;
+            $userPromoCode->coupon_id = $order->coupon_id ;
+            $userPromoCode->usage = 'Course' ;
+            $userPromoCode->course_id = $order->course_id ;
+
+            $userPromoCode->save();
+
+
         }
 
         return redirect()->to('payment-success')->send();

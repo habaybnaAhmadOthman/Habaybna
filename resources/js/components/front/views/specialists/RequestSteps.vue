@@ -32,10 +32,8 @@
             </div>
           </div>
         </div>
-        <div class="video-box relative w-55 mt-20-p w-80-p m-side-auto">
-          <video class="radius-10" width="100%" controls>
-            <source src="https://aws3.devops.arabiaweather.com/arabiaweather-crowd-sourcing-production/media/users/56336/posts/268852/original.720p.mp4" type="video/mp4">
-          </video>
+        <div class="video-box relative w-55 mt-20-p w-100-p p-side-12-p m-side-auto">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/zCpjCHGQQ3M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
     </div>
@@ -43,17 +41,7 @@
 </template>
 <script>
 export default {
-  methods: {
-    hidePlayBtn(){
-      document.querySelector('.video-box').classList.add('active')
-    }
-  },
-  mounted(){
-    document.querySelector('.video-box video').addEventListener('play',this.hidePlayBtn)
-  },
-  destroyed(){
-    document.querySelector('.video-box video').removeEventListener('play',this.hidePlayBtn)
-  }
+  
 }
 </script>
 
@@ -72,7 +60,10 @@ export default {
     position: absolute;
     top: 40px;
 }
-.video-box {
+.video-box iframe {
+  height: 315px;
+}
+/* .video-box {
   cursor: pointer;
 }
 .video-box:after {
@@ -98,5 +89,10 @@ export default {
     width: 57px;
     height: 57px;
   }
-}
+} */
+@media (max-width: 767px) {
+  .video-box iframe {
+    height: 197px;
+  }
+} 
 </style>

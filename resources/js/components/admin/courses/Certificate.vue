@@ -96,7 +96,12 @@ input[type="file"] {
 
         <li class="wrapper-row">
           <label for=""> اضف شعارات اخرى :</label>
-          <input name="coverImage" type="file" @change="uploadCoverImage" />
+          <input
+            name="coverImage"
+            id="coverImage"
+            type="file"
+            @change="uploadCoverImage"
+          />
           <!-- <input type='file' @change="readURL" /> -->
         </li>
 
@@ -145,10 +150,10 @@ export default {
         $logo
       ).then((res) => {
         if (res.status == 200) {
-          setTimeout(() => {
 
+          setTimeout(() => {
             this.$Message.success("تم الحذف ");
-            this.logos.splice(index, 11)
+            this.logos.splice(index, 1);
           }, 1500);
         }
       });
@@ -172,6 +177,8 @@ export default {
         .dispatch("admin/createUpdateCertificate", Obj)
         .then((res) => {
           if (res.status == 200) {
+          document.getElementById("coverImage").value = "";
+            this.uploaded_logos = null
             this.logos = res.data;
           }
         });

@@ -100,6 +100,7 @@ td > select {
                 id=""
                 v-model="appointment.calls_status.status"
                 @change="changeStatus($event, index, appointment.id)"
+                :disabled="appointment.calls_status.call_zoom_link ? false : true "
               >
                 <option value="0">مجدولة</option>
                 <option value="1">ناجحة</option>
@@ -120,7 +121,7 @@ td > select {
             </td>
             <td>
               <Button @click="moreDetails(appointment.id, index)" disabled>
-               مزيد من التفاصيل
+                مزيد من التفاصيل
               </Button>
             </td>
           </tr>
@@ -233,7 +234,12 @@ export default {
       }
     },
     changeStatus(event, index, appoID) {
+      if (!this.appointments.data[index].calls_status.call_zoom_link) {
+        alert("هذه المكالمة لا تحتوي على رابط");
+        return;
+      }
       console.log(event.target.value, index, appoID);
+
       let Obj = {
         status: event.target.value,
         appoID: appoID,

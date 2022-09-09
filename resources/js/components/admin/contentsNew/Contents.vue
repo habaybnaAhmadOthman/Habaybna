@@ -71,19 +71,11 @@ th {
               </p>
             </td>
             <td class="status">
-              <Button
-                type="success"
-                ghost
-                v-if="coupon.status"
-              >
+              <Button type="success" ghost v-if="coupon.status">
                 <!-- v-on:click="changeStatus(index, coupon.id)" -->
                 <span>نشط</span>
               </Button>
-              <Button
-                type="error"
-                ghost
-                v-if="!coupon.status"
-              >
+              <Button type="error" ghost v-if="!coupon.status">
                 <!-- v-on:click="changeStatus(index, coupon.id)" -->
                 <span>غير نشط</span>
               </Button>
@@ -91,7 +83,7 @@ th {
                 <span>نشط</span>
               </Button> -->
             </td>
-            <td>{{ coupon.created_at.slice(0,10) }}</td>
+            <td>{{ coupon.created_at.slice(0, 10) }}</td>
 
             <td>
               <Button
@@ -107,10 +99,12 @@ th {
           </tr>
         </tbody>
       </table>
-      <Pagination
-        :data="coupons"
-        @pagination-change-page="getResults"
-      ></Pagination>
+      <div class="pagination">
+        <Pagination
+          :data="coupons"
+          @pagination-change-page="getResults"
+        ></Pagination>
+      </div>
     </div>
     <Modal v-model="dialogDelete" width="360">
       <p slot="header" style="color: #f60; text-align: center">
@@ -142,7 +136,7 @@ export default {
 
   data() {
     return {
-      coupons: [],
+      coupons: {},
       dialogDelete: false,
       modal_loading: false,
       idDeleteUser: "",
@@ -168,14 +162,12 @@ export default {
       this.indexDeleteUser = index;
     },
     del(index) {
-      console.log(this.idDeleteUser);
       this.modal_loading = true;
       this.callApi(
         "post",
         "/api/admin/content-delete/" + this.idDeleteUser
       ).then((res) => {
         if (res.status == 200) {
-          console.log(res);
         }
       });
       setTimeout(() => {
@@ -248,7 +240,6 @@ export default {
       }
     },
     async getResults(page) {
-      console.log("xxxxxx");
       //   axios.get("example/results?page=" + page).then((response) => {
       //     this.coupons = response.data;
       //   });
@@ -259,19 +250,15 @@ export default {
         "get",
         "/api/admin/contents-new?page=" + page
       ).then((resp) => {
-        console.log("resp", resp);
         this.coupons = resp.data;
-        console.log(this.coupons);
       });
     },
   },
   computed: {
     filteredList() {
-      console.log(this.coupons);
-        return this.coupons.data.filter((coupon) => {
-            console.log(coupon.title.toLowerCase().includes(this.keyword.toLowerCase()));
-          return coupon.title.toLowerCase().includes(this.keyword.toLowerCase());
-        });
+      return this.coupons.data.filter((coupon) => {
+        return coupon.title.toLowerCase().includes(this.keyword.toLowerCase());
+      });
     },
   },
 };

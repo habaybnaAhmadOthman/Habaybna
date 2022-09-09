@@ -17,25 +17,14 @@ class PromoCodeController extends Controller
 {
     public function index()
     {
+
+        // dd($coupons);
         try{
-            $coupons = PromoCode::all();
-            $data = [];
-            foreach ($coupons as $key ) {
-                $data [] = [
-                    'id'=>$key->id,
-                    'code'=>$key->code,
-                    'usage'=>$key->usage,
-                    'type'=>$key->type,
-                    'status'=>$key->status,
-                    'max_usage'=>$key->max_usage,
-                    'discount_percentage'=>$key->discount_percentage,
-                    'start_date'=>unserialize($key->date)->start,
-                    'end_date'=>unserialize($key->date)->end,
-                    'usage_count'=>$key->usage_count,
-                    'usage_count'=>$key->usage_count,
-                ];
-            }
-            return response()->json($data, 200);
+            $coupons = PromoCode::with(['users_promo_codes'=>function($q){
+                $q->with('user','course','specialist');
+            }])->orderBy('id', 'desc')->paginate(15);
+
+            return response($coupons, 200);
         } catch (ModelNotFoundException $e){
             return response()->json(
                 false,

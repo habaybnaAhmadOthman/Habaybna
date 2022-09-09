@@ -139,8 +139,6 @@ class CallsAppointmentsController extends Controller
                 $q->where('status',$request->filters);
             });
           }
-
-
           return response(
               $log->orderBy('id', 'desc')->paginate(15),
               200
