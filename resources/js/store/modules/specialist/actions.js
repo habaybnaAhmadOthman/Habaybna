@@ -43,6 +43,17 @@ export default {
         }
         return resp.data
     },
+    // ******** get speciality for specialist ::: GET
+
+    async getSpeciality(context,payload) {
+        console.log('xxxxxzzz')
+        const resp = await callApi("GET", '/api/get-specialist-speciality');
+        if (!resp || resp.status != 200) {
+            const error = new Error("fail to getAppointments");
+            throw error;
+        }
+        return resp.data
+    },
     // ******** remove appointments ::: POST
     async removeAppointment(context,payload) {
         const resp = await callApi("POST", `/api/remove-appointment`,payload);

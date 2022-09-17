@@ -224,5 +224,6 @@ Route::get('/get-contents-new','ContentController@getIndexNew');
 Route::get('/get-specialist-data/{id}','ContentController@getSpecialistData');
 Route::get('/get-calls-providers','SpecialistController@callsProvidersList');
 Route::get('/get-specialist-appintments/{slug}','CallsAppointmentsController@getCallsProvidersappointments');
+Route::get('/get-specialist-speciality','SpecialistController@getSpeciality');
 
 

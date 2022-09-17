@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Specialist;
+use App\Speciality;
 use App\Interest;
 use App\UserInterest;
 use App\User;
@@ -323,21 +324,19 @@ class SpecialistController extends Controller
         $specialists = User::whereHas('specialist',function($q) {
 
             $q->canMakeCalls();
+            $q->where('status',1);
 
         });
-
         if( isset($request->filters) ) {
-            $explode_id = array_map('intval', explode(',', $request->filters));
-
-            $all = UserInterest::whereIn('interest_id', $explode_id )->pluck('user_id') ;
-
-            $specialists = User::whereHas('specialist',function($q) use ($all){
+            $explode_id =  explode(',', $request->filters);
+            $specialists = User::whereHas('specialist',function($q) use ($explode_id){
 
                 $q->canMakeCalls();
-                $q->whereIn('user_id',$all);
+                $q->where('status',1);
+                $q->whereIn('specialization',$explode_id);
 
             });
-
+            // dd($specialists->get());
 
 
         }
@@ -348,6 +347,12 @@ class SpecialistController extends Controller
                 ->paginate(12)  ,
             200
         );
+    }
+
+    public function getSpeciality()
+    {
+        $speciality = Speciality::all();
+        return response($speciality, 200);
     }
 
 

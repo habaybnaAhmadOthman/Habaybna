@@ -5,19 +5,21 @@
         <template  v-if="showTitle">
           <h2 class="font-26 bold main-color p-side-12-p center mb-30">تعرف على الأخصائيين</h2>
         </template>
-        <CategoryFilterSection v-if="!showMoreCardFn" @change-filter="setFilters" :api="api"></CategoryFilterSection>
+        <!-- <CategoryFilterSection v-if="!showMoreCardFn" @change-filter="setFilters" :api="api"></CategoryFilterSection> -->
+        <SpecialityFilterSection v-if="!showMoreCardFn" @change-filter="setFilters" :api="api"></SpecialityFilterSection>
         <template>
           <SpecialistsCards ref="specialistCardsRef" @load-more-data="getData" :page="currentPage" :can-load-data="canLoadData" v-if="isDataReady" :data="cardsCountFn" :showMoreCard="showMoreCardFn"></SpecialistsCards>
         </template>
       </div>
     </section>
-    
-    
+
+
   </div>
 </template>
 <script>
 import SpecialistsCards from './SpecialistsSection_Cards.vue'
 import CategoryFilterSection from '../../layouts/CategoryFilterSection.vue'
+import SpecialityFilterSection from '../../layouts/SpecialityFilterSection.vue'
 export default {
   props: ['cardsCount','showMoreCard','list-only','show-title'],
   computed: {
@@ -34,7 +36,7 @@ export default {
         return false
     }
   },
-  components: {SpecialistsCards,CategoryFilterSection},
+  components: {SpecialistsCards,CategoryFilterSection,SpecialityFilterSection},
   data(){
     return {
       activeFilters: [],
@@ -42,7 +44,7 @@ export default {
       specialistTemp: [],
       isDataReady: false,
       canLoadData: true,
-      api: 'courses/getCategories',
+      api: 'specialist/getSpeciality',
       currentPage: 1,
       selectedFilters: []
     }
@@ -59,7 +61,7 @@ export default {
         return a;
     },
     async setFilters(updatedFilters) {
-      this.selectedFilters = updatedFilters.filter((fl)=>fl.isChecked).map((chkd)=>chkd.id)
+        this.selectedFilters = updatedFilters.filter((fl)=>fl.isChecked).map((chkd)=>chkd.val)
       await this.getData();
       this.$refs.specialistCardsRef.handleScroll()
     },
@@ -70,7 +72,7 @@ export default {
         this.specialistTemp = []
       }
       this.currentPage = page
-      
+
       const loadedSpecialists =  (await this.$store.dispatch('specialist/getSpecialistsList',{page: this.currentPage,filters: this.selectedFilters})).data.map((sp)=>{
         return {
           avatar: sp.specialist.avatar,

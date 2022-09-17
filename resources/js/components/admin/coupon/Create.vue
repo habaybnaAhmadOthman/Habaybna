@@ -94,10 +94,10 @@ h1 {
         <label for="">كود الكوبون : </label>
         <Input
           v-model="form.code"
-          placeholder="اكتب رمز الكوبون من 10 احرف وارقام"
+          placeholder="اكتب رمز الكوبون من 4-10 احرف وارقام"
         />
         <span class="error" v-if="!this.formValidation.code">
-          يجب ان يحتوي الكود على 10 احرف او ارقام
+          يجب ان يحتوي الكود على 4-25 احرف او ارقام
         </span>
         <span class="error" v-if="usedCode"> هذا الرمز مستخدم </span>
       </div>
@@ -283,7 +283,7 @@ export default {
         });
     },
     submitForm(name) {
-        console.log(this.form.coupone_duration);
+        console.log(this.formValidation.code);
       this.validateForm();
       if (this.couponIsValid) {
         const Obj = this.form;
@@ -310,7 +310,7 @@ export default {
       }
     },
     validateForm() {
-      if (!/^[a-zA-Z0-9]{10}$/.test(this.form.code)) {
+      if (!/^[a-zA-Z0-9]/.test(this.form.code) || this.form.code.length < 4 || this.form.code.length > 25) {
         this.formValidation.code = false;
       } else {
         this.formValidation.code = true;

@@ -94,7 +94,7 @@ h1 {
           placeholder="اكتب رمز الكوبون من 10 احرف وارقام"
         />
         <span class="error" v-if="!this.formValidation.code">
-          يجب ان يحتوي الكود على 10 احرف او ارقام
+          يجب ان يحتوي الكود على 4-25 احرف او ارقام
         </span>
         <span class="error" v-if="usedCode"> هذا الرمز مستخدم </span>
       </div>
@@ -131,7 +131,7 @@ h1 {
           placeholder="الحد الاقصى لاستخدام الكوبون"
         />
         <span class="error" v-if="!this.formValidation.max_usage">
- الحد الادنى للاستخدام (1)     
+ الحد الادنى للاستخدام (1)
  </span>
       </div>
       <div class="question-form">
@@ -336,7 +336,7 @@ export default {
       }
     },
     validateForm() {
-      if (!/^[a-zA-Z0-9]{10}$/.test(this.form.code)) {
+      if (!/^[a-zA-Z0-9]/.test(this.form.code) || this.form.code.length < 4 || this.form.code.length > 25) {
         this.formValidation.code = false;
       } else {
         this.formValidation.code = true;
