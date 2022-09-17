@@ -56,49 +56,49 @@ th {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(specialist, index) in filteredList" :key="index">
+        <tr v-for="(specialist, index) in specialists" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ specialist.firstName + " " + specialist.lastName }}</td>
-          <td class="phone-td">{{ specialist.user.phone }}</td>
+          <td>{{ specialist.user_data.firstName + " " + specialist.user_data.lastName }}</td>
+          <td class="phone-td">{{ specialist.phone }}</td>
           <td>
             <!-- {{getCountry(specialist.user.phone) }} -->
             jordan
           </td>
-          <td>{{ specialist.user.email }}</td>
+          <td>{{ specialist.email }}</td>
           <td class="status">
             <Button
               type="success"
               ghost
-              v-if="specialist.status"
-              v-on:click="changeStatus(index, specialist.user_id)"
+              v-if="specialist.user_data.status"
+              v-on:click="changeStatus(index, specialist.id)"
             >
               <span>نشط</span>
             </Button>
             <Button
               type="error"
               ghost
-              v-if="!specialist.status"
-              v-on:click="changeStatus(index, specialist.user_id)"
+              v-if="!specialist.user_data.status"
+              v-on:click="changeStatus(index, specialist.id)"
             >
               <span>غير نشط</span>
             </Button>
           </td>
           <td>
-              <input class="make-calls" @change="makeCalls(specialist.user_id)" type="checkbox" name="makeCalls" v-model="specialist.make_calls">
+              <input class="make-calls" @change="makeCalls(specialist.id)" type="checkbox" name="makeCalls" v-model="specialist.make_calls">
           </td>
-          <td>{{ specialist.gender == "m" ? "ذكر" : "انثى" }}</td>
-          <td>{{ specialist.specialization }}</td>
+          <td>{{ specialist.user_data.gender == "m" ? "ذكر" : "انثى" }}</td>
+          <td>{{ specialist.user_data.specialization }}</td>
           <td>{{ specialist.created_at.slice(0, 10) }}</td>
           <td>
             <Button
-              :to="'/admin/specialist/' + specialist.user_id"
+              :to="'/admin/specialist/' + specialist.id"
               type="dashed"
               size="small"
               >عرض</Button
             >
             <!-- <Button type="dashed" size="small">courses</Button>
             <Button type="dashed" size="small">calls</Button> -->
-            <Button @click="deleteDaialog(specialist.user_id, index)">
+            <Button @click="deleteDaialog(specialist.id, index)">
               <Icon size="20" color="red" type="md-trash" />
             </Button>
           </td>
@@ -116,11 +116,11 @@ th {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(specialist, index) in filteredList" :key="index">
+        <tr v-for="(specialist, index) in specialists" :key="index">
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ specialist.firstName + " " + specialist.lastName }}</td>
-          <td class="phone-td">{{ specialist.user.phone }}</td>
-          <td>{{ specialist.user.email }}</td>
+          <td class="phone-td">{{ specialist.phone }}</td>
+          <td>{{ specialist.email }}</td>
           <td>{{ specialist.disorders_work_with }}</td>
         </tr>
       </tbody>
@@ -163,9 +163,9 @@ export default {
   },
   async created() {
     const resp = await this.callApi("get", "/api/admin/get-specialists-data");
-    console.log(resp, "xx");
+    console.log(resp.status, "xx");
     if (resp.status == 200) {
-      this.specialists = resp.data.specialists;
+      this.specialists = resp.data;
       console.log(this.specialists);
     }
   },
@@ -290,13 +290,15 @@ export default {
     },
   },
   computed: {
-    filteredList() {
-      return this.specialists.filter((other) => {
-        return other.firstName
-          .toLowerCase()
-          .includes(this.keyword.toLowerCase());
-      });
-    },
+    //   filteredList() {
+    //     var self = this
+    //     console.log(self.specialists,'xxxxxxxxxxxx');
+    //   return self.specialists((other) => {
+    //     return other.user_data.firstName
+    //       .toLowerCase()
+    //       .includes(self.keyword.toLowerCase());
+    //   });
+    // },
   },
 };
 </script>
