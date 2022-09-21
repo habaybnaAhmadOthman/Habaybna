@@ -172,7 +172,7 @@ class ContentController extends Controller
         {
 
             $data['specialist']['appintment'] = $provider->specialist
-                                                ->availiableAppointments->where('appointment','>=',gmdate("Y-m-d\TH:i:s\Z", strtotime('+ 7 hours')));
+                                                ->availiableAppointments;
         }
 
         return response($data,200);

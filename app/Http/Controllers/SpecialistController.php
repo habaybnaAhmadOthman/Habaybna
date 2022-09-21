@@ -341,6 +341,8 @@ class SpecialistController extends Controller
 
                 $q->canMakeCalls();
                 $q->where('status',1);
+            $q->whereHas('availiableAppointments');
+
                 $q->whereIn('specialization',$explode_id);
 
             });
