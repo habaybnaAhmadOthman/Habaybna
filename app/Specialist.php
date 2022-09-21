@@ -26,7 +26,6 @@ class Specialist extends Model
     {
         return $query->where('make_calls',true);
     }
-
     public function callsAppointments()
     {
         return $this->hasMany(CallsAppointments::class,'specialist_id','user_id');
