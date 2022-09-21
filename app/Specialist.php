@@ -26,7 +26,6 @@ class Specialist extends Model
     {
         return $query->where('make_calls',true);
     }
-
     public function callsAppointments()
     {
         return $this->hasMany(CallsAppointments::class,'specialist_id','user_id');
@@ -35,7 +34,7 @@ class Specialist extends Model
     public function availiableAppointments()
     {
         // $appointments = CallsAppointments::whereDoesntHave('callsStatus')->get();
-        return $this->hasMany(CallsAppointments::class,'specialist_id','user_id')->doesntHave('callsStatus');
+        return $this->hasMany(CallsAppointments::class,'specialist_id','user_id')->where('appointment','>=',gmdate("Y-m-d\TH:i:s\Z", strtotime('+ 7 hours')))->doesntHave('callsStatus');
 
     }
 

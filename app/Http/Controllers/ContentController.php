@@ -170,6 +170,7 @@ class ContentController extends Controller
         !empty($provider->specialist->callsAppointments)
         )
         {
+
             $data['specialist']['appintment'] = $provider->specialist
                                                 ->availiableAppointments;
         }

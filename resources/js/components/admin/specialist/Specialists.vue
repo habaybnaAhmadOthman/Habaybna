@@ -84,7 +84,7 @@ th {
             </Button>
           </td>
           <td>
-              <input class="make-calls" @change="makeCalls(specialist.id)" type="checkbox" name="makeCalls" v-model="specialist.make_calls">
+              <input class="make-calls" @change="makeCalls(specialist.id)" type="checkbox" name="makeCalls" v-model="specialist.specialist.make_calls">
           </td>
           <td>{{ specialist.user_data.gender == "m" ? "ذكر" : "انثى" }}</td>
           <td>{{ specialist.user_data.specialization }}</td>
