@@ -7,7 +7,7 @@
                 <p class="mb-20"><span class="">بانضمامك إلى برنامج شركاء حبايبنا.نت</span> فأنت تساهم في تغيير حياة العديد من الأطفال المتأخرين في التطور و تساعد الوالدين ومقدمي الرعاية على أن يعرفوا كيف يمكنهم تحسين حياة أبنائهم المتأخرين في التطور وخلق فرصة لهم في الحياة</p>
                 <p>نتعاون مع المؤثرين الذين نتشارك معهم في القيم والأهداف، حيث أن كلانا يسعى لتمكين الوالدين (كل أب وأم) هم بحاجة لمعرفة التعامل مع طفلهم المتأخر في التطور (ذوي الاضطرابات النمائية)</p>
                 <div class="d-flex justify-center mt-30">
-                    <a class="btn-main bold font-18" href="https://docs.google.com/forms/d/14g4sWljUNrol74CgdWjjZUt4zS4C8-5ruecb41MpL5o/edit">أرسل طلبك الآن</a>
+                    <a class="btn-main bold font-18" href="https://forms.gle/KE6pH2abHuGJ5SU56" target="_blank">أرسل طلبك الآن</a>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
 
 <script>
     import TheHeader from '../layouts/header/TheHeader.vue'
-    
+
     import TheFooter from '../layouts/TheFooter.vue'
     export default {
         components: { TheHeader,TheFooter},
