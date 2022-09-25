@@ -168,7 +168,7 @@ class HomeController extends Controller
                 // fill required parameters
                 $parameters["Amount"] =$request->amount * 100 ;
                 $parameters["Channel"] = "0";
-                $parameters["CurrencyISOCode"] = "840";
+                $parameters["CurrencyISOCode"] = "400";
                 $parameters["Language"] = "en";
                 $parameters["MerchantID"] = config('appconfig.stsmerchantid');
                 $parameters["MessageID"] = "1";
