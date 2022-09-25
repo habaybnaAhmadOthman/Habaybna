@@ -73,6 +73,8 @@ import SpecialistPage from "./components/front/pages/specialist/SpecialistPage";
 import SpecialistsPage from "./components/front/pages/specialist/SpecialistsPage.vue";
 import allSpecialistsPage from "./components/front/pages/specialist/allSpecialistsPage.vue";
 import PartnersProgramPage from "./components/front/pages/PartnersProgramPage.vue";
+import NSBirthday from "./components/front/pages/NSBirthday.vue";
+import NSBirthdayStatus from "./components/front/pages/NSBirthdayStatus.vue";
 import TermsPage from "./components/front/pages/TermsPage.vue";
 import TermsEnPage from "./components/front/pages/TermsEnPage.vue";
 import AboutPage from "./components/front/pages/AboutHabaybna.vue";
@@ -326,6 +328,10 @@ const routes = [{
         component: PartnersProgramPage
     },
     {
+        path: "/Nadeem-Sirajs-Birthday-Gift",
+        component: NSBirthday
+    },
+    {
         path: "/terms-and-conditions",
         component: TermsPage
     },
@@ -510,6 +516,12 @@ const routes = [{
         meta: {
             requiresAuth: true
         },
+
+    },
+    {
+        path: "/gift-payment-status",
+        component: NSBirthdayStatus,
+
 
     },
     {

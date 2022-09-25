@@ -225,5 +225,11 @@ Route::get('/get-specialist-data/{id}','ContentController@getSpecialistData');
 Route::get('/get-calls-providers','SpecialistController@callsProvidersList');
 Route::get('/get-specialist-appintments/{slug}','CallsAppointmentsController@getCallsProvidersappointments');
 Route::get('/get-specialist-speciality','SpecialistController@getSpeciality');
+    // nadeem birthday
+Route::post('/siraj-nadim-gift','HomeController@sendGift');
+Route::post('/payment/gift','HomeController@giftPaymentCallback');
+Route::get('/get-gift-payment-status','HomeController@checkGiftStatus');
+
+
 
 
