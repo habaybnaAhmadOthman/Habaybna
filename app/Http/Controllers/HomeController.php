@@ -166,7 +166,7 @@ class HomeController extends Controller
             //   $initOrder = $this->createInitOrder($data, $transactionId);
                 $parameters = [];
                 // fill required parameters
-                $parameters["Amount"] =$request->amount * 100 ;
+                $parameters["Amount"] =$request->amount * 1000;
                 $parameters["Channel"] = "0";
                 $parameters["CurrencyISOCode"] = "400";
                 $parameters["Language"] = "en";
