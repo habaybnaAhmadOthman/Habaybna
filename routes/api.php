@@ -49,6 +49,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function(){
 
+        // birthday naddem siraj
+        Route::get("/get-gifts","HomeController@getGifts");
         // contact us
         Route::get('/contact-us/all-messages','ContactUsController@index');
         Route::get('/contact-us/{id}','ContactUsController@show');

@@ -223,6 +223,13 @@ class HomeController extends Controller
         200
        );
     }
+
+    public function getGifts()
+    {
+        $giftsOrders = BirthdayGift::all();
+
+        return response($giftsOrders, 200);
+    }
     // private function createInitOrder($data,$tranID)
     // {
     //     try {

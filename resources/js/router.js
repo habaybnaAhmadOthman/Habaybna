@@ -40,6 +40,7 @@ import CreateSpecialist from "./components/admin/specialist/Create.vue";
 import CreateOther from "./components/admin/other/Create.vue";
 import ShowSpecialist from "./components/admin/specialist/Show.vue";
 import ShowMessage from "./components/admin/contactUs/Show.vue";
+import Birthday from "./components/admin/Birthday.vue";
 import ShowPackage from "./components/admin/calls/Show.vue";
 import ShowOther from "./components/admin/other/Show.vue";
 import Specialists from "./components/admin/specialist/Specialists.vue";
@@ -191,9 +192,9 @@ const routes = [{
         name: "CreateSpecialist"
     },
     {
-        path: "/admin/other/create",
-        component: CreateOther,
-        name: "CreateOther"
+        path: "/admin/birthday",
+        component: Birthday,
+        name: "Birthday"
     },
     {
         path: "/admin/specialist",

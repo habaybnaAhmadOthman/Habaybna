@@ -104,9 +104,11 @@ footer {
               <Icon type="ios-call-outline" size="24" />
               <router-link to="/admin/calls"> المكالمات </router-link>
             </MenuItem>
-             <MenuItem name="4">
+            <MenuItem name="4">
               <Icon type="ios-call-outline" size="24" />
-              <router-link to="/admin/calls-requests"> طلبات المكالمات </router-link>
+              <router-link to="/admin/calls-requests">
+                طلبات المكالمات
+              </router-link>
             </MenuItem>
             <Submenu name="5">
               <template slot="title">
@@ -148,9 +150,14 @@ footer {
             </MenuItem>
             <MenuItem name="10">
               <Icon type="ios-at-outline" size="24" />
-              <router-link to="/admin/testimonials"> اراء المستخدمين </router-link>
+              <router-link to="/admin/testimonials">
+                اراء المستخدمين
+              </router-link>
             </MenuItem>
-
+            <MenuItem name="10">
+              <Icon type="ios-at-outline" size="24" />
+              <router-link to="/admin/birthday"> gifts request </router-link>
+            </MenuItem>
           </Menu>
         </Sider>
         <Layout :style="{ padding: '0 5px' }">
