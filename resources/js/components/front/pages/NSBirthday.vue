@@ -44,7 +44,7 @@
             >this field is recuired</span
           >
         </div>
-        <div class="form-group col-sm-md-8 mb-50">
+        <div class="form-group col-sm-md-8">
           <input
             v-model="email"
             class="form-control"
@@ -52,6 +52,30 @@
             placeholder="Email"
           />
           <span v-if="!validation.email" class="gift-validation"
+            >this field is recuired</span
+          >
+        </div>
+        <div class="form-check mt-15">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="exampleCheck1"
+            value="true"
+            v-model="showInlist"
+          />
+          <label class="form-check-label ml-10" for="exampleCheck1"
+            >Let nadeem & sirag know .</label
+          >
+
+        </div>
+        <div v-if="showInlist" class="form-group col-sm-md-8 mb-50">
+          <textarea
+            v-model="message"
+            class="form-control p-10 message"
+            type="text"
+            placeholder="write a message .."
+          />
+          <span v-if="!validation.firstName" class="gift-validation"
             >this field is recuired</span
           >
         </div>
@@ -148,6 +172,23 @@
       <input type="hidden" name="Version" :value="paymentData.Version" />
       <input type="hidden" name="SecureHash" :value="paymentData.secureHash" />
     </form>
+    <a href="#users-list" class="btn-show-list"> Gifts List </a>
+    <div class="birthday-modal" id="users-list">
+      <a href="#" class="colse-x">X</a>
+      <a href="#" class="close"></a>
+      <div class="target-inner">
+        <div v-for="(user, index) in users" :key="index" class="card">
+          <div class="card-head">
+            <img src="/images/avatars/default.jpg" alt="" />
+            <span>{{ user.firstName }} {{ user.lastName }}</span>
+            <div class="card-gift">{{ user.amount }}</div>
+          </div>
+          <div class="card-content">
+            <p>{{user.msg}}.</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <TheFooter />
   </div>
 </template>
@@ -171,9 +212,22 @@ export default {
       },
       paymentData: null,
       PaymentFormIsRedy: false,
+      users: [],
+      showInlist: false,
+      message: null,
     };
   },
   methods: {
+    getUserList() {
+      const resp = this.callApi("get", "api/get-users-gift?success=1").then(
+        (res) => {
+          if (res.status == 200) {
+            this.users = res.data;
+          }
+        }
+      );
+    },
+
     sendGift(amount) {
       this.giftValidation();
       if (this.giftIsValid) {
@@ -182,26 +236,27 @@ export default {
           last: this.lastName,
           email: this.email,
           amount: amount,
+          showinList:this.showInlist,
+          msg:this.message,
         };
         let self = this;
         const resp = this.callApi("post", "/api/siraj-nadim-gift", Obj).then(
           (res) => {
             console.log("res");
             if (res.status == 200) {
-                console.log('xxxxxxxx');
+              console.log("xxxxxxxx");
               this.paymentData = res.data[0].SmartRouteParams;
               this.PaymentFormIsRedy = true;
-                    setTimeout(() => {
-              this.submitForm()
-
-      }, 1500);
+              setTimeout(() => {
+                this.submitForm();
+              }, 1500);
             }
           }
         );
       }
     },
     submitForm() {
-        console.log( this.$refs.birthday.submit());
+      console.log(this.$refs.birthday.submit());
     },
     giftValidation() {
       if (this.firstName == null) {
@@ -226,6 +281,9 @@ export default {
         this.giftIsValid = true;
       }
     },
+  },
+  mounted() {
+    this.getUserList();
   },
 };
 </script>
@@ -301,5 +359,155 @@ h1 {
 .gift-validation {
   color: red;
   display: block;
+}
+
+.btn-show-list {
+  position: fixed;
+  left: -5%;
+  top: 50%;
+  font-size: 40px;
+  background-color: #903ba6;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 45px 0px 40px 0px;
+  opacity: 0.8;
+  transition: left 0.3s ease-in;
+}
+.btn-show-list:hover {
+  opacity: 1;
+  left: 1%;
+}
+.birthday-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+.birthday-modal:target {
+  pointer-events: all;
+  opacity: 1;
+}
+.close {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #34495e;
+  opacity: 0.5;
+  transition: opacity 200ms;
+}
+.close:hover {
+  opacity: 0.4;
+}
+.target-inner {
+  display: grid;
+  overflow: a;
+  grid-template-columns: 30% 30% 30%;
+  width: 73%;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  position: absolute;
+  background: white;
+  padding: 34px;
+  /* direction: rtl; */
+  text-align: left;
+  overflow-y: scroll;
+  justify-content: space-around;
+  max-height: 70vh;
+  direction: ltr;
+  border-radius: 15px;
+}
+.card {
+  border: 1px solid #1a16164d;
+  margin: 9px 0;
+  padding: 7px 0px;
+  border-radius: 9px;
+  box-shadow: 0px 2px 1px 0px #00000070;
+}
+.card .card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card .card-head img {
+  width: 64px;
+  height: 64px;
+}
+.card .card-head span {
+  font-size: 1.3rem;
+}
+.card .card-content p {
+  font-size: 1.2rem;
+  padding: 3px 0px 1px 10px;
+}
+.card .card-gift {
+  min-width: 30%;
+  min-height: 58px;
+  border-radius: 5px;
+  background-image: url(/images/siteImgs/gift.jpg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bolder;
+  font-size: 1.8rem;
+  background-size: cover;
+}
+@media screen and(min-width: 576px) {
+}
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+  .target-inner {
+    min-width: 95%;
+    display: block;
+  }
+  .btn-show-list {
+    position: fixed;
+    right: -17%;
+    top: 8%;
+    font-size: 27px;
+    background-color: #903ba6;
+    color: #fff;
+    padding: 5px 20px;
+    border-radius: 45px 0px 40px 0px;
+    opacity: 0.8;
+    left: unset;
+    transition: right 0.5s ease-in;
+  }
+  .btn-show-list:hover {
+    right: 0;
+  }
+}
+.colse-x {
+  right: 6%;
+  top: 18%;
+  z-index: 99899989898989;
+  position: absolute;
+  font-size: 43px;
+  border-radius: 53%;
+  border: 3px solid #5f5a5a;
+  color: #912cfa;
+  padding: 3px 15px;
+  font-weight: 100;
+}
+.form-check-input {
+  content: "";
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.form-check label {
+  font-size: 1.5rem;
+}
+
+.form-control.message {
+  transition: all 0.4s ease-in;
+  width: 50%;
+  min-height: 80px;
 }
 </style>

@@ -27,6 +27,7 @@
         <img src="/images/siteImgs/gift-faild.png" alt="" />
 
         <h4>Thank you</h4>
+        <a href="/Nadeem-Sirajs-Birthday-Gift">back to birthday page </a>
       </div>
     </div>
 

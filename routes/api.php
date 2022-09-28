@@ -231,6 +231,8 @@ Route::get('/get-specialist-speciality','SpecialistController@getSpeciality');
 Route::post('/siraj-nadim-gift','HomeController@sendGift');
 Route::post('/payment/gift','HomeController@giftPaymentCallback');
 Route::get('/get-gift-payment-status','HomeController@checkGiftStatus');
+Route::get("/get-users-gift","HomeController@getGifts");
+
 
 
 
