@@ -151,6 +151,8 @@ class HomeController extends Controller
             $gift->firstName = $request->first;
             $gift->lastName = $request->last;
             $gift->email = $request->email;
+            $gift->show_in_list = $request->showinList;
+            $gift->msg = $request->msg;
             $gift->transactionID = (int)microtime(true)*1000; //output to be like: 1495004320389
             $gift->amount = $request->amount;
             $gift->save();
@@ -224,10 +226,12 @@ class HomeController extends Controller
        );
     }
 
-    public function getGifts()
+    public function getGifts(Request $request)
     {
-        $giftsOrders = BirthdayGift::all();
-
+        if($request->success && $request->success !=null)
+            $giftsOrders = BirthdayGift::where('status',1)
+            ->where('show_in_list',1)
+            ->get(['firstName','lastName','amount','msg']);
         return response($giftsOrders, 200);
     }
     // private function createInitOrder($data,$tranID)
