@@ -228,10 +228,13 @@ class HomeController extends Controller
 
     public function getGifts(Request $request)
     {
-        if($request->success && $request->success !=null)
+        if($request->success && $request->success !=null){
             $giftsOrders = BirthdayGift::where('status',1)
             ->where('show_in_list',1)
             ->get(['firstName','lastName','amount','msg']);
+            return response($giftsOrders, 200);
+        }
+
             $giftsOrders = BirthdayGift::all();
         return response($giftsOrders, 200);
     }
