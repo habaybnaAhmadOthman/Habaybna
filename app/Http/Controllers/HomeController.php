@@ -232,6 +232,7 @@ class HomeController extends Controller
             $giftsOrders = BirthdayGift::where('status',1)
             ->where('show_in_list',1)
             ->get(['firstName','lastName','amount','msg']);
+            $giftsOrders = BirthdayGift::all();
         return response($giftsOrders, 200);
     }
     // private function createInitOrder($data,$tranID)
