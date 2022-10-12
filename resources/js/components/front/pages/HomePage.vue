@@ -6,7 +6,7 @@
       <IconsSection></IconsSection>
     </div>
     <div
-      class="video-box relative w-55 mt-20-p w-100-p p-side-12-p m-side-auto"
+      class="video-box relative w-55 mt-20-p w-100-p p-side-12-p m-side-auto mt-50"
     >
       <iframe
         class="video-box-home"
