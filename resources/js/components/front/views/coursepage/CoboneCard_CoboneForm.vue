@@ -8,7 +8,7 @@
                 type="text"
                 v-model="promoCode"
                 class="w-80 cobone-input"
-                placeholder="هل لديك كوبون أو قسيمة شرائية استخدمها الآن ؟"
+                placeholder="هل لديك كود خصم؟ استخدمه وتابع من هنا"
             />
             <input type="submit" value="" class="apply-cobone w-10 pointer" />
         </form>
@@ -102,7 +102,7 @@ export default {
                 await this.$store.dispatch('courses/getAllCourses')
                 this.setInfoModal('يمكنك الآن مشاهدة الدورة','لقد قمت بإدخال رقم الكوبون بنجاح',true,true,true)
             } else { // discount success
-            
+
                 this.discountVal = this.coursePrice - (this.coursePrice * (checkPromoCode.discount_perc / 100));
                 this.setInfoModal('يمكنك إتمام عملية الشراء','لقد قمت بإدخال رقم الكوبون بنجاح',true,false,true)
             }

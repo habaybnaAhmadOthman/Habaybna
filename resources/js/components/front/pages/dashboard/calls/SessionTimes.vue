@@ -9,16 +9,16 @@
                     <div class="card-body p-0-p">
                         <div class="d-flex align-center space-between mb-25">
                             <h1 class="do">إختر الأوقات التي تكون متفرغاً بها لإجراء مكالمة</h1>
-                            <!-- <div class="d-flex align-center gap-10 justify-center-p">
+                            <div class="d-flex align-center gap-10 justify-center-p">
                                 <p class="font-13">اختيار هذه الأوقات بشكل أسبوعي</p>
                                 <label class="--switch">
                                     <input type="checkbox" v-model="repeatWeekly">
                                     <span class="-slider round"></span>
                                 </label>
-                            </div> -->
+                            </div>
                         </div>
 
-                        <SessionTableTimes></SessionTableTimes>
+                        <SessionTableTimes :repeatWeekly="repeatWeekly"></SessionTableTimes>
 
                     </div>
                 </div>
@@ -30,11 +30,11 @@
 <script>
 import UserProfileContent from "../../../views/userprofile/UserProfile_Content.vue";
 import SessionTableTimes from "../../../views/userprofile/calls/SessionTableTimes.vue";
-export default {    
+export default {
     components: {UserProfileContent,SessionTableTimes},
     data(){
         return {
-            repeatWeekly: true
+            repeatWeekly: false
         }
     },
 };

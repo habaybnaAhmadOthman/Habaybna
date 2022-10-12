@@ -8,6 +8,7 @@ use App\CallPurchaseOrders;
 use App\CallsAppointments;
 use App\Specialist;
 use App\User;
+use DateTime;
 
 use Auth;
 use \Carbon\Carbon;
@@ -18,8 +19,10 @@ class CallsAppointmentsController extends Controller
 
     public function setCallsProvidersappointments(Request $request)
     {
+        // dd($request->saveThoseIntervalsOnly[0]);
+
         if(Auth::user()->specialist && Auth::user()->specialist->make_calls){
-            $data['apointments'] = $request->all();
+            $data['apointments'] = $request->saveThoseIntervalsOnly;
 
             if(!empty($data['apointments']) && count($data['apointments']) > 0 ){
 
@@ -29,12 +32,16 @@ class CallsAppointmentsController extends Controller
                         'appointment'=>$one
                     ]);
                 }
-                return response(Auth::user()->specialist->callsAppointments, 200);
-            }
-        }
-        return response('cantmakecall', 404);
+                if ($request->repeatWeekly) {
+                    $this->rescheduleAppointment($request->saveThoseIntervalsOnly);
+                }
+
+                return response('success', 200);
+             }
 
 
+    }
+    return response('cantmakecall', 404);
     }
 
     public function getBookedCallsProvidersappointments()
@@ -204,7 +211,60 @@ class CallsAppointmentsController extends Controller
 
         return response('faild', 404);
 
+    }
 
+    private function rescheduleAppointment(array $data)
+    {
+        // $data=['2022-11-01T09:00:00.000Z','2022-11-08T09:00:00.000Z','2022-11-15T09:00:00.000Z','2022-11-T09:00:00.000Z'];
+        $lastDay = date("Y-m-t", strtotime($data[0]));
+        // $lastDayInMonth = new DateTime($data[0]);
+        foreach ($data as $key )
+        {
 
+            $nextAppointment = new DateTime($key);
+            $nextAppointment->modify('+1 week');
+            $nextAppString = $nextAppointment->format('Y-m-d') ;
+
+            if($nextAppString <= $lastDay) {
+                // dd($nextAppointment);
+
+                CallsAppointments::create([
+                    'specialist_id'=>Auth::id(),
+                    'appointment'=>$nextAppointment->format('Y-m-d\TH:i:s.000') . 'Z'
+                ]);
+
+                $nextAppointment->modify('+1 week');
+                $nextAppString = $nextAppointment->format('Y-m-d') ;
+            }
+            if( $nextAppString <= $lastDay ) {
+                $nextAppointment->modify('+1 hour');
+                // dd($nextAppointment->format('Y-m-d\TH:i:s.000') . 'Z');
+                CallsAppointments::create([
+                    'specialist_id'=>Auth::id(),
+                    'appointment'=>$nextAppointment->format('Y-m-d\TH:i:s.000') . 'Z'
+                ]);
+
+                $nextAppointment->modify('+1 week');
+                $nextAppString = $nextAppointment->format('Y-m-d') ;
+            }
+            if( $nextAppString <= $lastDay ) {
+                CallsAppointments::create([
+                    'specialist_id'=>Auth::id(),
+                    'appointment'=>$nextAppointment->format('Y-m-d\TH:i:s.000') . 'Z'
+                ]);
+
+                $nextAppointment->modify('+1 week');
+                $nextAppString = $nextAppointment->format('Y-m-d\TH:i:s.000') . 'Z' ;
+            }
+            if( $nextAppString <= $lastDay ) {
+                CallsAppointments::create([
+                    'specialist_id'=>Auth::id(),
+                    'appointment'=>$nextAppointment->format('Y-m-d\TH:i:s.000') . 'Z'
+                ]);
+
+                // $nextAppointment->modify('+1 week');
+                // $nextAppString = $nextAppointment->format('Y-m-d\TH:i:s.000') . 'Z' ;
+            }
+        }
     }
 }
