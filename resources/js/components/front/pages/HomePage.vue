@@ -85,7 +85,7 @@ export default {
   margin-top: 75px;
 }
 .video-box-home {
-  width: 75%;
+  width: 74%;
   height: 680px;
 }
 .statistic {
