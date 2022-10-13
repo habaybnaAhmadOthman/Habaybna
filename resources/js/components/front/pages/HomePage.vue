@@ -6,7 +6,7 @@
       <IconsSection></IconsSection>
     </div>
     <div
-      class="video-box relative w-55 mt-20-p w-100-p p-side-12-p m-side-auto mt-50"
+      class="video-box-home-container"
     >
       <iframe
         class="video-box-home"
@@ -18,10 +18,10 @@
       ></iframe>
     </div>
     <div class="mt-50 mobile-statistic">
-      <img src="images/siteImgs/statisticmobile.png" alt="" />
+      <img src="images/siteImgs/statisticmobile2.png" alt="" />
     </div>
     <div class="statistic">
-      <img src="images/siteImgs/statistics.png" alt="" />
+      <img src="images/siteImgs/statisticweb2.png" alt="" />
     </div>
     <div class="">
       <CoursesSection :cardsCount="5" :showMoreCard="true"></CoursesSection>
@@ -79,24 +79,31 @@ export default {
 };
 </script>
 <style scoped>
+.video-box-home-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 75px;
+}
 .video-box-home {
-  width: 1080px;
+  width: 75%;
   height: 680px;
 }
 .statistic {
   display: flex;
   justify-content: center;
+      margin: 77px 0;
+
 }
 .statistic img{
-  width: 55%;
+  width: 75%;
 }
 .mobile-statistic {
   display: none;
 }
 @media (max-width: 767px) {
   .video-box-home {
-    width: 360px;
-    height: 210px;
+    width: 355px;
+    height: 200px;
   }
 
   .mobile-statistic {
@@ -104,8 +111,15 @@ export default {
     display: flex;
     justify-content: center;
   }
+  .mobile-statistic img{
+  width: 90%;
+}
   .statistic {
     display: none;
   }
+  .video-box-home-container {
+
+  margin-top: 20px;
+}
 }
 </style>
