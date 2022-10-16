@@ -8,9 +8,14 @@
         type="text"
         v-model="promoCode"
         class="w-80 cobone-input"
-        placeholder="هل لديك كوبون أو قسيمة شرائية استخدمها الآن ؟"
+        placeholder="هل لديك كود خصم؟ استخدمه وتابع من هنا"
       />
-      <input :disabled="canEnterCode" type="submit" value="" class="apply-cobone w-10 pointer" />
+      <input
+        :disabled="canEnterCode"
+        type="submit"
+        value=""
+        class="apply-cobone w-10 pointer"
+      />
     </form>
     <info-modal
       :show="infoModal.show"
@@ -25,14 +30,14 @@
         <span class="gray font-35 before-discount bold ml-30">
           <template>{{ callPrice }} USD</template>
         </span>
-        <span class="bold font-35 main-color">{{ Math.round(discountVal) }} USD</span>
+        <span class="bold font-35 main-color"
+          >{{ Math.round(discountVal) }} USD</span
+        >
       </div>
       <button v-if="promoID" @click="bookAppointment" class="btn">
-          متابعة
+        متابعة
       </button>
-      <button v-else @click="closeInfoModal" class="btn">
-          متابعة
-      </button>
+      <button v-else @click="closeInfoModal" class="btn">متابعة</button>
     </info-modal>
   </div>
 </template>
@@ -41,8 +46,19 @@
 import infoModalMixin from "../../mixins/infoModal";
 export default {
   mixins: [infoModalMixin],
-  emits: ["buyAppointment","getPromoCode","open-questionaire-modal","saveSelectedApt"],
-  props: ["specialistID","isLoggedIn","canEnterCode", "selectedAppointment","slug"],
+  emits: [
+    "buyAppointment",
+    "getPromoCode",
+    "open-questionaire-modal",
+    "saveSelectedApt",
+  ],
+  props: [
+    "specialistID",
+    "isLoggedIn",
+    "canEnterCode",
+    "selectedAppointment",
+    "slug",
+  ],
   data() {
     return {
       promoCode: "",
@@ -50,7 +66,7 @@ export default {
       callPrice: 54,
       priceAfterDiscount: null,
       promoID: null,
-      callID: null
+      callID: null,
     };
   },
   methods: {
@@ -61,7 +77,7 @@ export default {
       this.infoModal.isFixed = false;
       if (!this.isLoggedIn) {
         this.$store.commit("loginModal", true);
-        this.$emit('saveSelectedApt',true)
+        this.$emit("saveSelectedApt", true);
         return false;
       }
       if (this.promoCode == "") {
@@ -77,7 +93,7 @@ export default {
           promoCode: this.promoCode,
           usage: "Call",
         });
-        
+
         if (checkPromoCode.isValid) {
           this.$emit("getPromoCode", checkPromoCode.id);
         }
@@ -91,7 +107,7 @@ export default {
       }
       if (checkPromoCode.discount_perc == 100) {
         // free
-        this.promoID = checkPromoCode.id
+        this.promoID = checkPromoCode.id;
         this.setInfoModal(
           "تم استخدام الكوبون بنجاح",
           "سيتم إضافة رابط المكالمة في سجل المكالمات الخاص بك",
@@ -111,29 +127,28 @@ export default {
           false,
           true
         );
-        this.$store.commit('specialist/callPrice',this.discountVal)
+        this.$store.commit("specialist/callPrice", this.discountVal);
       }
     },
     async bookAppointment() {
-      this.isLoading(true)
-      const selectedApt = this.selectedAppointment
+      this.isLoading(true);
+      const selectedApt = this.selectedAppointment;
       try {
-          const resp = await this.$store.dispatch('specialist/bookAppointment',{
-            appointmentID: selectedApt.id,
-            slug: this.slug,
-            specialistID: this.specialistID,
-            hasPromoCode: {
-                id: this.promoID
-            },
-          });
-          this.callID = resp.SmartRouteParams.appointment_id
-          this.closeInfoModal()
-        this.$emit('open-questionaire-modal',this.callID)
+        const resp = await this.$store.dispatch("specialist/bookAppointment", {
+          appointmentID: selectedApt.id,
+          slug: this.slug,
+          specialistID: this.specialistID,
+          hasPromoCode: {
+            id: this.promoID,
+          },
+        });
+        this.callID = resp.SmartRouteParams.appointment_id;
+        this.closeInfoModal();
+        this.$emit("open-questionaire-modal", this.callID);
       } catch (error) {
-          this.$store.commit('alertDialogMsg',error.message);
+        this.$store.commit("alertDialogMsg", error.message);
       }
-      this.isLoading(false)
-      
+      this.isLoading(false);
     },
   },
 };
@@ -151,15 +166,15 @@ export default {
   padding: 20px 8px;
 }
 .apply-cobone {
-  background-color: #780d93!important;
+  background-color: #780d93 !important;
   position: relative;
   border-radius: 25px 0 0 25px;
   border: 0;
   width: 20%;
-  background-image: url(/images/arrow-left.svg)!important;
-  background-repeat: no-repeat!important;
-  background-position: center!important;
-  transition: .3s;
+  background-image: url(/images/arrow-left.svg) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  transition: 0.3s;
 }
 .apply-cobone:disabled {
   opacity: 0.5;

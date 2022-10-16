@@ -73,6 +73,8 @@ import AddSession from './AddSession.vue'
 import NormalModal from "../../../layouts/NormalModal.vue";
 export default {
   components:{Col,AddSession,ColMobile,NormalModal},
+    props:["repeatWeekly"],
+
   mounted(){
     this.getAppointments()
   },
@@ -112,7 +114,12 @@ export default {
       if (saveThoseIntervalsOnly.length > 0) {
         this.isLoading(true)
         try {
-          await this.$store.dispatch('specialist/setAppointments',saveThoseIntervalsOnly)
+            let Obj = {
+                saveThoseIntervalsOnly : saveThoseIntervalsOnly,
+                repeatWeekly:this.repeatWeekly
+
+            }
+          await this.$store.dispatch('specialist/setAppointments',Obj)
         } catch {
           console.log('something happend!')
         }

@@ -27,6 +27,7 @@ export default {
     },
     // ******** add appointments ::: POST
     async setAppointments(context,payload) {
+        console.log('payload',payload);
         const resp = await callApi("POST", `/api/set-calls-providers-appointments`,payload);
         if (!resp || resp.status != 200) {
             const error = new Error("fail to setAppointments");
