@@ -92,6 +92,34 @@
                   @show-appointment-tab="isHasAppointments"
                   @open-questionaire-modal="openQuestionaireModal"
                 ></Book>
+                      <div
+                      style="justify-content:center"
+        class="
+          radius-12
+          bg-white
+          d-flex
+          mt-20
+          p-10
+          w-100 w-100-p
+
+        "
+      >
+        <p class="font-20 avaliable w-60 w-100-p" style="textAlign:center">
+          <!-- <img
+            class="ml-10"
+            src="/images/coin-icon.png"
+            width="30"
+            height="30"
+            alt="الأخصائيين"
+          /> -->
+          لأنكم حبايبنا نهديكم خصم 35% عند استخدام الكود:
+          <span class="d-block font-32  bold pt-15 pb-15" style="color:#f6b432">Hellohabaybna22</span>
+          <ul style="textAlign:right">
+              <li class="font-16" style="list-style:inside; vertical-align: middle;">صالح خلال أكتوبر ونوفمبر 2022</li>
+              <li class="font-16" style="list-style:inside; vertical-align: middle;">يمكن استخدام الكود أكثر من مرة</li>
+          </ul>
+        </p>
+      </div>
               </div>
               <div tab-name="about" all>
                 <div class="font-24 black-2 font-18-p">
@@ -235,7 +263,7 @@ export default {
       isDataReady: false,
       querstionaireModal: {
         show: false,
-        callIDFromCobone: null
+        callIDFromCobone: null,
       },
       showShareModal: false,
     };
@@ -293,7 +321,6 @@ export default {
             }
             return course;
           });
-          
         }
         if (data.specialist.articles.length > 0) {
           this.articles = data.specialist.articles.map((article) => {
@@ -303,7 +330,7 @@ export default {
             };
           });
         }
-        
+
         if (data.specialist) {
           this.specialistInfo.firstName = data.specialist.firstName;
           this.specialistInfo.lastName = data.specialist.lastName;
@@ -359,24 +386,24 @@ export default {
         });
         if (removedTabs.includes(activeTab)) {
           activeTab = this.tabs[0].name;
-          this.tabs[0].active = true
-        } 
-        setTimeout(()=>{
+          this.tabs[0].active = true;
+        }
+        setTimeout(() => {
           this.toggletab(activeTab);
-        },100)
+        }, 100);
         localStorage.removeItem("active_tab");
       }
       let checkIfHasActiveTab = false;
       this.tabs.forEach((tab) => {
         if (tab.active) {
-          checkIfHasActiveTab = true
+          checkIfHasActiveTab = true;
         }
       });
       if (!checkIfHasActiveTab) {
         this.tabs[0].active = true;
-        setTimeout(()=>{
+        setTimeout(() => {
           this.toggletab(this.tabs[0].name);
-        },100)
+        }, 100);
       }
     },
     toggletab(tabName) {
@@ -417,11 +444,14 @@ export default {
       }
     },
     openQuestionaireModal(callIDFromCobone) {
-      if ((typeof callIDFromCobone != 'object' && callIDFromCobone) || this.$route.query.payment == "true")
+      if (
+        (typeof callIDFromCobone != "object" && callIDFromCobone) ||
+        this.$route.query.payment == "true"
+      )
         this.isQuestionaireModal(true);
 
       if (callIDFromCobone) {
-        this.querstionaireModal.callIDFromCobone = callIDFromCobone
+        this.querstionaireModal.callIDFromCobone = callIDFromCobone;
       }
     },
     isQuestionaireModal(status) {
@@ -461,5 +491,19 @@ export default {
     width: 150px;
     height: 150px;
   }
+  .avaliable {
+      width: 100%;
+      font-size: 20px !important;
+  padding: 2px;
+
+  }
+}
+.avaliable {
+  text-align: center;
+  background-color: #944e99;
+  color: #fff;
+  padding: 30px 15px;
+  border-radius: 9px;
+  font-size: 23px;
 }
 </style>
