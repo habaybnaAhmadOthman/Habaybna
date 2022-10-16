@@ -18,7 +18,7 @@ class SendOtpCode
      */
     public function __construct()
     {
-       
+
     }
 
     /**
@@ -29,6 +29,6 @@ class SendOtpCode
      */
     public function handle(VerifyUser $event)
     {
-        \App\CustomClass\SendSms::execute($event->phone,$event->otp);
+        \App\CustomClass\SendSms::execute($event->phone,$event->otp,$event->msg);
     }
 }

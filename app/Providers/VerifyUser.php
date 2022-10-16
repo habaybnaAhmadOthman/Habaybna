@@ -15,16 +15,18 @@ class VerifyUser
     use Dispatchable, InteractsWithSockets, SerializesModels;
         public $phone ;
         public $otp ;
+        public $msg ;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($phone, $otp)
+    public function __construct($phone, $otp,$msg=null)
     {
         $this->phone = $phone ;
         $this->otp = $otp ;
+        $this->msg = $msg ;
     }
 
     /**

@@ -8,13 +8,16 @@ use Carbon\Carbon;
 
 class SendSms {
 
-    public static function execute($phone, $otp)
+    public static function execute($phone, $otp, $msg)
     {
         try {
-            $msg = "اهلا بك في منصة حبايبنا
-                    رمز التحقق الخاص بك هو
-                          (".$otp.")
-            ";
+            if(!isset($msg) && $msg == null){
+
+                $msg = "اهلا بك في منصة حبايبنا
+                        رمز التحقق الخاص بك هو
+                              (".$otp.")
+                ";
+            }
             //           www.habaybna.net
             $curl = curl_init();
 
@@ -27,7 +30,7 @@ class SendSms {
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => "sender=Habaybna&mobile=".$phone."&content=".$msg,
+                CURLOPT_POSTFIELDS => "sender=Habaybna&mobile=".$phone."&content=".$msg." (".$otp.")",
                 CURLOPT_HTTPHEADER => array(
                     "Authorization: Bearer ". config('appconfig.releanssecret')
                 ),

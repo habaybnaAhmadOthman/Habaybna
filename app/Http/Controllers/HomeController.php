@@ -96,7 +96,7 @@ class HomeController extends Controller
                 if($user){
                     $user->otp = random_int(100000, 999999);
                     $user->save();
-                    event(new VerifyUser($user->phone, $user->otp));
+                    event(new VerifyUser($user->phone, $user->otp,$msg=" رمز تحقق إعادة كلمة المرور هو"));
 
                     return response($user->phone,200);
 
