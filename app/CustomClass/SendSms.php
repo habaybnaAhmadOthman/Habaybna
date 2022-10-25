@@ -15,7 +15,7 @@ class SendSms {
 
                 $msg = "اهلا بك في منصة حبايبنا
                         رمز التحقق الخاص بك هو
-                              (".$otp.")
+                              
                 ";
             }
             //           www.habaybna.net
