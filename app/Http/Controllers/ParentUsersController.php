@@ -394,33 +394,17 @@ class ParentUsersController extends Controller
     public function getParentsData()
     {
         try{
-            $parents = ParentUsers::orderBy('id', 'desc')->get();
-            $data = [];
-            if(count($parents) > 0 ){
-                foreach ($parents as  $parent) {
-                    $parent->user->toArray();
-                    $parent->toArray();
-                    array_push($data,$parent);
-                }
+                $parents = User::whereHas('parent')->orderBy('id', 'desc')->paginate(4);
 
-                return response()->json([
-                    'parnets'=>$data
-                ],200);
+                return response($parents, 200);
+
+            } catch (ModelNotFoundException $e){
+                return response( 'error',404 );
             }
-            return response()->json([
-                'msg'=>'faild',
-                'status'=>false,
-                404
-           ]);
-    } catch (ModelNotFoundException $e){
-        return response()->json([
-            'msg'=>'faild',
-            'status'=>false,
-            404
-       ]);
-    }
 
     }
+
+
 
 
 }

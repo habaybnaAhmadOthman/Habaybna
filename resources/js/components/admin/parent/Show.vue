@@ -247,6 +247,8 @@
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
 import PrivateModeDialog from "../../front/views/userprofile/myaccount/PrivateModeDialog.vue";
+import years from '../../../modules/years';
+console.log(years);
 
 export default {
   emits: ["submit-form", "open-password-dialog"],
@@ -391,6 +393,8 @@ export default {
         jobTitle: this.jobTitle.val,
         interests: tagIDs,
       });
+        this.$Message.success("تم التعديل بنجاح ");
+
     },
     openAlertDialog(paramName, message) {
       this[paramName] = false;
