@@ -21,24 +21,22 @@ class UserController extends Controller
     {
         try{
             $user = Auth::user();
-            // dd($user->user_data);
-            $userIntrest = UserInterest::where('user_id',$user->id )->get() ;
+            // dd($user->interests);
+            // $userIntrest = UserInterest::where('user_id',$user->id )->get() ;
             $interestsList = Interest::all();
-            if($userIntrest){
-                $userIntrests = [];
-                foreach ($userIntrest as $intrest) {
-                    $userIntrests[] =
-                    [
-                       'id'=> $intrest->intrest_data->id,
-                       'title'=>$intrest->intrest_data->title,
-                    ];
-                }
+            // if($userIntrest){
+            //     $userIntrests = [];
+            //     foreach ($userIntrest as $intrest) {
+            //         $userIntrests[] =
+            //         [
+            //            'id'=> $intrest->intrest_data->id,
+            //            'title'=>$intrest->intrest_data->title,
+            //         ];
+            //     }
 
-            }
+            // }
 
-            switch ($user->role) {
-                case 'parent':
-
+                if($user->is_patent) {
                     $userData['firstName'] = $user->user_data->firstName ;
                     $userData['lastName'] = $user->user_data->lastName ;
                     $userData['gender'] = $user->user_data->gender ;
@@ -54,45 +52,37 @@ class UserController extends Controller
                     $userData['job_title'] = $user->user_data->job_title ;
                     $userData['why_to_join'] = $user->user_data->why_to_join ;
                     $userData['private_mode'] = $user->user_data->private_mode ;
-                    $userData['interests'] = $userIntrests ? $userIntrests : '';
+                    $userData['interests'] = $user->interests ? $user->interests : '';
                     $userData['interestsList'] = $interestsList ? $interestsList : [];
-
-
-
                     $userData['phone'] = $user->phone ;
                     $userData['email'] = $user->email ;
+                }
 
-                    break;
+                if($user->is_specialist) {
+                    $userData['firstName'] = $user->specialist->firstName ;
+                    $userData['lastName'] = $user->specialist->lastName ;
+                    $userData['gender'] = $user->specialist->gender ;
+                    $userData['specialization'] = $user->specialist->specialization ;
+                    $userData['work_place'] = $user->specialist->work_place ;
+                    $userData['status'] = $user->specialist->status ;
+                    $userData['avatar'] = $user->specialist->avatar ;
+                    $userData['edu_level'] = $user->specialist->edu_level ;
+                    $userData['job_title'] = $user->specialist->job_title ;
+                    $userData['dob'] = $user->specialist->dob ;
+                    $userData['city'] = $user->specialist->city ;
+                    $userData['experience'] = $user->specialist->experience ;
+                    $userData['disorders_work_with'] = $user->specialist->disorders_work_with ;
+                    $userData['interests'] = $user->interests ? $user->interests : '';
+                    $userData['interestsList'] = $interestsList ? $interestsList : [];
+                    $userData['can_make_call'] = $user->specialist->make_calls;
+                    $userData['phone'] = $user->phone ;
+                    $userData['email'] = $user->email ;
+                }
 
-                case 'specialist':
-
+                if($user->is_other) {
                     $userData['firstName'] = $user->user_data->firstName ;
                     $userData['lastName'] = $user->user_data->lastName ;
                     $userData['gender'] = $user->user_data->gender ;
-                    $userData['specialization'] = $user->user_data->specialization ;
-                    $userData['work_place'] = $user->user_data->work_place ;
-                    $userData['status'] = $user->user_data->status ;
-                    $userData['avatar'] = $user->user_data->avatar ;
-                    $userData['edu_level'] = $user->user_data->edu_level ;
-                    $userData['job_title'] = $user->user_data->job_title ;
-                    $userData['dob'] = $user->user_data->dob ;
-                    $userData['city'] = $user->user_data->city ;
-                    $userData['experience'] = $user->user_data->experience ;
-                    $userData['disorders_work_with'] = $user->user_data->disorders_work_with ;
-                    $userData['interests'] = $userIntrests ? $userIntrests : '';
-                    $userData['interestsList'] = $interestsList ? $interestsList : [];
-                    $userData['can_make_call'] = $user->user_data->make_calls;
-
-
-
-                    $userData['phone'] = $user->phone ;
-                    $userData['email'] = $user->email ;
-
-                case 'other':
-                    $userData['firstName'] = $user->user_data->firstName ;
-                    $userData['lastName'] = $user->user_data->lastName ;
-                    $userData['gender'] = $user->user_data->gender ;
-                    // $userData['specialization'] = $user->user_data->specialization ;
                     $userData['work_place'] = $user->user_data->work_place ;
                     $userData['status'] = $user->user_data->status ;
                     $userData['avatar'] = $user->user_data->avatar ;
@@ -101,13 +91,12 @@ class UserController extends Controller
                     $userData['dob'] = $user->user_data->dob ;
                     $userData['why_to_join'] = $user->user_data->why_to_join ;
                     $userData['employment'] = $user->user_data->employment ;
-                    $userData['interests'] = $userIntrests ? $userIntrests : '';
+                    $userData['interests'] = $user->interests ? $user->interests : '';
                     $userData['interestsList'] = $interestsList ? $interestsList : [];
-
-
                     $userData['phone'] = $user->phone ;
                     $userData['email'] = $user->email ;
-            }
+                }
+
                 return response()->json([
                     'msg'=>'success',
                     'userData'=>$userData,
@@ -337,4 +326,7 @@ class UserController extends Controller
         return response([$prgr,200]);
 
     }
+
+
+
 }

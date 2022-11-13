@@ -247,6 +247,7 @@
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
 import PrivateModeDialog from "../../front/views/userprofile/myaccount/PrivateModeDialog.vue";
+import years from '../../../modules/years';
 
 export default {
   emits: ["submit-form", "open-password-dialog"],
@@ -314,12 +315,10 @@ export default {
       this.PrivateModeDialog = !this.PrivateModeDialog;
     },
     async getProfileData() {
-      console.log(this.$route.params.data);
       const obj = await this.$store.dispatch(
         "admin/getParentProfileDataAdmin",
         this.$route.params.data
       );
-      console.log(obj);
       const data = obj.userData;
       this.firstName = data.firstName;
       this.lastName = data.lastName;
@@ -391,6 +390,8 @@ export default {
         jobTitle: this.jobTitle.val,
         interests: tagIDs,
       });
+        this.$Message.success("تم التعديل بنجاح ");
+
     },
     openAlertDialog(paramName, message) {
       this[paramName] = false;

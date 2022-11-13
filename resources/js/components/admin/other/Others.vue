@@ -49,32 +49,32 @@ th {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(other, index) in filteredList" :key="index">
+        <tr v-for="(other, index) in filterlist" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ other.firstName + " " + other.lastName }}</td>
-          <td class="phone-td">{{ other.user.phone }}</td>
-          <td>{{ other.user.email }}</td>
+          <td>{{ other.user_data.firstName + " " + other.user_data.lastName }}</td>
+          <td class="phone-td">{{ other.phone }}</td>
+          <td>{{ other.email }}</td>
           <td class="status">
             <Button
               type="success"
               ghost
-              v-if="other.status"
-              v-on:click="changeStatus(index, other.user_id)"
+              v-if="other.user_data.status"
+              v-on:click="changeStatus(index, other.user_data.user_id)"
             >
               <span>نشط</span>
             </Button>
             <Button
               type="error"
               ghost
-              v-if="!other.status"
+              v-if="!other.user_data.status"
               v-on:click="changeStatus(index, other.user_id)"
             >
               <span>غير نشط</span>
             </Button>
           </td>
-          <td>{{ other.gender == "m" ? "ذكر" : "انثى" }}</td>
-          <td>{{ other.specialization }}</td>
-          <td>{{ other.created_at.slice(0, 10) }}</td>
+          <td>{{ other.user_data.gender == "m" ? "ذكر" : "انثى" }}</td>
+          <td>{{ other.user_data.specialization }}</td>
+          <td>{{ other.user_data.created_at.slice(0, 10) }}</td>
 
           <td>
             <Button
@@ -86,7 +86,7 @@ th {
             <!-- <Button type="dashed" size="small">courses</Button>
             <Button type="dashed" size="small">calls</Button> -->
 
-            <Button @click="deleteDaialog(other.user_id, index)">
+            <Button @click="deleteDaialog(other.id, index)">
               <Icon size="20" color="red" type="md-trash" />
             </Button>
           </td>
@@ -104,11 +104,11 @@ th {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(specialist, index) in filteredList" :key="index">
+        <tr v-for="(specialist, index) in filterlist" :key="index">
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ specialist.firstName + " " + specialist.lastName }}</td>
-          <td class="phone-td">{{ specialist.user.phone }}</td>
-          <td>{{ specialist.user.email }}</td>
+          <td class="phone-td">{{ specialist.phone }}</td>
+          <td>{{ specialist.email }}</td>
           <td>{{ specialist.why_to_join }}</td>
         </tr>
       </tbody>
@@ -149,15 +149,27 @@ export default {
       ascending: false,
     };
   },
-  async created() {
-    const resp = await this.callApi("get", "/api/admin/get-others-data");
-    console.log(resp, "others");
-    if (resp.status == 200) {
-      this.others = resp.data.others;
-      console.log(this.others);
-    }
-  },
+//   async created() {
+//     const resp = await this.callApi("get", "/api/admin/get-others-data");
+//     console.log(resp, "others");
+//     if (resp.status == 200) {
+//       this.others = resp.data.others;
+//       console.log(this.others);
+//     }
+//   },
   methods: {
+          async getResults(page) {
+      if (typeof page === "undefined") {
+        page = 1;
+      }
+      await this.callApi(
+        "get",
+        "/api/admin/get-others-data?page=" + page
+      ).then((resp) => {
+        this.others = resp;
+        console.log(this.others);
+      });
+    },
     exportToExcel() {
       /* generate workbook object from table */
       var wb = XLSX.utils.table_to_book(document.getElementById("table"));
@@ -178,7 +190,7 @@ export default {
         this.dialogDelete = false;
         this.$Message.success("Successfully delete");
       }, 1500);
-      this.others.splice(index, 1);
+      this.others.data.data.splice(index, 1);
     },
     changeStatus(i, id) {
       this.loading = true;
@@ -186,7 +198,7 @@ export default {
       const resp = this.$store.dispatch("admin/changeStatus", id);
       setTimeout(() => {
         this.$Message.success("تم تغيير الحالة");
-        this.others[i].status = !this.others[i].status;
+        this.others.data.data[i].status = !this.others.data.data[i].status;
         this.loading = false;
       }, 1000);
     },
@@ -195,16 +207,16 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.others.sort((a, b) =>
+        return this.others.data.data.sort((a, b) =>
           isAscending
-            ? a.firstName > b.firstName
+            ? a.user_data.firstName > b.user_data.firstName
               ? 1
-              : b.firstName > a.firstName
+              : b.user_data.firstName > a.user_data.firstName
               ? -1
               : 0
-            : a.firstName < b.firstName
+            : a.user_data.firstName < b.user_data.firstName
             ? 1
-            : b.firstName < a.firstName
+            : b.user_data.firstName < a.user_data.firstName
             ? -1
             : 0
         );
@@ -213,16 +225,16 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.others.sort((a, b) =>
+        return this.others.data.data.sort((a, b) =>
           isAscending
-            ? a.status > b.status
+            ? a.user_data.status > b.user_data.status
               ? 1
-              : b.status > a.status
+              : b.user_data.status > a.user_data.status
               ? -1
               : 0
-            : a.status < b.status
+            : a.user_data.status < b.user_data.status
             ? 1
-            : b.status < a.status
+            : b.user_data.status < a.user_data.status
             ? -1
             : 0
         );
@@ -231,16 +243,16 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.others.sort((a, b) =>
+        return this.others.data.data.sort((a, b) =>
           isAscending
-            ? a.gender > b.gender
+            ? a.user_data.gender > b.user_data.gender
               ? 1
-              : b.gender > a.gender
+              : b.user_data.gender > a.user_data.gender
               ? -1
               : 0
-            : a.gender < b.gender
+            : a.user_data.gender < b.user_data.gender
             ? 1
-            : b.gender < a.gender
+            : b.user_data.gender < a.user_data.gender
             ? -1
             : 0
         );
@@ -249,29 +261,55 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.others.sort((a, b) =>
+        return this.others.data.data.sort((a, b) =>
           isAscending
-            ? a.created_at > b.created_at
+            ? a.user_data.created_at > b.user_data.created_at
               ? 1
-              : b.created_at > a.created_at
+              : b.user_data.created_at > a.user_data.created_at
               ? -1
               : 0
-            : a.created_at < b.created_at
+            : a.user_data.created_at < b.user_data.created_at
             ? 1
-            : b.created_at < a.created_at
+            : b.user_data.created_at < a.user_data.created_at
             ? -1
             : 0
         );
       }
     },
   },
+    mounted() {
+    this.getResults();
+  },
   computed: {
-    filteredList() {
-      return this.others.filter((other) => {
-        return other.firstName
-          .toLowerCase()
-          .includes(this.keyword.toLowerCase());
-      });
+    filterlist() {
+      if (this.others && this.others.data)
+        return this.others.data.data.filter((other) => {
+          let byName =
+            other.user_data.firstName
+              .toLowerCase()
+              .indexOf(this.keyword.toLowerCase()) > -1;
+
+          let lastName =
+            other.user_data.lastName
+              .toLowerCase()
+              .indexOf(this.keyword.toLowerCase()) > -1;
+
+          let byPhone =
+            other.phone.toLowerCase().indexOf(this.keyword.toLowerCase()) > -1;
+
+          let byEmail =
+            other.email.toLowerCase().indexOf(this.keyword.toLowerCase()) > -1;
+          if (byName === true) {
+            return byName;
+          } else if (lastName === true) {
+            return lastName;
+          } else if (byPhone === true) {
+            return byPhone;
+          } else if (byEmail === true) {
+            return byEmail;
+          }
+          console.log(byName, byPhone);
+        });
     },
   },
 };

@@ -44,6 +44,46 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // specialist //
+
+    public function specialist()
+    {
+        return $this->hasOne(Specialist::class,'user_id');
+    }
+    public function getIsSpecialistAttribute()
+    {
+        return $this->specialist ? true : false ;
+    }
+
+    // parent //
+
+    public function parent()
+    {
+        return $this->hasOne(ParentUsers::class,'user_id');
+    }
+    public function getIsParentAttribute()
+    {
+        return $this->parent ? true : false ;
+    }
+
+
+    // other //
+
+    public function other()
+    {
+        return $this->hasOne(Other::class,'user_id');
+    }
+    public function getIsOtherAttribute()
+    {
+        return $this->other ? true : false ;
+    }
+
+    // interests
+
+    public function interests()
+    {
+        return $this->belongsToMany(CourseCategory::class, 'user_interests','user_id','interest_id');
+    }
     public function getUserDataAttribute()
     {
         switch ($this->role) {
@@ -113,10 +153,7 @@ class User extends Authenticatable
         return $this->hasMany(NewContent::class,'id');
     }
 
-    public function specialist()
-    {
-        return $this->hasOne(Specialist::class,'user_id');
-    }
+
 
 
 

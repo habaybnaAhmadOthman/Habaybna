@@ -43,7 +43,7 @@ h3 {
       <Input
         type="text"
         v-model="keyword"
-        placeholder="ابحث عن الاسم او رقم الهاتف"
+        placeholder=" ابحث عن الاسم او رقم الهاتف أو الايميل"
       />
     </div>
     <table class="table">
@@ -69,51 +69,60 @@ h3 {
           <th scope="col">الاجراءات</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="(parent, index) in filteredList" :key="index">
+      <tbody v-if="parents && parents.data">
+        <tr v-for="(parent, index) in filterlist" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ parent.firstName + " " + parent.lastName }}</td>
-          <td class="phone-td">{{ parent.user.phone }}</td>
-          <td>{{ parent.user.email }}</td>
+          <td>
+            {{ parent.user_data.firstName + " " + parent.user_data.lastName }}
+          </td>
+          <td class="phone-td">{{ parent.phone }}</td>
+          <td>{{ parent.email }}</td>
           <td class="status">
             <Button
               type="success"
               ghost
-              v-if="parent.status"
-              v-on:click="changeStatus(index, parent.user_id)"
+              v-if="parent.user_data.status"
+              v-on:click="changeStatus(index, parent.user_data.user_id)"
             >
               <span>نشط</span>
             </Button>
             <Button
               type="error"
               ghost
-              v-if="!parent.status"
-              v-on:click="changeStatus(index, parent.user_id)"
+              v-if="!parent.user_data.status"
+              v-on:click="changeStatus(index, parent.user_data.user_id)"
             >
               <span>غير نشط</span>
             </Button>
           </td>
-          <td>{{ parent.gender == "m" ? "ذكر" : "انثى" }}</td>
-          <td>{{ parent.private_mode ? "نشط" : "غير نشط" }}</td>
+          <td>{{ parent.user_data.gender == "m" ? "ذكر" : "انثى" }}</td>
+          <td>{{ parent.user_data.private_mode ? "نشط" : "غير نشط" }}</td>
           <td>{{ parent.created_at.slice(0, 10) }}</td>
 
           <td>
             <Button
-              :to="'/admin/parent/' + parent.user_id"
+              :to="'/admin/parent/' + parent.user_data.user_id"
               type="dashed"
               size="small"
               >عرض</Button
             >
             <!-- <Button type="dashed" size="small">courses</Button>
             <Button type="dashed" size="small">calls</Button> -->
-            <Button @click="deleteDaialog(parent.user_id, index)">
+            <Button @click="deleteDaialog(parent.user_data.user_id, index)">
               <Icon size="20" color="red" type="md-trash" />
             </Button>
           </td>
         </tr>
       </tbody>
     </table>
-        <table class="table" id="table" style="display: none">
+    <div v-if="parents && parents.data" class="pagination">
+      <Pagination
+        :data="parents.data"
+        @pagination-change-page="getResults"
+      ></Pagination>
+    </div>
+
+    <table class="table" id="table" style="display: none">
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
@@ -124,12 +133,12 @@ h3 {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(specialist, index) in filteredList" :key="index">
+        <tr v-for="(specialist, index) in filterlist" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ specialist.firstName + " " + specialist.lastName }}</td>
-          <td class="phone-td">{{ specialist.user.phone }}</td>
-          <td>{{ specialist.user.email }}</td>
-          <td>{{ specialist.why_to_join }}</td>
+          <td>{{ specialist.user_data.firstName + " " + specialist.user_data.lastName }}</td>
+          <td class="phone-td">{{ specialist.phone }}</td>
+          <td>{{ specialist.email }}</td>
+          <td>{{ specialist.user_data.why_to_join }}</td>
         </tr>
       </tbody>
     </table>
@@ -156,11 +165,15 @@ h3 {
 </template>
 <script>
 import * as XLSX from "xlsx";
+import LaravelVuePagination from "laravel-vue-pagination";
 
 export default {
+  components: {
+    Pagination: LaravelVuePagination,
+  },
   data() {
     return {
-      parents: [],
+      parents: {},
       dialogDelete: false,
       modal_loading: false,
       idDeleteUser: "",
@@ -169,13 +182,21 @@ export default {
       loading: false,
     };
   },
-  async created() {
-    const resp = await this.callApi("get", "/api/admin/get-parents-data");
-    if (resp.status == 200) {
-      this.parents = resp.data.parnets;
-    }
-  },
+  //   async created() {
+  //     this.getResults();
+  //   },
   methods: {
+    async getResults(page) {
+      if (typeof page === "undefined") {
+        page = 1;
+      }
+      await this.callApi(
+        "get",
+        "/api/admin/get-parents-data?page=" + page
+      ).then((resp) => {
+        this.parents = resp;
+      });
+    },
     exportToExcel() {
       /* generate workbook object from table */
       var wb = XLSX.utils.table_to_book(document.getElementById("table"));
@@ -195,7 +216,7 @@ export default {
         this.dialogDelete = false;
         this.$Message.success("تم حذف المستخدم");
       }, 1500);
-      this.parents.splice(index, 1);
+      this.parents.data.data.splice(index, 1);
     },
     changeStatus(i, id) {
       this.loading = true;
@@ -203,25 +224,26 @@ export default {
       const resp = this.$store.dispatch("admin/changeStatus", id);
       setTimeout(() => {
         this.$Message.success("تم تغيير الحالة");
-        this.parents[i].status = !this.parents[i].status;
+        this.parents.data.data[i].user_data.status = !this.parents.data.data[i].user_data.status;
         this.loading = false;
       }, 1000);
     },
     sortTable(type) {
+        console.log(type);
       if (type == "name") {
-        //   console.log(this.ascending);
+          console.log(this.parents.data.data);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.parents.sort((a, b) =>
+        return this.parents.data.data.sort((a, b) =>
           isAscending
-            ? a.firstName > b.firstName
+            ? a.user_data.firstName > b.user_data.firstName
               ? 1
-              : b.firstName > a.firstName
+              : b.user_data.firstName > a.user_data.firstName
               ? -1
               : 0
-            : a.firstName < b.firstName
+            : a.user_data.firstName < b.user_data.firstName
             ? 1
-            : b.firstName < a.firstName
+            : b.user_data.firstName < a.user_data.firstName
             ? -1
             : 0
         );
@@ -230,16 +252,16 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.parents.sort((a, b) =>
+        return this.parents.data.data.sort((a, b) =>
           isAscending
-            ? a.status > b.status
+            ? a.user_data.status > b.user_data.status
               ? 1
-              : b.status > a.status
+              : b.user_data.status > a.user_data.status
               ? -1
               : 0
-            : a.status < b.status
+            : a.user_data.status < b.user_data.status
             ? 1
-            : b.status < a.status
+            : b.user_data.status < a.user_data.status
             ? -1
             : 0
         );
@@ -248,16 +270,16 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.parents.sort((a, b) =>
+        return this.parents.data.data.sort((a, b) =>
           isAscending
-            ? a.gender > b.gender
+            ? a.user_data.gender > b.user_data.gender
               ? 1
-              : b.gender > a.gender
+              : b.user_data.gender > a.user_data.gender
               ? -1
               : 0
-            : a.gender < b.gender
+            : a.user_data.gender < b.user_data.gender
             ? 1
-            : b.gender < a.gender
+            : b.user_data.gender < a.user_data.gender
             ? -1
             : 0
         );
@@ -266,29 +288,55 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.parents.sort((a, b) =>
+        return this.parents.data.data.sort((a, b) =>
           isAscending
-            ? a.created_at > b.created_at
+            ? a.user_datacreated_at > b.user_datacreated_at
               ? 1
-              : b.created_at > a.created_at
+              : b.user_datacreated_at > a.user_datacreated_at
               ? -1
               : 0
-            : a.created_at < b.created_at
+            : a.user_datacreated_at < b.user_data.created_at
             ? 1
-            : b.created_at < a.created_at
+            : b.user_datacreated_at < a.user_datacreated_at
             ? -1
             : 0
         );
       }
     },
   },
+  mounted() {
+    this.getResults();
+  },
   computed: {
-    filteredList() {
-      return this.parents.filter((other) => {
-        return other.firstName
-          .toLowerCase()
-          .includes(this.keyword.toLowerCase());
-      });
+    filterlist() {
+      if (this.parents && this.parents.data)
+        return this.parents.data.data.filter((other) => {
+          let byName =
+            other.user_data.firstName
+              .toLowerCase()
+              .indexOf(this.keyword.toLowerCase()) > -1;
+
+          let lastName =
+            other.user_data.lastName
+              .toLowerCase()
+              .indexOf(this.keyword.toLowerCase()) > -1;
+
+          let byPhone =
+            other.phone.toLowerCase().indexOf(this.keyword.toLowerCase()) > -1;
+
+          let byEmail =
+            other.email.toLowerCase().indexOf(this.keyword.toLowerCase()) > -1;
+          if (byName === true) {
+            return byName;
+          } else if (lastName === true) {
+            return lastName;
+          } else if (byPhone === true) {
+            return byPhone;
+          } else if (byEmail === true) {
+            return byEmail;
+          }
+          console.log(byName, byPhone);
+        });
     },
   },
 };

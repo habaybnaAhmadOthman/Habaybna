@@ -171,33 +171,15 @@ class SpecialistController extends Controller
 
     public function getSpecialistsData()
     {
-        $specialists = User::whereHas('specialist',function($q) {
+        try{
+            $specialists = User::whereHas('specialist')->orderBy('id', 'desc')->paginate(15);
+            return response($specialists, 200);
 
-            // $q->canMakeCalls();
-            // $q->where('status',1);
+        } catch (ModelNotFoundException $e){
+            return response( 'error',404 );
+        }
 
-        })->with('specialist')->orderBy('id', 'desc')->get();
-        return response($specialists, 200);
 
-        // try{
-        //     $specialists = Specialist::orderBy('id', 'desc')->get();
-        //     $data = [];
-        //     foreach ($specialists as  $specialist) {
-        //         $specialist->user->toArray();
-        //         // $specialist->toArray();
-        //         array_push($data,$specialist);
-        //     }
-
-        //     return response()->json([
-        //         'specialists'=>$data
-        //     ],200);
-        // } catch (ModelNotFoundException $e){
-        //     return response()->json([
-        //         'msg'=>'faild',
-        //         'status'=>false,
-        //         404
-        // ]);
-        // }
 
     }
 
