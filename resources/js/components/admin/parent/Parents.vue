@@ -81,7 +81,7 @@ h3 {
             <Button
               type="success"
               ghost
-              v-if="parent.status"
+              v-if="parent.user_data.status"
               v-on:click="changeStatus(index, parent.user_data.user_id)"
             >
               <span>نشط</span>
@@ -142,7 +142,6 @@ h3 {
         </tr>
       </tbody>
     </table>
-
     <Modal v-model="dialogDelete" width="360">
       <p slot="header" style="color: #f60; text-align: center">
         <Icon type="ios-information-circle"></Icon>
@@ -198,14 +197,6 @@ export default {
         this.parents = resp;
       });
     },
-    // filterlist() {
-    //     console.log(this.keyword);
-    //    this.parents.data.data = this.parents.data.data.filter((parent)=>{
-    //         parent.user_data.firstName
-    //         .toLowerCase()
-    //       .includes(this.keyword.toLowerCase())
-    //    })
-    // },
     exportToExcel() {
       /* generate workbook object from table */
       var wb = XLSX.utils.table_to_book(document.getElementById("table"));
@@ -233,25 +224,26 @@ export default {
       const resp = this.$store.dispatch("admin/changeStatus", id);
       setTimeout(() => {
         this.$Message.success("تم تغيير الحالة");
-        this.parents[i].status = !this.parents[i].status;
+        this.parents.data.data[i].user_data.status = !this.parents.data.data[i].user_data.status;
         this.loading = false;
       }, 1000);
     },
     sortTable(type) {
+        console.log(type);
       if (type == "name") {
-        //   console.log(this.ascending);
+          console.log(this.parents.data.data);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.parents.sort((a, b) =>
+        return this.parents.data.data.sort((a, b) =>
           isAscending
-            ? a.firstName > b.firstName
+            ? a.user_data.firstName > b.user_data.firstName
               ? 1
-              : b.firstName > a.firstName
+              : b.user_data.firstName > a.user_data.firstName
               ? -1
               : 0
-            : a.firstName < b.firstName
+            : a.user_data.firstName < b.user_data.firstName
             ? 1
-            : b.firstName < a.firstName
+            : b.user_data.firstName < a.user_data.firstName
             ? -1
             : 0
         );
@@ -260,16 +252,16 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.parents.sort((a, b) =>
+        return this.parents.data.data.sort((a, b) =>
           isAscending
-            ? a.status > b.status
+            ? a.user_data.status > b.user_data.status
               ? 1
-              : b.status > a.status
+              : b.user_data.status > a.user_data.status
               ? -1
               : 0
-            : a.status < b.status
+            : a.user_data.status < b.user_data.status
             ? 1
-            : b.status < a.status
+            : b.user_data.status < a.user_data.status
             ? -1
             : 0
         );
@@ -278,16 +270,16 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.parents.sort((a, b) =>
+        return this.parents.data.data.sort((a, b) =>
           isAscending
-            ? a.gender > b.gender
+            ? a.user_data.gender > b.user_data.gender
               ? 1
-              : b.gender > a.gender
+              : b.user_data.gender > a.user_data.gender
               ? -1
               : 0
-            : a.gender < b.gender
+            : a.user_data.gender < b.user_data.gender
             ? 1
-            : b.gender < a.gender
+            : b.user_data.gender < a.user_data.gender
             ? -1
             : 0
         );
@@ -296,16 +288,16 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.parents.sort((a, b) =>
+        return this.parents.data.data.sort((a, b) =>
           isAscending
-            ? a.created_at > b.created_at
+            ? a.user_datacreated_at > b.user_datacreated_at
               ? 1
-              : b.created_at > a.created_at
+              : b.user_datacreated_at > a.user_datacreated_at
               ? -1
               : 0
-            : a.created_at < b.created_at
+            : a.user_datacreated_at < b.user_data.created_at
             ? 1
-            : b.created_at < a.created_at
+            : b.user_datacreated_at < a.user_datacreated_at
             ? -1
             : 0
         );

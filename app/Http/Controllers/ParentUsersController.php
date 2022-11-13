@@ -394,7 +394,7 @@ class ParentUsersController extends Controller
     public function getParentsData()
     {
         try{
-                $parents = User::whereHas('parent')->orderBy('id', 'desc')->paginate(4);
+                $parents = User::whereHas('parent')->orderBy('id', 'desc')->paginate(15);
 
                 return response($parents, 200);
 

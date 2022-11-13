@@ -340,24 +340,12 @@ class OthersController extends Controller
     public function getOthersData()
     {
         try{
-            $others = Other::orderBy('id', 'desc')->get();
-            // dd($others);
-            $data = [];
-            foreach ($others as  $other) {
-                $other->user->toArray();
-                $other->toArray();
-                array_push($data,$other);
-            }
+            $others = User::whereHas('other')->orderBy('id', 'desc')->paginate(15);
+            return response($others, 200);
 
-            return response()->json([
-                'others'=>$data
-            ],200);
         } catch (ModelNotFoundException $e){
-            return response()->json([
-                'msg'=>'faild',
-                'status'=>false,
-                404
-        ]);
+            return response( 'error',404 );
         }
+
     }
 }

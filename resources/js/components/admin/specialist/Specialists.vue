@@ -6,8 +6,8 @@ th {
   text-align: right;
 }
 .make-calls {
-    height: 16px;
-    width: 15px;
+  height: 16px;
+  width: 15px;
 }
 </style>
 <template>
@@ -55,10 +55,16 @@ th {
           <th scope="col">الاجراءات</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="(specialist, index) in specialists" :key="index">
+      <tbody v-if="specialists && specialists.data">
+        <tr v-for="(specialist, index) in filterlist" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ specialist.user_data.firstName + " " + specialist.user_data.lastName }}</td>
+          <td>
+            {{
+              specialist.user_data.firstName +
+              " " +
+              specialist.user_data.lastName
+            }}
+          </td>
           <td class="phone-td">{{ specialist.phone }}</td>
           <td>
             <!-- {{getCountry(specialist.user.phone) }} -->
@@ -84,7 +90,13 @@ th {
             </Button>
           </td>
           <td>
-              <input class="make-calls" @change="makeCalls(specialist.id)" type="checkbox" name="makeCalls" v-model="specialist.specialist.make_calls">
+            <input
+              class="make-calls"
+              @change="makeCalls(specialist.id)"
+              type="checkbox"
+              name="makeCalls"
+              v-model="specialist.user_data.make_calls"
+            />
           </td>
           <td>{{ specialist.user_data.gender == "m" ? "ذكر" : "انثى" }}</td>
           <td>{{ specialist.user_data.specialization }}</td>
@@ -125,6 +137,12 @@ th {
         </tr>
       </tbody>
     </table>
+    <div v-if="specialists && specialists.data" class="pagination">
+      <Pagination
+        :data="specialists.data"
+        @pagination-change-page="getResults"
+      ></Pagination>
+    </div>
     <Modal v-model="dialogDelete" width="360">
       <p slot="header" style="color: #f60; text-align: center">
         <Icon type="ios-information-circle"></Icon>
@@ -148,8 +166,12 @@ th {
 </template>
 <script>
 import * as XLSX from "xlsx";
+import LaravelVuePagination from "laravel-vue-pagination";
 
 export default {
+  components: {
+    Pagination: LaravelVuePagination,
+  },
   data() {
     return {
       specialists: [],
@@ -161,25 +183,19 @@ export default {
       ascending: false,
     };
   },
-  async created() {
-    const resp = await this.callApi("get", "/api/admin/get-specialists-data");
-    console.log(resp.status, "xx");
-    if (resp.status == 200) {
-      this.specialists = resp.data;
-      console.log(this.specialists);
-    }
-  },
   methods: {
-    //   getCountry(phone) {
-    //     //   console.log('+'+phone.replace(/\D/g,'').substr(0, 3));
-    //       data.forEach(element => {
-    //         //   console.log(element.dial_code);
-    //           let code = '+'+phone.replace(/\D/g,'').substr(0, 3)
-    //             return code === element.dial_code ? element : 'unknown'
-
-    //       });
-
-    //   },
+    async getResults(page) {
+      if (typeof page === "undefined") {
+        page = 1;
+      }
+      await this.callApi(
+        "get",
+        "/api/admin/get-specialists-data?page=" + page
+      ).then((resp) => {
+        this.specialists = resp;
+        console.log(this.specialists);
+      });
+    },
     exportToExcel() {
       /* generate workbook object from table */
       var wb = XLSX.utils.table_to_book(document.getElementById("table"));
@@ -199,7 +215,8 @@ export default {
         this.dialogDelete = false;
         this.$Message.success("Successfully delete");
       }, 1500);
-      this.specialists.splice(index, 1);
+      this.specialists.data.data.splice(index, 1);
+
     },
     changeStatus(i, id) {
       this.loading = true;
@@ -207,19 +224,23 @@ export default {
       const resp = this.$store.dispatch("admin/changeStatus", id);
       setTimeout(() => {
         this.$Message.success("تم تغيير الحالة");
-        this.specialists[i].status = !this.specialists[i].status;
+        this.specialists.data.data[i].user_data.status =
+          !this.specialists.data.data[i].user_data.status;
         this.loading = false;
       }, 1000);
     },
     makeCalls(id) {
-        const resp = this.callApi('get','/api/admin/specialist-make-call-status/' + id)
+      const resp = this.callApi(
+        "get",
+        "/api/admin/specialist-make-call-status/" + id
+      );
     },
     sortTable(type) {
       if (type == "name") {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.specialists.sort((a, b) =>
+        return this.specialists.data.data.sort((a, b) =>
           isAscending
             ? a.firstName > b.firstName
               ? 1
@@ -237,16 +258,16 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.specialists.sort((a, b) =>
+        return this.specialists.data.data.sort((a, b) =>
           isAscending
-            ? a.status > b.status
+            ? a.user_data.status > b.user_data.status
               ? 1
-              : b.status > a.status
+              : b.user_data.status > a.user_data.status
               ? -1
               : 0
-            : a.status < b.status
+            : a.user_data.status < b.user_data.status
             ? 1
-            : b.status < a.status
+            : b.user_data.status < a.user_data.status
             ? -1
             : 0
         );
@@ -255,16 +276,16 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.specialists.sort((a, b) =>
+        return this.specialists.data.data.sort((a, b) =>
           isAscending
-            ? a.created_at > b.created_at
+            ? a.user_data.created_at > b.user_data.created_at
               ? 1
-              : b.created_at > a.created_at
+              : b.user_data.created_at > a.user_data.created_at
               ? -1
               : 0
-            : a.created_at < b.created_at
+            : a.user_data.created_at < b.user_data.created_at
             ? 1
-            : b.created_at < a.created_at
+            : b.user_data.created_at < a.user_data.created_at
             ? -1
             : 0
         );
@@ -273,32 +294,56 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.specialists.sort((a, b) =>
+        return this.specialists.data.data.sort((a, b) =>
           isAscending
-            ? a.gender > b.gender
+            ? a.user_data.gender > b.user_data.gender
               ? 1
-              : b.gender > a.gender
+              : b.user_data.gender > a.user_data.gender
               ? -1
               : 0
-            : a.gender < b.gender
+            : a.user_data.gender < b.user_data.gender
             ? 1
-            : b.gender < a.gender
+            : b.user_data.gender < a.user_data.gender
             ? -1
             : 0
         );
       }
     },
   },
+  mounted() {
+    this.getResults();
+  },
   computed: {
-    //   filteredList() {
-    //     var self = this
-    //     console.log(self.specialists,'xxxxxxxxxxxx');
-    //   return self.specialists((other) => {
-    //     return other.user_data.firstName
-    //       .toLowerCase()
-    //       .includes(self.keyword.toLowerCase());
-    //   });
-    // },
+    filterlist() {
+      if (this.specialists && this.specialists.data)
+        return this.specialists.data.data.filter((other) => {
+          let byName =
+            other.user_data.firstName
+              .toLowerCase()
+              .indexOf(this.keyword.toLowerCase()) > -1;
+
+          let lastName =
+            other.user_data.lastName
+              .toLowerCase()
+              .indexOf(this.keyword.toLowerCase()) > -1;
+
+          let byPhone =
+            other.phone.toLowerCase().indexOf(this.keyword.toLowerCase()) > -1;
+
+          let byEmail =
+            other.email.toLowerCase().indexOf(this.keyword.toLowerCase()) > -1;
+          if (byName === true) {
+            return byName;
+          } else if (lastName === true) {
+            return lastName;
+          } else if (byPhone === true) {
+            return byPhone;
+          } else if (byEmail === true) {
+            return byEmail;
+          }
+          console.log(byName, byPhone);
+        });
+    },
   },
 };
 </script>
