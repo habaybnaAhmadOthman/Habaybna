@@ -16,7 +16,7 @@ th {
       >
     </div>
     <!-- <Table border :columns="columns7" :data="data6"></Table> -->
-        <Button type="success" size="large" ghost v-on:click="exportToExcel()">
+    <Button type="success" size="large" ghost v-on:click="exportToExcel()">
       export bio to excel</Button
     >
     <div class="search-wrapper">
@@ -51,7 +51,9 @@ th {
       <tbody>
         <tr v-for="(other, index) in filterlist" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ other.user_data.firstName + " " + other.user_data.lastName }}</td>
+          <td>
+            {{ other.user_data.firstName + " " + other.user_data.lastName }}
+          </td>
           <td class="phone-td">{{ other.phone }}</td>
           <td>{{ other.email }}</td>
           <td class="status">
@@ -59,7 +61,7 @@ th {
               type="success"
               ghost
               v-if="other.user_data.status"
-              v-on:click="changeStatus(index, other.user_data.user_id)"
+              v-on:click="changeStatus(index, other.id)"
             >
               <span>نشط</span>
             </Button>
@@ -67,7 +69,7 @@ th {
               type="error"
               ghost
               v-if="!other.user_data.status"
-              v-on:click="changeStatus(index, other.user_id)"
+              v-on:click="changeStatus(index, other.id)"
             >
               <span>غير نشط</span>
             </Button>
@@ -78,7 +80,7 @@ th {
 
           <td>
             <Button
-              :to="'/admin/other/' + other.user_id"
+              :to="'/admin/other/' + other.id"
               type="dashed"
               size="small"
               >عرض</Button
@@ -93,7 +95,13 @@ th {
         </tr>
       </tbody>
     </table>
-            <table class="table" id="table" style="display: none">
+    <div v-if="others && others.data" class="pagination">
+      <Pagination
+        :data="others.data"
+        @pagination-change-page="getResults"
+      ></Pagination>
+    </div>
+    <table class="table" id="table" style="display: none">
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
@@ -136,8 +144,12 @@ th {
 </template>
 <script>
 import * as XLSX from "xlsx";
+import LaravelVuePagination from "laravel-vue-pagination";
 
 export default {
+  components: {
+    Pagination: LaravelVuePagination,
+  },
   data() {
     return {
       others: [],
@@ -149,26 +161,25 @@ export default {
       ascending: false,
     };
   },
-//   async created() {
-//     const resp = await this.callApi("get", "/api/admin/get-others-data");
-//     console.log(resp, "others");
-//     if (resp.status == 200) {
-//       this.others = resp.data.others;
-//       console.log(this.others);
-//     }
-//   },
+  //   async created() {
+  //     const resp = await this.callApi("get", "/api/admin/get-others-data");
+  //     console.log(resp, "others");
+  //     if (resp.status == 200) {
+  //       this.others = resp.data.others;
+  //       console.log(this.others);
+  //     }
+  //   },
   methods: {
-          async getResults(page) {
+    async getResults(page) {
       if (typeof page === "undefined") {
         page = 1;
       }
-      await this.callApi(
-        "get",
-        "/api/admin/get-others-data?page=" + page
-      ).then((resp) => {
-        this.others = resp;
-        console.log(this.others);
-      });
+      await this.callApi("get", "/api/admin/get-others-data?page=" + page).then(
+        (resp) => {
+          this.others = resp;
+          console.log(this.others);
+        }
+      );
     },
     exportToExcel() {
       /* generate workbook object from table */
@@ -198,7 +209,7 @@ export default {
       const resp = this.$store.dispatch("admin/changeStatus", id);
       setTimeout(() => {
         this.$Message.success("تم تغيير الحالة");
-        this.others.data.data[i].status = !this.others.data.data[i].status;
+        this.others.data.data[i].user_data.status = !this.others.data.data[i].user_data.status;
         this.loading = false;
       }, 1000);
     },
@@ -277,7 +288,7 @@ export default {
       }
     },
   },
-    mounted() {
+  mounted() {
     this.getResults();
   },
   computed: {
