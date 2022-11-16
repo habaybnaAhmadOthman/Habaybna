@@ -340,7 +340,7 @@ class OthersController extends Controller
     public function getOthersData()
     {
         try{
-            $others = User::whereHas('other')->orderBy('id', 'desc')->paginate(15);
+            $others = User::whereHas('other')->orderBy('id', 'desc')->paginate(10);
             return response($others, 200);
 
         } catch (ModelNotFoundException $e){
