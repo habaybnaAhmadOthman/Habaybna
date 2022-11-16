@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use Auth;
-
+use Illuminate\Database\Eloquent\Builder;
 
 class OthersController extends Controller
 {
@@ -337,12 +337,23 @@ class OthersController extends Controller
            }
     }
 
-    public function getOthersData()
+    public function getOthersData(Request $request)
     {
         try{
-            $others = User::whereHas('other')->orderBy('id', 'desc')->paginate(10);
-            return response($others, 200);
-
+            $others = User::whereHas('other');
+            if(isset($request->keyWord) && $request->keyWord !="" ){
+                $others->where('phone','like', '%'.$request->keyWord.'%')
+                        ->orWhere('email', 'like', '%'.$request->keyWord.'%');
+                if( count($others->get()) < 1  ){
+                    $others = User::whereHas('other', function(Builder $q) use($request){
+                        if(isset($request->keyWord) && $request->keyWord !="" ){
+                            $q->where('firstName','like','%'.$request->keyWord.'%');
+                            $q->orWhere('lastName','like','%'.$request->keyWord.'%');
+                        }
+                    });
+                }
+            }
+            return response($others->orderBy('id', 'desc')->paginate(10), 200);
         } catch (ModelNotFoundException $e){
             return response( 'error',404 );
         }

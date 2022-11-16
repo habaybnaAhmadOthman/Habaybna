@@ -327,6 +327,11 @@ class UserController extends Controller
 
     }
 
+    public function search($keyword, $type)
+    {
+        
+    }
+
 
 
 }

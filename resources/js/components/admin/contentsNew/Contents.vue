@@ -33,11 +33,13 @@ th {
     </div>
     <!-- <Table border :columns="columns7" :data="data6"></Table> -->
     <div class="search-wrapper">
-      <Input
+      <!-- <Input
         type="text"
         v-model="keyword"
         placeholder="ابحث عن عنوان المحتوى"
-      />
+      /> -->
+      <Search :type="'contents'" :key-word="keyword" @searchResult="getSearchResults($event)" :placeholder="'ابحث عن عنوان المقال او اسم الكاتب'"> </Search>
+
     </div>
     <div class="coupon-table">
       <table class="table">
@@ -129,9 +131,13 @@ th {
 </template>
 <script>
 import LaravelVuePagination from "laravel-vue-pagination";
+import AdminSearch from '../components/Search.vue'
+
 export default {
   components: {
     Pagination: LaravelVuePagination,
+    Search: AdminSearch,
+
   },
 
   data() {
@@ -239,6 +245,10 @@ export default {
         );
       }
     },
+        getSearchResults(data){
+            console.log(data);
+          this.coupons = data.data;
+    },
     async getResults(page) {
       //   axios.get("example/results?page=" + page).then((response) => {
       //     this.coupons = response.data;
@@ -248,8 +258,9 @@ export default {
       }
       const x = await this.callApi(
         "get",
-        "/api/admin/contents-new?page=" + page
+        "/api/admin/get-contents-data?page=" + page
       ).then((resp) => {
+          console.log(resp.data);
         this.coupons = resp.data;
       });
     },

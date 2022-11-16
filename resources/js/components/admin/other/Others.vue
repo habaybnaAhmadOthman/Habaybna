@@ -20,11 +20,12 @@ th {
       export bio to excel</Button
     >
     <div class="search-wrapper">
-      <Input
+      <!-- <Input
         type="text"
         v-model="keyword"
         placeholder="ابحث عن الاسم او رقم الهاتف"
-      />
+      /> -->
+      <Search :type="'others'" :key-word="keyword" @searchResult="getSearchResults($event)" :placeholder="'ابحث عن الاسم او رقم الهاتف او الايميل'"> </Search>
     </div>
     <table class="table">
       <thead class="thead-dark">
@@ -145,10 +146,12 @@ th {
 <script>
 import * as XLSX from "xlsx";
 import LaravelVuePagination from "laravel-vue-pagination";
+import AdminSearch from '../components/Search.vue'
 
 export default {
   components: {
     Pagination: LaravelVuePagination,
+    Search: AdminSearch,
   },
   data() {
     return {
@@ -180,6 +183,9 @@ export default {
           console.log(this.others);
         }
       );
+    },
+    getSearchResults(data){
+          this.others = data;
     },
     exportToExcel() {
       /* generate workbook object from table */

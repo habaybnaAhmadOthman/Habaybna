@@ -55,6 +55,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/contact-us/all-messages','ContactUsController@index');
         Route::get('/contact-us/{id}','ContactUsController@show');
 
+        // search admin
+        Route::get('get-others-search/{keyword}/{type}','UserController@search');
 
 
         //users
@@ -152,7 +154,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/content-new/{id}','ContentController@updateNew');
         Route::post('/content-new/edit','ContentController@editNew');
         Route::post('/content/create','ContentController@create');
-        Route::get('/contents-new','ContentController@indexNew');
+        // Route::get('/contents-new','ContentController@indexNew');
+        Route::get('get-contents-data','ContentController@indexNew');
         Route::post('/content-delete/{id}','ContentController@deleteNew');
 
         //testimonials
@@ -232,6 +235,8 @@ Route::post('/siraj-nadim-gift','HomeController@sendGift');
 Route::post('/payment/gift','HomeController@giftPaymentCallback');
 Route::get('/get-gift-payment-status','HomeController@checkGiftStatus');
 Route::get("/get-users-gift","HomeController@getGifts");
+
+
 
 
 

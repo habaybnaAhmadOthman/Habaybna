@@ -29,12 +29,23 @@ class ContentController extends Controller
       $contents = Content::paginate(15);
         return response()->json($contents);
    }
-   public function indexNew()
+   public function indexNew(Request $request)
    {
+       $contents = NewContent::with('intrests','author');
+       if(isset($request->keyWord) && $request->keyWord !="" ){
+           $contents->where('title', 'like', '%'.$request->keyWord);
 
-      $contents = NewContent::with('intrests','author')->orderBy('id', 'DESC')->paginate(15);
+           if( count($contents->get()) < 1  ){
+            $contents = NewContent::whereHas('author', function(Builder $q) use($request){
+                if(isset($request->keyWord) && $request->keyWord !="" ){
+                    $q->where('firstName','like','%'.$request->keyWord.'%');
+                    $q->orWhere('lastName','like','%'.$request->keyWord.'%');
+                }
+            })->with('intrests','author');
+        }
+       }
 
-        return response()->json($contents);
+        return response()->json($contents->orderBy('id', 'DESC')->paginate(15));
    }
 
    public function update(Request $request, $id)
