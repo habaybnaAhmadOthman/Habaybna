@@ -59,7 +59,15 @@ class SpecialistController extends Controller
 
 
         $interest = Interest::all();
-
+        $mailChimpData =[
+            'email'=> $user->email,
+            'phone'=> $user->phone,
+            'firstName'=> $specialist->firstName,
+            'lastName'=> $specialist->lastName,
+            'tag'=> 'new user',
+            'type'=> $user->role,
+        ];
+        mailChimpSubscribe($mailChimpData);
         return response()->json([
             'msg'=>'success',
             'status'=>true,

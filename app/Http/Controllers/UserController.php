@@ -36,7 +36,7 @@ class UserController extends Controller
 
             // }
 
-                if($user->is_patent) {
+                if($user->is_parent) {
                     $userData['firstName'] = $user->user_data->firstName ;
                     $userData['lastName'] = $user->user_data->lastName ;
                     $userData['gender'] = $user->user_data->gender ;
@@ -329,7 +329,7 @@ class UserController extends Controller
 
     public function search($keyword, $type)
     {
-        
+
     }
 
 

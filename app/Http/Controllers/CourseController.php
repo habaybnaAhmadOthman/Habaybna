@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Owenoj\LaravelGetId3\GetId3;
+use Newsletter;
 
 
 class CourseController extends Controller
@@ -210,6 +211,9 @@ class CourseController extends Controller
    }
    public function getAllcourses(AllCourses $allCourses)
    {
+
+
+
        $courses = $allCourses->execute();
 
        if($courses){
