@@ -73,6 +73,13 @@ h1 {
             <Option value="العلاج الوظيفي">العلاج الوظيفي</Option>
             <Option value="العلاج الطبيعي">العلاج الطبيعي</Option>
             <Option value="تحليل السلوك">تحليل السلوك</Option>
+            <Option value=" علم النفس الاكلينيكي"> علم النفس الاكلينيكي</Option>
+            <Option value=" صعوبات التعلم"> صعوبات التعلم</Option>
+            <Option value="التدخل المبكر">التدخل المبكر</Option>
+            <Option value="الإرشاد الأسري">الإرشاد الأسري</Option>
+            <Option value="تحليل السلوك التطبيقي">
+              تحليل السلوك التطبيقي</Option
+            >
           </Select>
         </FormItem>
       </div>

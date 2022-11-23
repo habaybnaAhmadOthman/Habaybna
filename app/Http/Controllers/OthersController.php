@@ -70,6 +70,15 @@ class OthersController extends Controller
 
         $interest = Interest::all();
 
+        $mailChimpData =[
+            'email'=> $user->email,
+            'phone'=> $user->phone,
+            'firstName'=> $otherUser->firstName,
+            'lastName'=> $otherUser->lastName,
+            'tag'=> 'new user',
+            'type'=> $user->role,
+        ];
+        mailChimpSubscribe($mailChimpData);
         return response()->json([
             'msg'=>'success',
             'status'=>true,

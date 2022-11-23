@@ -125,13 +125,18 @@
                         <option value="العلاج الوظيفي">العلاج الوظيفي</option>
                         <option value="العلاج الطبيعي">العلاج الطبيعي</option>
                         <option value="تحليل السلوك">تحليل السلوك</option>
+                        <option value=" علم النفس الاكلينيكي"> علم النفس الاكلينيكي</option>
+                        <option value=" صعوبات التعلم"> صعوبات التعلم</option>
+                        <option value="التدخل المبكر">التدخل المبكر</option>
+                        <option value="الإرشاد الأسري">الإرشاد الأسري</option>
+                        <option value="تحليل السلوك التطبيقي"> تحليل السلوك التطبيقي</option>
                     </select>
                 </div>
                 <p class="red mt-5 font-12">
                     هذا الحقل مطلوب
                 </p>
             </div>
-            
+
         </div>
 
         <!-- workPlace -->
