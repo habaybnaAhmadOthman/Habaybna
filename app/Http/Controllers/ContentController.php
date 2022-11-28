@@ -33,7 +33,7 @@ class ContentController extends Controller
    {
        $contents = NewContent::with('intrests','author');
        if(isset($request->keyWord) && $request->keyWord !="" ){
-           $contents->where('title', 'like', '%'.$request->keyWord);
+           $contents->where('title', 'LIKE', '%'.$request->keyWord.'%');
 
            if( count($contents->get()) < 1  ){
             $contents = NewContent::whereHas('author', function(Builder $q) use($request){
