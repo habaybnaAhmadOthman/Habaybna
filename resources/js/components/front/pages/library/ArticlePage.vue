@@ -54,7 +54,8 @@
             fixEmbedLinks(str){
                 const startFrom =  str.indexOf('<figure');
                 const endFrom =  str.indexOf('</oembed></figure>') + 18;
-                if (startFrom > -1) {
+
+                if (startFrom > -1  && str.indexOf('</oembed></figure>') > -1) {
                     const embedLinkTag = str.slice(startFrom,endFrom);
                     let urlOnly = embedLinkTag.slice(embedLinkTag.indexOf(`url="`) + 5)
                     const videoUrl = urlOnly.slice(0,urlOnly.indexOf(`"`)).replace('https://youtu.be/','https://www.youtube.com/embed/').replace('https://www.youtube.com/watch?v=','https://www.youtube.com/embed/');
