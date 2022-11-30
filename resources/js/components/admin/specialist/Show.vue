@@ -227,6 +227,8 @@
 <script>
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
+import AdminSearch from '../components/Search.vue'
+
 
 export default {
   emits: ["submit-form", "open-password-dialog"],

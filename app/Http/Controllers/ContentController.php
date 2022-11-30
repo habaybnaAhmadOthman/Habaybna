@@ -33,7 +33,7 @@ class ContentController extends Controller
    {
        $contents = NewContent::with('intrests','author');
        if(isset($request->keyWord) && $request->keyWord !="" ){
-           $contents->where('title', 'like', '%'.$request->keyWord);
+           $contents->where('title', 'LIKE', '%'.$request->keyWord.'%');
 
            if( count($contents->get()) < 1  ){
             $contents = NewContent::whereHas('author', function(Builder $q) use($request){
@@ -73,7 +73,7 @@ class ContentController extends Controller
    {
        $data['article'] = NewContent::with('intrests','author','isLiked')->where('title',$request->title)->first();
         if( $data['article'] && $data['article']->intrests->count() > 0 ){
-            $ids = $data['article']->intrests->pluck('id')->toArray();
+            // $ids = $data['article']->intrests->pluck('id')->toArray();
             foreach ($data['article']->intrests as $one) {
                 // $data['relatedArticle'][$one->id] =
                 //  ArticlesTags::with('article')
@@ -97,6 +97,7 @@ class ContentController extends Controller
         //         ->get();
         }
         // related contents
+        // dd($data['article']);
 
        if($data['article']){
            return response($data,200);
