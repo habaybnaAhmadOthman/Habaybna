@@ -67,7 +67,7 @@ class SpecialistController extends Controller
             'tag'=> 'new user',
             'type'=> $user->role,
         ];
-        mailChimpSubscribe($mailChimpData);
+        mailerLiteSubscribe($mailChimpData);
         return response()->json([
             'msg'=>'success',
             'status'=>true,
