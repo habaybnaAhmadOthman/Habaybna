@@ -243,10 +243,13 @@ class HomeController extends Controller
         if($request->keyWord)
         {
             $data['showMoreArticles'] = DB::table('course_categories')
-                    
+
                                             ->where('course_categories.title','LIKE','%' . $request->keyWord .'%')
                                             ->join('articles_tags','course_categories.id','=','articles_tags.tag_id')
-                                            ->join('contents','contents.id','=','articles_tags.article_id')
+                                            ->join('contents', function($join) {
+                                                $join->on('contents.id','=','articles_tags.article_id')
+                                                ->where('contents.status', '=', 1);
+                                            })
                                             ->select('contents.*')
                                             ->paginate(6);
 
@@ -254,7 +257,12 @@ class HomeController extends Controller
 
                                             ->where('course_categories.title','LIKE','%' . $request->keyWord .'%')
                                             ->join('category_courses','course_categories.id','=','category_courses.cat_id')
-                                            ->join('courses','courses.id','=','category_courses.course_id')
+                                            ->join('courses', function($join){
+                                                $join->on('courses.id','=','category_courses.course_id')
+                                                ->where('courses.is_publish', '=' , 1);
+                                            }
+
+                                            )
                                             ->select('courses.*')
                                             ->paginate(6);
 
@@ -265,7 +273,9 @@ class HomeController extends Controller
                 ->paginate(6);
 
             // courses
-            $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')->paginate(6);
+            $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')
+            ->where('is_publish',1)
+            ->paginate(6);
 
             //specialists
             $data['specialists'] = Specialist::where('firstName','like','%'. $request->keyWord .'%')
