@@ -60,6 +60,7 @@ import onlineCoursesPage from "./components/front/pages/onlineCoursesPage.vue";
 import allCoursesPage from "./components/front/pages/allCoursesPage.vue";
 // courses
 import CoursePage from "./components/front/pages/courses/CoursePage.vue";
+import SearchResults from "./components/front/pages/SearchResults.vue";
 import ClassRoomPage from "./components/front/pages/courses/ClassRoom.vue";
 import Cirtificate from "./components/front/views/coursepage/Certificate.vue";
 import PaymentStatus from "./components/front/pages/courses/PaymentStatus.vue";
@@ -544,9 +545,8 @@ const routes = [{
         component: SpecialistsPage
     },
     {
-        path: "/specialist/:specialist",
-        component: SpecialistPage,
-        props: true,
+        path: "/search-results",
+        component: SearchResults,
     },
     // *****************
     // content pages
