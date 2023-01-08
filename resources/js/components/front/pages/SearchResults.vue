@@ -77,12 +77,12 @@
         <h2>لا يوجد دورات تدريبية . . . . . "{{ keyword }}"</h2>
       </li>
     </ul>
-          <div class="portal-pagination mt-16 justify-center d-flex">
+          <!-- <div class="portal-pagination mt-16 justify-center d-flex">
         <Pagination
           :data="filteredCourses"
           @pagination-change-page="fetchData"
         ></Pagination>
-      </div>
+      </div> -->
   </div>
 </template>
 
@@ -93,14 +93,13 @@ export default {
   // props: ['filtered-articles','showMoreCard','class-list','current-page'],
   components: { Pagination: LaravelVuePagination },
   mounted() {
-    //   console.log(this.$route.query.keyWord);
     this.keyword = this.$route.query.keyWord;
-    this.fetchData(_, this.keyword);
+    this.fetchData(1, this.keyword);
   },
   data() {
     return {
       keyword: "",
-      filteredArticles: [],
+      filteredArticles: {},
       filteredCourses: [],
       filteredSpecialists: [],
       //   atLeastOneSelected: false,
@@ -109,17 +108,16 @@ export default {
   methods: {
     fetchData(page) {
       if (typeof page === "undefined") {
-        console.log(typeof page);
-        page = 1;
+        const page = 1;
       }
+      console.log('page',page);
       const resp = this.callApi(
         "get",
-        "/api/get-search-result/?page=" + page + "&keyWord=" + this.keyword
+        "/api/get-search-result?page="+page+"&keyWord="+this.keyword
       ).then((res) => {
         if (res.status == 200) {
           // articles
           this.filteredArticles = res.data.articles;
-          console.log(this.filteredArticles, res);
           var ids = new Set(res.data.articles.data.map((d) => d.id));
           var merged = [
             ...res.data.articles.data,
@@ -140,7 +138,6 @@ export default {
     },
     fetchDataArticles(page){
               if (typeof page === "undefined") {
-        console.log(typeof page);
         page = 2;
       }
             const resp = this.callApi(
@@ -150,7 +147,6 @@ export default {
         if (res.status == 200) {
           // articles
           this.filteredArticles = res.data.articles;
-          console.log(this.filteredArticles, res);
           var ids = new Set(res.data.articles.data.map((d) => d.id));
           var merged = [
             ...res.data.articles.data,

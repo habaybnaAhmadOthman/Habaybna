@@ -4,8 +4,12 @@
       <div class="d-flex align-center space-between box">
         <div class="w-60 w-100-p h-100">
           <div class="landing-call-links p-side-30 p-side-12-p">
-            <h1 class="font-35 main-color bold font-20-p mb-25 mb-0-p">نضع بين يديك مكتبة رقمية تضم أكثر من 1000 معلومة</h1>
-            <h2 class="font-26 font-18-p f-normal black">يشارك بتقديمها مئات الأخصائيين والوالدين ومقدمي الرعاية لمساعدتك في رحلتك لتمكين طفلك <br><span class="blue">مقالات . فيديوهات . ندوات رقمية . قصص وتجارب</span></h2>
+            <h1 class="font-35 main-color bold font-20-p mb-25 mb-0-p">كل يوم معلومة جديدة!
+
+</h1>
+            <h2 class="font-26 font-18-p f-normal black">أكثر من 1000 فيديو ومقال بين يديك يقدمها خبراء وأخصائيون متميزون لمساعدتك على تقديم الأفضل لطفلك .
+
+</h2>
           </div>
         </div>
         <img class="landing-bg relative mb-30-p" src="images/library-bg-1.png" alt="">
