@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\BirthdayGift;
 use App\ContactUs;
+use App\CourseCategory;
+use App\Courses;
 use App\User;
 use Illuminate\Http\Request;
 // use App\Http\Controllers\Auth;
@@ -11,12 +13,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Stevebauman\Location\Facades\Location;
 use App\Providers\VerifyUser;
 use Illuminate\Support\Facades\Hash;
-
-
-
-
-
+use App\NewContent;
+use App\Specialist;
 use Auth;
+use DB;
 
 class HomeController extends Controller
 {
@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
+        // $this->middleware('auth');+
     }
 
     /**
@@ -238,54 +238,49 @@ class HomeController extends Controller
             $giftsOrders = BirthdayGift::all();
         return response($giftsOrders, 200);
     }
-    // private function createInitOrder($data,$tranID)
-    // {
-    //     try {
+    public function getSearchResults(Request $request)
+    {
+        if($request->keyWord)
+        {
+            $data['showMoreArticles'] = DB::table('course_categories')
+                    
+                                            ->where('course_categories.title','LIKE','%' . $request->keyWord .'%')
+                                            ->join('articles_tags','course_categories.id','=','articles_tags.tag_id')
+                                            ->join('contents','contents.id','=','articles_tags.article_id')
+                                            ->select('contents.*')
+                                            ->paginate(6);
 
-    //         $course = Courses::findorfail($data['courseID']);
-    //     } catch (\Throwable $th) {
-    //         throw $th;
-    //     }
-    //         // store initial order data
-    //         $initData = new Coursespurchaseorders () ;
+            $data['showMoreCourses'] = DB::table('course_categories')
 
-    //         $initData->user_id = Auth::id();
-    //         $initData->course_id = $course->id;
-    //         $initData->status = false;  // not complete change to true when payment complete success
-    //         $initData->price = $course->price ;
-    //         $initData->transactionID = $tranID ;
-    //         $initData->save();
-    //             // check hasPromoCode
-
-    //         if($course->discount !== ""){
-    //             $disscountAmount = $course->price * $course->discount/100 ;
-    //             $initData->discount_amount = $disscountAmount;
-    //             $initData->amount = $course->price - $disscountAmount ;
-
-    //             $initData->save();
-
-    //         }
-    //         if(array_key_exists('id',$data['hasPromoCode']) && isset($data['hasPromoCode']['id']) ){
-    //             $promoCode = PromoCode::findorfail($data['hasPromoCode']['id']);
-    //             // $disscountAmount = $course->price * $promoCode->discount_percentage/100 ;
-    //             $disscountAmount = $initData->amount * $promoCode->discount_percentage/100 ;
-    //             $newPrice = $initData->amount - $disscountAmount ;
-    //             $initData->coupon_id = $promoCode->id;
-    //             $initData->discount_amount = $disscountAmount;
-    //             $initData->new_price = $newPrice;
-    //             $initData->amount = $newPrice ;
-
-    //             $initData->save();
+                                            ->where('course_categories.title','LIKE','%' . $request->keyWord .'%')
+                                            ->join('category_courses','course_categories.id','=','category_courses.cat_id')
+                                            ->join('courses','courses.id','=','category_courses.course_id')
+                                            ->select('courses.*')
+                                            ->paginate(6);
 
 
-    //         }
-    //         // else {
-    //         //     $initData->amount = $course->price;
 
-    //         //     $initData->save();
-    //         // }
-    //         return $initData;
-    // }
+            // articles
+            $data['articles'] = NewContent::with('author')->where('title','LIKE','%' . $request->keyWord .'%')
+                ->paginate(6);
+
+            // courses
+            $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')->paginate(6);
+
+            //specialists
+            $data['specialists'] = Specialist::where('firstName','like','%'. $request->keyWord .'%')
+                ->orWhere('lastName','like','%'. $request->keyWord .'%')
+                ->with('contents')
+                ->paginate(6);
+
+
+
+
+            return response($data, 200);
+
+        }
+    }
+
 
 
 

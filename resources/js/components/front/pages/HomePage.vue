@@ -2,9 +2,7 @@
   <div class="homepage">
     <TheHeader></TheHeader>
     <LandingSection></LandingSection>
-    <div class="mt-50">
       <IconsSection></IconsSection>
-    </div>
     <div
       class="video-box-home-container"
     >
