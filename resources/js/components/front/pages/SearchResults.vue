@@ -1,5 +1,8 @@
 <template>
+
   <div class="main">
+    <TheHeader></TheHeader>
+
     <h1>نتائج البحث</h1>
     <h1>مقالات</h1>
 
@@ -88,10 +91,12 @@
 
 <script>
 import LaravelVuePagination from "laravel-vue-pagination";
-
+import TheHeader from "../layouts/header/TheHeader.vue";
+import TheFooter from "../layouts/TheFooter.vue";
 export default {
   // props: ['filtered-articles','showMoreCard','class-list','current-page'],
-  components: { Pagination: LaravelVuePagination },
+  components: { Pagination: LaravelVuePagination,TheFooter,TheHeader
+ },
   mounted() {
     this.keyword = this.$route.query.keyWord;
     this.fetchData(1, this.keyword);
@@ -142,7 +147,7 @@ export default {
       }
             const resp = this.callApi(
         "get",
-        "/api/get-search-result/?page=" + page + "&keyWord=" + this.keyword
+        "/api/get-search-result?page="+ page+"&keyWord="+this.keyword
       ).then((res) => {
         if (res.status == 200) {
           // articles
@@ -164,10 +169,10 @@ export default {
 
 <style scoped>
 .main {
-  max-width: 1200px;
-  margin: 0 auto;
-  /* background-color: white; */
-}
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;}
 .main ul {
   margin: 16px 0;
 }
@@ -179,6 +184,9 @@ h1 {
   margin-top: 16px;
 }
 .cards {
+       max-width: 1200px;
+  /*margin: 0 auto; */
+  justify-content: flex-start;
   display: flex;
   flex-wrap: wrap;
   list-style: none;
