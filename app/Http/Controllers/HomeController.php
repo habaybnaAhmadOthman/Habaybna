@@ -252,8 +252,7 @@ class HomeController extends Controller
                                             })
                                             ->select('contents.*')
                                             ->paginate(6);
-
-            $data['showMoreCourses'] = DB::table('course_categories')
+                                            $data['showMoreCourses'] = DB::table('course_categories')
 
                                             ->where('course_categories.title','LIKE','%' . $request->keyWord .'%')
                                             ->join('category_courses','course_categories.id','=','category_courses.cat_id')
@@ -268,20 +267,22 @@ class HomeController extends Controller
 
 
 
+
             // articles
             $data['articles'] = NewContent::with('author')->where('title','LIKE','%' . $request->keyWord .'%')
-                ->paginate(6);
-
-            // courses
-            $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')
-            ->where('is_publish',1)
+            ->where('status',1)
             ->paginate(6);
 
-            //specialists
-            $data['specialists'] = Specialist::where('firstName','like','%'. $request->keyWord .'%')
-                ->orWhere('lastName','like','%'. $request->keyWord .'%')
-                ->with('contents')
+                // courses
+                $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')
+                ->where('is_publish',1)
                 ->paginate(6);
+
+                //specialists
+                // $data['specialists'] = Specialist::whereHas('contents')->where('firstName','like','%'. $request->keyWord .'%')
+                // ->orWhere('lastName','like','%'. $request->keyWord .'%')
+                // ->with('contents')
+                // ->paginate(6);
 
 
 

@@ -1,5 +1,4 @@
 <template>
-
   <div class="main">
     <TheHeader></TheHeader>
 
@@ -7,11 +6,11 @@
     <h1>مقالات</h1>
 
     <ul
-      v-if="filteredArticles.data && filteredArticles.data.length > 1"
+      v-if="data.filteredArticles && data.filteredArticles.data &&  data.filteredArticles.data.length > 0"
       class="cards"
     >
       <li
-        v-for="(item, index) in filteredArticles.data"
+        v-for="(item, index) in data.filteredArticles.data"
         :key="index"
         class="cards_item"
       >
@@ -39,20 +38,23 @@
         <h2>لا يوجد مقالات . . . . . "{{ keyword }}"</h2>
       </li>
     </ul>
-      <div class="portal-pagination mt-16 justify-center d-flex">
-        <Pagination
-          :data="filteredArticles"
-          @pagination-change-page="fetchDataArticles"
-        ></Pagination>
-      </div>
+    <div v-if="data.filteredArticles && data.filteredArticles.data" class= "portal-pagination mt-16 justify-center d-flex">
+      <Pagination
+        :data="data.filteredArticles"
+        @pagination-change-page="fetchDataArticles"
+      ></Pagination>
+    </div>
     <h1>دورات تدريبية</h1>
 
     <ul
-      v-if="filteredCourses.data && filteredCourses.data.length > 1"
+      v-if="
+      data.filteredCourses && data.filteredCourses.data &&
+        data.filteredCourses.data.length > 0
+      "
       class="cards"
     >
       <li
-        v-for="(item, index) in filteredCourses.data"
+        v-for="(item, index) in data.filteredCourses.data"
         :key="index"
         class="cards_item"
       >
@@ -80,7 +82,7 @@
         <h2>لا يوجد دورات تدريبية . . . . . "{{ keyword }}"</h2>
       </li>
     </ul>
-          <!-- <div class="portal-pagination mt-16 justify-center d-flex">
+    <!-- <div class="portal-pagination mt-16 justify-center d-flex">
         <Pagination
           :data="filteredCourses"
           @pagination-change-page="fetchData"
@@ -95,18 +97,21 @@ import TheHeader from "../layouts/header/TheHeader.vue";
 import TheFooter from "../layouts/TheFooter.vue";
 export default {
   // props: ['filtered-articles','showMoreCard','class-list','current-page'],
-  components: { Pagination: LaravelVuePagination,TheFooter,TheHeader
- },
+  components: { Pagination: LaravelVuePagination, TheFooter, TheHeader },
   mounted() {
+    console.log(this.data.filteredCourses.length);
     this.keyword = this.$route.query.keyWord;
     this.fetchData(1, this.keyword);
+    console.log(this.data.filteredCourses);
   },
   data() {
     return {
       keyword: "",
-      filteredArticles: {},
-      filteredCourses: [],
-      filteredSpecialists: [],
+      data: {
+        filteredArticles: [],
+        filteredCourses: [],
+        filteredSpecialists: [],
+      },
       //   atLeastOneSelected: false,
     };
   },
@@ -115,39 +120,42 @@ export default {
       if (typeof page === "undefined") {
         const page = 1;
       }
-      console.log('page',page);
+      console.log("page", page);
       const resp = this.callApi(
         "get",
-        "/api/get-search-result?page="+page+"&keyWord="+this.keyword
+        "/api/get-search-result?page=" + page + "&keyWord=" + this.keyword
       ).then((res) => {
         if (res.status == 200) {
           // articles
-          this.filteredArticles = res.data.articles;
+        //   this.filteredArticles = res.data.articles;
           var ids = new Set(res.data.articles.data.map((d) => d.id));
-          var merged = [
+           this.data.filteredArticles = res.data.articles.data.length > 0 ? res.data.articles : res.data.showMoreArticles
+
+           this.data.filteredArticles.data = [
             ...res.data.articles.data,
             ...res.data.showMoreArticles.data.filter((d) => !ids.has(d.id)),
           ];
-          this.filteredArticles.data = merged;
 
           // courses
-          this.filteredCourses = res.data.courses;
+
           var ids = new Set(res.data.courses.data.map((d) => d.id));
-          var mergedC = [
+           this.data.filteredCourses = res.data.courses.data.length > 0 ? res.data.courses : res.data.showMoreCourses
+           this.data.filteredCourses.data = [
             ...res.data.courses.data,
             ...res.data.showMoreCourses.data.filter((d) => !ids.has(d.id)),
           ];
-          this.filteredCourses.data = mergedC;
+        //   this.filteredCourses.data = mergedC;
+          console.log(this.data);
         }
       });
     },
-    fetchDataArticles(page){
-              if (typeof page === "undefined") {
+    fetchDataArticles(page) {
+      if (typeof page === "undefined") {
         page = 2;
       }
-            const resp = this.callApi(
+      const resp = this.callApi(
         "get",
-        "/api/get-search-result?page="+ page+"&keyWord="+this.keyword
+        "/api/get-search-result?page=" + page + "&keyWord=" + this.keyword
       ).then((res) => {
         if (res.status == 200) {
           // articles
@@ -158,10 +166,8 @@ export default {
             ...res.data.showMoreArticles.data.filter((d) => !ids.has(d.id)),
           ];
           this.filteredArticles.data = merged;
-
         }
       });
-
     },
   },
 };
@@ -169,10 +175,10 @@ export default {
 
 <style scoped>
 .main {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .main ul {
   margin: 16px 0;
 }
@@ -184,7 +190,7 @@ h1 {
   margin-top: 16px;
 }
 .cards {
-       max-width: 1200px;
+  max-width: 1200px;
   /*margin: 0 auto; */
   justify-content: flex-start;
   display: flex;
@@ -230,9 +236,9 @@ h1 {
   text-transform: capitalize;
   margin: 0px;
 }
-.search-pagination{
-    flex-basis: 100%;
-    text-align: center;
+.search-pagination {
+  flex-basis: 100%;
+  text-align: center;
 }
 .card_text {
   color: #363636;
