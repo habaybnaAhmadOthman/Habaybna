@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\BirthdayGift;
 use App\ContactUs;
 use App\CourseCategory;
+use App\SearchKeyWord;
 use App\Courses;
 use App\User;
 use Illuminate\Http\Request;
@@ -251,9 +252,8 @@ class HomeController extends Controller
                                                 ->where('contents.status', '=', 1);
                                             })
                                             ->select('contents.*')
-                                            ->paginate(6);
-
-            $data['showMoreCourses'] = DB::table('course_categories')
+                                            ->paginate(20);
+                                            $data['showMoreCourses'] = DB::table('course_categories')
 
                                             ->where('course_categories.title','LIKE','%' . $request->keyWord .'%')
                                             ->join('category_courses','course_categories.id','=','category_courses.cat_id')
@@ -264,28 +264,41 @@ class HomeController extends Controller
 
                                             )
                                             ->select('courses.*')
-                                            ->paginate(6);
+                                            ->paginate(20);
+
 
 
 
             // articles
             $data['articles'] = NewContent::with('author')->where('title','LIKE','%' . $request->keyWord .'%')
-                ->paginate(6);
+            ->where('status',1)
+            -> paginate(20);
 
-            // courses
-            $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')
-            ->where('is_publish',1)
-            ->paginate(6);
+                // courses
+                $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')
+                ->where('is_publish',1)
+                ->paginate(20);
 
-            //specialists
-            $data['specialists'] = Specialist::where('firstName','like','%'. $request->keyWord .'%')
-                ->orWhere('lastName','like','%'. $request->keyWord .'%')
-                ->with('contents')
-                ->paginate(6);
-
-
+                //specialists
+                // $data['specialists'] = Specialist::whereHas('contents')->where('firstName','like','%'. $request->keyWord .'%')
+                // ->orWhere('lastName','like','%'. $request->keyWord .'%')
+                // ->with('contents')
+                // ->paginate(6);
 
 
+
+            $keyWord =  SearchKeyWord::where('key_word',$request->keyWord)->first();
+
+            if(!$keyWord) {
+                $keyWord = new SearchKeyWord();
+                $keyWord->key_word = $request->keyWord ;
+                // $keyWord->user_id = $request->keyWord ;
+                $keyWord->count = 1;
+            }
+            else {
+                $keyWord->count = ++$keyWord->count ;
+            }
+                $keyWord->save();
             return response($data, 200);
 
         }
