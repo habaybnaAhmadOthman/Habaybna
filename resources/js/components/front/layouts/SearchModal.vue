@@ -1,6 +1,6 @@
 <template>
   <div class="search-form d-flex">
-    <form action="">
+    <form @submit.prevent="getResults">
       <div style="position: relative">
         <input type="text" v-model="keyWord" placeholder="البحث" name="q" />
         <!-- <router-link
@@ -29,7 +29,11 @@ export default {
   computed: {},
   methods: {
     getResults() {
-      this.$router.push({ path: "/search-results", query: { page:1,keyWord: this.keyWord } });
+        if(this.keyWord !== null){
+            console.log(this.keyWord);
+
+            this.$router.push({ path: "/search-results", query: { page:1,keyWord: this.keyWord } });
+        }
     //   console.log(this.keyWord);
     //   const resp = this.callApi(
     //     "get",
