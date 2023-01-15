@@ -73,7 +73,7 @@
             <input
               class="form-control plaintext"
               placeholder="الجنس"
-              :value="birthdate.val"
+              v-model="birthdate.val"
             />
           </div>
           <div class="col-md-4">

@@ -232,15 +232,11 @@ class OthersController extends Controller
             $other = Other::where('user_id',$id)->first();
 
             if(count($request->interests) > 0 ){
-                $oldInterest = UserInterest::where('user_id',$id )->get() ;
 
-                if(count($oldInterest) > 0 ){
-                    foreach ($oldInterest as $old) {
-                    $old->delete();
-                    }
-                }
 
                 foreach ($request->interests as $interest) {
+                    if( UserInterest::where('user_id',$id )->where('interest_id',$interest)->first() )
+                        continue ;
                     $userInterest = new UserInterest();
                     $userInterest->user_id = $id;
                     $userInterest->interest_id = $interest;
@@ -248,16 +244,29 @@ class OthersController extends Controller
                     $userInterest->save();
                  }
 
+                 $deletedInterests = UserInterest::where('user_id',$id )->whereNotIn('interest_id',$request->interests)->get();
+                 if(count($deletedInterests) > 0) {
+                     foreach ($deletedInterests as $key ) {
+                         $key->delete();
+                     }
+                 }
 
+            }else {
+
+                $oldInterest = UserInterest::where('user_id',$id )->get() ;
+                if(count($oldInterest) > 0 ){
+                    foreach ($oldInterest as $old) {
+                    $old->delete();
+                    }
+                }
             }
-
             $other->dob = $request->dob ;
             $other->specialization = $request->specialization ;
-            $other->work_place = $request->workPlace ;
+            $other->work_place = isset($request->workPlace) ? $request->workPlace : ""  ;
             $other->job_title = $request->jobTitle ;
             $other->employment = $request->employment ;
             $other->gender = $request->gender ;
-            $other->why_to_join = $request->whyToJoin ;
+            $other->why_to_join =   isset($request->whyToJoin) ? $request->whyToJoin : ""  ;;
             $other->edu_level = $request->education ;
             $other->specialization = 'others' ;
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ParentUsers extends Model
 {
-    protected $fillable = ['avatar','lastName','status'];
+    protected $fillable = ['avatar','lastName','status','dob'];
 
     public function user()
     {

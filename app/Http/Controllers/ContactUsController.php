@@ -9,7 +9,7 @@ class ContactUsController extends Controller
 {
    public function index()
    {
-       $messages = ContactUs::all();
+       $messages = ContactUs::orderBy('id', 'DESC')->paginate(2);
        return response($messages,200);
    }
 
@@ -31,5 +31,13 @@ class ContactUsController extends Controller
 
        $message->save();
        return response('success',200);
+   }
+
+   public function delete($id)
+   {
+       $msg = ContactUs::findorfail($id);
+    $msg->delete();
+
+    return response(200);
    }
 }

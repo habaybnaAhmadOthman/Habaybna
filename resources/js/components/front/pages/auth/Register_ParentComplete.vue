@@ -62,7 +62,7 @@ export default {
                 this.interests = await this.$store.dispatch("user/completeRegistration",obj);
                 this.showInterestScreen = true;
             } catch (e) {
-                this.showPopupMessage("حدث خطأ ما");
+                this.showPopupMessage("يرجى التأكد أنك قمت بإدخال البيانات بشكل صحيح");
             }
             this.isLoading = false;
         },

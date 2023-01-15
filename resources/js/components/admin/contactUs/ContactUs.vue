@@ -44,7 +44,11 @@ th {
             <td>{{ call_package.email }}</td>
             <td>{{ call_package.message }}</td>
 
-            <td>{{new Date (call_package.created_at).toISOString().split('T')[0]  }}</td>
+            <td>
+              {{
+                new Date(call_package.created_at).toISOString().split("T")[0]
+              }}
+            </td>
             <td>
               <Button
                 :to="'/admin/contact-us/' + call_package.id"
@@ -59,6 +63,12 @@ th {
           </tr>
         </tbody>
       </table>
+      <div v-if="packages" class="pagination">
+        <Pagination
+          :data="packages"
+          @pagination-change-page="getResults"
+        ></Pagination>
+      </div>
     </div>
     <Modal v-model="dialogDelete" width="360">
       <p slot="header" style="color: #f60; text-align: center">
@@ -82,10 +92,15 @@ th {
   </div>
 </template>
 <script>
+import LaravelVuePagination from "laravel-vue-pagination";
+
 export default {
+  components: {
+    Pagination: LaravelVuePagination,
+  },
   data() {
     return {
-      packages: [],
+      packages: "",
       dialogDelete: false,
       modal_loading: false,
       idDeleteUser: "",
@@ -94,16 +109,25 @@ export default {
       ascending: false,
     };
   },
-  async created() {
-    const resp = await this.callApi(
-      "get",
-      "/api/admin/contact-us/all-messages"
-    );
-    if (resp.status == 200) {
-      this.packages = resp.data;
-    }
+  async mounted() {
+    this.getResults();
   },
   methods: {
+    getResults(page) {
+      if (typeof page === "undefined") {
+        page = 1;
+      }
+      const resp = this.callApi(
+        "get",
+        "/api/admin/contact-us/all-messages?page=" + page
+      ).then((res)=>{
+          if(res.status == 200) {
+              this.packages = res.data
+              console.log('package : ',this.packages);
+          }
+      })
+
+    },
     deleteDaialog(id, index) {
       console.log(id, index);
       this.dialogDelete = true;
@@ -113,16 +137,20 @@ export default {
     del(index) {
       console.log(this.idDeleteUser);
       this.modal_loading = true;
-      const resp = this.$store.dispatch(
-        "admin/deleteCallPackge",
-        this.idDeleteUser
-      );
-      setTimeout(() => {
+      this.callApi(
+        "post",
+        "/api/admin/contact-us/delete/" + this.idDeleteUser
+      ).then((res)=>{
+          if(res.status == 200) {
+                    setTimeout(() => {
         this.modal_loading = false;
         this.dialogDelete = false;
-        this.$Message.success("تم حذف الحزمة  ");
+        this.$Message.success("تم حذف الرسالة  ");
       }, 1500);
-      this.packages.splice(index, 1);
+      this.packages.data.splice(index, 1);
+          }
+      })
+
     },
 
     sortTable(type) {
@@ -130,7 +158,7 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.packages.sort((a, b) =>
+        return this.packages.data.sort((a, b) =>
           isAscending
             ? a.title > b.title
               ? 1
@@ -148,7 +176,7 @@ export default {
         //   console.log(this.ascending);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
-        return this.packages.sort((a, b) =>
+        return this.packages.data.sort((a, b) =>
           isAscending
             ? a.status > b.status
               ? 1
@@ -184,11 +212,12 @@ export default {
   },
   computed: {
     filteredList() {
-      return this.packages.filter((call_package) => {
-        return call_package.name
-          .toLowerCase()
-          .includes(this.keyword.toLowerCase());
-      });
+      if (this.packages && this.packages.data)
+        return this.packages.data.filter((call_package) => {
+          return call_package.name
+            .toLowerCase()
+            .includes(this.keyword.toLowerCase());
+        });
     },
   },
 };

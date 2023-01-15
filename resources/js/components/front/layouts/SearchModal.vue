@@ -28,6 +28,12 @@ export default {
   },
   computed: {},
   methods: {
+
+
+        
+
+
+
     getResults() {
         if(this.keyWord !== null){
             console.log(this.keyWord);
