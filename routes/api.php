@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
         // contact us
         Route::get('/contact-us/all-messages','ContactUsController@index');
         Route::get('/contact-us/{id}','ContactUsController@show');
+        Route::post('/contact-us/delete/{id}','ContactUsController@delete');
 
         // search admin
         Route::get('get-others-search/{keyword}/{type}','UserController@search');

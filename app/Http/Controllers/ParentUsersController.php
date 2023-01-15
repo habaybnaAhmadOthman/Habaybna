@@ -179,15 +179,11 @@ class ParentUsersController extends Controller
             $parent = ParentUsers::where('user_id',$id)->first();
 
             if(count($request->interests) > 0 ){
-                $oldInterest = UserInterest::where('user_id',$id )->get() ;
 
-                if(count($oldInterest) > 0 ){
-                    foreach ($oldInterest as $old) {
-                    $old->delete();
-                    }
-                }
 
                 foreach ($request->interests as $interest) {
+                    if( UserInterest::where('user_id',$id )->where('interest_id',$interest)->first() )
+                        continue ;
                     $userInterest = new UserInterest();
                     $userInterest->user_id = $id;
                     $userInterest->interest_id = $interest;
@@ -195,7 +191,21 @@ class ParentUsersController extends Controller
                     $userInterest->save();
                  }
 
+                 $deletedInterests = UserInterest::where('user_id',$id )->whereNotIn('interest_id',$request->interests)->get();
+                 if(count($deletedInterests) > 0) {
+                     foreach ($deletedInterests as $key ) {
+                         $key->delete();
+                     }
+                 }
 
+            }else {
+
+                $oldInterest = UserInterest::where('user_id',$id )->get() ;
+                if(count($oldInterest) > 0 ){
+                    foreach ($oldInterest as $old) {
+                    $old->delete();
+                    }
+                }
             }
 
 
