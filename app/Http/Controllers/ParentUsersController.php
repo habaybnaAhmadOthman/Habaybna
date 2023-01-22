@@ -8,6 +8,7 @@ use App\Interest;
 use App\UserInterest;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use phpDocumentor\Reflection\Types\Parent_;
@@ -413,7 +414,24 @@ class ParentUsersController extends Controller
     public function getParentsData()
     {
         try{
-                $parents = User::whereHas('parent')->orderBy('id', 'desc')->paginate(15);
+
+            $parents = User::with('parent')
+                                ->whereHas('parent',function(Builder $q) {
+
+                                })->where('role','parent')->orderBy('id', 'desc')->paginate(15);
+
+                return response($parents, 200);
+
+            } catch (ModelNotFoundException $e){
+                return response( 'error',404 );
+            }
+
+    }
+
+    public function exportToExcel()
+    {
+        try{
+                $parents = User::whereHas('parent')->with('parent')->orderBy('id', 'desc')->get();
 
                 return response($parents, 200);
 

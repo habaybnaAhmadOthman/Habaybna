@@ -545,6 +545,11 @@ const routes = [{
         component: SpecialistsPage
     },
     {
+        path: "/specialist/:specialist",
+        component: SpecialistPage,
+        props: true,
+    },
+    {
         path: "/search-results",
         component: SearchResults,
     },

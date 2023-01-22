@@ -15,7 +15,6 @@ class PaymentCoures {
 
     public function execute(array $data)
     {
-
         try {
             $back_url = url('/api/payment/course');
                 //Step 1: Generate Secure Hash

@@ -180,6 +180,7 @@ class SpecialistController extends Controller
     public function getSpecialistsData()
     {
         try{
+
             $specialists = User::whereHas('specialist')->orderBy('id', 'desc')->paginate(15);
             return response($specialists, 200);
 
@@ -355,5 +356,16 @@ class SpecialistController extends Controller
         return response($speciality, 200);
     }
 
+    public function exportToExcel()
+    {
+        try{
+                $parents = User::whereHas('specialist')->where('role','specialist')->with('specialist')->orderBy('id', 'desc')->get();
+                return response($parents, 200);
+
+            } catch (ModelNotFoundException $e){
+                return response( 'error',404 );
+            }
+
+    }
 
 }

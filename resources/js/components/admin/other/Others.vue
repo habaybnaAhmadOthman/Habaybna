@@ -109,16 +109,20 @@ th {
           <th scope="col">الاسم الكامل</th>
           <th scope="col">الهاتف</th>
           <th scope="col">الايميل</th>
-          <th scope="col">السيرة الذاتية</th>
+          <th scope="col">لماذا ترغب بالانضمام</th>
+          <th scope="col">مكان العمل</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(specialist, index) in filterlist" :key="index">
+        <tr v-for="(user, index) in exportData" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ specialist.firstName + " " + specialist.lastName }}</td>
-          <td class="phone-td">{{ specialist.phone }}</td>
-          <td>{{ specialist.email }}</td>
-          <td>{{ specialist.why_to_join }}</td>
+          <td>
+            {{ user.other.firstName + " " + user.other.lastName }}
+          </td>
+          <td class="phone-td">{{ user.phone }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.other.why_to_join }}</td>
+          <td>{{ user.other.work_place }}</td>
         </tr>
       </tbody>
     </table>
@@ -162,6 +166,7 @@ export default {
       indexDeleteUser: "",
       keyword: "",
       ascending: false,
+      exportData:"",
     };
   },
   //   async created() {
@@ -188,10 +193,19 @@ export default {
           this.others = data;
     },
     exportToExcel() {
-      /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.getElementById("table"));
-      /* generate file and force a download*/
-      XLSX.writeFile(wb, "others bio.xlsx");
+      this.callApi("get", "/api/admin/export-others-excel").then((resp) => {
+        this.exportData = resp.data;
+        console.log("resp:", this.exportData.data);
+        /* generate workbook object from table */
+        this.export();
+      });
+    },
+    export() {
+      setTimeout(() => {
+        var wb = XLSX.utils.table_to_book(document.getElementById("table"));
+        /* generate file and force a download*/
+        XLSX.writeFile(wb, "parents bio.xlsx");
+      }, 1500);
     },
     deleteDaialog(id, index) {
       this.dialogDelete = true;
