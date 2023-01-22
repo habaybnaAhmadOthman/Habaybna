@@ -46,7 +46,7 @@ h3 {
         placeholder=" ابحث عن الاسم او رقم الهاتف أو الايميل"
       />
     </div>
-    <table class="table">
+    <table class="table" id="table1">
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
@@ -133,12 +133,14 @@ h3 {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(specialist, index) in filterlist" :key="index">
+        <tr v-for="(user, index) in exportData" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ specialist.user_data.firstName + " " + specialist.user_data.lastName }}</td>
-          <td class="phone-td">{{ specialist.phone }}</td>
-          <td>{{ specialist.email }}</td>
-          <td>{{ specialist.user_data.why_to_join }}</td>
+          <td>
+            {{ user.parent.firstName + " " + user.parent.lastName }}
+          </td>
+          <td class="phone-td">{{ user.phone }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.parent.why_to_join }}</td>
         </tr>
       </tbody>
     </table>
@@ -180,6 +182,7 @@ export default {
       indexDeleteUser: "",
       keyword: "",
       loading: false,
+      exportData: "",
     };
   },
   //   async created() {
@@ -198,10 +201,19 @@ export default {
       });
     },
     exportToExcel() {
-      /* generate workbook object from table */
-      var wb = XLSX.utils.table_to_book(document.getElementById("table"));
-      /* generate file and force a download*/
-      XLSX.writeFile(wb, "parents bio.xlsx");
+      this.callApi("get", "/api/admin/export-parent-excel").then((resp) => {
+        this.exportData = resp.data;
+        console.log("resp:", this.exportData.data);
+        /* generate workbook object from table */
+        this.export();
+      });
+    },
+    export() {
+      setTimeout(() => {
+        var wb = XLSX.utils.table_to_book(document.getElementById("table"));
+        /* generate file and force a download*/
+        XLSX.writeFile(wb, "parents bio.xlsx");
+      }, 1500);
     },
     deleteDaialog(id, index) {
       this.dialogDelete = true;
@@ -224,14 +236,15 @@ export default {
       const resp = this.$store.dispatch("admin/changeStatus", id);
       setTimeout(() => {
         this.$Message.success("تم تغيير الحالة");
-        this.parents.data.data[i].user_data.status = !this.parents.data.data[i].user_data.status;
+        this.parents.data.data[i].user_data.status =
+          !this.parents.data.data[i].user_data.status;
         this.loading = false;
       }, 1000);
     },
     sortTable(type) {
-        console.log(type);
+      console.log(type);
       if (type == "name") {
-          console.log(this.parents.data.data);
+        console.log(this.parents.data.data);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
         return this.parents.data.data.sort((a, b) =>
@@ -311,31 +324,35 @@ export default {
     filterlist() {
       if (this.parents && this.parents.data)
         return this.parents.data.data.filter((other) => {
-          let byName =
-            other.user_data.firstName
-              .toLowerCase()
-              .indexOf(this.keyword.toLowerCase()) > -1;
+            if (other.parent) {
+              console.log('zz',other);
+            let byName =
+              other.user_data.firstName
+                .toLowerCase()
+                .indexOf(this.keyword.toLowerCase()) > -1;
 
-          let lastName =
-            other.user_data.lastName
-              .toLowerCase()
-              .indexOf(this.keyword.toLowerCase()) > -1;
+            let lastName =
+              other.user_data.lastName
+                .toLowerCase()
+                .indexOf(this.keyword.toLowerCase()) > -1;
 
-          let byPhone =
-            other.phone.toLowerCase().indexOf(this.keyword.toLowerCase()) > -1;
+            let byPhone =
+              other.phone.toLowerCase().indexOf(this.keyword.toLowerCase()) >
+              -1;
 
-          let byEmail =
-            other.email.toLowerCase().indexOf(this.keyword.toLowerCase()) > -1;
-          if (byName === true) {
-            return byName;
-          } else if (lastName === true) {
-            return lastName;
-          } else if (byPhone === true) {
-            return byPhone;
-          } else if (byEmail === true) {
-            return byEmail;
+            let byEmail =
+              other.email.toLowerCase().indexOf(this.keyword.toLowerCase()) >
+              -1;
+            if (byName === true) {
+              return byName;
+            } else if (lastName === true) {
+              return lastName;
+            } else if (byPhone === true) {
+              return byPhone;
+            } else if (byEmail === true) {
+              return byEmail;
+            }
           }
-          console.log(byName, byPhone);
         });
     },
   },

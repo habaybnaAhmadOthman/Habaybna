@@ -67,6 +67,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // parent route
         Route::get('get-parents-data','ParentUsersController@getParentsData');
+        Route::get('export-parent-excel','ParentUsersController@exportToExcel');
         Route::get('parent/{id}','ParentUsersController@show');
         Route::post('/parent/update/{id}','ParentUsersController@update');
         Route::post('/parent/create','ParentUsersController@create');
@@ -77,12 +78,16 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('specialist/update/{id}','SpecialistController@update');
         Route::post('/specialist/create','SpecialistController@createSpecAdmin');
         Route::get('/specialist-make-call-status/{id}','SpecialistController@makeCallStatus');
+        Route::get('export-specialists-excel','SpecialistController@exportToExcel');
+
 
         //other route
         Route::get('get-others-data','OthersController@getOthersData');
         Route::get('other/{id}','OthersController@show');
         Route::post('other/update/{id}','OthersController@update');
         Route::post('/other/create','OthersController@createOtherAdmin');
+        Route::get('export-others-excel','OthersController@exportToExcel');
+
 
         // course route
         Route::get('course-init-data','CourseController@getCoursesInitData');

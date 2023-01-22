@@ -271,11 +271,13 @@ class HomeController extends Controller
 
             // articles
             $data['articles'] = NewContent::with('author')->where('title','LIKE','%' . $request->keyWord .'%')
+            ->orWhere('content','like','%'. $request->keyWord .'%')
             ->where('status',1)
             -> paginate(20);
 
                 // courses
-                $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')
+                
+                $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')->orWhere('courseDescription','like','%'. $request->keyWord .'%')
                 ->where('is_publish',1)
                 ->paginate(20);
 

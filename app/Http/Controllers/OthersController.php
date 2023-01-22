@@ -377,4 +377,16 @@ class OthersController extends Controller
         }
 
     }
+
+    public function exportToExcel()
+    {
+        try{
+                $parents = User::whereHas('other')->where('role','other')->with('other')->orderBy('id', 'desc')->get();
+                return response($parents, 200);
+
+            } catch (ModelNotFoundException $e){
+                return response( 'error',404 );
+            }
+
+    }
 }
