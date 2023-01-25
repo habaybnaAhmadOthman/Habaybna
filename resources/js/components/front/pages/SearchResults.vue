@@ -3,7 +3,9 @@
     <TheHeader></TheHeader>
 
     <h1>نتائج البحث</h1>
-    <h1>مقالات</h1>
+    <h1
+    v-if="data.filteredArticles && data.filteredArticles.data &&  data.filteredArticles.data.length > 0"
+    >مقالات</h1>
 
     <ul
       v-if="data.filteredArticles && data.filteredArticles.data &&  data.filteredArticles.data.length > 0"
@@ -33,18 +35,23 @@
         </router-link>
       </li>
     </ul>
-    <ul v-else class="cards">
+    <!-- <ul v-else class="cards">
       <li class="card no-article">
         <h2>لا يوجد مقالات . . . . . "{{ keyword }}"</h2>
       </li>
-    </ul>
+    </ul> -->
     <div v-if="data.filteredArticles && data.filteredArticles.data" class= "portal-pagination mt-16 justify-center d-flex">
       <Pagination
         :data="data.filteredArticles"
         @pagination-change-page="fetchDataArticles"
       ></Pagination>
     </div>
-    <h1>دورات تدريبية</h1>
+    <h1
+      v-if="
+      data.filteredCourses && data.filteredCourses.data &&
+        data.filteredCourses.data.length > 0
+      "
+    >دورات تدريبية</h1>
 
     <ul
       v-if="
@@ -77,11 +84,29 @@
         </router-link>
       </li>
     </ul>
-    <ul v-else class="cards">
+    <!-- <ul v-else class="cards">
       <li class="card no-article">
         <h2>لا يوجد دورات تدريبية . . . . . "{{ keyword }}"</h2>
       </li>
-    </ul>
+    </ul> -->
+                <h1 v-if="filteredSpecialists.length > 0">  الأخصائيين</h1>
+        <div class="d-flex specialist-list flex-wrap row-2" v-if="!isMobile">
+            <SpecialistCard v-for="specialist in filteredSpecialists" :key="specialist.user_id" :specialist="specialist"></SpecialistCard>
+        </div>
+                <div class="relative" v-else>
+            <div class="coaches-swiper my-swiper" dir="rtl">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div v-for="specialist in filteredSpecialists" :key="specialist.user_id" class="swiper-slide mobile-slide">
+                        <SpecialistCard :specialist="specialist"></SpecialistCard>
+                    </div>
+                </div>
+                <div class="swiper-button-next coaches-next mobile-arrow"></div>
+                <div class="swiper-button-prev coaches-prev mobile-arrow"></div>
+            </div>
+
+        </div>
     <!-- <div class="portal-pagination mt-16 justify-center d-flex">
         <Pagination
           :data="filteredCourses"
@@ -95,14 +120,14 @@
 import LaravelVuePagination from "laravel-vue-pagination";
 import TheHeader from "../layouts/header/TheHeader.vue";
 import TheFooter from "../layouts/TheFooter.vue";
+import SpecialistCard from '../views/specialists/SpecialistCard.vue'
+
 export default {
   // props: ['filtered-articles','showMoreCard','class-list','current-page'],
-  components: { Pagination: LaravelVuePagination, TheFooter, TheHeader },
+  components: { Pagination: LaravelVuePagination, TheFooter, TheHeader, SpecialistCard },
   mounted() {
-    console.log(this.data.filteredCourses.length);
     this.keyword = this.$route.query.keyWord;
     this.fetchData(1, this.keyword);
-    console.log(this.data.filteredCourses);
   },
   data() {
     return {
@@ -120,7 +145,6 @@ export default {
       if (typeof page === "undefined") {
         const page = 1;
       }
-      console.log("page", page);
       const resp = this.callApi(
         "get",
         "/api/get-search-result?page=" + page + "&keyWord=" + this.keyword
@@ -144,8 +168,9 @@ export default {
             ...res.data.courses.data,
             ...res.data.showMoreCourses.data.filter((d) => !ids.has(d.id)),
           ];
-        //   this.filteredCourses.data = mergedC;
-          console.log(this.data);
+        //   specialists
+        this.filteredSpecialists = res.data.specialists
+
         }
       });
     },
@@ -159,19 +184,20 @@ export default {
       ).then((res) => {
         if (res.status == 200) {
           // articles
-          this.filteredArticles = res.data.articles;
+        //   this.filteredArticles = res.data.articles;
           var ids = new Set(res.data.articles.data.map((d) => d.id));
-          var merged = [
+           this.data.filteredArticles = res.data.articles.data.length > 0 ? res.data.articles : res.data.showMoreArticles
+
+           this.data.filteredArticles.data = [
             ...res.data.articles.data,
             ...res.data.showMoreArticles.data.filter((d) => !ids.has(d.id)),
           ];
-          this.filteredArticles.data = merged;
         }
       });
     },
   },
 
-  
+
 };
 </script>
 

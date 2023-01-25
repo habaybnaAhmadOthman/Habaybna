@@ -1,7 +1,7 @@
 <template>
     <div class="course-page">
         <TheHeader></TheHeader>
-        <Banner 
+        <Banner
         @open-share-modal="showShareDialog"
         :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"
         ></Banner>
@@ -22,7 +22,7 @@
                 <RelatedCourses :title="`دورة ذات صلة`" v-if="isDataReady"></RelatedCourses>
             </div>
             <div class="mt-60" v-if="isDataReady && relatedArticles.length > 0">
-                <RelatedContent :data="relatedArticles"></RelatedContent>    
+                <RelatedContent :data="relatedArticles"></RelatedContent>
             </div>
         </div>
         <div class="mt-30">
@@ -84,7 +84,7 @@ import { vueVimeoPlayer } from 'vue-vimeo-player'
 export default {
     props: ['course'],
     mixins: [infoModalMixin],
-    components: { 
+    components: {
         CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedContent,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter,TheHeader,
         ShareCourseModal,TabsToggle,
         vueVimeoPlayer
@@ -147,8 +147,8 @@ export default {
                         tab.active = false
                 })
                 this.toggletab(activeTab)
-            } 
-        
+            }
+
         },
         toggletab(tabName) {
             document.querySelector(".tabs-toggle .active").classList.remove("active");
@@ -178,7 +178,7 @@ export default {
                 this.whatShouldLearn  = data.what_should_learn;
                 this.videosList  = data.videos_title_length;
                 this.videosCount  = data.videos_count;
-                
+
                 this.isDataReady = true;
                 // show related courses section
                 const resp = (await this.$store.dispatch(`content/getContent`,{page:1,filters: this.categories})).data
@@ -191,8 +191,7 @@ export default {
                         without_like:true
                     })
                 })
-                console.log(this.relatedArticles)
-                    
+    
             } catch (e){
                 console.log(e);
             }

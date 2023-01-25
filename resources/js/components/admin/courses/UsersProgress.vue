@@ -77,10 +77,10 @@ th {
           </tr>
         </tbody>
       </table>
-      <!-- <Pagination
+      <Pagination
         :data="orders"
         @pagination-change-page="getResults"
-      ></Pagination> -->
+      ></Pagination>
     </div>
   </div>
 </template>

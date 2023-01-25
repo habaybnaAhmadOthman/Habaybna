@@ -243,6 +243,7 @@ class HomeController extends Controller
     {
         if($request->keyWord)
         {
+            // dd([config('appconfig.mailerliteapikey'),config('appconfig.stssecret')]);
             $data['showMoreArticles'] = DB::table('course_categories')
 
                                             ->where('course_categories.title','LIKE','%' . $request->keyWord .'%')
@@ -276,17 +277,44 @@ class HomeController extends Controller
             -> paginate(20);
 
                 // courses
-                
+
                 $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')->orWhere('courseDescription','like','%'. $request->keyWord .'%')
                 ->where('is_publish',1)
                 ->paginate(20);
 
-                //specialists
-                // $data['specialists'] = Specialist::whereHas('contents')->where('firstName','like','%'. $request->keyWord .'%')
-                // ->orWhere('lastName','like','%'. $request->keyWord .'%')
-                // ->with('contents')
-                // ->paginate(6);
+                                $callers = DB::table('specialists')
+                                            ->where('make_calls',1)
+                                            ->where(function ($q) use($request)
+                                                {
+                                                    $q->where('specialists.firstName','like','%'.$request->keyWord.'%')
+                                                      ->orWhere('specialists.lastName', 'like', '%'.$request->keyWord.'%');
 
+                                                })
+                                            ->get();
+
+                                $writers = DB::table('specialists')
+                                ->where(function ($q) use($request)
+                                {
+                                    $q->where('specialists.firstName','like','%'.$request->keyWord.'%')
+                                      ->orWhere('specialists.lastName', 'like', '%'.$request->keyWord.'%');
+
+                                })
+                                                ->join('contents', 'specialists.user_id', '=', 'contents.author_id')
+                                                ->select('specialists.*')
+                                                ->distinct()
+                                                ->get();
+                                $teachers = DB::table('specialists')
+                                ->where(function ($q) use($request)
+                                {
+                                    $q->where('specialists.firstName','like','%'.$request->keyWord.'%')
+                                      ->orWhere('specialists.lastName', 'like', '%'.$request->keyWord.'%');
+
+                                })
+                                                ->join('course_specialists', 'specialists.user_id', '=', 'course_specialists.specialist_id')
+                                                ->select('specialists.*')
+                                                ->distinct()
+                                                ->get();
+                                                $data['specialists'] = $callers->union($writers)->union($teachers);
 
 
             $keyWord =  SearchKeyWord::where('key_word',$request->keyWord)->first();

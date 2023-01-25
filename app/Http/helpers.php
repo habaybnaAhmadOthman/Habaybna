@@ -24,7 +24,9 @@ if (! function_exists('mailerLiteSubscribe')) {
 
     function mailerLiteSubscribe($data)
     {
-        $mailerlite_group_api = ( new \MailerLiteApi\MailerLite( env('MAILERLITE_APIKEY') ) )->groups();
+
+        
+        $mailerlite_group_api = ( new \MailerLiteApi\MailerLite( config('appconfig.mailerliteapikey') ) )->groups();
         // dd($mailerlite_group_api->get());
         $mailerlite_subscriber = [
             'email'  => $data['email'],
