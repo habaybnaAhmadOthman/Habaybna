@@ -59,7 +59,7 @@ class PaymentController extends Controller
         return response($orders, 200);
     }
 
-    public function callPayment(Request $request,PaymentCall $paymentCall )
+    public function callPayment( Request $request,PaymentCall $paymentCall )
     {
         $data = $paymentCall->execute($request->all());
         return response()->json($data);

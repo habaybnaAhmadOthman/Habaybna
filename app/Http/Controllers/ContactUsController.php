@@ -9,7 +9,7 @@ class ContactUsController extends Controller
 {
    public function index()
    {
-       $messages = ContactUs::orderBy('id', 'DESC')->paginate(2);
+       $messages = ContactUs::orderBy('id', 'DESC')->paginate(15);
        return response($messages,200);
    }
 

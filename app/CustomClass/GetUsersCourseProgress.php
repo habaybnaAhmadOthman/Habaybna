@@ -44,9 +44,7 @@ class GetUsersCourseProgress {
                         'course_status'=>$this->getCourseStatus($one)
                       ];
                 }
-                // if($one->status){
 
-            // }
             }
             return $sortedData;
         }
@@ -64,9 +62,10 @@ class GetUsersCourseProgress {
         if($cc){
             $quizStatus = UsersQuiz::where('user_id',$cc->user_id)->where('course_id',$cc->course_id)->first();
 
-            if($quizStatus && $quizStatus->is_complete){
+            if($quizStatus && $quizStatus->is_complete) {
 
-                return 'تم انهاء الدورة';
+                    return 'تم انهاء الدورة' ;
+
             }
 
             elseif( $progress = UserCourseProgress::where('order_id',$cc->id)->count() > 0 ){
@@ -78,7 +77,7 @@ class GetUsersCourseProgress {
                 elseif(UserCourseProgress::where('order_id',$cc->id)->count() == $cc->course->videos->count()){
                     return ' لم يتم اجتياز الاختار';
                     }
-        }  else{
+            }  else{
                 return '    الدورة لم تبدأ';
                 }
 

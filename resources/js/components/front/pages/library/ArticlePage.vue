@@ -104,7 +104,7 @@
             },
         },
         mounted(){
-            console.log(this.$router.currentRoute)
+            // console.log(this.$router.currentRoute)
             this.getPageData();
         },
         beforeRouteLeave (to, from,next) {
