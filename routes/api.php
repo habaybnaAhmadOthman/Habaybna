@@ -194,6 +194,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // speciaist route
     Route::post('/edit-specialist-profile-data','SpecialistController@editProfileData');
+    Route::post('/add-zoom-account','SpecialistController@addZoomAccount');
+    Route::get('/get-zoom-account','SpecialistController@getZoomAccount');
+
 
     // others route
     Route::post('/edit-other-profile-data','OthersController@editProfileData');

@@ -105,6 +105,7 @@ import UserProfile_MyFavouriteContent from "./components/front/pages/dashboard/M
 // user profile ==> Calls
 import UserProfile_SessionTimes from "./components/front/pages/dashboard/calls/SessionTimes.vue";
 import UserProfile_CallLogs from "./components/front/pages/dashboard/calls/CallLog.vue";
+import UserProfile_ZoomAccount from "./components/front/pages/dashboard/calls/ZoomAccount.vue";
 
 
 
@@ -471,6 +472,11 @@ const routes = [{
                 path: "my-call-log",
                 component: UserProfile_CallLogs,
                 name: 'myCallLog'
+            },
+            {
+                path: "my-zoom-account",
+                component: UserProfile_ZoomAccount,
+                name: 'UserProfile_ZoomAccount'
             },
 
         ]
