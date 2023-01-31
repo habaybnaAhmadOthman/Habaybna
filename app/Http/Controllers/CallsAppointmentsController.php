@@ -20,7 +20,7 @@ class CallsAppointmentsController extends Controller
     public function setCallsProvidersappointments(Request $request)
     {
         // dd($request->saveThoseIntervalsOnly[0]);
-// dd(Auth::user()->specialist->make_calls);
+        // dd(Auth::user()->specialist->make_calls);
         if(Auth::user()->specialist && Auth::user()->specialist->make_calls){
             $data['apointments'] = $request->saveThoseIntervalsOnly;
 
@@ -40,8 +40,8 @@ class CallsAppointmentsController extends Controller
              }
 
 
-    }
-    return response('cantmakecall', 404);
+        }
+        return response('cantmakecall', 404);
     }
 
     public function getBookedCallsProvidersappointments()
@@ -58,15 +58,11 @@ class CallsAppointmentsController extends Controller
     public function getCallsProvidersappointments($slug)
     {
         // dd($slug);
-       $id = explode ("--", $slug);
-        $provider = User::findorfail($id[1]) ;
-        if($provider &&
-        $provider->specialist &&
-        !empty($provider->specialist->callsAppointments)
-        )
+        if(Auth::user()->specialist && Auth::user()->specialist->make_calls){
 
-        return response($provider->specialist->availiableAppointments, 200);
 
+        return response(Auth::user()->specialist->availiableAppointments, 200);
+        }
         return response('notcallprovider',404);
     }
 
