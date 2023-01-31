@@ -39,7 +39,7 @@ class JoinFreeCourse {
                 $coupon = PromoCode::findorfail($data['hasPromoCode']['id']);
                 $coupon->increment('usage_count');
                 $coupon->save();
-                
+
                 $initData->coupon_id = $coupon->id;
                 $initData->save();
 
@@ -51,6 +51,17 @@ class JoinFreeCourse {
                 $userPromoCode->course_id = $initData->course_id ;
 
                 $userPromoCode->save();
+
+                $course = Courses::findorfail($initData->course_id);
+                $mailChimpData =[
+                    'email'=> Auth::user()->email,
+                    'phone'=> Auth::user()->phone,
+                    'firstName'=> Auth::user()->user_data->firstName,
+                    'lastName'=> Auth::user()->user_data->lastName,
+                    'tag'=> $course->courseTitle,
+                    'type'=> Auth::user()->role,
+                ];
+                mailerLiteOnlineCoursesSubscribe($mailChimpData);
             }
 
             return $initData;

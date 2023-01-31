@@ -14,4 +14,9 @@ class CallPurchaseOrders extends Model
     {
         return $this->belongsTo(User::class,'user_id','id');
     }
+
+    public function specialist()
+    {
+        return $this->belongsTo(User::class,'specialist_id','id');
+    }
 }

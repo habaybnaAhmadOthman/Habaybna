@@ -73,6 +73,14 @@
                   >سجل المكالمات</router-link
                 >
               </li>
+                            <li>
+                <router-link
+                  class="d-block p-side-15 pt-10 pb-10 trans"
+                  to="/profile/my-zoom-account"
+                  @click.native="closeNavMenu"
+                  > اعدادات <strong style="color:#2d8cff">Zoom</strong></router-link
+                >
+              </li>
             </aside>
           </transition>
         </li>

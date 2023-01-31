@@ -172,6 +172,16 @@ class PaymentCoures {
 
 
         }
+        $course = Courses::findorfail($order->course_id);
+        $mailChimpData =[
+            'email'=> $user->email,
+            'phone'=> $user->phone,
+            'firstName'=> $user->user_data->firstName,
+            'lastName'=> $user->user_data->lastName,
+            'tag'=> $course->courseTitle,
+            'type'=> $user->role,
+        ];
+        mailerLiteOnlineCoursesSubscribe($mailChimpData);
 
         return redirect()->to('payment-success')->send();
 

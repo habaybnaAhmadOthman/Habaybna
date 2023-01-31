@@ -20,7 +20,7 @@ class CallsAppointmentsController extends Controller
     public function setCallsProvidersappointments(Request $request)
     {
         // dd($request->saveThoseIntervalsOnly[0]);
-
+// dd(Auth::user()->specialist->make_calls);
         if(Auth::user()->specialist && Auth::user()->specialist->make_calls){
             $data['apointments'] = $request->saveThoseIntervalsOnly;
 

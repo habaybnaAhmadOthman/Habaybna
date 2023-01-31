@@ -11,6 +11,7 @@ use App\CallsAppointments;
 use App\CallsStatus;
 use App\Specialist;
 use App\User;
+use App\SpecialistZoomAccount;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Object_ as TypesObject_;
 use PhpParser\Node\Expr\Cast\Object_;
@@ -160,26 +161,84 @@ class PaymentCall {
         $order->save();
 
         if($order->status){
+
+            // coupon increments
             if(isset($order->coupon_id) && $order->coupon_id !==""){
                 $coupon = PromoCode::findorfail($order->coupon_id);
                 $coupon->increment('usage_count');
                 $coupon->save();
 
                 $userPromoCode = new UsersPromoCode() ;
-            $userPromoCode->order_id = $order->id ;
-            $userPromoCode->user_id = $order->user_id ;
-            $userPromoCode->coupon_id = $order->coupon_id ;
-            $userPromoCode->usage = 'Call' ;
-            $userPromoCode->call_package_id = $order->specialist_id ;
+                $userPromoCode->order_id = $order->id ;
+                $userPromoCode->user_id = $order->user_id ;
+                $userPromoCode->coupon_id = $order->coupon_id ;
+                $userPromoCode->usage = 'Call' ;
+                $userPromoCode->call_package_id = $order->specialist_id ;
 
-            $userPromoCode->save();
+                $userPromoCode->save();
             }
 
-            $call_status = new CallsStatus() ;
+            //  call status //
 
-            $call_status->appointment_id = $order->appointment_id ;
-            $call_status->status = '0';
-            $call_status->save();
+            //  $table->enum('status', [0, 1, 2, 3]);
+            //  0=> booked not happend yet ,
+            //  1=> booked and happend ,
+            //  2=>booked and not happend almost
+
+            // specialist zoom link account
+
+            $zoomAccount = SpecialistZoomAccount::where('spec_id',$order->specialist->id)->first();
+            if($zoomAccount && isset($zoomAccount)) {
+
+                $call_status = new CallsStatus() ;
+                $call_status->appointment_id = $order->appointment_id ;
+                $call_status->call_zoom_link = $zoomAccount->zoom_link ;
+                $call_status->status = '0';
+
+                $call_status->save();
+
+                if(isset($call_status) ) {
+                    $call_status->call_zoom_link = $zoomAccount->zoomLink ;
+                    $call_status->save();
+
+                    // send sms to parent and specialist
+                    $numbers = $call_status->callAppointment->Parnet->phone.','.$call_status->callAppointment->specialist->Phone ;
+                    // $numbers = "+962795982977".','."+962792819107" ;
+                    $msg ="تم إضافة رابط المكالمة إلى سجل المكالمات الخاص بك على موقع حبايبنا.نت";
+
+                    $curl = curl_init();
+
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => "https://api.releans.com/v2/batch",
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => "",
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => "POST",
+                        CURLOPT_POSTFIELDS => "sender=Habaybna&mobile=".$numbers."&content=".$msg,
+                        CURLOPT_HTTPHEADER => array(
+                            "Authorization: Bearer ". config('appconfig.releanssecret')
+                        ),
+                    ));
+
+                    $response = curl_exec($curl);
+
+
+                    curl_close($curl);
+
+
+                    // return response('success', 200);
+                }
+
+            }else{
+                $call_status = new CallsStatus() ;
+                    $call_status->appointment_id = $order->appointment_id ;
+                    $call_status->status = '0';
+                    $call_status->save();
+                }
+
 
             $appChildInfo = new AppointmentChildInfo() ;
 
@@ -228,11 +287,66 @@ class PaymentCall {
 
             }
 
-            $call_status = new CallsStatus() ;
+            //  call status //
 
-            $call_status->appointment_id = $order->appointment_id ;
-            $call_status->status = '0';
-            $call_status->save();
+            //  $table->enum('status', [0, 1, 2, 3]);
+            //  0=> booked not happend yet ,
+            //  1=> booked and happend ,
+            //  2=>booked and not happend almost
+
+            // specialist zoom link account
+
+            $zoomAccount = SpecialistZoomAccount::where('spec_id',$order->specialist->id)->first();
+            if($zoomAccount && isset($zoomAccount)) {
+
+                $call_status = new CallsStatus() ;
+                $call_status->appointment_id = $order->appointment_id ;
+                $call_status->call_zoom_link = $zoomAccount->zoom_link ;
+                $call_status->status = '0';
+
+                $call_status->save();
+
+                if(isset($call_status) ) {
+                    $call_status->call_zoom_link = $zoomAccount->zoomLink ;
+                    $call_status->save();
+
+                    // send sms to parent and specialist
+                    // $numbers = $call_status->callAppointment->Parnet->phone.','.$call_status->callAppointment->specialist->Phone ;
+                    $numbers = "+962795982977".','."+962792819107" ;
+                    $msg ="تم إضافة رابط المكالمة إلى سجل المكالمات الخاص بك على موقع حبايبنا.نت";
+
+                    $curl = curl_init();
+
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => "https://api.releans.com/v2/batch",
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => "",
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => "POST",
+                        CURLOPT_POSTFIELDS => "sender=Habaybna&mobile=".$numbers."&content=".$msg,
+                        CURLOPT_HTTPHEADER => array(
+                            "Authorization: Bearer ". config('appconfig.releanssecret')
+                        ),
+                    ));
+
+                    $response = curl_exec($curl);
+
+
+                    curl_close($curl);
+
+
+                    // return response('success', 200);
+                }
+
+            }else{
+                $call_status = new CallsStatus() ;
+                    $call_status->appointment_id = $order->appointment_id ;
+                    $call_status->status = '0';
+                    $call_status->save();
+                }
 
             $appChildInfo = new AppointmentChildInfo() ;
 
@@ -240,6 +354,7 @@ class PaymentCall {
             $appChildInfo->save() ;
 
         }
+
         $specialist  = Specialist::where('user_id',$order->specialist_id)->first();
         $slug = $specialist->firstName ? $specialist->firstName.'-' : false;
         $slug = $specialist->lastName ? $slug.$specialist->lastName.'--'.$specialist->user_id : $slug.'--'.$specialist->user_id;

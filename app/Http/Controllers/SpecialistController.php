@@ -11,6 +11,8 @@ use App\User;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\SpecialistZoomAccount;
+
 
 
 
@@ -366,6 +368,37 @@ class SpecialistController extends Controller
                 return response( 'error',404 );
             }
 
+    }
+
+    public function addZoomAccount(Request $request)
+    {
+        if(Auth::user() && Auth::user()->role == 'specialist' ) {
+            $specZoomLink =  SpecialistZoomAccount::updateOrCreate(
+                ['spec_id' => Auth::id()],
+                [
+                    'zoom_link' => $request->zoomLink,
+                    'meeting_id' => $request->meetingID,
+                    'password' => $request->password,
+                    'status' => 1,
+                ]
+            );
+
+            if($specZoomLink) {
+                return response($specZoomLink, 200);
+            }
+            return response(404);
+
+        }
+
+    }
+
+    public function getZoomAccount()
+    {
+        $zoomAccount = SpecialistZoomAccount::where('spec_id',Auth::id())->get();
+        if($zoomAccount && count($zoomAccount) > 0)
+            return response($zoomAccount, 200);
+
+            return response($zoomAccount, 204);
     }
 
 }
