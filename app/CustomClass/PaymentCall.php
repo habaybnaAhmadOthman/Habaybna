@@ -187,7 +187,7 @@ class PaymentCall {
 
             // specialist zoom link account
 
-            $zoomAccount = SpecialistZoomAccount::where('spec_id',$order->specialist->id)->first();
+            $zoomAccount = SpecialistZoomAccount::where('spec_id',$order->specialist_id)->first();
             if($zoomAccount && isset($zoomAccount)) {
 
                 $call_status = new CallsStatus() ;
@@ -198,8 +198,6 @@ class PaymentCall {
                 $call_status->save();
 
                 if(isset($call_status) ) {
-                    $call_status->call_zoom_link = $zoomAccount->zoomLink ;
-                    $call_status->save();
 
                     // send sms to parent and specialist
                     $numbers = $call_status->callAppointment->Parnet->phone.','.$call_status->callAppointment->specialist->Phone ;
@@ -234,6 +232,7 @@ class PaymentCall {
 
             }else{
                 $call_status = new CallsStatus() ;
+                    // $call_status->call_zoom_link = $zoomAccount->zoomLink ;
                     $call_status->appointment_id = $order->appointment_id ;
                     $call_status->status = '0';
                     $call_status->save();
@@ -295,8 +294,8 @@ class PaymentCall {
             //  2=>booked and not happend almost
 
             // specialist zoom link account
+            $zoomAccount = SpecialistZoomAccount::where('spec_id',$order->specialist_id)->first();
 
-            $zoomAccount = SpecialistZoomAccount::where('spec_id',$order->specialist->id)->first();
             if($zoomAccount && isset($zoomAccount)) {
 
                 $call_status = new CallsStatus() ;
@@ -307,12 +306,11 @@ class PaymentCall {
                 $call_status->save();
 
                 if(isset($call_status) ) {
-                    $call_status->call_zoom_link = $zoomAccount->zoomLink ;
-                    $call_status->save();
+
 
                     // send sms to parent and specialist
-                    // $numbers = $call_status->callAppointment->Parnet->phone.','.$call_status->callAppointment->specialist->Phone ;
-                    $numbers = "+962795982977".','."+962792819107" ;
+                    $numbers = $call_status->callAppointment->Parnet->phone.','.$call_status->callAppointment->specialist->Phone ;
+                    // $numbers = "+962795982977".','."+962792819107" ;
                     $msg ="تم إضافة رابط المكالمة إلى سجل المكالمات الخاص بك على موقع حبايبنا.نت";
 
                     $curl = curl_init();

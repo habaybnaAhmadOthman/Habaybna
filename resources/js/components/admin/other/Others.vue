@@ -35,6 +35,7 @@ th {
             الاسم الكامل
           </th>
           <th scope="col">الهاتف</th>
+          <th scope="col">الدولة</th>
           <th scope="col">الايميل</th>
           <th scope="col" class="sortted" v-on:click="sortTable('status')">
             الحالة
@@ -56,6 +57,8 @@ th {
             {{ other.user_data.firstName + " " + other.user_data.lastName }}
           </td>
           <td class="phone-td">{{ other.phone }}</td>
+          <td class="phone-td">{{ other.country }}</td>
+
           <td>{{ other.email }}</td>
           <td class="status">
             <Button
@@ -108,6 +111,7 @@ th {
           <th scope="col">#</th>
           <th scope="col">الاسم الكامل</th>
           <th scope="col">الهاتف</th>
+          <th scope="col">الدولة</th>
           <th scope="col">الايميل</th>
           <th scope="col">لماذا ترغب بالانضمام</th>
           <th scope="col">مكان العمل</th>
@@ -120,6 +124,7 @@ th {
             {{ user.other.firstName + " " + user.other.lastName }}
           </td>
           <td class="phone-td">{{ user.phone }}</td>
+          <td class="phone-td">{{ user.country }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.other.why_to_join }}</td>
           <td>{{ user.other.work_place }}</td>
@@ -185,7 +190,7 @@ export default {
       await this.callApi("get", "/api/admin/get-others-data?page=" + page).then(
         (resp) => {
           this.others = resp;
-          console.log(this.others);
+        //   console.log(this.others);
         }
       );
     },
@@ -204,7 +209,7 @@ export default {
       setTimeout(() => {
         var wb = XLSX.utils.table_to_book(document.getElementById("table"));
         /* generate file and force a download*/
-        XLSX.writeFile(wb, "parents bio.xlsx");
+        XLSX.writeFile(wb, "others bio.xlsx");
       }, 1500);
     },
     deleteDaialog(id, index) {
@@ -213,7 +218,7 @@ export default {
       this.indexDeleteUser = index;
     },
     del(index) {
-      console.log(this.idDeleteUser);
+    //   console.log(this.idDeleteUser);
       this.modal_loading = true;
       const resp = this.$store.dispatch("admin/deleteUser", this.idDeleteUser);
       setTimeout(() => {
@@ -339,7 +344,7 @@ export default {
           } else if (byEmail === true) {
             return byEmail;
           }
-          console.log(byName, byPhone);
+        //   console.log(byName, byPhone);
         });
     },
   },

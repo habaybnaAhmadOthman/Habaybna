@@ -54,6 +54,7 @@ h3 {
             الاسم الكامل
           </th>
           <th scope="col">الهاتف</th>
+          <th scope="col">الدولة</th>
           <th scope="col">الايميل</th>
           <th scope="col" class="sortted" v-on:click="sortTable('status')">
             الحالة
@@ -76,6 +77,7 @@ h3 {
             {{ parent.user_data.firstName + " " + parent.user_data.lastName }}
           </td>
           <td class="phone-td">{{ parent.phone }}</td>
+          <td class="phone-td">{{ parent.country }}</td>
           <td>{{ parent.email }}</td>
           <td class="status">
             <Button
@@ -128,6 +130,7 @@ h3 {
           <th scope="col">#</th>
           <th scope="col">الاسم الكامل</th>
           <th scope="col">الهاتف</th>
+          <th scope="col">الدولة</th>
           <th scope="col">الايميل</th>
           <th scope="col">السيرة الذاتية</th>
         </tr>
@@ -139,6 +142,7 @@ h3 {
             {{ user.parent.firstName + " " + user.parent.lastName }}
           </td>
           <td class="phone-td">{{ user.phone }}</td>
+          <td class="">{{ user.country }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.parent.why_to_join }}</td>
         </tr>
@@ -203,7 +207,7 @@ export default {
     exportToExcel() {
       this.callApi("get", "/api/admin/export-parent-excel").then((resp) => {
         this.exportData = resp.data;
-        console.log("resp:", this.exportData.data);
+        // console.log("resp:", this.exportData.data);
         /* generate workbook object from table */
         this.export();
       });
@@ -242,9 +246,9 @@ export default {
       }, 1000);
     },
     sortTable(type) {
-      console.log(type);
+    //   console.log(type);
       if (type == "name") {
-        console.log(this.parents.data.data);
+        // console.log(this.parents.data.data);
         let isAscending = this.ascending;
         this.ascending = !this.ascending;
         return this.parents.data.data.sort((a, b) =>
@@ -325,7 +329,7 @@ export default {
       if (this.parents && this.parents.data)
         return this.parents.data.data.filter((other) => {
             if (other.parent) {
-              console.log('zz',other);
+            //   console.log('zz',other);
             let byName =
               other.user_data.firstName
                 .toLowerCase()

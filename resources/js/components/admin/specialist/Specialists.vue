@@ -67,8 +67,7 @@ th {
           </td>
           <td class="phone-td">{{ specialist.phone }}</td>
           <td>
-            <!-- {{getCountry(specialist.user.phone) }} -->
-            jordan
+            {{ specialist.country }}
           </td>
           <td>{{ specialist.email }}</td>
           <td class="status">
@@ -123,6 +122,7 @@ th {
           <th scope="col">#</th>
           <th scope="col">الاسم الكامل</th>
           <th scope="col">الهاتف</th>
+          <th scope="col">الدولة</th>
           <th scope="col">الايميل</th>
           <th scope="col">الاختصاص</th>
           <th scope="col">مكان العمل</th>
@@ -135,6 +135,8 @@ th {
             {{ user.specialist.firstName + " " + user.specialist.lastName }}
           </td>
           <td class="phone-td">{{ user.phone }}</td>
+          <td>{{ user.country }}</td>
+
           <td>{{ user.email }}</td>
           <td>{{ user.specialist.specialization }}</td>
           <td>{{ user.specialist.work_place }}</td>
@@ -185,7 +187,7 @@ export default {
       indexDeleteUser: "",
       keyword: "",
       ascending: false,
-      exportData:"",
+      exportData: "",
     };
   },
   methods: {
@@ -198,22 +200,24 @@ export default {
         "/api/admin/get-specialists-data?page=" + page
       ).then((resp) => {
         this.specialists = resp;
-        console.log(this.specialists);
+        // console.log(this.specialists);
       });
     },
     exportToExcel() {
-      this.callApi("get", "/api/admin/export-specialists-excel").then((resp) => {
-        this.exportData = resp.data;
-        console.log("resp:", this.exportData.data);
-        /* generate workbook object from table */
-        this.export();
-      });
+      this.callApi("get", "/api/admin/export-specialists-excel").then(
+        (resp) => {
+          this.exportData = resp.data;
+        //   console.log("resp:", this.exportData.data);
+          /* generate workbook object from table */
+          this.export();
+        }
+      );
     },
     export() {
       setTimeout(() => {
         var wb = XLSX.utils.table_to_book(document.getElementById("table"));
         /* generate file and force a download*/
-        XLSX.writeFile(wb, "parents bio.xlsx");
+        XLSX.writeFile(wb, "specialist bio.xlsx");
       }, 1500);
     },
     deleteDaialog(id, index) {
@@ -230,7 +234,6 @@ export default {
         this.$Message.success("Successfully delete");
       }, 1500);
       this.specialists.data.data.splice(index, 1);
-
     },
     changeStatus(i, id) {
       this.loading = true;
@@ -355,7 +358,7 @@ export default {
           } else if (byEmail === true) {
             return byEmail;
           }
-          console.log(byName, byPhone);
+        //   console.log(byName, byPhone);
         });
     },
   },
