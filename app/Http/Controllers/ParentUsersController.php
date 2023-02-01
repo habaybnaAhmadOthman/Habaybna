@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use phpDocumentor\Reflection\Types\Parent_;
+use Stevebauman\Location\Facades\Location;
+
 
 class ParentUsersController extends Controller
 {
@@ -261,6 +263,7 @@ class ParentUsersController extends Controller
             'password' => ['required', 'string','min:8'],
            ]);
 
+
            $user = new User();
             $user->phone = $request->session()->get('user.phone');
             $user->email = $request->email ;
@@ -271,6 +274,15 @@ class ParentUsersController extends Controller
 
             $user->save();
 
+           // add country
+           try {
+            $position = Location::get(request()->ip());
+            $user->country = $position->countryName ;
+           $user->save();
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
            Auth::login($user);
 
         $parent = new ParentUsers() ;

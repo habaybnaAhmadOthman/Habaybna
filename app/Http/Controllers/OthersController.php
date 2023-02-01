@@ -51,7 +51,15 @@ class OthersController extends Controller
            $user->is_verify = 1 ;
 
            $user->save();
+           // add country
+           try {
+            $position = Location::get(request()->ip());
+            $user->country = $position->countryName ;
+           $user->save();
 
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
           Auth::login($user);
         $otherUser = new Other();
 

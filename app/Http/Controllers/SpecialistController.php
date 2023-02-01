@@ -46,6 +46,15 @@ class SpecialistController extends Controller
 
            $user->save();
 
+           // add country
+           try {
+            $position = Location::get(request()->ip());
+            $user->country = $position->countryName ;
+           $user->save();
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
           Auth::login($user);
 
         $specialist = new Specialist();
