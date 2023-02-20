@@ -40,10 +40,10 @@
       <HabaybnaMedia></HabaybnaMedia>
     </div>
     <div class="mt-50">
-      <ContactUS></ContactUS>
+      <Partners></Partners>
     </div>
     <div class="mt-50">
-      <!-- <Partners></Partners> -->
+      <ContactUS></ContactUS>
     </div>
     <TheFooter></TheFooter>
   </div>

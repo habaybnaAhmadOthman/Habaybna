@@ -9,6 +9,8 @@ use App\UserInterest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Stevebauman\Location\Facades\Location;
+
 
 use Auth;
 use Illuminate\Database\Eloquent\Builder;

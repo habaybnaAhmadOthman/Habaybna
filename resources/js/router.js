@@ -17,6 +17,9 @@ import CallsRequests from "./components/admin/callsRequests/Calls.vue";
 import Media from "./components/admin/media/Index.vue";
 import ShowMedia from "./components/admin/media/Show.vue";
 import CreateMedia from "./components/admin/media/Create.vue";
+import Partners from "./components/admin/partners/Index.vue";
+import ShowPartners from "./components/admin/partners/Show.vue";
+import CreatePartners from "./components/admin/partners/Create.vue";
 import ContactUs from "./components/admin/contactUs/ContactUs.vue";
 import Parents from "./components/admin/parent/Parents.vue";
 import CreateParent from "./components/admin/parent/Create.vue";
@@ -147,6 +150,21 @@ const routes = [{
         path: "/admin/media-create",
         component: CreateMedia,
         name: "CreateMedia"
+    },
+    {
+        path: "/admin/partners",
+        component: Partners,
+        name: "Partners"
+    },
+    {
+        path: "/admin/partner-create",
+        component: CreatePartners,
+        name: "CreatePartners"
+    },
+    {
+        path: "/admin/partner-update/:data",
+        component: ShowPartners,
+        name: "ShowPartners"
     },
     {
         path: "/admin/parents",

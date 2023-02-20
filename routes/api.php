@@ -107,11 +107,18 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
         // media
-
         Route::post('/create-media','MediaController@create');
         Route::get('/update-media/{id}','MediaController@update');
         Route::post('/edit-media','MediaController@edit');
         Route::post('/media-delete/{id}','MediaController@delete');
+
+        // admin partners
+        Route::get('/partners', 'PartnerController@index')->name('partners.index');
+        Route::post('/create-partner','PartnerController@create');
+        Route::get('/update-partner/{id}','PartnerController@update');
+        Route::post('/edit-partner','PartnerController@edit');
+        Route::post('/partner-delete/{id}','PartnerController@delete');
+
 
 
 
@@ -136,7 +143,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // calls
         Route::get('/calls/packages','CallsController@index');
-        Route::get('get-calls-appointments','CallsAppointmentsController@getCallsAppointments');
+        Route::get('get-calls-appointments','    {
+            path: "/partners-program",
+            component: PartnersProgramPage
+        },@getCallsAppointments');
         Route::post('/calls/create','CallsController@create');
         Route::get('/calls/package/{id}','CallsController@show');
         Route::post('/calls/package/{id}','CallsController@update');
@@ -240,6 +250,7 @@ Route::get('/get-calls-providers','SpecialistController@callsProvidersList');
 Route::get('/get-specialist-appintments/{slug}','CallsAppointmentsController@getCallsProvidersappointments');
 Route::get('/get-specialist-speciality','SpecialistController@getSpeciality');
 Route::get('get-search-result','HomeController@getSearchResults');
+Route::get('/parteners', 'PartnerController@getPartners')->name('partners.front');
 
     // nadeem birthday
 Route::post('/siraj-nadim-gift','HomeController@sendGift');

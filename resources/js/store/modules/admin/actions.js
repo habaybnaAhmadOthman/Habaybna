@@ -220,6 +220,24 @@ export default {
         return resp
 
     },
+    async createPartner(context, payload) {
+        const resp = await callApi('POST', '/api/admin/create-partner', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to update profile data");
+            throw error;
+        }
+        return resp
+
+    },
+    async updatePartner(context, payload) {
+        const resp = await callApi('POST', '/api/admin/edit-partner', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to update cover data");
+            throw error;
+        }
+        return resp
+
+    },
     async editContent(context, payload) {
         console.log('in');
         const resp = await callApi('POST', '/api/admin/content/edit', payload)
@@ -365,6 +383,16 @@ export default {
     },
     async deleteMediaCover(context, payload) {
         const resp = await callApi('POST', '/api/admin/media-delete/' + payload)
+
+        if (resp.status != 200) {
+            const error = new Error("fail to create profile data");
+            throw error;
+        }
+        return resp.data
+
+    },
+    async deletePartner(context, payload) {
+        const resp = await callApi('POST', '/api/admin/partner-delete/' + payload)
 
         if (resp.status != 200) {
             const error = new Error("fail to create profile data");
