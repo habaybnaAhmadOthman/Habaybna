@@ -152,7 +152,7 @@ class CallsAppointmentsController extends Controller
     {
         $appointment = CallsStatus::where('appointment_id',$request->appointmentID)->first() ;
 
-        if(isset($appointment) ) {
+        if(isset($appointment) ) {   
             $appointment->call_zoom_link = $request->zoomLink ;
             $appointment->save();
 

@@ -21,6 +21,7 @@ export default {
     },
     clearUser(state) {
         state.firstName = null;
+        state.canMakeCalls = null;
         state.lastName = null;
         state.type = null;
         state.avatar = null;

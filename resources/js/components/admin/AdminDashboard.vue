@@ -148,16 +148,20 @@ footer {
               <Icon type="ios-call" size="16" />
               <router-link to="/admin/media">التغطية الاعلامية </router-link>
             </MenuItem>
+            <MenuItem name="11">
+              <Icon type="ios-call" size="16" />
+              <router-link to="/admin/partners">الشركاء  </router-link>
+            </MenuItem>
             <MenuItem name="10">
               <Icon type="ios-at-outline" size="24" />
               <router-link to="/admin/testimonials">
                 اراء المستخدمين
               </router-link>
             </MenuItem>
-            <MenuItem name="10">
+            <!-- <MenuItem name="10">
               <Icon type="ios-at-outline" size="24" />
               <router-link to="/admin/birthday"> gifts request </router-link>
-            </MenuItem>
+            </MenuItem> -->
           </Menu>
         </Sider>
         <Layout :style="{ padding: '0 5px' }">

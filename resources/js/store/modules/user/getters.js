@@ -30,6 +30,7 @@ export default {
         return !!state.loggedIn;
     },
     
-    // isAuthenticated: state => !!state.user, 
+
+    // isAuthenticated: state => !!state.user,
     // user(state,getters,rootState,rootGetters)
 };

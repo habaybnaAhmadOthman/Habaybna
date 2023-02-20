@@ -124,7 +124,7 @@ export default {
             }
 
           }
-          
+
           if (call.appointment_child_info && call.appointment_child_info.child_situation) {
             obj.childStatus= call.appointment_child_info.child_status;
             obj.childAge= call.appointment_child_info.age;
@@ -170,7 +170,7 @@ export default {
         this.$store.commit('alertDialogMsg','يرجى كتابة توصية')
         return ;
       }
-      
+
       this.$store.dispatch('specialist/addRecommendation',{
         callID: this.userRecommendationModal.callID,
         specialistID: this.specialistInfo.id,
@@ -195,7 +195,7 @@ export default {
       return window.matchMedia("(max-width: 677px)").matches
     },
     isSpecialist(){
-      return (this.getUserData).type == 'specialist'
+      return (this.getUserData).canMakeCalls
     },
     getUserData(){
       return this.$store.getters['user/userData']
@@ -213,7 +213,7 @@ export default {
       }
       if (this.isSpecialist)
         obj.specialistID = this.specialistInfo.id
-      else 
+      else
         obj.userID = this.getUserData.id
 
       return obj
