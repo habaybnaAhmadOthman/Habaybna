@@ -49,7 +49,7 @@ class TestimonialsController extends Controller
 
     public function getTestimonials($type)
     {
-       $data =  Testimonials::where('type',$type)->paginate(5);
+       $data =  Testimonials::all()->random(5)->where('status',1);
 
        return response($data,200);
     }

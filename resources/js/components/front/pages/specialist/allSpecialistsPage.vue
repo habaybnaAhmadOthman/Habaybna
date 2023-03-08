@@ -36,7 +36,7 @@
           /><span class="top-2"> 30 دقيقة</span>
         </p>
       </div>
-      <div
+      <!-- <div
         class="
           radius-12
           bg-white
@@ -47,9 +47,9 @@
           p-10
           w-32 w-100-p
 
-        "
-      >
-        <p class="font-20" style="textAlign:center">
+        " -->
+      <!-- > -->
+        <!-- <p class="font-20" style="textAlign:center"> -->
           <!-- <img
             class="ml-10"
             src="/images/coin-icon.png"
@@ -57,14 +57,14 @@
             height="30"
             alt="الأخصائيين"
           /> -->
-          لأنكم حبايبنا نهديكم خصم 35% عند استخدام الكود:
-          <span class="d-block font-22 main-color bold pt-15 pb-15">Hellohabaybna22</span>
-          <ul style="textAlign:right">
+          <!-- لأنكم حبايبنا نهديكم خصم 35% عند استخدام الكود: -->
+          <!-- <span class="d-block font-22 main-color bold pt-15 pb-15">Hellohabaybna22</span> -->
+          <!-- <ul style="textAlign:right">
               <li style="list-style:inside; vertical-align: middle;">صالح خلال أكتوبر ونوفمبر 2022</li>
               <li style="list-style:inside; vertical-align: middle;">يمكن استخدام الكود أكثر من مرة</li>
-          </ul>
-        </p>
-      </div>
+          </ul> -->
+        <!-- </p> -->
+      <!-- </div> -->
     </section>
     <SpecialistsSection :list-only="false"></SpecialistsSection>
 

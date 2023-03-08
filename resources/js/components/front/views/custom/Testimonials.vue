@@ -33,8 +33,8 @@
                         nextEl: `.${this.type}-testimonial-next`,
                         prevEl: `.${this.type}-testimonial-prev`,
                     },
-                    
-                    
+
+
                     breakpoints: {
                     // when window width is >= 320px
                     320: {
@@ -54,13 +54,14 @@
                         // pagination: this.paginationFn('paginationDo')
                     }
                 },
-                    
+
                 });
 
                 // }
             },
             async getData(){
-                const data = (await this.$store.dispatch('content/getTestimonials',{type:this.type})).data;
+                const data = (await this.$store.dispatch('content/getTestimonials',{type:this.type}));
+                console.log('data',data);
                 this.slides = data
             }
         },
