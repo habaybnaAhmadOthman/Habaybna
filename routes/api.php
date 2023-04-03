@@ -213,6 +213,11 @@ Route::middleware('auth:sanctum')->group(function () {
     // get liked articles
     Route::get('/user/likes-articles','ContentController@getUserLikedArticles');
 
+    // community routes
+    Route::get('posts', 'CommunityController@index');
+    Route::post('posts', 'CommunityController@storePost');
+
+    Route::post('posts/{post:slug}/comment', 'CommunityController@storeComment');
 
 
 

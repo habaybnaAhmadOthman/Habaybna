@@ -16,7 +16,12 @@
       </router-link>
       <router-link to="/online-courses" class="mo center mobile-link">
         <figure>
-          <img class="dark-icon" src="/images/mo-video-bottom.svg" width="24" height="21" />
+          <img
+            class="dark-icon"
+            src="/images/mo-video-bottom.svg"
+            width="24"
+            height="21"
+          />
         </figure>
         <p class="font-10 mobile-icon-color">الدورات</p>
       </router-link>
@@ -26,6 +31,12 @@
         </figure>
         <p class="font-10 mobile-icon-color">حسابي</p>
       </div>
+      <router-link to="/notifications" class="mo center mobile-link">
+        <figure>
+          <img src="/images/notification.svg" />
+        </figure>
+        <p class="font-10 mobile-icon-color">الاشعارات</p>
+      </router-link>
       <div class="profile-mo mo center mobile-link">
         <figure>
           <img src="/images/menu-icon-mobile.svg" @click="toggleMobileMenu" />
@@ -35,6 +46,8 @@
     </div>
     <LeftSide
       :isMobileMenuOpened="isMobileMenuOpened"
+      :isNotificationsMenuOpened="isNotificationsMenuOpened"
+      @toggleNotificationMenu="toggleNotificationMenu"
       :toggleMobileMenu="toggleMobileMenu"
       @toggleMobileMenu="toggleMobileMenu"
       :isLoggedIn="isLoggedIn"
@@ -51,6 +64,7 @@ export default {
   data() {
     return {
       isMobileMenuOpened: false,
+      isNotificationsMenuOpened: false,
     };
   },
   computed: {
@@ -59,13 +73,18 @@ export default {
     },
     userAvatar() {
       let avatar = this.$store.getters["user/userData"].avatar;
-      if (avatar == "default.jpg" || !this.isLoggedIn) avatar = "/images/profile-avatar-mo.svg";
+      if (avatar == "default.jpg" || !this.isLoggedIn)
+        avatar = "/images/profile-avatar-mo.svg";
       return avatar;
-    }
+    },
   },
   methods: {
     toggleMobileMenu() {
       this.isMobileMenuOpened = !this.isMobileMenuOpened;
+    },
+    toggleNotificationMenu() {
+        console.log('two');
+      this.isNotificationsMenuOpened = !this.isNotificationsMenuOpened;
     },
     openProfileMenu() {
       if (this.isLoggedIn) {
@@ -74,6 +93,13 @@ export default {
         this.$router.push("/signin");
       }
     },
+    // openNotificationsMenu() {
+    //   if (this.isLoggedIn) {
+    //     document.querySelector(".user-side-nav").classList.add("active");
+    //   } else {
+    //     this.$router.push("/signin");
+    //   }
+    // },
   },
 };
 </script>
@@ -85,7 +111,8 @@ a {
 .mobile-icon-color {
   color: #6e6d6d;
 }
-.courses-mo,.dark-icon {
+.courses-mo,
+.dark-icon {
   filter: brightness(0.4);
 }
 @media (max-width: 767px) {
@@ -109,7 +136,7 @@ a {
     align-items: center;
     z-index: 10;
   }
-  
+
   .mobile-link img {
     height: 21px;
     margin-bottom: 3px;

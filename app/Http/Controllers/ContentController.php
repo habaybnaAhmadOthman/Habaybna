@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Content;
 use App\CourseSpecialist;
 use App\NewContent;
+use App\Events\TestEvent;
 use App\ArticlesTags;
 
 use App\Specialist;
@@ -134,6 +135,7 @@ class ContentController extends Controller
    public function getIndexNew(Request $request)
    {
 
+    event(new TestEvent('hello world'));
 
 
       $contents = NewContent::with('intrests','author','isLiked')

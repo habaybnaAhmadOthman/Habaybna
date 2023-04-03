@@ -28,6 +28,7 @@ export default {
         state.token = null;
         state.loggedIn = false;
         state.is_verify = false;
+        state.id = null;
     },
     clearAdmin(state) {
         state.firstName = null;
@@ -37,6 +38,8 @@ export default {
         state.token = null;
         state.loggedIn = false;
         state.is_verify = false;
+        state.id = null;
+
 
     },
     type(state,userType) {

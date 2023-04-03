@@ -14,6 +14,7 @@ import AdminDashboard from './components/admin/AdminDashboard.vue'
 import ParentDashboard from './components/parents/ParentDashboard.vue'
 import ClassRoom from './components/parents/ClassRoom.vue'
 import Player from './components/Player.vue'
+import Push from '../../node_modules/push.js/';
 
 
 
@@ -41,12 +42,15 @@ Vue.use(VueSocialSharing);
 
 
 Vue.use(VueCarousel);
-Vue.use(ViewUI,{ locale });
+Vue.use(ViewUI, {
+    locale
+});
 Vue.mixin(common)
 
 
 Vue.use(CKEditor);
 Vue.use(VueCoreVideoPlayer)
+Vue.use(Push)
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -64,8 +68,8 @@ Vue.component('upload-video', require('./components/UploadVideos.vue').default);
 Vue.component('admin-dashboard', require('./components/admin/AdminDashboard.vue').default);
 Vue.component('parent-dashboard', require('./components/parents/ParentDashboard.vue').default);
 Vue.component('class-room', require('./components/parents/ClassRoom.vue').default);
-Vue.component('player',Player);
-Vue.component('main-app',MainApp)
+Vue.component('player', Player);
+Vue.component('main-app', MainApp)
 
 
 /**
@@ -74,12 +78,14 @@ Vue.component('main-app',MainApp)
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 const app = new Vue({
     el: '#app',
     // check if user logged in
     async beforeCreate() {
         await this.$store.getters['user/isLoggedin'];
     },
+
     store,
     router
 });

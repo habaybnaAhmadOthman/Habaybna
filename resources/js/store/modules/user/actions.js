@@ -147,6 +147,7 @@ export default {
                 type: obj.type,
                 canMakeCalls: obj.can_make_call,
                 avatar: obj.avatar,
+                id: obj.id,
             })
             await dispatch('courses/getAllCourses',{}, {root:true})
         } else { // is admin

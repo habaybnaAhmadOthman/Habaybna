@@ -69,6 +69,7 @@ import Cirtificate from "./components/front/views/coursepage/Certificate.vue";
 import PaymentStatus from "./components/front/pages/courses/PaymentStatus.vue";
 import CallPaymentStatus from "./components/front/pages/courses/CallPaymentStatus.vue";
 import ExamPage from "./components/front/pages/courses/ExamPage.vue";
+import HabaybnaCommunity from "./components/front/layouts/HabaybnaCommunity.vue"
 
 // library
 import LibraryPage from "./components/front/pages/library/LibraryPage.vue";
@@ -583,6 +584,13 @@ const routes = [{
         path: "/library",
         component: LibraryPage,
         name: 'library'
+    },
+        // *****************
+    // content pages
+    {
+        path: "/habaybna-community",
+        component: HabaybnaCommunity,
+        name: 'habaybna-community'
     },
     {
         path: "/library/:article",

@@ -12,6 +12,35 @@ try {
     require('bootstrap');
 } catch (e) {}
 
+
+// pusher config
+try {
+
+    var pusher = new Pusher('404161226d57a8ae6b83', {
+        cluster: 'ap2'
+    });
+    Pusher.logToConsole = true;
+
+    var channel = pusher.subscribe('test');
+    channel.bind('pusher:subscription_succeeded', function (members) {
+        // alert('successfully subscribed!');
+    });
+    channel.bind('App\\Events\\TestEvent', function (data) {
+        const iconPath = "/images/1.png"
+        Push.create(data.message, {
+            body: 'xxxxxxxxx',
+            timeout: 5000
+
+        });
+    });
+    
+
+} catch (e) {
+    // console.log(e);
+}
+
+
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

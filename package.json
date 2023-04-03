@@ -32,6 +32,7 @@
         "jspdf": "^2.5.1",
         "laravel-vue-pagination": "2.3.1",
         "portal-vue": "^2.1.7",
+        "push.js": "^1.0.12",
         "secure-ls": "^1.2.6",
         "swiper": "^8.0.6",
         "swiper-vue2": "^1.0.6",

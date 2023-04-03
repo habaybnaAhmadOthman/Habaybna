@@ -194,6 +194,7 @@ export default {
   //   },
   methods: {
     async getResults(page) {
+        
       if (typeof page === "undefined") {
         page = 1;
       }
@@ -220,9 +221,9 @@ export default {
       }, 1500);
     },
     deleteDaialog(id, index) {
-      this.dialogDelete = true;
-      this.idDeleteUser = id;
-      this.indexDeleteUser = index;
+    //   this.dialogDelete = true;
+    //   this.idDeleteUser = id;
+    //   this.indexDeleteUser = index;
     },
     del(index) {
       this.modal_loading = true;

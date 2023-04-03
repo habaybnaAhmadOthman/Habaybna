@@ -3,7 +3,7 @@
         <transition name="fade">
             <router-view :key="forceRefresh"></router-view>
         </transition>
-        
+
         <LoginModal v-if="!isLoggedIn"></LoginModal>
         <alert-dialog
           :show="!!alertDialogMsg"
@@ -14,7 +14,7 @@
         <div v-if="isLoading">
             <loading-spinner></loading-spinner>
         </div>
-        
+
         <portal-target name="info-modal"></portal-target>
         <portal-target name="login-modal"></portal-target>
         <portal-target name="destination"></portal-target>
