@@ -54,4 +54,44 @@ class CommunityController extends Controller
         // $post = Post::with(['user','comments'])->where('id',$data->id);
         // return response($post->first(), 200);
     }
+
+    public function deleteComment(Post $post)
+    {
+        $comment = $post->comments->where('id',request()->id)->first();
+
+        if($comment->user_id == Auth::id() || Auth::user()->role == 'admin'){
+
+            $comment->delete();
+
+            return response($post, 200) ;
+        }
+        return response($post, 404) ;
+    }
+
+    public function deletePost(Post $post)
+    {
+
+
+        if($post->user_id == Auth::id() || Auth::user()->role == 'admin'){
+
+            $post->delete();
+
+            return response('success', 200) ;
+        }
+        return response('faild', 404) ;
+    }
+
+    public function adminIndex()
+    {
+    //     $posts = Post::with(['comments',function($q){
+    //         dd($q->get());
+    //         // $q->withoutGlobalScopes();
+    //     }])->get();
+        // dd(Post::with('comments')->withoutGlobalScopes()->get());
+
+        // dd(Post::latest()->get());
+        return response(Post::latest()->get(), 200);
+    }
+
+
 }

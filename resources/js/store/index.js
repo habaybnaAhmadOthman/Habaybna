@@ -45,4 +45,5 @@ const store = new vuex.Store({
         })
     ]
 });
+
 export default store;

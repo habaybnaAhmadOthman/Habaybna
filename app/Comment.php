@@ -14,12 +14,12 @@ class Comment extends Model
 
     protected $with = ['user'];
 
-    protected static function booted()
-    {
-        static::addGlobalScope('users', function (Builder $builder) {
-            $builder->where('status', true);
-        });
-    }
+    // protected static function booted()
+    // {
+    //     static::addGlobalScope('users', function (Builder $builder) {
+    //         $builder->where('status', true);
+    //     });
+    // }
     public function post()
     {
         return $this->belongsTo(Post::class);

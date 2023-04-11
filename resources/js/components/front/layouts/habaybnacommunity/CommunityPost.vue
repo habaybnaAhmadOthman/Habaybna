@@ -19,7 +19,7 @@
           <li
             v-if="isLoggedIn"
             :class="`${canDelete ? '' : 'noclick'}`"
-            @click="deletePost()"
+            @click="showDeleteCommentDialog()"
           >
             حذف
           </li>
@@ -31,14 +31,16 @@
           {{ post.content }}
         </p>
       </div>
-      <div class="create-post__text-wrap">
+      <div class="d-flex comment-input">
         <!-- @handelPublishPost="handelPublishPost" -->
 
-        <PostInput
-          @handelPublishComment="handelPublishComment"
-          :placeholder="'اكتب تعليق'"
-          type="comment"
-        />
+        <div v-if="isLoggedIn && canMakeComment">
+          <PostInput
+            @handelPublishComment="handelPublishComment"
+            :placeholder="'اكتب تعليق'"
+            type="comment"
+          />
+        </div>
         <div v-if="canPublish" class="mt-10">
           <button
             class="create-post__submit"
@@ -49,23 +51,29 @@
             انشر
           </button>
         </div>
-        <div v-if="post.comments.length > 3">
+        <div>
           <Comments
-            v-for="(comment, index) in post.comments.slice(0, 3)"
+            v-for="(comment, index) in comments"
             :key="index"
             :comment="comment"
+            :index="index"
+            @handelDeletedComment="handelDeletedComment"
           />
         </div>
-        <strong v-if="post.comments.length > 3" class="show-more font-18"
+        <strong
+          v-if="post.comments.length > 3 && show"
+          @click="showMoreComments(index)"
+          class="show-more font-18"
           >اظهر المزيد...!</strong
         >
-        <div v-else-if="post.comments.length >= 1 && post.comments.length <= 3">
+        <!-- <div v-else-if="post.comments.length >= 1 && post.comments.length <= 3">
           <Comments
             v-for="(comment, index) in post.comments"
             :key="index"
             :comment="comment"
+            :index="index"
           />
-        </div>
+        </div> -->
       </div>
     </form>
   </section>
@@ -75,7 +83,7 @@ import PostInput from "./PostInput.vue";
 import Comments from "./Comments.vue";
 
 export default {
-  props: ["post"],
+  props: ["post", "index"],
   components: {
     PostInput,
     Comments,
@@ -85,6 +93,7 @@ export default {
       content: "",
       canPublish: false,
       showMenu: false,
+      show: true,
     };
   },
 
@@ -110,20 +119,40 @@ export default {
       });
     },
 
-    deletePost() {
-      console.log("delete");
+    showDeleteCommentDialog() {
+      if (confirm("هل أنت متأكد من حذف المنشور؟!")) {
+        // Save it!
+        this.callApi("delete", "/api/posts/" + this.post.slug).then((resp) => {
+          if (resp.status == 200) {
+            this.$emit("handelDeletedPost", this.index);
+            this.showMenu = false;
+          } else {
+            alert("somthing wronge");
+          }
+        });
+      } else {
+        // Do nothing!
+      }
     },
     reportPost() {},
+
+    showMoreComments(index) {
+      this.show = false;
+    },
+    handelDeletedComment(index) {
+      this.post.comments.splice(index, 1);
+    },
   },
   mounted() {},
   computed: {
     isLoggedIn() {
-      console.log(this.$store.getters["user/userData"], this.post);
       return this.$store.getters["user/isLoggedIn"];
+    },
+    canMakeComment() {
+      return this.$store.getters["user/userData"].canMakeComment;
     },
     canDelete() {
       if (this.$store.getters["user/isLoggedIn"]) {
-        console.log(this.$store.getters["user/userData"]);
         return this.$store.getters["user/userData"].id == this.post.user_id;
       } else {
         return false;
@@ -136,6 +165,14 @@ export default {
         this.post.user.user_data.lastName
       );
     },
+    comments() {
+      return this.post.comments.length > 3 && this.show
+        ? this.post.comments.slice(0, 3)
+        : this.post.comments;
+    },
+    // showMoreCommentsButton() {
+    //   return this.post.comments.length > 3 && !this.show;
+    // },
   },
 };
 </script>
@@ -193,6 +230,11 @@ li.noclick {
   pointer-events: none;
   color: #c5c4c4;
   cursor: not-allowed;
+}
+.comment-input {
+  width: 100%;
+  justify-content: content;
+  flex-direction: column;
 }
 </style>
 

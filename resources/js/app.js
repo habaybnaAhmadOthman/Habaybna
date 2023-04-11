@@ -14,7 +14,7 @@ import AdminDashboard from './components/admin/AdminDashboard.vue'
 import ParentDashboard from './components/parents/ParentDashboard.vue'
 import ClassRoom from './components/parents/ClassRoom.vue'
 import Player from './components/Player.vue'
-import Push from '../../node_modules/push.js/';
+// import Push from '../../node_modules/push.js/';
 
 
 
@@ -35,6 +35,27 @@ import MainApp from './MainApp.vue'
 // import  portal plugins
 import VueSocialSharing from 'vue-social-sharing'
 import VueMeta from 'vue-meta'
+
+
+
+// var channel = window.Echo.channel('test');
+
+Echo.channel('test')
+.listen('TestEvent', post => {
+  if (! ('Notification' in window)) {
+    alert('Web Notification is not supported');
+    return;
+  }
+  Notification.requestPermission( permission => {
+     new Notification('New post alert!', {
+      body: 'post.title', // content for the alert
+    //   icon: "https://pusher.com/static_logos/320x320.png" // optional image url
+    });
+
+
+  });
+})
+
 // use portal plugins
 Vue.use(VueMeta)
 Vue.use(VueSocialSharing);
@@ -50,7 +71,6 @@ Vue.mixin(common)
 
 Vue.use(CKEditor);
 Vue.use(VueCoreVideoPlayer)
-Vue.use(Push)
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

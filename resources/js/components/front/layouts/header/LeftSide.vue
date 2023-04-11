@@ -163,4 +163,14 @@ export default {
     display: none;
   }
 }
+@media screen and (max-width: 766px) {
+  .notifications {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    margin: 10px auto 5px 20px;
+    width: 28%;
+    display: none;
+  }
+}
 </style>

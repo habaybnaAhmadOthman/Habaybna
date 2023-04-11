@@ -2,11 +2,11 @@
   <section class="create-post">
     <img
       class="create-post__avatar"
-      src="https://raw.githubusercontent.com/Javieer57/create-post-component/design/2010/img/avatar-tumblr.png"
+      :src="getAvatar"
       alt=""
     />
-    <div id="create-post-form" class="create-post__form">
 
+    <div id="create-post-form" class="create-post__form">
       <PostInput
         @handelPublishPost="handelPublishPost"
         :placeholder="'انشر سؤال او استفسار ....!'"
@@ -48,21 +48,28 @@ export default {
         : (this.canPublish = false);
     },
     publishPost() {
-      let post = {
-        content: this.content,
-        private_mood: false,
-      };
-
-      this.callApi("post", "/api/posts", post).then((resp) => {
-        if (resp.status == 200) {
-          this.$emit("handelNewPost", resp.data);
-        }
-      });
+      if (this.isLoggedIn) {
+        let post = {
+          content: this.content,
+          private_mood: false,
+        };
+        this.callApi("post", "/api/posts", post).then((resp) => {
+          if (resp.status == 200) {
+            this.$emit("handelNewPost", resp.data);
+          }
+        });
+      }
     },
   },
-  computed: {},
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters["user/isLoggedIn"];
+    },
+        getAvatar() {
+      return this.$store.getters["user/userData"].avatar;
+    },
+  },
 };
 </script>
 <style scoped>
-
 </style>

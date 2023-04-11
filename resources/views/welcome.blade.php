@@ -51,8 +51,8 @@
         <main-app></main-app>
     </div>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-    <script src="{{ asset('assets/js/push.min.js') }}"></script>
+    {{-- <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script src="/assets/js/push.min.js"></script> --}}
 
 
 </body>

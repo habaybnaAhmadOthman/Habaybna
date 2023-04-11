@@ -44,7 +44,7 @@ export default {
             const error = new Error("تم إيقاف حسابك");
             throw error;
         }
-        if (!resp || resp.status != 200) {
+        if (!resp || resp.status != 204) {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
@@ -67,7 +67,7 @@ export default {
             const error = new Error("تم إيقاف حسابك");
             throw error;
         }
-        if (!resp || resp.status != 200) {
+        if (!resp || resp.status != 204) {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
@@ -141,11 +141,13 @@ export default {
 
         const obj = resp.data.userData;
         if (obj.role != 'admin') {
+            console.log('userdatatata',obj.can_make_comment);
             commit('setUser',{
                 firstName: obj.firstName,
                 lastName: obj.lastName,
                 type: obj.type,
                 canMakeCalls: obj.can_make_call,
+                canMakeComment: obj.can_make_comment,
                 avatar: obj.avatar,
                 id: obj.id,
             })

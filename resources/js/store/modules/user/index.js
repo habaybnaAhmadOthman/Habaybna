@@ -17,6 +17,7 @@ export default {
             lastName: null,
             openAvatarModal: false,
             canMakeCall: false,
+            canMakeComment: false,
             id: null
         }
     },

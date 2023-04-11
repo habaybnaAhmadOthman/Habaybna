@@ -19,6 +19,7 @@ export default {
             token: state.token,
             avatar: state.avatar,
             canMakeCalls: state.canMakeCalls,
+            canMakeComment: state.canMakeComment,
             id:state.id
         }
         return obj
@@ -29,7 +30,7 @@ export default {
     isLoggedIn(state) {
         return !!state.loggedIn;
     },
-    
+
 
     // isAuthenticated: state => !!state.user,
     // user(state,getters,rootState,rootGetters)

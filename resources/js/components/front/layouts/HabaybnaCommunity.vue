@@ -16,6 +16,8 @@
               v-for="(post, index) in allPosts"
               :key="index"
               :post="post"
+              :index="index"
+              @handelDeletedPost="handelDeletedPost"
             />
           </div>
         </div>
@@ -68,13 +70,20 @@ export default {
 
         // this.$emit("handelNewPost", resp.data);
       });
+      if (!this.isLoggedIn) {
+        setTimeout(() => {
+          alert(
+            "اهلا بك في مجتمع حبايبنا . قم بتسجيل الدخول لتتمكن من التفاعل معنا"
+          );
+        }, 3000);
+      }
     },
 
     handelNewPost(post) {
       this.isLoading = true;
       this.loading();
       this.allPosts.unshift(post);
-      document.getElementById('create-post-txt').value = ""
+      document.getElementById("create-post-txt").value = "";
     },
 
     loading(time = 500) {
@@ -82,13 +91,22 @@ export default {
         this.isLoading = false;
       }, time);
     },
-    handelNewComment(post){
-        console.log('comunity post :' ,post );
-        let postIndex = this.allPosts.findIndex(x => x.id === post.id)
+    handelNewComment(post) {
+      console.log("comunity post :", post);
+      let postIndex = this.allPosts.findIndex((x) => x.id === post.id);
 
-        // console.log(postIndex, this.allPosts[postIndex]);
-        this.allPosts[postIndex].components = post.components
-
+      // console.log(postIndex, this.allPosts[postIndex]);
+      this.allPosts[postIndex].components = post.components;
+    },
+    handelDeletedPost(index) {
+      this.isLoading = true
+      this.loading(800)
+      this.allPosts.splice(index, 1);
+    },
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters["user/isLoggedIn"];
     },
   },
 };

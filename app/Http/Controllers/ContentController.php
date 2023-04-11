@@ -135,7 +135,10 @@ class ContentController extends Controller
    public function getIndexNew(Request $request)
    {
 
-    event(new TestEvent('hello world'));
+     event(new TestEvent('hello world'));
+    //  TestEvent::dispatch('hello world');
+
+
 
 
       $contents = NewContent::with('intrests','author','isLiked')

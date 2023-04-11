@@ -1,5 +1,6 @@
 window._ = require('lodash');
 
+
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -13,31 +14,7 @@ try {
 } catch (e) {}
 
 
-// pusher config
-try {
 
-    var pusher = new Pusher('404161226d57a8ae6b83', {
-        cluster: 'ap2'
-    });
-    Pusher.logToConsole = true;
-
-    var channel = pusher.subscribe('test');
-    channel.bind('pusher:subscription_succeeded', function (members) {
-        // alert('successfully subscribed!');
-    });
-    channel.bind('App\\Events\\TestEvent', function (data) {
-        const iconPath = "/images/1.png"
-        Push.create(data.message, {
-            body: 'xxxxxxxxx',
-            timeout: 5000
-
-        });
-    });
-    
-
-} catch (e) {
-    // console.log(e);
-}
 
 
 
@@ -57,14 +34,13 @@ axios.defaults.withCredentials = true;
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
+ import Echo from 'laravel-echo'
+ // import Push from 'pusher-js'
 
-// import Echo from 'laravel-echo';
+ window.Echo = new Echo({
+   broadcaster: 'pusher',
+   key: '404161226d57a8ae6b83',
+   cluster: 'ap2',
+   forceTLS: true
+ });
 
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     forceTLS: true
-// });

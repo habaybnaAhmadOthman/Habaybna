@@ -20,7 +20,7 @@
 <script>
 export default {
   mounted() {
-    console.log(this.toggleNotificationMenu);
+    // console.log(this.toggleNotificationMenu);
   },
   props: ["isNotificationsMenuOpened", "isLoggedIn"],
   methods: {},

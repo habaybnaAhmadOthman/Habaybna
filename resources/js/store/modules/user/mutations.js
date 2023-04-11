@@ -12,8 +12,10 @@ export default {
             state.token = payload.token;
         if (payload.id)
             state.id = payload.id;
-        if (payload.canMakeCalls || !payload.canMakeCalls )
+        if (payload.canMakeCalls || !payload.canMakeCalls)
             state.canMakeCalls = payload.canMakeCalls;
+        if (payload.canMakeComment || !payload.canMakeComment)
+            state.canMakeComment = payload.canMakeComment;
         if (!state.avatar || state.avatar == 'default.jpg')
             state.avatar = '/images/avatars/default.jpg';
         state.loggedIn = true;
@@ -22,6 +24,7 @@ export default {
     clearUser(state) {
         state.firstName = null;
         state.canMakeCalls = null;
+        state.canMakeComment =null
         state.lastName = null;
         state.type = null;
         state.avatar = null;
@@ -42,17 +45,17 @@ export default {
 
 
     },
-    type(state,userType) {
+    type(state, userType) {
         state.type = userType;
     },
-    openAvatarModal(state,isOpen) {
+    openAvatarModal(state, isOpen) {
         state.openAvatarModal = isOpen;
     },
     login(state) {
         state.loggedIn = true;
         state.is_verify = true;
     },
-    userAvatar(state,src){
+    userAvatar(state, src) {
         state.avatar = src
     },
     setCountryCode(state, countryCode) {
