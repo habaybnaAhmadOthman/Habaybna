@@ -44,7 +44,7 @@ export default {
             const error = new Error("تم إيقاف حسابك");
             throw error;
         }
-        if (!resp || resp.status != 204) {
+        if (!resp || resp.status != 204 ||resp.status != 200) {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
@@ -67,7 +67,7 @@ export default {
             const error = new Error("تم إيقاف حسابك");
             throw error;
         }
-        if (!resp || resp.status != 204) {
+        if (!resp || resp.status != 204 || resp.status != 200) {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
