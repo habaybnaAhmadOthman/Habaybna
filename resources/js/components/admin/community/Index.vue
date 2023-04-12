@@ -28,10 +28,21 @@
             <span> {{ comment.content }}</span>
           </div>
 
-          <div class="w-32">
-            <span class="pointer">{{
-              comment.status ? "منشور" : "غير منشور"
-            }}</span>
+          <div class="w-32 text-center">
+            <span
+              @click="showChangeStatusDialog(index, indexC)"
+              style="color: green"
+              v-if="comment.status"
+              class="pointer border-bottom"
+              >نشط</span
+            >
+            <span
+              @click="showChangeStatusDialog(index, indexC)"
+              style="color: orangeRed"
+              v-else
+              class="pointer border-bottom"
+              >غير نشط</span
+            >
           </div>
           <div class="w-32 text-left">
             <span
@@ -106,6 +117,26 @@ export default {
             }
           }
         );
+      } else {
+        // Do nothing!
+      }
+    },
+        showChangeStatusDialog(index, indexC) {
+      if (confirm(" تغيير الحالة !!")) {
+        // Save it!
+        const comment = this.posts[index].comments[indexC];
+
+        this.callApi(
+            "post",
+          "/api/admin/comment/comment-status",
+          comment
+        ).then((resp) => {
+            if (resp.status == 200) {
+              this.posts[index].comments[indexC].status = !this.posts[index].comments[indexC].status;
+          } else {
+            alert("somthing wronge");
+          }
+        });
       } else {
         // Do nothing!
       }

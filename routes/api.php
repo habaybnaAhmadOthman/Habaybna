@@ -50,6 +50,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function(){
         // habaybna community
         Route::get("/community","CommunityController@adminIndex");
+        Route::post("/comment/comment-status","CommunityController@changeCommentStatus");
+        Route::post("/specialist-can-make-comment","CommunityController@specialistPermesion");
+
 
         // birthday naddem siraj
         Route::get("/get-gifts","HomeController@getGifts");

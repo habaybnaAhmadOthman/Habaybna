@@ -45,6 +45,7 @@ th {
           <th scope="col" class="sortted" v-on:click="sortTable('status')">
             تقديم استشارات
           </th>
+          <th scope="col" class="sortted">مجتمع حبايبنا</th>
           <th class="sortted" scope="col" v-on:click="sortTable('gender')">
             الجنس
           </th>
@@ -95,6 +96,15 @@ th {
               type="checkbox"
               name="makeCalls"
               v-model="specialist.user_data.make_calls"
+            />
+          </td>
+          <td>
+            <input
+              class="make-calls"
+              @change="canComments(specialist.id)"
+              type="checkbox"
+              name="makeCalls"
+              v-model="specialist.user_data.can_make_comments"
             />
           </td>
           <td>{{ specialist.user_data.gender == "m" ? "ذكر" : "انثى" }}</td>
@@ -207,7 +217,7 @@ export default {
       this.callApi("get", "/api/admin/export-specialists-excel").then(
         (resp) => {
           this.exportData = resp.data;
-        //   console.log("resp:", this.exportData.data);
+          //   console.log("resp:", this.exportData.data);
           /* generate workbook object from table */
           this.export();
         }
@@ -250,6 +260,12 @@ export default {
       const resp = this.callApi(
         "get",
         "/api/admin/specialist-make-call-status/" + id
+      );
+    },
+        canComments(id) {
+      const resp = this.callApi(
+        "post",
+        "/api/admin/specialist-can-make-comment",{'id':id}
       );
     },
     sortTable(type) {
@@ -358,7 +374,7 @@ export default {
           } else if (byEmail === true) {
             return byEmail;
           }
-        //   console.log(byName, byPhone);
+          //   console.log(byName, byPhone);
         });
     },
   },

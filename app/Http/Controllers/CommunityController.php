@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validat;
 use Illuminate\Support\Facades\Validator;
+use App\Specialist;
 
 class CommunityController extends Controller
 {
@@ -91,6 +93,34 @@ class CommunityController extends Controller
 
         // dd(Post::latest()->get());
         return response(Post::latest()->get(), 200);
+    }
+
+    public function changeCommentStatus()
+    {
+        // $comment = $post->comments->where('id',request()->id)->first();
+        $comment = Comment::findOrFail( request()->id );
+
+
+        if($comment){
+
+            $comment->status = !$comment->status;
+            $comment->save();
+
+            return response('success', 200) ;
+        }
+        return response('faild', 404) ;
+    }
+
+    public function specialistPermesion()
+    {
+        if($specialist = Specialist::where('user_id', request()->id)->first()){
+            $specialist->can_make_comments = !$specialist->can_make_comments ;
+            $specialist->save();
+
+            return response('success', 200);
+        }
+        return response('fail', 404);
+
     }
 
 
