@@ -45,6 +45,7 @@ export default {
   components: {LoginModal},
   computed: {
       isLoggedIn() {
+
           return this.$store.getters["user/isLoggedIn"];
       },
       isLoading() {

@@ -150,6 +150,7 @@ export default {
                 canMakeComment: obj.can_make_comment,
                 avatar: obj.avatar,
                 id: obj.id,
+                notifications:obj.notifications
             })
             await dispatch('courses/getAllCourses',{}, {root:true})
         } else { // is admin

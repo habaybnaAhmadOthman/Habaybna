@@ -4,11 +4,21 @@
       <figure>
         <img src="/images/notification.svg" />
       </figure>
+      <span
+        style="color:red; fontSize:x-smal;
+                 position: absolute;
+                color: red;
+                top: 40px;
+                right: 13px;
+                "
+      >
+        {{ unredNotifications }}
+      </span>
 
       <NotificationsModel
         :isLoggedIn="isLoggedIn"
         :isNotificationsMenuOpened="isNotificationsMenuOpened"
-
+        :notifications="notifications"
       />
     </div>
     <div class="bar do hh-all"></div>
@@ -66,7 +76,7 @@ import NotificationsModel from "../NotificationsModel.vue";
 
 export default {
   emits: ["toggleMobileMenu", "toggleNotificationMenu"],
-  props: ["isLoggedIn", "isMobileMenuOpened",'isNotificationsMenuOpened'],
+  props: ["isLoggedIn", "isMobileMenuOpened", "isNotificationsMenuOpened"],
   components: { MobileMenu, NotificationsModel },
 
   methods: {
@@ -84,7 +94,7 @@ export default {
       this.$emit("toggleMobileMenu");
     },
     toggleNotificationMenu() {
-        console.log('one');
+      console.log("one", this.notifications);
       this.$emit("toggleNotificationMenu");
     },
   },
@@ -95,6 +105,16 @@ export default {
     userName() {
       const user = this.$store.getters["user/userData"];
       return user.firstName + " " + user.lastName;
+    },
+    notifications() {
+      return this.$store.getters["user/userData"].notifications;
+    },
+    unredNotifications() {
+      let notRead = 0;
+      this.$store.getters["user/userData"].notifications.forEach((element) => {
+        if (element.read_at == null) notRead++;
+      });
+      return notRead;
     },
   },
 };

@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
+
 
 
 class Comment extends Model
@@ -28,5 +30,12 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getCreatedAtAttribute()
+    {
+        return Carbon::create($this->attributes['created_at'])->locale('ar')->diffForHumans();
+        // return  $created_at->diffForHumans();
+
     }
 }

@@ -100,3 +100,10 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
     // });
 
     Route::view('{any}','welcome')->where('any','.*');
+    // Route::get('/serviceworker', function () {
+    //     dd('xxx');
+    //     return response(file_get_contents('./service-worker.js'), 200, [
+    //     'Content-Type' => 'text/javascript',
+    //     'Cache-Control' => 'public, max-age=3600',
+    //     ]);
+    // });

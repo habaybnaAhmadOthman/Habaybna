@@ -9,7 +9,10 @@
       action=""
     >
       <div class="post-header d-flex">
-        <h4>{{ fullName }}</h4>
+        <div>
+          <h4>{{ fullName }}</h4>
+          <span class="d-block" style="color:gray">{{ post.created_at }}</span>
+        </div>
         <ul class="option" @click="showMenu = !showMenu">
           <li>.</li>
           <li>.</li>

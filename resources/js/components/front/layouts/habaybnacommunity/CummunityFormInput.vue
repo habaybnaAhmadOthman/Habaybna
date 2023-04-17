@@ -1,10 +1,6 @@
 <template>
   <section class="create-post">
-    <img
-      class="create-post__avatar"
-      :src="getAvatar"
-      alt=""
-    />
+    <img class="create-post__avatar" :src="getAvatar" alt="" />
 
     <div id="create-post-form" class="create-post__form">
       <PostInput
@@ -56,6 +52,7 @@ export default {
         this.callApi("post", "/api/posts", post).then((resp) => {
           if (resp.status == 200) {
             this.$emit("handelNewPost", resp.data);
+
           }
         });
       }
@@ -65,7 +62,7 @@ export default {
     isLoggedIn() {
       return this.$store.getters["user/isLoggedIn"];
     },
-        getAvatar() {
+    getAvatar() {
       return this.$store.getters["user/userData"].avatar;
     },
   },

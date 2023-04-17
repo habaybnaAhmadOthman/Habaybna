@@ -20,9 +20,12 @@
           >Delete</span
         >
       </div>
-      <p>
-        {{ comment.content }}
-      </p>
+      <div class="d-flex space-between" >
+        <p>
+          {{ comment.content }}
+        </p>
+        <span style="color:gray;font-size: x-small"> {{ comment.created_at }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -39,21 +42,18 @@ export default {
   },
   methods: {
     showDeleteCommentDialog(comment, index) {
-      if (
-        confirm("هل أنت متأكد من حذف التعليق؟!")
-      ) {
+      if (confirm("هل أنت متأكد من حذف التعليق؟!")) {
         // Save it!
         this.callApi(
           "delete",
           "/api/posts/" + comment.post_id + "/comment",
           comment
         ).then((resp) => {
-            if(resp.status == 200) {
-
-                this.$emit('handelDeletedComment',index)
-            }else{
-                alert('somthing wronge')
-            }
+          if (resp.status == 200) {
+            this.$emit("handelDeletedComment", index);
+          } else {
+            alert("somthing wronge");
+          }
         });
       } else {
         // Do nothing!

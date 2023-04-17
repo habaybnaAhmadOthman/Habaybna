@@ -28,7 +28,9 @@
          } */
     </style>
     <!-- MailerLite Universal -->
+    <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
     <script>
+
         (function(w, d, e, u, f, l, n) {
             w[f] = w[f] || function() {
                     (w[f].q = w[f].q || [])
@@ -50,6 +52,7 @@
     <div id="app">
         <main-app></main-app>
     </div>
+
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     {{-- <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script src="/assets/js/push.min.js"></script> --}}

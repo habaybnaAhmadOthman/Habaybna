@@ -18,7 +18,8 @@ export default {
             openAvatarModal: false,
             canMakeCall: false,
             canMakeComment: false,
-            id: null
+            id: null,
+            notifications:null
         }
     },
     mutations,

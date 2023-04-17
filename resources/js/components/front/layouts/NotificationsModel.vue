@@ -5,13 +5,10 @@
   >
     <h4>الاشعارات</h4>
     <ul>
-      <li>ل وقال خلال مشستيب قد قام احمج بالتعليق على صورة لك</li>
-      <li>ل وقال خلال مشستيب قد قام احمج بالتعليق على صورة لك</li>
-      <li>ل وقال خلال مشستيب قد قام احمج بالتعليق على صورة لك</li>
-      <li>
-        <router-link to="#"
-          >ل وقال خلال مشستيب قد قام احمج بالتعليق على صورة لك</router-link
-        >
+      <li v-for="(one, index) in notifications" :key="index">
+        <router-link to="/habaybna-community">
+          {{ one.data.content_ar }}
+        </router-link>
       </li>
       <li class="all-notifications main-color">مشاهدة جميع الاشعارات</li>
     </ul>
@@ -22,8 +19,10 @@ export default {
   mounted() {
     // console.log(this.toggleNotificationMenu);
   },
-  props: ["isNotificationsMenuOpened", "isLoggedIn"],
+  props: ["isNotificationsMenuOpened", "isLoggedIn", "notifications"],
   methods: {},
+  mounted() {},
+  computed: {},
 };
 </script>
 <style scoped >

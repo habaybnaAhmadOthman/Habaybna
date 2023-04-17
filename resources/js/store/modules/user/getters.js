@@ -20,7 +20,8 @@ export default {
             avatar: state.avatar,
             canMakeCalls: state.canMakeCalls,
             canMakeComment: state.canMakeComment,
-            id:state.id
+            id:state.id,
+            notifications:state.notifications
         }
         return obj
     },

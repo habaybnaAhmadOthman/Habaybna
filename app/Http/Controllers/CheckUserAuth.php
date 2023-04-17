@@ -37,6 +37,7 @@ class CheckUserAuth extends Controller
                     $userData['avatar']= $user->user_data->avatar;
                     $userData['firstName']= $user->user_data->firstName;
                     $userData['lastName']= $user->user_data->lastName;
+                    $userData['notifications']= $user->notifications;
                     $userData['type']= $user->role;
                     $userData['can_make_call']= $user->role == 'specialist' && $user->user_data->make_calls ? true : false ;
                     $userData['can_make_comment']= $user->role == 'specialist' && $user->user_data->can_make_comments ? true : false ;

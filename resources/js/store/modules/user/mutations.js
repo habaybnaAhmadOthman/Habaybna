@@ -10,6 +10,8 @@ export default {
             state.avatar = payload.avatar;
         if (payload.token)
             state.token = payload.token;
+        if (payload.notifications)
+            state.notifications = payload.notifications;
         if (payload.id)
             state.id = payload.id;
         if (payload.canMakeCalls || !payload.canMakeCalls)
@@ -24,7 +26,7 @@ export default {
     clearUser(state) {
         state.firstName = null;
         state.canMakeCalls = null;
-        state.canMakeComment =null
+        state.canMakeComment = null
         state.lastName = null;
         state.type = null;
         state.avatar = null;

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validat;
 use Illuminate\Support\Facades\Validator;
 use App\Specialist;
+use App\Events\NewPost;
 
 class CommunityController extends Controller
 {
@@ -30,6 +31,8 @@ class CommunityController extends Controller
         $input['user_id'] =Auth::id();
         $data = Post::create($input);
         $post = Post::with(['user','comments'])->where('id',$data->id);
+
+        event(new NewPost());
         return response($post->first(), 200);
     }
 
