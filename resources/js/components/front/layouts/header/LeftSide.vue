@@ -5,12 +5,15 @@
         <img src="/images/notification.svg" />
       </figure>
       <span
-        style="color:red; fontSize:x-smal;
-                 position: absolute;
-                color: red;
-                top: 40px;
-                right: 13px;
-                "
+      v-if="unredNotifications > 0"
+        style="
+          color: red;
+          fontsize: x-smal;
+          position: absolute;
+          color: red;
+          top: 40px;
+          right: 13px;
+        "
       >
         {{ unredNotifications }}
       </span>
@@ -110,11 +113,18 @@ export default {
       return this.$store.getters["user/userData"].notifications;
     },
     unredNotifications() {
-      let notRead = 0;
-      this.$store.getters["user/userData"].notifications.forEach((element) => {
-        if (element.read_at == null) notRead++;
-      });
-      return notRead;
+      if (this.$store.getters["user/isLoggedIn"]) {
+        let notRead = 0;
+        this.$store.getters["user/userData"].notifications.forEach(
+          (element) => {
+            if (element.read_at == null) notRead++;
+          }
+        );
+        return notRead;
+      }else{
+        return 0;
+
+      }
     },
   },
 };
