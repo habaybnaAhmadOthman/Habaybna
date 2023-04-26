@@ -55,9 +55,10 @@ class NewPostNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'content_ar'=>'منشور جديد',
+            // 'content_ar'=>'لقد قام أحد الأخصائيين بالتعليق على منشورك',
+            'content_ar'=>' تم اضافة منشور جديد من أحد مستخدمين حبايبنا',
             'content_en'=>'newpost'
         ];
-        
+
     }
 }

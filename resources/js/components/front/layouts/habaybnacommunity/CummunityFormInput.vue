@@ -17,7 +17,7 @@
           id="create-post-submit-btn"
           @click="publishPost"
         >
-          Publish
+          نشر
         </button>
       </div>
     </div>
@@ -69,4 +69,7 @@ export default {
 };
 </script>
 <style scoped>
+    #create-post-submit-btn:hover {
+        cursor: pointer;
+    }
 </style>

@@ -5,7 +5,7 @@
         <img src="/images/notification.svg" />
       </figure>
       <span
-      v-if="unredNotifications > 0"
+        v-if="unredNotifications > 0"
         style="
           color: red;
           fontsize: x-smal;
@@ -121,9 +121,8 @@ export default {
           }
         );
         return notRead;
-      }else{
+      } else {
         return 0;
-
       }
     },
   },

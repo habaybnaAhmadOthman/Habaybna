@@ -1,6 +1,7 @@
 <template>
   <div class="homepage">
     <TheHeader></TheHeader>
+    <div class="bg-blue d-flex w-100 h-15 py-30">تفاعل مع المختصين في مجتمع حبايبنا </div>
     <LandingSection></LandingSection>
       <IconsSection></IconsSection>
     <div
@@ -119,5 +120,8 @@ export default {
 
   margin-top: 20px;
 }
+
 }
+.py-30 {
+padding: 30px 0;}
 </style>

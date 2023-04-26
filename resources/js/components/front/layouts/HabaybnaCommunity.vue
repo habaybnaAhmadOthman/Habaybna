@@ -6,7 +6,7 @@
     <TheHeader></TheHeader>
     <div class="habaybna-community">
       <div class="row">
-        <CommunityLSide />
+        <CommunityLSide/>
         <div class="col-md-6">
           <div class="community-md-side">
             <CummunityFormInput @handelNewPost="handelNewPost" />
@@ -21,7 +21,7 @@
             />
           </div>
         </div>
-        <CommunityRSide />
+        <CommunityRSide/>
       </div>
     </div>
     <div v-if="isLoading">
@@ -36,7 +36,7 @@ import TheHeader from "../layouts/header/TheHeader.vue";
 import HabaybnaMedia from "../views/custom/HabaybnaMedia.vue";
 import Partners from "../views/custom/Partners.vue";
 import CommunityLSide from "../layouts/habaybnacommunity/CommunityLside.vue";
-import CommunityRSide from "../layouts/habaybnacommunity/CommunityLside.vue";
+import CommunityRSide from "../layouts/habaybnacommunity/CummunityRSide.vue";
 import CummunityFormInput from "../layouts/habaybnacommunity/CummunityFormInput.vue";
 import CommunityPost from "../layouts/habaybnacommunity/CommunityPost.vue";
 

@@ -1,7 +1,5 @@
 <template>
   <section class="create-post">
-    <img class="create-post__avatar" :src="post.user.user_data.avatar" alt="" />
-
     <form
       @submit.prevent
       id="create-post-form"
@@ -9,9 +7,18 @@
       action=""
     >
       <div class="post-header d-flex">
-        <div>
-          <h4>{{ fullName }}</h4>
-          <span class="d-block" style="color:gray">{{ post.created_at }}</span>
+        <div class="d-flex">
+          <img
+            class="create-post__avatar"
+            :src="post.user.user_data.avatar"
+            alt=""
+          />
+          <div class="p-10">
+            <h4>{{ fullName }}</h4>
+            <span class="d-block" style="color: gray">{{
+              post.created_at
+            }}</span>
+          </div>
         </div>
         <ul class="option" @click="showMenu = !showMenu">
           <li>.</li>
@@ -26,7 +33,7 @@
           >
             حذف
           </li>
-          <li v-if="isLoggedIn" @click="reportPost()">تبليغ</li>
+          <!-- <li v-if="isLoggedIn" @click="reportPost()">تبليغ</li> -->
         </ul>
       </div>
       <div class="create-post__text-wrap">
@@ -37,22 +44,24 @@
       <div class="d-flex comment-input">
         <!-- @handelPublishPost="handelPublishPost" -->
 
-        <div v-if="isLoggedIn && canMakeComment">
-          <PostInput
-            @handelPublishComment="handelPublishComment"
-            :placeholder="'اكتب تعليق'"
-            type="comment"
-          />
-        </div>
-        <div v-if="canPublish" class="mt-10">
-          <button
-            class="create-post__submit"
-            type="submit"
-            id="create-post-submit-btn"
-            @click="publishComment(post)"
-          >
-            انشر
-          </button>
+        <div class="d-flex">
+          <div v-if="isLoggedIn && canMakeComment" style="width: 94%">
+            <PostInput
+              @handelPublishComment="handelPublishComment"
+              :placeholder="'اكتب تعليق'"
+              type="comment"
+            />
+          </div>
+          <div v-if="canPublish" class="mt-10">
+            <button
+              class="create-post__submit"
+              type="submit"
+              id="create-post-submit-btn"
+              @click="publishComment(post)"
+            >
+              انشر
+            </button>
+          </div>
         </div>
         <div>
           <Comments
@@ -137,7 +146,7 @@ export default {
         // Do nothing!
       }
     },
-    reportPost() {},
+    // reportPost() {},
 
     showMoreComments(index) {
       this.show = false;
@@ -225,8 +234,7 @@ export default {
 }
 .post-header {
   justify-content: space-between;
-  border-bottom: 1px solid #e6e6e6;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
   color: #706868;
 }
 li.noclick {
@@ -238,6 +246,9 @@ li.noclick {
   width: 100%;
   justify-content: content;
   flex-direction: column;
+}
+#create-post-submit-btn:hover {
+  cursor: pointer;
 }
 </style>
 
