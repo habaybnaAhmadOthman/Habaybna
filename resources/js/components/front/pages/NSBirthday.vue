@@ -2,7 +2,10 @@
   <div class="terms-page">
     <TheHeader />
     <div class="container birthday">
-      <img src="/images/siteImgs/nsBirthday.jpg" alt="" />
+      <img
+        src="/images/siteImgs/Green Minimalist Happy Birthday Card.jpg"
+        alt=""
+      />
       <p class="celebrations">Celebrations are sweeter when SHARED!</p>
       <p>
         Your Celebrations are sweeter when SHARED! Your contribution will be
@@ -15,8 +18,14 @@
         Jordan.
       </p>
       <p>
-        A heartfelt THANK YOU for your kind gift, on behalf of Nadeem &amp;
-        Siraj.
+        Last year we celebrated Nadim and Siraj's birthday and through such
+        gifts 65 virtual online consultations were offered for parents, and then
+        another parent added 20 online consultations as a gift and habaybna
+        added 15 to offer 100 free online consultations in total.
+      </p>
+      <p>
+        A heartfelt THANK YOU for your kind gift, on behalf of Aziz and the
+        families who will benefit from your gift.
       </p>
       <div class="row choose col-12">
         <p>Choose Your Gift</p>
@@ -66,7 +75,6 @@
           <label class="form-check-label ml-10" for="exampleCheck1"
             >Let nadeem & sirag know .</label
           >
-
         </div>
         <div v-if="showInlist" class="form-group col-sm-md-8 mb-50">
           <textarea
@@ -172,7 +180,7 @@
       <input type="hidden" name="Version" :value="paymentData.Version" />
       <input type="hidden" name="SecureHash" :value="paymentData.secureHash" />
     </form>
-    <a href="#users-list" class="btn-show-list"> Gifts List </a>
+    <a v-if="users.length" href="#users-list" class="btn-show-list"> Gifts List </a>
     <div class="birthday-modal" id="users-list">
       <a href="#" class="colse-x">X</a>
       <a href="#" class="close"></a>
@@ -183,8 +191,9 @@
             <span>{{ user.firstName }} {{ user.lastName }}</span>
             <div class="card-gift">{{ user.amount }}</div>
           </div>
+
           <div class="card-content">
-            <p>{{user.msg}}.</p>
+            <p>{{ user.msg }}.</p>
           </div>
         </div>
       </div>
@@ -236,8 +245,8 @@ export default {
           last: this.lastName,
           email: this.email,
           amount: amount,
-          showinList:this.showInlist,
-          msg:this.message,
+          showinList: this.showInlist,
+          msg: this.message,
         };
         let self = this;
         const resp = this.callApi("post", "/api/siraj-nadim-gift", Obj).then(

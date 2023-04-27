@@ -12,7 +12,7 @@ export default {
             state.token = payload.token;
         if (payload.id)
             state.id = payload.id;
-        if (payload.canMakeCalls)
+        if (payload.canMakeCalls || !payload.canMakeCalls )
             state.canMakeCalls = payload.canMakeCalls;
         if (!state.avatar || state.avatar == 'default.jpg')
             state.avatar = '/images/avatars/default.jpg';

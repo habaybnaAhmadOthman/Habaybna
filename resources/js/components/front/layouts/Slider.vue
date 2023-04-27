@@ -30,9 +30,9 @@
                         nextEl: `.${this.arrowSelector}-next`,
                         prevEl: `.${this.arrowSelector}-prev`,
                     },
-                    
+
                     autoplay: this.autoPlayFn,
-                    
+
                     breakpoints: {
                     // when window width is >= 320px
                     320: {
@@ -52,7 +52,7 @@
                         pagination: this.paginationFn('paginationDo')
                     }
                 },
-                    
+
                 });
 
                 // }
@@ -68,7 +68,9 @@
                 }
             },
             goToLink(url){
-                window.open(url, '_blank')
+                if(url === null)
+                    return
+                    window.open(url, '_blank')
             }
         },
         computed:{
@@ -86,7 +88,7 @@
         mounted(){
             this.initSwiper()
         },
-        
+
     }
 </script>
 

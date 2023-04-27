@@ -143,10 +143,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // calls
         Route::get('/calls/packages','CallsController@index');
-        Route::get('get-calls-appointments','    {
-            path: "/partners-program",
-            component: PartnersProgramPage
-        },@getCallsAppointments');
+        Route::get('get-calls-appointments','CallsAppointmentsController@getCallsAppointments');
         Route::post('/calls/create','CallsController@create');
         Route::get('/calls/package/{id}','CallsController@show');
         Route::post('/calls/package/{id}','CallsController@update');
