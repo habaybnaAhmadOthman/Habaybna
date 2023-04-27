@@ -73,7 +73,7 @@
             v-model="showInlist"
           />
           <label class="form-check-label ml-10" for="exampleCheck1"
-            >Let nadeem & sirag know .</label
+            >Let Aziz know !</label
           >
         </div>
         <div v-if="showInlist" class="form-group col-sm-md-8 mb-50">

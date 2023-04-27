@@ -349,7 +349,7 @@ const routes = [{
         component: PartnersProgramPage
     },
     {
-        path: "/Nadeem-Sirajs-Birthday-Gift",
+        path: "/community/birthday",
         component: NSBirthday
     },
     {
