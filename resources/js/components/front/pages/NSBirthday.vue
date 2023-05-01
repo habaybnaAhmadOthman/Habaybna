@@ -228,7 +228,7 @@ export default {
   },
   methods: {
     getUserList() {
-      const resp = this.callApi("get", "api/get-users-gift?success=1").then(
+      const resp = this.callApi("get", "/api/get-users-gift?success=1").then(
         (res) => {
           if (res.status == 200) {
             this.users = res.data;
