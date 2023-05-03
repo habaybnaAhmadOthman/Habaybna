@@ -1,6 +1,7 @@
 <template>
     <div class="library-page">
         <TheHeader></TheHeader>
+        <CommunityBar></CommunityBar>
         <Banner></Banner>
         <ContentSection :save-current-page="true"></ContentSection>
         <TheFooter></TheFooter>
@@ -9,11 +10,13 @@
 
 <script>
     import TheHeader from '../../layouts/header/TheHeader.vue'
+import CommunityBar from "../../layouts/habaybnacommunity/CommunityBar.vue";
+
     import Banner from '../../views/library/MainBanner.vue'
     import ContentSection from '../../views/library/ContentSection.vue'
     import TheFooter from '../../layouts/TheFooter.vue'
     export default {
-        components: { TheHeader,Banner,ContentSection,TheFooter},
+        components: { CommunityBar,TheHeader,Banner,ContentSection,TheFooter},
         beforeRouteEnter(to, from, next) {
             const shouldGetFiltersFromPrevPage = localStorage.getItem('new_filters');
             if (!shouldGetFiltersFromPrevPage) {

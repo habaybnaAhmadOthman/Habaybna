@@ -193,6 +193,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/course/video-actions','UserController@setVideoActions');
 
     // general routes
+
+    Route::post('user-notifications/read','UserController@readNotifications');
+    Route::get('user-notifications','UserController@notifications');
+
     Route::get('get-profile-data','UserController@getUserData');
     // Route::post('logoutt','AuthController@logout')->name('user.logoutt');
     Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');

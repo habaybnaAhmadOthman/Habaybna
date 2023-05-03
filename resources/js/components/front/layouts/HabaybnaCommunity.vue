@@ -163,11 +163,14 @@ img {
 }
 
 .create-post__form {
-  background-color: #fff;
+  background-color: #ededed61;
   padding: 20px;
   width: 100%;
   position: relative;
-  border-radius: 5px;
+    border-radius: 17;
+  border: 1px solid #80808066;
+
+
 }
 
 .create-post__form::after {

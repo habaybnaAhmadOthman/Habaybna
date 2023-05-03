@@ -1,6 +1,6 @@
 
 <template>
-  <div class="create-post__text-wrap">
+  <div class="create-post__text-wrap flex-1">
 
     <textarea
       @input="handleChange"

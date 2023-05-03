@@ -141,7 +141,6 @@ export default {
 
         const obj = resp.data.userData;
         if (obj.role != 'admin') {
-            console.log('userdatatata',obj.can_make_comment);
             commit('setUser',{
                 firstName: obj.firstName,
                 lastName: obj.lastName,

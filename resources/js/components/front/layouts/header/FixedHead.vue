@@ -31,7 +31,7 @@
         </figure>
         <p class="font-10 mobile-icon-color">حسابي</p>
       </div>
-      <router-link to="/notifications" class="mo center mobile-link">
+      <router-link  v-if="isLoggedIn" to="/notifications" class="mo center mobile-link">
         <figure>
           <img src="/images/notification.svg" />
         </figure>

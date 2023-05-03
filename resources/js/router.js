@@ -68,6 +68,10 @@ import HomePage from "./components/front/pages/HomePage.vue";
 import ErrorPage from "./components/front/pages/ErrorPage.vue";
 import onlineCoursesPage from "./components/front/pages/onlineCoursesPage.vue";
 import allCoursesPage from "./components/front/pages/allCoursesPage.vue";
+
+// notifications
+import AllNotifications from "./components/front/pages/AllNotifications.vue";
+
 // courses
 import CoursePage from "./components/front/pages/courses/CoursePage.vue";
 import SearchResults from "./components/front/pages/SearchResults.vue";
@@ -500,11 +504,7 @@ const routes = [{
                 component: UserProfile_SessionTimes,
                 name: 'mySessionsTimes'
             },
-            {
-                path: "my-call-log",
-                component: UserProfile_CallLogs,
-                name: 'myCallLog'
-            },
+
             {
                 path: "my-zoom-account",
                 component: UserProfile_ZoomAccount,
@@ -515,6 +515,14 @@ const routes = [{
     },
     // *****************
     // courses
+    {
+        path: "/notifications",
+        component: AllNotifications,
+        name: 'AllNotifications',
+        meta: {
+            requiresAuth: true
+        },
+    },
     {
         path: "/courses/:course",
         component: CoursePage,

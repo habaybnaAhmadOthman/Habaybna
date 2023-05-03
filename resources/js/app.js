@@ -54,56 +54,56 @@ import VueMeta from 'vue-meta'
 // }
 
 
-Echo.channel('test')
-    .listen('TestEvent', post => {
-        if (!('Notification' in window)) {
-            alert('Web Notification is not supported');
-            return;
-        } else {
-            // const beamsClient = new PusherPushNotifications.Client({
-            //     instanceId: 'ec559eac-30e5-473c-8414-adabb00c204e',
-            // });
-            // console.log('beamsClient');
-            // console.log('beamsClient.start()', beamsClient.start());
-            // beamsClient.start()
-            //     .then(() => beamsClient.addDeviceInterest('hello'))
-            //     .then(() => console.log('Successfully registered and subscribed!'))
-            //     .catch(console.error);
-        }
-        Notification.requestPermission(permission => {
-            new Notification('New post alert!', {
+// Echo.channel('test')
+//     .listen('TestEvent', post => {
+//         if (!('Notification' in window)) {
+//             alert('Web Notification is not supported');
+//             return;
+//         } else {
+//             // const beamsClient = new PusherPushNotifications.Client({
+//             //     instanceId: 'ec559eac-30e5-473c-8414-adabb00c204e',
+//             // });
+//             // console.log('beamsClient');
+//             // console.log('beamsClient.start()', beamsClient.start());
+//             // beamsClient.start()
+//             //     .then(() => beamsClient.addDeviceInterest('hello'))
+//             //     .then(() => console.log('Successfully registered and subscribed!'))
+//             //     .catch(console.error);
+//         }
+//         Notification.requestPermission(permission => {
+//             new Notification('New post alert!', {
 
-                body: 'post.title', // content for the alert
-                //   icon: "https://pusher.com/static_logos/320x320.png" // optional image url
-            });
+//                 body: 'post.title', // content for the alert
+//                 //   icon: "https://pusher.com/static_logos/320x320.png" // optional image url
+//             });
 
 
-        });
-    })
-Echo.channel('usernewpost')
-    .listen('NewPost', post => {
-        console.log('post', post);
-        if (!('Notification' in window)) {
-            alert('Web Notification is not supported');
-            return;
-        } else {
-            // const beamsClient = new PusherPushNotifications.Client({
-            //     instanceId: 'ec559eac-30e5-473c-8414-adabb00c204e',
-            // });
-            // console.log('beamsClient');
-            // console.log('beamsClient.start()', beamsClient.start());
-            // beamsClient.start()
-            //     .then(() => beamsClient.addDeviceInterest('hello'))
-            //     .then(() => console.log('Successfully registered and subscribed!'))
-            //     .catch(console.error);
-        }
-        Notification.requestPermission((permission) => {
-            new Notification("منشور جديد", {
-                body: "لقد قام احد المستخدمين باضافة منشور !", // content for the alert
-                //   icon:this.getAvatar, // optional image url
-            });
-        });
-    })
+//         });
+//     })
+// Echo.channel('usernewpost')
+//     .listen('NewPost', post => {
+//         console.log('post', post);
+//         if (!('Notification' in window)) {
+//             alert('Web Notification is not supported');
+//             return;
+//         } else {
+//             // const beamsClient = new PusherPushNotifications.Client({
+//             //     instanceId: 'ec559eac-30e5-473c-8414-adabb00c204e',
+//             // });
+//             // console.log('beamsClient');
+//             // console.log('beamsClient.start()', beamsClient.start());
+//             // beamsClient.start()
+//             //     .then(() => beamsClient.addDeviceInterest('hello'))
+//             //     .then(() => console.log('Successfully registered and subscribed!'))
+//             //     .catch(console.error);
+//         }
+//         Notification.requestPermission((permission) => {
+//             new Notification("منشور جديد", {
+//                 body: "لقد قام احد المستخدمين باضافة منشور !", // content for the alert
+//                 //   icon:this.getAvatar, // optional image url
+//             });
+//         });
+//     })
 // importScripts("https://js.pusher.com/beams/service-worker.js");
 
 

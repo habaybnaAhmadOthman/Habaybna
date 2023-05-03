@@ -5,12 +5,20 @@
   >
     <h4>الاشعارات</h4>
     <ul>
-      <li v-for="(one, index) in notifications" :key="index">
-        <router-link to="/habaybna-community">
+      <li
+        v-for="(one, index) in notifications.slice(0, 5)"
+        :key="index"
+        @click="setAsRead(index, one)"
+      >
+
           {{ one.data.content_ar }}
+
+      </li>
+      <li class="center p-10">
+        <router-link class="main-color " to="notifications">
+          مشاهدة جميع الاشعارات
         </router-link>
       </li>
-      <li class="all-notifications main-color">مشاهدة جميع الاشعارات</li>
     </ul>
   </div>
 </template>
@@ -20,8 +28,44 @@ export default {
     // console.log(this.toggleNotificationMenu);
   },
   props: ["isNotificationsMenuOpened", "isLoggedIn", "notifications"],
-  methods: {},
-  mounted() {},
+  methods: {
+    setAsRead(i, one) {
+      this.callApi("post", "/api/user-notifications/read", one).then((resp) => {
+        console.log(resp.data, "xxxxxxxxx");
+        this.$store.commit("user/setUser", {
+          notifications: resp.data,
+        });
+        --this.notRead;
+        this.$router.replace('notifications')
+      });
+    },
+  },
+  mounted() {
+    Echo.channel("usernewpost").listen("NewPost", (post) => {
+      console.log("post", post);
+
+      // if (!('Notification' in window)) {
+      //     alert('Web Notification is not supported');
+      //     return;
+      // } else {
+      //     // const beamsClient = new PusherPushNotifications.Client({
+      //     //     instanceId: 'ec559eac-30e5-473c-8414-adabb00c204e',
+      //     // });
+      //     // console.log('beamsClient');
+      //     // console.log('beamsClient.start()', beamsClient.start());
+      //     // beamsClient.start()
+      //     //     .then(() => beamsClient.addDeviceInterest('hello'))
+      //     //     .then(() => console.log('Successfully registered and subscribed!'))
+      //     //     .catch(console.error);
+      // }
+      // Notification.requestPermission((permission) => {
+      //     new Notification("منشور جديد", {
+      //         body: "لقد قام احد المستخدمين باضافة منشور !", // content for the alert
+      //         //   icon:this.getAvatar, // optional image url
+      //     });
+      // });
+    });
+  },
   computed: {},
 };
 </script>

@@ -194,7 +194,7 @@ export default {
   //   },
   methods: {
     async getResults(page) {
-        
+
       if (typeof page === "undefined") {
         page = 1;
       }

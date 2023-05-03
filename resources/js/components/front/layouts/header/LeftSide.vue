@@ -5,7 +5,7 @@
         <img src="/images/notification.svg" />
       </figure>
       <span
-        v-if="unredNotifications > 0"
+        v-if="notRead > 0"
         style="
           color: red;
           fontsize: x-smal;
@@ -15,7 +15,7 @@
           right: 13px;
         "
       >
-        {{ unredNotifications }}
+        {{ notRead }}
       </span>
 
       <NotificationsModel
@@ -81,6 +81,11 @@ export default {
   emits: ["toggleMobileMenu", "toggleNotificationMenu"],
   props: ["isLoggedIn", "isMobileMenuOpened", "isNotificationsMenuOpened"],
   components: { MobileMenu, NotificationsModel },
+  data() {
+    return {
+      notRead: 0,
+    };
+  },
 
   methods: {
     async logout() {
@@ -112,19 +117,52 @@ export default {
     notifications() {
       return this.$store.getters["user/userData"].notifications;
     },
-    unredNotifications() {
-      if (this.$store.getters["user/isLoggedIn"]) {
-        let notRead = 0;
-        this.$store.getters["user/userData"].notifications.forEach(
-          (element) => {
-            if (element.read_at == null) notRead++;
-          }
-        );
-        return notRead;
-      } else {
-        return 0;
-      }
-    },
+    unredNotifications() {},
+  },
+  mounted() {
+    if (this.$store.getters["user/isLoggedIn"]) {
+      this.$store.getters["user/userData"].notifications.forEach((element) => {
+        if (element.read_at == null) this.notRead++;
+      });
+
+      Echo.channel("usernewpost").listen("NewPost", (post) => {
+        //   this.notRead++;
+        this.$Message.info(" منشور جديد ");
+        // this.$store.se["user/userData"].notifications
+        if (this.$store.getters["user/isLoggedIn"]) {
+          ////////////////
+          this.callApi("get", "/api/user-notifications").then((resp) => {
+            this.$store.commit("user/setUser", {
+              notifications: resp.data,
+            });
+            this.notRead++;
+          });
+          ////////////////
+        }
+        if (!("Notification" in window)) {
+          alert("Web Notification is not supported");
+          return;
+        } else {
+          // const beamsClient = new PusherPushNotifications.Client({
+          //     instanceId: 'ec559eac-30e5-473c-8414-adabb00c204e',
+          // });
+          // console.log('beamsClient');
+          // console.log('beamsClient.start()', beamsClient.start());
+          // beamsClient.start()
+          //     .then(() => beamsClient.addDeviceInterest('hello'))
+          //     .then(() => console.log('Successfully registered and subscribed!'))
+          //     .catch(console.error);
+        }
+        // Notification.requestPermission((permission) => {
+        //   new Notification("منشور جديد", {
+        //     body: "لقد قام احد المستخدمين باضافة منشور !", // content for the alert
+        //     //   icon:this.getAvatar, // optional image url
+        //   });
+        // });
+      });
+    } else {
+      this.notRead = 0;
+    }
   },
 };
 </script>

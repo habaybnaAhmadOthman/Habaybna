@@ -7,7 +7,7 @@
       action=""
     >
       <div class="post-header d-flex">
-        <div class="d-flex">
+        <div class="d-flex ">
           <img
             class="create-post__avatar"
             :src="post.user.user_data.avatar"
@@ -37,14 +37,14 @@
         </ul>
       </div>
       <div class="create-post__text-wrap">
-        <p class="mb-20">
+        <p class="post-content mb-20">
           {{ post.content }}
         </p>
       </div>
       <div class="d-flex comment-input">
         <!-- @handelPublishPost="handelPublishPost" -->
 
-        <div class="d-flex">
+        <div class="d-block">
           <div v-if="isLoggedIn && canMakeComment" style="width: 94%">
             <PostInput
               @handelPublishComment="handelPublishComment"
@@ -54,7 +54,7 @@
           </div>
           <div v-if="canPublish" class="mt-10">
             <button
-              class="create-post__submit"
+              class="create-post__submit d-block d-flex"
               type="submit"
               id="create-post-submit-btn"
               @click="publishComment(post)"
@@ -249,6 +249,13 @@ li.noclick {
 }
 #create-post-submit-btn:hover {
   cursor: pointer;
+}
+.post-content{
+text-align: -webkit-center;
+    background: #f4f4f4;
+    padding: 30px 16px;
+    border-radius: 17px;
+    font-size: x-large;
 }
 </style>
 

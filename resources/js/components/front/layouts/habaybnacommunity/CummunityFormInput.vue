@@ -1,13 +1,15 @@
 <template>
   <section class="create-post">
-    <img class="create-post__avatar" :src="getAvatar" alt="" />
 
     <div id="create-post-form" class="create-post__form">
+    <div class="d-flex align-center">
+        <img class="create-post__avatar" :src="getAvatar" alt="" />
       <PostInput
         @handelPublishPost="handelPublishPost"
         :placeholder="'انشر سؤال او استفسار ....!'"
         type="post"
       />
+    </div>
       <div class="create-post__media-wrap" id="create-post-media-wrap"></div>
       <div class="create-post__buttons">
         <button
