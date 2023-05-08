@@ -7,6 +7,7 @@
           <h2 v-if="notifications.length > 0">الاشعارات</h2>
           <h2 v-else class="center">لا يوجد اشعارات</h2>
         </div>
+        
         <div
           :class="`border-bottom p-10 pointer${
             one.read_at != null ? ' seen' : ''
@@ -32,12 +33,14 @@ export default {
   },
   methods: {
     setAsRead(i, one) {
-      console.log("ccccccc");
       this.callApi("post", "/api/user-notifications/read", one).then((resp) => {
-        console.log(resp.data, "xxxxxxxxx");
-        this.$store.commit("user/setUser", {
-          notifications: resp.data,
-        });
+        // this.$store.commit(
+        //   "user/setUser",
+
+        //   {
+        //     notifications: resp.data,
+        //   }
+        // );
         --this.notRead;
         this.$router.replace("habaybna-community");
       });
@@ -45,7 +48,7 @@ export default {
   },
   computed: {
     notifications() {
-      console.log(this.$store.getters["user/userData"].notifications);
+      //   console.log(this.$store.getters["user/userData"].notifications);
       return this.$store.getters["user/userData"].notifications;
     },
   },
@@ -57,11 +60,11 @@ export default {
   background-color: whitesmoke;
 }
 
-.xx >.border-bottom {
-    border-top: 1px solid #8080806e;
+.xx > .border-bottom {
+  border-top: 1px solid #8080806e;
 }
 
 .border-bottom:hover {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 </style>

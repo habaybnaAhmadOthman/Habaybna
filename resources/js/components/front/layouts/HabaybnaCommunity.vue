@@ -6,7 +6,7 @@
     <TheHeader></TheHeader>
     <div class="habaybna-community">
       <div class="row">
-        <CommunityLSide/>
+        <CommunityLSide />
         <div class="col-md-6">
           <div class="community-md-side">
             <CummunityFormInput @handelNewPost="handelNewPost" />
@@ -21,7 +21,7 @@
             />
           </div>
         </div>
-        <CommunityRSide/>
+        <CommunityRSide />
       </div>
     </div>
     <div v-if="isLoading">
@@ -99,8 +99,8 @@ export default {
       this.allPosts[postIndex].components = post.components;
     },
     handelDeletedPost(index) {
-      this.isLoading = true
-      this.loading(800)
+      this.isLoading = true;
+      this.loading(800);
       this.allPosts.splice(index, 1);
     },
   },
@@ -156,21 +156,13 @@ img {
   margin-bottom: 20px;
 }
 
-.create-post__avatar {
-  width: 65px;
-  height: 65px;
-  border-radius: 5px;
-}
-
 .create-post__form {
   background-color: #ededed61;
   padding: 20px;
   width: 100%;
   position: relative;
-    border-radius: 17;
+  border-radius: 17;
   border: 1px solid #80808066;
-
-
 }
 
 .create-post__form::after {
@@ -190,8 +182,7 @@ img {
 /* Dynamic height for text-area:
 https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
 .create-post__text-wrap {
-  display: grid;
-  margin-bottom: 20px;
+  margin: 10px 0;
 }
 
 .create-post__text-wrap::after {
@@ -201,20 +192,24 @@ https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
 }
 
 .create-post__text-wrap > textarea {
-  min-height: 70px;
+  /* min-height: 50px;
+  max-height: 200px; */
   font-size: 16px;
   color: #757a91;
   resize: none;
   overflow: hidden;
+  border: 0.5px solid #ebe4e4;
+  padding: 2px 6px;
+  border-radius: 17px;
 }
 
-.create-post__text-wrap > textarea::placeholder {
-  color: #999999;
+.create-post__text-wrap>textarea::placeholder {
+    color: #999999;
+    margin-top: 10px;
 }
 
 .create-post__text-wrap > textarea,
 .create-post__text-wrap::after {
-  border: none;
   font: inherit;
   grid-area: 1 / 1 / 2 / 2;
   line-height: 1.5;

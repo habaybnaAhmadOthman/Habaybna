@@ -72,7 +72,7 @@
                                 >
                             </aside>
                         </div> -->
-                        
+
                     </menu>
                 </div>
 
@@ -190,7 +190,7 @@ a {
         padding-left: 12px;
         padding-right: 12px;
         background:#F4F4F4;
-        position: relative;
+        /* position: relative; */
     }
     .header-right {
         display: none;

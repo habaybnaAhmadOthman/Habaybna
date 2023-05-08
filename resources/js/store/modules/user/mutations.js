@@ -1,5 +1,6 @@
 export default {
     setUser(state, payload) {
+        console.log('payload',payload);
         if (payload.firstName)
             state.firstName = payload.firstName;
         if (payload.lastName)
@@ -62,7 +63,10 @@ export default {
     },
     setCountryCode(state, countryCode) {
         state.countryCode = countryCode || state.countryCode;
-    }
+    },
+    // userNotifications(state){
+
+    // }
     // login(state,payload){
     //     state.is_verify = payload.is_verify;
     // },

@@ -1615,9 +1615,9 @@ img {
 }
 
 .create-post__avatar {
-    width: 55px;
-    height: 55px;
-    border-radius: 17px;
+    width: 45px;
+    height: 45px;
+    border-radius: 25px;
     margin-left: 5px;
 }
 
@@ -1653,10 +1653,7 @@ img {
 
 /* Dynamic height for text-area:
 https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
-.create-post__text-wrap {
-    display: grid;
-    margin-bottom: 5px;
-}
+
 
 .create-post__text-wrap::after {
     content: attr(data-replicated-value) " ";
@@ -1664,21 +1661,20 @@ https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
     visibility: hidden;
 }
 
-.create-post__text-wrap>textarea {
-    min-height: 70px;
-    font-size: 16px;
-    color: #757a91;
-    resize: none;
-    overflow: hidden;
+
+input::placeholder{
+    margin-top: 0.5rem;
 }
 
-.create-post__text-wrap>textarea::placeholder {
-    color: #999999;
-}
+
+/* .create-post__text-wrap > textarea {
+    border: 0.5px solid #ebe4e4;
+    padding: 0px 9px;
+    border-radius: 17px;
+  } */
 
 .create-post__text-wrap>textarea,
 .create-post__text-wrap::after {
-    border: none;
     font: inherit;
     grid-area: 1 / 1 / 2 / 2;
     line-height: 1.5;
@@ -1883,6 +1879,12 @@ https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
     .habaybna-community {
         margin: 0;
         padding: 0;
+    }
+    .create-post__avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 17px;
+        margin-left: 5px;
     }
 
     .community-l-side,

@@ -43,6 +43,7 @@
         </figure>
         <p class="font-10 mobile-icon-color">المزيد</p>
       </div>
+
     </div>
     <LeftSide
       :isMobileMenuOpened="isMobileMenuOpened"
@@ -57,6 +58,7 @@
 
 <script>
 import LeftSide from "./LeftSide.vue";
+
 export default {
   components: {
     LeftSide,

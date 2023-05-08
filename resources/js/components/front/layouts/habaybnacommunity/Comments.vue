@@ -4,13 +4,13 @@
     <img :src="comment.user.user_data.avatar" alt="" class="rounded" />
     <div class="bg-gray p-10">
       <div class="d-flex space-between">
-        <h3>
+        <h5>
           {{
             comment.user.user_data.firstName +
             " " +
             comment.user.user_data.lastName
           }}
-        </h3>
+        </h5>
         <span
           data-toggle="modal"
           data-target="#exampleModal"
@@ -89,8 +89,17 @@ export default {
   color: #a6a0a0;
   font-weight: bold;
   cursor: pointer;
+  font-size: x-small;
+
 }
 .delete-comment:hover {
   color: #000;
+}
+@media (max-width: 767px) {
+.comments-wrap img {
+  width: 35px;
+  height: 35px;
+  margin-left: 7px;
+}
 }
 </style>

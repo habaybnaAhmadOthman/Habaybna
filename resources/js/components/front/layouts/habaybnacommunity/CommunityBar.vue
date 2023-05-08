@@ -1,6 +1,6 @@
 <template>
   <div
-    class="align-center bg-blue d-flex h-15 justify-center w-100 radius-5 community-bar"
+    class="align-center bg-blue d-flex h-15 justify-center w-100  community-bar"
   >
     <router-link to="/habaybna-community" class="flex-all w-100">
       <p class="white p-10 font-22">تفاعل مع المختصين في مجتمع حبايبنا</p>

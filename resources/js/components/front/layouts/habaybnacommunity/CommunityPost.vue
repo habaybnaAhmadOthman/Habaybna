@@ -13,9 +13,9 @@
             :src="post.user.user_data.avatar"
             alt=""
           />
-          <div class="p-10">
-            <h4>{{ fullName }}</h4>
-            <span class="d-block" style="color: gray">{{
+          <div>
+            <h6>{{ fullName }}</h6>
+            <span class="d-block font-12" style="color: gray">{{
               post.created_at
             }}</span>
           </div>
@@ -36,8 +36,8 @@
           <!-- <li v-if="isLoggedIn" @click="reportPost()">تبليغ</li> -->
         </ul>
       </div>
-      <div class="create-post__text-wrap">
-        <p class="post-content mb-20">
+      <div class="create-post__text-wrap mt-10">
+        <p class="post-content">
           {{ post.content }}
         </p>
       </div>
@@ -236,6 +236,9 @@ export default {
   justify-content: space-between;
   /* padding-bottom: 10px; */
   color: #706868;
+}
+.post-header img {
+
 }
 li.noclick {
   pointer-events: none;

@@ -31,18 +31,19 @@ export default {
   methods: {
     setAsRead(i, one) {
       this.callApi("post", "/api/user-notifications/read", one).then((resp) => {
-        console.log(resp.data, "xxxxxxxxx");
-        this.$store.commit("user/setUser", {
-          notifications: resp.data,
-        });
+        // this.$store.commit("user/setUser",
+        //   {
+        //       notifications : resp.data,
+
+        //   }
+        // );
         --this.notRead;
-        this.$router.replace('notifications')
+        this.$router.replace('habaybna-community')
       });
     },
   },
   mounted() {
     Echo.channel("usernewpost").listen("NewPost", (post) => {
-      console.log("post", post);
 
       // if (!('Notification' in window)) {
       //     alert('Web Notification is not supported');
