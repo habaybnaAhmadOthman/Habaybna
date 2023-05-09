@@ -5,17 +5,17 @@
         <div class="flex-all h-100">
           <div class="landing-call-links p-side-5">
             <h1 class="font-25 main-color bold font-18-p mb-25">
-              أهلاً وسهلاً بك في حبايبنا.نت
+              أهلاً بك في حبايبنا.نت
             </h1>
             <h2 class="font-20 font-16-p f-normal black">
-              نساعدك في رحلتك الاستثنائية مع تطور طفلك. لست وحدك بعد الآن!
+              مجتمع من المعرفة ونصائح الخبراء عن تطور الطفل‎
             </h2>
             <SearchModal></SearchModal>
           </div>
         </div>
         <img
           class="landing-bg w-80-p mb-30-p"
-          src="images/landing-1.png"
+          src="images/siteImgs/Home page image.png"
           alt=""
         />
       </div>

@@ -13,7 +13,7 @@
 
             <CommunityPost
               @handelNewComment="handelNewComment"
-              v-for="(post, index) in allPosts"
+              v-for="(post, index) in allPostsa"
               :key="index"
               :post="post"
               :index="index"
@@ -63,13 +63,12 @@ export default {
   },
   methods: {
     getAllPosts() {
-      this.callApi("get", "/api/posts").then((resp) => {
         this.isLoading = true;
         this.loading();
-        this.allPosts = resp.data.data;
+        this.$store.dispatch('community/setPosts')
+
 
         // this.$emit("handelNewPost", resp.data);
-      });
       if (!this.isLoggedIn) {
         setTimeout(() => {
           alert(
@@ -82,7 +81,7 @@ export default {
     handelNewPost(post) {
       this.isLoading = true;
       this.loading();
-      this.allPosts.unshift(post);
+      this.allPostsa.unshift(post);
       document.getElementById("create-post-txt").value = "";
     },
 
@@ -108,6 +107,9 @@ export default {
     isLoggedIn() {
       return this.$store.getters["user/isLoggedIn"];
     },
+    allPostsa() {
+        return this.$store.getters["community/allPosts"].data
+    }
   },
 };
 </script>

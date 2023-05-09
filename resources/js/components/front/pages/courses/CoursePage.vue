@@ -1,6 +1,7 @@
 <template>
     <div class="course-page">
         <TheHeader></TheHeader>
+        
         <Banner
         @open-share-modal="showShareDialog"
         :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"
@@ -191,7 +192,7 @@ export default {
                         without_like:true
                     })
                 })
-    
+
             } catch (e){
                 console.log(e);
             }

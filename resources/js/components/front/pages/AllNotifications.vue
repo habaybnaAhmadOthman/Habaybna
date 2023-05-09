@@ -7,7 +7,7 @@
           <h2 v-if="notifications.length > 0">الاشعارات</h2>
           <h2 v-else class="center">لا يوجد اشعارات</h2>
         </div>
-        
+
         <div
           :class="`border-bottom p-10 pointer${
             one.read_at != null ? ' seen' : ''
@@ -41,7 +41,7 @@ export default {
         //     notifications: resp.data,
         //   }
         // );
-        --this.notRead;
+        this.$store.dispatch('user/setNotifications')
         this.$router.replace("habaybna-community");
       });
     },

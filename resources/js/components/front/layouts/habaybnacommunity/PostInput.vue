@@ -45,14 +45,14 @@ export default {
 
 <style scoped>
 .create-post__text-wrap > textarea {
-  height: 37px;
+  height: 45px;
   /* max-height: 200px; */
   font-size: 16px;
   color: #757a91;
   resize: none;
   overflow: hidden;
   border: 0.5px solid #ebe4e4;
-  padding: 2px 6px;
+  padding: 5px 6px;
   border-radius: 17px;
   width: 80%;
 }
@@ -62,6 +62,9 @@ export default {
 @media (max-width: 767px) {
   .create-post__text-wrap > textarea {
     width: 100%;
+  padding: 6px 6px;
+
+
   }
 }
 </style>

@@ -237,9 +237,9 @@ export default {
   /* padding-bottom: 10px; */
   color: #706868;
 }
-.post-header img {
+/* .post-header img {
 
-}
+} */
 li.noclick {
   pointer-events: none;
   color: #c5c4c4;

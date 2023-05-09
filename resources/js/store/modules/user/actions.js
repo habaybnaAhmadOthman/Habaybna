@@ -149,8 +149,12 @@ export default {
                 canMakeComment: obj.can_make_comment,
                 avatar: obj.avatar,
                 id: obj.id,
+                // notifications:obj.notifications
+            })
+            commit('setUserNotificatins',{
                 notifications:obj.notifications
             })
+
             await dispatch('courses/getAllCourses',{}, {root:true})
         } else { // is admin
 
@@ -170,7 +174,16 @@ export default {
         return resp.data
     },
 
+    // set notifications
+    async setNotifications (context) {
+        await callApi("get", "/api/user-notifications").then((resp) => {
 
+            context.commit('setUserNotificatins',{
+                notifications:resp.data
+            })
+          });
+
+    },
     // ******** edit user profile ::: edit
     async updateProfileData({_,getters},payload) {
         const resp = await callApi("POST", `/api/edit-${getters.type}-profile-data`,payload);

@@ -51,6 +51,7 @@ export default {
           content: this.content,
           private_mood: false,
         };
+        this.content = ""
         this.callApi("post", "/api/posts", post).then((resp) => {
           if (resp.status == 200) {
             this.$emit("handelNewPost", resp.data);

@@ -31,9 +31,25 @@
         </figure>
         <p class="font-10 mobile-icon-color">حسابي</p>
       </div>
-      <router-link  v-if="isLoggedIn" to="/notifications" class="mo center mobile-link">
+      <router-link
+        v-if="isLoggedIn"
+        to="/notifications"
+        class="mo center mobile-link"
+      >
         <figure>
           <img src="/images/notification.svg" />
+          <span
+            v-if="notifications.count > 0"
+            style="
+              color: red;
+              position: absolute;
+              top: -8px;
+              right: 20px;
+              font-size: small;
+            "
+          >
+            {{ notRead.length }}
+          </span>
         </figure>
         <p class="font-10 mobile-icon-color">الاشعارات</p>
       </router-link>
@@ -43,7 +59,6 @@
         </figure>
         <p class="font-10 mobile-icon-color">المزيد</p>
       </div>
-
     </div>
     <LeftSide
       :isMobileMenuOpened="isMobileMenuOpened"
@@ -79,13 +94,25 @@ export default {
         avatar = "/images/profile-avatar-mo.svg";
       return avatar;
     },
+    notifications() {
+      console.log(
+        'fixed this.$store.getters["user/notifications"]',
+        this.$store.getters["user/notifications"]
+      );
+      return this.$store.getters["user/notifications"];
+    },
+    notRead() {
+      return this.notifications.notifications.filter(
+        (one) => one.read_at == null
+      );
+    },
   },
   methods: {
     toggleMobileMenu() {
       this.isMobileMenuOpened = !this.isMobileMenuOpened;
     },
     toggleNotificationMenu() {
-        console.log('two');
+      console.log("two");
       this.isNotificationsMenuOpened = !this.isNotificationsMenuOpened;
     },
     openProfileMenu() {

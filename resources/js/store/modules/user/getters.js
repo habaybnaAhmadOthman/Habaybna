@@ -31,6 +31,14 @@ export default {
     isLoggedIn(state) {
         return !!state.loggedIn;
     },
+    notifications(state) {
+
+       const  notification = {
+           notifications: state.notifications,
+           count: state.notifications.length,
+        }
+        return notification
+    }
 
 
     // isAuthenticated: state => !!state.user,

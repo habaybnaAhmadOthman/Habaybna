@@ -5,7 +5,7 @@
         <img src="/images/notification.svg" />
       </figure>
       <span
-        v-if="notRead > 0"
+        v-if="notifications.count > 0"
         style="
           color: red;
           fontsize: x-smal;
@@ -15,7 +15,9 @@
           right: 13px;
         "
       >
-        {{ notRead }}
+        {{
+            notRead.length
+        }}
       </span>
 
       <NotificationsModel
@@ -83,7 +85,6 @@ export default {
   components: { MobileMenu, NotificationsModel },
   data() {
     return {
-      notRead: 0,
     };
   },
 
@@ -115,29 +116,22 @@ export default {
       return user.firstName + " " + user.lastName;
     },
     notifications() {
-      return this.$store.getters["user/userData"].notifications;
+        console.log('this.$store.getters["user/notifications"]',this.$store.getters["user/notifications"]);
+      return this.$store.getters["user/notifications"];
     },
-    unredNotifications() {},
+    notRead() {
+        return this.notifications.notifications.filter(one=>one.read_at == null)
+    },
   },
   mounted() {
     if (this.$store.getters["user/isLoggedIn"]) {
-      this.$store.getters["user/userData"].notifications.forEach((element) => {
-        if (element.read_at == null) this.notRead++;
-      });
+
 
       Echo.channel("usernewpost").listen("NewPost", (post) => {
-        //   this.notRead++;
         this.$Message.info(" منشور جديد ");
-        // this.$store.se["user/userData"].notifications
         if (this.$store.getters["user/isLoggedIn"]) {
-          ////////////////
-          this.callApi("get", "/api/user-notifications").then((resp) => {
-            this.$store.commit("user/setUser", {
-              notifications: resp.data,
-            });
-            this.notRead++;
-          });
-          ////////////////
+        this.$store.dispatch('user/setNotification')
+
         }
         if (!("Notification" in window)) {
           alert("Web Notification is not supported");
@@ -160,8 +154,6 @@ export default {
         //   });
         // });
       });
-    } else {
-      this.notRead = 0;
     }
   },
 };

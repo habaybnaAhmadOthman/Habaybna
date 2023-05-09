@@ -64,6 +64,9 @@ export default {
     setCountryCode(state, countryCode) {
         state.countryCode = countryCode || state.countryCode;
     },
+    setUserNotificatins(state,payload ) {
+        state.notifications = payload.notifications;
+    },
     // userNotifications(state){
 
     // }
