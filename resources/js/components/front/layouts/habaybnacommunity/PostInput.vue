@@ -31,7 +31,6 @@ export default {
         }
       } else {
         this.$emit("handelPublishComment", event.target.value);
-        console.log(index);
       }
     },
     auto_grow(event) {

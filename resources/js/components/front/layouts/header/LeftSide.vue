@@ -1,5 +1,10 @@
 <template>
   <div class="d-flex align-center hide-do-profile">
+      <!-- <div v-if="show" class="notification-modal relative">
+          <div>
+              منشور جديد
+          </div>
+      </div> -->
     <div class="notifications" @click="toggleNotificationMenu">
       <figure>
         <img src="/images/notification.svg" />
@@ -85,6 +90,7 @@ export default {
   components: { MobileMenu, NotificationsModel },
   data() {
     return {
+        show:false
     };
   },
 
@@ -103,7 +109,6 @@ export default {
       this.$emit("toggleMobileMenu");
     },
     toggleNotificationMenu() {
-      console.log("one", this.notifications);
       this.$emit("toggleNotificationMenu");
     },
   },
@@ -116,7 +121,6 @@ export default {
       return user.firstName + " " + user.lastName;
     },
     notifications() {
-        console.log('this.$store.getters["user/notifications"]',this.$store.getters["user/notifications"]);
       return this.$store.getters["user/notifications"];
     },
     notRead() {
@@ -128,31 +132,35 @@ export default {
 
 
       Echo.channel("usernewpost").listen("NewPost", (post) => {
-        this.$Message.info(" منشور جديد ");
         if (this.$store.getters["user/isLoggedIn"]) {
-        this.$store.dispatch('user/setNotification')
+        this.$store.dispatch('user/setNotifications')
 
         }
         if (!("Notification" in window)) {
           alert("Web Notification is not supported");
           return;
         } else {
-          // const beamsClient = new PusherPushNotifications.Client({
-          //     instanceId: 'ec559eac-30e5-473c-8414-adabb00c204e',
-          // });
-          // console.log('beamsClient');
-          // console.log('beamsClient.start()', beamsClient.start());
-          // beamsClient.start()
-          //     .then(() => beamsClient.addDeviceInterest('hello'))
-          //     .then(() => console.log('Successfully registered and subscribed!'))
-          //     .catch(console.error);
+        this.show = true
+        setTimeout(() => {
+            this.show = false
+        }, 2000);
+
+          const beamsClient = new PusherPushNotifications.Client({
+              instanceId: 'ec559eac-30e5-473c-8414-adabb00c204e',
+          });
+          console.log('beamsClient');
+          console.log('beamsClient.start()', beamsClient.start());
+          beamsClient.start()
+              .then(() => beamsClient.addDeviceInterest('hello'))
+              .then(() => console.log('Successfully registered and subscribed!'))
+              .catch(console.error);
         }
-        // Notification.requestPermission((permission) => {
-        //   new Notification("منشور جديد", {
-        //     body: "لقد قام احد المستخدمين باضافة منشور !", // content for the alert
-        //     //   icon:this.getAvatar, // optional image url
-        //   });
-        // });
+        Notification.requestPermission((permission) => {
+          new Notification("منشور جديد", {
+            body: "لقد قام احد المستخدمين باضافة منشور !", // content for the alert
+            //   icon:this.getAvatar, // optional image url
+          });
+        });
       });
     }
   },
@@ -180,6 +188,17 @@ export default {
   min-width: 50px;
   height: 50px;
   position: relative;
+}
+.notification-modal > div {
+    position: absolute;
+    top: 8vw;
+    right: -40vw;
+    padding: 8px 20px;
+    background: #7818a8;
+    color: #fff;
+    border-radius: 6px;
+    width: 250px;
+    text-align: center;
 }
 .notifications:hover {
   cursor: pointer;
