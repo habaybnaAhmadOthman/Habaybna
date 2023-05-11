@@ -19,7 +19,9 @@ export default {
             token: state.token,
             avatar: state.avatar,
             canMakeCalls: state.canMakeCalls,
-            id:state.id
+            canMakeComment: state.canMakeComment,
+            id:state.id,
+            notifications:state.notifications
         }
         return obj
     },
@@ -29,7 +31,15 @@ export default {
     isLoggedIn(state) {
         return !!state.loggedIn;
     },
-    
+    notifications(state) {
+
+       const  notification = {
+           notifications: state.notifications,
+           count: state.notifications.length,
+        }
+        return notification
+    }
+
 
     // isAuthenticated: state => !!state.user,
     // user(state,getters,rootState,rootGetters)

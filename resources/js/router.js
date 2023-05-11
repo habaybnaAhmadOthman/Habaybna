@@ -57,10 +57,21 @@ import Show from "./components/admin/parent/Show.vue";
 import ClassRoom from "./components/parents/ClassRoom.vue";
 // import VideoInfoComponent from './components/VideoInfoComponent.vue'
 
+// community section
+import HabaybnaCommunityAdmin from "./components/admin/community/Index.vue";
+
+
+
+
+
 import HomePage from "./components/front/pages/HomePage.vue";
 import ErrorPage from "./components/front/pages/ErrorPage.vue";
 import onlineCoursesPage from "./components/front/pages/onlineCoursesPage.vue";
 import allCoursesPage from "./components/front/pages/allCoursesPage.vue";
+
+// notifications
+import AllNotifications from "./components/front/pages/AllNotifications.vue";
+
 // courses
 import CoursePage from "./components/front/pages/courses/CoursePage.vue";
 import SearchResults from "./components/front/pages/SearchResults.vue";
@@ -69,6 +80,7 @@ import Cirtificate from "./components/front/views/coursepage/Certificate.vue";
 import PaymentStatus from "./components/front/pages/courses/PaymentStatus.vue";
 import CallPaymentStatus from "./components/front/pages/courses/CallPaymentStatus.vue";
 import ExamPage from "./components/front/pages/courses/ExamPage.vue";
+import HabaybnaCommunity from "./components/front/layouts/HabaybnaCommunity.vue"
 
 // library
 import LibraryPage from "./components/front/pages/library/LibraryPage.vue";
@@ -129,6 +141,12 @@ const routes = [{
         path: "/admin/testimonials",
         component: Testimonials,
         name: "Testimonials"
+    },
+    // community routes
+    {
+        path: "/admin/habaybna-community",
+        component: HabaybnaCommunityAdmin,
+        name: "HabaybnaCommunityAdmin"
     },
     {
         path: "/admin/testimonials/create",
@@ -486,11 +504,7 @@ const routes = [{
                 component: UserProfile_SessionTimes,
                 name: 'mySessionsTimes'
             },
-            {
-                path: "my-call-log",
-                component: UserProfile_CallLogs,
-                name: 'myCallLog'
-            },
+
             {
                 path: "my-zoom-account",
                 component: UserProfile_ZoomAccount,
@@ -501,6 +515,14 @@ const routes = [{
     },
     // *****************
     // courses
+    {
+        path: "/notifications",
+        component: AllNotifications,
+        name: 'AllNotifications',
+        meta: {
+            requiresAuth: true
+        },
+    },
     {
         path: "/courses/:course",
         component: CoursePage,
@@ -583,6 +605,13 @@ const routes = [{
         path: "/library",
         component: LibraryPage,
         name: 'library'
+    },
+        // *****************
+    // content pages
+    {
+        path: "/habaybna-community",
+        component: HabaybnaCommunity,
+        name: 'habaybna-community'
     },
     {
         path: "/library/:article",

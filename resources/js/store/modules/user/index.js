@@ -17,7 +17,9 @@ export default {
             lastName: null,
             openAvatarModal: false,
             canMakeCall: false,
-            id: null
+            canMakeComment: false,
+            id: null,
+            notifications:[]
         }
     },
     mutations,

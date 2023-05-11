@@ -1,5 +1,6 @@
 export default {
     setUser(state, payload) {
+        console.log('payload',payload);
         if (payload.firstName)
             state.firstName = payload.firstName;
         if (payload.lastName)
@@ -10,10 +11,14 @@ export default {
             state.avatar = payload.avatar;
         if (payload.token)
             state.token = payload.token;
+        if (payload.notifications)
+            state.notifications = payload.notifications;
         if (payload.id)
             state.id = payload.id;
-        if (payload.canMakeCalls || !payload.canMakeCalls )
+        if (payload.canMakeCalls || !payload.canMakeCalls)
             state.canMakeCalls = payload.canMakeCalls;
+        if (payload.canMakeComment || !payload.canMakeComment)
+            state.canMakeComment = payload.canMakeComment;
         if (!state.avatar || state.avatar == 'default.jpg')
             state.avatar = '/images/avatars/default.jpg';
         state.loggedIn = true;
@@ -22,12 +27,15 @@ export default {
     clearUser(state) {
         state.firstName = null;
         state.canMakeCalls = null;
+        state.canMakeComment = null
         state.lastName = null;
         state.type = null;
         state.avatar = null;
         state.token = null;
         state.loggedIn = false;
         state.is_verify = false;
+        state.id = null;
+        state.notifications = [];
     },
     clearAdmin(state) {
         state.firstName = null;
@@ -37,24 +45,32 @@ export default {
         state.token = null;
         state.loggedIn = false;
         state.is_verify = false;
+        state.id = null;
+
 
     },
-    type(state,userType) {
+    type(state, userType) {
         state.type = userType;
     },
-    openAvatarModal(state,isOpen) {
+    openAvatarModal(state, isOpen) {
         state.openAvatarModal = isOpen;
     },
     login(state) {
         state.loggedIn = true;
         state.is_verify = true;
     },
-    userAvatar(state,src){
+    userAvatar(state, src) {
         state.avatar = src
     },
     setCountryCode(state, countryCode) {
         state.countryCode = countryCode || state.countryCode;
-    }
+    },
+    setUserNotificatins(state,payload ) {
+        state.notifications = payload.notifications;
+    },
+    // userNotifications(state){
+
+    // }
     // login(state,payload){
     //     state.is_verify = payload.is_verify;
     // },

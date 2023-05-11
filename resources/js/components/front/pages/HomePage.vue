@@ -1,11 +1,10 @@
 <template>
   <div class="homepage">
     <TheHeader></TheHeader>
+    <CommunityBar></CommunityBar>
     <LandingSection></LandingSection>
-      <IconsSection></IconsSection>
-    <div
-      class="video-box-home-container"
-    >
+    <IconsSection></IconsSection>
+    <div class="video-box-home-container">
       <iframe
         class="video-box-home"
         src="https://www.youtube.com/embed/4VsdSsLT_BI"
@@ -52,6 +51,7 @@
 <script>
 import TheHeader from "../layouts/header/TheHeader.vue";
 import TheFooter from "../layouts/TheFooter.vue";
+import CommunityBar from "../layouts/habaybnacommunity/CommunityBar.vue";
 import LandingSection from "../views/homepage/LandingSection.vue";
 import IconsSection from "../views/homepage/iconsSection.vue";
 import CoursesSection from "../views/onlinecourses/CoursesSection.vue";
@@ -63,6 +63,7 @@ import Testimonials from "../views/custom/Testimonials.vue";
 export default {
   components: {
     LandingSection,
+    CommunityBar,
     IconsSection,
     Articles,
     CoursesSection,
@@ -89,10 +90,9 @@ export default {
 .statistic {
   display: flex;
   justify-content: center;
-      margin: 77px 0;
-
+  margin: 77px 0;
 }
-.statistic img{
+.statistic img {
   width: 75%;
 }
 .mobile-statistic {
@@ -105,19 +105,18 @@ export default {
   }
 
   .mobile-statistic {
-      margin: 50px 0;
+    margin: 50px 0;
     display: flex;
     justify-content: center;
   }
-  .mobile-statistic img{
-  width: 90%;
-}
+  .mobile-statistic img {
+    width: 90%;
+  }
   .statistic {
     display: none;
   }
   .video-box-home-container {
-
-  margin-top: 20px;
-}
+    margin-top: 20px;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <?php
 // use Spatie\Newsletter\Newsletter;
-use Newsletter;
+// use Newsletter;
 use MailerLiteApi\MailerLite;
 
 if (! function_exists('mailChimpSubscribe')) {

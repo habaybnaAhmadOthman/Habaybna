@@ -150,12 +150,18 @@ footer {
             </MenuItem>
             <MenuItem name="11">
               <Icon type="ios-call" size="16" />
-              <router-link to="/admin/partners">الشركاء  </router-link>
+              <router-link to="/admin/partners">الشركاء </router-link>
             </MenuItem>
             <MenuItem name="10">
               <Icon type="ios-at-outline" size="24" />
               <router-link to="/admin/testimonials">
                 اراء المستخدمين
+              </router-link>
+            </MenuItem>
+            <MenuItem name="11">
+              <Icon type="ios-at-outline" size="24" />
+              <router-link to="/admin/habaybna-community">
+                 مجتمع حبايبنا
               </router-link>
             </MenuItem>
             <!-- <MenuItem name="10">

@@ -61,7 +61,6 @@
             },
             async getData(){
                 const data = (await this.$store.dispatch('content/getTestimonials',{type:this.type}));
-                console.log('data',data);
                 this.slides = data
             }
         },

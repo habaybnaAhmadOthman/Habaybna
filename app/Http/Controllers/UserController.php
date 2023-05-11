@@ -17,6 +17,18 @@ use App\UserInterest;
 
 class UserController extends Controller
 {
+
+    public function notifications()
+    {
+        return Auth::user()->notifications ;
+    }
+
+    public function readNotifications()
+    {
+        // dd(request()->all());
+        Auth::user()->notifications->find(request()->id)->update(['read_at'=>now()],['id'=>request()->id]);
+        return response(Auth::user()->notifications, 200) ;
+    }
     public function getUserData()
     {
         try{

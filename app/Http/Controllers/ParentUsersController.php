@@ -7,6 +7,7 @@ use App\User;
 use App\Interest;
 use App\UserInterest;
 use Illuminate\Http\Request;
+use App\Events\TestEvent;
 use Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
@@ -426,6 +427,8 @@ class ParentUsersController extends Controller
     public function getParentsData()
     {
         try{
+            //  event(new TestEvent('hello world'));
+
 
             $parents = User::with('parent')
                                 ->whereHas('parent',function(Builder $q) {
