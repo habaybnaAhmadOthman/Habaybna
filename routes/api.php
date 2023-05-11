@@ -48,6 +48,11 @@ Route::middleware('auth:sanctum')->group(function () {
     //admin routes
 
     Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function(){
+        // habaybna community
+        Route::get("/community","CommunityController@adminIndex");
+        Route::post("/comment/comment-status","CommunityController@changeCommentStatus");
+        Route::post("/specialist-can-make-comment","CommunityController@specialistPermesion");
+
 
         // birthday naddem siraj
         Route::get("/get-gifts","HomeController@getGifts");
@@ -188,6 +193,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/course/video-actions','UserController@setVideoActions');
 
     // general routes
+
+    Route::post('user-notifications/read','UserController@readNotifications');
+    Route::get('user-notifications','UserController@notifications');
+
     Route::get('get-profile-data','UserController@getUserData');
     // Route::post('logoutt','AuthController@logout')->name('user.logoutt');
     Route::post('/store-user-interests','UserInterestsController@store')->name('store.interests');
@@ -213,6 +222,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // get liked articles
     Route::get('/user/likes-articles','ContentController@getUserLikedArticles');
 
+    // community routes
+    Route::post('posts', 'CommunityController@storePost');
+
+    Route::post('posts/{post:slug}/comment', 'CommunityController@storeComment');
+    Route::delete('posts/{post:id}/comment', 'CommunityController@deleteComment');
+    Route::delete('posts/{post:slug}', 'CommunityController@deletePost');
 
 
 
@@ -221,6 +236,8 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // non auth routes
+Route::get('posts', 'CommunityController@index');
+
 Route::post('register','AuthController@signup')->name('user.register');
 Route::post('login','AuthController@login')->name('user.login');
 Route::get('all-courses','CourseController@getAllcourses')->name('getAllcourses');

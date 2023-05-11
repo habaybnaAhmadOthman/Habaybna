@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\IsVerified;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsParent;
+use App\Events\MyEvent;
 
 
 /*
@@ -93,5 +94,16 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
     Route::post('category/update/{id}','CoursesCategoriesController@update')->name('category.update');
     Route::view('{any}','admin.adminDashboard')->where('any','.*');
     });
+    // Route::get('/pusher', function() {
+    //     event(new MyEvent('Hi there Pusher!'));
+    //     return "Event has been sent!";
+    // });
 
     Route::view('{any}','welcome')->where('any','.*');
+    // Route::get('/serviceworker', function () {
+    //     dd('xxx');
+    //     return response(file_get_contents('./service-worker.js'), 200, [
+    //     'Content-Type' => 'text/javascript',
+    //     'Cache-Control' => 'public, max-age=3600',
+    //     ]);
+    // });

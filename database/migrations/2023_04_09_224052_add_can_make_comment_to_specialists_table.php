@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCountryToUsersTable extends Migration
+class AddCanMakeCommentToSpecialistsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddCountryToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('country')->nullable()->after('phone');
+        Schema::table('specialists', function (Blueprint $table) {
+            $table->boolean('can_make_comments')->default(false)->after('make_calls');
         });
     }
 
@@ -25,7 +25,7 @@ class AddCountryToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('specialists', function (Blueprint $table) {
             //
         });
     }

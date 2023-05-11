@@ -5,8 +5,11 @@ use DB;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Specialist extends Model
 {
+    
+
     protected $primaryKey = "user_id";
     public function user()
     {

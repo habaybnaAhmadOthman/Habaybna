@@ -14,6 +14,7 @@ import AdminDashboard from './components/admin/AdminDashboard.vue'
 import ParentDashboard from './components/parents/ParentDashboard.vue'
 import ClassRoom from './components/parents/ClassRoom.vue'
 import Player from './components/Player.vue'
+// import Push from '../../node_modules/push.js/';
 
 
 
@@ -34,6 +35,25 @@ import MainApp from './MainApp.vue'
 // import  portal plugins
 import VueSocialSharing from 'vue-social-sharing'
 import VueMeta from 'vue-meta'
+
+
+
+// var channel = window.Echo.channel('test');
+if ('serviceWorker' in navigator) {
+    // console.log('xxxxxxxxxxxzzzz',navigator.serviceWorker);
+   window.addEventListener('load', function() {
+
+       navigator.serviceWorker.register('./service-worker.js').then(function(registration) {
+       // Registration was successful
+       console.log('ServiceWorker registration successful with scope: ', registration);
+   }, function(err) {
+       // registration failed :(
+           console.log('ServiceWorker registration failed: ', err);
+       });
+   });
+}
+
+
 // use portal plugins
 Vue.use(VueMeta)
 Vue.use(VueSocialSharing);
@@ -41,7 +61,9 @@ Vue.use(VueSocialSharing);
 
 
 Vue.use(VueCarousel);
-Vue.use(ViewUI,{ locale });
+Vue.use(ViewUI, {
+    locale
+});
 Vue.mixin(common)
 
 
@@ -64,8 +86,8 @@ Vue.component('upload-video', require('./components/UploadVideos.vue').default);
 Vue.component('admin-dashboard', require('./components/admin/AdminDashboard.vue').default);
 Vue.component('parent-dashboard', require('./components/parents/ParentDashboard.vue').default);
 Vue.component('class-room', require('./components/parents/ClassRoom.vue').default);
-Vue.component('player',Player);
-Vue.component('main-app',MainApp)
+Vue.component('player', Player);
+Vue.component('main-app', MainApp)
 
 
 /**
@@ -74,12 +96,14 @@ Vue.component('main-app',MainApp)
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 const app = new Vue({
     el: '#app',
     // check if user logged in
     async beforeCreate() {
         await this.$store.getters['user/isLoggedin'];
     },
+
     store,
     router
 });

@@ -1,6 +1,8 @@
 <template>
     <div class="library-page">
         <TheHeader></TheHeader>
+    <CommunityBar></CommunityBar>
+
         <div class="container">
             <ArticleBanner :is_liked="is_liked" :id="ID" @open-share-modal="showShareDialog" :image="mainImage" :created_at="created_at"></ArticleBanner>
             <ArticleContent v-if="isDataReady" :tags="tags" :title="title" :description="description" :author="author"></ArticleContent>
@@ -26,6 +28,8 @@
 
 <script>
     import TheHeader from '../../layouts/header/TheHeader.vue'
+import CommunityBar from "../../layouts/habaybnacommunity/CommunityBar.vue";
+
     import ArticleBanner from '../../views/library/ArticleBanner.vue'
     import ArticleContent from '../../views/library/ArticleContent.vue'
     import RelatedContent from '../../views/library/RelatedContent.vue'
@@ -34,7 +38,7 @@
     import ShareArticleModal from '../../views/coursepage/ShareCourseModal.vue'
     export default {
         props: ['article'],
-        components: { TheHeader,ArticleBanner,ArticleContent,AboutSpecialists,RelatedContent,TheFooter,ShareArticleModal},
+        components: { TheHeader,ArticleBanner,ArticleContent,AboutSpecialists,RelatedContent,TheFooter,ShareArticleModal, CommunityBar},
         data(){
             return {
                 author: {},

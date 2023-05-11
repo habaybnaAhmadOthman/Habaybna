@@ -4,8 +4,14 @@ namespace App\Providers;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use App\Events\TestEvent;
+use App\Listeners\SendNewPostNotification;
+use App\Listeners\SendNewCommentNotification;
+use App\Events\NewPost;
+use App\Events\NewComment;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -21,6 +27,17 @@ class EventServiceProvider extends ServiceProvider
         VerifyUser::class => [
             SendOtpCode::class,
         ],
+        NewPost::class=>[
+            SendNewPostNotification::class
+        ],
+        NewComment::class=>[
+            SendNewCommentNotification::class
+        ],
+        // PushNotification::class => [
+        //     SendNotification::class,
+        // ],
+
+
     ];
 
     /**
@@ -30,6 +47,9 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Event::listen(function (TestEvent $event) {
+            return $event;
+        });
         parent::boot();
 
         //

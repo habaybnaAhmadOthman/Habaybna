@@ -12,6 +12,7 @@ use App\Specialist;
 
 
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable  ;

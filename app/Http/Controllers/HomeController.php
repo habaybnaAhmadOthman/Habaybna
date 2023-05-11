@@ -44,6 +44,7 @@ class HomeController extends Controller
     public function getUserCountry(Request $request)
     {
         // request()->ip() ::: 37.220.117.144
+
         try {
             $position = Location::get(request()->ip());
             return response()->json([
@@ -175,7 +176,7 @@ class HomeController extends Controller
                 $parameters["Language"] = "en";
                 $parameters["MerchantID"] = config('appconfig.stsmerchantid');
                 $parameters["MessageID"] = "1";
-                $parameters['PaymentDescription']='sirajnadeemgift';
+                $parameters['PaymentDescription']='Aziz-birthday';
                 $parameters["Quantity"] = "1";
                 $parameters['ResponseBackURL'] = $back_url;
                 $parameters["ThemeID"] = "1000000001";
