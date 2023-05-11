@@ -1,7 +1,9 @@
 <template>
     <div class="course-page">
         <TheHeader></TheHeader>
-        
+    <CommunityBar></CommunityBar>
+
+
         <Banner
         @open-share-modal="showShareDialog"
         :videoSrc="trailerSrc" :videosCount="videosCount" :courseLength="courseLength" :banner-title="courseName"
@@ -69,6 +71,8 @@
 
 <script>
 import Banner from "../../views/coursepage/Banner.vue";
+import CommunityBar from "../../layouts/habaybnacommunity/CommunityBar.vue";
+
 import CourseInfo from "../../views/coursepage/CourseInfo.vue";
 import AboutSpecialists from "../../views/coursepage/AboutSpecialists.vue";
 import ContentTable from "../../views/coursepage/ContentTable.vue";
@@ -87,7 +91,7 @@ export default {
     mixins: [infoModalMixin],
     components: {
         CourseInfo,ContentTable,Banner,AboutSpecialists,RelatedContent,RelatedCourses,CombaniesBanner,CoursesFeatures,TheFooter,TheHeader,
-        ShareCourseModal,TabsToggle,
+        ShareCourseModal,TabsToggle,CommunityBar,
         vueVimeoPlayer
     },
     data() {

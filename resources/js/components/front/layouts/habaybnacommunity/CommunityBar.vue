@@ -5,7 +5,7 @@
     <router-link to="/habaybna-community" class="flex-all w-100">
       <p class="white p-5">تفاعل مع المختصين في مجتمع حبايبنا</p>
       <div class="">
-        <img src="images/siteImgs/question-mark.png" alt="" />
+        <img src="/images/siteImgs/question-mark.png" alt="" />
       </div>
     </router-link>
   </div>

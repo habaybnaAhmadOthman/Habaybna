@@ -44,7 +44,6 @@ export default {
     // whenever question changes, this function will run
 
     emptyCommentInput(newStatus, oldStatus) {
-        console.log(newQuestion, oldQuestion);
       if (this.emptyCommentInput){
           this.content = ""
       }

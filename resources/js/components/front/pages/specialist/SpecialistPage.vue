@@ -1,6 +1,7 @@
 <template>
   <div class="library-page">
     <TheHeader></TheHeader>
+    <CommunityBar></CommunityBar>
     <div class="container">
       <div class="pt-50 pt-20-p">
         <h2
@@ -210,6 +211,8 @@ import infoModalMixin from "../../mixins/infoModal";
 import SmallCard from "../../layouts/SmallCard.vue";
 import CourseCard from "../../views/onlinecourses/Course_Card.vue";
 import ShareModal from "../../views/coursepage/ShareCourseModal.vue";
+import CommunityBar from "../../layouts/habaybnacommunity/CommunityBar.vue";
+
 
 export default {
   props: ["specialist"],
@@ -223,6 +226,7 @@ export default {
     Book,
     QuestionaireModal,
     TheFooter,
+    CommunityBar,
   },
   data() {
     return {

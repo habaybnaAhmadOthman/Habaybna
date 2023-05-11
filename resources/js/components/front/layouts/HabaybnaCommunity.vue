@@ -111,7 +111,7 @@ export default {
     handelDeletedPost(index) {
       this.isLoading = true;
       this.loading(800);
-      this.allPosts.splice(index, 1);
+      this.allPostsa.splice(index, 1);
     },
   },
   computed: {

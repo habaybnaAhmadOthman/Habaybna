@@ -24,7 +24,7 @@
           @click="showDeleteCommentDialog(comment, index)"
           class="delete-comment"
           v-if="canDelete"
-          >Delete</span
+          >حذف</span
         >
       </div>
       <div class="mt-5">
