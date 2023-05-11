@@ -19,7 +19,7 @@ export default {
             canMakeCall: false,
             canMakeComment: false,
             id: null,
-            notifications:null
+            notifications:[]
         }
     },
     mutations,
