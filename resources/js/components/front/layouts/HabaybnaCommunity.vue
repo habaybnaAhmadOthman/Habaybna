@@ -9,6 +9,17 @@
         <CommunityLSide />
         <div class="col-md-6">
           <div class="community-md-side">
+            <div v-if="!hideRoles" class="roles">
+              <p>
+                أهلاً بك في مجتمع حبايبنا للحصول على الإجابة من الخبراء
+                والمختصين بكل مايتعلق بتطور الطفل وأي تحديات قد يواجهها. نود
+                التذكير أن الإجابات في هذا المجتمع لاتحل محل استشارة الطبيب أو
+                الخدمات المقدمة من المراكز المختصة، هدفنا هو نشر المعرفة فقط.
+              </p>
+              <div class="left pointer">
+                <p class="role-button" @click="hideRoles = true">موافق</p>
+              </div>
+            </div>
             <CummunityFormInput @handelNewPost="handelNewPost" />
 
             <CommunityPost
@@ -59,16 +70,16 @@ export default {
     return {
       allPosts: [],
       isLoading: false,
+      hideRoles: false,
     };
   },
   methods: {
     getAllPosts() {
-        this.isLoading = true;
-        this.loading();
-        this.$store.dispatch('community/setPosts')
+      this.isLoading = true;
+      this.loading();
+      this.$store.dispatch("community/setPosts");
 
-
-        // this.$emit("handelNewPost", resp.data);
+      // this.$emit("handelNewPost", resp.data);
       if (!this.isLoggedIn) {
         setTimeout(() => {
           alert(
@@ -108,15 +119,15 @@ export default {
       return this.$store.getters["user/isLoggedIn"];
     },
     allPostsa() {
-        return this.$store.getters["community/allPosts"].data
-    }
+      return this.$store.getters["community/allPosts"].data;
+    },
   },
 };
 </script>
 <style scoped>
 .habaybna-community {
   margin-top: 42px;
-  padding: 0 100px;
+  /* padding: 0 100px; */
 }
 .community-l-side,
 .community-md-side,
@@ -127,7 +138,7 @@ export default {
 .top-l-side {
   background-color: #fff;
   border: 1px solid #80808066;
-  border-radius: 17px;
+  border-radius: 3px;
   padding: 27px 10px;
   margin-bottom: 15px;
 }
@@ -150,12 +161,12 @@ img {
 
 /* Create post */
 .create-post {
-  width: 95%;
+  width: 99%;
   max-width: 660px;
   margin: 0 auto;
   display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
+  /* gap: 20px; */
+  margin-bottom: 7px;
 }
 
 .create-post__form {
@@ -163,7 +174,7 @@ img {
   padding: 20px;
   width: 100%;
   position: relative;
-  border-radius: 17;
+  border-radius: 1px;
   border: 1px solid #80808066;
 }
 
@@ -202,12 +213,12 @@ https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
   overflow: hidden;
   border: 0.5px solid #ebe4e4;
   padding: 2px 6px;
-  border-radius: 17px;
+  border-radius: 12px;
 }
 
-.create-post__text-wrap>textarea::placeholder {
-    color: #999999;
-    margin-top: 10px;
+.create-post__text-wrap > textarea::placeholder {
+  color: #999999;
+  margin-top: 10px;
 }
 
 .create-post__text-wrap > textarea,
@@ -411,7 +422,25 @@ https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
 .create-post__submit:disabled {
   background-color: rgb(186, 235, 255);
 }
-@media (max-width: 767px) {
+.roles {
+  display: block;
+  z-index: 999999999;
+  background-color: #ed8e00;
+  color: #fff;
+  padding: 20px 16px;
+  position: fixed;
+  top: 32vh;
+  right: 39vw;
+  width: 373px;
+  border-radius: 3px;
+}
+  .roles .role-button {
+    padding: 6px 0;
+    border: 0.5px solid #fff;
+    text-align: center;
+    margin: 20px;
+  }
+@media only screen and (max-width: 767px) {
   .habaybna-community {
     margin: 0;
     padding: 0;
@@ -425,6 +454,19 @@ https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
     flex: 0 0 100%;
     max-width: 100%;
   }
+  .roles {
+    display: block;
+    z-index: 999999999;
+    background-color: #ed8e00;
+    color: #fff;
+    padding: 2px 10px;
+    position: fixed;
+    top: 32vh;
+    right: 10vw;
+    width: 80%;
+  }
+
 }
-</style>>
+
+</style>
 

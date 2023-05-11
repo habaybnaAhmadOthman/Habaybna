@@ -10,6 +10,8 @@ use Illuminate\Validat;
 use Illuminate\Support\Facades\Validator;
 use App\Specialist;
 use App\Events\NewPost;
+use App\Events\NewComment;
+
 
 class CommunityController extends Controller
 {
@@ -49,7 +51,11 @@ class CommunityController extends Controller
         $post->comments()->create($input);
 
         $post = Post::find($post->id);
-        // dd($post);
+        broadcast(new NewComment($post->user))->toOthers();
+
+
+        // event(new NewComment());
+
         return response($post, 200);
 
        } catch (\Throwable $th) {

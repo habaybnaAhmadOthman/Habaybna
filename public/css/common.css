@@ -1571,7 +1571,7 @@ img {
 /* start habaybna communtity */
 .habaybna-community {
     margin-top: 42px;
-    padding: 0 100px;
+    /* padding: 0 100px; */
 }
 
 .community-l-side,
@@ -1583,7 +1583,7 @@ img {
 .top-l-side {
     background-color: #fff;
     border: 1px solid #80808066;
-    border-radius: 17px;
+    border-radius: 3px;
     padding: 27px 10px;
     margin-bottom: 15px;
 }
@@ -1632,7 +1632,7 @@ img {
     padding: 20px;
     width: 100%;
     position: relative;
-    border-radius: 17px;
+    /* border-radius: 17px; */
     border: 1px solid #80808066;
     /* border-radius: 5px; */
 }
@@ -1896,4 +1896,5 @@ input::placeholder{
         flex: 0 0 100%;
         max-width: 100%;
     }
+
 }

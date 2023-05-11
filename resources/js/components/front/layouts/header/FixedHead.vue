@@ -39,7 +39,7 @@
         <figure>
           <img src="/images/notification.svg" />
           <span
-            v-if="notifications.count > 0"
+            v-if="notRead.length > 0"
             style="
               color: red;
               position: absolute;

@@ -7,7 +7,7 @@
       action=""
     >
       <div class="post-header d-flex">
-        <div class="d-flex ">
+        <div class="d-flex">
           <img
             class="create-post__avatar"
             :src="post.user.user_data.avatar"
@@ -50,6 +50,7 @@
               @handelPublishComment="handelPublishComment"
               :placeholder="'اكتب تعليق'"
               type="comment"
+              :emptyCommentInput="emptyCommentInput"
             />
           </div>
           <div v-if="canPublish" class="mt-10">
@@ -106,6 +107,7 @@ export default {
       canPublish: false,
       showMenu: false,
       show: true,
+      emptyCommentInput:false,
     };
   },
 
@@ -127,7 +129,11 @@ export default {
         "/api/posts/" + post.slug + "/comment",
         comment
       ).then((resp) => {
-        this.post.comments = resp.data.comments;
+        if (resp.status == 200) {
+          this.post.comments = resp.data.comments;
+          this.canPublish = false;
+          this.emptyCommentInput = true
+        }
       });
     },
 
@@ -199,14 +205,15 @@ export default {
   width: 50%;
   margin: 20px auto;
   cursor: pointer;
-  border-radius: 16px;
-  border: 1px solid #e2dede;
-  padding: 3px 0;
+  padding: 1px 0;
   transition: all 0.2s ease;
+  color: #89919121;
 }
 .show-more:hover {
-  color: #cbb3cc;
-  border: 1px solid #880093;
+  color: #515a6e;
+  border: 1px solid #515a6e;
+  border-radius: 2px;
+
 }
 .option {
   position: relative;
@@ -253,12 +260,12 @@ li.noclick {
 #create-post-submit-btn:hover {
   cursor: pointer;
 }
-.post-content{
-text-align: -webkit-center;
-    background: #f4f4f4;
-    padding: 30px 16px;
-    border-radius: 17px;
-    font-size: x-large;
+.post-content {
+  text-align: -webkit-center;
+  /* background: #f4f4f4; */
+  padding: 30px 16px;
+  border-radius: 17px;
+  font-size: x-large;
 }
 </style>
 

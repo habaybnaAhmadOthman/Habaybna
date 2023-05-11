@@ -1,16 +1,23 @@
 
 <template>
-  <div class="comments-wrap d-flex mt-10">
-    <img :src="comment.user.user_data.avatar" alt="" class="rounded" />
-    <div class="bg-gray p-10">
+  <div class="comments-wrap d-flex m-10">
+    <div class="border-bottom p-0">
       <div class="d-flex space-between">
-        <h5>
-          {{
-            comment.user.user_data.firstName +
-            " " +
-            comment.user.user_data.lastName
-          }}
-        </h5>
+        <div class="d-flex">
+          <img :src="comment.user.user_data.avatar" alt="" class="" />
+
+          <div class="speciality">
+            <h4>
+              {{
+                comment.user.user_data.firstName +
+                " " +
+                comment.user.user_data.lastName
+              }}
+            </h4>
+            <h5>{{ comment.user.user_data.specialization }}</h5>
+
+          </div>
+        </div>
         <span
           data-toggle="modal"
           data-target="#exampleModal"
@@ -20,11 +27,15 @@
           >Delete</span
         >
       </div>
-      <div class="d-flex space-between" >
-        <p>
+      <div class="mt-5">
+        <p class="p-10" style="background-color: #ededed69">
           {{ comment.content }}
         </p>
-        <span style="color:gray;font-size: x-small"> {{ comment.created_at }}</span>
+        <div class="left">
+          <span style="color: gray; font-size: x-small">
+            {{ comment.created_at }}</span
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -72,34 +83,39 @@ export default {
 </script>
 
 <style scoped>
+.comments-wrap {
+    margin:15px
+}
 .comments-wrap > div {
-  width: 85%;
-  min-width: 85%;
-  border-radius: 16px;
+  width: 99%;
+  min-width: 70%;
+  border-radius: 3px;
+  /* border: 0.5px solid #ebe4e4; */
+
 }
 .comments-wrap img {
-  width: 50px;
-  height: 50px;
-  margin-left: 10px;
+  width: 64px;
+  height: 64px;
+  margin-left: 4px;
 }
 .comments-wrap p {
-  border-radius: 16px;
+  /* border-radius: 16px; */
 }
 .delete-comment {
   color: #a6a0a0;
   font-weight: bold;
   cursor: pointer;
   font-size: x-small;
-
 }
 .delete-comment:hover {
   color: #000;
 }
+
 @media (max-width: 767px) {
-.comments-wrap img {
-  width: 35px;
-  height: 35px;
-  margin-left: 7px;
-}
+  .comments-wrap img {
+    width: 40px;
+    height: 40px;
+    margin-left: 7px;
+  }
 }
 </style>

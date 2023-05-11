@@ -9,7 +9,9 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use App\Events\TestEvent;
 use App\Listeners\SendNewPostNotification;
+use App\Listeners\SendNewCommentNotification;
 use App\Events\NewPost;
+use App\Events\NewComment;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         NewPost::class=>[
             SendNewPostNotification::class
+        ],
+        NewComment::class=>[
+            SendNewCommentNotification::class
         ],
         // PushNotification::class => [
         //     SendNotification::class,

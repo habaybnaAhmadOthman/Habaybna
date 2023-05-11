@@ -15,8 +15,10 @@
 
 <script>
 export default {
-  props: ["placeholder", "type", "status"],
-  mounted() {},
+  props: ["placeholder", "type", "status","emptyCommentInput"],
+  created() {
+
+  },
   data() {
     return {
       content: "",
@@ -31,11 +33,22 @@ export default {
         }
       } else {
         this.$emit("handelPublishComment", event.target.value);
+
       }
     },
     auto_grow(event) {
       event.target.style.height = event.target.scrollHeight + "px";
     },
+  },
+    watch: {
+    // whenever question changes, this function will run
+
+    emptyCommentInput(newStatus, oldStatus) {
+        console.log(newQuestion, oldQuestion);
+      if (this.emptyCommentInput){
+          this.content = ""
+      }
+    }
   },
 
   computed: {},
@@ -44,16 +57,16 @@ export default {
 
 <style scoped>
 .create-post__text-wrap > textarea {
-  height: 45px;
-  /* max-height: 200px; */
-  font-size: 16px;
-  color: #757a91;
-  resize: none;
-  overflow: hidden;
-  border: 0.5px solid #ebe4e4;
-  padding: 5px 6px;
-  border-radius: 17px;
-  width: 80%;
+height: 45px;
+    /* max-height: 200px; */
+    font-size: 16px;
+    color: #757a91;
+    resize: none;
+    overflow: hidden;
+    border: 0.5px solid #ebe4e454;
+    padding: 5px 6px;
+    border-radius: 3px;
+    width: 80%;
 }
 .create-post__text-wrap > textarea::placeholder {
   margin-top: 20px;

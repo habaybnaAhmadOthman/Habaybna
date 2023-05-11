@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-center hide-do-profile">
-      <!-- <div v-if="show" class="notification-modal relative">
+    <!-- <div v-if="show" class="notification-modal relative">
           <div>
               منشور جديد
           </div>
@@ -10,7 +10,7 @@
         <img src="/images/notification.svg" />
       </figure>
       <span
-        v-if="notifications.count > 0"
+        v-if="notRead.length > 0"
         style="
           color: red;
           fontsize: x-smal;
@@ -20,9 +20,7 @@
           right: 13px;
         "
       >
-        {{
-            notRead.length
-        }}
+        {{ notRead.length }}
       </span>
 
       <NotificationsModel
@@ -90,7 +88,7 @@ export default {
   components: { MobileMenu, NotificationsModel },
   data() {
     return {
-        show:false
+      show: false,
     };
   },
 
@@ -124,40 +122,73 @@ export default {
       return this.$store.getters["user/notifications"];
     },
     notRead() {
-        return this.notifications.notifications.filter(one=>one.read_at == null)
+      return this.notifications.notifications.filter(
+        (one) => one.read_at == null
+      );
     },
   },
   mounted() {
     if (this.$store.getters["user/isLoggedIn"]) {
-
-
       Echo.channel("usernewpost").listen("NewPost", (post) => {
         if (this.$store.getters["user/isLoggedIn"]) {
-        this.$store.dispatch('user/setNotifications')
-
+          this.$store.dispatch("user/setNotifications");
         }
         if (!("Notification" in window)) {
           alert("Web Notification is not supported");
           return;
         } else {
-        this.show = true
-        setTimeout(() => {
-            this.show = false
-        }, 2000);
+          this.show = true;
+          setTimeout(() => {
+            this.show = false;
+          }, 2000);
 
           const beamsClient = new PusherPushNotifications.Client({
-              instanceId: 'ec559eac-30e5-473c-8414-adabb00c204e',
+            instanceId: "ec559eac-30e5-473c-8414-adabb00c204e",
           });
-          console.log('beamsClient');
-          console.log('beamsClient.start()', beamsClient.start());
-          beamsClient.start()
-              .then(() => beamsClient.addDeviceInterest('hello'))
-              .then(() => console.log('Successfully registered and subscribed!'))
-              .catch(console.error);
+          console.log("beamsClient");
+          console.log("beamsClient.start()", beamsClient.start());
+          beamsClient
+            .start()
+            .then(() => beamsClient.addDeviceInterest("hello"))
+            .then(() => console.log("Successfully registered and subscribed!"))
+            .catch(console.error);
         }
         Notification.requestPermission((permission) => {
           new Notification("منشور جديد", {
             body: "لقد قام احد المستخدمين باضافة منشور !", // content for the alert
+            //   icon:this.getAvatar, // optional image url
+          });
+        });
+      });
+
+      /////// comment notifications
+      Echo.private("usernewcomment").listen("NewComment", (post) => {
+        if (this.$store.getters["user/isLoggedIn"]) {
+          this.$store.dispatch("user/setNotifications");
+        }
+        if (!("Notification" in window)) {
+          alert("Web Notification is not supported");
+          return;
+        } else {
+          this.show = true;
+          setTimeout(() => {
+            this.show = false;
+          }, 2000);
+
+          const beamsClient = new PusherPushNotifications.Client({
+            instanceId: "ec559eac-30e5-473c-8414-adabb00c204e",
+          });
+          console.log("beamsClient");
+          console.log("beamsClient.start()", beamsClient.start());
+          beamsClient
+            .start()
+            .then(() => beamsClient.addDeviceInterest("hello"))
+            .then(() => console.log("Successfully registered and subscribed!"))
+            .catch(console.error);
+        }
+        Notification.requestPermission((permission) => {
+          new Notification("تعليق جديد", {
+            body: "لقد قام احد المستخدمين باضافة تعليق !", // content for the alert
             //   icon:this.getAvatar, // optional image url
           });
         });
@@ -190,15 +221,15 @@ export default {
   position: relative;
 }
 .notification-modal > div {
-    position: absolute;
-    top: 8vw;
-    right: -40vw;
-    padding: 8px 20px;
-    background: #7818a8;
-    color: #fff;
-    border-radius: 6px;
-    width: 250px;
-    text-align: center;
+  position: absolute;
+  top: 8vw;
+  right: -40vw;
+  padding: 8px 20px;
+  background: #7818a8;
+  color: #fff;
+  border-radius: 6px;
+  width: 250px;
+  text-align: center;
 }
 .notifications:hover {
   cursor: pointer;
