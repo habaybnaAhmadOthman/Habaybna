@@ -35,6 +35,7 @@ export default {
         state.loggedIn = false;
         state.is_verify = false;
         state.id = null;
+        state.notifications = [];
     },
     clearAdmin(state) {
         state.firstName = null;
