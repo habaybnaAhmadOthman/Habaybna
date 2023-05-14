@@ -40,8 +40,13 @@ class CommunityController extends Controller
             "secretKey" => "2BDF11FE0671710DBAD88E52F2C96CB0E7D8BAB0ABC5F25DBF61404CAC1DBEC8",
           ));
           $publishResponse = $pushNotifications->publishToInterests(
-            [""],
+            ["newpost"],
             [
+                "apns" => [
+                    "aps" => [
+                      "alert" => "Hello!",
+                    ],
+                  ],
 
               "web" => [
                 "notification" => [
