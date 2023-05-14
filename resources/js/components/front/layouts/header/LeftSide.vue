@@ -129,70 +129,43 @@ export default {
   },
   mounted() {
     if (this.$store.getters["user/isLoggedIn"]) {
-      Echo.channel("usernewpost").listen("NewPost", (post) => {
+      Echo.private("usernewcomment").listen("NewComment", (post) => {
         if (this.$store.getters["user/isLoggedIn"]) {
+          const beamsClient = new PusherPushNotifications.Client({
+            instanceId: "ec559eac-30e5-473c-8414-adabb00c204e",
+          });
+
+          beamsClient
+            .start()
+            .then(() => beamsClient.addDeviceInterest("newcomment"))
+            .then(() => beamsClient.getDeviceInterests())
+            .catch(console.error);
           this.$store.dispatch("user/setNotifications");
+          this.$store.dispatch("community/setPosts");
         }
         if (!("Notification" in window)) {
           alert("Web Notification is not supported");
           return;
         } else {
-          this.show = true;
-          setTimeout(() => {
-            this.show = false;
-          }, 2000);
-
+        }
+      });
+      Echo.channel("usernewpost").listen("NewPost", (post) => {
+        if (this.$store.getters["user/isLoggedIn"]) {
           const beamsClient = new PusherPushNotifications.Client({
             instanceId: "ec559eac-30e5-473c-8414-adabb00c204e",
           });
-          console.log("beamsClient");
-          console.log("beamsClient.start()", beamsClient.start());
+
           beamsClient
             .start()
-            .then(() => beamsClient.addDeviceInterest("hello"))
-            .then(() => console.log("Successfully registered and subscribed!"))
+            .then(() => beamsClient.addDeviceInterest("newpost"))
+            .then(() => beamsClient.getDeviceInterests())
             .catch(console.error);
+          this.$store.dispatch("user/setNotifications");
+          this.$store.dispatch("community/setPosts");
         }
-        Notification.requestPermission((permission) => {
-          new Notification("منشور جديد", {
-            body: "لقد قام احد المستخدمين باضافة منشور !", // content for the alert
-            //   icon:this.getAvatar, // optional image url
-          });
-        });
       });
 
       /////// comment notifications
-      Echo.private("usernewcomment").listen("NewComment", (post) => {
-        if (this.$store.getters["user/isLoggedIn"]) {
-          this.$store.dispatch("user/setNotifications");
-        }
-        if (!("Notification" in window)) {
-          alert("Web Notification is not supported");
-          return;
-        } else {
-          this.show = true;
-          setTimeout(() => {
-            this.show = false;
-          }, 2000);
-
-          const beamsClient = new PusherPushNotifications.Client({
-            instanceId: "ec559eac-30e5-473c-8414-adabb00c204e",
-          });
-          console.log("beamsClient");
-          console.log("beamsClient.start()", beamsClient.start());
-          beamsClient
-            .start()
-            .then(() => beamsClient.addDeviceInterest("hello"))
-            .then(() => console.log("Successfully registered and subscribed!"))
-            .catch(console.error);
-        }
-        Notification.requestPermission((permission) => {
-          new Notification("تعليق جديد", {
-            body: "لقد قام احد المستخدمين باضافة تعليق !", // content for the alert
-            //   icon:this.getAvatar, // optional image url
-          });
-        });
-      });
     }
   },
 };
