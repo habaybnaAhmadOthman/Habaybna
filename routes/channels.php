@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use App\User;
+use App\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +18,12 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
-Broadcast::channel('usernewcomment',function(){
-    return true;
-});
+// Broadcast::channel('usernewcomment.{postId}',function($user, $postId){
+//               return   $user->whereHas('specialist',function($query) {
+//                     $query->where('can_make_comments', true);
+
+//                     }) || Post::find($postId)->user_id === $user->id  ?  true : false ;
+
+
+// });
 

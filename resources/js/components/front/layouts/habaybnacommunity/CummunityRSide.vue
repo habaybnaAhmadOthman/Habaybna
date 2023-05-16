@@ -1,11 +1,12 @@
 <template>
   <div class="col-md-3">
     <div class="community-r-side">
-      <div class="top-r-side">
+      <div class="top-l-side">
         <!-- <h1 class="main-color">قواعد النشر !</h1> -->
         <img
           class=""
-          src="https://habaybna.net/storage/images/partners/partnerCoverImg-Hikma_Pharmaceuticals-Logo.wine.png"
+          src="/images/siteImgs/أهم المعلومات ونصائح الخبراء (1).jpg"
+
           alt=""
         />
       </div>
@@ -15,3 +16,8 @@
 <script>
 export default {};
 </script>
+<style scoped>
+    .top-l-side {
+        padding : 0;
+    }
+</style>

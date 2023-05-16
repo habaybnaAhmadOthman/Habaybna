@@ -129,19 +129,24 @@ export default {
   },
   mounted() {
     if (this.$store.getters["user/isLoggedIn"]) {
-      Echo.private("usernewcomment").listen("NewComment", (post) => {
+      Echo.channel("usernewcomment").listen("NewComment", (post) => {
+          console.log(post);
         if (this.$store.getters["user/isLoggedIn"]) {
-          const beamsClient = new PusherPushNotifications.Client({
-            instanceId: "ec559eac-30e5-473c-8414-adabb00c204e",
-          });
-
-          beamsClient
-            .start()
-            .then(() => beamsClient.addDeviceInterest("newcomment"))
-            .then(() => beamsClient.getDeviceInterests())
-            .catch(console.error);
-          this.$store.dispatch("user/setNotifications");
-          this.$store.dispatch("community/setPosts");
+          if (
+            this.$store.getters["user/userData"].id == post.usernewcomment ||
+            this.$store.getters["user/userData"].canMakeComment
+          ) {
+            const beamsClient = new PusherPushNotifications.Client({
+              instanceId: "ec559eac-30e5-473c-8414-adabb00c204e",
+            });
+            beamsClient
+              .start()
+              .then(() => beamsClient.addDeviceInterest(`usernewcomment.${post.usernewcomment}`))
+              .then(() => beamsClient.getDeviceInterests())
+              .catch(console.error);
+            this.$store.dispatch("user/setNotifications");
+            this.$store.dispatch("community/setPosts");
+          }
         }
         if (!("Notification" in window)) {
           alert("Web Notification is not supported");

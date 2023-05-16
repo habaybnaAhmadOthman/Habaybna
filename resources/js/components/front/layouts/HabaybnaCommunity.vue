@@ -146,7 +146,8 @@ export default {
 .community-md-side,
 .community-l-side {
 }
-.community-r-side {
+.top-r-side {
+  padding: 0 !important;
 }
 .community-md-side {
 }
@@ -434,12 +435,12 @@ https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
   width: 373px;
   border-radius: 3px;
 }
-  .roles .role-button {
-    padding: 6px 0;
-    border: 0.5px solid #fff;
-    text-align: center;
-    margin: 20px;
-  }
+.roles .role-button {
+  padding: 6px 0;
+  border: 0.5px solid #fff;
+  text-align: center;
+  margin: 20px;
+}
 @media only screen and (max-width: 767px) {
   .habaybna-community {
     margin: 0;
@@ -465,8 +466,6 @@ https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
     right: 10vw;
     width: 80%;
   }
-
 }
-
 </style>
 
