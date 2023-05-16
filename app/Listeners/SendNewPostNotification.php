@@ -36,7 +36,6 @@ class SendNewPostNotification
             $query->where('can_make_comments', true);
 
         })->get();
-
         // \Illuminate\Support\Facades\Notification::sen
         // foreach($data as $one ) {
 

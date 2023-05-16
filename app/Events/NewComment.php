@@ -13,16 +13,19 @@ use Illuminate\Queue\SerializesModels;
 class NewComment implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $user ;
+    public $post_id ;
+    public $user_id ;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($post_id, $user_id)
     {
-        $this->user = $user ;
+        $this->post_id = $post_id ;
+        $this->user_id = $user_id ;
+
     }
 
     /**
@@ -32,6 +35,12 @@ class NewComment implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('usernewcomment');
+        return new Channel('usernewcomment');
     }
+
+    public function broadcastWith()
+    {
+        return ['usernewcomment'=> $this->user_id];
+    }
+
 }

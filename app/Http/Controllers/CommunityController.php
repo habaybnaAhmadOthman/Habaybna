@@ -34,33 +34,33 @@ class CommunityController extends Controller
         $data = Post::create($input);
         $post = Post::with(['user','comments'])->where('id',$data->id);
 
-        // event(new NewPost());
-        $pushNotifications = new \Pusher\PushNotifications\PushNotifications(array(
-            "instanceId" => "ec559eac-30e5-473c-8414-adabb00c204e",
-            "secretKey" => "2BDF11FE0671710DBAD88E52F2C96CB0E7D8BAB0ABC5F25DBF61404CAC1DBEC8",
-          ));
-          $publishResponse = $pushNotifications->publishToInterests(
-            ["newpost"],
-            [
-                "apns" => [
-                    "aps" => [
-                      "alert" => "Hello!",
-                    ],
-                  ],
+        event(new NewPost());
+        // $pushNotifications = new \Pusher\PushNotifications\PushNotifications(array(
+        //     "instanceId" => "ec559eac-30e5-473c-8414-adabb00c204e",
+        //     "secretKey" => "2BDF11FE0671710DBAD88E52F2C96CB0E7D8BAB0ABC5F25DBF61404CAC1DBEC8",
+        //   ));
+        //   $publishResponse = $pushNotifications->publishToInterests(
+        //     ["newpost"],
+        //     [
+        //                       "apns" => [
+        //         "aps" => [
+        //           "alert" => "Hello!",
+        //         ],
+        //       ],
 
-              "web" => [
-                "notification" => [
-                  "title" => "منشور جديد!",
-                  "body" => "لقد قام احد المستخدمين باضافة منشور",
-                  "deep_link"=> "https://www.pusher.com"
-                ],
-                "data" => [
-                    "name" => "adam",
-                    "type" => "user",
-                ],
-              ],
-            ]
-          );
+        //       "web" => [
+        //         "notification" => [
+        //           "title" => "منشور جديد!",
+        //           "body" => "لقد قام احد المستخدمين باضافة منشور",
+        //           "deep_link"=> "https://www.pusher.com"
+        //         ],
+        //         "data" => [
+        //             "name" => "adam",
+        //             "type" => "user",
+        //         ],
+        //       ],
+        //     ]
+        //   );
 
         //   dd($pushNotifications);
         //   dd("Published with Publish ID: " . $publishResponse->publishId . "\n");
@@ -83,32 +83,36 @@ class CommunityController extends Controller
         // broadcast(new NewComment($post->user))->toOthers();
 
 
-        event(new NewComment($post->user));
+        event(new NewComment($post->id, $post->user_id));
+        // NewComment::dispatch($post->id);
+
+
+
         $pushNotifications = new \Pusher\PushNotifications\PushNotifications(array(
             "instanceId" => "ec559eac-30e5-473c-8414-adabb00c204e",
             "secretKey" => "2BDF11FE0671710DBAD88E52F2C96CB0E7D8BAB0ABC5F25DBF61404CAC1DBEC8",
           ));
-          $publishResponse = $pushNotifications->publishToInterests(
-            ["newcomment"],
-            [
-              "apns" => [
-                "aps" => [
-                  "alert" => "Hello!",
-                ],
-              ],
-              "web" => [
-                "notification" => [
-                  "title" => "تعليق  جديد!",
-                  "body" => "لقد قام احد المختصين باضافة تعلق",
-                  "deep_link"=> "https://www.pusher.com"
-                ],
-                "data" => [
-                    "name" => "adam",
-                    "type" => "user",
-                ],
-              ],
-            ]
-          );
+        //   $publishResponse = $pushNotifications->publishToInterests(
+        //     ["newcomment"],
+        //     [
+        //       "apns" => [
+        //         "aps" => [
+        //           "alert" => "Hello!",
+        //         ],
+        //       ],
+        //       "web" => [
+        //         "notification" => [
+        //           "title" => "تعليق  جديد!",
+        //           "body" => "لقد قام احد المختصين باضافة تعلق",
+        //           "deep_link"=> "https://www.pusher.com"
+        //         ],
+        //         "data" => [
+        //             "name" => "adam",
+        //             "type" => "user",
+        //         ],
+        //       ],
+        //     ]
+        //   );
         return response($post, 200);
 
        } catch (\Throwable $th) {

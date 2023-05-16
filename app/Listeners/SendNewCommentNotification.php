@@ -12,6 +12,8 @@ use App\Notifications\NewPostNotification;
 use App\Notifications\NewCommentNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Events\NewComment;
+use App\Post;
+use Illuminate\Support\Facades\Auth;
 
 class SendNewCommentNotification
 {
@@ -32,14 +34,14 @@ class SendNewCommentNotification
      * @param  \App\Events\NewComment  $event
      * @return void
      */
-    public function handle(NewComment $event)
+    public function handle( NewComment $post)
     {
         $data = User::whereHas('specialist',function($query){
                 $query->where('can_make_comments', true);
+                $query->where('user_id','!=', Auth::id());
                 })->get();
-                $all = collect([$data,[$event->user]])->collapse();
-            Notification::send($all, new NewCommentNotification());
-            // Notification::send($event, new NewCommentNotification());
+                $all = collect([$data,[Post::find($post->post_id)->user]])->collapse();
+                Notification::send($all, new NewCommentNotification());
 
 
     }
