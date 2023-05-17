@@ -73,6 +73,8 @@ class RegisterController extends Controller
             'otp'=>random_int(100000, 999999)
         ]);
         event(new VerifyUser($user->phone, $user->otp));
+        request()->session()->put('user.otp',$user->otp);
+        request()->session()->put('user.phone',$user->phone);
         return $user;
     }
 

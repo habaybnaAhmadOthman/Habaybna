@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckOtp extends Controller
 {
+
     public function __invoke(Request $request)
     {
        if($request->session()->get('user.otp') != $request->otpCode)
