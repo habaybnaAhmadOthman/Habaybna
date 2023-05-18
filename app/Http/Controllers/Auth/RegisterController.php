@@ -65,16 +65,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
-            'role' => $data['type'], // parent, specialist, other
-            // 'email' => $data['email'],
-            'phone' => $data['phone'], // ex: +962792819107
-            'is_verify'=> 0,
-            'otp'=>random_int(100000, 999999)
-        ]);
-        event(new VerifyUser($user->phone, $user->otp));
-        request()->session()->put('user.otp',$user->otp);
-        request()->session()->put('user.phone',$user->phone);
+        // $user = User::create([
+        //     'role' => $data['type'], // parent, specialist, other
+        //     // 'email' => $data['email'],
+        //     'phone' => $data['phone'], // ex: +962792819107
+        //     'is_verify'=> 0,
+        //     'otp'=>random_int(100000, 999999)
+        // ]);
+        $user = new User();
+        $user->phone = $data['phone'];
+        $user->role = $data['type'];
+        
+        $otp = random_int(100000, 999999) ;
+        event(new VerifyUser($data['phone'], $otp));
+        request()->session()->put('user.otp',$otp);
+        request()->session()->put('user.phone',$data['phone']);
         return $user;
     }
 

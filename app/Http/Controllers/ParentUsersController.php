@@ -51,7 +51,7 @@ class ParentUsersController extends Controller
         'relative' => ['required', 'string'],
         'password' => ['required', 'string','min:8'],
        ]);
-       $request->session()->get('user')->validate([
+       $request->session()->get('user.phone')->validate([
         'phone' => ['required', 'unique:users'],
        ]);
        $user = new User();
