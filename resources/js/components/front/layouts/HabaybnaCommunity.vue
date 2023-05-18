@@ -129,10 +129,7 @@ export default {
   margin-top: 42px;
   /* padding: 0 100px; */
 }
-.community-l-side,
-.community-md-side,
-.community-r-side {
-}
+
 .top-r-side,
 .top-md-side,
 .top-l-side {
@@ -142,20 +139,11 @@ export default {
   padding: 27px 10px;
   margin-bottom: 15px;
 }
-.community-r-side,
-.community-md-side,
-.community-l-side {
-}
+
 .top-r-side {
   padding: 0 !important;
 }
-.community-md-side {
-}
 
-.community-l-side {
-}
-.top-l-side {
-}
 img {
   vertical-align: top;
 }

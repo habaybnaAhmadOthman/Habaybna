@@ -98,9 +98,7 @@ export default {
   height: 64px;
   margin-left: 4px;
 }
-.comments-wrap p {
-  /* border-radius: 16px; */
-}
+
 .delete-comment {
   color: #a6a0a0;
   font-weight: bold;
