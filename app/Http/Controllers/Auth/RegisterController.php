@@ -75,8 +75,9 @@ class RegisterController extends Controller
         $user = new User();
         $user->phone = $data['phone'];
         $user->role = $data['type'];
-        
+
         $otp = random_int(100000, 999999) ;
+
         event(new VerifyUser($data['phone'], $otp));
         request()->session()->put('user.otp',$otp);
         request()->session()->put('user.phone',$data['phone']);

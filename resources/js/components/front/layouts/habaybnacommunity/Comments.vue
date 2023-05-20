@@ -15,7 +15,6 @@
               }}
             </h4>
             <h5>{{ comment.user.user_data.specialization }}</h5>
-
           </div>
         </div>
         <span
@@ -28,7 +27,7 @@
         >
       </div>
       <div class="mt-5">
-        <p class="p-10" style="background-color: #ededed69">
+        <p class="p-10" style="margin: 0px 50px">
           {{ comment.content }}
         </p>
         <div class="left">
@@ -84,19 +83,19 @@ export default {
 
 <style scoped>
 .comments-wrap {
-    margin:15px
+  margin: 15px;
 }
 .comments-wrap > div {
   width: 99%;
   min-width: 70%;
   border-radius: 3px;
   /* border: 0.5px solid #ebe4e4; */
-
 }
 .comments-wrap img {
-  width: 64px;
-  height: 64px;
-  margin-left: 4px;
+  width: 45px;
+  height: 45px;
+  margin-left: 9px;
+  border-radius: 15px;
 }
 
 .delete-comment {

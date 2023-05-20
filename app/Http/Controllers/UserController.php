@@ -26,8 +26,8 @@ class UserController extends Controller
     public function readNotifications()
     {
         // dd(request()->all());
-        Auth::user()->notifications->find(request()->id)->update(['read_at'=>now()],['id'=>request()->id]);
-        return response(Auth::user()->notifications, 200) ;
+        Auth::user()->notifications->find(request()->id)->update(['read_at'=>now()]);
+      return response(Auth::user()->notifications, 200) ;
     }
     public function getUserData()
     {

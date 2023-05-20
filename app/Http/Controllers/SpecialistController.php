@@ -45,7 +45,7 @@ class SpecialistController extends Controller
            $user->otp = '123432' ;
            $user->role = 'specialist' ;
            $user->is_verify = 1 ;
-
+// dd($user);
            $user->save();
 
            // add country
@@ -59,24 +59,33 @@ class SpecialistController extends Controller
         }
           Auth::login($user);
 
-        $specialist = new Specialist();
+        $user->specialist()->create([
+            // 'user_id' => Auth::user()->id,
+            'firstName' => $request->fristName,
+            'lastName' => $request->lastName,
+            'gender' => $request->gender,
+            'specialization' => $request->specialization,
+            'work_place' => $request->workPlace,
+        ]);
 
-        $specialist->user_id = Auth::user()->id;
-        $specialist->firstName = $request->fristName;
-        $specialist->lastName = $request->lastName;
-        $specialist->gender = $request->gender ;
-        $specialist->specialization = $request->specialization ;
-        $specialist->work_place = $request->workPlace ;
+        // $specialist = new Specialist();
 
-        $specialist->save();
+        // $specialist->user_id = Auth::user()->id;
+        // $specialist->firstName = $request->fristName;
+        // $specialist->lastName = $request->lastName;
+        // $specialist->gender = $request->gender ;
+        // $specialist->specialization = $request->specialization ;
+        // $specialist->work_place = $request->workPlace ;
+
+        // $specialist->save();
 
 
         $interest = Interest::all();
         $mailChimpData =[
             'email'=> $user->email,
             'phone'=> $user->phone,
-            'firstName'=> $specialist->firstName,
-            'lastName'=> $specialist->lastName,
+            'firstName'=> $user->specialist->firstName,
+            'lastName'=> $user->specialist->lastName,
             'tag'=> 'new user',
             'type'=> $user->role,
         ];

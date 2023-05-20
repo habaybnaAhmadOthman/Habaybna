@@ -12,6 +12,7 @@ class CheckOtp extends Controller
 
     public function __invoke(Request $request)
     {
+            // dd($request->session()->get('user.otp'));
        if($request->session()->get('user.otp') != $request->otpCode)
        {
            return response('faild',404);
