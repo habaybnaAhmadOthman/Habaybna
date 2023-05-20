@@ -37,21 +37,21 @@ import VueSocialSharing from 'vue-social-sharing'
 import VueMeta from 'vue-meta'
 
 
-
+navigator.serviceWorker.register('/service-worker.js');
 // var channel = window.Echo.channel('test');
-if ('serviceWorker' in navigator) {
-    // console.log('xxxxxxxxxxxzzzz',navigator.serviceWorker);
-   window.addEventListener('load', function() {
+// if ('serviceWorker' in navigator) {
+//     // console.log('xxxxxxxxxxxzzzz',navigator.serviceWorker);
+//    window.addEventListener('load', function() {
 
-       navigator.serviceWorker.register('service-worker.js').then(function(registration) {
-       // Registration was successful
-       console.log('ServiceWorker registration successful with scope: ', registration);
-   }, function(err) {
-       // registration failed :(
-           console.log('ServiceWorker registration failed: ', err);
-       });
-   });
-}
+//        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+//        // Registration was successful
+//        console.log('ServiceWorker registration successful with scope: ', registration);
+//    }, function(err) {
+//        // registration failed :(
+//            console.log('ServiceWorker registration failed: ', err);
+//        });
+//    });
+// }
 
 
 // use portal plugins

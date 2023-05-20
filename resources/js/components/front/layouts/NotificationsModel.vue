@@ -38,7 +38,8 @@ export default {
         //   }
         // );
         this.$store.dispatch('user/setNotifications')
-        this.$router.replace("habaybna-community");
+        if (this.$route.path !== "/habaybna-community") this.$router.push('/habaybna-community')
+
       });
     },
   },
@@ -68,7 +69,7 @@ export default {
 //     });
 //   },
   computed: {
-      
+
 
   },
 };

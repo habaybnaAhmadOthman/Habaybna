@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Specialist extends Model
 {
-    
+
+    protected $guarded=[];
 
     protected $primaryKey = "user_id";
     public function user()
