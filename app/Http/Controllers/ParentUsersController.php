@@ -263,53 +263,40 @@ class ParentUsersController extends Controller
             'relative' => ['required', 'string'],
             'password' => ['required', 'string','min:8'],
            ]);
+           Auth::user()->email = $request->email;
+           Auth::user()->password = Hash::make($request->password);
+           Auth::user()->is_verify = 1 ;
 
 
-           $user = new User();
-            $user->phone = $request->session()->get('user.phone');
-            $user->email = $request->email ;
-            $user->password = Hash::make($request->password);
-            $user->otp = '123432' ;
-            $user->role = 'parent' ;
-            $user->is_verify = 1 ;
-
-            $user->save();
+           Auth::user()->save();
 
            // add country
            try {
             $position = Location::get(request()->ip());
-            $user->country = $position->countryName ;
-           $user->save();
+            Auth::user()->country = $position->countryName ;
+            Auth::user()->save();
 
         } catch (\Throwable $th) {
-            //throw $th;
-        }
-           Auth::login($user);
-
-        $parent = new ParentUsers() ;
-        if ($request->hasFile('image')) {
-            $img = $request->file('image');
-            $filename = 'profile-photo-' . time() . '.' . $img->getClientOriginalExtension();
-            $path = $img->storeAs('avatars', $filename);
+            // throw $th;
         }
 
-        $parent->user_id = Auth::user()->id ;
-        $parent->firstName = $request->firstName ;
-        $parent->lastName = $request->lastName ;
-        $parent->gender = $request->gender ;
-        $parent->relative = $request->relative ;
-        // $parent->avatar = $path ? $path  : '';
+                // create paretn
+                Auth::user()->parent()->create([
+                    'firstName' => $request->firstName,
+                    'lastName' => $request->lastName,
+                    'gender' => $request->gender,
+                    'relative' =>  $request->relative,
+                ]);
 
-        $parent->save();
 
         $interest = Interest::all();
         $mailChimpData =[
-            'email'=> $user->email,
-            'phone'=> $user->phone,
-            'firstName'=> $parent->firstName,
-            'lastName'=> $parent->lastName,
+            'email'=>Auth::user()->email,
+            'phone'=>Auth::user()->phone,
+            'firstName'=> Auth::user()->parent->firstName,
+            'lastName'=> Auth::user()->parent->lastName,
             'tag'=> 'new user',
-            'type'=> $user->role,
+            'type'=>Auth::user()->role,
         ];
         mailerLiteSubscribe($mailChimpData);
         return response()->json([

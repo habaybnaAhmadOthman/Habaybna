@@ -38,28 +38,24 @@ class SpecialistController extends Controller
             'password' => ['required', 'string','min:8'],
            ]);
 
-           $user = new User();
-           $user->phone = $request->session()->get('user.phone');
-           $user->email = $request->email ;
-           $user->password = Hash::make($request->password);
-           $user->otp = '123432' ;
-           $user->role = 'specialist' ;
-           $user->is_verify = 1 ;
-// dd($user);
-           $user->save();
+           Auth::user()->email = $request->email;
+           Auth::user()->password = Hash::make($request->password);
+           Auth::user()->is_verify = 1 ;
+
+
+           Auth::user()->save();
 
            // add country
            try {
             $position = Location::get(request()->ip());
-            $user->country = $position->countryName ;
-           $user->save();
+            Auth::user()->country = $position->countryName ;
+            Auth::user()->save();
 
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
-          Auth::login($user);
-
-        $user->specialist()->create([
+        // create specialist
+        Auth::user()->specialist()->create([
             // 'user_id' => Auth::user()->id,
             'firstName' => $request->fristName,
             'lastName' => $request->lastName,
@@ -68,27 +64,18 @@ class SpecialistController extends Controller
             'work_place' => $request->workPlace,
         ]);
 
-        // $specialist = new Specialist();
-
-        // $specialist->user_id = Auth::user()->id;
-        // $specialist->firstName = $request->fristName;
-        // $specialist->lastName = $request->lastName;
-        // $specialist->gender = $request->gender ;
-        // $specialist->specialization = $request->specialization ;
-        // $specialist->work_place = $request->workPlace ;
-
-        // $specialist->save();
-
-
+        // add inetrest
         $interest = Interest::all();
         $mailChimpData =[
-            'email'=> $user->email,
-            'phone'=> $user->phone,
-            'firstName'=> $user->specialist->firstName,
-            'lastName'=> $user->specialist->lastName,
+            'email'=> Auth::user()->email,
+            'phone'=> Auth::user()->phone,
+            'firstName'=> Auth::user()->specialist->firstName,
+            'lastName'=> Auth::user()->specialist->lastName,
             'tag'=> 'new user',
-            'type'=> $user->role,
+            'type'=> Auth::user()->role,
         ];
+
+        // subscribe user
         mailerLiteSubscribe($mailChimpData);
         return response()->json([
             'msg'=>'success',

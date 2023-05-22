@@ -44,49 +44,50 @@ class OthersController extends Controller
             'password' => ['required', 'string','min:8'],
            ]);
 
-           $user = new User();
-           $user->phone = $request->session()->get('user.phone');
-           $user->email = $request->email ;
-           $user->password = Hash::make($request->password);
-           $user->otp = '123432' ;
-           $user->role = 'other' ;
-           $user->is_verify = 1 ;
 
-           $user->save();
+           Auth::user()->email = $request->email;
+           Auth::user()->password = Hash::make($request->password);
+           Auth::user()->is_verify = 1 ;
+
+
+           Auth::user()->save();
+
            // add country
            try {
             $position = Location::get(request()->ip());
-            $user->country = $position->countryName ;
-           $user->save();
+            Auth::user()->country = $position->countryName ;
+            Auth::user()->save();
 
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
-          Auth::login($user);
-        $otherUser = new Other();
+        Auth::user()->other()->create([
+            // 'user_id' => Auth::user()->id,
+            'firstName' => $request->fristName,
+            'lastName' => $request->lastName,
+            'gender' => $request->gender,
+            'specialization' => '',
+            'work_place' => '',
+            'employment' =>$request->employment,
+            'why_to_join' => $request->whyToJoin,
 
-        $otherUser->user_id = Auth::user()->id;
-        $otherUser->firstName = $request->fristName;
-        $otherUser->lastName = $request->lastName;
-        $otherUser->gender = $request->gender ;
-        $otherUser->specialization = '' ;
-        $otherUser->work_place = '' ;
-        $otherUser->employment = $request->employment ;
-        $otherUser->why_to_join = $request->whyToJoin ;
 
-        $otherUser->save();
+        ]);
+
+
+
 
 
 
         $interest = Interest::all();
 
         $mailChimpData =[
-            'email'=> $user->email,
-            'phone'=> $user->phone,
-            'firstName'=> $otherUser->firstName,
-            'lastName'=> $otherUser->lastName,
+            'email'=>Auth::user()->email,
+            'phone'=>Auth::user()->phone,
+            'firstName'=> Auth::user()->firstName,
+            'lastName'=> Auth::user()->lastName,
             'tag'=> 'new user',
-            'type'=> $user->role,
+            'type'=>Auth::user()->role,
         ];
         mailerLiteSubscribe($mailChimpData);
         return response()->json([
