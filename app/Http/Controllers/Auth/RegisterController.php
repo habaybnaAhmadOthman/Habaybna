@@ -65,13 +65,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // $user = User::create([
-        //     'role' => $data['type'], // parent, specialist, other
-        //     // 'email' => $data['email'],
-        //     'phone' => $data['phone'], // ex: +962792819107
-        //     'is_verify'=> 0,
-        //     'otp'=>random_int(100000, 999999)
-        // ]);
         $user = new User();
         $user->phone = $data['phone'];
         $user->role = $data['type'];

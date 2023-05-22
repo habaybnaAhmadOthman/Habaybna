@@ -95,6 +95,7 @@ class HomeController extends Controller
     public function forgetPassword (Request $request) {
         if($request->mobileNumber && $request->mobileNumber != ""){
             $user = User::where('phone',$request->mobileNumber)->first();
+
                 if($user){
                     $user->otp = random_int(100000, 999999);
                     $user->save();
@@ -129,7 +130,6 @@ class HomeController extends Controller
     }
 
     public function changePassword (Request $request) {
-
         if($request->mobileNumber && $request->mobileNumber != ""){
             $user = User::where('phone',$request->mobileNumber)->first();
                 if($user && $user->is_verify){
@@ -137,11 +137,9 @@ class HomeController extends Controller
                     $user->save() ;
                     return response($user->phone,200);
                 }
-
                 return response('notVerify',403);
         }
         return response('invalidPhoneNumber',403);
-
     }
 
     public function sendGift(Request $request)

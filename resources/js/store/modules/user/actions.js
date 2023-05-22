@@ -11,7 +11,7 @@ export default {
     },
     async registerFirstStep(context, payload) {
         await axios.get("/sanctum/csrf-cookie");
-        const resp = await callApi("POST", "register", payload);
+        const resp = await callApi("POST", "api/register", payload);
         if (!resp || resp.status != 201) {
             const error = new Error("رقم الهاتف مستخدم، يرجى تجربة رقم آخر");
             throw error;
@@ -39,20 +39,21 @@ export default {
     // ******** login :::
     async login(context, payload) {
         await axios.get("/sanctum/csrf-cookie");
-        const resp = await callApi("POST", "login", payload);
+        const resp = await callApi("POST", "api/login", payload);
         if (resp && resp.data && resp.data.status && resp.data.status == 403) {
             const error = new Error("تم إيقاف حسابك");
             throw error;
         }
-        if (!resp  ||resp.status != 204) {
+        if (!resp  ||resp.status != 200) {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
         context.commit('clearUser');
         context.commit('clearAdmin');
+
         context.commit('setUser',{
             token: resp.data.token,
-            id: resp.data.id,
+            id: resp.data.user.id,
         })
         axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
         await context.dispatch('checkUserAuth')
@@ -61,13 +62,13 @@ export default {
     // !!!!!!!!!!!!!
     // check error handling
     async loginModal(context, payload) {
-        // await axios.get("/sanctum/csrf-cookie");
-        const resp = await callApi("POST", "/login", payload);
+        await axios.get("/sanctum/csrf-cookie");
+        const resp = await callApi("POST", "api/login", payload);
         if (resp && resp.data && resp.data.status && resp.data.status == 403) {
             const error = new Error("تم إيقاف حسابك");
             throw error;
         }
-        if (!resp ||  resp.status != 204) {
+        if (!resp ||  resp.status != 200) {
             const error = new Error("يرجى التأكد من الحقول المدخلة");
             throw error;
         }
@@ -149,6 +150,7 @@ export default {
                 canMakeComment: obj.can_make_comment,
                 avatar: obj.avatar,
                 id: obj.id,
+                token:obj.token
                 // notifications:obj.notifications
             })
             commit('setUserNotificatins',{

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Providers\VerifyUser;
+
 
 
 
@@ -16,34 +18,32 @@ class AuthController extends Controller
 {
     public function signup(Request $request)
     {
-        // dd($request);
         $request->validate([
             'phone' => ['required', 'unique:users'],
-            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'type' => ['required', 'string'],
         ]);
+
         $user = User::create([
             'role' => $request->type,
             // 'email' => $request->email,
             'phone' => $request->phone,
-            'otp'=> 000111 //random_int(100000, 999999),
+            'otp'=>random_int(100000, 999999),
         ]);
-        // $user->save();
-        //  $user->createToken(random_int(100000, 999999))->planeTextTokens;
-        //  return  $user->createToken($request->phone)->token->id;
+        if($user) {
+          Auth::login($user);
 
-        // $token =  $user->createToken($request->phone);
-        // dd(Auth::user());
-        // $token = $user->createToken($request->phone);
+            event(new VerifyUser($user->phone, $user->otp));
+
+            return $user;
+        }
+
+
+
+
 
         $userData['user'] =  $user;
         $userData['token'] =  $user->createToken('LaravelSanctumAuth')->accessToken;
 
-        // $accessToken = $user->createToken('authToken')->access_token ;
-
-        // return response()->json([
-        //     'message' => 'Successfully created user!'
-        // ], 201);
         return response()->json(['userData' => $userData], 201);
 
     }
@@ -59,28 +59,27 @@ class AuthController extends Controller
             'phone' => 'required|string',
             'password' => 'required|string',
         ]);
+        if(!Auth::attempt($request->only(['phone', 'password']))){
+            return response()->json([
+                'status' => false,
+                'message' => 'Email & Password does not match with our record.',
+            ], 401);
+        }
         $user = User::where('phone', $request->phone)->first();
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'phone' => ['The provided credentials are incorrect.'],
-            ]);
-        }
         $userType = $user->user_data;
 
-        $user->tokens()->delete();
 
-        $token = $user->createToken('vue web')->accessToken;
+        $token = $user->createToken('LaravelSanctumAuth');
 
         $userData['user'] =  $user;
-        $userData['token'] =  $token;
-
+        $userData['token'] =  $token->plainTextToken;
         if($userType){
             $userData['user']['firstName'] = $userType['firstName'];
             $userData['user']['lastName'] = $userType['lastName'];
         }
 
-        return response()->json(['userData' => $userData], 200);
+        return response($userData, 200);
     }
 
     public function logout(Request $request)

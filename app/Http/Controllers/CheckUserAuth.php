@@ -34,6 +34,7 @@ class CheckUserAuth extends Controller
                 $user = Auth::user();
                 if($user != null){
                     $userData['id']= $user->id;
+                    $userData['token']= $user->tokens()->first()->token;
                     $userData['avatar']= $user->user_data->avatar;
                     $userData['firstName']= $user->user_data->firstName;
                     $userData['lastName']= $user->user_data->lastName;

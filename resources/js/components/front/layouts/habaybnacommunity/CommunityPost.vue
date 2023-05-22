@@ -8,11 +8,7 @@
     >
       <div class="post-header d-flex">
         <div class="d-flex">
-          <img
-            class="create-post__avatar"
-            :src="post.user.user_data.avatar"
-            alt=""
-          />
+          <img class="create-post__avatar" :src="getAvatar" alt="" />
           <div>
             <h6>{{ fullName }}</h6>
             <span class="d-block font-12" style="color: gray">{{
@@ -107,7 +103,7 @@ export default {
       canPublish: false,
       showMenu: false,
       show: true,
-      emptyCommentInput:false,
+      emptyCommentInput: false,
     };
   },
 
@@ -132,7 +128,7 @@ export default {
         if (resp.status == 200) {
           this.post.comments = resp.data.comments;
           this.canPublish = false;
-          this.emptyCommentInput = true
+          this.emptyCommentInput = true;
         }
       });
     },
@@ -165,6 +161,9 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters["user/isLoggedIn"];
+    },
+    getAvatar() {
+      return this.$store.getters["user/userData"].avatar;
     },
     canMakeComment() {
       return this.$store.getters["user/userData"].canMakeComment;
@@ -213,7 +212,6 @@ export default {
   color: #515a6e;
   border: 1px solid #515a6e;
   border-radius: 2px;
-
 }
 .option {
   position: relative;

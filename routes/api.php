@@ -228,6 +228,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('posts/{post:slug}/comment', 'CommunityController@storeComment');
     Route::delete('posts/{post:id}/comment', 'CommunityController@deleteComment');
     Route::delete('posts/{post:slug}', 'CommunityController@deletePost');
+    Route::get('/check-user-authentication',CheckUserAuth::class);
 
 
 
@@ -242,7 +243,7 @@ Route::post('register','AuthController@signup')->name('user.register');
 Route::post('login','AuthController@login')->name('user.login');
 Route::get('all-courses','CourseController@getAllcourses')->name('getAllcourses');
 Route::get('get-categories','CategoriesController@index');
-Route::get('/check-user-authentication',CheckUserAuth::class);
+// Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::post('/payment/course','PaymentController@coursePaymentCallback');
 Route::post('/payment/call','PaymentController@callPaymentCallback');
 Route::post('/user/forget-password','HomeController@forgetPassword');
