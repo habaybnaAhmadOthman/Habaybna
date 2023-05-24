@@ -1,3 +1,5 @@
+var ClassicEditor = require('ckeditor5-custom-build/build/ckeditor');
+
 export default {
     methods: {
         initEditor(selector, key, cb,video="") {

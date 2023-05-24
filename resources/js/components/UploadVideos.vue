@@ -92,7 +92,7 @@
           </div>
           <div class="">
             <strong>وصف الحلقة</strong>
-            <textarea id="videoDescription"></textarea>
+            <textarea name="" id="videoDescription"></textarea>
             <span class="error" v-if="!this.formValidation.videoDescription">
               * يجب تعبئة هذا الحقل
             </span>
@@ -176,6 +176,7 @@ import initEditor from "../components/front/mixins/initEditor";
 export default {
   mixins: [initEditor],
   mounted() {
+    //   debugger
     this.initEditor(
       "#videoDescription",
       "form.videoDescription",
@@ -188,10 +189,10 @@ export default {
         id: "",
         videoTitle: "",
         videoDescription: null,
-        editor: ClassicEditor,
-        editorConfig: {
-          enterMode: "br",
-        },
+        // editor: Editor.ClassicEditor,
+        // editorConfig: {
+        //   enterMode: "br",
+        // },
         video: "",
         length:"",
         is_publish: "",

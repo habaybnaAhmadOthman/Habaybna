@@ -34,12 +34,7 @@ class AuthController extends Controller
 
             event(new VerifyUser($user->phone, $user->otp));
 
-            return $user;
         }
-
-
-
-
 
         $userData['user'] =  $user;
         $userData['token'] =  $user->createToken('LaravelSanctumAuth')->accessToken;
@@ -66,6 +61,7 @@ class AuthController extends Controller
             ], 401);
         }
         $user = User::where('phone', $request->phone)->first();
+
 
         $userType = $user->user_data;
 

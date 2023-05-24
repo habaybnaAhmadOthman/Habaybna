@@ -62,6 +62,8 @@ class SpecialistController extends Controller
             'gender' => $request->gender,
             'specialization' => $request->specialization,
             'work_place' => $request->workPlace,
+            'can_make_comments' => 0,
+
         ]);
 
         // add inetrest
