@@ -226,7 +226,7 @@ export default {
         courseTitle: "",
         courseCategory: "",
         courseDescription: null,
-        editor: ClassicEditor,
+        editor: Editor.ClassicEditor,
         watWeLearn: null,
         editorConfig: {
           enterMode: "br",

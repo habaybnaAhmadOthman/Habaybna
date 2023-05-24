@@ -8,7 +8,7 @@
     >
       <div class="post-header d-flex">
         <div class="d-flex">
-          <img class="create-post__avatar" :src="getAvatar" alt="" />
+          <img class="create-post__avatar" :src="post.user.user_data.avatar" alt="" />
           <div>
             <h6>{{ fullName }}</h6>
             <span class="d-block font-12" style="color: gray">{{
