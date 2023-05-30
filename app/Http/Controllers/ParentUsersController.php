@@ -255,14 +255,17 @@ class ParentUsersController extends Controller
 
     public function completeRegister(Request $request)
     {
-        $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        $data = $request->validate([
             'firstName' => ['required', 'string'],
             'lastName' => ['required', 'string'],
             'gender' => ['required', 'string'],
             'relative' => ['required', 'string'],
-            'password' => ['required', 'string','min:8'],
+            'password' => ['required', 'string','min:6'],
            ]);
+
+           if(User::where('email',$request->email)->first())
+           return response('emailused', 203);
+
            Auth::user()->email = $request->email;
            Auth::user()->password = Hash::make($request->password);
            Auth::user()->is_verify = 1 ;

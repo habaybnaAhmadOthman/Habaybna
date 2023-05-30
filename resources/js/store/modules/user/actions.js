@@ -28,7 +28,7 @@ export default {
             `api/${type}-complete-register`,
             payload
         );
-        if (resp.status != 200) {
+        if (resp.status == 203) {
             const error = new Error(`fail to complete registration as ${type}`);
             throw error;
         }

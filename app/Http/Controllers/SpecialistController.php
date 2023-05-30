@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\SpecialistZoomAccount;
 use Stevebauman\Location\Facades\Location;
+use Illuminate\Support\Facades\Validator;
+
 
 
 
@@ -28,15 +30,23 @@ class SpecialistController extends Controller
 
     public function create(Request $request)
     {
-        $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+
+
+           $validator = Validator::make($request->all(), [
             'fristName' => ['required', 'string'],
             'lastName' => ['required', 'string'],
             'gender' => ['required', 'string'],
             'specialization' => ['required', 'string'],
             'workPlace' => ['required', 'string'],
-            'password' => ['required', 'string','min:8'],
-           ]);
+            'password' => ['required', 'string','min:6'],
+        ]);
+        if(User::where('email',$request->email)->first())
+            return response('emailused', 203);
+
+        // if(count($validator->errors()) > 0) {
+        //     return response( ['errors' => $validator->errors()], 422);
+        // }
+
 
            Auth::user()->email = $request->email;
            Auth::user()->password = Hash::make($request->password);
