@@ -65,7 +65,7 @@ export default {
                 this.interests = await this.$store.dispatch("user/completeRegistration",obj);
                 this.showInterestScreen = true;
             } catch (e) {
-                this.showPopupMessage("يرجى التأكد أنك قمت بإدخال البيانات بشكل صحيح");
+                this.showPopupMessage("       عنوان البريد الألكتروني مستخدم!!");
             }
             this.isLoading = false;
         },

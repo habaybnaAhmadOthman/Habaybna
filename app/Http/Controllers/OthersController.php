@@ -35,7 +35,6 @@ class OthersController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'fristName' => ['required', 'string'],
             'lastName' => ['required', 'string'],
             'gender' => ['required', 'string'],
@@ -43,6 +42,8 @@ class OthersController extends Controller
             'whyToJoin' => ['required', 'string'],
             'password' => ['required', 'string','min:8'],
            ]);
+           if(User::where('email',$request->email)->first())
+           return response('emailused', 203);
 
 
            Auth::user()->email = $request->email;
@@ -110,7 +111,7 @@ class OthersController extends Controller
             'lastName' => ['required', 'string'],
             'gender' => ['required', 'string'],
             'employment' => ['required', 'string'],
-            'password' => ['required', 'string','min:8'],
+            'password' => ['required', 'string','min:6'],
            ]);
 
            $user = new User();
