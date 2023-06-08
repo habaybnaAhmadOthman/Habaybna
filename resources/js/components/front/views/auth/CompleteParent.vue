@@ -63,8 +63,7 @@
                 <small
                     class="d-block relative"
                     v-if="!password.has_minimum_lenth"
-                    >يجب أن لا تقل كلمة السر عن ٦ خانات</small
-                >
+                    >يجب أن لا تقل كلمة السر عن ٦ خانات</small>
             </div>
             <p class="red mt-5 font-12">
                 هذا الحقل مطلوب
