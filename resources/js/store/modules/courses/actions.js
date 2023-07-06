@@ -52,7 +52,7 @@ export default {
         const targetedCourse = getters.courses[targetedCourseIndex]
         targetedCourse.is_favourite = !targetedCourse.is_favourite
         getters.courses[targetedCourseIndex] = targetedCourse
-        
+
         commit('setAllCourses',getters.courses)
     },
     // ******** get user courses ::: get
@@ -215,7 +215,7 @@ export default {
                 options:question.answers.map((opt)=> {if (opt.is_correct) correctAnswer = opt.id; return {id: opt.id,title: opt.title}})
             })
             data[index].correctAnswer = correctAnswer
-        })  
+        })
 
         return data
     },

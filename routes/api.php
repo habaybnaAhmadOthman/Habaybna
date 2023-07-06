@@ -230,6 +230,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('posts/{post:slug}', 'CommunityController@deletePost');
     Route::get('/check-user-authentication',CheckUserAuth::class);
 
+    // parent child
+    Route::get('/profile/get-childs','ChildController@index');
+    Route::post('/profile/add-child','ChildController@store');
+    Route::post('/profile/edit-child','ChildController@edit');
+    Route::post('/profile/delete-child','ChildController@delete');
+
 
 
 

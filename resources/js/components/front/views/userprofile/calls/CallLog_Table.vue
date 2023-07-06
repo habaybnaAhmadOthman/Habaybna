@@ -10,6 +10,8 @@
         <div>عمر الطفل عند معرفة حالته</div>
         <div>المشكلة</div>
         <div>رابط المكالمات</div>
+
+
         <div>حالة المكالمة</div>
         <div>التوصية</div>
       </div>
@@ -23,7 +25,13 @@
         @add-recommendation="addRecommendation"
         @show-recommendation="toggleUserRecomendationModal"
       ></TableCol>
-      <h2 class="center mt-30" v-if="data.length == 0">لا يوجد مكالمات</h2>
+      <!-- <h2 class="center mt-30" v-if="data.length == 0">لا يوجد مكالمات</h2> -->
+        <h4 class="center mt-30" v-if="data.length == 0">لا يوجد مكالمات</h4>
+        <router-link to="/consultations">
+            <h4 class="center mt-30" v-if="data.length == 0">احجز استشارك الأولى مجانا من هنا</h4>
+        </router-link> >
+
+
       <div class="portal-pagination mt-40 mt-40 justify-center d-flex">
         <Pagination
           :data="contentTemp"

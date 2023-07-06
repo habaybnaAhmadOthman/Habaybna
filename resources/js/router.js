@@ -91,6 +91,7 @@ import SpecialistsPage from "./components/front/pages/specialist/SpecialistsPage
 import allSpecialistsPage from "./components/front/pages/specialist/allSpecialistsPage.vue";
 import PartnersProgramPage from "./components/front/pages/PartnersProgramPage.vue";
 import AlEtihad from "./components/front/pages/AlEtihad.vue";
+import Consultations from "./components/front/pages/Consultations.vue";
 import NSBirthday from "./components/front/pages/NSBirthday.vue";
 import NSBirthdayStatus from "./components/front/pages/NSBirthdayStatus.vue";
 import TermsPage from "./components/front/pages/TermsPage.vue";
@@ -111,6 +112,7 @@ import RegisterOtherComplete from "./components/front/pages/auth/Register_OtherC
 import LoginPage from "./components/front/pages/auth/LoginPage.vue";
 import ForgetPasswordPage from "./components/front/pages/auth/ForgetPasswordPage.vue";
 
+import UserProfile_Childs from "./components/front/views/userprofile/childs/Index.vue";
 
 import UserProfile_Template from "./components/front/views/userprofile/UserProfile_Template";
 import UserProfile_MyAccount from "./components/front/pages/dashboard/UserProfile.vue";
@@ -372,6 +374,10 @@ const routes = [{
         component: AlEtihad
     },
     {
+        path: "/consultations",
+        component: Consultations
+    },
+    {
         path: "/community/birthday",
         component: NSBirthday
     },
@@ -514,6 +520,16 @@ const routes = [{
                 path: "my-zoom-account",
                 component: UserProfile_ZoomAccount,
                 name: 'UserProfile_ZoomAccount'
+            },
+            {
+                path: "my-call-log",
+                component: UserProfile_CallLogs,
+                name: 'UserProfile_CallLogs'
+            },
+            {
+                path: "childs",
+                component: UserProfile_Childs,
+                name: 'UserProfile_Childs'
             },
 
         ]

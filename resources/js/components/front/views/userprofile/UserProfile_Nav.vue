@@ -21,16 +21,23 @@
           >إعدادات الحساب</router-link
         >
       </li>
-      <!-- <li>
-                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/" @click.native="closeNavMenu"
-                    >حساب الطفل</router-link
-                >
-            </li>
-            <li>
-                <router-link class="d-block p-side-15 pt-10 pb-10 trans" to="/" @click.native="closeNavMenu"
-                    >الإستشارات</router-link
-                >
-            </li> -->
+      <li v-if="userType == 'parent' " >
+        <router-link
+          class="d-block p-side-15 pt-10 pb-10 trans"
+          to="/profile/childs"
+          @click.native="closeNavMenu"
+        >
+          الأطفال</router-link
+        >
+      </li>
+      <li>
+        <router-link
+          class="d-block p-side-15 pt-10 pb-10 trans"
+          to="/"
+          @click.native="closeNavMenu"
+          >الإستشارات</router-link
+        >
+      </li>
       <li>
         <router-link
           class="d-block p-side-15 pt-10 pb-10 trans"
@@ -49,7 +56,6 @@
       </li>
       <template v-if="isSpecialist && canMakeCalls">
         <li>
-
           <span
             class="d-block p-side-15 pt-10 pb-10 trans pointer submenu-target"
             @click="collapseMenu('calls')"
@@ -73,18 +79,19 @@
                   >سجل المكالمات</router-link
                 >
               </li>
-                            <li>
+              <li>
                 <router-link
                   class="d-block p-side-15 pt-10 pb-10 trans"
                   to="/profile/my-zoom-account"
                   @click.native="closeNavMenu"
-                  > اعدادات <strong style="color:#2d8cff">Zoom</strong></router-link
+                >
+                  اعدادات
+                  <strong style="color: #2d8cff">Zoom</strong></router-link
                 >
               </li>
             </aside>
           </transition>
         </li>
-
       </template>
       <!-- if user not specialist (parents,others) -->
       <li v-else>
@@ -106,17 +113,7 @@
       <li class="mo">
         <button
           @click="logout"
-          class="
-            d-block
-            p-side-15
-            pt-10
-            pb-10
-            trans
-            bg-none
-            w-100
-            border-0
-            logout-btn
-          "
+          class="d-block p-side-15 pt-10 pb-10 trans bg-none w-100 border-0 logout-btn"
         >
           تسجيل خروج
         </button>
@@ -140,9 +137,9 @@ export default {
     isSpecialist() {
       return this.userType == "specialist";
     },
-    canMakeCalls(){
-      return this.$store.getters['user/userData'].canMakeCalls
-    }
+    canMakeCalls() {
+      return this.$store.getters["user/userData"].canMakeCalls;
+    },
   },
   methods: {
     closeNavMenu() {
