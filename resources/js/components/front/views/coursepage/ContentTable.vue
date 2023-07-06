@@ -43,10 +43,10 @@
                         <div class="play-video d-flex">
                             <img class="play-icon" :src="`/images/test-icon${isExamCompleted}.svg`" width="50" height="50" alt="" />
                             <div class="duration do">
-                                <span class="nowrap black-2">الإختبار</span>
+                                <span class="nowrap black-2"> أسئلة للتأمل</span>
                             </div>
                             <div class="video-name bold">
-                                <span class="mo black-2">الإختبار</span>
+                                <span class="mo black-2"> أسئلة للتأمل</span>
                             </div>
                         </div>
                     </router-link>
@@ -121,7 +121,7 @@ export default {
         getCourseVideoIcon(index){
             if (!this.courseData.isPurchased) {
                 return `/images/lock-icon.svg`
-            }   
+            }
             if (
                 index == 0 ||
                 // this.courseData.course_progress[index].is_complete == 1 ||
