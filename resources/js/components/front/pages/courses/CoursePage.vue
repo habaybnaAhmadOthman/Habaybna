@@ -118,7 +118,7 @@ export default {
                     active: false
                 },
                 {
-                    title: 'الدروس' ,
+                    title: 'الحلقات' ,
                     name: 'table',
                     active: true
                 },

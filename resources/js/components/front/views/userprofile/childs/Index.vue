@@ -209,7 +209,7 @@
                 </div>
               </div>
               <img
-                :src="image"
+                :src="`${selectedChild.photo !== 'default.jpg' ? selectedChild.photo : image}`"
                 width="45"
                 height="45"
                 class="pointer user-avatar user-avatar-get radius-60 object-fit"
@@ -427,7 +427,12 @@
                   <div class="child-info">
                     <div class="child-name">
                       <p>
-                        <a @click="showModal = true">
+                        <a
+                          @click="
+                            showModal = true;
+                            image = '/images/avatars/default.jpg';
+                          "
+                        >
                           <strong>+</strong> أضف طفل</a
                         >
                       </p>
@@ -463,10 +468,8 @@ export default {
     this.callApi("get", "/api/profile/get-childs").then((resp) => {
       this.childs = resp.data;
     });
-    this.$store.dispatch("courses/getCategories").then((resp) => {
-      if (resp.length > 0) {
-        this.intersets = resp;
-      }
+        this.callApi("get", "/api/get-selected-categories").then((resp) => {
+       this.intersets = resp.data;
     });
   },
   data() {
@@ -494,11 +497,9 @@ export default {
 
   methods: {
     async handelShowInterests() {
-      this.$store.dispatch("courses/getCategories").then((resp) => {
-        if (resp.length > 0) {
-          this.intersets = resp;
-        }
-      });
+        this.callApi("get", "/api/get-selected-categories").then((resp) => {
+       this.intersets = resp.data;
+    });
     },
     chooseImage() {
       if (this.showModalEdit) {
@@ -509,27 +510,21 @@ export default {
     },
     onSelectFile() {
       if (this.showModalEdit) {
-        console.log("editable photo");
         const input = this.$refs.fileInputedit;
         const files = input.files;
-        console.log("editable file", files);
         if (files && files[0]) {
-          console.log(" in in files", files[0]);
           this.editChildPhoto = files[0];
 
           const reader = new FileReader();
           reader.onload = (e) => {
-            console.log(" in in files", files[0]);
-
+            this.selectedChild.photo = e.target.result
             this.image = e.target.result;
           };
-          console.log(" in in files", files[0]);
 
           reader.readAsDataURL(files[0]);
           this.$emit("input", files[0]);
         }
       } else {
-        console.log("else");
         const input = this.$refs.fileInput;
         const files = input.files;
         if (files && files[0]) {
@@ -556,16 +551,19 @@ export default {
         JSON.stringify(this.childInfo.selectedIntersests)
       );
       this.callApi("post", "/api/profile/add-child", childData).then((resp) => {
-        console.log(resp);
         if (resp.status == 200) {
-            this.childs = resp.data,
-            this.childInfo.name = ""
-            this.childInfo.photo = "",
+
+          this.childs = resp.data,
+          this.childInfo.name = "";
+          this.childInfo.photo = "",
             this.childInfo.dob = "",
             this.childInfo.gender = "",
             this.childInfo.otherInfo = "",
-            this.childInfo.selectedIntersests = "",
+            this.childInfo.selectedIntersests = [],
             this.showModal = false;
+          this.showInterests = false;
+          this.showInterests = false
+
         }
         if (resp.status == 201) {
           alert("يمكنك اضافة خمسة اطفال كحد اعلى");
@@ -574,21 +572,16 @@ export default {
       });
     },
     handelEditChild(index) {
+        this.selectedChildIndex = index;
       this.showModalEdit = true;
       this.selectedChild = this.childs[index];
-      this.image = this.selectedChild.photo;
-      this.selectedChildIndex = index;
-      console.log("selected child : ", this.selectedChild);
+    //   this.image = this.selectedChild.photo;
     },
     handelDeleteChild(index) {
       this.showModalDelete = true;
       this.selectedChild = this.childs[index];
     },
     editChild() {
-      console.log(
-        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-        this.editChildPhoto
-      );
       const childDataed = new FormData();
       childDataed.append("name", this.selectedChild.name);
       childDataed.append("id", this.selectedChild.id);
@@ -611,10 +604,6 @@ export default {
             this.childs = resp.data;
             this.childInfo.photo = null;
           }
-          //   if (resp.status == 201) {
-          //     alert("يمكنك اضافة خمسة اطفال كحد اعلى");
-          //     this.showModal = false;
-          //   }
         }
       );
     },

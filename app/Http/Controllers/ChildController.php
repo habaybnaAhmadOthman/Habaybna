@@ -52,12 +52,14 @@ class ChildController extends Controller
             $child->photo = $path;
             $child->save();
         }
-                $chidls = DB::table('users')
-                                ->join('children','users.id','=','children.user_id')
-                                ->where('users.id',Auth::id())
-                                ->select('children.*')
-                                ->get();
-        return response($chidls, 200);
+                // $chidls = DB::table('users')
+                //                 ->join('children','users.id','=','children.user_id')
+                //                 ->where('users.id',Auth::id())
+                //                 ->select('children.*')
+                //                 ->get();
+        $childs = Auth::user()->children()->where('status',1)->orderByDesc('id')->get() ;
+
+        return response($childs, 200);
 
 
 
@@ -85,7 +87,14 @@ class ChildController extends Controller
             $child->photo = $path;
             $child->save();
         }
-        return response($parent->children, 200);
+        // $chidls = DB::table('users')
+        // ->join('children','users.id','=','children.user_id')
+        // ->where('users.id',Auth::id())
+        // ->select('children.*')
+        // ->get();
+        $childs = Auth::user()->children()->where('status',1)->orderByDesc('id')->get() ;
+
+        return response($childs, 200);
     }
 
     public function delete(Request $request)

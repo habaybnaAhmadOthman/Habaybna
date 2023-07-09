@@ -249,6 +249,7 @@ Route::post('register','AuthController@signup')->name('user.register');
 Route::post('login','AuthController@login')->name('user.login');
 Route::get('all-courses','CourseController@getAllcourses')->name('getAllcourses');
 Route::get('get-categories','CategoriesController@index');
+Route::get('get-selected-categories','CategoriesController@getSelectedCategories');
 // Route::get('/check-user-authentication',CheckUserAuth::class);
 Route::post('/payment/course','PaymentController@coursePaymentCallback');
 Route::post('/payment/call','PaymentController@callPaymentCallback');
