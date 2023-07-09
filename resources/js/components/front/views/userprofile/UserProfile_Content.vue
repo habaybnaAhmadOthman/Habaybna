@@ -11,7 +11,6 @@
         </div>
     </div>
 </template>
-
 <script>
 import FixedHeadWithLeftSide from '../../layouts/header/FixedHead.vue'
 export default {

@@ -9,7 +9,7 @@
                     </div>
                     <div class="d-flex details white font-20 pb-10 w-100-p space-between">
                         <p class="d-flex align-center icon ml-20 m-0-p"><img class="ml-10" src="/images/time-icon.svg" width="31" height="31" alt=""><span class="ml-5">{{ getTime }}</span></p>
-                        <p class="d-flex align-center icon ml-20 m-0-p" v-if="!isLectureFn"><img class="ml-10 video" src="/images/video-svgrepo.svg" width="39" height="34" alt="">{{videosCount}} الحلقات</p>
+                        <p class="d-flex align-center icon ml-20 m-0-p" v-if="!isLectureFn"><img class="ml-10 video" src="/images/video-svgrepo.svg" width="39" height="34" alt="">{{videosCount}} حلقة</p>
                         <p class="d-flex align-center icon pointer" v-if="!isLectureFn" @click="openShareModal"><img class="ml-10 share" src="/images/share-icon.svg" width="34" height="36" alt="">مشاركة</p>
                     </div>
                 </div>
