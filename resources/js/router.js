@@ -94,6 +94,12 @@ import AlEtihad from "./components/front/pages/AlEtihad.vue";
 import Consultations from "./components/front/pages/Consultations.vue";
 import NSBirthday from "./components/front/pages/NSBirthday.vue";
 import NSBirthdayStatus from "./components/front/pages/NSBirthdayStatus.vue";
+
+// Subsicribe
+import Subscribe from "./components/front/pages/Subscribe.vue";
+import SubscriberStatus from "./components/front/pages/SubscriberStatus.vue";
+
+
 import TermsPage from "./components/front/pages/TermsPage.vue";
 import TermsEnPage from "./components/front/pages/TermsEnPage.vue";
 import AboutPage from "./components/front/pages/AboutHabaybna.vue";
@@ -382,6 +388,10 @@ const routes = [{
         component: NSBirthday
     },
     {
+        path: "/subscribe",
+        component: Subscribe
+    },
+    {
         path: "/terms-and-conditions",
         component: TermsPage
     },
@@ -590,8 +600,10 @@ const routes = [{
     {
         path: "/gift-payment-status",
         component: NSBirthdayStatus,
-
-
+    },
+    {
+        path: "/subscribe-status",
+        component: SubscriberStatus,
     },
     {
         path: "/course/:course/certificate",

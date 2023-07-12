@@ -280,8 +280,11 @@ Route::post('/payment/gift','HomeController@giftPaymentCallback');
 Route::get('/get-gift-payment-status','HomeController@checkGiftStatus');
 Route::get("/get-users-gift","HomeController@getGifts");
 
+// subscriber
 
-
+Route::post('/subscribe','SbuscribeController@store');
+Route::post('/payment/subscribe','SbuscribeController@subscribPaymentCallback');
+Route::get('/get-subscribe-payment-status','SbuscribeController@checkPaymentStatus');
 
 
 
