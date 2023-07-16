@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sbuscribe;
+use Carbon\Carbon;
 
 class SbuscribeController extends Controller
 {
+    public function index()
+    {
+        return Sbuscribe::orderBy('id','DESC')->paginate(10);
+    }
     public function store(Request $request)
     {
         try {
@@ -72,12 +77,14 @@ class SbuscribeController extends Controller
             $subscriber->card_holder_name = $request->Response_CardHolderName;
             $subscriber->card_number = $request->Response_CardNumber;
 
+            // if($request->Response_StatusCode == "00000") {
+                $subscriber->start_at = Carbon::now()->toDateTimeString();
+            // }
+
             $subscriber->save();
         }
-        if($subscriber->status) {
-        return redirect()->to('subscribe-status')->send();
 
-        }
+
         return redirect()->to('subscribe-status')->send();
 
 

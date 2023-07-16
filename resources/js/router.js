@@ -14,6 +14,7 @@ import AdminDashboard from "./components/admin/AdminDashboard.vue";
 import Courses from "./components/admin/Courses.vue";
 import Calls from "./components/admin/calls/Calls.vue";
 import CallsRequests from "./components/admin/callsRequests/Calls.vue";
+import SubscribersIndex from "./components/admin/subscribers/Index.vue";
 import Media from "./components/admin/media/Index.vue";
 import ShowMedia from "./components/admin/media/Show.vue";
 import CreateMedia from "./components/admin/media/Create.vue";
@@ -145,6 +146,11 @@ const routes = [{
         path: "/admin/courses",
         component: Courses,
         name: "Courses"
+    },
+    {
+        path: "/admin/subscribers",
+        component: SubscribersIndex,
+        name: "SubscribersIndex"
     },
     {
         path: "/admin/testimonials",
