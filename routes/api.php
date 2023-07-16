@@ -53,6 +53,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post("/comment/comment-status","CommunityController@changeCommentStatus");
         Route::post("/specialist-can-make-comment","CommunityController@specialistPermesion");
 
+        // subscribers
+        Route::get("/subscribers","SbuscribeController@index");
+
 
         // birthday naddem siraj
         Route::get("/get-gifts","HomeController@getGifts");

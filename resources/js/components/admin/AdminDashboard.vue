@@ -77,6 +77,10 @@ footer {
                 <router-link to="/admin/others"> الاخرون </router-link>
               </MenuItem>
             </Submenu>
+            <MenuItem name="12">
+              <Icon type="ios-subscribe" size="24" />
+              <router-link to="/admin/subscribers"> الاشتراكات </router-link>
+            </MenuItem>
             <Submenu name="1">
               <template slot="title">
                 <Icon type="ios-videocam-outline" size="24" />
@@ -161,7 +165,7 @@ footer {
             <MenuItem name="11">
               <Icon type="ios-at-outline" size="24" />
               <router-link to="/admin/habaybna-community">
-                 مجتمع حبايبنا
+                مجتمع حبايبنا
               </router-link>
             </MenuItem>
             <!-- <MenuItem name="10">
