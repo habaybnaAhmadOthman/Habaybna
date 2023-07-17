@@ -1,7 +1,7 @@
 <template>
   <div class="terms-page">
     <TheHeader />
-    <div class="container birthday  ">
+    <div class="container birthday">
       <!-- <img
             src="/images/siteImgs/Green Minimalist Happy Birthday Card.jpg"
             alt=""
@@ -16,7 +16,7 @@
           <form @submit.prevent class="col-md-6 center p-10">
             <div class="form-group mb-10">
               <input
-              required
+                required
                 v-model="name"
                 class="form-control w-100 pr-20"
                 type="text"
@@ -28,7 +28,7 @@
             </div>
             <div class="form-group mb-20">
               <input
-              required
+                required
                 v-model="email"
                 class="form-control w-100 pr-20"
                 type="email"
@@ -40,17 +40,19 @@
             </div>
             <div class="form-group mb-10">
               <input
-              required
+                required
                 v-model="phoneNumber"
                 class="form-control w-100 pr-20"
                 type="text"
-                placeholder='رقم الهاتف مثال    971xxxxxxxxx+'
+                :placeholder="info.placeHolder"
               />
               <span v-if="!validation.phoneNumber" class="gift-validation"
                 >هذا الحقل مطلوب</span
               >
             </div>
-            <button class="btn gift mt-20" @click="subscribe()">أكمل الدفع</button>
+            <button class="btn gift mt-20" @click="subscribe()">
+              أكمل الدفع
+            </button>
           </form>
         </div>
       </div>
@@ -62,12 +64,12 @@
       :action="paymentData.RedirectURL"
       @submit.prevent="submitForm"
     >
-      <input type="hidden" name="Amount" :value="paymentData.Amount" />
+      <input type="hidden" name="Amount" :value="info.amount ?? false" />
       <input type="hidden" name="Channel" :value="paymentData.Channel" />
       <input
         type="hidden"
         name="CurrencyISOCode"
-        :value="paymentData.CurrencyISOCode"
+        :value="info.currency"
       />
       <input type="hidden" name="Language" :value="paymentData.Language" />
       <input type="hidden" name="MerchantID" :value="paymentData.MerchantID" />
@@ -106,6 +108,7 @@ export default {
   components: { TheHeader, TheFooter },
   data() {
     return {
+      countries: ["uae", "ksa", "other"],
       name: null,
       email: null,
       phoneNumber: "",
@@ -115,21 +118,34 @@ export default {
         email: true,
         phoneNumber: true,
       },
+      info_c: [
+        {
+          count: "uae",
+          placeHolder: "رقم الهاتف مثال    971xxxxxxxxx+",
+          phoneValidation: "/+971([d]{9})/",
+          amount: 22000,
+          currency: "784",
+        },
+        {
+          count: "ksa",
+          placeHolder: "رقم الهاتف مثال    966xxxxxxxxx+",
+          phoneValidation: "/+966([d]{9})/",
+          amount: 22000,
+          currency: "682",
+        },
+        {
+          count: "other",
+          placeHolder: "رقم الهاتف مثال  (123)545456789+",
+          phoneValidation: "/+{3}([d]{9})/",
+          amount: 560,
+          currency: "840",
+        },
+      ],
       paymentData: null,
       PaymentFormIsRedy: false,
     };
   },
   methods: {
-    getUserList() {
-      const resp = this.callApi("get", "/api/get-users-gift?success=1").then(
-        (res) => {
-          if (res.status == 200) {
-            this.users = res.data;
-          }
-        }
-      );
-    },
-
     subscribe() {
       this.giftValidation();
       if (this.canSubscribe) {
@@ -139,19 +155,17 @@ export default {
           phone: this.phoneNumber,
         };
         let self = this;
-        const resp = this.callApi("post", "/api/subscribe", Obj).then(
-          (res) => {
-            console.log("res");
-            if (res.status == 200) {
-              console.log("xxxxxxxx",res);
-              this.paymentData = res.data;
-              this.PaymentFormIsRedy = true;
-              setTimeout(() => {
-                this.submitForm();
-              }, 1500);
-            }
+        const resp = this.callApi("post", "/api/subscribe", Obj).then((res) => {
+          console.log("res");
+          if (res.status == 200) {
+            console.log("xxxxxxxx", res);
+            this.paymentData = res.data;
+            this.PaymentFormIsRedy = true;
+            setTimeout(() => {
+              this.submitForm();
+            }, 1500);
           }
-        );
+        });
       }
     },
     submitForm() {
@@ -172,9 +186,10 @@ export default {
         this.validation.email = true;
         this.canSubscribe = true;
       }
-      var phoneno = /\+971([\d]{9})/
-;
-      if (this.phoneNumber == "" || !this.phoneNumber.match(phoneno)) {
+      if (
+        this.phoneNumber == "" ||
+        !this.phoneNumber.match(this.phoneValidation)
+      ) {
         this.validation.phoneNumber = false;
         this.canSubscribe = false;
       } else {
@@ -184,6 +199,49 @@ export default {
     },
   },
   mounted() {
+    // console.log(this.isUae, this.country, "xxzz", this.info.amount);
+  },
+  computed: {
+    country() {
+      return this.countries.includes(this.$route.query.cou)
+        ? this.$route.query.cou
+        : "other";
+    },
+
+    isUae() {
+      return this.country == "uae" ?? false;
+    },
+    isKsa() {
+      return this.country == "ksa" ?? false;
+    },
+    phoneValidation() {
+      if (this.isUae) {
+        return /\+971([\d]{9})/;
+      }
+      if (this.isKsa) {
+        return /\+966([\d]{9})/;
+      }
+      return /\+{3}([\d]{9})/;
+    },
+    phonePlaceHolder() {
+      if (this.isUae) {
+        return "رقم الهاتف مثال    971xxxxxxxxx+";
+      }
+      if (this.isKsa) {
+        return "رقم الهاتف مثال    966+";
+      }
+      return "رقم الهاتف مثال    xxxxxxxxxxxx+";
+    },
+    info() {
+      let data = null;
+
+      this.info_c.forEach((one) => {
+        if (one.count == this.country) {
+          data = one;
+        }
+      });
+      return data;
+    },
   },
 };
 </script>

@@ -23,6 +23,8 @@ import ShowPartners from "./components/admin/partners/Show.vue";
 import CreatePartners from "./components/admin/partners/Create.vue";
 import ContactUs from "./components/admin/contactUs/ContactUs.vue";
 import Parents from "./components/admin/parent/Parents.vue";
+import Children from "./components/admin/children/Index.vue";
+import Child from "./components/admin/children/Show.vue";
 import CreateParent from "./components/admin/parent/Create.vue";
 import CreateCoupon from "./components/admin/coupon/Create.vue";
 import CoursesOrders from "./components/admin/orders/courses/Index.vue";
@@ -188,6 +190,16 @@ const routes = [{
         path: "/admin/partners",
         component: Partners,
         name: "Partners"
+    },
+    {
+        path: "/admin/children",
+        component: Children,
+        name: "Children"
+    },
+    {
+        path: "/admin/child/:data",
+        component: Child,
+        name: "Child"
     },
     {
         path: "/admin/partner-create",
@@ -395,6 +407,7 @@ const routes = [{
     },
     {
         path: "/subscribe",
+        query:{cou:':cou'} ,
         component: Subscribe
     },
     {
