@@ -18,6 +18,11 @@ class Child extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(ParentUsers::class,'user_id');
+    }
+
     public function getDobAttribute($value)
     {
 

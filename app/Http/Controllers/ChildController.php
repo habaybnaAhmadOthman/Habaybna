@@ -19,7 +19,8 @@ class ChildController extends Controller
     public $parent ;
     public function __construct()
     {
-        $this->middleware(['auth', 'parent']);
+
+        // $this->middleware(['auth', 'parent','isAdmin']);
 
     }
     public function index()
@@ -28,6 +29,16 @@ class ChildController extends Controller
         return response($childs, 200);
     }
 
+    public function show($id)
+    {
+        // dd($id);
+       return Child::findorfail($id);
+    }
+    public function allchilds()
+    {
+       return Child::orderBy('id','DESC')->paginate(10);
+
+    }
     public function store(Request $request)
     {
         // json_decode($parent->children()->find(3)->interests)  ;

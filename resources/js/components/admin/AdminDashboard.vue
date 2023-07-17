@@ -61,39 +61,42 @@ footer {
           <Menu theme="light" width="auto" :open-names="[]">
             <Submenu name="2">
               <template slot="title">
-                <Icon type="ios-people" size="24" :style="{ margin: '1px' }" />
                 ادارة المستخدمين
+                <Icon type="ios-people" size="24" :style="{ margin: '1px' }" />
               </template>
               <MenuItem name="2-1">
-                <Icon type="ios-contacts" size="16" />
                 <router-link to="/admin/parents"> الأهالي </router-link>
+                <Icon type="ios-contacts" size="16" />
               </MenuItem>
               <MenuItem name="2-2">
-                <Icon type="md-contact" size="16" />
                 <router-link to="/admin/specialist"> الأخصائيين </router-link>
+                <Icon type="md-contact" size="16" />
               </MenuItem>
               <MenuItem name="2-3">
-                <Icon type="ios-people" size="16" />
                 <router-link to="/admin/others"> الاخرون </router-link>
+                <Icon type="ios-people" size="16" />
+              </MenuItem>
+              <MenuItem name="2-3">
+                <router-link to="/admin/children"> الأطفال </router-link>
+                <Icon type="ios-people" size="16" />
               </MenuItem>
             </Submenu>
             <MenuItem name="12">
-              <Icon type="ios-subscribe" size="24" />
               <router-link to="/admin/subscribers"> الاشتراكات </router-link>
+              <Icon type="md-notifications-outline" size="24" />
             </MenuItem>
             <Submenu name="1">
               <template slot="title">
-                <Icon type="ios-videocam-outline" size="24" />
                 الدورات التدريبية
+                <Icon type="ios-videocam-outline" size="24" />
               </template>
               <MenuItem name="1-1">
                 <Icon type="ios-videocam-outline" size="24" />
                 <router-link to="/admin/courses">
-                  جميع الدورات التدريبية</router-link
-                >
+                  جميع الدورات التدريبية
+                </router-link>
               </MenuItem>
               <MenuItem name="1-2">
-                <Icon type="ios-videocam-outline" size="24" />
                 <router-link to="/admin/courses/users-progress">
                   الدورات-حالة المستخدمين</router-link
                 >
@@ -101,72 +104,72 @@ footer {
             </Submenu>
 
             <MenuItem name="3">
-              <Icon type="ios-code" size="24" />
               <router-link to="/admin/coupons"> الكوبونات </router-link>
+              <Icon type="ios-code" size="24" />
             </MenuItem>
             <MenuItem name="4">
-              <Icon type="ios-call-outline" size="24" />
               <router-link to="/admin/calls"> المكالمات </router-link>
+              <Icon type="ios-call-outline" size="24" />
             </MenuItem>
             <MenuItem name="4">
-              <Icon type="ios-call-outline" size="24" />
               <router-link to="/admin/calls-requests">
                 طلبات المكالمات
               </router-link>
+              <Icon type="ios-call-outline" size="24" />
             </MenuItem>
             <Submenu name="5">
               <template slot="title">
+                طلبات الشراء
                 <Icon
                   type="ios-paper-outline"
                   size="24"
                   :style="{ margin: '1px' }"
                 />
-                طلبات الشراء
               </template>
               <MenuItem name="5-1">
-                <Icon type="ios-videocam" size="16" />
                 <router-link to="/admin/orders/courses-orders">
                   دورات تدريبية
                 </router-link>
+                <Icon type="ios-videocam" size="16" />
               </MenuItem>
               <MenuItem name="5-2">
-                <Icon type="ios-call" size="16" />
                 <router-link to="/admin/orders/courses-orders">
                   مكالمات
                 </router-link>
+                <Icon type="ios-call" size="16" />
               </MenuItem>
             </Submenu>
             <MenuItem name="6">
-              <Icon type="ios-call" size="16" />
               <router-link to="/admin/contents"> المحتوى </router-link>
+              <Icon type="ios-call" size="16" />
             </MenuItem>
             <MenuItem name="7">
-              <Icon type="ios-call" size="16" />
               <router-link to="/admin/content-new"> المحتوى جديد </router-link>
+              <Icon type="ios-call" size="16" />
             </MenuItem>
             <MenuItem name="8">
-              <Icon type="ios-call" size="16" />
               <router-link to="/admin/contact-us"> تواصل معنا </router-link>
+              <Icon type="ios-call" size="16" />
             </MenuItem>
             <MenuItem name="9">
-              <Icon type="ios-call" size="16" />
               <router-link to="/admin/media">التغطية الاعلامية </router-link>
+              <Icon type="ios-call" size="16" />
             </MenuItem>
             <MenuItem name="11">
-              <Icon type="ios-call" size="16" />
               <router-link to="/admin/partners">الشركاء </router-link>
+              <Icon type="ios-call" size="16" />
             </MenuItem>
             <MenuItem name="10">
-              <Icon type="ios-at-outline" size="24" />
               <router-link to="/admin/testimonials">
                 اراء المستخدمين
               </router-link>
+              <Icon type="ios-at-outline" size="24" />
             </MenuItem>
             <MenuItem name="11">
-              <Icon type="ios-at-outline" size="24" />
               <router-link to="/admin/habaybna-community">
                 مجتمع حبايبنا
               </router-link>
+              <Icon type="ios-at-outline" size="24" />
             </MenuItem>
             <!-- <MenuItem name="10">
               <Icon type="ios-at-outline" size="24" />

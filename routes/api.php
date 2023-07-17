@@ -55,6 +55,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // subscribers
         Route::get("/subscribers","SbuscribeController@index");
+        Route::get("/children","ChildController@allchilds");
+        Route::get("/child/{id}","ChildController@show");
 
 
         // birthday naddem siraj
