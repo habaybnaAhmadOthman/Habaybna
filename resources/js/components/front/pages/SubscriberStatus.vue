@@ -2,16 +2,20 @@
   <div class="terms-page">
     <TheHeader />
     <div class="container birthday">
+      <div v-if="paymentStatus" class="gift-payment-status success">
+        <img src="/images/success-icon.png" alt="" />
 
-      <div v-if="paymentStatus" class="gift-payment-status success mt-50">
-
-        <h4> عملية الدفع ناجحة اذهب الي صفحة التسجيل</h4>
-        <a href="/signup"> صفحة التسجيل </a>
+        <h4>عملية دفع ناجحة</h4>
+        <p>سنقوم بتحويلك الى صفحة التسجيل</p>
+        <h4>شكرا لك</h4>
       </div>
-      <div v-else class="gift-payment-status success">
+      <div
+        v-if="paymentStatus == false"
+        class="gift-payment-status success mt-20"
+      >
         <img src="/images/siteImgs/gift-faild.png" alt="" />
 
-        <h4>عملية الدفع فشلت</h4>
+        <h4 class="mt-20">عملية الدفع قد فشلت</h4>
       </div>
     </div>
 
@@ -38,27 +42,26 @@ export default {
       this.isLoading(true);
       axios({ method: "GET", url: "/api/get-subscribe-payment-status" }).then(
         (res) => {
-          console.log(res);
           if (res.data == "faild") {
-            //   this.paymentStatus = false;
-            // document.documentElement.scrollTop = document.body.scrollTop = 1300;
-
-            // this.$router.replace(`/specialist/${res.data.slug}?payment=false`);
-            this.isLoading(false);
-                        setTimeout(() => {
-            // this.$router.replace("/Nadeem-Sirajs-Birthday-Gift");
-
+            setTimeout(() => {
+              this.paymentStatus = false;
+            }, 500);
+            setTimeout(() => {
+              this.$router.replace("/subscribe?cou=other");
             }, 2500);
+
+            // document.documentElement.scrollTop = document.body.scrollTop = 1000;
           } else {
-            this.paymentStatus = true;
-            document.documentElement.scrollTop = document.body.scrollTop = 1300;
+            setTimeout(() => {
+              this.paymentStatus = true;
+            }, 500);
+            // document.documentElement.scrollTop = document.body.scrollTop = 1000;
 
             setTimeout(() => {
-            this.$router.replace("/signup");
-
+              this.$router.replace("/signup");
             }, 2500);
-            this.isLoading(false);
           }
+          this.isLoading(false);
         }
       );
     },
@@ -101,9 +104,9 @@ h1 {
   /* background-color: #e0f2f2; */
   direction: ltr;
 }
-.birthday img {
+/* .birthday img {
   width: 100%;
-}
+} */
 .birthday p {
   font-size: 27px;
   margin: 16px 0;
@@ -168,7 +171,7 @@ h1 {
 }
 .gift-payment-status {
   max-width: 50%;
-  margin: auto;
+  margin: 20px auto;
   text-align: center;
   font-size: 24px;
 }

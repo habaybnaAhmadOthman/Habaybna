@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sbuscribe;
 use Carbon\Carbon;
+use Stevebauman\Location\Facades\Location;
 
 class SbuscribeController extends Controller
 {
@@ -22,7 +23,7 @@ class SbuscribeController extends Controller
             $subscriber->email = $request->email;
             $subscriber->phone = $request->phone;
             $subscriber->transactionID = (int)microtime(true)*1000; //output to be like: 1495004320389
-
+            $subscriber->country = $this->getUserCountry(request()->ip());
             $subscriber->save();
 
             $back_url = url('/api/payment/subscribe');
@@ -36,9 +37,9 @@ class SbuscribeController extends Controller
             //   $initOrder = $this->createInitOrder($data, $transactionId);
                 $parameters = [];
                 // fill required parameters
-                $parameters["Amount"] =220 * 100;
+                $parameters["Amount"] =$request->info['amount'];
                 $parameters["Channel"] = "0";
-                $parameters["CurrencyISOCode"] = "784"; // for uae
+                $parameters["CurrencyISOCode"] = $request->info['currency']; // for uae
                 $parameters["Language"] = "en";
                 $parameters["MerchantID"] = config('appconfig.stsmerchantid');
                 $parameters["MessageID"] = "1";
@@ -76,10 +77,13 @@ class SbuscribeController extends Controller
             $subscriber->status = $request->Response_StatusCode == "00000" ? true : false ;
             $subscriber->card_holder_name = $request->Response_CardHolderName;
             $subscriber->card_number = $request->Response_CardNumber;
+            $subscriber->amount = $request->Response_Amount;
+            $subscriber->secure_hash = $request->Response_SecureHash;
+            $subscriber->approval_code = $request->Response_ApprovalCode ;
 
-            // if($request->Response_StatusCode == "00000") {
+            if($request->Response_StatusCode == "00000") {
                 $subscriber->start_at = Carbon::now()->toDateTimeString();
-            // }
+            }
 
             $subscriber->save();
         }
@@ -98,5 +102,10 @@ class SbuscribeController extends Controller
         return response($status,
         200
        );
+    }
+
+    private function getUserCountry($ip)
+    {
+        return serialize(Location::get($ip));
     }
 }
