@@ -64,13 +64,9 @@
       :action="paymentData.RedirectURL"
       @submit.prevent="submitForm"
     >
-      <input type="hidden" name="Amount" :value="info.amount ?? false" />
+      <input type="hidden" name="Amount" :value="paymentData.Amount" />
       <input type="hidden" name="Channel" :value="paymentData.Channel" />
-      <input
-        type="hidden"
-        name="CurrencyISOCode"
-        :value="info.currency"
-      />
+      <input type="hidden" name="CurrencyISOCode" :value="paymentData.CurrencyISOCode" />
       <input type="hidden" name="Language" :value="paymentData.Language" />
       <input type="hidden" name="MerchantID" :value="paymentData.MerchantID" />
       <input type="hidden" name="MessageID" :value="paymentData.MessageID" />
@@ -122,22 +118,22 @@ export default {
         {
           count: "uae",
           placeHolder: "رقم الهاتف مثال    971xxxxxxxxx+",
-          phoneValidation: "/+971([d]{9})/",
+          phoneValidation: /\+971([\d]{9})/,
           amount: 22000,
           currency: "784",
         },
         {
           count: "ksa",
           placeHolder: "رقم الهاتف مثال    966xxxxxxxxx+",
-          phoneValidation: "/+966([d]{9})/",
+          phoneValidation:/\+966([\d]{9})/,
           amount: 22000,
           currency: "682",
         },
         {
           count: "other",
           placeHolder: "رقم الهاتف مثال  (123)545456789+",
-          phoneValidation: "/+{3}([d]{9})/",
-          amount: 560,
+          phoneValidation: /\+[0-9]{1,3}([\d]{9})/,
+          amount: 5600,
           currency: "840",
         },
       ],
@@ -153,12 +149,11 @@ export default {
           name: this.name,
           email: this.email,
           phone: this.phoneNumber,
+          info: this.info,
         };
         let self = this;
         const resp = this.callApi("post", "/api/subscribe", Obj).then((res) => {
-          console.log("res");
           if (res.status == 200) {
-            console.log("xxxxxxxx", res);
             this.paymentData = res.data;
             this.PaymentFormIsRedy = true;
             setTimeout(() => {
@@ -169,7 +164,7 @@ export default {
       }
     },
     submitForm() {
-      console.log(this.$refs.birthday.submit());
+      this.$refs.birthday.submit();
     },
     giftValidation() {
       if (this.name == null) {
@@ -188,7 +183,7 @@ export default {
       }
       if (
         this.phoneNumber == "" ||
-        !this.phoneNumber.match(this.phoneValidation)
+        !this.phoneNumber.match(this.info.phoneValidation)
       ) {
         this.validation.phoneNumber = false;
         this.canSubscribe = false;
@@ -199,7 +194,6 @@ export default {
     },
   },
   mounted() {
-    // console.log(this.isUae, this.country, "xxzz", this.info.amount);
   },
   computed: {
     country() {
