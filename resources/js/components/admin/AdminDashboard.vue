@@ -107,6 +107,14 @@ footer {
               <router-link to="/admin/coupons"> الكوبونات </router-link>
               <Icon type="ios-code" size="24" />
             </MenuItem>
+            <MenuItem name="3">
+              <router-link to="/admin/categories"> التصنيفات </router-link>
+              <Icon type="ios-code" size="24" />
+            </MenuItem>
+            <MenuItem name="3">
+              <router-link to="/admin/comming-soon"> Comming soon </router-link>
+              <Icon type="ios-code" size="24" />
+            </MenuItem>
             <MenuItem name="4">
               <router-link to="/admin/calls"> المكالمات </router-link>
               <Icon type="ios-call-outline" size="24" />

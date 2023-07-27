@@ -31,7 +31,6 @@
 }
 input[type="file"] {
   padding: 10px;
-  background: #2d2d2d;
 }
 .content-container {
   /* display: flex; */

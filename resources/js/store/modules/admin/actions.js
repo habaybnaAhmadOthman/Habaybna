@@ -229,6 +229,15 @@ export default {
         return resp
 
     },
+    async createCommingSoon(context, payload) {
+        const resp = await callApi('POST', '/api/admin/comming-soon', payload)
+        if (resp.status != 200) {
+            const error = new Error("fail to update profile data");
+            throw error;
+        }
+        return resp
+
+    },
     async updatePartner(context, payload) {
         const resp = await callApi('POST', '/api/admin/edit-partner', payload)
         if (resp.status != 200) {

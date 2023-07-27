@@ -107,5 +107,6 @@ class SbuscribeController extends Controller
     private function getUserCountry($ip)
     {
         return serialize(Location::get($ip));
+        
     }
 }
