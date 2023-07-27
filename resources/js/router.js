@@ -21,6 +21,19 @@ import CreateMedia from "./components/admin/media/Create.vue";
 import Partners from "./components/admin/partners/Index.vue";
 import ShowPartners from "./components/admin/partners/Show.vue";
 import CreatePartners from "./components/admin/partners/Create.vue";
+
+// comming soon
+import CommingSoon from "./components/admin/commingsoon/Index.vue";
+import ShowCommingSoon from "./components/admin/commingsoon/Show.vue";
+import CreateCommingSoon from "./components/admin/commingsoon/Create.vue";
+
+
+// categories admin
+
+import Categories from "./components/admin/categories/Index.vue";
+import CreateCategories from "./components/admin/categories/Create.vue";
+
+///
 import ContactUs from "./components/admin/contactUs/ContactUs.vue";
 import Parents from "./components/admin/parent/Parents.vue";
 import Children from "./components/admin/children/Index.vue";
@@ -211,6 +224,41 @@ const routes = [{
         component: ShowPartners,
         name: "ShowPartners"
     },
+    // commingsoon
+    {
+        path: "/admin/comming-soon/create",
+        component: CreateCommingSoon,
+        name: "CreateCommingSoon"
+    },
+    {
+        path: "/admin/comming-soon/:data",
+        component: ShowCommingSoon,
+        name: "ShowCommingSoon"
+    },
+    {
+        path: "/admin/comming-soon",
+        component: CommingSoon,
+        name: "CommingSoon"
+    },
+    ///////////////////
+
+        // categories
+        {
+            path: "/admin/categories/create",
+            component: CreateCategories,
+            name: "CreateCategories"
+        },
+        // {
+        //     path: "/admin/comming-soon/:data",
+        //     component: Showcategories,
+        //     name: "Showcategories"
+        // },
+        {
+            path: "/admin/categories",
+            component: Categories,
+            name: "Categories"
+        },
+        ///////////////////
     {
         path: "/admin/parents",
         component: Parents,

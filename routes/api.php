@@ -58,6 +58,22 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get("/children","ChildController@allchilds");
         Route::get("/child/{id}","ChildController@show");
 
+        // comming soon
+
+        // manage categories
+
+        Route::get('/categories','CoursesCategoriesController@index');
+        Route::post('/categories/store','CoursesCategoriesController@store');
+        Route::post('/category/delete/{id}','CoursesCategoriesController@delete');
+
+        ////
+
+        Route::get("/comming-soon","CommingSoonController@index");
+        Route::post("/comming-soon","CommingSoonController@store");
+        Route::get("/comming-soon/{id}","CommingSoonController@show");
+        Route::post("/comming-soon/update","CommingSoonController@update");
+        Route::get("/comming-soon/delete/{id}","CommingSoonController@delete");
+
 
         // birthday naddem siraj
         Route::get("/get-gifts","HomeController@getGifts");

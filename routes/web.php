@@ -87,11 +87,11 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
 
     // courses categories
 
-    Route::get('/coursesCategories','CoursesCategoriesController@index')->name('coursesCategories');
-    Route::get('category/create','CoursesCategoriesController@create')->name('category.create');
-    Route::post('category/store','CoursesCategoriesController@store')->name('category.store');
-    Route::get('category/{id}/edit','CoursesCategoriesController@edit')->name('category.edit');
-    Route::post('category/update/{id}','CoursesCategoriesController@update')->name('category.update');
+    // Route::get('/coursesCategories','CoursesCategoriesController@index')->name('coursesCategories');
+    // Route::get('category/create','CoursesCategoriesController@create')->name('category.create');
+    // Route::post('category/store','CoursesCategoriesController@store')->name('category.store');
+    // Route::get('category/{id}/edit','CoursesCategoriesController@edit')->name('category.edit');
+    // Route::post('category/update/{id}','CoursesCategoriesController@update')->name('category.update');
     Route::view('{any}','admin.adminDashboard')->where('any','.*');
     });
     // Route::get('/pusher', function() {

@@ -69,7 +69,8 @@ export default {
       this.$store.commit("isLoading", status);
     },
     sendGift(amount) {
-      this.giftValidation();
+
+this.giftValidation();
       if (this.giftIsValid) {
         const Obj = {
           first: this.firstName,
@@ -105,7 +106,7 @@ h1 {
   direction: ltr;
 }
 /* .birthday img {
-  width: 100%;
+  width: 100%; 
 } */
 .birthday p {
   font-size: 27px;

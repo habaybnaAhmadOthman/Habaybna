@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 use App\CourseCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\CategoryCourse;
 
 
 
@@ -16,13 +17,14 @@ class CoursesCategoriesController extends Controller
 {
     public function index()
     {
-        $categories = CourseCategory::all();
-        return view('admin.couresesCategories.index',['categories'=>$categories]);
+        $categories = CourseCategory::orderBy('id','desc')->paginate(10);
+
+        return response($categories, 200);
     }
 
     public function create()
     {
-        return view('admin.couresesCategories.create');
+
     }
 
     public function store(Request $request)
@@ -35,12 +37,11 @@ class CoursesCategoriesController extends Controller
         $category = new CourseCategory();
 
         $category->title = $request->title ;
-        $category->status = 1 ;
+        $category->status = $request->status ;
 
         $category->save();
 
-        return redirect()->route('coursesCategories')
-        ->with('success',"Category Added scuccessfully");
+        return response($category, 200);
 
 
     }
@@ -62,8 +63,20 @@ class CoursesCategoriesController extends Controller
 
         $category->save();
 
-        return redirect()->route('coursesCategories')
-        ->with('success',"Category updated scuccessfully");
+        return response($category,200);
 
+    }
+
+    public function delete(Request $request , $id)
+    {
+        if(CategoryCourse::where('cat_id',$id)->count() > 0) {
+            foreach(CategoryCourse::where('cat_id',$id)->get() as $one){
+                $one->delete();
+            }
+        }
+
+        $category = CourseCategory::findorfail($id);
+
+        $category->delete();
     }
 }
