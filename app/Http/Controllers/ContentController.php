@@ -143,7 +143,7 @@ class ContentController extends Controller
 
       $contents = NewContent::with('intrests','author','isLiked')
       ->where('status',1)
-      ->inRandomOrder()
+      ->orderBy('id','desc')
       ;
 
         if(isset($request->filters) && $request->filters != null){

@@ -70,7 +70,7 @@ export default {
     return {
       allPosts: [],
       isLoading: false,
-      hideRoles: false,
+      hideRoles: true,
     };
   },
   methods: {
@@ -85,8 +85,11 @@ export default {
           alert(
             "اهلا بك في مجتمع حبايبنا . قم بتسجيل الدخول لتتمكن من التفاعل معنا"
           );
-        }, 3000);
+        }, 2000);
       }
+      setTimeout(() => {
+        this.hideRoles = false;
+      }, 4000);
     },
 
     handelNewPost(post) {
@@ -414,20 +417,32 @@ https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
 .roles {
   display: block;
   z-index: 999999999;
-  background-color: #ed8e00;
-  color: #fff;
+  background-color: #fff;
+  color: #625858;
   padding: 20px 16px;
   position: fixed;
   top: 32vh;
-  right: 39vw;
+  right: 36vw;
+  border: 1px solid #9c27b0;
   width: 373px;
-  border-radius: 3px;
+  box-shadow: #9c27b0 1px 2px 3px;
+  border-radius: 12px;
 }
 .roles .role-button {
   padding: 6px 0;
-  border: 0.5px solid #fff;
+  background-color: #87007a;
   text-align: center;
+  border-radius: 7px;
   margin: 20px;
+  color: #ffff;
+  font-weight: bold;
+}
+.roles .role-button:hover {
+  background-color: #fff;
+  margin: 20px;
+  color: #9c27b0;
+  font-weight: bold;
+  border: 2px solid #9c27b0;
 }
 @media only screen and (max-width: 767px) {
   .habaybna-community {
@@ -444,10 +459,6 @@ https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ */
     max-width: 100%;
   }
   .roles {
-    display: block;
-    z-index: 999999999;
-    background-color: #ed8e00;
-    color: #fff;
     padding: 2px 10px;
     position: fixed;
     top: 32vh;

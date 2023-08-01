@@ -5,17 +5,16 @@
         <div class="flex-all h-100">
           <div class="landing-call-links p-side-5">
             <h1 class="font-25 main-color bold font-18-p mb-25">
-              أهلاً بك في حبايبنا.نت
+              مساعدة الأطفال على التطور والنمو ليس أمراً سهلاً!
             </h1>
             <h2 class="font-20 font-16-p f-normal black">
-              مجتمع من المعرفة ونصائح الخبراء عن تطور الطفل‎
-            </h2>
+تعرفي من الخبراء على كافة احتياجات طفلك خلال مراحل نموه وكيف يمكنك مساعدته على التطور والتعلم            </h2>
             <SearchModal></SearchModal>
           </div>
         </div>
         <img
           class="landing-bg w-80-p mb-30-p"
-          src="images/siteImgs/Home page image.png"
+          src="images/siteImgs/Home page image02.jpg"
           alt=""
         />
       </div>

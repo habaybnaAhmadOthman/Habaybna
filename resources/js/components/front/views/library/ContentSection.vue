@@ -3,7 +3,7 @@
     <section class="learn-section mt-20">
       <div class="container p-side-12-p" :class="classList">
         <template v-if="title || !listOnly">
-          <h2 class="title-line mb-40 mb-20-p">مكتبة المعلومات</h2>
+          <h2 class="title-line mb-40 mb-20-p">مكتبة حبايبنا</h2>
         </template>
         <template v-if="!listOnly">
           <CategoryFilterSection :watch-url="true" @change-filter="setFilters" :api="api"></CategoryFilterSection>
@@ -124,7 +124,7 @@ export default {
               localStorage.removeItem('prev_page')
             }
         }
-        
+
         if (localStorage.getItem('prev_filters')) {
           this.activeFilters = localStorage.getItem('prev_filters');
           localStorage.removeItem('prev_filters')
@@ -156,7 +156,7 @@ export default {
             delete query.filters;
           }
         }
-          
+
 
         if (this.$router.currentRoute.query.page !== undefined) {
           if (this.$router.currentRoute.query.page != query.page)
@@ -169,7 +169,7 @@ export default {
         if (!isSameURL) {
           this.$router.replace({ query });
 
-        }        
+        }
       }
     },
     isLoading(status) {

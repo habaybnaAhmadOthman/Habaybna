@@ -31,7 +31,7 @@
                         <router-link
                             class="black-2 nowrap p-side-10 h-100 flex-all bold"
                             to="/online-courses"
-                            >الدورات الرقمية</router-link
+                            >الدورات </router-link
                         >
                         <router-link
                             class="black-2 nowrap p-side-10 h-100 flex-all bold"
@@ -41,7 +41,7 @@
                         <router-link
                             class="black-2 nowrap p-side-10 h-100 flex-all bold"
                             to="/library"
-                            >مكتبة المعلومات</router-link
+                            >مكتبة حبايبنا</router-link
                         >
                         <!-- <div class="dropdown relative h-100 flex-all">
                             <router-link

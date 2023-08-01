@@ -1,5 +1,5 @@
 <template>
-  <div class="search-form d-flex">
+  <div class="search-form d-flex ml-10 mr-10">
     <form @submit.prevent="getResults">
       <div style="position: relative">
         <input type="text" v-model="keyWord" placeholder="البحث" name="q" />
@@ -30,7 +30,7 @@ export default {
   methods: {
 
 
-        
+
 
 
 
@@ -68,7 +68,7 @@ export default {
   border-radius: 31px;
   width: 100%;
   color: #6e6d6d;
-  border: 1px solid #6e6d6d;
+  border: none;
 }
 .search-form img {
   position: absolute;
@@ -83,6 +83,7 @@ export default {
   .search-form input {
 padding: 14px 15px;
     font-size: 0.9rem;
+    height: 4rem;
   }
   .search-form img {
 left: 0.3rem;

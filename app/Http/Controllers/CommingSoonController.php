@@ -11,7 +11,7 @@ class CommingSoonController extends Controller
 {
     public function index()
     {
-        $data = CommingSoon::paginate(5);
+        $data = CommingSoon::paginate(10);
         return response($data, 200);
     }
 
@@ -72,6 +72,13 @@ class CommingSoonController extends Controller
         }
         return response($comming,200);
 
+    }
+
+    public function getCommingCourses()
+    {
+        $commingCourses = CommingSoon::where('status',1)->orderBy('order')->limit(10)->get();
+
+        return response($commingCourses, 200);
     }
 
 

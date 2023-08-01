@@ -8,6 +8,7 @@
             <CoursesSection :cardsCount="5" :showMoreCard="true"></CoursesSection>
 
         </section>
+        <CommingSoonBanner></CommingSoonBanner>
         <CombaniesBanner></CombaniesBanner>
         <div class="mt-30">
             <TheFooter></TheFooter>
@@ -23,10 +24,11 @@ import CommunityBar from "../layouts/habaybnacommunity/CommunityBar.vue";
 import Banner from '../views/onlinecourses/CoursesSection_Banner.vue'
 import CoursesFeatures from '../views/onlinecourses/CoursesFeatures.vue'
 import CombaniesBanner from '../layouts/CompaniesBanner.vue'
+import CommingSoonBanner from '../layouts/CommingSoonBanner.vue'
 
 import TheFooter from '../layouts/TheFooter.vue';
 import CoursesSection from "../views/onlinecourses/CoursesSection.vue";
 export default {
-    components: { CommunityBar, CoursesSection,TheFooter,Banner,CombaniesBanner,CoursesFeatures,TheHeader }
+    components: { CommunityBar, CoursesSection,TheFooter,Banner,CombaniesBanner,CoursesFeatures,TheHeader, CommingSoonBanner }
 };
 </script>
