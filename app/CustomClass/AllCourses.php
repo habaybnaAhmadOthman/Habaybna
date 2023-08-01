@@ -14,7 +14,7 @@ class AllCourses {
     public function execute()
     {
         try {
-            $allCourses = Courses::where('is_publish',1)->get();
+            $allCourses = Courses::where('is_publish',1)->orderBy('id','desc')->get();
 
             $data = [] ;
             if(count($allCourses) > 0 ){

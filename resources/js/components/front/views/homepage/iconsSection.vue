@@ -1,67 +1,69 @@
 <template>
-  <section class="icons-section relative">
+  <section class="icons-section relative mt-50">
     <div class="container h-100 z-1">
-      <div
-        class="
-          icons-box
-          d-flex
-          row-3-gap
-          gap-20
-          justify-center-p
-          p-side-12-p
-          pb-10-p
-          flex-wrap
-        "
-      >
-        <div class="icon-box">
+      <div class="row">
+        <div class="w-25 col-sm-6 icon-box mb-10" >
           <router-link to="/online-courses">
-            <figure class="mb-20 video">
+            <figure class="video">
               <img
-                src="/images/online-video-icon.svg"
+                src="/images/siteImgs/homepageicons1.png"
                 alt=""
                 width="101"
                 height="81"
               />
             </figure>
-            <p class="black font-30 mb-10 bold font-16-p">دورات تدريب رقمية</p>
             <p class="black-2 font-24 pre-line font-14-p">
-              تقدم تدريبات عملية يقدمها أخصائيون متميزون
+              لمساعدتك على فهم احتياجات طفلك الأساسية مع أكثر من 1000 فيديو
             </p>
           </router-link>
         </div>
-        <div class="icon-box">
+        <div class="w-25 col-sm-6 icon-box mb-10 ">
           <router-link to="/ask-specialists">
-            <figure class="mb-20 consultation">
+            <figure class="consultation">
               <img
-                src="/images/consultation-icon.svg"
+                src="/images/siteImgs/homepageicons2.png"
                 alt=""
                 width="93"
                 height="97"
               />
             </figure>
-            <p class="black font-30 mb-10 bold font-16-p">
-              استشارات مع المختصين
-            </p>
+
             <p class="black-2 font-24 pre-line font-14-p">
               للحصول على التوجيه والإرشاد بشكل فردي عن بعد
             </p>
           </router-link>
         </div>
-        <div class="icon-box">
+        <div class="w-25 col-sm-6 icon-box mb-10 ">
           <router-link to="/library">
-            <figure class="mb-20 library">
+            <figure class="library">
               <img
-                src="/images/product-icon.svg"
+                src="/images/siteImgs/homepageicons3.png"
                 alt=""
                 width="98"
                 height="90"
               />
             </figure>
-            <p class="black font-30 mb-10 bold font-16-p">
-              مكتبة معلومات مجانية
-            </p>
+
             <p class="black-2 font-24 pre-line font-14-p">
-              تضم تجارب وخبرات لتمكين الأطفال بمختلف قدراتهم
+              لمساعدتك على معرفة بدائل لتحسين حياة طفلك من خلال دورات قصيرة
+              خفيفة
+            </p>
+          </router-link>
+        </div>
+        <div class="w-25 col-sm-6 icon-box mb-10 ">
+          <router-link to="/habaybna-community">
+            <figure class="library">
+              <img
+                src="/images/siteImgs/homepageicons4.png"
+                alt=""
+                width="98"
+                height="90"
+              />
+            </figure>
+
+            <p class="black-2 font-24 pre-line font-14-p">
+              لمساعدتك على التعامل مع تحد في التطور أو التعليم مع طفلك من خلال
+              الاستشارات
             </p>
           </router-link>
         </div>
@@ -70,21 +72,40 @@
   </section>
 </template>
 <script>
+    import "/public/css/common.css";
+
 export default {
   components: {},
 };
 </script>
 
 <style scoped>
+
 figure {
-  height: 97px;
+  height: 143px;
+  width: 143px;
   display: flex;
   align-items: flex-end;
 }
-@media (max-width: 767px) {
+a figure img {
+  height: 100%;
+  width: 100%;
+}
+.icon-box a {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.icon-box p {
+width: 80%;
+}
+
+/* @media (max-width: 767px) {
   .icon-box {
     padding: 5px 20px;
-    min-width: 210px;
+    max-width: 24%;
     text-align: center;
   }
   .icon-box figure {
@@ -106,5 +127,12 @@ figure {
     width: 44px;
     height: 40px;
   }
-}
+  .icon-box a {
+          display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+} */
 </style>

@@ -307,6 +307,10 @@ Route::post('/subscribe','SbuscribeController@store');
 Route::post('/payment/subscribe','SbuscribeController@subscribPaymentCallback');
 Route::get('/get-subscribe-payment-status','SbuscribeController@checkPaymentStatus');
 
+// comming soon portal
+
+Route::get('/courses/comming-soon','CommingSoonController@getCommingCourses');
+
 
 
 

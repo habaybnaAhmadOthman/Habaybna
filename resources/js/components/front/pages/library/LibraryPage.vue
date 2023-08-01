@@ -3,6 +3,67 @@
     <TheHeader></TheHeader>
     <CommunityBar></CommunityBar>
     <Banner></Banner>
+    <div class="our-features">
+      <div class="container p-side-12-p">
+        <h2 class="main-color mb-20-p font-30 title-line mb-50 font-20-p">
+          ما هي مميزات مكتبة حبايبنا.نت ؟
+        </h2>
+        <div class="features pt-15 d-flex space-between flex-wrap pt-0-p">
+          <div
+            class="box relative center w-25 p-side-10 p-side-15-p half-p radius-3-p"
+          >
+            <img
+              src="/images/Icons Library/9.svg"
+              width="250"
+              height="150"
+              class="mb-30 mt-15-p mb-15-p"
+            />
+            <p class="font-19 main-color font-15-p mb-15-p">
+              تهم كل والدين وأساسية لتطور كل طفل
+            </p>
+          </div>
+          <div
+            class="box relative center w-25 p-side-10 p-side-15-p half-p radius-3-p"
+          >
+            <img
+              src="/images/Icons Library/10.svg"
+              width="250"
+              height="150"
+              class="mb-30 mt-15-p mb-15-p"
+            />
+            <p class="font-19 main-color font-15-p mb-15-p">
+              فيديوهات قصيرة وسريعة وتغير حياتك و حياة طفلك
+            </p>
+          </div>
+          <div
+            class="box relative center w-25 p-side-10 p-side-15-p half-p radius-3-p"
+          >
+            <img
+              src="/images/Icons Library/11.svg"
+              width="250"
+              height="150"
+              class="mb-30 mt-15-p mb-15-p"
+            />
+            <p class="font-19 main-color font-15-p mb-15-p">
+              يقدمها خبراء في مجالات متنوعة مرتبطة بتطور الطفل
+            </p>
+          </div>
+          <div
+            class="box relative center w-25 p-side-10 p-side-15-p half-p radius-3-p"
+          >
+            <img
+              src="/images/Icons Library/12.svg"
+              width="250"
+              height="150"
+              class="mb-30 mt-15-p mb-15-p"
+            />
+            <p class="font-19 main-color font-15-p mb-15-p">
+              من الوقت والجهد والتفكير في البحث عن بدائل
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
     <ContentSection :save-current-page="true"></ContentSection>
     <TheFooter></TheFooter>
   </div>
@@ -34,4 +95,10 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 767px) {
+  .box img {
+    width: 100px;
+    height: 100px;
+  }
+}
 </style>

@@ -215,7 +215,6 @@ class CourseController extends Controller
 
 
        $courses = $allCourses->execute();
-
        if($courses){
            $my_courses = [];
            if(Auth::check()){

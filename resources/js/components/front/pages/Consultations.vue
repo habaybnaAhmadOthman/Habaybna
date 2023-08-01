@@ -3,7 +3,7 @@
     <TheHeader />
     <div class="container">
       <div class="bae-banner">
-        <img src="/images/siteImgs/Consultations banner1.jpg" class="" />
+        <img src="" class="" />
       </div>
       <!-- <div class="w-80 w-100-p"> -->
       <div>

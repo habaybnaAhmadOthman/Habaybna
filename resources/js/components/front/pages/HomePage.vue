@@ -7,7 +7,7 @@
     <div class="video-box-home-container">
       <iframe
         class="video-box-home"
-        src="https://www.youtube.com/embed/4VsdSsLT_BI"
+        src="https://www.youtube.com/embed/GzB4wANrPRM"
         title="تجربة أبوين مع طفلهما المتأخرين في الكلام والتطور دفعتهما لتطوير منصة حبايبنا.نت"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -100,7 +100,7 @@ export default {
 }
 @media (max-width: 767px) {
   .video-box-home {
-    width: 355px;
+    width: 100%;
     height: 200px;
   }
 
