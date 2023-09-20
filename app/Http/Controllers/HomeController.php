@@ -282,8 +282,8 @@ class HomeController extends Controller
 
                 // courses
 
-                $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')->orWhere('courseDescription','like','%'. $request->keyWord .'%')
-                ->where('is_publish',1)
+
+                $data['courses'] = Courses::where('courseTitle','like','%'. $request->keyWord .'%')->where('is_publish',1)
                 ->paginate(20);
 
                                 $callers = DB::table('specialists')

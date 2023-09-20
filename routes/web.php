@@ -63,7 +63,7 @@ Route::get('/get-user-country','HomeController@getUserCountry');
 Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () {
 
     // dashboard
-    Route::view('/','admin.adminDashboard');
+    // Route::view('/','admin.adminDashboard');
 
     // courses
 
@@ -92,7 +92,7 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
     // Route::post('category/store','CoursesCategoriesController@store')->name('category.store');
     // Route::get('category/{id}/edit','CoursesCategoriesController@edit')->name('category.edit');
     // Route::post('category/update/{id}','CoursesCategoriesController@update')->name('category.update');
-    Route::view('{any}','admin.adminDashboard')->where('any','.*');
+    // Route::view('{any}','admin.adminDashboard')->where('any','.*');
     });
     // Route::get('/pusher', function() {
     //     event(new MyEvent('Hi there Pusher!'));
