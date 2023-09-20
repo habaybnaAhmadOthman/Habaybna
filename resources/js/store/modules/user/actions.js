@@ -63,7 +63,7 @@ export default {
     // check error handling
     async loginModal(context, payload) {
         await axios.get("/sanctum/csrf-cookie");
-        const resp = await callApi("POST", "api/login", payload);
+        const resp = await callApi("POST", "/api/login", payload);
         if (resp && resp.data && resp.data.status && resp.data.status == 403) {
             const error = new Error("تم إيقاف حسابك");
             throw error;
@@ -76,7 +76,7 @@ export default {
         context.commit('clearAdmin');
         context.commit('setUser',{
             token: resp.data.token,
-            id: resp.data.userData.id,
+            id: resp.data.user.id,
         })
         axios.defaults.headers.common.Authorization = `Bearer ${resp.data.token}`;
         await context.dispatch('checkUserAuth')
